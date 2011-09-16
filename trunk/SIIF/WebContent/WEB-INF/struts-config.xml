@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<form-beans>
+		<form-bean name="planoForm" type="ar.com.siif.struts.actions.forms.PlanoForm">
+		</form-bean>
+		<form-bean name="loginForm" type="ar.com.siif.struts.actions.forms.LoginForm">
+		</form-bean>
+		<form-bean name="fiscalizacionForm"
+			type="ar.com.siif.struts.actions.forms.FiscalizacionForm">
+		</form-bean>
+		<form-bean name="guiaForestalForm"
+			type="ar.com.siif.struts.actions.forms.GuiaForestalForm">
+		</form-bean>
+		<form-bean name="tipoProductoForestalForm"
+			type="ar.com.siif.struts.actions.forms.TipoProductoForestalForm">
+		</form-bean>
+		<form-bean name="aforoForm" type="ar.com.siif.struts.actions.forms.AforoForm">
+		</form-bean>
+		<form-bean name="ubicacionForm"
+			type="ar.com.siif.struts.actions.forms.UbicacionForm">
+		</form-bean>
+		<!-- <form-bean name="planPagosForm" -->
+		<!-- type="ar.com.siif.struts.actions.forms.PlanPagosForm"> -->
+		<!-- </form-bean> -->
+		<form-bean name="entidadForm"
+			type="ar.com.siif.struts.actions.forms.EntidadForm">
+		</form-bean>
+		<form-bean name="localidadForm"
+			type="ar.com.siif.struts.actions.forms.LocalidadForm">
+		</form-bean>
+		<form-bean name="usuarioForm"
+			type="ar.com.siif.struts.actions.forms.UsuarioForm">
+		</form-bean>
+		<form-bean name="rolForm" type="ar.com.siif.struts.actions.forms.RolForm">
+		</form-bean>
+	</form-beans>
+
+	<global-exceptions></global-exceptions>
+
+	<global-forwards>
+		<forward name="error" path=".error"></forward>
+	</global-forwards>
+
+	<action-mappings>
+
+		<action path="/jsp" type="ar.com.siif.struts.actions.TilesForwardAction">
+			<forward name=".index" path=".index" />
+			<forward name=".indizarPlano" path=".indizarPlano" />
+			<forward name=".visualizarPlano" path=".visualizarPlano" />
+			<forward name=".estadisticaIndizacionPlanos" path=".estadisticaIndizacionPlanos" />
+			<forward name=".pruebaTiles" path=".pruebaTiles" />
+
+			<forward name=".fiscalizacionProdForestales" path=".fiscalizacionProdForestales" />
+			<forward name=".altaTipoProductoForestal" path=".altaTipoProductoForestal" />
+			<forward name=".altaEntidad" path=".altaEntidad" />
+			<forward name=".recuperarEntidades" path=".recuperarEntidades" />
+			<forward name=".recuperarLocalidades" path=".recuperarLocalidades" />
+			<forward name=".altaLocalidad" path=".altaLocalidad" />
+			<forward name=".altaUsuario" path=".altaUsuario" />
+			<forward name=".recuperarUsuarios" path=".recuperarUsuarios" />
+			
+		</action>
+
+		<action path="/menu" type="ar.com.siif.struts.actions.MenuAction"
+			parameter="metodo" />
+
+		<action path="/login" type="ar.com.siif.struts.actions.LoginAction"
+			parameter="metodo" name="loginForm" scope="session">
+			<forward name="exitoLogin" path=".index" />
+			<forward name="errorLogin" path="/jsp/login.jsp" />
+			<forward name="exitoLogout" path="/jsp/login.jsp" />
+		</action>
+
+		<!-- FISCALIZACION -->
+		<action path="/fiscalizacion" type="ar.com.siif.struts.actions.FiscalizacionAction"
+			parameter="metodo" name="fiscalizacionForm" scope="session">
+			<forward name="exitoRecuperarLocalidadesParaFiscalizacionesAModificar" 
+				path=".recuperarFiscalizacionesAModificar" />
+			<forward name="exitoRecuperarFiscalizacionesParaAltaGFB"
+				path=".exitoRecuperarFiscalizacionesParaAltaGFB" />
+			<forward name="exitoCargarFiscalizacionAModificar" path=".cargarFiscalizacionAModificar" />
+			<forward name="exitoModificacionFiscalizacion"
+				path="/fiscalizacion.do?metodo=recuperarLocalidadesParaFiscalizacionesAModificar" />
+			<forward name="exitoCargaAltaFiscalizacion" path=".altaFiscalizacionProdForestales" />
+			<forward name="exitoAltaFiscalizacion" path="/fiscalizacion.do?metodo=cargarAltaFiscalizacion" />
+			<forward name="exitoRecuperarFiscalizacionesAModificar" path="/jsp/bloqueFiscalizacionesAModificar.jsp" />			
+		</action>
+		<!-- FIN FISCALIZACION -->
+
+		<!-- UBICACION -->
+		<action path="/ubicacion" type="ar.com.siif.struts.actions.UbicacionAction"
+			parameter="metodo" name="ubicacionForm" scope="session">
+			<forward name="exitoRecuperarUbicacionParaAlta" path=".exitoRecuperarUbicacionParaAlta" />
+			<forward name="exitoRecuperarUbicacionParaModificacion" path=".exitoRecuperarUbicacionParaModificacion" />				
+			<forward name="exitoRecuperarUbicacionParaModificacionDeRodales" path="/jsp/bloqueModificacionRodal.jsp" />
+			<forward name="exitoRecuperarUbicacionParaModificacionDeMarcaciones" path="/jsp/bloqueModificacionMarcacion.jsp" />
+			<forward name="exitoRecuperarUbicacionParaModificacionDeTranzones" path="/jsp/bloqueModificacionTranzon.jsp" />
+			<forward name="exitoRecuperarUbicacionParaModificacionDePMFs" path="/jsp/bloqueModificacionPMF.jsp" />
+			
+			<forward name="exitoAltaUbicacion" path=".index" />
+		</action>
+		<!-- FIN UBICACION -->
+
+		<!-- GUIA FORESTAL -->
+		<action path="/guiaForestal" type="ar.com.siif.struts.actions.GuiaForestalAction"
+			parameter="metodo" name="guiaForestalForm" scope="session">
+			<forward name="exitoCargaAltaGuiaForestalBasica" path=".altaGuiaForestalBasica" />
+			<forward name="exitoAltaGuiaForestalBasica" path=".index" />	
+			<forward name="exitoRecuperarLocalidadesParaAltaGFB" path=".recuperarFiscalizacionesParaAltaGFB" />
+			<forward name="exitoRecuperarFiscalizacionesParaAltaGFB" path="/jsp/bloqueFiscalizacionesParaAltaGFB.jsp" />
+			
+			<!-- Boleta de Deposito  -->			
+			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
+			<forward name="exitoRecuperarGuiasForestalesParaBoletaDeposito" 
+							path="/jsp/bloqueMostrarGuiasForestalesParaBoletaDeposito.jsp" />	
+			<forward name="exitoCargarGuiaForestalPagoBoletaDeposito" path=".cargarGuiaForestalPagoBoletaDepostio" />
+			<!--<forward name="exitoRegistrarPagoBoletaDeposito" path="/jsp/bloqueRegistroPagoBoletaDeposito.jsp" /> -->
+			<forward name="exitoCargarGuiaForestalReemBoletaDeposito" path=".cargarGuiaForestalReemBoletaDeposito" />	
+			
+			<forward name="exitoRecuperarGuiaForestalPorNroGuia" 
+							path="/guiaForestal.do?metodo=cargarGuiaForestalPagoBoletaDeposito" />			
+			
+			<!-- Vale de Transporte  -->
+			<forward name="exitoRecuperarProductoresParaValeTransporte" path=".cargarProductoresParaValeTransporte" />
+			<forward name="exitoRecuperarGuiasForestalesParaValeTransporte" 
+							path="/jsp/bloqueMostrarGuiasForestalesParaValeTransporte.jsp" />	
+			<forward name="exitoCargarGuiaForestalDevolucionValeTransporte" path=".cargarGuiaForestalDevolucionValeTransporte" />
+			<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />				
+		</action>
+
+
+		<action path="/recuperarGuiasForestales" type="ar.com.siif.struts.actions.GuiaForestalAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarGuiasForestalesPlanDePagos"
+				path=".recuperarGuiasForestales" />
+			<forward name="exitoCargarPlanPagoAModificar" path=".cargarPlanPagoAModificar" />
+		</action>
+		<!-- FIN GUIA FORESTAL -->
+
+		<!-- TIPO PRODUCTO FORESTAL -->
+		<action path="/tipoProductoForestal"
+			type="ar.com.siif.struts.actions.TipoProductoForestalAction"
+			parameter="metodo" name="tipoProductoForestalForm" scope="session">
+			<forward name="exitoAltaTipoProductoForestal" path=".altaTipoProductoForestal" />
+			<forward name="exitoModificacionTipoProductoForestal"
+				path="/recuperarTipoProductoForestal.do?metodo=cargarModificacionTipoProductoForestal" />
+		</action>
+
+		<action path="/recuperarTipoProductoForestal"
+			type="ar.com.siif.struts.actions.TipoProductoForestalAction"
+			parameter="metodo">
+			<forward name="exitoCargarModificacionTipoProductoForestal"
+				path=".modificacionTipoProductoForestal" />
+			<forward name="exitoRecuperarTipoProductoForestal"
+				path="/jsp/bloqueModificacionTipoProductoForestal.jsp" />
+		</action>
+		<!-- FIN TIPO PRODUCTO FORESTAL -->
+
+		<!-- AFORO -->
+		<action path="/aforo" type="ar.com.siif.struts.actions.AforoAction"
+			parameter="metodo" name="aforoForm" scope="session">
+			<forward name="exitoAltaAforo" path="/recuperarAforo.do?metodo=cargarAltaAforo" />
+			<forward name="exitoModificacionAforo"
+				path="/recuperarAforo.do?metodo=cargarModificacionAforos" />
+		</action>
+
+		<action path="/recuperarAforo" type="ar.com.siif.struts.actions.AforoAction"
+			parameter="metodo">
+			<forward name="exitoCargarAltaAforo" path=".altaAforo" />
+			<forward name="exitoCargarModificacionAforos" path=".modificacionAforo" />
+			<forward name="exitoRecuperarAforo" path="/jsp/bloqueModificacionAforo.jsp" />
+		</action>
+		<!-- FIN AFORO -->
+
+		<!-- ENTIDAD -->
+		<action path="/entidad" type="ar.com.siif.struts.actions.EntidadAction"
+			parameter="metodo" name="entidadForm" scope="session">
+			<forward name="cargarAltaEntidad" path=".altaEntidad" />
+			<forward name="exitoAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
+			<forward name="exitoCargarEntidadAModificar" path="/jsp/bloqueAltaEntidad.jsp" />
+			<forward name="exitoModificacionEntidad"
+				path="/cargarEntidadesAModificar.do?metodo=cargarEntidadesAModificar" />
+			<forward name="errorAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
+		</action>
+
+		<action path="/cargarEntidadesAModificar" type="ar.com.siif.struts.actions.EntidadAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarEntidades" path=".recuperarEntidades" />
+		</action>
+		<!-- FIN ENTIDAD -->
+
+		<!-- LOCALIDAD -->
+		<action path="/localidad" type="ar.com.siif.struts.actions.LocalidadAction"
+			parameter="metodo" name="localidadForm" scope="session">
+			<forward name="exitoAltaLocalidad"
+				path="/jsp.do?page=.altaLocalidad&amp;metodo=altaLocalidad" />
+			<forward name="exitoCargarLocalidadAModificar" path="/jsp/bloqueAltaLocalidad.jsp" />
+			<forward name="errorAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
+			<forward name="exitoModificacionLocalidad"
+				path="/cargarLocalidadesAModificar.do?metodo=cargarLocalidadesAModificar" />
+		</action>
+
+		<action path="/cargarLocalidadesAModificar" type="ar.com.siif.struts.actions.LocalidadAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarLocalidades" path=".recuperarLocalidades" />
+		</action>
+		<!-- FIN LOCALIDAD -->
+
+		<!-- USUARIO -->
+		<action path="/usuario" type="ar.com.siif.struts.actions.UsuarioAction"
+			parameter="metodo" name="usuarioForm" scope="session">
+			<forward name="cargarAltaUsuario" path=".altaUsuario" />
+			<forward name="exitoAltaUsuario" path="/usuario.do?metodo=cargarAltaUsuario" />
+			<forward name="exitoCargarUsuarioAModificar" path="/jsp/bloqueAltaUsuario.jsp" />
+			<forward name="errorAltaUsuario" path="/usuario.do?metodo=cargarAltaUsuario" />
+			<forward name="exitoModificacionUsuario"
+				path="/cargarUsuariosAModificar.do?metodo=cargarUsuariosAModificar" />
+		</action>
+
+		<action path="/cargarUsuariosAModificar" type="ar.com.siif.struts.actions.UsuarioAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarUsuarios" path=".recuperarUsuarios" />
+			<forward name="exitoCargarUsuarioAModificar" path=".altaUsuario" />
+		</action>
+		<!-- FIN USUARIO -->
+
+		<!-- ROL -->
+		<action path="/rol" type="ar.com.siif.struts.actions.RolAction"
+			parameter="metodo" name="rolForm" scope="session">
+			<forward name="exitoAltaRol" path="/recuperarRol.do?metodo=cargarAltaRol" />
+			<forward name="exitoModificacionRol" path="/recuperarRol.do?metodo=cargarModificacionRol" />
+		</action>
+
+		<action path="/recuperarRol" type="ar.com.siif.struts.actions.RolAction"
+			parameter="metodo">
+			<forward name="exitoCargarAltaRol" path=".altaRol" />
+			<forward name="exitoCargarModificacionRol" path=".modificacionRol" />
+			<forward name="exitoRecuperarRol" path="/jsp/bloqueModificacionRol.jsp" />
+		</action>
+		<!-- FIN ROL -->
+
+		<!-- CONSULTAS GUIA FORESTAL(POR PRODUCTOR) -->
+		<action path="/consultasPorProductor"
+			type="ar.com.siif.struts.actions.ConsultasPorProductorAction"
+			parameter="metodo">
+			<forward name="exitoCargarConsultaPorProductor" path=".consultaGuiaForestalPorProductor" />
+			<forward name="exitoRecuperarGuiasForestalesConsultaPorProductor" path="/jsp/bloqueMostrarGuiasForestalesConsultaPorProductor.jsp" />
+			<forward name="exitoCargarGuiaForestal" path=".cargarGuiaForestalConsultaPorProductor" />
+			<forward name="exitoRecuperarGuiasForestalesConDeudasAforo" path="/jsp/bloqueMostrarGuiasForestalesConDeudaAforo.jsp" />						
+		</action>
+		<!-- FIN CONSULTAS GUIA FORESTAL(POR PRODUCTOR) -->
+
+		<!-- CONSULTAS FISCALIZACION -->
+		<action path="/consultasFiscalizacion"
+			type="ar.com.siif.struts.actions.ConsultasFiscalizacionAction" parameter="metodo">
+			<forward name="exitoCargarLocalidadesConsultaFiscalizacion" path=".consultaFiscalizacion" />
+			<forward name="exitoRecuperarFiscalizacionesConGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />
+			<forward name="exitoRecuperarFiscalizacionesSinGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />			
+			<forward name="exitoCargarFiscalizacion" path=".cargarFiscalizacionConsulta" />									
+		</action>
+		<!-- FIN CONSULTAS FISCALIZACION -->
+
+		<!-- REPORTES  -->			
+		<action path="/reporte" type="ar.com.siif.struts.actions.ReportesAction"
+			parameter="metodo">
+			<forward name="exitoMostrarReporte" path=".mostrarReporte" />			
+		</action>		
+		<!-- FIN REPORTES  -->
+
+	</action-mappings>
+
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+
+</struts-config>

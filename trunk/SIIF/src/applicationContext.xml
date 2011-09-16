@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/siif" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative 
+		to JTA) -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+
+	<!--  *******************-->
+	<!--     Respositories   -->
+	<!--  *******************-->
+
+	<bean id="abstractRepository" abstract="true">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="menuDAO" class="ar.com.siif.dao.MenuDAO" parent="abstractRepository" />
+	<bean id="loginDAO" class="ar.com.siif.dao.LoginDAO" parent="abstractRepository" />
+	<bean id="fiscalizacionDAO" class="ar.com.siif.dao.FiscalizacionDAO"
+		parent="abstractRepository" />
+	<bean id="guiaForestalDAO" class="ar.com.siif.dao.GuiaForestalDAO"
+		parent="abstractRepository" />
+	<bean id="tipoProductoForestalDAO" class="ar.com.siif.dao.TipoProductoForestalDAO"
+		parent="abstractRepository" />
+	<bean id="entidadDAO" class="ar.com.siif.dao.EntidadDAO" parent="abstractRepository" />
+	<bean id="ubicacionDAO" class="ar.com.siif.dao.UbicacionDAO"
+		parent="abstractRepository" />
+	<bean id="aforoDAO" class="ar.com.siif.dao.AforoDAO" parent="abstractRepository" />
+	<bean id="consultasPorProductorDAO" class="ar.com.siif.dao.ConsultasPorProductorDAO"
+		parent="abstractRepository" />
+	<bean id="localidadDAO" class="ar.com.siif.dao.LocalidadDAO"
+		parent="abstractRepository" />
+	<bean id="rolDAO" class="ar.com.siif.dao.RolDAO" parent="abstractRepository" />
+	<bean id="usuarioDAO" class="ar.com.siif.dao.UsuarioDAO" parent="abstractRepository" />
+	<bean id="reportesDAO" class="ar.com.siif.dao.ReportesDAO" parent="abstractRepository" />
+	<bean id="consultasFiscalizacionDAO" class="ar.com.siif.dao.ConsultasFiscalizacionDAO"
+		parent="abstractRepository" />	
+	
+	<!--  *******************-->
+	<!--     Fachadas   -->
+	<!--  *******************-->
+
+	<!-- MENU -->
+	<bean id="menuFachadaImpl" class="ar.com.siif.fachada.MenuFachada">
+		<constructor-arg ref="menuDAO" />
+	</bean>
+
+	<bean id="menuFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="menuFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IMenuFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- LOGIN --> 
+	<bean id="loginFachadaImpl" class="ar.com.siif.fachada.LoginFachada">
+		<constructor-arg ref="loginDAO" />
+	</bean>	
+
+	<bean id="loginFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="loginFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.ILoginFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- FISCALIZACION --> 
+	<bean id="fiscalizacionFachadaImpl" class="ar.com.siif.fachada.FiscalizacionFachada">
+		<constructor-arg ref="fiscalizacionDAO" />
+	</bean>	
+
+	<bean id="fiscalizacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="fiscalizacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IFiscalizacionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- GUIA FORESTAL --> 
+	<bean id="guiaForestalFachadaImpl" class="ar.com.siif.fachada.GuiaForestalFachada">
+		<constructor-arg ref="guiaForestalDAO" />
+	</bean>	
+
+	<bean id="guiaForestalFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="guiaForestalFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IGuiaForestalFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
+
+
+	<!--TIPO PRODUCTO --> 
+	<bean id="tipoProductoForestalFachadaImpl" class="ar.com.siif.fachada.TipoProductoForestalFachada">
+		<constructor-arg ref="tipoProductoForestalDAO" />
+	</bean>	
+
+	<bean id="tipoProductoForestalFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="tipoProductoForestalFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces"
+			value="ar.com.siif.fachada.ITipoProductoForestalFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
+
+
+	<!--AFORO --> 
+	<bean id="aforoFachadaImpl" class="ar.com.siif.fachada.AforoFachada">
+		<constructor-arg ref="aforoDAO" />
+		<constructor-arg ref="tipoProductoForestalDAO" />
+	</bean>	
+
+	<bean id="aforoFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="aforoFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IAforoFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- UBICACION --> 
+	<bean id="ubicacionFachadaImpl" class="ar.com.siif.fachada.UbicacionFachada">
+		<constructor-arg ref="ubicacionDAO" />
+	</bean>	
+
+	<bean id="ubicacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="ubicacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IUbicacionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+    <!--CONSULTAS POR PRODUCTOR --> 
+	<bean id="consultasPorProductorFachadaImpl" class="ar.com.siif.fachada.ConsultasPorProductorFachada">
+		<constructor-arg ref="consultasPorProductorDAO" />		
+	</bean>	
+
+	<bean id="consultasPorProductorFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="consultasPorProductorFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces"
+			value="ar.com.siif.fachada.IConsultasPorProductorFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	
+	<!-- ENTIDAD --> 
+	<bean id="entidadFachadaImpl" class="ar.com.siif.fachada.EntidadFachada">
+		<constructor-arg ref="entidadDAO" />
+	</bean>	
+
+	<bean id="entidadFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="entidadFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IEntidadFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
+
+
+	<!-- LOCALIDAD --> 
+	<bean id="localidadFachadaImpl" class="ar.com.siif.fachada.LocalidadFachada">
+		<constructor-arg ref="localidadDAO" />
+	</bean>	
+
+	<bean id="localidadFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="localidadFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.ILocalidadFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+		
+		
+	<!-- ROL --> 
+	<bean id="rolFachadaImpl" class="ar.com.siif.fachada.RolFachada">
+		<constructor-arg ref="rolDAO" />
+		<constructor-arg ref="entidadDAO" />
+		<constructor-arg ref="usuarioDAO" />
+	</bean>	
+
+	<bean id="rolFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="rolFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IRolFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- USUARIO --> 
+	<bean id="usuarioFachadaImpl" class="ar.com.siif.fachada.UsuarioFachada">
+		<constructor-arg ref="usuarioDAO" />
+	</bean>	
+
+	<bean id="usuarioFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="usuarioFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IUsuarioFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- REPORTES --> 
+	<bean id="reportesFachadaImpl" class="ar.com.siif.fachada.ReportesFachada">
+		<constructor-arg ref="reportesDAO" />
+	</bean>	
+
+	<bean id="reportesFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+    <!--CONSULTAS POR FISCALIZACION --> 
+	<bean id="consultasFiscalizacionFachadaImpl" class="ar.com.siif.fachada.ConsultasFiscalizacionFachada">
+		<constructor-arg ref="consultasFiscalizacionDAO" />		
+	</bean>	
+
+	<bean id="consultasFiscalizacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="consultasFiscalizacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces"
+			value="ar.com.siif.fachada.IConsultasFiscalizacionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--  *******************-->
+	<!--       Parameters    -->
+	<!--  *******************-->
+
+	<bean id="version" class="java.lang.String">
+		<constructor-arg value="1.0" />
+	</bean>
+
+
+	<!-- <bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> 
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" 
+		/> <property name="targetMethod" value="initLogging" /> <property name="arguments"> 
+		<list> <value>${webapp.root}/WEB-INF/log4j.properties</value> </list> </property> 
+		</bean> -->
+
+
+</beans>

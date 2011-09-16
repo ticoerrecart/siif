@@ -1,0 +1,88 @@
+VIEW `siif`.`v_fiscalizacion` AS 
+select 
+	`siif`.`fiscalizacion`.`id` AS `id`,
+	`siif`.`fiscalizacion`.`cantidadMts` AS `cantidadMts`,
+	`siif`.`fiscalizacion`.`cantidadUnidades` AS `cantidadUnidades`,
+	`siif`.`fiscalizacion`.`fecha` AS `fecha`,
+	`siif`.`fiscalizacion`.`periodoForestal` AS `periodoForestal`,
+	`siif`.`fiscalizacion`.`tamanioMuestra` AS `tamanioMuestra`,
+	`siif`.`fiscalizacion`.`guiaForestal_fk` AS `guiaForestal_fk`,
+	`siif`.`tipoproducto`.`nombre` AS `nombreTipoProd`,
+	`siif`.`entidad`.`nombre` AS `nombreEntidad`,
+	`siif`.`pmf`.`nombre` AS `nombrePmf`,
+	`siif`.`pmf`.`expediente` AS `expPmf`,
+	`siif`.`tranzon`.`numero` AS `numeroTranzon`,
+	`siif`.`tranzon`.`disposicion` AS `dispTranzon`,
+	`siif`.`marcacion`.`disposicion` AS `dispMarcacion`,
+	`siif`.`rodal`.`nombre` AS `nombreRodal`,
+	`siif`.`localidad`.`nombre` AS `nombreLocalidad` 
+
+from (((((((`siif`.`fiscalizacion` join `siif`.`tipoproducto`) 
+	join `siif`.`entidad`)
+	join `siif`.`rodal`) 
+	join `siif`.`marcacion`) 
+	join `siif`.`tranzon`) 
+	join `siif`.`pmf`) 
+	join `siif`.`localidad`) 
+
+where ((`siif`.`fiscalizacion`.`tipoProducto_fk` = `siif`.`tipoproducto`.`id`) 
+	and (`siif`.`fiscalizacion`.`entidad_fk` = `siif`.`entidad`.`id`) 
+	and (`siif`.`fiscalizacion`.`rodal_fk` = `siif`.`rodal`.`id`) 
+	and (`siif`.`rodal`.`marcacion_fk` = `siif`.`marcacion`.`id`) 
+	and (`siif`.`marcacion`.`tranzon_fk` = `siif`.`tranzon`.`id`)
+	and (`siif`.`tranzon`.`pmf_fk` = `siif`.`pmf`.`id`) 
+	and (`siif`.`localidad`.`id` = `siif`.`entidad`.`localidad_fk`))
+
+
+
+-----------------------------------------------------------------
+
+
+
+CREATE VIEW `siif`.`v_guiaforestal` AS
+  SELECT
+    `siif`.`guiaforestal`.`id` AS `id`,
+    `siif`.`guiaforestal`.`nroGuia` AS `nroGuia`,
+    `siif`.`entidad`.`nombre` AS `nombreEntidad`,
+    `siif`.`guiaforestal`.`fechaVencimiento` AS `fechaVencimiento`,
+    `siif`.`fiscalizacion`.`periodoForestal` AS `periodoForestal`,
+    `siif`.`localidad`.`nombre` AS `nombreLocalidad`,
+    `siif`.`guiaforestal`.`distanciaAforoMovil` AS `distanciaAforoMovil`,
+    `siif`.`pmf`.`nombre` AS `nombrePmf`,
+    `siif`.`pmf`.`expediente` AS `expPmf`,
+    `siif`.`tranzon`.`numero` AS `numeroTranzon`,
+    `siif`.`tranzon`.`disposicion` AS `dispTranzon`,
+    `siif`.`marcacion`.`disposicion` AS `dispMarcacion`,
+    `siif`.`rodal`.`nombre` AS `nombreRodal`,
+    `siif`.`tipoProducto`.`nombre` AS `nomTipoProducto`,
+    `siif`.`guiaforestal`.`estado` AS `estadoProdForestal`,
+    `siif`.`guiaforestal`.`especie` AS `especieProdForestal`,
+    `siif`.`fiscalizacion`.`cantidadMts` AS `cantidadM3`,
+    `siif`.`fiscalizacion`.`cantidadUnidades` AS `cantidadUnidades`,
+    `siif`.`guiaforestal`.`importe` AS `importe`,
+    `siif`.`guiaforestal`.`inspFiscalizacion` AS `inspFiscalizacion`,
+    `siif`.`guiaforestal`.`valorAforos` AS `valorAforos`,
+    `siif`.`guiaforestal`.`observaciones` AS `observaciones`
+
+  FROM  ((((((((`siif`.`guiaforestal` join
+                `siif`.`fiscalizacion`) join
+                `siif`.`entidad`) join
+                `siif`.`localidad`) join
+                `siif`.`pmf`) join
+                `siif`.`tranzon`) join
+                `siif`.`marcacion`) join
+                `siif`.`rodal`) join
+                `siif`.`tipoproducto`)
+
+  WHERE ((`siif`.`guiaforestal`.`fiscalizacion_fk` = `siif`.`fiscalizacion`.`id`)
+       and (`siif`.`fiscalizacion`.`entidad_fk` = `siif`.`entidad`.`id`)
+       and (`siif`.`fiscalizacion`.`rodal_fk` = `siif`.`rodal`.`id`)
+       and (`siif`.`rodal`.`marcacion_fk` = `siif`.`marcacion`.`id`)
+       and (`siif`.`marcacion`.`tranzon_fk` = `siif`.`tranzon`.`id`)
+       and (`siif`.`tranzon`.`pmf_fk` = `siif`.`pmf`.`id`)
+       and (`siif`.`localidad`.`id` = `siif`.`entidad`.`localidad_fk`)
+       and (`siif`.`tipoproducto`.`id` = `siif`.`fiscalizacion`.`tipoproducto_fk`))
+
+
+
+  ----------------------------------------------------------------------------------
