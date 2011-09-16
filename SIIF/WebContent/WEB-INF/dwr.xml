@@ -1,0 +1,61 @@
+
+<dwr>
+	<allow>
+		<convert converter="bean" match="ar.com.siif.negocio.PMF">
+			<param name="include" value="id, nombre, nombreExpediente" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Tranzon">
+			<param name="include" value="id, numero, numeroDisposicion" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Marcacion">
+			<param name="include" value="id, disposicion" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Rodal">
+			<param name="include" value="id, nombre" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Entidad">
+			<param name="include" value="id, nombre" />
+		</convert>
+		
+		<convert converter="bean" match="ar.com.siif.negocio.Rol">
+			<param name="include" value="id, rol" />
+		</convert>
+			
+		<convert converter="exception" match="ar.com.siif.negocio.exception.NegocioException">
+			<param name="include" value="message" />
+		</convert>
+		
+		<convert converter="exception" match="java.lang.Exception" >
+		    <param name="include" value="message,lineNumber"/>
+		</convert>
+		
+		<create creator="none" javascript="Validator">
+		    <param name="class" value="ar.com.siif.struts.utils.Validator"/>
+		</create>
+		
+		<create creator="spring" javascript="UbicacionFachada">
+			<param name="beanName" value="ubicacionFachada" />
+		</create>
+		
+		<create creator="spring" javascript="RolFachada">
+			<param name="beanName" value="rolFachada" />
+		</create>
+		
+		<create creator="spring" javascript="EntidadFachada">
+			<param name="beanName" value="entidadFachada" />
+		</create>
+
+		<create creator="new" javascript="UbicacionAction">
+			<param name="class" value="ar.com.siif.struts.actions.UbicacionAction"/>
+		</create>
+
+		<create creator="spring" javascript="AforoFachada">
+			<param name="beanName" value="aforoFachada" />
+		</create>
+		
+		<create creator="spring" javascript="GuiaForestalFachada">
+			<param name="beanName" value="guiaForestalFachada" />
+		</create>		
+	</allow>
+
+</dwr> 
