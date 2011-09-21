@@ -261,6 +261,50 @@ public abstract class Validator {
 		return salida;
 	}
 
+	/**
+	 * Verifica que la fecha sea vàlida y anterior a fecha actual. si es nula o
+	 * blanco devuelve true
+	 * 
+	 * @param pEntrada
+	 * @param label
+	 * @param pError
+	 * @return boolean
+	 */
+	public static boolean validarFechaMenorA(String pFechaDesde, String pFechaHasta, 
+			String labelFechaDesde, String labelFechaHasta, StringBuffer pError) {
+		
+		boolean salida = true;
+		if (pFechaDesde == null || pFechaDesde.equals("")) {
+			addErrorXML(pError, labelFechaDesde + " es un dato obligatorio");
+			salida = false;	
+		}else{
+			if(!DateUtils.validateDate(pFechaDesde, true, "dd/MM/yyyy")) {
+				addErrorXML(pError, labelFechaDesde
+					+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+				salida = false;
+			}	
+		}		
+		
+		if (pFechaHasta == null || pFechaHasta.equals("")) {
+			addErrorXML(pError, labelFechaHasta + " es un dato obligatorio");
+			salida = false;
+		}else{
+			if(!DateUtils.validateDate(pFechaHasta, true, "dd/MM/yyyy")) {
+				addErrorXML(pError, labelFechaHasta
+						+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+				salida = false;
+			}	
+		}
+		
+		if (salida && DateUtils.isBefore(DateUtils.dateFromString(pFechaHasta, "dd/MM/yyyy"),
+				DateUtils.dateFromString(pFechaDesde, "dd/MM/yyyy"))) {
+			addErrorXML(pError, "Fecha Desde debe ser menor a Fecha Hasta");
+			salida = false;
+		}
+
+		return salida;
+	}	
+	
 	public static boolean validarSN(String tipoLote) {
 		return (tipoLote.equals("S") || tipoLote.equals("N"));
 	}

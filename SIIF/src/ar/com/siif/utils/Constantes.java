@@ -103,11 +103,15 @@ public class Constantes {
 		
 		public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO = "Consulta de Guías Forestales Con Deuda de Aforo";
 		
+		public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE = "Consulta de Guías Forestales Con Deuda de Vale de Transporte";
+		
 		public static final String METODO_RECUPERAR_GUIAS_VIGENTES = "recuperarGuiasForestalesVigentes";
 		
 		public static final String METODO_RECUPERAR_GUIAS_NO_VIGENTES = "recuperarGuiasForestalesNoVigentes";	
 		
 		public static final String METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO = "recuperarGuiasForestalesConDeudasAforo";
+		
+		public static final String METODO_RECUPERAR_GUIAS_CON_DEUDAS_VALE_TRANSPORTE = "recuperarGuiasForestalesConDeudasValeTransporte";
 	//FIN CONSULTA GUIA FORESTAL (POR PRODUCTOR)
 		
 	//CONSULTAS FISCALIZACIONES
@@ -119,4 +123,8 @@ public class Constantes {
 		
 		public static final String TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL = "Consulta de Fiscalizaciones sin Guia Forestal";		
 	//FIN CONSULTAS FISCALIZACIONES
+		
+	//REPORTES
+		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_Y_FECHA = "Volumen Fiscalizado por Productor Y Fecha";
+	//FIN REPORTES	
 }
