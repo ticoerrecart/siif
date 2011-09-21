@@ -10,7 +10,7 @@ public interface IConsultasPorProductorFachada {
 	
 	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor);
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudas(long idProductor);
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor);
 	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor);
 	

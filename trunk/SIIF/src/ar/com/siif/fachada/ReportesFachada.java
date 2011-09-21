@@ -18,7 +18,7 @@ public class ReportesFachada implements IReportesFachada {
 		return reportesDAO.pruebaJasper(path);
 	}
 	
-	public byte[] generarReporteGuiaForestal(int idGuiaForestal,String path){
+	public byte[] generarReporteGuiaForestal(long idGuiaForestal,String path){
 	
 		return reportesDAO.generarReporteGuiaForestal(idGuiaForestal,path);
 	}	
@@ -31,5 +31,10 @@ public class ReportesFachada implements IReportesFachada {
 	public byte[] generarReporteVolumenFiscalizadoPorProducto(String path){
 		
 		return reportesDAO.generarReporteVolumenFiscalizadoPorProducto(path);
+	}	
+	
+	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, String fechaDesde, String fechaHasta, String path){
+		
+		return reportesDAO.generarReporteVolumenFiscalizadoPorProductorYFecha(idProd,fechaDesde,fechaHasta,path);
 	}	
 }
