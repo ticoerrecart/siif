@@ -252,13 +252,6 @@
 	</definition>
 	<!-- FIN ROL -->
 
-	<!-- REPORTE -->
-	<definition name=".mostrarReporte" extends=".base">
-		<put name="title" value="SIIFs" />
-		<put name="body" value="/jsp/mostrarReporte.jsp" />
-	</definition>
-	<!-- FIN REPORTE -->
-
 	<!-- CONSULTAS FISCALIZACION -->
 	<definition name=".consultaFiscalizacion" extends=".base">
 		<put name="title" value="SIIFs" />
@@ -270,6 +263,18 @@
 		<put name="body" value="/jsp/cargarFiscalizacionConsulta.jsp" />
 	</definition>	
 	<!-- FIN CONSULTAS FISCALIZACION -->
+
+	<!-- REPORTE -->
+	<definition name=".mostrarReporte" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarReporte.jsp" />
+	</definition>
+
+	<definition name=".reporteVolumenFiscalizadoProductorFecha" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenFiscalizadoProductorFecha.jsp" />
+	</definition>		
+	<!-- FIN REPORTE -->
 
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIFs" />
