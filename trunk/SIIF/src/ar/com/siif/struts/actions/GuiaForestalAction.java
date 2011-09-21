@@ -295,7 +295,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestal> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudas(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);

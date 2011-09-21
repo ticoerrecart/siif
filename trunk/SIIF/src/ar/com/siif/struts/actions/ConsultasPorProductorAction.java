@@ -53,7 +53,12 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
 				}
 				else{
-					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
+					if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)){
+						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
+					}
+					else{
+						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE);
+					}
 				}
 			}	
 
@@ -167,10 +172,36 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudas(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestalesVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarGuiasForestalesConDeudasValeTransporte(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoRecuperarGuiasForestalesConDeudasValeTransporte";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
+					.getBean("consultasPorProductorFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
+					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
+
+			request.setAttribute("guiasForestales", guiasForestalesVigentes);
+			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_VALE_TRANSPORTE);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

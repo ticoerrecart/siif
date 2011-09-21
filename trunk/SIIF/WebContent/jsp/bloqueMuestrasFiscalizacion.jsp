@@ -1,6 +1,5 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="/WEB-INF/calendario.tld" prefix="cal"%>
 
 <%Integer cant = Integer.parseInt(request.getParameter("cantMuestras"));
   Integer cantT = Integer.parseInt(request.getParameter("cantTotal"));
