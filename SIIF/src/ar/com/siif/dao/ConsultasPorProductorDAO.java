@@ -65,7 +65,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		return lista;
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudas(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
 		
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class)
 							.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);

@@ -15,14 +15,14 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import org.jfree.chart.plot.PlotOrientation;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.utils.Fecha;
+
 public class ReportesDAO extends HibernateDaoSupport {
 
 	@SuppressWarnings("deprecation")
 	public byte[] pruebaJasper(String path){
 		
-		//ByteArrayOutputStream baos = null;
 		byte[] bytes = null;
-		
 		try{
 			InputStream input = new FileInputStream(path + File.separatorChar + "fiscalizacion.jasper");
 			String fileImagen = path + File.separatorChar + "logo.GIF";
@@ -48,11 +48,9 @@ public class ReportesDAO extends HibernateDaoSupport {
 	}	
 	
 	@SuppressWarnings("deprecation")
-	public byte[] generarReporteGuiaForestal(int idGuiaForestal,String path){
+	public byte[] generarReporteGuiaForestal(long idGuiaForestal,String path){
 		
-		//ByteArrayOutputStream baos = null;
 		byte[] bytes = null;
-		
 		try{
 			InputStream input = new FileInputStream(path + File.separatorChar + "guiaForestal.jasper");
 			String fileImagen = path + File.separatorChar + "logo.GIF";
@@ -80,7 +78,6 @@ public class ReportesDAO extends HibernateDaoSupport {
 	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path){
 		
 		byte[] bytes = null;
-		
 		try{
 			InputStream input = new FileInputStream(path + File.separatorChar + "fiscalizacion.jasper");
 			String fileImagen = path + File.separatorChar + "logo.GIF";
@@ -105,9 +102,7 @@ public class ReportesDAO extends HibernateDaoSupport {
 	public byte[] generarReporteVolumenFiscalizadoPorProducto(String path){
 		
 		byte[] bytes = null;
-		
 		try{
-			
 			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizado.jasper");
 			String fileImagen = path + File.separatorChar + "logo.GIF";
 			
@@ -125,5 +120,31 @@ public class ReportesDAO extends HibernateDaoSupport {
 			e.printStackTrace();
 		}
 		return bytes;
+	}
+	
+	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, String fechaDesde, String fechaHasta, String path){
+		
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoPorProductorYFecha.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProd", idProd);
+			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bytes;		
 	}	
 }

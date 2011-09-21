@@ -28,9 +28,9 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return consultasPorProductorDAO.recuperarGuiasForestalesNoVigentes(idProductor);
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudas(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
 		
-		return consultasPorProductorDAO.recuperarGuiasForestalesConDeudas(idProductor);		
+		return consultasPorProductorDAO.recuperarGuiasForestalesConDeudasAforo(idProductor);		
 	}
 	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor){
