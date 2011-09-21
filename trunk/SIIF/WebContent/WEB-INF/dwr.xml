@@ -55,7 +55,11 @@
 		
 		<create creator="spring" javascript="GuiaForestalFachada">
 			<param name="beanName" value="guiaForestalFachada" />
-		</create>		
+		</create>
+		
+		<create creator="new" javascript="ReportesAction">
+			<param name="class" value="ar.com.siif.struts.actions.ReportesAction"/>
+		</create>				
 	</allow>
 
 </dwr> 

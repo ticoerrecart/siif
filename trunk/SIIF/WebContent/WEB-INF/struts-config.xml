@@ -248,7 +248,8 @@
 			<forward name="exitoCargarConsultaPorProductor" path=".consultaGuiaForestalPorProductor" />
 			<forward name="exitoRecuperarGuiasForestalesConsultaPorProductor" path="/jsp/bloqueMostrarGuiasForestalesConsultaPorProductor.jsp" />
 			<forward name="exitoCargarGuiaForestal" path=".cargarGuiaForestalConsultaPorProductor" />
-			<forward name="exitoRecuperarGuiasForestalesConDeudasAforo" path="/jsp/bloqueMostrarGuiasForestalesConDeudaAforo.jsp" />						
+			<forward name="exitoRecuperarGuiasForestalesConDeudasAforo" path="/jsp/bloqueMostrarGuiasForestalesConDeudaAforo.jsp" />
+			<forward name="exitoRecuperarGuiasForestalesConDeudasValeTransporte" path="/jsp/bloqueMostrarGuiasForestalesConDeudasValeTransporte.jsp" />						
 		</action>
 		<!-- FIN CONSULTAS GUIA FORESTAL(POR PRODUCTOR) -->
 
@@ -265,8 +266,9 @@
 		<!-- REPORTES  -->			
 		<action path="/reporte" type="ar.com.siif.struts.actions.ReportesAction"
 			parameter="metodo">
-			<forward name="exitoMostrarReporte" path=".mostrarReporte" />			
-		</action>		
+			<forward name="exitoMostrarReporte" path=".mostrarReporte" />
+			<forward name="exitoCargarReporteVolumenFiscalizadoPorProductorYFecha" path=".reporteVolumenFiscalizadoProductorFecha" />			
+		</action>			
 		<!-- FIN REPORTES  -->
 
 	</action-mappings>
