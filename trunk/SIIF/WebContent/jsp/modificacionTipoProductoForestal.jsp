@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -57,7 +58,7 @@ function submitir(){
 <table border="0" class="cuadrado" align="center" width="60%"
 	cellpadding="2">
 	<tr>
-		<td class="azulAjustado">Modificación Tipo de Producto Forestal</td>
+		<td class="azulAjustado"><bean:message key='SIIF.titulo.ModificacionTipoProducto'/></td>
 	</tr>
 	<tr>
 		<td height="20"></td>
@@ -67,7 +68,7 @@ function submitir(){
 		<table id="idTipoProducto" border="0" class="cuadrado" align="center"
 			width="60%" cellpadding="2">
 			<tr>
-				<td class="azulAjustado">Tipo de Producto Forestal</td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.TipoProducto'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 
@@ -75,8 +76,11 @@ function submitir(){
 
 				<tr id="tr<c:out value='${i.count}'></c:out>">
 					<td class="botonerab"><c:out value="${tipoProducto.nombre}"></c:out></td>
-					<td><a
-						href="javascript:mostrarDatos(<c:out value='${tipoProducto.id}'></c:out>,<c:out value='${i.count}'></c:out>);">Editar</a></td>
+					<td>
+						<a href="javascript:mostrarDatos(<c:out value='${tipoProducto.id}'></c:out>,<c:out value='${i.count}'></c:out>);">
+							<bean:message key='SIIF.label.Editar'/>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

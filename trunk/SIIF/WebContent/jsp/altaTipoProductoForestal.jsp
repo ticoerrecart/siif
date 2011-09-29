@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -30,14 +31,15 @@ function submitir(){
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
-			<td colspan="2" class="azulAjustado">Alta Tipo de Producto
-			Forestal</td>
+			<td colspan="2" class="azulAjustado">
+				<bean:message key='SIIF.titulo.AltaTipoProducto'/>
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Tipo de Producto Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td align="left"><input name="productoForestal.nombre"
 				class="botonerab" type="text" size="30"></td>
 		</tr>

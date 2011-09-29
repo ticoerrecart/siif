@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -26,7 +27,7 @@
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td width="45%" class="botoneralNegritaRight">Tipo de Entidad</td>
+			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 			<td align="left"><c:choose>
 				<c:when test="${metodo=='altaEntidad'}">
 					<html:select property="tipoEntidad" styleClass="botonerab"
@@ -46,12 +47,12 @@
 			</c:choose></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Nombre</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Nombre'/></td>
 			<td align="left"><html:text property="entidad.nombre"
 				styleClass="botonerab" value="${entidad.nombre}" /></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Localidad</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td align="left"><html:select styleClass="botonerab"
 				property="idLocalidad" value="${entidad.localidad.id}">
 				<c:forEach items="${localidades}" var="localidad">
@@ -63,22 +64,22 @@
 			</html:select></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Dirección</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Direccion'/></td>
 			<td align="left"><html:text property="entidad.direccion"
 				styleClass="botonerab" value="${entidad.direccion}" /></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Teléfono</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Telefono'/></td>
 			<td align="left"><html:text property="entidad.telefono"
 				styleClass="botonerab" value="${entidad.telefono}" /></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">E-Mail</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.EMail'/></td>
 			<td align="left"><html:text property="entidad.email"
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Confirmación de E-Mail</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ConfirmacionEMail'/></td>
 			<td align="left"><html:text property="confirmacionEmail"
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>

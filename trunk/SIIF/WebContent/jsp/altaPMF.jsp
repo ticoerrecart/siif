@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarLetras.js'/>"></script>
@@ -23,13 +24,15 @@
 	
 	<table border="0" class="cuadrado" align="center" width="50%" cellpadding="2">
 		<tr>
-			<td colspan="3" class="azulAjustado">Alta de Plan de Manejo Forestal</td>
+			<td colspan="3" class="azulAjustado">
+				<bean:message key='SIIF.titulo.AltaPMF'/>
+			</td>
 		</tr>
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>		
 		<tr>
-			<td class="botoneralNegritaRight">Productor Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="2%"></td> 
 			<td align="left">	
 				<html:select styleClass="botonerab" property="idProductorForestal" styleId="idProductorForestal" onchange="actualizarComboPMF()">
@@ -43,28 +46,28 @@
 			</td>
 		</tr>
 		<tr>	
-			<td class="botoneralNegritaRight">Plan de Manejo Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 			<td width="2%"></td>
 			<td align="left"> 
 				<html:select styleClass="botonerab" property="idPMF" styleId="idPMF" onchange="actualizarComboTranzon()" />
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Tranzon</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Tranzon'/></td>
 			<td width="2%"></td>
 			<td align="left"> 
 				<html:select styleClass="botonerab" property="idTranzon" styleId="idTranzon"  onchange="actualizarComboMarcacion()" />
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Marcacion</td> 
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td> 
 			<td width="2%"></td>
 			<td align="left">	
 				<html:select styleClass="botonerab" property="idMarcacion" styleId="idMarcacion" onchange="actualizarComboRodal()" />
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Rodal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Rodal'/></td>
 			<td width="2%"></td>
 			<td align="left"> 
 				<html:select styleClass="botonerab" property="idRodal" styleId="idRodal" onchange="cambioComboRodal()" />
@@ -80,13 +83,13 @@
 	<br>
 	<table id="altaDeRodal" style="display: none" border="0" class="cuadrado" align="center" width="50%"  cellpadding="2">
 		<tr>
-			<td colspan="3" class="azulAjustado">Alta de Rodal</td>
+			<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.AltaRodal'/></td>
 		</tr>
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>		
 		<tr>
-			<td width="47%" class="botoneralNegritaRight" >Nombre</td>
+			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Nombre'/></td>
 			<td width="2%"></td>
 			<td align="left"><input id="nombreRodal" type="text" class="botonerab" ></td>
 		</tr>
@@ -105,13 +108,13 @@
 	
 	<table id="altaDeMarcacion" style="display: none" border="0" class="cuadrado" align="center" width="50%"  cellpadding="2">
 		<tr>
-			<td colspan="3" class="azulAjustado">Alta de Marcacion</td>
+			<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.AltaMarcacion'/></td>
 		</tr>
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>		
 		<tr>
-			<td width="47%" class="botoneralNegritaRight" >Disposicion</td>
+			<td width="47%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Disposicion'/></td>
 			<td width="2%"></td>
 			<td align="left"> <input id="disposicionMarcacion" type="text" class="botonerab" ></td>
 		</tr>
@@ -131,19 +134,19 @@
 	
 	<table id="altaDeTranzon" style="display: none" border="0" class="cuadrado" align="center" width="50%"  cellpadding="2">
 		<tr>
-			<td colspan="3" class="azulAjustado">Alta de Tranzon</td>
+			<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.AltaTranzon'/></td>
 		</tr>
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>		
 		<tr>
-			<td width="47%" class="botoneralNegritaRight" >Numero</td>
+			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Numero'/></td>
 			<td width="2%"></td>
 			<td align="left"> <input id="numeroTranzon" type="text" class="botonerab" ></td>
 		</tr>
 
 		<tr>
-			<td width="47%" class="botoneralNegritaRight">Disposicion</td>
+			<td width="47%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Disposicion'/></td>
 			<td width="2%"></td>
 			<td align="left"> <input id="disposicionTranzon" type="text" class="botonerab" ></td>
 		</tr>
@@ -162,19 +165,19 @@
 
 	<table id="altaDePMF" style="display: none" border="0" class="cuadrado" align="center" width="50%"  cellpadding="2">
 		<tr>
-			<td colspan="3" class="azulAjustado">Alta de PMF</td>
+			<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.AltaPMF'/></td>
 		</tr>
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>		
 		<tr>
-			<td width="47%" class="botoneralNegritaRight" >Expediente</td>
+			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Expediente'/></td>
 			<td width="2%"></td>
 			<td align="left"> <input id="expedientePMF" type="text" class="botonerab" ></td>
 		</tr>
 
 		<tr>
-			<td width="47%" class="botoneralNegritaRight" >Nombre</td>
+			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Nombre'/></td>
 			<td width="2%"></td>
 			<td align="left"> <input id="nombrePMF" type="text" class="botonerab" ></td>
 		</tr>

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -33,8 +34,10 @@ function mostrarGuias(){
 
 	var metodo = $('#paramForward').val();
 	var idProd = $('#selectProductores').val();
+	$('#divCargando').show();
 	if(idProd != "" && idProd != "-1"){
 		$('#divGuias').load('../../guiaForestal.do?metodo=recuperarGuiasForestalesParaBoletaDeposito&forward='+ metodo +'&idProductor='+idProd);
+		$('#divCargando').hide(); 
 		$('#divGuias').hide();
 		$('#divGuias').fadeIn(600);
 	}else{
@@ -118,7 +121,7 @@ function submitir(){
 					</tr>
 					<tr>
 						<td width="38%" class="botoneralNegritaRight">
-							Nro de Guía
+							<bean:message key='SIIF.label.NroDeGuia'/>
 						</td>
 						<td align="right">
 							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
@@ -142,7 +145,7 @@ function submitir(){
 				</tr>
 				
 				<tr>
-					<td class="botoneralNegritaRight">Localidad</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 					<td class="botonerab">
 						<select id="selectLocalidades" class="botonerab" onchange="cargarProductores()">
 							<option value="-1">-Seleccione una Localidad-</option>
@@ -165,33 +168,18 @@ function submitir(){
 				</tr>				
 				
 				<tr>
-					<td class="botoneralNegritaRight">Productor Forestal</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="botonerab">
 						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarGuias()">
 							<option value="">-Seleccione un Productor-</option>
-							<!--<c:forEach items="${productores}" var="productor" varStatus="i">
-
-								<c:choose>
-									<c:when test="${productor.id == idProd}">
-										<option value="<c:out value='${productor.id}'></c:out>" selected="selected">
-											<c:out value="${productor.nombre}"></c:out>
-										</option>
-									</c:when>
-									<c:otherwise>
-										<option value="<c:out value='${productor.id}'></c:out>">
-											<c:out value="${productor.nombre}"></c:out>
-										</option>								
-									</c:otherwise>
-								</c:choose>								
-																
-							</c:forEach>-->
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<tr>     
 					<td height="10"></td>
 				</tr>
 			</table>
+			<div id="divCargando" style="display: none"><img src="<html:rewrite page='/imagenes/cargando.gif'/>"></div>
 			<div id="divGuias" style="display: none"></div>
 		</td>
 	</tr>
