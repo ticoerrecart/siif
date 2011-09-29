@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -46,7 +47,7 @@ function submitir(){
 <table border="0" class="cuadrado" align="center" width="70%"
 	cellpadding="2">
 	<tr>
-		<td class="azulAjustado">Modificación de Aforo</td>
+		<td class="azulAjustado"><bean:message key='SIIF.titulo.ModificacionAforo'/></td>
 	</tr>
 	<tr>
 		<td height="30"></td>
@@ -56,10 +57,10 @@ function submitir(){
 		<table id="idAforo" border="0" class="cuadrado" align="center"
 			width="90%" cellpadding="2">
 			<tr>
-				<td class="azulAjustado" width="25%">Tipo de Productor</td>
-				<td class="azulAjustado" width="28%">Tipo de Producto Forestal</td>
-				<td class="azulAjustado" width="17%">Estado</td>
-				<td class="azulAjustado" width="20%">Valor de Aforo</td>
+				<td class="azulAjustado" width="25%"><bean:message key='SIIF.label.TipoProductor'/></td>
+				<td class="azulAjustado" width="28%"><bean:message key='SIIF.label.TipoProducto'/></td>
+				<td class="azulAjustado" width="17%"><bean:message key='SIIF.label.Estado'/></td>
+				<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.ValorAforo$'/></td>
 				<td class="azulAjustado" width="10%"></td>
 			</tr>
 			<c:forEach items="${aforos}" var="aforo" varStatus="i">
@@ -76,8 +77,11 @@ function submitir(){
 						value="${aforo.tipoProducto.nombre}"></c:out></td>
 					<td class="botonerab"><c:out value="${aforo.estado}"></c:out></td>
 					<td class="botonerab"><c:out value="${aforo.valorAforo}"></c:out></td>
-					<td><a
-						href="javascript:mostrarDatos(<c:out value='${aforo.id}'></c:out>,<c:out value='${i.count}'></c:out>);">Editar</a></td>
+					<td>
+						<a href="javascript:mostrarDatos(<c:out value='${aforo.id}'></c:out>,<c:out value='${i.count}'></c:out>);">
+							<bean:message key='SIIF.label.Editar'/>
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

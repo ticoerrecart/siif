@@ -1,11 +1,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <html>
 <head>
-<link rel="stylesheet" href="<html:rewrite page='/css/main.css'/>"
-	type="text/css">
-<link rel="stylesheet"
-	href="<html:rewrite page='/css/jqueryslidemenu.css'/>" type="text/css">
+<link rel="stylesheet" href="<html:rewrite page='/css/main.css'/>" type="text/css">
+<link rel="stylesheet" href="<html:rewrite page='/css/jqueryslidemenu.css'/>" type="text/css">
 </head>
 
 <body>
@@ -14,13 +14,14 @@
 
 <html:form action="login">
 	<html:hidden property="metodo" value="login" />
-	<table class="cuadrado" border="0" width="40%" align="center" vertical-align="middle">
+	<table class="cuadrado" border="0" width="40%" align="center">
 		<tr>
-			<td colspan="4" height="25" align="center" class="azulAjustado">
-				<CENTER><b> Bienvenido </b></CENTER>
-			</td>
-		</tr>
-
+			<td colspan="4" height="26em" align="center" class="azulAjustado">
+				<CENTER>
+					<b><bean:message key='SIIF.label.Bienvenido'/></b>
+				</CENTER>
+			</td> 
+		</tr>  
 		<tr>
 			<td height="15" colspan="4">&nbsp;</td>
 		</tr>
@@ -30,7 +31,7 @@
 					<img src="<html:rewrite page='/imagenes/personitas.jpg'/>" width="33" height="32" alt="Roles">
 				</div>
 			</td>
-			<td width="25%"><b>Usuario</b></td>
+			<td width="25%"><b><bean:message key='SIIF.label.Usuario'/></b></td>
 			<td align="left">
 				<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value="c"/>
 			</td>
@@ -38,11 +39,11 @@
 		</tr>
 		<tr>
 			<td height="32">
-			<div align="right">
-				<img src="<html:rewrite page='/imagenes/llaves.gif'/>" width="33" height="32" alt="Roles">
-			</div>
+				<div align="right">
+					<img src="<html:rewrite page='/imagenes/llaves.gif'/>" width="33" height="32" alt="Roles">
+				</div>
 			</td>
-			<td><b>Password</b></td>
+			<td><b><bean:message key='SIIF.label.Contrasenia'/></b></td>
 			<td align="left">
 				<html:password property="password"	styleClass="botonerab" size="15" value="c"></html:password>
 			</td>
@@ -56,11 +57,10 @@
 				<html:submit styleId="idAceptar" styleClass="botonerab" value="Ingresar"></html:submit>
 			</td>
 		</tr>
-
 		<tr>
 			<td height="14" colspan="4">&nbsp;</td>
 		</tr>
-	</table>
+	</table> 
 </html:form>
 <script type="text/javascript">
 	//document.getElementById("idUsuario").focus();

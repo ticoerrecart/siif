@@ -1,6 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -34,7 +35,9 @@
 <table border="0" class="cuadrado" align="center" width="80%"
 	cellpadding="2">
 	<tr>
-		<td class="azulAjustado">Modificación de Entidad</td>
+		<td class="azulAjustado">
+			<bean:message key='SIIF.titulo.ModificacionEntidad'/>
+		</td>
 	</tr>
 	<tr>
 		<td height="20"></td>
@@ -44,12 +47,12 @@
 		<table border="0" class="cuadrado" align="center" width="90%"
 			cellpadding="2">
 			<tr>
-				<td class="azulAjustado">Nombre</td>
-				<td class="azulAjustado">Dirección</td>
-				<td class="azulAjustado">Localidad</td>
-				<td class="azulAjustado">Teléfono</td>
-				<td class="azulAjustado">E-Mail</td>
-				<td class="azulAjustado">Tipo de Entidad</td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.Nombre'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.Direccion'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.Localidad'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.Telefono'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.EMail'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.TipoEntidad'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 			<%String clase=""; %>
@@ -63,7 +66,9 @@
 					<td><c:out value="${entidad.email}" /></td>
 					<td><c:out value="${entidad.tipoEntidad}" /></td>
 					<td><!--a href="../../entidad.do?metodo=cargarEntidadAModificar&id=<c:out value='${entidad.id}'/>">Editar</a-->
-					<a href="javascript:mostrarDatos(${entidad.id},${i.count});">Editar</a>
+					<a href="javascript:mostrarDatos(${entidad.id},${i.count});">
+						<bean:message key='SIIF.label.Editar'/>
+					</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -98,42 +99,22 @@ function actualizarProductoresVolverCallback(productores){
 <table border="0" class="cuadrado" align="center" width="70%"
 	cellpadding="2">
 	<tr>
-		<td class="azulAjustado">Modificación de Fiscalización de
-		Productos Forestales</td>
+		<td class="azulAjustado">
+			<bean:message key='SIIF.titulo.ModifFiscalizacion'/>
+		</td>
 	</tr>
 	<tr>
 		<td height="20"></td>
 	</tr>
 	<tr>
 		<td>
-		<!-- <table border="0" class="cuadradoSinBorde" align="center" width="60%"
-			cellpadding="2">
-			<tr>
-				<td class="azulAjustado">Fecha</td>
-				<td class="azulAjustado">Productor Forestal</td>
-				<td class="azulAjustado"></td>
-			</tr>
-			<%String clase=""; %>
-			<c:forEach items="${fiscalizaciones}" var="fiscalizacion">
-				<%clase=(clase.equals("")?"par":""); %>
-				<tr>
-					<td class="botonerab <%=clase%>"><fmt:formatDate
-						value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' /></td>
-					<td class="botonerab <%=clase%>"><c:out
-						value="${fiscalizacion.productorForestal.nombre}"></c:out></td>
-					<td class="<%=clase%>"><a
-						href="../../fiscalizacion.do?metodo=cargarFiscalizacionAModificar&id=<c:out value='${fiscalizacion.id}'></c:out>">Editar</a></td>
-				</tr>
-			</c:forEach>
-		</table>-->
-		
 			<table border="0" class="cuadrado" align="center" width="60%"
 				cellpadding="2">
 				<tr>
 					<td height="10" colspan="3"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight" width="30%">Localidad</td>
+					<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.Localidad'/></td>
 					<td class="botonerab">
 						<select id="selectLocalidades" class="botonerab" onchange="cargarProductores()">
 							<option value="-1">-Seleccione una Localidad-</option>
@@ -159,7 +140,7 @@ function actualizarProductoresVolverCallback(productores){
 				</tr>
 				
 				<tr>
-					<td class="botoneralNegritaRight">Productor Forestal</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="botonerab">
 						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarFiscalizaciones()">
 							<option value="">-Seleccione un Productor-</option>

@@ -1,10 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<!-- <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/js/validarLetras.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/js/validarNum.js'/>"></script> -->
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/dwr/interface/ReportesAction.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
@@ -25,6 +22,11 @@
 </script>
 
 <script type="text/javascript"> 
+
+var type;
+if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
+if (document.all) type="IE"; 
+if (!document.all && document.getElementById) type="MO";
 
 function submitir(){
 
@@ -49,8 +51,12 @@ function validarReporteCallback(valor){
 		var fechaDesde = $("#idFechaDesde").val();
 		var fechaHasta = $("#idFechaHasta").val();
 			
-		var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
-		window.open("../../reporte.do?metodo=generarReporteVolumenFiscalizadoPorProductorYFecha&idProd="+idProd+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,especificaciones);		
+		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+		if(type == "IE"){
+			window.open("./reporte.do?metodo=generarReporteVolumenFiscalizadoPorProductorYFecha&idProd="+idProd+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+		}else{
+			window.open("../../reporte.do?metodo=generarReporteVolumenFiscalizadoPorProductorYFecha&idProd="+idProd+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+		}		
 	}	
 }
 
@@ -71,7 +77,7 @@ function validarReporteCallback(valor){
 					<td height="10" colspan="2"></td>
 				</tr>
 				<tr>
-					<td width="40%" class="botoneralNegritaRight">Productor Forestal</td>
+					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
 						<select id="selectProductores" class="botonerab">
 							<option value="">-Seleccione un Productor-</option>
@@ -87,7 +93,7 @@ function validarReporteCallback(valor){
 					<td height="2" colspan="2"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight">Fecha Desde</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.FechaDesde'/></td>
 					<td align="left">			
 						<input id="idFechaDesde" class="botonerab" type="text" size="23" readonly="readonly">
 						<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 
@@ -97,7 +103,7 @@ function validarReporteCallback(valor){
 					<td height="2" colspan="2"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight">Fecha Hasta</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.FechaHasta'/></td>
 					<td align="left">			
 						<input id="idFechaHasta" class="botonerab" type="text" size="23" readonly="readonly">
 						<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 

@@ -2,21 +2,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadradoSinBorde" align="center" width="60%" cellpadding="2">
 				<tr>
 					<td class="botoneralNegritaLeftGrande">
-						Fiscalizaciones
+						<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>
 					</td>
 				</tr>
 			</table>			
 			<table border="0" class="cuadrado" 
 				align="center" width="60%" cellpadding="2">
 				<tr>
-					<td class="azulAjustado">Fecha</td>
-					<td class="azulAjustado">Productor Forestal</td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="azulAjustado"></td>
 				</tr>
 				<%String clase=""; %>
@@ -32,7 +33,7 @@
 						</td>
 						<td class="botonerab">
 							<a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
-								Seleccionar
+								<bean:message key='SIIF.label.Seleccionar'/>
 							</a>
 						</td>
 					</tr>
@@ -40,6 +41,6 @@
 			</table>
 		</c:when>	
 		<c:otherwise>
-			No existen Fiscalizaciones para esta localidad
+			<bean:message key='SIIF.error.NoExiFis'/>
 		</c:otherwise>
 	</c:choose>	

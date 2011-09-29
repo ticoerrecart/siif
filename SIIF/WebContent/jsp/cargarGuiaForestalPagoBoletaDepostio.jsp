@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import= "ar.com.siif.negocio.Fiscalizacion" %>
-<%@ page import= "ar.com.siif.negocio.GuiaForestal" %> 
+<%@ page import= "ar.com.siif.negocio.GuiaForestal" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -94,7 +95,7 @@ function registrarPagoCallback(valor){
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
-			Registrar Pago Boleta de Deposito
+			<bean:message key='SIIF.titulo.RegPagoBoleta'/>
 		</td>
 	</tr>
 	<tr>
@@ -102,12 +103,12 @@ function registrarPagoCallback(valor){
 	</tr>
 
 	<tr>
-		<td width="12%" class="botoneralNegritaRight">Nro de Guía</td>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroDeGuia'/></td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.nroGuia}" readonly="readonly" class="botonerab" size="40">
 		</td>
 
-		<td width="30%" class="botoneralNegritaRight">Permisionario</td>
+		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 		<td align="left">
 			<input id="nombreProductor" value="${guiaForestal.fiscalizacion.productorForestal.nombre}" 
 				   class="botonerab" type="text" size="40" readonly="readonly">			
@@ -115,26 +116,26 @@ function registrarPagoCallback(valor){
 	</tr>
 
 	<tr>
-		<td width="12%" class="botoneralNegritaRight">Valido Hasta</td>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 		<td width="30%" align="left">
 			<input type="text" value="<fmt:formatDate value='${guiaForestal.fechaVencimiento}' pattern='dd/MM/yyyy' />" 
 				readonly="readonly" class="botonerab">
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 				align="top" width='17' height='21'>
 		</td>
-		<td width="30%" class="botoneralNegritaRight">Período Forestal</td>
+		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
 			<input value="${guiaForestal.fiscalizacion.periodoForestal}" class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 	</tr>
 	<tr>
-		<td width="12%" class="botoneralNegritaRight">Localidad</td>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.fiscalizacion.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
 		</td>
 	
 		<td width="30%" class="botoneralNegritaRight">
-			Distancia establacida para la aplicación del aforo móvil
+			<bean:message key='SIIF.label.DistanciaEstablecida'/>
 		</td>
 		<td align="left">
 			<input value="${guiaForestal.distanciaAforoMovil}" readonly="readonly" class="botonerab" type="text" size="10">km
@@ -151,13 +152,15 @@ function registrarPagoCallback(valor){
 		<td height="10" colspan="4"></td>
 	</tr>
 	<tr>
-		<td width="12%" class="botoneralNegritaRight">Plan Manejo Forestal</td>
+		<td width="12%" class="botoneralNegritaRight">
+			<bean:message key='SIIF.label.PlanManejoForestal'/>
+		</td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
 					class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 		<td width="30%" class="botoneralNegritaRight">
-			Tranzon
+			<bean:message key='SIIF.label.Tranzon'/>
 		</td>
 		<td align="left">
 			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.numero} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
@@ -165,13 +168,13 @@ function registrarPagoCallback(valor){
 		</td>
 	</tr>
 	<tr>
-		<td width="12%" class="botoneralNegritaRight">Marcacion</td>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.disposicion}" 
 					class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 		<td width="30%" class="botoneralNegritaRight">
-			Rodal
+			<bean:message key='SIIF.label.Rodal'/>
 		</td>
 		<td align="left">
 			<input value="${guiaForestal.fiscalizacion.rodal.nombre}" 
@@ -308,19 +311,19 @@ function registrarPagoCallback(valor){
 		<div id="e2" style="DISPLAY: ">
 			<label onclick="javascript:exp('2')"> 
 				<img src="../../imagenes/expand.gif" border="0" /> 
-				<U class="azulOpcion">Plan de Pagos</U><BR>
+				<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/></U><BR>
 			</label>
 		</div>
 		<div id="c2" style="DISPLAY: none">
 			<label onclick="javascript:col('2')"> 
 				<img src="../../imagenes/collapse.gif" border="0" /> 
-				<U class="azulOpcion">Plan de Pagos</U><BR>
+				<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/></U><BR>
 			</label>
 			<br>
 			<div id="idBoletas">
 			<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2"> 
 				<tr>
-					<td colspan="3" class="azulAjustado">Boletas de Deposito</td>
+					<td colspan="3" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
 				</tr>				
 
 				<tr>
@@ -337,7 +340,7 @@ function registrarPagoCallback(valor){
 											<table border="0" class="cuadrado" align="right" width="80%" cellpadding="2">
 												<tr>
 													<td colspan="5" class="grisSubtitulo">
-														Cuota n°<c:out value="${index.index+1}"></c:out>
+														<bean:message key='SIIF.label.Cuota'/><c:out value="${index.index+1}"></c:out>
 													</td>
 												</tr>
 												<tr>
@@ -345,39 +348,49 @@ function registrarPagoCallback(valor){
 												</tr>
 												<tr>
 													<td width="10%" class="botoneralNegritaRight">
-														Número de Cuota
+														<bean:message key='SIIF.label.NumeroCuota'/>
 													</td>
 													<td width="35%" align="left">
 														<input value="${boletaDeposito.numero}" class="botonerab" type="text"
 															   size="20" readonly="readonly">
 													</td>
-													<td width="15%" class="botoneralNegritaRight">Productor</td>
+													<td width="15%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.Productor'/>
+													</td>
 													<td width="40%" align="left" colspan="2">
 														<input value="${boletaDeposito.guiaForestal.fiscalizacion.productorForestal.nombre}"
 															   class="botonerab" type="text" size="40" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<td width="10%" class="botoneralNegritaRight">Concepto</td>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.Concepto'/>
+													</td>
 													<td colspan="4" align="left">
 														<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
 														 	   readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<td width="10%" class="botoneralNegritaRight">Area</td>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.Area'/>
+													</td>
 													<td colspan="4" align="left">
 														<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
 															   readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<td width="10%" class="botoneralNegritaRight">Efectico/Cheque</td>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.EfecticoCheque'/>
+													</td>
 													<td width="35%" align="left">
 														<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
 															   type="text" size="20" readonly="readonly">
 													</td>
-													<td width="15%" class="botoneralNegritaRight">Monto$</td>
+													<td width="15%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.Monto$'/>
+													</td>
 													<td width="40%" align="left" colspan="2">
 														<input value="${boletaDeposito.monto}" class="botonerab" type="text"
 															   size="20" readonly="readonly">
@@ -385,7 +398,7 @@ function registrarPagoCallback(valor){
 												</tr>
 												<tr>
 													<td width="10%" class="botoneralNegritaRight">
-														Fecha Vencimiento
+														<bean:message key='SIIF.label.Fecha_Venc'/>
 													</td>
 													<td width="35%" align="left">
 														<input type="text" readonly="readonly" class="botonerab" size="17"
@@ -394,7 +407,7 @@ function registrarPagoCallback(valor){
 															 align="top" width='17' height='21'>		
 													</td>
 													<td width="15%" class="botoneralNegritaRight">
-														Fecha Pago
+														<bean:message key='SIIF.label.FechaPago'/>
 													</td>
 													<td width="23%" align="left">
 														<input id="idFechaPago<c:out value='${boletaDeposito.id}'></c:out>"
@@ -407,12 +420,12 @@ function registrarPagoCallback(valor){
 														<c:when test="${boletaDeposito.fechaPago ==null}">
 															<td id="idEstadoBoleta<c:out value='${boletaDeposito.id}'></c:out>" 
 																width="17%" class="rojoAdvertenciaLeft">
-																NO PAGADA
+																<bean:message key='SIIF.label.NOPAGADA'/>
 															</td>		
 														</c:when>
 														<c:otherwise>
 															<td width="17%" class="verdeExitoLeft">
-																PAGADA
+																<bean:message key='SIIF.label.PAGADA'/>
 															</td>
 														</c:otherwise>
 													</c:choose>																						
@@ -434,7 +447,7 @@ function registrarPagoCallback(valor){
 								</c:forEach>	
 							</c:when>
 							<c:otherwise>
-								No existen Boletas de Deposito para esta Guía Forestal
+								<bean:message key='SIIF.error.NoExiBoletas'/>
 							</c:otherwise>													
 						</c:choose>									
 					<!-- </td>

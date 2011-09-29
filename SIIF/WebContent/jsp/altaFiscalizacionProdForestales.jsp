@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -245,14 +246,14 @@ function deshabilitarLocalizacion(ids){
 	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				Alta de Fiscalización de Productos Forestales
+				<bean:message key='SIIF.titulo.AltaFiscalizacion'/>
 			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight">Localidad</td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td width="30%">
 				<select id="idLocalidad" class="botonerab" onchange="actualizarComboProductores();">
 					<option value="-1">-Seleccione una Localidad-</option>
@@ -263,7 +264,7 @@ function deshabilitarLocalizacion(ids){
 					</c:forEach>	
 				</select>
 			</td>
-			<td width="20%" class="botoneralNegritaRight">Productor Forestal</td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="30%">
 				<select id="idProductor" class="botonerab" name="idProductorForestal" onchange="actualizarComboPMF();" 
 						disabled="disabled">
@@ -272,23 +273,23 @@ function deshabilitarLocalizacion(ids){
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Fecha</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td>			
 				<input id="datepicker" name="fecha" class="botonerab" type="text" size="23"	readonly="readonly">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 
 			</td>
-			<td class="botoneralNegritaRight">Período Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td>
 				<input name="fiscalizacion.periodoForestal"	class="botonerab" type="text" size="27">
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Cantidades(Unidades)</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td>
 				<input name="fiscalizacion.cantidadUnidades" class="botonerab" type="text" size="27"
 					   onkeypress="javascript:esNumerico(event);">
 			</td>
-			<td class="botoneralNegritaRight">Tipo de Producto</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
 				<select class="botonerab" name="idTipoProductoForestal">
 					<option value="-1">- Seleccione un Producto -</option>
@@ -300,14 +301,14 @@ function deshabilitarLocalizacion(ids){
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight">
-				Cantidades(m³)
+				<bean:message key='SIIF.label.CantMts3'/>
 			</td>
 			<td>
 				<input name="fiscalizacion.cantidadMts" class="botonerab" type="text" size="27"
 					   onkeypress="javascript:esNumericoConDecimal(event);">
 			</td>
 			<td class="botoneralNegritaRight">
-				Tamaño de la Muestra
+				<bean:message key='SIIF.label.TamañoMuestra'/>
 			</td>
 			<td>
 				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" 
@@ -324,14 +325,14 @@ function deshabilitarLocalizacion(ids){
 				<table border="0" class="cuadrado" align="center" width="80%"
 					cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Localización</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 					</tr>
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>				
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Plan de Manejo Forestal
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td>
 							<select id="idPMF" class="botonerab" name="idPlanManejoForestal" disabled="disabled" 
@@ -343,7 +344,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>				
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Tranzon
+							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td>
 							<select id="idTranzon" class="botonerab" name="idTranzon" disabled="disabled" 
@@ -355,7 +356,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Marcacion
+							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td>
 							<select id="idMarcacion" class="botonerab" name="idMarcacion" disabled="disabled" 
@@ -367,7 +368,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Rodal
+							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>
 							<select id="idRodal" class="botonerab" name="idRodal" disabled="disabled">
@@ -388,14 +389,14 @@ function deshabilitarLocalizacion(ids){
 			<td colspan="4" align="left">
 				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Muestras</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Muestras'/></td>
 					</tr>
 					<tr>
 						<td height="20" colspan="3"></td>
 					</tr>
 					<tr>
 						<td width="35%" class="botoneralNegritaRight">
-							Cantidad Muestras
+							<bean:message key='SIIF.label.CantidadMuestras'/>
 						</td>
 						<td>
 							<input id="idCantMuestras" class="botonerab" type="text" 
@@ -416,9 +417,9 @@ function deshabilitarLocalizacion(ids){
 								width="70%" cellpadding="2" cellspacing="0" style="display: none">
 								<tr>
 									<td class="azulAjustado" width="3%"></td>
-									<td class="azulAjustado" width="33%">Largo</td>
-									<td class="azulAjustado" width="32%">Diametro 1</td>
-									<td class="azulAjustado" width="32%">Diametro 2</td>
+									<td class="azulAjustado" width="33%"><bean:message key='SIIF.label.Largo'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro1'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro2'/></td>
 								</tr>
 								<tr>
 									<td colspan="4">

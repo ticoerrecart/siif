@@ -2,6 +2,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <%
    response.setHeader("Cache-Control","no-cache"); 
    response.setHeader("Cache-Control","no-store"); //HTTP 1.1
@@ -16,10 +18,10 @@
 		<table border="0" class="cuadrado" align="center" width="80%"
 			cellpadding="2">
 			<tr>
-				<td class="azulAjustado">Nro de Guía</td>			
-				<td class="azulAjustado">Fecha</td>
-				<td class="azulAjustado">Fecha de Vencimiento</td>
-				<td class="azulAjustado">Monto</td>				
+				<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>			
+				<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.FechaVenc'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.Monto'/></td>				
 				<td class="azulAjustado"></td>
 			</tr>
 			<%String clase="";%>
@@ -53,7 +55,7 @@
 		</table>
 	</c:when>
 	<c:otherwise>
-		No existen Guías Forestales con Deuda para este Productor Forestal
+		<bean:message key='SIIF.error.NoExiGF'/>
 	</c:otherwise>	
 </c:choose>
 <!-- </td> -->

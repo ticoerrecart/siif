@@ -13,11 +13,16 @@ if (!document.all && document.getElementById) type="MO";
 function llamarReporte(){	
 
 	var metodo = document.getElementById("paramForward").value;
-	var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
-	window.open("../../reporte.do?metodo="+metodo,especificaciones);		
+	//var especificaciones = "top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
+	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+	if(type == "IE"){
+		window.open("./reporte.do?metodo="+metodo,"",especificaciones);
+	}else{
+		window.open("../../reporte.do?metodo="+metodo,"",especificaciones);
+	}	 
 }
 
-</script>
+</script> 
 
 <input id="paramForward" type="hidden" value="${paramForward}">
 

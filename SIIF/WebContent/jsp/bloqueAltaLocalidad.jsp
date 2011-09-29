@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -31,7 +32,7 @@
 		<tr>
 			<td colspan="2" class="azulAjustado"><c:choose>
 				<c:when test="${empty metodo}">
-						Alta de Localidad
+						<bean:message key='SIIF.titulo.AltaLocalidad'/>
 					</c:when>
 			</c:choose></td>
 		</tr>
@@ -39,22 +40,25 @@
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td width="40%" class="botoneralNegritaRight">Nombre</td>
-			<td align="left"><html:text styleClass="botonerab"
-				property="localidad.nombre" value="${localidad.nombre}" /></td>
+			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Nombre'/></td>
+			<td align="left">
+				<html:text styleClass="botonerab" property="localidad.nombre" value="${localidad.nombre}" />
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td height="20" colspan="2"><input type="button"
-				class="botonerab" value="Aceptar" id="enviar"
-				onclick="javascript:submitir();"> <c:choose>
-				<c:when test="${empty metodo}">
-					<input type="button" class="botonerab" value="Cancelar"
-						onclick="javascript:parent.location= contextRoot() +  '/jsp.do?page=.index'">
-				</c:when>
-			</c:choose></td>
+			<td height="20" colspan="2">
+				<input type="button" class="botonerab" value="Aceptar" id="enviar"
+						onclick="javascript:submitir();"> 
+				<c:choose>
+					<c:when test="${empty metodo}">
+						<input type="button" class="botonerab" value="Cancelar"
+							onclick="javascript:parent.location= contextRoot() +  '/jsp.do?page=.index'">
+					</c:when>
+				</c:choose>
+			</td>
 		</tr>
 		<tr>
 			<td height="10" colspan="2"></td>

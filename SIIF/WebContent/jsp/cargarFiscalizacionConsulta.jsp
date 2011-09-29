@@ -2,12 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 
 <script type="text/javascript">
 
-function volver(){	
+var type;
+if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
+if (document.all) type="IE"; 
+if (!document.all && document.getElementById) type="MO";
+
+function volver(){
 
 	var metodo = $('#paramForward').val();
 	var productor = $('#paramProductor').val();
@@ -17,9 +23,14 @@ function volver(){
 
 function imprimir(){	
 	
-	var idFiscalizacion = $('#idFiscalizacion').val();	
-	var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
-	window.open("../../reporte.do?metodo=generarReporteFiscalizacion&idFiscalizacion="+idFiscalizacion,especificaciones);		
+	var idFiscalizacion = $('#idFiscalizacion').val();
+	//var especificaciones = "top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
+	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+	if(type == "IE"){
+		window.open("./reporte.do?metodo=generarReporteFiscalizacion&idFiscalizacion="+idFiscalizacion,"",especificaciones);
+	}else{
+		window.open("../../reporte.do?metodo=generarReporteFiscalizacion&idFiscalizacion="+idFiscalizacion,"",especificaciones);
+	}		
 }
 
 </script>
@@ -34,57 +45,57 @@ function imprimir(){
 	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				Fiscalización de Productos Forestales
+				<bean:message key='SIIF.titulo.FiscalizacionProdForest'/>
 			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="22%" class="botoneralNegritaRight">Localidad</td>
+			<td width="22%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td align="left" width="22%">
 				<input class="botonerab" type="text" size="20" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.productorForestal.localidad.nombre}'></c:out>">			
 			</td>
-			<td width="20%" class="botoneralNegritaRight">Productor Forestal</td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="29" readonly="readonly" 
 					   value="<c:out value='${fiscalizacion.productorForestal.nombre}'></c:out>">
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Fecha</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="16" readonly="readonly"
 					   value="<fmt:formatDate value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />">
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 				align="top" width='17' height='21'>		
 			</td>
-			<td class="botoneralNegritaRight">Período Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="29" readonly="readonly" 
 					   value="<c:out value='${fiscalizacion.periodoForestal}'></c:out>">			
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Cantidades(Unidades)</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="20" readonly="readonly" 
 					   value="<c:out value='${fiscalizacion.cantidadUnidades}'></c:out>">
 			</td>
-			<td class="botoneralNegritaRight">Tipo de Producto</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="29" readonly="readonly" 
 					   value="<c:out value='${fiscalizacion.tipoProducto.nombre}'></c:out>">			
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Cantidades(m³)</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantMts3'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="20" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.cantidadMts}'></c:out>">
 			</td>
-			<td class="botoneralNegritaRight">Tamaño de la Muestra</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TamañoMuestra'/></td>
 			<td align="left">
 				<input class="botonerab" type="text" size="29" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.tamanioMuestra}'></c:out>">
@@ -102,14 +113,14 @@ function imprimir(){
 			<td colspan="4" align="left">
 				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Localización</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 					</tr>
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>				
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Plan de Manejo Forestal
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
@@ -119,7 +130,7 @@ function imprimir(){
 					</tr>		
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Tranzon
+							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
@@ -129,7 +140,7 @@ function imprimir(){
 					</tr>	
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Marcacion
+							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
@@ -139,7 +150,7 @@ function imprimir(){
 					</tr>
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Rodal
+							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
@@ -163,7 +174,7 @@ function imprimir(){
 			<td colspan="4" align="left">
 				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Muestras</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Muestras'/></td>
 					</tr>
 					<tr>
 						<td height="20" colspan="3"></td>
@@ -174,9 +185,9 @@ function imprimir(){
 								   width="70%" cellpadding="2" cellspacing="0" style="display: ">
 								<tr>
 									<td class="azulAjustado" width="3%"></td>
-									<td class="azulAjustado" width="33%">Largo</td>
-									<td class="azulAjustado" width="32%">Diametro 1</td>
-									<td class="azulAjustado" width="32%">Diametro 2</td>
+									<td class="azulAjustado" width="33%"><bean:message key='SIIF.label.Largo'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro1'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro2'/></td>
 								</tr>
 								<tr>
 									<td colspan="4">

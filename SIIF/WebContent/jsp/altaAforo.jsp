@@ -4,6 +4,7 @@
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
  
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -29,18 +30,18 @@ function submitir(){
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
-			<td colspan="2" class="azulAjustado">Alta de Aforo</td>
+			<td colspan="2" class="azulAjustado"><bean:message key='SIIF.titulo.AltaAforo'/></td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Valor Aforo $</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo$'/></td>
 			<td align="left"><input name="aforo.valorAforo"
 				class="botonerab" type="text" size="30"></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Tipo de Producto Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td align="left"><html:select styleClass="botonerab"
 				property="idTipoProductoForestal">
 
@@ -53,14 +54,14 @@ function submitir(){
 			</html:select></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Estado</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Estado'/></td>
 			<td align="left"><select class="botonerab" name="aforo.estado">
 				<option value="Seco">Seco</option>
 				<option value="Verde">Verde</option>
 			</select></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Tipo Productor</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProductor'/></td>
 			<td align="left"><select class="botonerab"
 				name="aforo.tipoProductor">
 				<option value="OBR">Obrajero</option>

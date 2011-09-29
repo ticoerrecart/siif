@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import= "ar.com.siif.negocio.Fiscalizacion" %> 
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -244,22 +245,23 @@ function calcularTotales(){
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
-			<td colspan="4" class="azulAjustado">Alta de Guía Forestal
-			Básica</td>
+			<td colspan="4" class="azulAjustado">
+				<bean:message key='SIIF.titulo.AltaGuia'/>
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
 
 		<tr>
-			<td width="12%" class="botoneralNegritaRight">Nro de Guía</td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroDeGuia'/></td>
 			<td width="30%" align="left">
 				<input name="guiaForestal.nroGuia" 
 				class="botonerab" type="text" size="40">
 			</td>
 			<html:hidden styleId="idFiscalizacion" property="idFiscalizacion" value="${fiscalizacion.id}" />
 
-			<td width="30%" class="botoneralNegritaRight">Permisionario</td>
+			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 			<td align="left">
 				<input id="nombreProductor" name="fiscalizacion.productorForestal.nombre" 
 					value="${fiscalizacion.productorForestal.nombre}" class="botonerab"
@@ -268,7 +270,7 @@ function calcularTotales(){
 		</tr>
 
 		<tr>
-			<td width="12%" class="botoneralNegritaRight">Valido Hasta</td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 			<td width="30%" align="left">
 				<!-- <input name="fechaVencimiento" class="botonerab" type="text" size="16" readonly="readonly">
 				<cal:cal propiedad="fechaVencimiento" formato="date11" name="fechaVencimiento" />-->
@@ -276,7 +278,7 @@ function calcularTotales(){
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 					align="top" width='17' height='21'>
 			</td>
-			<td width="30%" class="botoneralNegritaRight">Período Forestal</td>
+			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
 				<input name="guiaForestal.periodoForestal"
 					value="${fiscalizacion.periodoForestal}" class="botonerab"
@@ -287,12 +289,13 @@ function calcularTotales(){
 			<td colspan="2"></td>
 		
 			<td width="30%" class="botoneralNegritaRight">
-				Distancia establacida para la aplicación del aforo móvil
+				<bean:message key='SIIF.label.DistanciaEstablecida'/>
 			</td>
-			<td align="left">
+			<td align="left" class="botoneraNegritaLeft">
 				<input name="guiaForestal.distanciaAforoMovil"
 					class="botonerab" type="text" size="10"
-					onkeypress="javascript:esNumerico(event);">km
+					onkeypress="javascript:esNumerico(event);">
+					<bean:message key='SIIF.label.km'/>
 					
 			</td>				
 		</tr>
@@ -307,13 +310,13 @@ function calcularTotales(){
 			<td height="10" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="12%" class="botoneralNegritaRight">Plan Manejo Forestal</td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 			<td width="30%" align="left">
 				<input value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
 						class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 			<td width="30%" class="botoneralNegritaRight">
-				Tranzon
+				<bean:message key='SIIF.label.Tranzon'/>
 			</td>
 			<td align="left">
 				<input value="${fiscalizacion.rodal.marcacion.tranzon.numero} - ${fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
@@ -321,13 +324,13 @@ function calcularTotales(){
 			</td>
 		</tr>
 		<tr>
-			<td width="12%" class="botoneralNegritaRight">Marcacion</td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
 			<td width="30%" align="left">
 				<input value="${fiscalizacion.rodal.marcacion.disposicion}" 
 						class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 			<td width="30%" class="botoneralNegritaRight">
-				Rodal
+				<bean:message key='SIIF.label.Rodal'/>
 			</td>
 			<td align="left">
 				<input value="${fiscalizacion.rodal.nombre}"
@@ -349,27 +352,33 @@ function calcularTotales(){
 		<tr>
 			<td colspan="4" align="left">
 
-			<div id="e1" style="DISPLAY: "><label
-				onclick="javascript:exp('1')"> <img
-				src="../../imagenes/expand.gif" border="0" /> <U class="azulOpcion">Productos
-			Forestales</U><BR>
-			</label></div>
-			<div id="c1" style="DISPLAY: none"><label
-				onclick="javascript:col('1')"> <img
-				src="../../imagenes/collapse.gif" border="0" /> <U
-				class="azulOpcion">Productos Forestales</U><BR>
+			<div id="e1" style="DISPLAY: ">
+				<label onclick="javascript:exp('1')"> 
+					<img src="../../imagenes/expand.gif" border="0" /> 
+					<U class="azulOpcion">
+						<bean:message key='SIIF.subTitulo.ProductosForestales'/>
+					</U>
+					<BR>
+				</label>
+			</div>
+			<div id="c1" style="DISPLAY: none">
+				<label onclick="javascript:col('1')"> 
+					<img src="../../imagenes/collapse.gif" border="0" /> 
+					<U class="azulOpcion">
+						<bean:message key='SIIF.subTitulo.ProductosForestales'/>
+					</U>
+					<BR>
 			</label>
-
-
+			
 			<table border="0" class="cuadradoSinBorde" align="center"
 				width="100%" cellpadding="2">
 				<tr>
 					<td height="5" colspan="4"></td>
 				</tr>
 				<tr>
-					<td align="left" colspan="4">La presente Guía Forestal Básica
-					certifica la propiedad de la siguiente partida de productos
-					forestales:</td>
+					<td align="left" colspan="4">
+						<bean:message key='SIIF.label.CertificadoGuia'/>
+					</td>
 				</tr>
 				<tr>
 					<td height="5" colspan="4"></td>
@@ -379,12 +388,12 @@ function calcularTotales(){
 					<table border="0" class="cuadrado" align="center" width="90%"
 						cellpadding="2" cellspacing="0">
 						<tr>
-							<td class="azulAjustado">Tipo</td>
-							<td class="azulAjustado">Estado</td>
-							<td class="azulAjustado">Especie</td>
-							<td class="azulAjustado">M³</td>
-							<td class="azulAjustado">Unidad</td>
-							<td class="azulAjustado">Importe</td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.Tipo'/></td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.Estado'/></td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.Especie'/></td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.M3'/></td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.Unidad'/></td>
+							<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 						</tr>
 						<tr>
 							<td>
@@ -426,14 +435,14 @@ function calcularTotales(){
 						</tr>
 						<tr>
 							<td colspan="3">&nbsp;</td>
-							<td colspan="2">Derecho de Inspección y Fiscalización 20%</td>
+							<td colspan="2"><bean:message key='SIIF.label.DerechoInspFisca'/></td>
 							<td><input id="idPorcentaje"
 								name="guiaForestal.inspFiscalizacion" readonly="readonly"
 								class="botonerab" type="text"></td>
 						</tr>
 						<tr>
 							<td colspan="4"></td>
-							<td class="botoneralNegrita">TOTAL</td>
+							<td class="botoneralNegrita"><bean:message key='SIIF.label.TOTAL'/></td>
 							<td><input id="idTotal" readonly="readonly"
 								class="botonerab" type="text"></td>
 						</tr>
@@ -444,18 +453,18 @@ function calcularTotales(){
 					<td height="15" colspan="4"></td>
 				</tr>
 				<tr>
-					<td width="12%" class="botoneralNegritaRight">Valor de Aforo</td>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo'/></td>
 					<td width="55%" align="left">
 						<input id="idValorAforo" name="guiaForestal.valorAforos" 
 							class="botonerab" type="text" size="70" readonly="readonly">
 					</td>
 					<td id="errorAforo" class="rojoAdvertenciaLeft" style="display: none;">
-						No existe Valor de Aforo definido 
+						<bean:message key='SIIF.error.NoExiValorAforo'/> 
 					</td>
 					<td></td>
 				</tr>
 				<tr>
-					<td width="12%" class="botoneralNegritaRight">Observaciones</td>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
 					<td align="left" colspan="3"><textarea
 						name="guiaForestal.observaciones" class="botonerab" cols="130"
 						rows="3"></textarea></td>
@@ -475,18 +484,18 @@ function calcularTotales(){
 			<div id="e2" style="DISPLAY: ">
 				<label onclick="javascript:exp('2')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion">Plan de Pagos</U><BR>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/></U><BR>
 				</label>
 			</div>
 			<div id="c2" style="DISPLAY: none">
 				<label onclick="javascript:col('2')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion">Plan de Pagos</U><BR>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/> </U><BR>
 				</label>
 				<br>
 				<table class="cuadrado" align="center" width="90%" cellpadding="2"> 
 					<tr>
-						<td colspan="4" class="azulAjustado">Boletas de Deposito</td>
+						<td colspan="4" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
 					</tr>				
 	
 					<tr>
@@ -497,18 +506,20 @@ function calcularTotales(){
 						<table border="0" class="cuadrado" align="center" width="80%"
 							cellpadding="2">
 							<tr>
-								<td colspan="4" class="grisSubtitulo">Cuota n°1</td>
+								<td colspan="4" class="grisSubtitulo"><bean:message key='SIIF.label.CuotaNro'/>1</td>
 							</tr>
 							<tr>
 								<td height="5" colspan="4"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Número de
-								Cuota</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.NumeroCuota'/>
+									
+								</td>
 								<td width="40%" align="left"><input
 									name="boletasDeposito[0].numero" class="botonerab" type="text"
 									size="20" onkeypress="javascript:esNumerico(event);"></td>
-								<td width="10%" class="botoneralNegritaRight">Productor</td>
+								<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Productor'/></td>
 								<td width="40%" align="left"><input
 									name="fiscalizacion.productorForestal.nombre"
 									value="${fiscalizacion.productorForestal.nombre}"
@@ -516,31 +527,32 @@ function calcularTotales(){
 								</td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Concepto</td>
+								<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
 								<td colspan="3" align="left"><input
 									name="boletasDeposito[0].concepto" class="botonerab"
 									type="text" size="90"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Area</td>
+								<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
 								<td colspan="3" align="left"><input
 									name="boletasDeposito[0].area" class="botonerab" type="text"
 									size="90"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Efectico/Cheque:</td>
+								<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.EfecticoCheque'/></td>
 								<td width="40%" align="left"><input
 									name="boletasDeposito[0].efectivoCheque" class="botonerab"
 									type="text" size="20"
 									onkeypress="javascript:esAlfaNumerico(event);"></td>
-								<td width="10%" class="botoneralNegritaRight">Monto:</td>
+								<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto$'/></td>
 								<td width="40%" align="left"><input
 									name="boletasDeposito[0].monto" class="botonerab" type="text"
 									size="20" onkeypress="javascript:esNumericoConDecimal(event);"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Fecha
-								Vencimiento</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Fecha_Venc'/>
+								</td>
 								<td colspan="3" align="left">
 									<input id="datepicker0" type="text" readonly="readonly" class="botonerab" 
 											name='boletasDeposito[0].fechaVencimientoTransient'>
@@ -597,20 +609,20 @@ function calcularTotales(){
 			<div id="e3" style="DISPLAY: ">
 				<label onclick="javascript:exp('3')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion">Vales de Transporte</U>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ValesTransporte'/></U>
 					<BR>
 				</label>
 			</div>
 			<div id="c3" style="DISPLAY: none">
 				<label onclick="javascript:col('3')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion">Vales de Transporte</U>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ValesTransporte'/></U>
 					<BR>
 				</label>
 				<br>
 				<table class="cuadrado" align="center" width="90%" cellpadding="2">
 					<tr>
-						<td colspan="4" class="azulAjustado">Vales de Transporte</td>
+						<td colspan="4" class="azulAjustado"><bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
 					</tr>				
 					<tr>
 						<td height="10" colspan="4"></td>
@@ -621,20 +633,22 @@ function calcularTotales(){
 							width="80%" cellpadding="2">
 
 							<tr>
-								<td colspan="4" class="grisSubtitulo">Vale de Transporte
-								n°1</td>
+								<td colspan="4" class="grisSubtitulo">
+									<bean:message key='SIIF.label.ValeTransporteNro'/>1
+								</td>
 							</tr>
 							<tr>
 								<td height="5" colspan="4"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Número de
-								Vale</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.NumeroVale'/>
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].numero" class="botonerab" type="text"
 									size="25" onkeypress="javascript:esNumerico(event);"></td>
 								<td width="10%" class="botoneralNegritaRight">
-									Transportados por
+									<bean:message key='SIIF.label.TransportadosPor'/>
 								</td>
 								<td width="40%" align="left">
 									<input value="${fiscalizacion.productorForestal.nombre}"
@@ -642,32 +656,42 @@ function calcularTotales(){
 								</td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Origen</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Origen'/>
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].origen" class="botonerab" type="text"
 									size="25"></td>
-								<td width="10%" class="botoneralNegritaRight">Destino</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Destino'/>
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].destino" class="botonerab"
 									type="text" size="25"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Vehiculo</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Vehiculo'/>     
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].vehiculo" class="botonerab"
 									type="text" size="25"></td>
-								<td width="10%" class="botoneralNegritaRight">Marca</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Marca'/>
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].marca" class="botonerab" type="text"
 									size="25"></td>
 							</tr>
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">Dominio</td>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Dominio'/>
+								</td>
 								<td width="40%" align="left"><input
 									name="valesTransporte[0].dominio" class="botonerab"
 									type="text" size="7"></td>
 								<td width="10%" class="botoneralNegritaRight">
-									Fecha Vencimiento
+									<bean:message key='SIIF.label.Fecha_Venc'/>
 								</td>
 								<td width="40%" align="left">
 									<input id="datepickerVale0" type="text" readonly="readonly" class="botonerab" 
@@ -693,10 +717,10 @@ function calcularTotales(){
 								<table class="cuadradoSinBorde" align="center" width="80%"
 									cellpadding="2">
 									<tr>
-										<td class="grisSubtitulo">Producto</td>
-										<td class="grisSubtitulo">N° de Piezas</td>
-										<td class="grisSubtitulo">Cantidad m³</td>
-										<td class="grisSubtitulo">Especie</td>
+										<td class="grisSubtitulo"><bean:message key='SIIF.label.Producto'/></td>
+										<td class="grisSubtitulo"><bean:message key='SIIF.label.NroPiezas'/></td>
+										<td class="grisSubtitulo"><bean:message key='SIIF.label.CantMts3'/></td>
+										<td class="grisSubtitulo"><bean:message key='SIIF.label.Especie'/></td>
 									</tr>
 									<tr>
 										<td><input class="botonerab" type="text"
@@ -770,22 +794,16 @@ function calcularTotales(){
 			<td height="10" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="12%" class="botoneralNegritaRight">Localidad</td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td width="30%" align="left"><input
 				name="guiaForestal.localidad" class="botonerab" type="text"
 				size="40"></td>
-			<td width="30%" class="botoneralNegritaRight">Fecha</td>
-			<td align="left">
-				<!-- <input name="fecha" class="botonerab"
-				type="text" size="16" readonly="readonly"> <cal:cal
-				propiedad="fecha" formato="date11" name="fecha" />-->
-				
+			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
+			<td align="left">		
 				<input id="datepickerFecha" type="text" name="fecha" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 					align="top" width='17' height='21'>				
-				
 			</td>
-
 		</tr>
 		<tr>
 			<td height="10" colspan="4"></td>

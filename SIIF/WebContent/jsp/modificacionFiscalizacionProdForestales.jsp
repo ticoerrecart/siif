@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
@@ -182,21 +183,21 @@ function deshabilitarLocalizacion(ids){
 	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				Modificación de	Fiscalización de Productos Forestales
+				<bean:message key='SIIF.titulo.ModifFiscalizacion'/>
 			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Localidad</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td>
 			
 				<input class="botonerab" type="text" size="20" disabled="disabled"
 					   value="<c:out value='${fiscalizacion.productorForestal.localidad.nombre}'></c:out>">			
 			
 			</td>
-			<td class="botoneralNegritaRight">Productor Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td>
 				<html:select styleId="idProductor" property="idProductorForestal" styleClass="botonerab"
 							 value="${fiscalizacion.productorForestal.id}" onchange="actualizarComboPMF();">
@@ -210,25 +211,24 @@ function deshabilitarLocalizacion(ids){
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Fecha</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td>
 				<input name="fecha" class="botonerab" type="text" size="16" readonly="readonly"
 					   value="<fmt:formatDate value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />">
-				<cal:cal propiedad="fecha" formato="date11" name="fecha" />			
 			</td>
-			<td class="botoneralNegritaRight">Período Forestal</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td>
 				<input name="fiscalizacion.periodoForestal" class="botonerab" type="text" size="20"
 					   value="<c:out value='${fiscalizacion.periodoForestal}'></c:out>">			
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Cantidades(Unidades)</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td>
 				<input name="fiscalizacion.cantidadUnidades" class="botonerab" type="text" size="20"
 					   value="<c:out value='${fiscalizacion.cantidadUnidades}'></c:out>"
 					   onkeypress="javascript:esNumerico(event);"></td>
-			<td class="botoneralNegritaRight">Tipo de Producto</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
 				<html:select property="idTipoProductoForestal" styleClass="botonerab"
 					value="${fiscalizacion.tipoProducto.id}">				
@@ -241,13 +241,13 @@ function deshabilitarLocalizacion(ids){
 			</td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight">Cantidades(m³)</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantMts3'/></td>
 			<td>
 				<input name="fiscalizacion.cantidadMts" class="botonerab" type="text" size="20"
 					   value="<c:out value='${fiscalizacion.cantidadMts}'></c:out>" 
 					   onkeypress="javascript:esNumericoConDecimal(event);">
 			</td>
-			<td class="botoneralNegritaRight">Tamaño de la Muestra</td>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TamañoMuestra'/></td>
 			<td>
 				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="20"
 					   value="<c:out value='${fiscalizacion.tamanioMuestra}'></c:out>">
@@ -265,14 +265,14 @@ function deshabilitarLocalizacion(ids){
 			<td colspan="4" align="left">
 				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Localización</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 					</tr>
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>				
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Plan de Manejo Forestal
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td>
 							<html:select styleId="idPMF" property="idPlanManejoForestal" styleClass="botonerab"
@@ -289,7 +289,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>		
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Tranzon
+							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td>
 							<html:select styleId="idTranzon" property="idTranzon" styleClass="botonerab"
@@ -306,7 +306,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Marcacion
+							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td>				
 							<html:select styleId="idMarcacion" property="idMarcacion" styleClass="botonerab"
@@ -323,7 +323,7 @@ function deshabilitarLocalizacion(ids){
 					</tr>
 					<tr>
 						<td width="40%" class="botoneralNegritaRight">
-							Rodal
+							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>		
 							<html:select styleId="idRodal" property="idRodal" styleClass="botonerab"
@@ -353,14 +353,14 @@ function deshabilitarLocalizacion(ids){
 			<td colspan="4" align="left">
 				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
-						<td colspan="3" class="grisSubtitulo">Muestras</td>
+						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Muestras'/></td>
 					</tr>
 					<tr>
 						<td height="20" colspan="3"></td>
 					</tr>
 					<tr>
 						<td width="35%" class="botoneralNegritaRight">
-							Cantidad Muestras
+							<bean:message key='SIIF.label.CantidadMuestras'/>
 						</td>
 						<td>
 							<input id="idCantMuestras" class="botonerab" type="text" onkeypress="javascript:esNumerico(event);">
@@ -379,9 +379,9 @@ function deshabilitarLocalizacion(ids){
 								   width="70%" cellpadding="2" cellspacing="0" style="display: ">
 								<tr>
 									<td class="azulAjustado" width="3%"></td>
-									<td class="azulAjustado" width="33%">Largo</td>
-									<td class="azulAjustado" width="32%">Diametro 1</td>
-									<td class="azulAjustado" width="32%">Diametro 2</td>
+									<td class="azulAjustado" width="33%"><bean:message key='SIIF.label.Largo'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro1'/></td>
+									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro2'/></td>
 								</tr>
 								<tr>
 									<td colspan="4">
@@ -418,7 +418,7 @@ function deshabilitarLocalizacion(ids){
 															<td height="5" colspan="4"></td>
 														</tr>												
 												
-													</c:forEach>
+													</c:forEach> 
 												</table>												
 												<div id="tabla2"></div>		
 												

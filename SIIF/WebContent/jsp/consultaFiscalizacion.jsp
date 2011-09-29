@@ -1,6 +1,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarLetras.js'/>"></script>
@@ -105,7 +106,7 @@ function actualizarProductoresVolverCallback(productores){
 					<td height="10"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight">Localidad</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 					<td class="botonerab">
 						<select id="selectLocalidades" class="botonerab" onchange="cargarProductores()">
 							<option value="-1">-Seleccione una Localidad-</option>
@@ -127,7 +128,7 @@ function actualizarProductoresVolverCallback(productores){
 					</td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight">Productor Forestal</td>
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="botonerab">
 						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarFiscalizaciones()">
 							<option value="-1">-Seleccione un Productor-</option>
