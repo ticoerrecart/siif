@@ -99,16 +99,18 @@ public class ReportesDAO extends HibernateDaoSupport {
 		return bytes;	
 	}	
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProducto(String path){
+	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,String fechaDesde,String fechaHasta){
 		
 		byte[] bytes = null;
 		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizado.jasper");
+			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoPorProductoForestalYFechas.jasper");
 			String fileImagen = path + File.separatorChar + "logo.GIF";
 			
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
 			Map parameters = new HashMap();
 			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));			
 			
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
