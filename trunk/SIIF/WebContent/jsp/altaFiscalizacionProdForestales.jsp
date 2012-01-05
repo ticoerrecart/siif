@@ -106,6 +106,10 @@ function agregarMuestras(){
 					indiceDiv++;				 			
 				}
 		);
+
+		var tamanioMuestra = $("#idTamanioMuestra").val();
+		tamanioMuestra = parseInt(tamanioMuestra) + parseInt(cantMuestras);
+		$("#idTamanioMuestra").val(tamanioMuestra);		
 	}		
 }
 
@@ -126,7 +130,10 @@ function removerMuestras(){
 	if(cantTotales == 0){
 		$("#tablaMuestras").hide();
 	}
-	
+
+	var tamanioMuestra = $("#idTamanioMuestra").val();
+	tamanioMuestra = parseInt(tamanioMuestra) - parseInt(cant);
+	(tamanioMuestra < 0)?$("#idTamanioMuestra").val(0):$("#idTamanioMuestra").val(tamanioMuestra);	
 }
 
 function actualizarComboProductores(){
@@ -311,8 +318,8 @@ function deshabilitarLocalizacion(ids){
 				<bean:message key='SIIF.label.TamañoMuestra'/>
 			</td>
 			<td>
-				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" 
-					   onkeypress="javascript:esNumerico(event);">
+				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
+				 	   id="idTamanioMuestra" disabled="disabled" onkeypress="javascript:esNumerico(event);">
 			</td>
 		</tr>
 		<tr>
