@@ -8,7 +8,7 @@ public interface IReportesFachada {
 	
 	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path);
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProducto(String path);
+	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,String fechaDesde,String fechaHasta);
 	
 	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd,String fechaDesde,String fechaHasta,String path);
 }
