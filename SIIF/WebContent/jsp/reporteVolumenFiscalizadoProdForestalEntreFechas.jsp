@@ -30,12 +30,11 @@ if (!document.all && document.getElementById) type="MO";
 
 function submitir(){
 
-	var idProd = $("#selectProductores").val();
 	var fechaDesde = $("#idFechaDesde").val();
-	var fechaHasta = $("#idFechaHasta").val();	
-
+	var fechaHasta = $("#idFechaHasta").val();
+	
 	//llamar a ReportesAction.validarReporteVolumenFiscalizadoProductoFecha(idProd,fechaDesde,fechaHasta,validarReporteCallback);
-	ReportesAction.validarReporteVolumenFiscalizadoProductoFecha(idProd,fechaDesde,fechaHasta,validarReporteCallback);
+	ReportesAction.validarReporteVolumenFiscalizadoProdForestalEntreFechas(fechaDesde,fechaHasta,validarReporteCallback);
 	
 	//en validarReporteCallback hacer el llamado con window.open() para generar el reporte
 }
@@ -47,25 +46,26 @@ function validarReporteCallback(valor){
 	else{
 		$("#error").html("");
 		
-		var idProd = $("#selectProductores").val();
 		var fechaDesde = $("#idFechaDesde").val();
 		var fechaHasta = $("#idFechaHasta").val();
+		var paramForward = $("#paramForward").val();
 			
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reporte.do?metodo=generarReporteVolumenFiscalizadoPorProductorYFecha&idProd="+idProd+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+			window.open("./reporte.do?metodo="+paramForward+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
 		}else{
-			window.open("../../reporte.do?metodo=generarReporteVolumenFiscalizadoPorProductorYFecha&idProd="+idProd+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+			window.open("../../reporte.do?metodo="+paramForward+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
 		}		
 	}	
 }
 
 </script>
-<input id="paramForward" type="hidden" value="${paramForward}">   
+<input id="paramForward" type="hidden" value="${paramForward}"> 
 <div id="error" class="rojoAdvertencia"></div>
+
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
-		<td class="azulAjustado"><c:out value="${titulo}" /></td>
+		<td class="azulAjustado">Volumen Fiscalizado por Producto Forestal entre Fechas</td>
 	</tr>
 	<tr>
 		<td height="20"></td>
@@ -75,23 +75,7 @@ function validarReporteCallback(valor){
 			<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 				<tr>
 					<td height="10" colspan="2"></td>
-				</tr>
-				<tr>
-					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
-					<td align="left" class="botonerab">
-						<select id="selectProductores" class="botonerab">
-							<option value="">-Seleccione un Productor-</option>
-							<c:forEach items="${productores}" var="productor" varStatus="i">
-								<option value="<c:out value='${productor.id}'></c:out>">
-									<c:out value="${productor.nombre}"></c:out>
-								</option>																
-							</c:forEach>
-						</select>
-					</td>
 				</tr>				
-				<tr>
-					<td height="2" colspan="2"></td>
-				</tr>
 				<tr>
 					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.FechaDesde'/></td>
 					<td align="left">			

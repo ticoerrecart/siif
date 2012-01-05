@@ -5,6 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html"  prefix="html" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
@@ -177,7 +178,7 @@
 		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDePMFs';
 		$('#bloquePMFs').load(url);
 		
-		})
+	})
 	
 	
 	function errorHandler(msg, exc) {
@@ -186,6 +187,11 @@
 	dwr.engine.setErrorHandler(errorHandler);
 
 	
+	function ocultarMostrar(idTabla,divModificacion){	
+
+		toggle(idTabla);
+		$(divModificacion).hide();
+	}
 	
 </script>
 &nbsp;
@@ -199,7 +205,13 @@
 	${error}
 </div>
 
-	
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+		<tr>
+			<td colspan="2" class="azulAjustado">
+				 <bean:message key='SIIF.titulo.ModificacionPMF'/>
+			</td>
+		</tr>
+	</table>		
 	<div id="bloqueRodales" >
 	</div>
 	

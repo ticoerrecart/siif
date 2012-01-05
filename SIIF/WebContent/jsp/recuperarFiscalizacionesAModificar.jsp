@@ -9,7 +9,8 @@
 	src="<html:rewrite page='/js/validarLetras.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
-
+<script type="text/javascript"
+	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
@@ -34,14 +35,24 @@ function mostrarDatos(idTr){
 function mostrarFiscalizaciones(){
 
 	var idProductor = $('#selectProductores').val();
+	$('#divCargando').show();	
+	$('#divFiscalizaciones').html("");
+	
 	if(idProductor != "" && idProductor != "-1"){
 		//Se tiene que cambiar el metodo "recuperarFiscalizacionesAModificar" se le tiene q enviar el idProductor.
 		$('#divFiscalizaciones').load('../../fiscalizacion.do?metodo=recuperarFiscalizacionesAModificar&idProductor='+idProductor);
 		$('#divFiscalizaciones').hide();
 		$('#divFiscalizaciones').fadeIn(600);
+
+		Concurrent.Thread.create(function(){
+		    while ($('#divFiscalizaciones').html() == "") {}
+		    $('#divCargando').hide();
+		});		
+		
 	}else{
 		$('#divFiscalizaciones').hide(600);
 		$('#divFiscalizaciones').html("");
+		$('#divCargando').hide();
 	}	
 }
 
@@ -147,7 +158,7 @@ function actualizarProductoresVolverCallback(productores){
 						</select>
 					</td>
 				</tr>				
-				
+				 
 				<tr>
 					<td height="10" colspan="3"></td>
 				</tr>
@@ -159,6 +170,9 @@ function actualizarProductoresVolverCallback(productores){
 		<td height="20"></td>
 	</tr>
 	<tr>
+		<td id="divCargando" style="display: none">
+			<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+		</td>	
 		<td>
 			<div id="divFiscalizaciones"></div>		
 		</td>

@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
  <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<script type="text/javascript"
+	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <script>
@@ -16,11 +18,18 @@
 		tr=idTr;
 		clase = $('#tr'+tr).attr("class");
 		$('#tr'+tr).attr("class", "seleccionado");
+
+		$('#divCargando').show();	
+		$('#divModificacion').html("");
 		
 		$('#divModificacion').load('../../localidad.do?metodo=cargarLocalidadAModificar&id=' + idLocalidad);
-		
 		$('#divModificacion').hide();
 		$('#divModificacion').fadeIn(600);
+
+		Concurrent.Thread.create(function(){
+		    while ($('#divModificacion').html() == "") {}
+		    $('#divCargando').hide();
+		});
 	}
 </script>
 
@@ -61,8 +70,16 @@
 		<td height="20"></td>
 	</tr>
 	<tr>
+		<td id="divCargando" style="display: none">
+			<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+		</td>
+	</tr>	
+	<tr>
 		<td>
-		<div id="divModificacion"></div>
+			<div id="divModificacion"></div>
 		</td>
 	</tr>
+	<tr>
+		<td height="10"></td>
+	</tr>	
 </table>

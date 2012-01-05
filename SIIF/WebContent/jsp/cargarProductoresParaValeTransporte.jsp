@@ -9,7 +9,8 @@
 	src="<html:rewrite page='/js/validarLetras.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
-
+<script type="text/javascript"
+	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
@@ -34,13 +35,23 @@ function mostrarGuias(){
 
 	var metodo = $('#paramForward').val();
 	var idProd = $('#selectProductores').val();
+	$('#divCargando').show();	
+	$('#divGuias').html("");
+	
 	if(idProd != "" && idProd != "-1"){
 		$('#divGuias').load('../../guiaForestal.do?metodo=recuperarGuiasForestalesParaValeTransporte&forward='+ metodo +'&idProductor='+idProd);
 		$('#divGuias').hide();
 		$('#divGuias').fadeIn(600);
+
+		Concurrent.Thread.create(function(){
+		    while ($('#divGuias').html() == "") {}
+		    $('#divCargando').hide();
+		});
+		
 	}else{
 		$('#divGuias').hide(600);
 		$('#divGuias').html("");
+		$('#divCargando').hide();		
 	}	
 }
 
@@ -177,6 +188,10 @@ function submitir(){
 					<td height="10"></td>
 				</tr>
 			</table>
+			<div id="divCargando" style="display: none">
+				<br>
+				<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+			</div>			
 			<div id="divGuias" style="display: none"></div>
 		</td>
 	</tr>
