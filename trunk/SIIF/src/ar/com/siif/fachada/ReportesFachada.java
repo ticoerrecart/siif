@@ -28,9 +28,9 @@ public class ReportesFachada implements IReportesFachada {
 		return reportesDAO.generarReporteFiscalizacion(idFiscalizacion,path);
 	}	
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProducto(String path){
+	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,String fechaDesde,String fechaHasta){
 		
-		return reportesDAO.generarReporteVolumenFiscalizadoPorProducto(path);
+		return reportesDAO.generarReporteVolumenFiscalizadoPorProductoForestalFecha(path,fechaDesde,fechaHasta);
 	}	
 	
 	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, String fechaDesde, String fechaHasta, String path){
