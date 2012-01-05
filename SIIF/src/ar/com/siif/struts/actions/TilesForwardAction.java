@@ -1,5 +1,7 @@
 package ar.com.siif.struts.actions;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +16,15 @@ public class TilesForwardAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String page = request.getParameter("page");
+		
+		Enumeration<String> enumParamNames = request.getParameterNames();
+		
+		while (enumParamNames.hasMoreElements()) {
+			
+			String paramName = enumParamNames.nextElement();
+			String paramValue = request.getParameter(paramName);
+			request.setAttribute(paramName, paramValue);			
+		}
 		
 		return mapping.findForward(page);
 	}
