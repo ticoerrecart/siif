@@ -214,6 +214,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));
 			//fiscalizacion.setMarcacion(ubicacionFachada.getMarcacion(fiscalizacionForm.getIdMarcacion()));			
 			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
+			fiscalizacion.setTamanioMuestra(fiscalizacionForm.getMuestras().size());
 			
 			int i=0;
 			for (Muestra muestra : fiscalizacionForm.getMuestras()) {							

@@ -16,6 +16,7 @@ import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
 
@@ -123,43 +124,17 @@ public class ReportesAction extends ValidadorAction {
 
 		return null;
 	}	
-	
+		
 	@SuppressWarnings("unchecked")
-	public ActionForward generarReporteVolumenFiscalizadoPorProducto(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		String path = request.getSession().getServletContext().getRealPath("jasper");
-		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
-			IReportesFachada reportesFachada = (IReportesFachada) ctx.getBean("reportesFachada");
-			
-			byte[] bytes = reportesFachada.generarReporteVolumenFiscalizadoPorProducto(path);		
-			
-			// Lo muestro en la salida del response
-			response.setContentType("application/pdf");
-			//response.setContentLength(baos.size());
-			ServletOutputStream out = response.getOutputStream();
-			out.write(bytes, 0, bytes.length);
-			out.flush();
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
-		}
-
-		return null;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ActionForward cargarReporteVolumenFiscalizadoPorProductorYFecha(ActionMapping mapping, ActionForm form,
+	public ActionForward cargarReporteVolumenFiscalizadoEntreFechas(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{	
-		String strForward = "exitoCargarReporteVolumenFiscalizadoPorProductorYFecha";
+		String strForward = "exitoCargarReporteVolumenFiscalizadoProductorEntreFechas";
 
 		try {
-			String paramForward = request.getParameter("forward");
-
+			String paramForward = request.getParameter("paramForward");
+			String paramValidator = request.getParameter("validator");
+			
 			WebApplicationContext ctx = getWebApplicationContext();
 			IFiscalizacionFachada fiscalizacionFachada = 
 											(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");
@@ -168,12 +143,13 @@ public class ReportesAction extends ValidadorAction {
 			
 			request.setAttribute("productores", productores);
 			request.setAttribute("paramForward", paramForward);
-			request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_Y_FECHA);			
+			request.setAttribute("validator", paramValidator);
+			request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
 			
-			/*if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
+			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
 				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
 			}
-			else{
+			/*else{
 				if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)){
 					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
 				}
@@ -195,7 +171,39 @@ public class ReportesAction extends ValidadorAction {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public ActionForward generarReporteVolumenFiscalizadoPorProductorYFecha(ActionMapping mapping, ActionForm form,
+	public ActionForward generarReporteVolumenFiscalizadoPorProductoForestalEntreFecha(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Usuario u = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IReportesFachada reportesFachada = (IReportesFachada) ctx.getBean("reportesFachada");
+			
+			String fechaDesde = request.getParameter("fechaDesde");
+			String fechaHasta = request.getParameter("fechaHasta");			
+			
+			byte[] bytes = reportesFachada.generarReporteVolumenFiscalizadoPorProductoForestalFecha(path,fechaDesde,fechaHasta);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteVolumenFiscalizadoPorProductorEntreFechas(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		String path = request.getSession().getServletContext().getRealPath("jasper");
@@ -221,11 +229,18 @@ public class ReportesAction extends ValidadorAction {
 		}
 
 		return null;
-	}		
+	}			
 	
-	public String validarReporteVolumenFiscalizadoProductoFecha(String idProd,String fechaDesde,String fechaHasta){
+	public String validarReporteVolumenFiscalizadoPorProductorFecha(String idProd,String fechaDesde,String fechaHasta){
 		StringBuffer pError = new StringBuffer();
 		Validator.requerido(idProd, "Productor", pError);
+		Validator.validarFechaMenorA(fechaDesde, fechaHasta, "Fecha Desde", "Fecha Hasta", pError);
+	
+		return pError.toString();
+	}	
+	
+	public String validarReporteVolumenFiscalizadoProdForestalEntreFechas(String fechaDesde,String fechaHasta){
+		StringBuffer pError = new StringBuffer();
 		Validator.validarFechaMenorA(fechaDesde, fechaHasta, "Fecha Desde", "Fecha Hasta", pError);
 	
 		return pError.toString();
