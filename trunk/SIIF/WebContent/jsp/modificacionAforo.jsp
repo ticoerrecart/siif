@@ -10,6 +10,8 @@
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/jquery-1.3.2.min.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 
 <script type="text/javascript">
 
@@ -22,10 +24,19 @@ function mostrarDatos(idAforo,idTr){
 	}
 	tr=idTr;
 	clase = $('#tr'+tr).attr("class");
-	$('#tr'+tr).attr("class", "seleccionado");	
+	$('#tr'+tr).attr("class", "seleccionado");
+
+	$('#divCargando').show();	
+	$('#divModificacion').html("");
+		
 	$('#divModificacion').load('../../recuperarAforo.do?metodo=recuperarAforo&id='+idAforo);
 	$('#divModificacion').hide();
-	$('#divModificacion').fadeIn(600);		
+	$('#divModificacion').fadeIn(600);
+
+	Concurrent.Thread.create(function(){
+	    while ($('#divModificacion').html() == "") {}
+	    $('#divCargando').hide();
+	});
 }
 
 function submitir(){
@@ -90,11 +101,18 @@ function submitir(){
 	<tr>
 		<td height="30"></td>
 	</tr>
-
+	<tr>
+		<td id="divCargando" style="display: none">
+			<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+		</td>
+	</tr>
 	<tr>
 		<td>
-		<div id="divModificacion"></div>
+			<div id="divModificacion"></div>
 		</td>
+	</tr>
+	<tr>
+		<td height="10"></td>
 	</tr>
 </table>
 <script type="text/javascript">

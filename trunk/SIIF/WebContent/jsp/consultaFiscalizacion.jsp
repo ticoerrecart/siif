@@ -6,7 +6,8 @@
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarLetras.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarNum.js'/>"></script>
-
+<script type="text/javascript"
+	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
@@ -32,13 +33,23 @@ function mostrarFiscalizaciones(){
 
 	var metodo = $('#paramForward').val();
 	var idProd = $('#selectProductores').val();
+	$('#divCargando').show();	
+	$('#divFiscalizaciones').html("");
+	
 	if(idProd != "" && idProd != "-1"){
 		$('#divFiscalizaciones').load('../../consultasFiscalizacion.do?metodo='+ metodo +'&idProductor='+idProd);		
 		$('#divFiscalizaciones').hide();
 		$('#divFiscalizaciones').fadeIn(600);
+
+		Concurrent.Thread.create(function(){
+		    while ($('#divFiscalizaciones').html() == "") {}
+		    $('#divCargando').hide();
+		});	
+		
 	}else{
 		$('#divFiscalizaciones').hide(600);
 		$('#divFiscalizaciones').html("");
+		$('#divCargando').hide();		
 	}	
 }
 
@@ -145,6 +156,9 @@ function actualizarProductoresVolverCallback(productores){
 		<td height="20"></td>
 	</tr>
 	<tr>
+		<td id="divCargando" style="display: none">
+			<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+		</td>	
 		<td>
 			<div id="divFiscalizaciones"></div>		
 		</td>
