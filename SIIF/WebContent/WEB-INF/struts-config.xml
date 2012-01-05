@@ -60,7 +60,8 @@
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
 			<forward name=".altaUsuario" path=".altaUsuario" />
 			<forward name=".recuperarUsuarios" path=".recuperarUsuarios" />
-			
+			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
+						    
 		</action>
 
 		<action path="/menu" type="ar.com.siif.struts.actions.MenuAction"
@@ -267,7 +268,7 @@
 		<action path="/reporte" type="ar.com.siif.struts.actions.ReportesAction"
 			parameter="metodo">
 			<forward name="exitoMostrarReporte" path=".mostrarReporte" />
-			<forward name="exitoCargarReporteVolumenFiscalizadoPorProductorYFecha" path=".reporteVolumenFiscalizadoProductorFecha" />			
+			<forward name="exitoCargarReporteVolumenFiscalizadoProductorEntreFechas" path=".reporteVolumenFiscalizadoProductorEntreFechas" />			
 		</action>			
 		<!-- FIN REPORTES  -->
 
