@@ -125,6 +125,8 @@ public class Constantes {
 	//FIN CONSULTAS FISCALIZACIONES
 		
 	//REPORTES
-		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_Y_FECHA = "Volumen Fiscalizado por Productor Y Fecha";
+		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS = "Volumen Fiscalizado Por Productor entre Fechas";
+		
+		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTO_FORESTAL_ENTRE_FECHAS = "Volumen Fiscalizado Por Producto Forestal entre Fechas";
 	//FIN REPORTES	
 }
