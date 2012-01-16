@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IRolFachada {
@@ -21,4 +22,6 @@ public interface IRolFachada {
 	public void modificacionRol(Rol rol, List<ItemMenu> menues) throws NegocioException;
 
 	public boolean existeRol(Rol rol);
+	
+	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException;
 }

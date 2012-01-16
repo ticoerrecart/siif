@@ -11,6 +11,7 @@ import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.Usuario;
+import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -125,5 +126,10 @@ public class RolFachada implements IRolFachada {
 		}
 
 	}
+	
+	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException{
+		
+		rolDAO.verificarMenu(pNombreMenu,pRol);
+	}	
 
 }
