@@ -14,9 +14,11 @@ import ar.com.siif.fachada.IConsultasFiscalizacionFachada;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.utils.Constantes;
 
 public class ConsultasFiscalizacionAction extends ValidadorAction {
@@ -27,11 +29,26 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarLocalidadesConsultaFiscalizacion";
 
 		try {
-			String paramForward = request.getParameter("forward");
+			String paramForward = request.getParameter("forward");	
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			
+			if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
+				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());
+				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_CON_GUIA_FORESTAL);
+			}
+			else{
+				if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL)){
+					rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());
+					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL);
+				}
+			}	
+			
 			String paramLoc = request.getParameter("idLoc");
 			String paramProd = request.getParameter("idProd");
 
-			WebApplicationContext ctx = getWebApplicationContext();
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");			
 				
 			List<Localidad> localidades = localidadFachada.getLocalidades();			
@@ -41,21 +58,9 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("idLoc", paramLoc);
 			request.setAttribute("idProd", paramProd);
 
-			if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
-				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_CON_GUIA_FORESTAL);
-			}
-			else{
-				if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL)){
-					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL);
-				}
-			/*	else{
-					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
-				}*/
-			}
-
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}	
@@ -118,11 +123,22 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacion";
 
 		try {
-			WebApplicationContext ctx = getWebApplicationContext();
+			String paramForward = request.getParameter("paramForward");			
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			
+			if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
+				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());											
+			}
+			else{
+				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());				
+			}						
+			
 			IFiscalizacionFachada fiscalizacionFachada = 
 								(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");
-
-			String paramForward = request.getParameter("paramForward");
+			
 			long idFiscalizacion = new Long(request.getParameter("idFiscalizacion"));
 			
 			Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(idFiscalizacion);
@@ -132,7 +148,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);

@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Usuario;
@@ -135,7 +136,13 @@ public class ReportesAction extends ValidadorAction {
 			String paramForward = request.getParameter("paramForward");
 			String paramValidator = request.getParameter("validator");
 			
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			
+			rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
+			
 			IFiscalizacionFachada fiscalizacionFachada = 
 											(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");
 
@@ -145,7 +152,7 @@ public class ReportesAction extends ValidadorAction {
 			request.setAttribute("paramForward", paramForward);
 			request.setAttribute("validator", paramValidator);
 			request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
-			
+
 			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
 				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
 			}
@@ -165,7 +172,7 @@ public class ReportesAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}	

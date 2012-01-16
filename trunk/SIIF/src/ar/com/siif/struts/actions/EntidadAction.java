@@ -12,10 +12,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.RecursosNaturales;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.EntidadForm;
 import ar.com.siif.struts.utils.Validator;
@@ -26,14 +28,24 @@ public class EntidadAction extends ValidadorAction {
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarAltaEntidad(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String strForward = "cargarAltaEntidad";
-
-		WebApplicationContext ctx = getWebApplicationContext();
-		ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-		request.setAttribute("localidades", localidadFachada.getLocalidades());
-		request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
-		request.setAttribute("metodo", "altaEntidad");
-		//request.getSession().removeAttribute("entidad");
+		try{
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_ENTIDAD_MENU,usuario.getRol());
+			
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+			request.setAttribute("localidades", localidadFachada.getLocalidades());
+			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
+			request.setAttribute("metodo", "altaEntidad");
+			
+		}catch(Exception e){
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
 		return mapping.findForward(strForward);
 	}
 
@@ -96,11 +108,23 @@ public class EntidadAction extends ValidadorAction {
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarEntidadesAModificar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String strForward = "exitoRecuperarEntidades";
-		WebApplicationContext ctx = getWebApplicationContext();
-		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-		List<Entidad> entidades = entidadFachada.getEntidades();
-		request.setAttribute("entidades", entidades);
+		try{
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			List<Entidad> entidades = entidadFachada.getEntidades();
+			request.setAttribute("entidades", entidades);
+			
+		}catch(Exception e){
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
 		return mapping.findForward(strForward);
 	}
 

@@ -10,8 +10,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.struts.actions.forms.TipoProductoForestalForm;
@@ -55,8 +57,12 @@ public class TipoProductoForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarModificacionTipoProductoForestal";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_TIPO_PROD_FORESTAL_MENU,usuario.getRol());
+			
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
 					.getBean("tipoProductoForestalFachada");
 
@@ -65,7 +71,7 @@ public class TipoProductoForestalAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
