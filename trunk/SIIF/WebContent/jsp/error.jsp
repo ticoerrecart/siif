@@ -3,8 +3,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-<div id="errores" class="errores">
-<table>
+<div id="errores" class="rojoAdvertencia">
+<c:out value="${error}"></c:out>
+<!-- <table>
 	<tr>
 		<td class="negrita">Titulo:</td>
 		<td>${titulo}</td>
@@ -13,7 +14,7 @@
 		<td class="negrita">Mensaje:</td>
 		<td>${mensaje}</td>
 	</tr>
-</table>
+</table> -->
 </div>
 
 

@@ -9,9 +9,15 @@
 </head>
 
 <body>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div id="errores" class="rojoAdvertencia">${error}</div>
-
 <html:form action="login">
 	<html:hidden property="metodo" value="login" />
 	<table class="cuadrado" border="0" width="40%" align="center">
