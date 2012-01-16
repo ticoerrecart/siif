@@ -123,7 +123,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	}
 
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) {
-		this.getHibernateTemplate().save(fiscalizacion);
+		this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
