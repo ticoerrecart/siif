@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
@@ -26,6 +27,8 @@ import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
+import ar.com.siif.negocio.Usuario;
+import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
@@ -41,8 +44,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargaAltaFiscalizacion";
 
 		try {
-
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU,usuario.getRol());			
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -68,7 +75,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -83,8 +90,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarLocalidadesParaFiscalizacionesAModificar";
 
 		try {
-
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());						
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -104,7 +115,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -146,8 +157,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacionAModificar";
 
 		try {
-
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());	
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 			
@@ -183,7 +198,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -196,8 +211,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoModificacionFiscalizacion";
 
 		try {
-
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -245,7 +264,10 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			request.getSession().setAttribute("fiscalizacion", null);
-			
+
+		} catch (AccesoDenegadoException ade) {
+			request.setAttribute("error", ade.getMessage());
+			strForward = "error";			
 		} catch (DataBaseException dbe) {
 			request.setAttribute("errorModificacion", dbe.getMessage());
 			// strForward = "errorLogin";
