@@ -129,4 +129,40 @@ public class Constantes {
 		
 		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTO_FORESTAL_ENTRE_FECHAS = "Volumen Fiscalizado Por Producto Forestal entre Fechas";
 	//FIN REPORTES	
+		
+	//MENU
+		public static final String ALTA_FISCALIZACION_MENU = "Alta de Fiscalización de Productos Forestales";
+		
+		public static final String MODIFICACION_FISCALIZACION_MENU = "Modificación de Fiscalización de Productos Forestales";
+		
+		public static final String ALTA_GUIA_FORESTAL_MENU = "Alta de Guía Forestal Básica";
+		
+		public static final String REGISTRAR_PAGO_BOLETA_MENU = "Registrar Pago Boleta de Deposito";
+		
+		public static final String REEMPLAZAR_BOLETA_MENU = "Reemplazar Boleta de Deposito";
+		
+		public static final String DEVOLUCION_VALE_MENU = "Devolución Vale de Transporte";		
+		
+		public static final String REEMPLAZAR_VALE_MENU = "Reemplazar Vale de Transporte";	
+		
+		public static final String CONSULTA_FISCALIZACIONES_CON_GUIA_MENU = "Fiscalizacion de Productos Forestales con Guia";
+		
+		public static final String CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU = "Fiscalizacion de Productos Forestales sin Guia";
+		
+		public static final String CONSULTA_GUIA_VIGENTE_MENU = "Guías Forestales Vigentes";
+		
+		public static final String CONSULTA_GUIA_NO_VIGENTE_MENU = "Guías Forestales No Vigentes";
+		
+		public static final String CONSULTA_DEUDA_AFORO_MENU = "Deudas de Aforo";
+		
+		public static final String CONSULTA_DEUDA_VALE_MENU = "Deudas Vales de Transporte";
+		
+		public static final String REPORTE_VOL_FISC_PROD_FECHAS_MENU = "Volumen Fiscalizado Por Productor entre Fechas";
+		
+		public static final String MODIFICACION_TIPO_PROD_FORESTAL_MENU = "Modificacion Tipo de Producto Forestal";
+		
+		public static final String ALTA_ENTIDAD_MENU = "Alta de Entidad";
+		
+		public static final String MODIFICACION_ENTIDAD_MENU = "Modificación de Entidad";
+	//FIN MENU
 }
