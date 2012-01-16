@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -90,4 +91,16 @@ public class RolDAO extends HibernateDaoSupport {
 		List<Rol> roles = criteria.list();
 		return (roles.size() > 0);
 	}
+	
+	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException{
+		
+		Rol rol = (Rol)getHibernateTemplate().load(Rol.class, pRol.getId());
+		for (ItemMenu item : rol.getMenues()) {
+			if(item.getItem().equals(pNombreMenu)){
+				return;
+			}
+		}
+		
+		throw new AccesoDenegadoException("El rol "+pRol.getRol()+" no puede ejecutar la acción: "+pNombreMenu); 
+	}	
 }
