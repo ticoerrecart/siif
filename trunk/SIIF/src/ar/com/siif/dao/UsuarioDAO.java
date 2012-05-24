@@ -16,7 +16,7 @@ public class UsuarioDAO extends HibernateDaoSupport {
 	public void altaUsuario(Usuario elUsuario) throws NegocioException {
 
 		if (existeUsuario(elUsuario.getNombreUsuario(), elUsuario.getId())) {
-			throw new NegocioException(Constantes.EXISTE_ENTIDAD);
+			throw new NegocioException(Constantes.EXISTE_USUARIO);
 		}
 		this.getHibernateTemplate().saveOrUpdate(elUsuario);
 		this.getHibernateTemplate().flush();
