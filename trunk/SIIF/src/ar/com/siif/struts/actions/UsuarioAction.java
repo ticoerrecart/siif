@@ -27,17 +27,26 @@ public class UsuarioAction extends ValidadorAction {
 	public ActionForward cargarAltaUsuario(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "cargarAltaUsuario";
-
-		WebApplicationContext ctx = getWebApplicationContext();
-		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-		IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-
-		request.setAttribute("entidades", entidadFachada.getEntidades());
-		request.setAttribute("roles", rolFachada.getRoles());
-
-		request.setAttribute("titulo", Constantes.TITULO_ALTA_USUARIO);
-		request.setAttribute("metodo", "altaUsuario");
-		request.setAttribute("idRolAdministrador", Constantes.ID_ROL_ADMINISTRADOR);
+		try {
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_USUARIO_MENU,usuario.getRol());
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+	
+			request.setAttribute("entidades", entidadFachada.getEntidades());
+			request.setAttribute("roles", rolFachada.getRoles());
+	
+			request.setAttribute("titulo", Constantes.TITULO_ALTA_USUARIO);
+			request.setAttribute("metodo", "altaUsuario");
+			request.setAttribute("idRolAdministrador", Constantes.ID_ROL_ADMINISTRADOR);
+			
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}			
 		return mapping.findForward(strForward);
 	}
 
@@ -108,26 +117,41 @@ public class UsuarioAction extends ValidadorAction {
 	public ActionForward cargarUsuarioAModificar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarUsuarioAModificar";
-		cargarUsuarioAModificar(request);
+		try{
+			cargarUsuarioAModificar(request);
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
 		return mapping.findForward(strForward);
 	}
 
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarUsuariosAModificar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Usuario usuarioLogueado = (Usuario) request.getSession().getAttribute("usuario");
+			
 		String strForward = "exitoRecuperarUsuarios";
-		if (usuarioLogueado != null
-				&& Constantes.ID_ROL_ADMINISTRADOR == usuarioLogueado.getRol().getId().longValue()) {
-			WebApplicationContext ctx = getWebApplicationContext();
-			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
-			List<Usuario> usuarios = usuarioFachada.getUsuarios();
-			request.setAttribute("usuarios", usuarios);
-		} else {
-			cargarUsuarioAModificar(request);
-			request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_USUARIO);
-			strForward = "exitoCargarUsuarioAModificar";
-		}
+		try {
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_USUARIO_MENU,usuario.getRol());		
+						
+			if (usuario != null && Constantes.ID_ROL_ADMINISTRADOR == usuario.getRol().getId().longValue()) {
+				
+				IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
+				List<Usuario> usuarios = usuarioFachada.getUsuarios();
+				request.setAttribute("usuarios", usuarios);
+			} else {
+				cargarUsuarioAModificar(request);
+				request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_USUARIO);
+				strForward = "exitoCargarUsuarioAModificar";
+			}
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}			
 		return mapping.findForward(strForward);
 	}
 
@@ -135,18 +159,23 @@ public class UsuarioAction extends ValidadorAction {
 	public ActionForward modificacionUsuario(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "exitoModificacionUsuario";
-
-		WebApplicationContext ctx = getWebApplicationContext();
-		IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
-		IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-		UsuarioForm usuarioForm = (UsuarioForm) form;
-		usuarioForm.getUsuario().setEntidad(
-				entidadFachada.getEntidad(Long.parseLong(usuarioForm.getIdEntidad())));
-		usuarioForm.getUsuario().setRol(rolFachada.getRol(Long.parseLong(usuarioForm.getIdRol())));
-		usuarioFachada.altaUsuario(usuarioForm.getUsuario());
-
-		request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_USUARIO);
+		try{
+			WebApplicationContext ctx = getWebApplicationContext();
+			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			UsuarioForm usuarioForm = (UsuarioForm) form;
+			usuarioForm.getUsuario().setEntidad(
+					entidadFachada.getEntidad(Long.parseLong(usuarioForm.getIdEntidad())));
+			usuarioForm.getUsuario().setRol(rolFachada.getRol(Long.parseLong(usuarioForm.getIdRol())));
+			usuarioFachada.altaUsuario(usuarioForm.getUsuario());
+	
+			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_USUARIO);
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());
+		} catch (Exception e) {
+			request.setAttribute("error", e.toString());
+		}	
 		return mapping.findForward(strForward);
 	}
 }

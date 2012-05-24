@@ -12,10 +12,13 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IFiscalizacionFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.struts.actions.forms.UbicacionForm;
 import ar.com.siif.struts.utils.Validator;
+import ar.com.siif.utils.Constantes;
 
 public class UbicacionAction extends ValidadorAction {
 
@@ -24,7 +27,12 @@ public class UbicacionAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "error";
 		try {
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_PMF_MENU,usuario.getRol());
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -34,7 +42,7 @@ public class UbicacionAction extends ValidadorAction {
 			strForward = "exitoRecuperarUbicacionParaAlta";
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
@@ -50,8 +58,12 @@ public class UbicacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarUbicacionParaModificacion";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_PMF_MENU,usuario.getRol());
+			
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
 			request.setAttribute("rodales", ubicacionFachada.getRodales());

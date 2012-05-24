@@ -11,9 +11,11 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IAforoFachada;
+import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 
 import ar.com.siif.struts.actions.forms.AforoForm;
@@ -30,8 +32,12 @@ public class AforoAction extends ValidadorAction {
 		String strForward = "exitoCargarAltaAforo";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_AFORO_MENU,usuario.getRol());
+			
 			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 
 			List<TipoProducto> tiposProducto = aforoFachada.recuperarTiposProducto();
@@ -42,7 +48,7 @@ public class AforoAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -80,8 +86,12 @@ public class AforoAction extends ValidadorAction {
 		String strForward = "exitoCargarModificacionAforos";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_AFORO_MENU,usuario.getRol());
+			
 			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 
 			List<Aforo> aforos = aforoFachada.recuperarAforos();
@@ -89,7 +99,7 @@ public class AforoAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -101,8 +111,12 @@ public class AforoAction extends ValidadorAction {
 		String strForward = "exitoRecuperarAforo";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_AFORO_MENU,usuario.getRol());
+			
 			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 
 			String id = request.getParameter("id");
@@ -115,7 +129,7 @@ public class AforoAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);

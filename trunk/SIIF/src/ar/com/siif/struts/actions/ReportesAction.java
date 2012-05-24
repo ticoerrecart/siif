@@ -18,6 +18,7 @@ import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Usuario;
+import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
 
@@ -185,8 +186,9 @@ public class ReportesAction extends ValidadorAction {
 		
 		String path = request.getSession().getServletContext().getRealPath("jasper");
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
 			IReportesFachada reportesFachada = (IReportesFachada) ctx.getBean("reportesFachada");
 			
 			String fechaDesde = request.getParameter("fechaDesde");

@@ -134,7 +134,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
@@ -160,7 +160,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
@@ -186,7 +186,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
@@ -212,7 +212,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);

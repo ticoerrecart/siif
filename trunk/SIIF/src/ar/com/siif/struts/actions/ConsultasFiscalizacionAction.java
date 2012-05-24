@@ -85,7 +85,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
@@ -111,7 +111,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
