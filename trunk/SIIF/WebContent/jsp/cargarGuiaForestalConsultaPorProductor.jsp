@@ -112,7 +112,7 @@ function col(sec) {
 		</td>
 	</tr>
 	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.fiscalizacion.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
 		</td>

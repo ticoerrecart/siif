@@ -182,6 +182,7 @@
 	
 	
 	function errorHandler(msg, exc) {
+		alert(msg);
 		$('#errores').html(msg + " - Detalle: " + dwr.util.toDescriptiveString(exc, 2));
 	}
 	dwr.engine.setErrorHandler(errorHandler);
