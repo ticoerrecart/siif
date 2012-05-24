@@ -420,6 +420,16 @@ public abstract class Validator {
 		}
 		
 		for (Muestra muestra : muestras) {
+			if(muestra != null){
+				if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0 || muestra.getDiametro2() == 0.0)
+				{
+					addErrorXML(pError, "Faltan datos de Largo y/o Diametro en las Muestras");
+					return false;
+				}				
+			}
+		}
+		
+		/*for (Muestra muestra : muestras) {
 			
 			if(muestra != null){
 				if(muestra.getLargo() == 0.0 && muestra.getDiametro1() == 0.0 && muestra.getDiametro2() == 0.0){
@@ -438,7 +448,7 @@ public abstract class Validator {
 		if(cantNulos == muestras.size()){
 			addErrorXML(pError, "Cantidad de Muestras debe ser un numero mayor a 0");
 			return false;			
-		}
+		}*/
 		return true;
 	}
 	
