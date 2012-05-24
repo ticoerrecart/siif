@@ -257,7 +257,7 @@ function deshabilitarLocalizacion(ids){
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TamañoMuestra'/></td>
 			<td>
 				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="20"
-					   id ="idTamanioMuestra" disabled="disabled" 
+					   id ="idTamanioMuestra" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.tamanioMuestra}'></c:out>">
 			</td>
 		</tr>

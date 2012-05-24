@@ -319,7 +319,7 @@ function deshabilitarLocalizacion(ids){
 			</td>
 			<td>
 				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
-				 	   id="idTamanioMuestra" disabled="disabled" onkeypress="javascript:esNumerico(event);">
+				 	   id="idTamanioMuestra" readonly="readonly" onkeypress="javascript:esNumerico(event);">
 			</td>
 		</tr>
 		<tr>

@@ -30,11 +30,13 @@
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
-			<td colspan="2" class="azulAjustado"><c:choose>
-				<c:when test="${empty metodo}">
+			<td colspan="2" class="azulAjustado">
+				<c:choose>
+					<c:when test="${metodo == 'altaLocalidad'}">
 						<bean:message key='SIIF.titulo.AltaLocalidad'/>
 					</c:when>
-			</c:choose></td>
+				</c:choose>
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>

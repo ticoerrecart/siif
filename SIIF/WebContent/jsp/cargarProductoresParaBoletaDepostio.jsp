@@ -59,18 +59,23 @@ function mostrarGuias(){
 
 function cargarProductores(){
 
-	var idLocalidad = $('#selectLocalidades').val();
-	if(idLocalidad != "-1"){
-		$('#selectProductores').attr('disabled','');
-		EntidadFachada.getEntidadesPorLocalidad(idLocalidad,actualizarProductoresCallback );		
-	}else{
-		dwr.util.removeAllOptions("selectProductores");
-		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-		dwr.util.addOptions("selectProductores", data, "id", "nombre");		
-		$('#selectProductores').attr('disabled','disabled');
-	}		
-	$('#divGuias').hide(600);
-	$('#divGuias').html("");
+	try{
+		var idLocalidad = $('#selectLocalidades').val();
+		if(idLocalidad != "-1"){
+			$('#selectProductores').attr('disabled','');
+			EntidadFachada.getEntidadesPorLocalidad(idLocalidad,actualizarProductoresCallback );		
+		}else{
+			dwr.util.removeAllOptions("selectProductores");
+			var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
+			dwr.util.addOptions("selectProductores", data, "id", "nombre");		
+			$('#selectProductores').attr('disabled','disabled');
+		}		
+		$('#divGuias').hide(600);
+		$('#divGuias').html("");
+	}
+	catch(exception){
+		alert("Excepción: " + exception.message + " " + exception.description);  
+	}	
 }
 
 function actualizarProductoresCallback(productores){
