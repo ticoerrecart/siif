@@ -159,10 +159,32 @@ public class Constantes {
 		
 		public static final String REPORTE_VOL_FISC_PROD_FECHAS_MENU = "Volumen Fiscalizado Por Productor entre Fechas";
 		
+		public static final String ALTA_TIPO_PROD_FORESTAL_MENU = "Alta Tipo de Producto Forestal";
+		
 		public static final String MODIFICACION_TIPO_PROD_FORESTAL_MENU = "Modificacion Tipo de Producto Forestal";
 		
 		public static final String ALTA_ENTIDAD_MENU = "Alta de Entidad";
 		
 		public static final String MODIFICACION_ENTIDAD_MENU = "Modificación de Entidad";
+		
+		public static final String ALTA_AFORO_MENU = "Alta de Aforo";	
+		
+		public static final String MODIFICACION_AFORO_MENU = "Modificación de Aforo";
+		
+		public static final String ALTA_PMF_MENU = "Alta Plan de Manejo Forestal";
+		
+		public static final String MODIFICACION_PMF_MENU = "Modificación Plan de Manejo Forestal";
+		
+		public static final String ALTA_LOCALIDAD_MENU = "Alta de Localidad";		
+		
+		public static final String MODIFICACION_LOCALIDAD_MENU = "Modificación de Localidad";
+		
+		public static final String ALTA_ROL_MENU = "Alta de Rol";
+		
+		public static final String MODIFICACION_ROL_MENU = "Modificación de Rol";
+		
+		public static final String ALTA_USUARIO_MENU = "Alta de Usuario";
+		
+		public static final String MODIFICACION_USUARIO_MENU = "Modificación de Usuario";
 	//FIN MENU
 }
