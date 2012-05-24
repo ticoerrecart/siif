@@ -41,6 +41,7 @@
 
 	<global-forwards>
 		<forward name="error" path=".error"></forward>
+		<forward name="bloqueError" path="/jsp/error.jsp"></forward>
 	</global-forwards>
 
 	<action-mappings>
