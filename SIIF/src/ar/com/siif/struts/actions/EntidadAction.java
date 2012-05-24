@@ -131,20 +131,32 @@ public class EntidadAction extends ValidadorAction {
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarEntidadAModificar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		String strForward = "exitoCargarEntidadAModificar";
-		WebApplicationContext ctx = getWebApplicationContext();
-		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+		try{
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+	
+			// recupero la entidad de la B.D.
+			String id = request.getParameter("id");
+			Entidad entidad = entidadFachada.getEntidad(Long.parseLong(id));
+			//request.getSession().setAttribute("entidad", entidad);
+			request.setAttribute("entidad", entidad);
+	
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+			request.setAttribute("localidades", localidadFachada.getLocalidades());
+			//request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_ENTIDAD);
+			request.setAttribute("metodo", "modificacionEntidad");
 
-		// recupero la entidad de la B.D.
-		String id = request.getParameter("id");
-		Entidad entidad = entidadFachada.getEntidad(Long.parseLong(id));
-		//request.getSession().setAttribute("entidad", entidad);
-		request.setAttribute("entidad", entidad);
-
-		ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-		request.setAttribute("localidades", localidadFachada.getLocalidades());
-		//request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_ENTIDAD);
-		request.setAttribute("metodo", "modificacionEntidad");
+		}catch(Exception e){
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}	
 		return mapping.findForward(strForward);
 	}
 

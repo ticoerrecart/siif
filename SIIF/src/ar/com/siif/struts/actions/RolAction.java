@@ -15,6 +15,7 @@ import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.RolForm;
 import ar.com.siif.struts.actions.forms.TipoProductoForestalForm;
@@ -30,9 +31,11 @@ public class RolAction extends ValidadorAction {
 		String strForward = "exitoCargarAltaRol";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_ROL_MENU,usuario.getRol());
 
 			List<ItemMenu> menues = rolFachada.recuperarMenues();
 			Collections.sort(menues);
@@ -43,7 +46,7 @@ public class RolAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -81,18 +84,19 @@ public class RolAction extends ValidadorAction {
 		String strForward = "exitoCargarModificacionRol";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_ROL_MENU,usuario.getRol());
 
 			List<Rol> roles = rolFachada.getRoles();
 			request.setAttribute("roles", roles);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-
+			strForward = "error";
 		}
-
 		return mapping.findForward(strForward);
 	}
 
@@ -102,9 +106,11 @@ public class RolAction extends ValidadorAction {
 		String strForward = "exitoRecuperarRol";
 
 		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_ROL_MENU,usuario.getRol());
 
 			String id = request.getParameter("id");
 
@@ -118,9 +124,8 @@ public class RolAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-
+			strForward = "bloqueError";
 		}
-
 		return mapping.findForward(strForward);
 	}
 

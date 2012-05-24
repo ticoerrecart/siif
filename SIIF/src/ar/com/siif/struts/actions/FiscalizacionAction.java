@@ -144,7 +144,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+			strForward = "bloqueError";
 		}
 
 		return mapping.findForward(strForward);
