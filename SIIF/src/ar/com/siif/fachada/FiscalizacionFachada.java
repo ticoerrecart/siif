@@ -40,6 +40,11 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		return fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
 	}
 
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) {
+
+		return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
+	}	
+	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) {
 
 		return fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion);

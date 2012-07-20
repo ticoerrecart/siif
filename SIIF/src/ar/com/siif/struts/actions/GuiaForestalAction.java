@@ -116,6 +116,23 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
+	public ActionForward modificacionGuiaForestalBasica(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoModificacionGuiaForestalBasica";
+
+		try {	
+			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;			
+			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+			
+		} catch (Exception e) {
+			request.setAttribute("errorModificacion", e.getMessage());
+		}
+
+		return mapping.findForward(strForward);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ActionForward recuperarGuiasForestalesPlanDePagos(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -236,6 +253,104 @@ public class GuiaForestalAction extends ValidadorAction {
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+		
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarLocalidadesParaModificacionGFB(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String strForward = "exitoRecuperarLocalidadesParaModificacionGFB";
+
+			try {
+				Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+				WebApplicationContext ctx = getWebApplicationContext();
+				
+				IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+				rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,usuario.getRol());
+				
+				ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+						.getBean("localidadFachada");			
+				
+				String paramLocalidad = request.getParameter("idLocalidad");
+				String idProductor = request.getParameter("idProductor");
+				
+				//List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizaciones();
+				List<Localidad> localidades = localidadFachada.getLocalidades();
+				
+				//request.setAttribute("fiscalizaciones", fiscalizaciones);
+				request.setAttribute("localidades", localidades);
+				request.setAttribute("idLocalidad", paramLocalidad);
+				request.setAttribute("idProductor", idProductor);
+				
+			} catch (Exception e) {
+				request.setAttribute("error", e.getMessage());
+				strForward = "error";
+			}
+
+			return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarGuiasForestalesParaModificacionGFB(
+												ActionMapping mapping, ActionForm form,
+												HttpServletRequest request, HttpServletResponse response) 
+												throws Exception 
+	{
+		String strForward = "exitoRecuperarGuiasForestalesParaModificacionGFB";
+
+		try {
+			//String paramForward = request.getParameter("forward");
+			WebApplicationContext ctx = getWebApplicationContext();
+			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
+					.getBean("consultasPorProductorFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			List<GuiaForestal> guiasForestales = consultasPorProductorFachada
+					.recuperarGuiasForestales(Long.parseLong(idProductor));
+
+			request.setAttribute("guiasForestales", guiasForestales);
+			//request.setAttribute("paramForward", paramForward);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarModificacionGuiaForestalBasica(
+														ActionMapping mapping, ActionForm form,
+														HttpServletRequest request, HttpServletResponse response) 
+														throws Exception 
+	{
+		String strForward = "exitoCargarModificacionGuiaForestalBasica";
+		
+		try {
+			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,usuario.getRol());
+			
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+					.getBean("guiaForestalFachada");
+
+			String idGuia = request.getParameter("idGuia");
+			
+			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+
+			request.setAttribute("guiaForestal", guiaForestal);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);

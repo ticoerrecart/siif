@@ -36,6 +36,8 @@ public class Constantes {
 		public static final String METODO_CARGAR_GUIA_DEVOLUCION_VALE = "cargarGuiaForestalDevolucionValeTransporte";
 		
 		public static final String NO_EXISTE_GUIA = "Guía Forestal no encontrada";
+		
+		public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
 	// FIN GUIA FORESTAL
 	
 	// ENTIDAD
@@ -136,6 +138,8 @@ public class Constantes {
 		public static final String MODIFICACION_FISCALIZACION_MENU = "Modificación de Fiscalización de Productos Forestales";
 		
 		public static final String ALTA_GUIA_FORESTAL_MENU = "Alta de Guía Forestal Básica";
+		
+		public static final String MODIFICACION_GUIA_FORESTAL_MENU = "Modificación de Guía Forestal Básica";
 		
 		public static final String REGISTRAR_PAGO_BOLETA_MENU = "Registrar Pago Boleta de Deposito";
 		

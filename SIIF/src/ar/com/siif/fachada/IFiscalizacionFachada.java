@@ -17,6 +17,8 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor);
 
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor);	
+	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion);
 
 	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion, 
