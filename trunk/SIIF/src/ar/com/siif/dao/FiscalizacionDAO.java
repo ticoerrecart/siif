@@ -67,6 +67,22 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		return fiscalizaciones;
 	}
 
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) {
+
+		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+		criteria.createAlias("productorForestal", "pf");		
+		
+		criteria.add(Restrictions.conjunction()
+				.add(Restrictions.isNull("guiaForestal"))
+				.add(Restrictions.eq("pf.id", idProductor)));
+		
+		criteria.addOrder(Order.asc("pf.nombre"));
+		criteria.addOrder(Order.asc("fecha"));		
+		
+		List<Fiscalizacion> fiscalizaciones = criteria.list();
+		return fiscalizaciones;	
+	}	
+	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) {
 
 		Fiscalizacion acta = (Fiscalizacion) getSession().get(Fiscalizacion.class, idFiscalizacion);

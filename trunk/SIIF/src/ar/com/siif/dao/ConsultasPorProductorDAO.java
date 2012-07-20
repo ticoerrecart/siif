@@ -28,6 +28,22 @@ import ar.com.siif.negocio.GuiaForestal;
 
 public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 
+	public List<GuiaForestal> recuperarGuiasForestales(long idProductor){
+		
+		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
+
+		criteria.createAlias("fiscalizacion.productorForestal", "productor");
+
+		criteria.addOrder(Order.asc("nroGuia"));
+		
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)));
+
+		List<GuiaForestal> lista = criteria.list();
+
+		return lista;
+		
+	}	
+	
 	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor) {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);

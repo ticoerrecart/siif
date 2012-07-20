@@ -452,14 +452,15 @@ public abstract class Validator {
 		return true;
 	}
 	
-	public static boolean validarBoletasDeposito(List<BoletaDeposito> boletas, StringBuffer pError){
+	public static boolean validarBoletasDeposito(List<BoletaDeposito> boletas, double montoTotal, StringBuffer pError){
 		
 		if(boletas.size() == 0){
 			addErrorXML(pError, "La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
 			return false;
 		}
+		double montoSumaBoletas = 0;
 		for (BoletaDeposito boleta : boletas) {
-			
+			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
 			if(boleta.getNumero() <= 0 || boleta.getConcepto() == null || boleta.getConcepto().equals("")
 					|| boleta.getArea() == null || boleta.getArea().equals("")  
 					|| boleta.getMonto() <= 0.0)
@@ -467,6 +468,10 @@ public abstract class Validator {
 				addErrorXML(pError, "Faltan datos en las Boletas de Deposito");
 				return false;									
 			}
+		}
+		if(montoSumaBoletas != montoTotal){
+			addErrorXML(pError, "La suma de los montos de las Boletas de Deposito debe ser igual al Monto Total");
+			return false;			
 		}
 		return true;
 	}

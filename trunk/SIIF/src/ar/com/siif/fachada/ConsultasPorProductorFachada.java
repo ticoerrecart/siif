@@ -18,6 +18,11 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		consultasPorProductorDAO = consultasDAO;
 	}
 
+	public List<GuiaForestal> recuperarGuiasForestales(long idProductor){
+		
+		return consultasPorProductorDAO.recuperarGuiasForestales(idProductor);
+	}
+	
 	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor) {
 
 		return consultasPorProductorDAO.recuperarGuiasForestalesVigentes(idProductor);

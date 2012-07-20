@@ -8,6 +8,8 @@ public interface IConsultasPorProductorFachada {
 
 	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor);
 	
+	public List<GuiaForestal> recuperarGuiasForestales(long idProductor);
+	
 	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor);
 	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor);
