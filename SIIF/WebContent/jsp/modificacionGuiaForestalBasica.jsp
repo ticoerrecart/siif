@@ -1,7 +1,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import= "ar.com.siif.negocio.Fiscalizacion" %> 
+<%@ page import= "ar.com.siif.negocio.GuiaForestal" %> 
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript"
@@ -41,13 +44,11 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function volver(){	
-	//document.forms[0].elements["metodo"].value = "recuperarLocalidadesParaAltaGFB";
-	//document.forms[0].submit();
-
+	
 	var localidad = $('#paramLocalidad').val();
 	var productor = $('#paramProductor').val();	
 	parent.location = contextRoot() +  
-	'/guiaForestal.do?metodo=recuperarLocalidadesParaAltaGFB&idLocalidad=' + localidad + '&idProductor=' + productor;		
+	'/guiaForestal.do?metodo=recuperarLocalidadesParaModificacionGFB&idLocalidad=' + localidad + '&idProductor=' + productor;		
 }
 
 function submitir(){
@@ -94,8 +95,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 	return stringNuevo;
 	
 }
-
-var indice = 2;										 
+										 
 function agregarCuota(){
 	var nom = $("#nombreProductor").val();
 	
@@ -123,13 +123,48 @@ function agregarCuota(){
 	);	
 }
 
+var indBoleta = 0;
+function agregarBoleta(indiceBoleta){
+	alert(indiceBoleta);
+	alert(indBoleta);
+	indiceBoleta = indiceBoleta + indBoleta;//Le sumo indice para q vaya aumentando pq siempre llamo a agregarBoleta con el mismo indiceBoleta
+	indBoleta++;
+	alert(indBoleta);
+	alert(indiceBoleta);
+
+	var nom = $("#nombreProductor").val();
+	var nombre = "";
+	nombre = reemplazarCaracter(" ","%20",nom,nombre);	
+
+	$('#dummy').load('/SIIF/jsp/bloquePlanPagosModificacionGFB.jsp?nombreProductor='+ nombre +'&indiceBoleta=' + indiceBoleta , 
+			function(){
+
+				var i = "divBoletaDeposito"+indiceBoleta;																
+				document.getElementById(i).innerHTML = document.getElementById("dummy").innerHTML;
+				document.getElementById("dummy").innerHTML = "";
+
+				var indiceDate = "#datepicker"+indiceBoleta;
+				$( indiceDate ).datepicker({ dateFormat: 'dd/mm/yy'});													
+			}								
+	);	
+}
+
+function eliminarBoleta(indiceBoleta){
+
+	if(confirm("¿Está seguro que desea eliminar la Boleta de Deposito?")){
+		var idBoleta = "divBoletaDeposito"+indiceBoleta;
+		document.getElementById(idBoleta).innerHTML = "";
+	}
+
+	/*var html = document.getElementById("idTablaBoletas").innerHTML; 
+	var html2 = document.getElementById("idTrBoletaDeposito0").innerHTML;
+	document.getElementById("idTablaBoletas").innerHTML = html+"<tr>"+html2+"</tr>";*/
+}
+
 function removerCuota(){
 
 	indice--;
 	document.getElementById("dummy").innerHTML = "";	
-	
-	/*var i = "#idTable"+indice;	
-	$(i).remove();*/
 
 	var i = "divPlanDePagos"+indice;
 	document.getElementById(i).innerHTML = "";
@@ -184,7 +219,7 @@ function removerVale(){
 	}																			
 }
 
-function cambiarEstado(){
+/*function cambiarEstado(){
 
 	var estado = $('#idEstado').val();
 	var idFiscalizacion = $('#idFiscalizacion').val();	
@@ -212,7 +247,7 @@ function actualizarImporteCallback(valor){
 		$('#idPorcentaje').val(0);
 		$('#idTotal').val(0);
 	}	
-}
+}*/
 
 function calcularTotales(){
 
@@ -233,20 +268,24 @@ function calcularTotales(){
 
 </script>
 
+<%
+	GuiaForestal guia = (GuiaForestal)request.getAttribute("guiaForestal");
+%>
+
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
-<input id="paramLocalidad" type="hidden" value="${fiscalizacion.productorForestal.localidad.id}">
-<input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
+<input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
+<input id="paramLocalidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.localidad.id}">
 
 <html:form action="guiaForestal" styleId="guiaForestalForm">
-	<html:hidden property="metodo" value="altaGuiaForestalBasica" />
+	<html:hidden property="metodo" value="modificacionGuiaForestalBasica" />
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
-				<bean:message key='SIIF.titulo.AltaGuia'/>
+				<bean:message key='SIIF.titulo.ModificacionGuia'/>
 			</td>
 		</tr>
 		<tr>
@@ -256,15 +295,15 @@ function calcularTotales(){
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroDeGuia'/></td>
 			<td width="30%" align="left">
-				<input name="guiaForestal.nroGuia" 
+				<input name="guiaForestal.nroGuia" value="${guiaForestal.nroGuia}"
 				class="botonerab" type="text" size="40">
 			</td>
-			<html:hidden styleId="idFiscalizacion" property="idFiscalizacion" value="${fiscalizacion.id}" />
+			<html:hidden styleId="idFiscalizacion" property="idFiscalizacion" value="${guiaForestal.fiscalizacion.id}" />
 
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 			<td align="left">
 				<input id="nombreProductor" name="fiscalizacion.productorForestal.nombre" 
-					value="${fiscalizacion.productorForestal.nombre}" class="botonerab"
+					value="${guiaForestal.fiscalizacion.productorForestal.nombre}" class="botonerab"
 					type="text" size="40" readonly="readonly">			
 			</td>
 		</tr>
@@ -272,31 +311,34 @@ function calcularTotales(){
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 			<td width="30%" align="left">
-				<!-- <input name="fechaVencimiento" class="botonerab" type="text" size="16" readonly="readonly">
-				<cal:cal propiedad="fechaVencimiento" formato="date11" name="fechaVencimiento" />-->
-				<input id="datepicker" type="text" name="fechaVencimiento" readonly="readonly" class="botonerab">
+				<input id="datepicker" type="text" name="fechaVencimiento" class="botonerab"
+						value="<fmt:formatDate value='${guiaForestal.fechaVencimiento}' pattern='dd/MM/yyyy'/>">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 					align="top" width='17' height='21'>
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-				<input name="guiaForestal.periodoForestal"
-					value="${fiscalizacion.periodoForestal}" class="botonerab"
-					type="text" size="40" readonly="readonly">
+				<input name="guiaForestal.periodoForestal" value="${guiaForestal.fiscalizacion.periodoForestal}" 
+					class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2"></td>
-		
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
+			<td width="30%" align="left">
+				<input value="${guiaForestal.localidad}" readonly="readonly" 
+					   name="guiaForestal.localidad" class="botonerab" size="40">
+					   
+				<input value="<fmt:formatDate value='${guiaForestal.fecha}' pattern='dd/MM/yyyy'/>" 
+						type="hidden" name="fecha">	
+								   
+			</td>
 			<td width="30%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.DistanciaEstablecida'/>
 			</td>
 			<td align="left" class="botoneraNegritaLeft">
-				<input name="guiaForestal.distanciaAforoMovil"
-					class="botonerab" type="text" size="10"
-					onkeypress="javascript:esNumerico(event);">
+				<input name="guiaForestal.distanciaAforoMovil" value="${guiaForestal.distanciaAforoMovil}"
+					class="botonerab" type="text" size="10"	onkeypress="javascript:esNumerico(event);">
 					<bean:message key='SIIF.label.km'/>
-					
 			</td>				
 		</tr>
 		<tr>
@@ -304,36 +346,35 @@ function calcularTotales(){
 		</tr>
 	</table>
 
-	<table border="0" class="cuadrado" align="center" width="80%"
-		cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 			<td width="30%" align="left">
-				<input value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
+				<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
 						class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 			<td width="30%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.Tranzon'/>
 			</td>
 			<td align="left">
-				<input value="${fiscalizacion.rodal.marcacion.tranzon.numero} - ${fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
+				<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.numero} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
 						class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 		</tr>
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
 			<td width="30%" align="left">
-				<input value="${fiscalizacion.rodal.marcacion.disposicion}" 
+				<input value="${guiaForestal.fiscalizacion.rodal.marcacion.disposicion}" 
 						class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 			<td width="30%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.Rodal'/>
 			</td>
 			<td align="left">
-				<input value="${fiscalizacion.rodal.nombre}"
+				<input value="${guiaForestal.fiscalizacion.rodal.nombre}"
 					   class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 		</tr>		
@@ -398,36 +439,55 @@ function calcularTotales(){
 						<tr>
 							<td>
 								<input class="botonerab" type="text" 
-									value="<c:out value='${fiscalizacion.tipoProducto.nombre}'/>"
+									value="<c:out value='${guiaForestal.fiscalizacion.tipoProducto.nombre}'/>"
 									readonly="readonly">																							
 							</td>
 							<td>
-								<select id="idEstado" class="botonerab" name="guiaForestal.estado" onchange="cambiarEstado();">
+								<input class="botonerab" type="text" name="guiaForestal.estado" 
+									   value="${guiaForestal.estado}" readonly="readonly">							
+							</td>
+							<!-- <td>
+								<select id="idEstado" class="botonerab" "<c:out value='${guiaForestal.estado}'/>" 
+										name="guiaForestal.estado" onchange="cambiarEstado();">
+										<c:choose>
+											<c:when test="${guiaForestal.estado =='Seco'}">
+												<option value="">-Seleccione un Estado-</option>								
+												<option value="Seco" selected="selected">Seco</option>
+												<option value="Verde">Verde</option>											
+											</c:when>
+											<c:when test="${guiaForestal.estado =='Verde'}">
+												<option value="">-Seleccione un Estado-</option>								
+												<option value="Seco">Seco</option>
+												<option value="Verde" selected="selected">Verde</option>											
+											</c:when>									
+											<c:otherwise>
 												<option value="">-Seleccione un Estado-</option>								
 												<option value="Seco">Seco</option>
 												<option value="Verde">Verde</option>
+											</c:otherwise>		
+										</c:choose>
 								</select>								
-							</td>
+							</td>-->
 							<td>
-								<input class="botonerab" type="text" name="guiaForestal.especie">
+								<input class="botonerab" type="text" name="guiaForestal.especie" 
+										value="<c:out value='${guiaForestal.especie}'/>">
 							</td>
 							<td>
 								<input id="idCantidadMts" class="botonerab" type="text"
-									value="<c:out value='${fiscalizacion.cantidadMts}'/>"
+									value="<c:out value='${guiaForestal.fiscalizacion.cantidadMts}'/>"
 									readonly="readonly"
 									onkeypress="javascript:esNumericoConDecimal(event);">
 							</td>
 							<td>
 								<input class="botonerab" type="text"
-									value="<c:out value='${fiscalizacion.cantidadUnidades}'/>"
+									value="<c:out value='${guiaForestal.fiscalizacion.cantidadUnidades}'/>"
 									readonly="readonly"
 									onkeypress="javascript:esNumerico(event);">
 							</td>
 							<td>
 								<input id="idImporte" class="botonerab" type="text"
-									name="guiaForestal.importe"
-									onkeypress="javascript:esNumericoConDecimal(event);"
-									onblur="calcularTotales();">
+									name="guiaForestal.importe" value='<c:out value="${guiaForestal.importe}"></c:out>'
+									onkeypress="javascript:esNumericoConDecimal(event);" readonly="readonly">
 							</td>
 						</tr>
 						<tr>
@@ -436,15 +496,19 @@ function calcularTotales(){
 						<tr>
 							<td colspan="3">&nbsp;</td>
 							<td colspan="2"><bean:message key='SIIF.label.DerechoInspFisca'/></td>
-							<td><input id="idPorcentaje"
-								name="guiaForestal.inspFiscalizacion" readonly="readonly"
-								class="botonerab" type="text"></td>
+							<td>
+								<input id="idPorcentaje" name="guiaForestal.inspFiscalizacion" readonly="readonly"
+									   value='<c:out value="${guiaForestal.inspFiscalizacion}"></c:out>'
+									   class="botonerab" type="text">
+							</td>
 						</tr>
 						<tr>
 							<td colspan="4"></td>
 							<td class="botoneralNegrita"><bean:message key='SIIF.label.TOTAL'/></td>
-							<td><input id="idTotal" readonly="readonly"
-								class="botonerab" type="text"></td>
+							<td>
+								<input id="idTotal" readonly="readonly"	class="botonerab" type="text"
+									   value="<%= guia.getImporte() + guia.getInspFiscalizacion()%>">
+							</td>
 						</tr>
 					</table>
 					</td>
@@ -455,7 +519,7 @@ function calcularTotales(){
 				<tr>
 					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo'/></td>
 					<td width="55%" align="left">
-						<input id="idValorAforo" name="guiaForestal.valorAforos" 
+						<input id="idValorAforo" name="guiaForestal.valorAforos" value='<c:out value="${guiaForestal.valorAforos}"></c:out>'
 							class="botonerab" type="text" size="70" readonly="readonly">
 					</td>
 					<td id="errorAforo" class="rojoAdvertenciaLeft" style="display: none;">
@@ -465,9 +529,11 @@ function calcularTotales(){
 				</tr>
 				<tr>
 					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
-					<td align="left" colspan="3"><textarea
-						name="guiaForestal.observaciones" class="botonerab" cols="130"
-						rows="3"></textarea></td>
+					<td align="left" colspan="3">
+						<textarea name="guiaForestal.observaciones" class="botonerab" cols="130" rows="3">
+							<c:out value="${guiaForestal.observaciones}"></c:out>
+						</textarea>
+					</td>
 				</tr>
 				<tr>
 					<td height="10" colspan="4"></td>
@@ -477,8 +543,7 @@ function calcularTotales(){
 			</td>
 		</tr>
 
-		<!-- PLAN DE PAGO -->
-
+	<!-- PLAN DE PAGO --> 
 		<tr>
 			<td colspan="4" align="left">
 			<div id="e2" style="DISPLAY: ">
@@ -490,115 +555,198 @@ function calcularTotales(){
 			<div id="c2" style="DISPLAY: none">
 				<label onclick="javascript:col('2')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/> </U><BR>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.PlanPagos'/></U><BR>
 				</label>
 				<br>
-				<table class="cuadrado" align="center" width="90%" cellpadding="2"> 
-					<tr>
-						<td colspan="4" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
-					</tr>				
-	
-					<tr>
-						<td height="10" colspan="4"></td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-								<tr>
-									<td colspan="4" class="grisSubtitulo"><bean:message key='SIIF.label.CuotaNro'/>1</td>
-								</tr>
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIF.label.NumeroCuota'/>
-										
-									</td>
-									<td width="40%" align="left"><input
-										name="boletasDeposito[0].numero" class="botonerab" type="text"
-										size="20" onkeypress="javascript:esNumerico(event);"></td>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Productor'/></td>
-									<td width="40%" align="left"><input
-										name="fiscalizacion.productorForestal.nombre"
-										value="${fiscalizacion.productorForestal.nombre}"
-										class="botonerab" type="text" size="40" readonly="readonly">
-									</td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
-									<td colspan="3" align="left"><input
-										name="boletasDeposito[0].concepto" class="botonerab"
-										type="text" size="90"></td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
-									<td colspan="3" align="left"><input
-										name="boletasDeposito[0].area" class="botonerab" type="text"
-										size="90"></td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.EfecticoCheque'/></td>
-									<td width="40%" align="left"><input
-										name="boletasDeposito[0].efectivoCheque" class="botonerab"
-										type="text" size="20"
-										onkeypress="javascript:esAlfaNumerico(event);"></td>
-									<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto$'/></td>
-									<td width="40%" align="left"><input
-										name="boletasDeposito[0].monto" class="botonerab" type="text"
-										size="20" onkeypress="javascript:esNumericoConDecimal(event);"></td>
-								</tr>
-								<tr>
-									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIF.label.Fecha_Venc'/>
-									</td>
-									<td colspan="3" align="left">
-										<input id="datepicker0" type="text" readonly="readonly" class="botonerab" 
-												name='boletasDeposito[0].fechaVencimientoTransient'>
-										<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-											align="top" width='17' height='21'>		
-																					
-										<script>
-											$(function() {
-										
-												$( "#datepicker0" ).datepicker({ dateFormat: 'dd/mm/yy'});
-											});
-										</script>	
-																																
-									</td>
-								</tr>
-								<tr>
-									<td height="5" colspan="4"></td>
-								</tr>
-		
-							</table>								
-		<!--  -->
-		
-							<div id="dummy" style="display: none"></div>
-							<div id="divPlanDePagos2"></div>
+				<div id="idBoletas">
+					<table id="idTablaBoletas" border="0" class="cuadrado" align="center" width="90%" cellpadding="2"> 
+						<tr>
+							<td colspan="3" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
+						</tr>				
+						<tr>
+							<td height="10" colspan="3"></td>
+						</tr>
+						<c:choose>					 
+						<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">
 							
-							<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
-								<tr>
-									<td height="5" colspan="4"></td>
+							<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">
+								<c:choose>
+									<c:when test="${boletaDeposito.fechaPago ==null}">
+										<c:set var="readonly" value=""></c:set>				
+									</c:when>
+									<c:otherwise>
+										<c:set var="readonly" value="readonly='readonly'"></c:set>	
+									</c:otherwise>
+								</c:choose>								
+								<tr id="idTrBoletaDeposito${index.index}">
+									<td colspan="3">
+										<div id="divBoletaDeposito${index.index}">	
+											<table border="0" class="cuadradoSinBorde" align="right" cellpadding="2">									
+												<tr>
+													<td width="90%">													
+														<table border="0" class="cuadrado" align="right" width="100%" cellpadding="2">
+															<tr>
+																<td colspan="5" class="grisSubtitulo">
+																	<bean:message key='SIIF.label.CuotaNro'/><c:out value="${index.index+1}"></c:out>
+																</td>
+															</tr>
+															<tr>
+																<td height="5" colspan="5"></td>
+															</tr>
+															<tr>											
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.NumeroCuota'/>
+																	
+																</td>
+																<td width="40%" align="left">
+																	<input value="${boletaDeposito.numero}" class="botonerab" type="text"
+																		   name="boletasDeposito[${index.index}].numero" size="20"
+																		   <c:out value="${readonly}"></c:out> 
+																		   onkeypress="javascript:esNumerico(event);">											
+																</td>											
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.Productor'/>
+																</td>
+																<td width="40%" align="left" colspan="2">
+																	<input value="${boletaDeposito.guiaForestal.fiscalizacion.productorForestal.nombre}"
+																			readonly="readonly" class="botonerab" type="text" size="40">
+																</td>
+															</tr>
+															<tr>
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.Concepto'/>
+																</td>
+																<td colspan="4" align="left">
+																	<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
+																	 	   name="boletasDeposito[${index.index}].concepto" 
+																		   <c:out value="${readonly}"></c:out>>
+																</td>
+															</tr>
+															<tr>
+																<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
+																<td colspan="4" align="left">
+																		<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
+																			   name="boletasDeposito[${index.index}].area" 
+																			   <c:out value="${readonly}"></c:out>>
+																</td>
+															</tr>
+															<tr>
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.EfecticoCheque'/>
+																</td>
+																<td width="40%" align="left">
+																		<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
+																			   name="boletasDeposito[${index.index}].efectivoCheque" 
+																			   type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);"
+																			   <c:out value="${readonly}"></c:out>>											
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.Monto$'/>
+																</td>
+																<td width="40%" align="left" colspan="2">
+																		<input value="${boletaDeposito.monto}" class="botonerab" type="text"
+																			   name="boletasDeposito[${index.index}].monto" 
+																			   size="20" <c:out value="${readonly}"></c:out>
+																			   onkeypress="javascript:esNumericoConDecimal(event);">					
+																</td>
+															</tr>
+															<tr>
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.Fecha_Venc'/>
+																</td>
+																<td width="40%" align="left">
+																	<input id="datepicker${index.index}" type="text"  
+																		class="botonerab" size="17" readonly="readonly"
+																		value="<fmt:formatDate value='${boletaDeposito.fechaVencimiento}' pattern='dd/MM/yyyy'/>"
+																		name='boletasDeposito[${index.index}].fechaVencimientoTransient'>											
+																	<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+																		align="top" width='17' height='21'>		
+																													
+																	<script>
+																		$(function() {
+																			var indiceDate = "#datepicker"+${index.index};
+																			$(indiceDate).datepicker({ dateFormat: 'dd/mm/yy'});
+																		});
+																	</script>																						
+																</td>
+																<td width="10%" class="botoneralNegritaRight">
+																	<bean:message key='SIIF.label.FechaPago'/>
+																</td>
+																<td width="23%" align="left">
+																	<input id="idFechaPago<c:out value='${boletaDeposito.id}'></c:out>"
+																		   type="text" readonly="readonly" class="botonerab" size="17"
+																		   value="<fmt:formatDate value='${boletaDeposito.fechaPago}' pattern='dd/MM/yyyy' />"
+																		   name='boletasDeposito[${index.index}].fechaPagoTransient'>
+																	<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+																		 align="top" width='17' height='21'>																						
+																</td>										
+																<c:choose>
+																	<c:when test="${boletaDeposito.fechaPago ==null}">
+																		<td width="17%" class="rojoAdvertenciaLeft">
+																			<bean:message key='SIIF.label.NOPAGADA'/>
+																		</td>		
+																	</c:when>
+																	<c:otherwise>
+																		<td width="17%" class="verdeExitoLeft">
+																			<bean:message key='SIIF.label.PAGADA'/>
+																		</td>
+																	</c:otherwise>
+																</c:choose>												
+															</tr>
+															<tr>
+																<td height="5" colspan="4"></td>
+															</tr>
+														</table>
+													</td>
+													<td width="10%">
+														<c:choose>
+															<c:when test="${boletaDeposito.fechaPago ==null}">
+																<input id="idBotonPago<c:out value='${boletaDeposito.id}'></c:out>"
+																		type="button" value="Eliminar" class="botonerab" 
+																		onclick="eliminarBoleta(${index.index});">														
+															</c:when>
+															<c:otherwise>
+																<input type="button" value="Eliminar" class="botonerab" disabled="disabled">
+															</c:otherwise>
+														</c:choose>										
+													</td>
+												</tr>
+											</table>													
+										</div>											
+									</td>
 								</tr>
 								<tr>
-									<td colspan="4">
-										<input id="idBotonAgregarCuota" type="button" value="+" 
-											onclick="javascript:agregarCuota();">
-										<input id="idBotonRemoverCuota" disabled="disabled" type="button"
-											value="-" onclick="javascript:removerCuota();"></td>
+									<td height="5" colspan="3"></td>
+								</tr>		
+								<c:set var="indiceBoleta" value="${index.index + 1}"></c:set>				
+							</c:forEach>
+								<tr>
+									<td colspan="3">
+										<div id="dummy" style="display: none"></div>
+										<div id="divBoletaDeposito${indiceBoleta}"></div>								
+									</td>
 								</tr>
 								<tr>
-									<td height="5" colspan="4"></td>
+									<td height="5" colspan="3"></td>
 								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
+								<tr>
+									<td colspan="3">
+										<input type="button" value="Agregar Boleta" class="botonerab" 
+											   onclick="agregarBoleta(${indiceBoleta});">								
+									</td>
+								</tr>							
+								<tr>
+									<td height="10" colspan="3"></td>
+								</tr>						
+						</c:when>
+						<c:otherwise>
+							<bean:message key='SIIF.error.NoExiBoletas'/>
+						</c:otherwise>													
+						</c:choose>									
+					</table>
+				</div>
 			</div>
 			</td>
-		</tr>
-
+		</tr> 
 
 
 		<!-- VALES DE TRANSPORTE -->
@@ -786,7 +934,7 @@ function calcularTotales(){
 			<td height="10" colspan="4"></td>
 		</tr>
 	</table>
-	<table border="0" class="cuadrado" align="center" width="80%"
+	<!-- <table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>
@@ -806,7 +954,7 @@ function calcularTotales(){
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>
-	</table>
+	</table> -->
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
@@ -817,7 +965,7 @@ function calcularTotales(){
 				<input type="button" value="Aceptar" id="enviar" 
 					class="botonerab" onclick="javascript:submitir();"> 
 				<input type="button" class="botonerab" value="Volver" 
-					onclick="javascript:volver();">
+					onclick='javascript:volver();'>
 			</td>
 		</tr>
 		<tr>

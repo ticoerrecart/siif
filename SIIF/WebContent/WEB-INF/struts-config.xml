@@ -108,10 +108,21 @@
 		<!-- GUIA FORESTAL -->
 		<action path="/guiaForestal" type="ar.com.siif.struts.actions.GuiaForestalAction"
 			parameter="metodo" name="guiaForestalForm" scope="session">
-			<forward name="exitoCargaAltaGuiaForestalBasica" path=".altaGuiaForestalBasica" />
-			<forward name="exitoAltaGuiaForestalBasica" path=".index" />	
-			<forward name="exitoRecuperarLocalidadesParaAltaGFB" path=".recuperarFiscalizacionesParaAltaGFB" />
-			<forward name="exitoRecuperarFiscalizacionesParaAltaGFB" path="/jsp/bloqueFiscalizacionesParaAltaGFB.jsp" />
+			
+			<!-- Guia Forestal  -->
+				<!-- Alta -->
+				<forward name="exitoCargaAltaGuiaForestalBasica" path=".altaGuiaForestalBasica" />
+				<forward name="exitoAltaGuiaForestalBasica" path=".index" />	
+				<forward name="exitoRecuperarLocalidadesParaAltaGFB" path=".recuperarFiscalizacionesParaAltaGFB" />
+				<forward name="exitoRecuperarFiscalizacionesParaAltaGFB" path="/jsp/bloqueFiscalizacionesParaAltaGFB.jsp" />
+			
+				<!-- Modificacion -->
+				<forward name="exitoRecuperarLocalidadesParaModificacionGFB" path=".recuperarGuiasForestalesParaModificacionGFB" />
+				<forward name="exitoRecuperarGuiasForestalesParaModificacionGFB" 
+								path="/jsp/bloqueMostrarGuiasForestalesParaModificacionGFB.jsp" />			
+				<forward name="exitoCargarModificacionGuiaForestalBasica" path=".cargarModificacionGFB" />
+				<forward name="exitoModificacionGuiaForestalBasica" 
+						 path="/guiaForestal.do?metodo=recuperarLocalidadesParaModificacionGFB" />
 			
 			<!-- Boleta de Deposito  -->			
 			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
