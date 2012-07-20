@@ -243,8 +243,10 @@ function col(sec) {
 								<tr>
 									<td colspan="3">&nbsp;</td>
 									<td colspan="2"><bean:message key='SIIF.label.DerechoInspFisca'/></td>
-									<td><input value="${guiaForestal.inspFiscalizacion}" readonly="readonly"
-										class="botonerab" type="text"></td>
+									<td>
+										<input value="${guiaForestal.inspFiscalizacion}" readonly="readonly"
+												class="botonerab" type="text">
+									</td>
 								</tr>
 								<tr>
 									<td colspan="4"></td>
@@ -272,8 +274,9 @@ function col(sec) {
 					<tr>
 						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
 						<td align="left" colspan="3">
-							<textarea class="botonerab" cols="130" rows="3" 
-									  readonly="readonly"><c:out value="${guiaForestal.observaciones}"></c:out></textarea>
+							<textarea class="botonerab" cols="130" rows="3" readonly="readonly">
+								<c:out value="${guiaForestal.observaciones}"></c:out>
+							</textarea>
 						</td>
 					</tr>
 					<tr>

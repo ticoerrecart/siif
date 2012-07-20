@@ -101,6 +101,17 @@
 			<put name="body" value="/jsp/recuperarFiscalizacionesParaAltaGFB.jsp" />
 		</definition>
 
+		<definition name=".recuperarGuiasForestalesParaModificacionGFB"
+			extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiasForestalesParaModificacionGFB.jsp" />
+		</definition>
+
+		<definition name=".cargarModificacionGFB" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/modificacionGuiaForestalBasica.jsp" />
+		</definition>
+
 		<!-- Boleta de Deposito  -->
 			<definition name=".cargarProductoresParaBoletaDepostio"
 				extends=".base">
