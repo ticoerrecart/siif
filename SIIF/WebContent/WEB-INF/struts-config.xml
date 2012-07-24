@@ -80,6 +80,8 @@
 			parameter="metodo" name="fiscalizacionForm" scope="session">
 			<forward name="exitoRecuperarLocalidadesParaFiscalizacionesAModificar" 
 				path=".recuperarFiscalizacionesAModificar" />
+			<forward name="exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar" 
+				path=".recuperarFiscalizacionesAModificar" />
 			<forward name="exitoRecuperarFiscalizacionesParaAltaGFB"
 				path=".exitoRecuperarFiscalizacionesParaAltaGFB" />
 			<forward name="exitoCargarFiscalizacionAModificar" path=".cargarFiscalizacionAModificar" />
