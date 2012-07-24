@@ -58,10 +58,10 @@ function mostrarFiscalizaciones(){
 
 function cargarProductores(){
 
-	var idLocalidad = $('#selectLocalidades').val();
-	if(idLocalidad != "-1"){
+	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
+	if(idTipoDeEntidad != "-1"){
 		$('#selectProductores').attr('disabled','');
-		EntidadFachada.getEntidadesPorLocalidad(idLocalidad,actualizarProductoresCallback );		
+		EntidadFachada.getEntidadesPorTipoDeEntidad(idTipoDeEntidad,actualizarProductoresCallback );		
 	}else{
 		dwr.util.removeAllOptions("selectProductores");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
@@ -80,11 +80,11 @@ function actualizarProductoresCallback(productores){
 }
 
 function cargarProductoresVolver(){
-
-	var idLocalidad = $('#selectLocalidades').val();
+	$('#selectTiposDeEntidad').val($('#paramIdTipoDeEntidad').val());
+	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
 
 	$('#selectProductores').attr('disabled','');
-	EntidadFachada.getEntidadesPorLocalidad(idLocalidad,actualizarProductoresVolverCallback );		
+	EntidadFachada.getEntidadesPorTipoDeEntidad(idTipoDeEntidad,actualizarProductoresVolverCallback );		
 
 	$('#divGuias').hide(600);
 	$('#divGuias').html("");
@@ -104,7 +104,7 @@ function actualizarProductoresVolverCallback(productores){
 
 <div id="exitoGrabado" class="verdeExito">${exitoModificacion}</div>
 <div id="errores" class="rojoAdvertencia">${errorModificacion}</div>
-<input id="paramLocalidad" type="hidden" value="${idLocalidad}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
 <input id="paramProductor" type="hidden" value="${idProductor}">
 <br>
 <table border="0" class="cuadrado" align="center" width="70%"
@@ -125,22 +125,22 @@ function actualizarProductoresVolverCallback(productores){
 					<td height="10" colspan="3"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.Localidad'/></td>
+					<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoEntidad'/></td>
 					<td class="botonerab">
-						<select id="selectLocalidades" class="botonerab" onchange="cargarProductores()">
-							<option value="-1">-Seleccione una Localidad-</option>
-							<c:forEach items="${localidades}" var="localidad" varStatus="i">
+						<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
+							<option value="-1">-Seleccione un Tipo de Entidad-</option>
+							<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
 														
 								<c:choose>
-									<c:when test="${localidad.id == idLocalidad}">
-										<option value="<c:out value='${localidad.id}'></c:out>" selected="selected">
-											<c:out value="${localidad.nombre}"></c:out>
+									<c:when test="${tipoDeEntidad.name == idLocalidad}">
+										<option value="<c:out value='${tipoDeEntidad.name}'></c:out>" selected="selected">
+											<c:out value="${tipoDeEntidad.descripcion}"></c:out>
 										</option>
 									</c:when>
 									<c:otherwise>
-										<option value="<c:out value='${localidad.id}'></c:out>">
-											<c:out value="${localidad.nombre}"></c:out>
-										</option>								
+										<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
+											<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+										</option>
 									</c:otherwise>
 								</c:choose>									
 								
@@ -183,8 +183,8 @@ function actualizarProductoresVolverCallback(productores){
 </table>
 <script type="text/javascript">
 
-var idLocalidad = $('#paramLocalidad').val();
-if(idLocalidad != null && idLocalidad != ""){
+var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
+if(idTipoDeEntidad != null && idTipoDeEntidad != ""){
 	cargarProductoresVolver();
 }
 

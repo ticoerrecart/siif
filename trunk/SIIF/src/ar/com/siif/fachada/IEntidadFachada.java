@@ -1,8 +1,8 @@
 package ar.com.siif.fachada;
 
-import java.util.Collection;
 import java.util.List;
 
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -17,4 +17,9 @@ public interface IEntidadFachada {
 	public boolean existeEntidad(String nombre, Long id);
 
 	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad);
+
+	public List<TipoDeEntidad> getTiposDeEntidad();
+
+	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad);
+
 }

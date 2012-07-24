@@ -1,11 +1,11 @@
 package ar.com.siif.fachada;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.EntidadDAO;
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
-import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.exception.NegocioException;
 
 public class EntidadFachada implements IEntidadFachada {
@@ -37,7 +37,20 @@ public class EntidadFachada implements IEntidadFachada {
 	}
 
 	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad) {
-
 		return entidadDAO.getEntidades(idLocalidad);
 	}
+
+	public List<TipoDeEntidad> getTiposDeEntidad() {
+		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
+		tiposDeEntidad.add(TipoDeEntidad.OBR);
+		tiposDeEntidad.add(TipoDeEntidad.PPF);
+
+		return tiposDeEntidad;
+
+	}
+
+	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad) {
+		return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
+	}
+
 }

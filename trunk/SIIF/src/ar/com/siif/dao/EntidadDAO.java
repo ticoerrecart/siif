@@ -1,15 +1,14 @@
 package ar.com.siif.dao;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Obrajero;
@@ -76,10 +75,28 @@ public class EntidadDAO extends HibernateDaoSupport {
 
 		obrajeros.addAll(ppf);
 		Collections.sort(obrajeros);
-		
+
 		//TreeSet<Entidad> lista = new TreeSet<Entidad>(obrajeros);
 
 		return obrajeros;
 		//return lista;				
+	}
+
+	public List<Entidad> getEntidades(TipoDeEntidad tipoDeEntidad) {
+		List<Entidad> obrajeros = null;
+		Criteria criteria = null;
+		if (tipoDeEntidad == TipoDeEntidad.OBR) {
+			criteria = getSession().createCriteria(Obrajero.class);
+			obrajeros = criteria.list();
+		}
+
+		if (tipoDeEntidad == TipoDeEntidad.PPF) {
+			criteria = getSession().createCriteria(PPF.class);
+			obrajeros = criteria.list();
+		}
+
+		Collections.sort(obrajeros);
+
+		return obrajeros;
 	}
 }

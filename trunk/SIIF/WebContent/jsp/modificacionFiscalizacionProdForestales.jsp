@@ -26,15 +26,12 @@ function submitir(){
 	validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
 }
 
-function volver(){	
-	//document.forms[0].elements["metodo"].value = "recuperarLocalidadesParaFiscalizacionesAModificar";
-	//document.forms[0].submit();
-
-	var localidad = $('#paramLocalidad').val();
+function volver(){
+	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();	
 	parent.location = contextRoot() +  
-	'/fiscalizacion.do?metodo=recuperarLocalidadesParaFiscalizacionesAModificar&idLocalidad=' + localidad + 
-	'&idProductor=' + productor;	
+	'/fiscalizacion.do?metodo=recuperarTiposDeEntidadParaFiscalizacionesAModificar&idTipoDeEntidad=' + idTipoDeEntidad + 
+	'&idProductor=' + productor;
 }
 
 var i=2;
@@ -181,7 +178,7 @@ function deshabilitarLocalizacion(ids){
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
-<input id="paramLocalidad" type="hidden" value="${fiscalizacion.productorForestal.localidad.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.idTipoEntidad}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="modificacionFiscalizacion" />
@@ -431,7 +428,7 @@ function deshabilitarLocalizacion(ids){
 												<div id="tabla2"></div>		
 												
 												<script type="text/javascript">
-													cantTotales = <c:out value="${fn:length(fiscalizacion.muestra)}"></c:out>;
+													cantTotales = <c:out value="${fn:length(fiscalizacion.muestra)}"/>
 													indiceDiv = 2;				
 												</script>																			
 											</c:if>																																																	

@@ -1,7 +1,6 @@
 package ar.com.siif.struts.actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,13 +12,13 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IEntidadFachada;
+import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
-import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
-import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
@@ -30,7 +29,6 @@ import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.AccesoDenegadoException;
 import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
@@ -44,12 +42,13 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargaAltaFiscalizacion";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			Usuario usuario = (Usuario) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-			rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU,usuario.getRol());			
-			
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
+
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -65,7 +64,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			List<Localidad> localidades = localidadFachada.getLocalidades();
 
-			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProducto();					
+			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProducto();
 
 			//request.setAttribute("ubicaciones", ubicaciones);
 			request.setAttribute("productores", productores);
@@ -82,36 +81,36 @@ public class FiscalizacionAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarLocalidadesParaFiscalizacionesAModificar(
-									ActionMapping mapping, ActionForm form,
-									HttpServletRequest request, HttpServletResponse response) 
-									throws Exception {
+	public ActionForward recuperarLocalidadesParaFiscalizacionesAModificar(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		String strForward = "exitoRecuperarLocalidadesParaFiscalizacionesAModificar";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			Usuario usuario = (Usuario) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());						
-			
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");			
-			
+					.getBean("localidadFachada");
+
 			String idLocalidad = request.getParameter("idLocalidad");
-			String idProductor = request.getParameter("idProductor");			
-			
+			String idProductor = request.getParameter("idProductor");
+
 			//List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizaciones();
 			List<Localidad> localidades = localidadFachada.getLocalidades();
-			
+
 			//request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("localidades", localidades);
 			request.setAttribute("idLocalidad", idLocalidad);
-			request.setAttribute("idProductor", idProductor);			
+			request.setAttribute("idProductor", idProductor);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -122,10 +121,40 @@ public class FiscalizacionAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarFiscalizacionesAModificar(
-									ActionMapping mapping, ActionForm form,
-									HttpServletRequest request, HttpServletResponse response) 
-									throws Exception {
+	public ActionForward recuperarTiposDeEntidadParaFiscalizacionesAModificar(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar";
+
+		try {
+			Usuario usuario = (Usuario) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarFiscalizacionesAModificar(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoRecuperarFiscalizacionesAModificar";
 
@@ -137,9 +166,10 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			//String idLocalidad = request.getParameter("idLocalidad");
 			String idProductor = request.getParameter("idProductor");
-			
-			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizacionesPorProductor(new Long(idProductor));
-			
+
+			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada
+					.recuperarFiscalizacionesPorProductor(new Long(idProductor));
+
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 
 		} catch (Exception e) {
@@ -148,8 +178,8 @@ public class FiscalizacionAction extends ValidadorAction {
 		}
 
 		return mapping.findForward(strForward);
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarFiscalizacionAModificar(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -157,37 +187,41 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacionAModificar";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			Usuario usuario = (Usuario) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());	
-			
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
-			
+
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
-			.getBean("tipoProductoForestalFachada");			
+					.getBean("tipoProductoForestalFachada");
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
-			.getBean("ubicacionFachada");			
+					.getBean("ubicacionFachada");
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
-			.getBean("entidadFachada");			
-			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
 			long idFiscalizacion = new Long(request.getParameter("id"));
 			Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(idFiscalizacion);
-			
+
 			//List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
-			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(
-					fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal().getLocalidad().getId());
+			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion
+					.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal()
+					.getLocalidad().getId());
 			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProducto();
 			List<PMF> pmf = ubicacionFachada.getPMFs(fiscalizacion.getProductorForestal().getId());
-			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getId());
-			List<Marcacion> marcaciones = ubicacionFachada.getMarcacionesById(fiscalizacion.getRodal().getMarcacion().getTranzon().getId());
-			List<Rodal> rodales = ubicacionFachada.getRodalesById(fiscalizacion.getRodal().getMarcacion().getId());
-			
+			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal()
+					.getMarcacion().getTranzon().getPmf().getId());
+			List<Marcacion> marcaciones = ubicacionFachada.getMarcacionesById(fiscalizacion
+					.getRodal().getMarcacion().getTranzon().getId());
+			List<Rodal> rodales = ubicacionFachada.getRodalesById(fiscalizacion.getRodal()
+					.getMarcacion().getId());
+
 			request.getSession().setAttribute("fiscalizacion", fiscalizacion);
 			request.setAttribute("productores", productores);
 			request.setAttribute("tiposProducto", tiposProducto);
@@ -211,63 +245,63 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoModificacionFiscalizacion";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			Usuario usuario = (Usuario) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU,usuario.getRol());
-			
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
-			.getBean("ubicacionFachada");
+					.getBean("ubicacionFachada");
 
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
 
-			fiscalizacion.setProductorForestal(fiscalizacionFachada.getProductorForestal(
-											   fiscalizacionForm.getIdProductorForestal()));
+			fiscalizacion.setProductorForestal(fiscalizacionFachada
+					.getProductorForestal(fiscalizacionForm.getIdProductorForestal()));
 			fiscalizacion.setTipoProducto(fiscalizacionFachada.getTipoProducto(fiscalizacionForm
-										 .getIdTipoProductoForestal()));
+					.getIdTipoProductoForestal()));
 			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));
 			//fiscalizacion.setMarcacion(ubicacionFachada.getMarcacion(fiscalizacionForm.getIdMarcacion()));			
 			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
 			fiscalizacion.setTamanioMuestra(fiscalizacionForm.getMuestras().size());
-			
-			int i=0;
-			for (Muestra muestra : fiscalizacionForm.getMuestras()) {							
-				
-				if(fiscalizacion.getMuestra().size() <= i){
-					if(muestra.getLargo() > 0.0){
+
+			int i = 0;
+			for (Muestra muestra : fiscalizacionForm.getMuestras()) {
+
+				if (fiscalizacion.getMuestra().size() <= i) {
+					if (muestra.getLargo() > 0.0) {
 						muestra.setFiscalizacion(fiscalizacion);
 						fiscalizacion.getMuestra().add(muestra);
-					}	
-				}
-				else{
-					Muestra muestraAModificar = fiscalizacion.getMuestra().get(i);					
+					}
+				} else {
+					Muestra muestraAModificar = fiscalizacion.getMuestra().get(i);
 					muestraAModificar.setDiametro1(muestra.getDiametro1());
 					muestraAModificar.setDiametro2(muestra.getDiametro2());
 					muestraAModificar.setLargo(muestra.getLargo());
 				}
 				i++;
-			}			
-			List<Muestra> muestrasAEliminar = new ArrayList<Muestra>();
-			for(int j=fiscalizacion.getMuestra().size()-1; j>=fiscalizacionForm.getMuestras().size();j--){
-				
-				muestrasAEliminar.add(fiscalizacion.getMuestra().get(j));
-				fiscalizacion.getMuestra().set(j, null);				
 			}
-				
-						
-			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion,muestrasAEliminar);
+			List<Muestra> muestrasAEliminar = new ArrayList<Muestra>();
+			for (int j = fiscalizacion.getMuestra().size() - 1; j >= fiscalizacionForm
+					.getMuestras().size(); j--) {
+
+				muestrasAEliminar.add(fiscalizacion.getMuestra().get(j));
+				fiscalizacion.getMuestra().set(j, null);
+			}
+
+			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion, muestrasAEliminar);
 
 			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			request.getSession().setAttribute("fiscalizacion", null);
 
 		} catch (AccesoDenegadoException ade) {
 			request.setAttribute("error", ade.getMessage());
-			strForward = "error";			
+			strForward = "error";
 		} catch (DataBaseException dbe) {
 			request.setAttribute("errorModificacion", dbe.getMessage());
 			// strForward = "errorLogin";
@@ -291,8 +325,8 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
-			.getBean("ubicacionFachada");			
-			
+					.getBean("ubicacionFachada");
+
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
 
@@ -307,16 +341,16 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
 
 			for (Muestra muestra : fiscalizacionForm.getMuestras()) {
-				
-				if(muestra.getLargo() > 0.0){
+
+				if (muestra.getLargo() > 0.0) {
 					muestra.setFiscalizacion(fiscalizacion);
 					fiscalizacion.getMuestra().add(muestra);
-				}	
+				}
 			}
-			
+
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
-			
-			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_FISCALIZACION);			
+
+			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_FISCALIZACION);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
