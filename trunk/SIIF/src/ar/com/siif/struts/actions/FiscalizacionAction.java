@@ -80,45 +80,46 @@ public class FiscalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
-	public ActionForward recuperarLocalidadesParaFiscalizacionesAModificar(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	/*	@SuppressWarnings("unchecked")
+		public ActionForward recuperarLocalidadesParaFiscalizacionesAModificar(ActionMapping mapping,
+				ActionForm form, HttpServletRequest request, HttpServletResponse response)
+				throws Exception {
 
-		String strForward = "exitoRecuperarLocalidadesParaFiscalizacionesAModificar";
+			String strForward = "exitoRecuperarLocalidadesParaFiscalizacionesAModificar";
 
-		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
-			WebApplicationContext ctx = getWebApplicationContext();
+			try {
+				Usuario usuario = (Usuario) request.getSession().getAttribute(
+						Constantes.USER_LABEL_SESSION);
+				WebApplicationContext ctx = getWebApplicationContext();
 
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+				IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+				rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
 
-			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
-					.getBean("fiscalizacionFachada");
+				IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
+						.getBean("fiscalizacionFachada");
 
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");
+				ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+						.getBean("localidadFachada");
 
-			String idLocalidad = request.getParameter("idLocalidad");
-			String idProductor = request.getParameter("idProductor");
+				String idLocalidad = request.getParameter("idLocalidad");
+				String idProductor = request.getParameter("idProductor");
 
-			//List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizaciones();
-			List<Localidad> localidades = localidadFachada.getLocalidades();
+				//List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizaciones();
+				List<Localidad> localidades = localidadFachada.getLocalidades();
 
-			//request.setAttribute("fiscalizaciones", fiscalizaciones);
-			request.setAttribute("localidades", localidades);
-			request.setAttribute("idLocalidad", idLocalidad);
-			request.setAttribute("idProductor", idProductor);
+				//request.setAttribute("fiscalizaciones", fiscalizaciones);
+				request.setAttribute("localidades", localidades);
+				request.setAttribute("idLocalidad", idLocalidad);
+				request.setAttribute("idProductor", idProductor);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "error";
+			} catch (Exception e) {
+				request.setAttribute("error", e.getMessage());
+				strForward = "error";
+			}
+
+			return mapping.findForward(strForward);
 		}
-
-		return mapping.findForward(strForward);
-	}
+	*/
 
 	@SuppressWarnings("unchecked")
 	public ActionForward recuperarTiposDeEntidadParaFiscalizacionesAModificar(
