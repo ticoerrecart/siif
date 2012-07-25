@@ -104,8 +104,10 @@ function actualizarProductoresVolverCallback(productores){
 
 <div id="exitoGrabado" class="verdeExito">${exitoModificacion}</div>
 <div id="errores" class="rojoAdvertencia">${errorModificacion}</div>
+
 <input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
 <input id="paramProductor" type="hidden" value="${idProductor}">
+
 <br>
 <table border="0" class="cuadrado" align="center" width="70%"
 	cellpadding="2">
@@ -181,11 +183,10 @@ function actualizarProductoresVolverCallback(productores){
 		<td height="20"></td>
 	</tr>	
 </table>
+
 <script type="text/javascript">
-
-var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
-if(idTipoDeEntidad != null && idTipoDeEntidad != ""){
-	cargarProductoresVolver();
-}
-
+	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
+	if(idTipoDeEntidad != null && idTipoDeEntidad != ""){
+		cargarProductoresVolver();
+	}
 </script>
