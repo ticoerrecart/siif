@@ -86,7 +86,7 @@
 				path=".exitoRecuperarFiscalizacionesParaAltaGFB" />
 			<forward name="exitoCargarFiscalizacionAModificar" path=".cargarFiscalizacionAModificar" />
 			<forward name="exitoModificacionFiscalizacion"
-				path="/fiscalizacion.do?metodo=recuperarLocalidadesParaFiscalizacionesAModificar" />
+				path="/fiscalizacion.do?metodo=recuperarTiposDeEntidadParaFiscalizacionesAModificar" />
 			<forward name="exitoCargaAltaFiscalizacion" path=".altaFiscalizacionProdForestales" />
 			<forward name="exitoAltaFiscalizacion" path="/fiscalizacion.do?metodo=cargarAltaFiscalizacion" />
 			<forward name="exitoRecuperarFiscalizacionesAModificar" path="/jsp/bloqueFiscalizacionesAModificar.jsp" />			
