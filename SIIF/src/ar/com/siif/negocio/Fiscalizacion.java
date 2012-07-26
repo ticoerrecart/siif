@@ -42,11 +42,6 @@ public class Fiscalizacion {
 	@JoinColumn(name = "guiaForestal_fk")
 	private GuiaForestal guiaForestal;
 
-	/*@ManyToOne()
-	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "marcacion_fk")
-	private Marcacion marcacion;*/
-
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "rodal_fk")
@@ -61,6 +56,16 @@ public class Fiscalizacion {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Muestra> muestra = new ArrayList<Muestra>();
 
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "usuario_fk")
+	private Usuario usuario;	
+	
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "oficina_fk")
+	private Entidad oficinaAlta;	
+	
 	public String getPeriodoForestal() {
 		return periodoForestal;
 	}
@@ -125,14 +130,6 @@ public class Fiscalizacion {
 		this.tamanioMuestra = tamanioMuestra;
 	}
 
-	/*public Marcacion getMarcacion() {
-		return marcacion;
-	}
-
-	public void setMarcacion(Marcacion marcacion) {
-		this.marcacion = marcacion;
-	}*/
-
 	public TipoProducto getTipoProducto() {
 		return tipoProducto;
 	}
@@ -155,6 +152,22 @@ public class Fiscalizacion {
 
 	public void setRodal(Rodal rodal) {
 		this.rodal = rodal;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Entidad getOficinaAlta() {
+		return oficinaAlta;
+	}
+
+	public void setOficinaAlta(Entidad oficinaAlta) {
+		this.oficinaAlta = oficinaAlta;
 	}
 
 }
