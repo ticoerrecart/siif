@@ -116,6 +116,7 @@
 				<forward name="exitoCargaAltaGuiaForestalBasica" path=".altaGuiaForestalBasica" />
 				<forward name="exitoAltaGuiaForestalBasica" path=".index" />	
 				<forward name="exitoRecuperarLocalidadesParaAltaGFB" path=".recuperarFiscalizacionesParaAltaGFB" />
+				<forward name="exitoRecuperarTiposDeEntidadParaAltaGFB" path=".recuperarFiscalizacionesParaAltaGFB" />
 				<forward name="exitoRecuperarFiscalizacionesParaAltaGFB" path="/jsp/bloqueFiscalizacionesParaAltaGFB.jsp" />
 			
 				<!-- Modificacion -->

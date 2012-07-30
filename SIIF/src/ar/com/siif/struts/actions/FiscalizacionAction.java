@@ -144,7 +144,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
-
+			request.setAttribute("urlDetalle", "../../fiscalizacion.do?metodo=recuperarFiscalizacionesAModificar");
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
