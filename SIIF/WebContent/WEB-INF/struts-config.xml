@@ -121,11 +121,12 @@
 			
 				<!-- Modificacion -->
 				<forward name="exitoRecuperarLocalidadesParaModificacionGFB" path=".recuperarGuiasForestalesParaModificacionGFB" />
+				<forward name="exitoRecuperarTiposDeEntidadParaModificacionGFB" path=".recuperarGuiasForestalesParaModificacionGFB" />
 				<forward name="exitoRecuperarGuiasForestalesParaModificacionGFB" 
 								path="/jsp/bloqueMostrarGuiasForestalesParaModificacionGFB.jsp" />			
 				<forward name="exitoCargarModificacionGuiaForestalBasica" path=".cargarModificacionGFB" />
 				<forward name="exitoModificacionGuiaForestalBasica" 
-						 path="/guiaForestal.do?metodo=recuperarLocalidadesParaModificacionGFB" />
+						 path="/guiaForestal.do?metodo=recuperarTiposDeEntidadParaModificacionGFB" />
 			
 			<!-- Boleta de Deposito  -->			
 			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
