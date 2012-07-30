@@ -44,10 +44,11 @@ function volver(){
 	//document.forms[0].elements["metodo"].value = "recuperarLocalidadesParaAltaGFB";
 	//document.forms[0].submit();
 
-	var localidad = $('#paramLocalidad').val();
-	var productor = $('#paramProductor').val();	
-	parent.location = contextRoot() +  
-	'/guiaForestal.do?metodo=recuperarLocalidadesParaAltaGFB&idLocalidad=' + localidad + '&idProductor=' + productor;		
+	var entidad = $('#paramIdTipoDeEntidad').val();
+	var productor = $('#paramProductor').val();
+
+	parent.location = contextRoot() +
+	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor;		
 }
 
 function submitir(){
@@ -237,7 +238,7 @@ function calcularTotales(){
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
-<input id="paramLocalidad" type="hidden" value="${fiscalizacion.productorForestal.localidad.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.idTipoEntidad}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 
 <html:form action="guiaForestal" styleId="guiaForestalForm">
