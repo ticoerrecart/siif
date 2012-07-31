@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
+import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
@@ -30,8 +31,6 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		try {
 			String paramForward = request.getParameter("forward");
-			String paramLoc = request.getParameter("idLoc");
-			String paramProd = request.getParameter("idProd");
 
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);						
 			WebApplicationContext ctx = getWebApplicationContext();			
@@ -60,15 +59,15 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			
 
 			
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");			
-				
-			List<Localidad> localidades = localidadFachada.getLocalidades();			
-			
-			request.setAttribute("localidades", localidades);
-			request.setAttribute("paramForward", paramForward);
-			request.setAttribute("idLoc", paramLoc);
-			request.setAttribute("idProd", paramProd);
-
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("urlDetalle",
+					"../../consultasPorProductor.do?metodo=" + paramForward);
+			//request.setAttribute("paramForward", paramForward);
 	
 
 		} catch (Exception e) {
