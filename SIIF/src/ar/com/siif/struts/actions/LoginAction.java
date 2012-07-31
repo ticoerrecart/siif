@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.DispatchActionSupport;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IMenuFachada;
 import ar.com.siif.negocio.ItemMenu;
@@ -41,9 +42,9 @@ public class LoginAction extends DispatchActionSupport {
 			WebApplicationContext ctx = getWebApplicationContext();
 			ILoginFachada loginFachada = (ILoginFachada) ctx.getBean("loginFachada");
 
-			Usuario usr = loginFachada.login(usuario, password);
+			UsuarioDTO usrDTO = loginFachada.login(usuario, password);
 
-			request.getSession().setAttribute(Constantes.USER_LABEL_SESSION, usr);
+			request.getSession().setAttribute(Constantes.USER_LABEL_SESSION, usrDTO);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

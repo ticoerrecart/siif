@@ -1,8 +1,10 @@
 package ar.com.siif.fachada;
 
 import ar.com.siif.dao.LoginDAO;
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 
 public class LoginFachada implements ILoginFachada {
 
@@ -15,9 +17,12 @@ public class LoginFachada implements ILoginFachada {
 		this.loginDAO = loginDAO;
 	}
 
-	public Usuario login(String usuario, String password) throws NegocioException {
+	public UsuarioDTO login(String usuario, String password) throws NegocioException {
 
-		return loginDAO.login(usuario, password);
+		Usuario usr = loginDAO.login(usuario, password);
+		UsuarioDTO usrDTO = ProviderDTO.getUsuarioDTO(usr);
+		
+		return usrDTO;
 	}
 
 	public Usuario getUsuario(Long id) {

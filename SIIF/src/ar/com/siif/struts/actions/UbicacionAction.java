@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
@@ -27,11 +28,11 @@ public class UbicacionAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "error";
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_PMF_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.ALTA_PMF_MENU,usuario.getRol());
 			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
@@ -58,11 +59,11 @@ public class UbicacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarUbicacionParaModificacion";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_PMF_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_PMF_MENU,usuario.getRol());
 			
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");

@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.struts.DispatchActionSupport;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IMenuFachada;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Usuario;
@@ -28,7 +29,7 @@ public class MenuAction extends DispatchActionSupport {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 
 			WebApplicationContext ctx = getWebApplicationContext();

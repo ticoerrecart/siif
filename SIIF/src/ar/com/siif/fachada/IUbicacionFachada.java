@@ -2,6 +2,10 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 
+import ar.com.siif.dto.MarcacionDTO;
+import ar.com.siif.dto.PMFDTO;
+import ar.com.siif.dto.RodalDTO;
+import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
@@ -53,5 +57,12 @@ public interface IUbicacionFachada {
 	public void modificarPMF(Long idPMF, String nombre, String expediente);
 	
 	public Rodal getRodal(Long idRodal);
+	
+	public List<PMFDTO> getPMFsDTO(Long idPF);
+	
+	public List<TranzonDTO> getTranzonesDTOById(Long idPMF);
+	
+	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon);
 
+	public List<RodalDTO> getRodalesDTOById(Long idMarcacion);
 }

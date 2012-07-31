@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
@@ -31,14 +32,14 @@ public class EntidadAction extends ValidadorAction {
 		
 		String strForward = "cargarAltaEntidad";
 		try{
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_ENTIDAD_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.ALTA_ENTIDAD_MENU,usuario.getRol());
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			request.setAttribute("localidades", localidadFachada.getLocalidades());
+			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
 			request.setAttribute("metodo", "altaEntidad");
 			
@@ -111,11 +112,11 @@ public class EntidadAction extends ValidadorAction {
 		
 		String strForward = "exitoRecuperarEntidades";
 		try{
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			List<Entidad> entidades = entidadFachada.getEntidades();
@@ -134,11 +135,11 @@ public class EntidadAction extends ValidadorAction {
 		
 		String strForward = "exitoCargarEntidadAModificar";
 		try{
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 	

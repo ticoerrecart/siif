@@ -91,7 +91,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IMenuFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -113,29 +113,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.ILoginFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
-			</props>
-		</property>
-	</bean>
-
-	<!-- FISCALIZACION --> 
-	<bean id="fiscalizacionFachadaImpl" class="ar.com.siif.fachada.FiscalizacionFachada">
-		<constructor-arg ref="fiscalizacionDAO" />
-	</bean>	
-
-	<bean id="fiscalizacionFachada"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager">
-			<ref bean="transactionManager" />
-		</property>
-		<property name="proxyTargetClass" value="true" />
-		<property name="target">
-			<ref bean="fiscalizacionFachadaImpl" />
-		</property>
-		<property name="proxyInterfaces" value="ar.com.siif.fachada.IFiscalizacionFachada" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -157,7 +135,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IGuiaForestalFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>	
@@ -181,11 +159,10 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			value="ar.com.siif.fachada.ITipoProductoForestalFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>	
-
 
 	<!--AFORO --> 
 	<bean id="aforoFachadaImpl" class="ar.com.siif.fachada.AforoFachada">
@@ -205,7 +182,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IAforoFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -227,7 +204,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IUbicacionFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -250,7 +227,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			value="ar.com.siif.fachada.IConsultasPorProductorFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -273,7 +250,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IEntidadFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>	
@@ -296,7 +273,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.ILocalidadFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -321,7 +298,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IRolFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -343,7 +320,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IUsuarioFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -365,7 +342,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>
@@ -388,7 +365,33 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			value="ar.com.siif.fachada.IConsultasFiscalizacionFachada" />
 		<property name="transactionAttributes">
 			<props>
-				<prop key="*">PROPAGATION_REQUIRES_NEW,-java.lang.Exception</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- FISCALIZACION --> 
+	<bean id="fiscalizacionFachadaImpl" class="ar.com.siif.fachada.FiscalizacionFachada">
+		<constructor-arg ref="fiscalizacionDAO" />
+		<constructor-arg ref="ubicacionFachada" />
+		<constructor-arg ref="entidadFachada" />
+		<constructor-arg ref="tipoProductoForestalFachada" />
+		<constructor-arg ref="usuarioFachada" />
+	</bean>	
+
+	<bean id="fiscalizacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="fiscalizacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IFiscalizacionFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
 			</props>
 		</property>
 	</bean>

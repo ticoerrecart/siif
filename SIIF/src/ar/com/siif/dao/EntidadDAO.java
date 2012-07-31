@@ -13,6 +13,7 @@ import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PPF;
+import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -99,4 +100,13 @@ public class EntidadDAO extends HibernateDaoSupport {
 
 		return obrajeros;
 	}
+	
+	public List<Entidad> getOficinasForestales(){
+		
+		List<Entidad> oficinasForestales = null;		
+		Criteria criteria = getSession().createCriteria(RecursosNaturales.class);
+		oficinasForestales = criteria.list();
+		
+		return oficinasForestales;
+	}	
 }

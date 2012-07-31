@@ -11,6 +11,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
@@ -42,35 +47,29 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargaAltaFiscalizacion";
 
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
-
-			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
-					.getBean("fiscalizacionFachada");
+			//rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
 
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
 					.getBean("tipoProductoForestalFachada");
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidad();
+			
+			List<TipoProductoDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
 
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");
-
-			// List<EntidadDTO> productores =
-			// fiscalizacionFachada.recuperarProductores();
-			List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
-
-			List<Localidad> localidades = localidadFachada.getLocalidades();
-
-			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProducto();
-
-			//request.setAttribute("ubicaciones", ubicaciones);
-			request.setAttribute("productores", productores);
+			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
+			
 			request.setAttribute("tiposProducto", tiposProducto);
-			request.setAttribute("localidades", localidades);
+			request.setAttribute("tiposEntidad", tiposEntidad);
+			request.setAttribute("oficinas", oficinas);
 			request.getSession().setAttribute("fiscalizacion", null);//Por si quedo alguna Fiscalizacion en el session
+			request.getSession().setAttribute("fiscalizacionDTO", null);//Por si quedo alguna Fiscalizacion en el session
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -129,12 +128,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar";
 
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
 
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
@@ -189,12 +188,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacionAModificar";
 
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
 
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
@@ -211,11 +210,10 @@ public class FiscalizacionAction extends ValidadorAction {
 			Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(idFiscalizacion);
 
-			//List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
 			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion
 					.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal()
 					.getLocalidad().getId());
-			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProducto();
+			List<TipoProducto> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestal();
 			List<PMF> pmf = ubicacionFachada.getPMFs(fiscalizacion.getProductorForestal().getId());
 			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal()
 					.getMarcacion().getTranzon().getPmf().getId());
@@ -223,7 +221,7 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getRodal().getMarcacion().getTranzon().getId());
 			List<Rodal> rodales = ubicacionFachada.getRodalesById(fiscalizacion.getRodal()
 					.getMarcacion().getId());
-
+			
 			request.getSession().setAttribute("fiscalizacion", fiscalizacion);
 			request.setAttribute("productores", productores);
 			request.setAttribute("tiposProducto", tiposProducto);
@@ -247,12 +245,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoModificacionFiscalizacion";
 
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
 
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
@@ -267,8 +265,7 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getProductorForestal(fiscalizacionForm.getIdProductorForestal()));
 			fiscalizacion.setTipoProducto(fiscalizacionFachada.getTipoProducto(fiscalizacionForm
 					.getIdTipoProductoForestal()));
-			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));
-			//fiscalizacion.setMarcacion(ubicacionFachada.getMarcacion(fiscalizacionForm.getIdMarcacion()));			
+			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));			
 			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
 			fiscalizacion.setTamanioMuestra(fiscalizacionForm.getMuestras().size());
 
@@ -296,14 +293,24 @@ public class FiscalizacionAction extends ValidadorAction {
 				fiscalizacion.getMuestra().set(j, null);
 			}
 
+			Usuario usr = fiscalizacion.getUsuario();
+			fiscalizacion.setUsuario(null);
+			Entidad oficina = fiscalizacion.getOficinaAlta();
+			fiscalizacion.setOficinaAlta(null);			
+			
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion, muestrasAEliminar);
 
+			fiscalizacion.setUsuario(usr);
+			fiscalizacion.setOficinaAlta(oficina);			
+			
+			fiscalizacionFachada.actualizarFiscalizacion(fiscalizacion);
+			
 			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			request.getSession().setAttribute("fiscalizacion", null);
 
-		} catch (AccesoDenegadoException ade) {
+		/*} catch (AccesoDenegadoException ade) {
 			request.setAttribute("error", ade.getMessage());
-			strForward = "error";
+			strForward = "error";*/
 		} catch (DataBaseException dbe) {
 			request.setAttribute("errorModificacion", dbe.getMessage());
 			// strForward = "errorLogin";
@@ -321,16 +328,22 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoAltaFiscalizacion";
 
 		try {
-
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			
 			WebApplicationContext ctx = getWebApplicationContext();
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+			
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
-			Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
+			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
+			fiscalizacionDTO.setIdUsuario(usuario.getId());
+			
+			/*Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
 
 			Entidad productorForestal = fiscalizacionFachada.getProductorForestal(fiscalizacionForm
 					.getIdProductorForestal());
@@ -339,9 +352,10 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacion.setProductorForestal(productorForestal);
 			fiscalizacion.setTipoProducto(tipoProducto);
 			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));
-			//fiscalizacion.setMarcacion(ubicacionFachada.getMarcacion(fiscalizacionForm.getIdMarcacion()));
 			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
-
+			fiscalizacion.setUsuario(usuario);
+			fiscalizacion.setOficinaAlta(entidadFachada.getEntidad(fiscalizacionForm.getIdOficinaForestal()));
+			
 			for (Muestra muestra : fiscalizacionForm.getMuestras()) {
 
 				if (muestra.getLargo() > 0.0) {
@@ -351,7 +365,12 @@ public class FiscalizacionAction extends ValidadorAction {
 			}
 
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
-
+			fiscalizacionFachada.actualizarFiscalizacion(fiscalizacion);*/
+			
+			//Hay que hacer el alta de la Fiscalizacion, con la FiscalizacionDTO y la lista de MuestraDTO.
+			//Hay que cambiar el usuario que se guarda en el session por usuarioDTO.
+			fiscalizacionFachada.altaFiscalizacion(fiscalizacionDTO,fiscalizacionForm.getMuestrasDTO());
+			
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_FISCALIZACION);
 
 		} catch (Exception e) {

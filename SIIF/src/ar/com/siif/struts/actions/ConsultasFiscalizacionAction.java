@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasFiscalizacionFachada;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
@@ -30,18 +31,18 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 		try {
 			String paramForward = request.getParameter("forward");	
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
 			
 			if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
-				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());
+				//rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());
 				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_CON_GUIA_FORESTAL);
 			}
 			else{
 				if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL)){
-					rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());
+					//rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());
 					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL);
 				}
 			}	
@@ -124,17 +125,17 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 		try {
 			String paramForward = request.getParameter("paramForward");			
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			
-			if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
+			/*if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
 				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());											
 			}
 			else{
 				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());				
-			}						
+			}*/						
 			
 			IFiscalizacionFachada fiscalizacionFachada = 
 								(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");

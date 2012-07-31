@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
@@ -137,12 +138,12 @@ public class ReportesAction extends ValidadorAction {
 			String paramForward = request.getParameter("paramForward");
 			String paramValidator = request.getParameter("validator");
 			
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			
-			rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
 			
 			IFiscalizacionFachada fiscalizacionFachada = 
 											(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");

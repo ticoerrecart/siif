@@ -7,17 +7,18 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
 public class TipoProductoForestalDAO extends HibernateDaoSupport {
 
-	public void altaTipoProductoForestal(String tipoProductoForestal) throws NegocioException {
+	public void altaTipoProductoForestal(TipoProducto tipoProductoForestal) throws NegocioException {
 
 		Criteria criteria = getSession().createCriteria(TipoProducto.class);
 		criteria.add(Restrictions.disjunction()
-				.add(Restrictions.eq("nombre", tipoProductoForestal)));
+				.add(Restrictions.eq("nombre", tipoProductoForestal.getNombre())));
 
 		List<TipoProducto> tiposProducto = criteria.list();
 
@@ -25,10 +26,7 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 			throw new NegocioException(Constantes.EXISTE_TIPO_PRODUCTO);
 		}
 
-		TipoProducto tipoProducto = new TipoProducto();
-		tipoProducto.setNombre(tipoProductoForestal);
-
-		this.getHibernateTemplate().save(tipoProducto);
+		this.getHibernateTemplate().save(tipoProductoForestal);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
@@ -64,13 +62,13 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().clear();
 	}
 
-	public boolean existeTipoProductoForestal(String nombre, Long id) {
+	public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO) {
 
 		Criteria criteria = getSession().createCriteria(TipoProducto.class);
 		Conjunction conj = Restrictions.conjunction();
-		conj.add(Restrictions.eq("nombre", nombre));
-		if (id != null) {
-			conj.add(Restrictions.ne("id", id));
+		conj.add(Restrictions.eq("nombre", tipoProdructoDTO.getNombre()));
+		if (tipoProdructoDTO.getId() != null) {
+			conj.add(Restrictions.ne("id", tipoProdructoDTO.getId()));
 		}
 		criteria.add(conj);
 
