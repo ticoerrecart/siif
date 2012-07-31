@@ -31,8 +31,6 @@ import ar.com.siif.utils.Constantes;
 
 public class GuiaForestalAction extends ValidadorAction {
 
-	private String a;
-
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarAltaGuiaForestalBasica(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -444,25 +442,18 @@ public class GuiaForestalAction extends ValidadorAction {
 			}
 
 			String forwardBuscarNroGuia = request.getParameter("forwardBuscarNroGuia");
-			String paramLoc = request.getParameter("idLoc");
-			String paramProd = request.getParameter("idProd");
-
-			ILocalidadFachada localidadFachada = 
-								(ILocalidadFachada) ctx.getBean("localidadFachada");
-
-			/*IFiscalizacionFachada fiscalizacionFachada = 
-								(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");*/
-
-			List<Localidad> localidades = localidadFachada.getLocalidades();
-			//List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
-
-			request.setAttribute("localidades", localidades);
-			//request.setAttribute("productores", productores);
-			request.setAttribute("paramForward", paramForward);
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
-			request.setAttribute("idLoc", paramLoc);
-			request.setAttribute("idProd", paramProd);
 
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("urlDetalle",
+					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaBoletaDeposito");
+			request.setAttribute("paramForward", paramForward);
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";

@@ -28,13 +28,13 @@ function mostrarDatos(idTr){
 function mostrarDetalle(){
 
 	var idProductor = $('#selectProductores').val();
+	var forward = $('#paramForward').val();
 	$('#divCargando').show();	
 	$('#divDetalle').html("");
 	
 	if(idProductor != "" && idProductor != "-1"){
-		//Se tiene que cambiar el metodo "recuperarFiscalizacionesAModificar" se le tiene q enviar el idProductor.
 	//alert($('#paramUrlDetalle').val() + '&idProductor='+idProductor)
-		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor);
+		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
 		$('#divDetalle').hide();
 		$('#divDetalle').fadeIn(600);
 
@@ -99,7 +99,7 @@ function actualizarProductoresVolverCallback(productores){
 <input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
 <input id="paramProductor" type="hidden" value="${idProductor}">
 <input id="paramUrlDetalle" type="hidden" value="${urlDetalle}">
-
+<input id="paramForward" type="hidden" value="${paramForward}">
 <tr>
 	<td>
 		<table border="0" class="cuadrado" align="center" width="60%"
