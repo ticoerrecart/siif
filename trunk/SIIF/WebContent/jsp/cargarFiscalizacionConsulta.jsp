@@ -17,8 +17,8 @@ function volver(){
 
 	var metodo = $('#paramForward').val();
 	var productor = $('#paramProductor').val();
-	var localidad = $('#paramLocalidad').val();
-	parent.location = contextRoot() +  '/consultasFiscalizacion.do?metodo=cargarLocalidadesConsultaFiscalizacion&forward=' + metodo + '&idProd=' + productor + '&idLoc=' + localidad;		
+	var entidad = $('#paramIdTipoDeEntidad').val();
+	parent.location = contextRoot() +  '/consultasFiscalizacion.do?metodo=cargarTiposDeEntidadConsultaFiscalizacion&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;		
 }
 
 function imprimir(){	
@@ -36,7 +36,7 @@ function imprimir(){
 </script>
 
 <input id="idFiscalizacion" type="hidden" value="${fiscalizacion.id}">
-<input id="paramLocalidad" type="hidden" value="${fiscalizacion.productorForestal.localidad.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.idTipoEntidad}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 <input id="paramForward" type="hidden" value="${paramForward}">
 
