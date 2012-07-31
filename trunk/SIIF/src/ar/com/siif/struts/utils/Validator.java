@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.ValeTransporte;
@@ -410,7 +411,7 @@ public abstract class Validator {
 		return validarLetras(valor, 0, label, pError);
 	}
 	
-	public static boolean validarMuestras(List<Muestra> muestras, StringBuffer pError){
+	public static boolean validarMuestras(List<MuestraDTO> muestras, StringBuffer pError){
 
 		int cantNulos = 0;
 		
@@ -419,7 +420,7 @@ public abstract class Validator {
 			return false;
 		}
 		
-		for (Muestra muestra : muestras) {
+		for (MuestraDTO muestra : muestras) {
 			if(muestra != null){
 				if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0 || muestra.getDiametro2() == 0.0)
 				{
