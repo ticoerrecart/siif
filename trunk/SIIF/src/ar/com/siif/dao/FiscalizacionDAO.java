@@ -14,10 +14,13 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PPF;
+import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.utils.Constantes;
 
@@ -93,28 +96,6 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			throws DataBaseException {
 
 		try {
-			/*
-			 * Criteria criteria =
-			 * getSession().createCriteria(ActaMartillado.class);
-			 * criteria.add(Restrictions.disjunction() .add(
-			 * Restrictions.eq("nroOrden",acta.getNroOrden())));
-			 * 
-			 * ActaMartillado actaBase =
-			 * (ActaMartillado)criteria.uniqueResult();
-			 * 
-			 * Entidad productorForestal =
-			 * (Entidad)getSession().get(Entidad.class,
-			 * acta.getProductorForestal().getId());
-			 * 
-			 * acta.setProductorForestal(productorForestal);
-			 * acta.setId(actaBase.getId());
-			 * 
-			 * this.getHibernateTemplate().merge(acta);
-			 * this.getHibernateTemplate().flush();
-			 * this.getHibernateTemplate().clear();
-			 */
-
-			//Fiscalizacion f = (Fiscalizacion)this.getHibernateTemplate().get(Fiscalizacion.class, pFiscalizacion.getId());
 			
 			for (Muestra muestra : muestrasAEliminar) {
 
@@ -124,10 +105,8 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 				this.getHibernateTemplate().flush();
 				this.getHibernateTemplate().clear();				
 			}
-			
+						
 			this.getHibernateTemplate().saveOrUpdate(pFiscalizacion);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
 
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
@@ -138,12 +117,40 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		}
 	}
 
-	public void altaFiscalizacion(Fiscalizacion fiscalizacion) {
-		this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();
+	public void altaFiscalizacion(Fiscalizacion fiscalizacion)
+		throws DataBaseException{ 
+		try{			
+			this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		}			
 	}
 
+	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)
+		throws DataBaseException {
+						
+		try{
+			
+			this.getHibernateTemplate().merge(fiscalizacion);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+		}			
+	}	
+	
 	public Entidad getProductorForestal(long idProductorForestal) {
 		return (Entidad) this.getHibernateTemplate().get(Entidad.class, idProductorForestal);
 	}

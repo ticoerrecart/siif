@@ -1,13 +1,12 @@
 package ar.com.siif.dto;
 
-@Deprecated
 public class EntidadDTO {
 
 	private Long id;
 
 	private String nombre;
 
-	private String localidad;
+	private long idLocalidad;
 
 	private String direccion;
 
@@ -29,14 +28,6 @@ public class EntidadDTO {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getLocalidad() {
-		return localidad;
-	}
-
-	public void setLocalidad(String localidad) {
-		this.localidad = localidad;
 	}
 
 	public String getDireccion() {
@@ -61,5 +52,13 @@ public class EntidadDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public long getIdLocalidad() {
+		return idLocalidad;
+	}
+
+	public void setIdLocalidad(long idLocalidad) {
+		this.idLocalidad = idLocalidad;
 	}
 }

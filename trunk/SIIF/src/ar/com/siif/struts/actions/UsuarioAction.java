@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUsuarioFachada;
@@ -28,11 +29,11 @@ public class UsuarioAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "cargarAltaUsuario";
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_USUARIO_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.ALTA_USUARIO_MENU,usuario.getRol());
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 	
@@ -132,11 +133,11 @@ public class UsuarioAction extends ValidadorAction {
 			
 		String strForward = "exitoRecuperarUsuarios";
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_USUARIO_MENU,usuario.getRol());		
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_USUARIO_MENU,usuario.getRol());		
 						
 			if (usuario != null && Constantes.ID_ROL_ADMINISTRADOR == usuario.getRol().getId().longValue()) {
 				

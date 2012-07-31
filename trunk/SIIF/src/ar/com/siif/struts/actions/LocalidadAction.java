@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.Localidad;
@@ -27,11 +28,11 @@ public class LocalidadAction extends ValidadorAction {
 		
 		String strForward = "exitoRecuperarLocalidades";
 		try{
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			List<Localidad> localidades = localidadFachada.getLocalidades();
@@ -64,21 +65,21 @@ public class LocalidadAction extends ValidadorAction {
 		String strForward = "exitoAltaLocalidad";
 		try{	
 			LocalidadForm localidadForm = (LocalidadForm) form;
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);	
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);	
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());	
+			//rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());	
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			localidadForm.getLocalidad().setId(null);
 			localidadFachada.altaLocalidad(localidadForm.getLocalidad());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_LOCALIDAD);
 		
-		} catch (AccesoDenegadoException ade) {
+		/*} catch (AccesoDenegadoException ade) {
 			request.setAttribute("error", ade.getMessage());
 			strForward = "error";
-						
+			*/			
 		} catch (Exception e) {
 			strForward = "bloqueError";
 			request.setAttribute("error", e.getMessage());
@@ -92,11 +93,11 @@ public class LocalidadAction extends ValidadorAction {
 		
 		String strForward = "exitoCargarLocalidadAModificar";
 		try{
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());		
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());		
 		
 			String id = request.getParameter("id");
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");

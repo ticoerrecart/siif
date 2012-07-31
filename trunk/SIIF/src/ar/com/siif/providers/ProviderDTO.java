@@ -7,27 +7,40 @@ import ar.com.siif.dto.ActaMartilladoDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.LocalidadDTO;
+import ar.com.siif.dto.MarcacionDTO;
+import ar.com.siif.dto.PMFDTO;
+import ar.com.siif.dto.RodalDTO;
+import ar.com.siif.dto.RolDTO;
+import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TranzonDTO;
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.Marcacion;
+import ar.com.siif.negocio.PMF;
+import ar.com.siif.negocio.Rodal;
+import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.utils.Fecha;
 
-@Deprecated
 public abstract class ProviderDTO {
-	/*
+	
 		public static EntidadDTO getEntidadDTO(Entidad entidad){
 			
 			EntidadDTO entidadDTO = new EntidadDTO();
 
 			entidadDTO.setId(entidad.getId());
 			entidadDTO.setNombre(entidad.getNombre());
-			entidadDTO.setLocalidad(entidad.getLocalidad());
 			entidadDTO.setDireccion(entidad.getDireccion());
 			entidadDTO.setTelefono(entidad.getTelefono());
 			entidadDTO.setEmail(entidad.getEmail());
@@ -35,6 +48,93 @@ public abstract class ProviderDTO {
 			return entidadDTO;
 		}
 		
+		public static TipoProductoDTO getTipoProductoDTO(TipoProducto tipoProducto){
+			
+			TipoProductoDTO tipoProductoDTO = new TipoProductoDTO();
+			
+			tipoProductoDTO.setId(tipoProducto.getId());
+			tipoProductoDTO.setNombre(tipoProducto.getNombre());
+			
+			return tipoProductoDTO;
+			
+		}
+		
+		public static PMFDTO getPMFDTO(PMF pmf){
+			
+			PMFDTO pmfDTO = new PMFDTO();
+			
+			pmfDTO.setId(pmf.getId());
+			pmfDTO.setExpediente(pmf.getExpediente());
+			pmfDTO.setNombre(pmf.getNombre());
+			
+			return pmfDTO;			
+		}
+		
+		public static TranzonDTO getTranzonDTO(Tranzon tranzon){
+			
+			TranzonDTO tranzonDTO = new TranzonDTO();
+			
+			tranzonDTO.setId(tranzon.getId());
+			tranzonDTO.setDisposicion(tranzon.getDisposicion());
+			tranzonDTO.setNumero(tranzon.getNumero());
+			
+			return tranzonDTO;
+		}
+		
+		public static MarcacionDTO getMarcacionDTO(Marcacion marcacion){
+			
+			MarcacionDTO marcacionDTO = new MarcacionDTO();
+			
+			marcacionDTO.setId(marcacion.getId());
+			marcacionDTO.setDisposicion(marcacion.getDisposicion());
+			
+			return marcacionDTO;
+		}
+		
+		public static RodalDTO getRodalDTO(Rodal rodal){
+			
+			RodalDTO rodalDTO = new RodalDTO();
+			
+			rodalDTO.setId(rodal.getId());
+			rodalDTO.setNombre(rodal.getNombre());
+			
+			return rodalDTO;
+		}
+		
+		public static RolDTO getRolDTO(Rol rol){
+			
+			RolDTO rolDTO = new RolDTO();
+			
+			rolDTO.setId(rol.getId());
+			rolDTO.setRol(rol.getRol());
+			
+			return rolDTO;
+		}
+		
+		public static UsuarioDTO getUsuarioDTO(Usuario usuario){
+			
+			
+			UsuarioDTO usuarioDTO = new UsuarioDTO();
+			
+			usuarioDTO.setId(usuario.getId());
+			usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
+			usuarioDTO.setPassword(usuario.getPassword());
+			usuarioDTO.setRol(ProviderDTO.getRolDTO(usuario.getRol()));
+			
+			return usuarioDTO;
+		}
+		
+		public static LocalidadDTO getLocalidadDTO(Localidad localidad){
+			
+			LocalidadDTO localidadDTO = new LocalidadDTO();
+			
+			localidadDTO.setId(localidad.getId());
+			localidadDTO.setNombre(localidad.getNombre());
+			
+			return localidadDTO;
+		}
+		
+	/*	
 		public static ActaMartilladoDTO getActaMartilladoDTO(FiscalizacionForm form){
 			
 			ActaMartilladoDTO acta = new ActaMartilladoDTO();

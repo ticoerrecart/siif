@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.EntidadDAO;
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 
 public class EntidadFachada implements IEntidadFachada {
 
@@ -53,4 +55,29 @@ public class EntidadFachada implements IEntidadFachada {
 		return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
 	}
 
+	public List<Entidad> getOficinasForestales(){
+		return entidadDAO.getOficinasForestales();
+	}	
+	
+	public List<EntidadDTO> getOficinasForestalesDTO(){
+		
+		List<EntidadDTO> oficianasDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> oficinas = entidadDAO.getOficinasForestales();
+		
+		for (Entidad entidad : oficinas) {
+			oficianasDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		return oficianasDTO;
+	}	
+	
+	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad){
+		
+		List<EntidadDTO> entidadesDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> entidades = entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
+		
+		for (Entidad entidad : entidades) {
+			entidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		return entidadesDTO;
+	}	
 }

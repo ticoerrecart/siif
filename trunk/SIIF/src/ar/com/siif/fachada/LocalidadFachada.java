@@ -1,10 +1,13 @@
 package ar.com.siif.fachada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.LocalidadDAO;
+import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 
 public class LocalidadFachada implements ILocalidadFachada {
 
@@ -32,4 +35,16 @@ public class LocalidadFachada implements ILocalidadFachada {
 	public void altaLocalidad(Localidad laLocalidad) throws NegocioException {
 		localidadDAO.altaLocalidad(laLocalidad);
 	}
+	
+	public List<LocalidadDTO> getLocalidadesDTO(){
+		
+		List<LocalidadDTO> localidadesDTO = new ArrayList<LocalidadDTO>();
+		List<Localidad> localidades = localidadDAO.getLocalidades();
+		
+		for (Localidad localidad : localidades) {
+			localidadesDTO.add(ProviderDTO.getLocalidadDTO(localidad));
+		}
+		
+		return localidadesDTO;
+	}	
 }

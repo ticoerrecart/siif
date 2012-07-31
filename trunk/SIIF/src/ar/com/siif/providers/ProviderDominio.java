@@ -3,19 +3,72 @@ package ar.com.siif.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.negocio.BoletaDeposito;
+import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Muestra;
+import ar.com.siif.negocio.Rodal;
+import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.utils.Fecha;
 
-@Deprecated
 public abstract class ProviderDominio {
 
-	public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
+	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO>muestrasDTO,
+												Rodal rodal, Entidad productorForestal, Entidad oficinaForestal,
+												TipoProducto tipoProducto, Usuario usuario){
+		
+		Fiscalizacion fiscalizacion = new Fiscalizacion();
+		
+		fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
+		fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
+		fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha()));
+		fiscalizacion.setOficinaAlta(oficinaForestal);
+		fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
+		fiscalizacion.setProductorForestal(productorForestal);
+		fiscalizacion.setRodal(rodal);
+		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
+		fiscalizacion.setTipoProducto(tipoProducto);
+		fiscalizacion.setUsuario(usuario);
+
+		List<Muestra> muestras = new ArrayList<Muestra>();
+		for (MuestraDTO muestraDTO : muestrasDTO) {
+			muestras.add(ProviderDominio.getMuestra(muestraDTO,fiscalizacion));
+		}
+		fiscalizacion.setMuestra(muestras);
+		
+		return fiscalizacion;
+		
+	}
+	
+	public static Muestra getMuestra(MuestraDTO muestraDTO, Fiscalizacion fiscalizacion){
+		
+		Muestra muestra = new Muestra();
+		
+		muestra.setLargo(muestraDTO.getLargo());
+		muestra.setDiametro1(muestraDTO.getDiametro1());
+		muestra.setDiametro2(muestraDTO.getDiametro2());
+		muestra.setFiscalizacion(fiscalizacion);
+		
+		return muestra;
+	}
+	
+	public static TipoProducto getTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO){
+		
+		TipoProducto tipoProducto = new TipoProducto();
+		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
+		
+		return tipoProducto;
+	}
+	
+	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
 
 		Fiscalizacion acta = form.getFiscalizacion();
 		if (form.getFecha() != null && !form.getFecha().equals("")) {
@@ -120,7 +173,7 @@ public abstract class ProviderDominio {
 		}
 
 		return guia;
-	}
+	}*/
 
 	/*
 	 * public static Entidad getEntidad(EntidadDTO entidadDTO){

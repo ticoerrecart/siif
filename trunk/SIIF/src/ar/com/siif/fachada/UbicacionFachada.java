@@ -1,14 +1,20 @@
 package ar.com.siif.fachada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.UbicacionDAO;
+import ar.com.siif.dto.MarcacionDTO;
+import ar.com.siif.dto.PMFDTO;
+import ar.com.siif.dto.RodalDTO;
+import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 
 public class UbicacionFachada implements IUbicacionFachada {
 
@@ -145,5 +151,58 @@ public class UbicacionFachada implements IUbicacionFachada {
 
 	public Rodal getRodal(Long idRodal){
 		return this.ubicacionDAO.getRodal(idRodal);
+	}	
+	
+	public List<PMFDTO> getPMFsDTO(Long idPF){
+		
+		Entidad e = ubicacionDAO.getEntidad(idPF);
+		List<PMF> list = e.getPmfs();
+		ubicacionDAO.getHibernateTemplate().initialize(list);		
+		
+		List<PMFDTO> pmfListDTO = new ArrayList<PMFDTO>();
+		for (PMF pmf : list) {
+			pmfListDTO.add(ProviderDTO.getPMFDTO(pmf));
+		}
+		return pmfListDTO;
+	}	
+	
+	public List<TranzonDTO> getTranzonesDTOById(Long idPMF){
+		
+		PMF pmf = ubicacionDAO.getPMF(idPMF);
+		List<Tranzon> list = pmf.getTranzones();
+		ubicacionDAO.getHibernateTemplate().initialize(list);
+		
+		List<TranzonDTO> tranzonesDTO = new ArrayList<TranzonDTO>();
+		for (Tranzon tranzon : list) {
+			tranzonesDTO.add(ProviderDTO.getTranzonDTO(tranzon));
+		}
+		return tranzonesDTO;		
+	}
+	
+	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon){
+		
+		Tranzon tranzon = ubicacionDAO.getTranzon(idTranzon);
+		List<Marcacion> list = tranzon.getMarcaciones();
+		ubicacionDAO.getHibernateTemplate().initialize(list);		
+		
+		List<MarcacionDTO> marcacionesDTO = new ArrayList<MarcacionDTO>();
+		for (Marcacion marcacion : list) {
+			marcacionesDTO.add(ProviderDTO.getMarcacionDTO(marcacion));
+		}
+		return marcacionesDTO;
+	}
+	
+	public List<RodalDTO> getRodalesDTOById(Long idMarcacion){
+		
+		Marcacion marcacion = ubicacionDAO.getMarcacion(idMarcacion);
+		List<Rodal> list = marcacion.getRodales();
+		ubicacionDAO.getHibernateTemplate().initialize(list);
+		
+		List<RodalDTO> rodalesDTO = new ArrayList<RodalDTO>();
+		for (Rodal rodal : list) {
+			rodalesDTO.add(ProviderDTO.getRodalDTO(rodal));
+		}
+		
+		return rodalesDTO;
 	}	
 }

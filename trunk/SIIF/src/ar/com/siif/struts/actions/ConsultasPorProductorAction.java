@@ -8,6 +8,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
+
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
@@ -31,26 +33,26 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			String paramLoc = request.getParameter("idLoc");
 			String paramProd = request.getParameter("idProd");
 
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);						
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);						
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
 			
 			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
-				rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
+				//rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
 				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
 			}
 			else{
 				if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)){
-					rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_NO_VIGENTE_MENU,usuario.getRol());
+					//rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_NO_VIGENTE_MENU,usuario.getRol());
 					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
 				}
 				else{
 					if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)){
-						rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_AFORO_MENU,usuario.getRol());
+						//rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_AFORO_MENU,usuario.getRol());
 						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
 					}
 					else{
-						rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
+						//rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
 						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE);
 					}
 				}
@@ -225,12 +227,12 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		try {
 			String paramForward = request.getParameter("paramForward");	
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			
-			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
+			/*if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
 				rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
 			}
 			else{
@@ -245,7 +247,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 						rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
 					}
 				}
-			}			
+			}*/			
 			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");

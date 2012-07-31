@@ -2,6 +2,7 @@ package ar.com.siif.struts.actions.forms;
 
 import org.apache.struts.action.ActionForm;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.struts.utils.Validator;
 
@@ -15,6 +16,8 @@ public class EntidadForm extends ActionForm {
 
 	private String confirmacionEmail;
 
+	private EntidadDTO entidadDTO;
+	
 	public EntidadForm() {
 		this.entidad = new Entidad();
 	}
@@ -27,11 +30,11 @@ public class EntidadForm extends ActionForm {
 	 */
 	public boolean validar(StringBuffer error) {
 		boolean mailsOk = true;
-		boolean ok1 = Validator.requerido(this.getEntidad().getNombre(), "Nombre", error)
-				&& Validator.validarEmail(this.getEntidad().getEmail(), "E-Mail", error)
+		boolean ok1 = Validator.requerido(this.getEntidadDTO().getNombre(), "Nombre", error)
+				&& Validator.validarEmail(this.getEntidadDTO().getEmail(), "E-Mail", error)
 				&& Validator.validarEmail(this.getConfirmacionEmail(), "Confirmación de E-Mail",
 						error);
-		if (ok1 && !this.getEntidad().getEmail().equalsIgnoreCase(this.getConfirmacionEmail())) {
+		if (ok1 && !this.getEntidadDTO().getEmail().equalsIgnoreCase(this.getConfirmacionEmail())) {
 			Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");
 			mailsOk = false;
 		}
@@ -70,4 +73,13 @@ public class EntidadForm extends ActionForm {
 	public void setConfirmacionEmail(String confirmacionEmail) {
 		this.confirmacionEmail = confirmacionEmail;
 	}
+
+	public EntidadDTO getEntidadDTO() {
+		return entidadDTO;
+	}
+
+	public void setEntidadDTO(EntidadDTO entidadDTO) {
+		this.entidadDTO = entidadDTO;
+	}
+	
 }

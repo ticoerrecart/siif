@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
@@ -39,12 +40,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargaAltaGuiaForestalBasica";
 		String idFiscalizacion = request.getParameter("id");
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 			Fiscalizacion actaMartillado = fiscalizacionFachada.recuperarFiscalizacion(Long
@@ -67,7 +68,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 
 			ILoginFachada loginFachada = (ILoginFachada) ctx.getBean("loginFachada");
@@ -76,7 +77,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
-			usuario = loginFachada.getUsuario(usuario.getId());
+			Usuario usuario = loginFachada.getUsuario(usr.getId());
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			GuiaForestal guiaForestal = guiaForm.getGuiaForestal();
 
@@ -357,6 +358,7 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+
 	@SuppressWarnings("unchecked")
 	public ActionForward recuperarGuiasForestalesParaModificacionGFB(
 												ActionMapping mapping, ActionForm form,
@@ -396,12 +398,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarModificacionGuiaForestalBasica";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,usuario.getRol());
+			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
@@ -427,17 +429,17 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoRecuperarProductoresParaBoletaDeposito";
 		try {
 			String paramForward = request.getParameter("forward");
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-
-			if (paramForward.equals(Constantes.METODO_CARGAR_GUIA_PAGO_BOLETA_DEPOSITO)) {
-				rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU, usuario.getRol());
-				request.setAttribute("titulo", "Registrar Pago Boleta de Deposito");
+			
+			if(paramForward.equals(Constantes.METODO_CARGAR_GUIA_PAGO_BOLETA_DEPOSITO)){
+				//rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
+				request.setAttribute("titulo", "Registrar Pago Boleta de Deposito");				
 			}
 			else{
-				rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU, usuario.getRol());
+				//rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());				
 				request.setAttribute("titulo", "Reemplazar Boleta de Deposito");
 			}
 
@@ -537,12 +539,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarGuiaForestalPagoBoletaDeposito";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
+			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
@@ -599,12 +601,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarGuiaForestalReemBoletaDeposito";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());
+			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
@@ -629,18 +631,18 @@ public class GuiaForestalAction extends ValidadorAction {
 	{
 		String strForward = "exitoRecuperarProductoresParaValeTransporte";
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			String paramForward = request.getParameter("forward");
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-
-			if (paramForward.equals(Constantes.METODO_CARGAR_GUIA_DEVOLUCION_VALE)) {
-				rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU, usuario.getRol());
-				request.setAttribute("titulo", "Devolución de Vale de Transporte");
+						
+			if(paramForward.equals(Constantes.METODO_CARGAR_GUIA_DEVOLUCION_VALE)){
+				//rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());				
+				request.setAttribute("titulo", "Devolución de Vale de Transporte");				
 			}
 			else{
-				rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU, usuario.getRol());
+				//rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());				
 				request.setAttribute("titulo", "Reemplazar Vale de Transporte");
 			}
 
@@ -736,12 +738,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarGuiaForestalDevolucionValeTransporte";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());
+			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");
@@ -792,12 +794,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoCargarGuiaForestalReemplazarValeTransporte";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU, usuario.getRol());
-
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
+			//rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());
+			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");

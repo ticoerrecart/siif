@@ -2,22 +2,37 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 import ar.com.siif.dao.FiscalizacionDAO;
+import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Muestra;
+import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.providers.ProviderDominio;
 
 public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	private FiscalizacionDAO fiscalizacionDAO;
-
+	private IUbicacionFachada ubicacionFachada; 
+	private IEntidadFachada entidadFachada;
+	private ITipoProductoForestalFachada tipoProductoForestalFachada;
+	private IUsuarioFachada usuarioFachada;
+	
 	public FiscalizacionFachada() {
 	}
-
-	public FiscalizacionFachada(FiscalizacionDAO fiscalizacionDAO) {
+	
+	public FiscalizacionFachada(FiscalizacionDAO fiscalizacionDAO, IUbicacionFachada pUbicacionFachada,
+			IEntidadFachada pEntidadFachada, ITipoProductoForestalFachada pTipoProductoForestalFachada,
+			IUsuarioFachada pUsuarioFachada) {
 
 		this.fiscalizacionDAO = fiscalizacionDAO;
+		this.ubicacionFachada = pUbicacionFachada;
+		this.entidadFachada = pEntidadFachada;
+		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
+		this.usuarioFachada = pUsuarioFachada;
 	}
 
 	public List<Entidad> recuperarEntidades() {
@@ -57,8 +72,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		fiscalizacionDAO.modificacionFiscalizacion(fiscalizacion,muestrasAEliminar);
 	}
 
-	public void altaFiscalizacion(Fiscalizacion acta) {
-		fiscalizacionDAO.altaFiscalizacion(acta);
+	public void altaFiscalizacion(Fiscalizacion fiscalizacion)
+		throws DataBaseException{
+		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 
 	public Entidad getProductorForestal(long idProductorForestal) {
@@ -75,5 +91,26 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor){
 		return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
+	}	
+	
+	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)
+		throws DataBaseException {
+		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
+	}
+	
+	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
+		throws DataBaseException{
+		
+		Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getIdRodal());
+		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdProductorForestal());
+		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdOficinaForestal());
+		TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(
+				fiscalizacionDTO.getIdTipoProductoForestal());
+		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getIdUsuario());
+		
+		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,muestrasDTO,rodal,
+																		productorForestal,oficinaForestal,
+																		tipoProducto,usuario);
+		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}	
 }
