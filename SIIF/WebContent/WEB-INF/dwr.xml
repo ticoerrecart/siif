@@ -4,16 +4,31 @@
 		<convert converter="bean" match="ar.com.siif.negocio.PMF">
 			<param name="include" value="id, nombre, nombreExpediente" />
 		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.PMFDTO">
+			<param name="include" value="id, nombre, nombreExpediente" />
+		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Tranzon">
+			<param name="include" value="id, numero, numeroDisposicion" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.TranzonDTO">
 			<param name="include" value="id, numero, numeroDisposicion" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.negocio.Marcacion">
 			<param name="include" value="id, disposicion" />
 		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.MarcacionDTO">
+			<param name="include" value="id, disposicion" />
+		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Rodal">
 			<param name="include" value="id, nombre" />
 		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.RodalDTO">
+			<param name="include" value="id, nombre" />
+		</convert>
 		<convert converter="bean" match="ar.com.siif.negocio.Entidad">
+			<param name="include" value="id, nombre" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.EntidadDTO">
 			<param name="include" value="id, nombre" />
 		</convert>
 		
