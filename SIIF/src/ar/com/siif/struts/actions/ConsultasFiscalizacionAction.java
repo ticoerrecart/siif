@@ -98,7 +98,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
 					"../../consultasFiscalizacion.do?metodo=" + paramForward);
-			request.setAttribute("paramForward", paramForward);
+			//request.setAttribute("paramForward", paramForward);
 			
 
 		} catch (Exception e) {

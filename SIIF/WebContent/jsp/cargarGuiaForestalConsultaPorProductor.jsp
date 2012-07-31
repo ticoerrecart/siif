@@ -23,8 +23,8 @@ if (!document.all && document.getElementById) type="MO";
 function volver(){	
 	var metodo = $('#paramForward').val();
 	var productor = $('#paramProductor').val();
-	var localidad = $('#paramLocalidad').val();
-	parent.location = contextRoot() +  '/consultasPorProductor.do?metodo=cargarConsultaPorProductores&forward=' + metodo + '&idProd=' + productor + '&idLoc=' + localidad;
+	var entidad = $('#paramIdTipoDeEntidad').val();
+	parent.location = contextRoot() +  '/consultasPorProductor.do?metodo=cargarConsultaPorProductores&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;
 
 	/*var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
 	window.open("../../mostrarReporte.do?metodo=pruebaJasper",especificaciones);*/		
@@ -73,7 +73,7 @@ function col(sec) {
 <input id="idGuia" type="hidden" value="${guiaForestal.id}">
 <input id="paramForward" type="hidden" value="${paramForward}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
-<input id="paramLocalidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.localidad.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.idTipoEntidad}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
