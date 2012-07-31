@@ -55,6 +55,19 @@
 			</td>
 			<td>&nbsp;</td>
 		</tr>
+		<!--  <tr>
+			<td height="32">
+			</td>
+			<td><b>Sub-Sistema</b></td>
+			<td align="left">
+				<select class="botonerab">
+					<option>Direccion General de Bosques</option>
+					<option>Direccion General de Mineria</option>
+					<option>Dirección General de Pesca</option>
+				</select>
+			</td>
+			<td>&nbsp;</td>
+		</tr>-->		
 		<tr>
 			<td height="15" colspan="4">&nbsp;</td>
 		</tr>

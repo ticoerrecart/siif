@@ -140,7 +140,7 @@ function actualizarComboProductores(){
 
 	deshabilitarLocalizacion(["idPMF","idTranzon","idMarcacion","idRodal"]);
 
-	if($("#idLocalidad").val() != "-1"){		
+	/*if($("#idLocalidad").val() != "-1"){		
 		$('#idProductor').attr('disabled','');
 		EntidadFachada.getEntidadesPorLocalidad($("#idLocalidad").val(),actualizarProductoresCallback );
 	}else{
@@ -148,11 +148,21 @@ function actualizarComboProductores(){
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
 		dwr.util.addOptions("idProductor", data, "id", "nombre");
 		$('#idProductor').attr('disabled','disabled');		
-	}		
+	}*/	
+
+	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
+	if(idTipoDeEntidad != "-1"){
+		$('#idProductor').attr('disabled','');
+		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
+	}else{
+		dwr.util.removeAllOptions("idProductor");
+		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
+		dwr.util.addOptions("idProductor", data, "id", "nombre");		
+		$('#idProductor').attr('disabled','disabled');
+	}
 }
 
 function actualizarProductoresCallback(productores){
-
 	dwr.util.removeAllOptions("idProductor");
 	var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
 	dwr.util.addOptions("idProductor", data, "id", "nombre");	
@@ -165,7 +175,7 @@ function actualizarComboPMF(){
 	deshabilitarLocalizacion(["idPMF","idTranzon","idMarcacion","idRodal"]);
 	
 	if (idPF > 0 ){
-		UbicacionFachada.getPMFs(idPF,actualizarComboPMFCallback );
+		UbicacionFachada.getPMFsDTO(idPF,actualizarComboPMFCallback );
 	}
 }
 
@@ -182,7 +192,7 @@ function actualizarComboTranzon(){
 	deshabilitarLocalizacion(["idTranzon","idMarcacion","idRodal"]);
 	
 	if (idPMF > 0 ){
-		UbicacionFachada.getTranzonesById(idPMF,actualizarComboTranzonCallback );
+		UbicacionFachada.getTranzonesDTOById(idPMF,actualizarComboTranzonCallback );
 	}
 }
 
@@ -200,7 +210,7 @@ function actualizarComboMarcacion(){
 	deshabilitarLocalizacion(["idMarcacion","idRodal"]);
 	
 	if (idTranzon > 0 ){
-		UbicacionFachada.getMarcacionesById(idTranzon,actualizarComboMarcacionCallback );
+		UbicacionFachada.getMarcacionesDTOById(idTranzon,actualizarComboMarcacionCallback );
 	}
 }
 
@@ -218,7 +228,7 @@ function actualizarComboRodal(){
 	deshabilitarLocalizacion(["idRodal"]);
 	
 	if (idMarcacion > 0 ){
-		UbicacionFachada.getRodalesById(idMarcacion,actualizarComboRodalCallback );
+		UbicacionFachada.getRodalesDTOById(idMarcacion,actualizarComboRodalCallback );
 	}
 }
 
@@ -260,20 +270,39 @@ function deshabilitarLocalizacion(ids){
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 			<td width="30%">
-				<select id="idLocalidad" class="botonerab" onchange="actualizarComboProductores();">
+				<!-- <select id="idLocalidad" class="botonerab" onchange="actualizarComboProductores();">
 					<option value="-1">-Seleccione una Localidad-</option>
 					<c:forEach items="${localidades}" var="localidad">
 						<option value="${localidad.id}">
 							<c:out value="${localidad.nombre}"></c:out>
 						</option>
 					</c:forEach>	
-				</select>
+				</select>-->
+				<select id="selectTiposDeEntidad" class="botonerab" onchange="actualizarComboProductores()">
+					<option value="-1">-Seleccione Tipo de Entidad-</option>
+					<c:forEach items="${tiposEntidad}" var="tipoDeEntidad" varStatus="i">
+												
+						<c:choose>
+							<c:when test="${tipoDeEntidad.name == idLocalidad}">
+								<option value="<c:out value='${tipoDeEntidad.name}'></c:out>" selected="selected">
+									<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+								</option>
+							</c:when>
+							<c:otherwise>
+								<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
+									<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+								</option>
+							</c:otherwise>
+						</c:choose>									
+						
+					</c:forEach>
+				</select>				
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="30%">
-				<select id="idProductor" class="botonerab" name="idProductorForestal" onchange="actualizarComboPMF();" 
+				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.idProductorForestal" onchange="actualizarComboPMF();" 
 						disabled="disabled">
 					<option value="-1">-Seleccione un Productor-</option>
 				</select>
@@ -282,23 +311,23 @@ function deshabilitarLocalizacion(ids){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td>			
-				<input id="datepicker" name="fecha" class="botonerab" type="text" size="23"	readonly="readonly">
+				<input id="datepicker" name="fiscalizacionDTO.fecha" class="botonerab" type="text" size="23"	readonly="readonly">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td>
-				<input name="fiscalizacion.periodoForestal"	class="botonerab" type="text" size="27">
+				<input name="fiscalizacionDTO.periodoForestal"	class="botonerab" type="text" size="27">
 			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td>
-				<input name="fiscalizacion.cantidadUnidades" class="botonerab" type="text" size="27"
+				<input name="fiscalizacionDTO.cantidadUnidades" class="botonerab" type="text" size="27"
 					   onkeypress="javascript:esNumerico(event);">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
-				<select class="botonerab" name="idTipoProductoForestal">
+				<select class="botonerab" name="fiscalizacionDTO.idTipoProductoForestal">
 					<option value="-1">- Seleccione un Producto -</option>
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
 						<option value="${tipoProducto.id}"><c:out value="${tipoProducto.nombre}"></c:out></option>
@@ -311,17 +340,33 @@ function deshabilitarLocalizacion(ids){
 				<bean:message key='SIIF.label.CantMts3'/>
 			</td>
 			<td>
-				<input name="fiscalizacion.cantidadMts" class="botonerab" type="text" size="27"
+				<input name="fiscalizacionDTO.cantidadMts" class="botonerab" type="text" size="27"
 					   onkeypress="javascript:esNumericoConDecimal(event);">
 			</td>
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TamañoMuestra'/>
 			</td>
 			<td>
-				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
+				<input name="fiscalizacionDTO.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
 				 	   id="idTamanioMuestra" readonly="readonly" onkeypress="javascript:esNumerico(event);">
 			</td>
 		</tr>
+		<tr>
+			<td class="botoneralNegritaRight">
+				Oficina
+			</td>
+			<td>
+				<select class="botonerab" name="fiscalizacionDTO.idOficinaForestal">
+					<option value="-1">- Seleccione una Oficina -</option>
+					<c:forEach items="${oficinas}" var="oficina">
+						<option value="${oficina.id}"><c:out value="${oficina.nombre}"></c:out></option>
+					</c:forEach>
+				</select>
+			</td>
+			<td class="botoneralNegritaRight" colspan="2">
+
+			</td>
+		</tr>		
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
@@ -378,7 +423,7 @@ function deshabilitarLocalizacion(ids){
 							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>
-							<select id="idRodal" class="botonerab" name="idRodal" disabled="disabled">
+							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" disabled="disabled">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>
@@ -414,10 +459,10 @@ function deshabilitarLocalizacion(ids){
 							<input class="botonerab" type="button" value="Remover" onclick="removerMuestras();">
 						</td>
 					</tr>
+				
 					<tr>
 						<td height="10" colspan="3"></td>
-					</tr>
-	
+					</tr>	
 					<tr>
 						<td colspan="3">
 							<table id="tablaMuestras" border="0" class="cuadrado" align="center"

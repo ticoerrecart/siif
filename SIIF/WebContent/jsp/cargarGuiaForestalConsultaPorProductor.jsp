@@ -328,7 +328,7 @@ function col(sec) {
 										</tr>
 										<tr>
 											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.NumeroCuota'/>
+												<bean:message key='SIIF.label.BoletaDeposito'/>
 											</td>
 											<td width="35%" align="left">
 												<input value="${boletaDeposito.numero}" class="botonerab" type="text"

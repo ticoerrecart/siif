@@ -513,7 +513,7 @@ function calcularTotales(){
 								</tr>
 								<tr>
 									<td width="10%" class="botoneralNegritaRight">
-										<bean:message key='SIIF.label.NumeroCuota'/>
+										<bean:message key='SIIF.label.BoletaDeposito'/>
 										
 									</td>
 									<td width="40%" align="left"><input

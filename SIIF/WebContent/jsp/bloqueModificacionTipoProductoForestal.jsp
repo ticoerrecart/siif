@@ -10,7 +10,7 @@
 <html:form action="tipoProductoForestal"
 	styleId="tipoProductoForestalForm">
 	<html:hidden property="metodo" value="modificacionTipoProductoForestal" />
-	<html:hidden property="productoForestal.id" value="${tipoProducto.id}" />
+	<html:hidden property="productoForestalDTO.id" value="${tipoProducto.id}" />
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
@@ -20,7 +20,7 @@
 			<td width="35%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TipoProducto'/>
 			</td>
-			<td><input name="productoForestal.nombre" class="botonerab"
+			<td><input name="productoForestalDTO.nombre" class="botonerab"
 				type="text" size="30"
 				value="<c:out value='${tipoProducto.nombre}'></c:out>"></td>
 			<td width="10%"></td>

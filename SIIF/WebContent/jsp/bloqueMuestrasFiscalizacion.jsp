@@ -24,11 +24,11 @@
 	<tr id="fila<%=i%>">
 		<td class="botoneralNegritaRight"><%=i+1 %></td>
 		<td><input class="botonerab" type="text"
-			name='<%="muestras["+i+"].largo"%>'></td>
+			name='<%="muestrasDTO["+i+"].largo"%>'></td>
 		<td><input class="botonerab" type="text"
-			name='<%="muestras["+i+"].diametro1"%>'></td>
+			name='<%="muestrasDTO["+i+"].diametro1"%>'></td>
 		<td><input class="botonerab" type="text"
-			name='<%="muestras["+i+"].diametro2"%>'></td>
+			name='<%="muestrasDTO["+i+"].diametro2"%>'></td>
 	</tr>
 
 	<tr id="espDespues<%=i%>">
