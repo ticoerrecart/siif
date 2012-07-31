@@ -33,11 +33,11 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function volver(){	
-	var localidad = $('#paramLocalidad').val();
+	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();	
 	parent.location = contextRoot() +  
 	'/guiaForestal.do?metodo=recuperarProductoresParaBoletasDeposito&forward=cargarGuiaForestalReemBoletaDeposito'+ 
-	'&forwardBuscarNroGuia=cargarGuiaForestalReemBoletaDepositoPorNroGuia&idProd=' + productor + '&idLoc=' + localidad;	
+	'&forwardBuscarNroGuia=cargarGuiaForestalReemBoletaDepositoPorNroGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
 }
 
 function exp(sec) {
@@ -192,7 +192,7 @@ function cambiarAtributos(idBoleta,readonly){
 %>
 
 <div id="error" class="rojoAdvertencia"></div>
-<input id="paramLocalidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.localidad.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.idTipoEntidad}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
