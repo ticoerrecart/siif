@@ -40,7 +40,7 @@ function submitir(){
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
-			<td align="left"><input name="productoForestal.nombre"
+			<td align="left"><input name="productoForestalDTO.nombre"
 				class="botonerab" type="text" size="30"></td>
 		</tr>
 		<tr>

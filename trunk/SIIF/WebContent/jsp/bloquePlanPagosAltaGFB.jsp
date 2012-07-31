@@ -24,7 +24,7 @@
 				<td height="5" colspan="4"></td>
 			</tr>
 			<tr>
-				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NumeroCuota'/></td>
+				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.BoletaDeposito'/></td>
 				<td width="40%" align="left">
 					<input name='<%="boletasDeposito["+(i-1)+"].numero"%>' class="botonerab" type="text" 
 						size="20" onkeypress="javascript:esNumerico(event);">

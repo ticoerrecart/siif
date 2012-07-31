@@ -444,7 +444,7 @@ function cambiarAtributos(idBoleta,readonly){
 										</tr>
 										<tr>
 											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.NumeroCuota'/>
+												<bean:message key='SIIF.label.BoletaDeposito'/>
 											</td>
 											<td width="35%" align="left">
 												<input id="idCuota<c:out value='${boletaDeposito.id}'></c:out>" 
