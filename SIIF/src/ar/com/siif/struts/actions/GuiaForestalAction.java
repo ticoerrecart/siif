@@ -233,12 +233,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoRecuperarTiposDeEntidadParaAltaGFB";
 
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute(
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU, usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU, usuario.getRol());
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
@@ -332,11 +332,11 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoRecuperarTiposDeEntidadParaModificacionGFB";
 
 		try {
-			Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU, usuario.getRol());
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU, usuario.getRol());
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
