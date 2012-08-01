@@ -25,7 +25,7 @@
 			<html:hidden property="metodo" value="${metodo}" />
 		</c:otherwise>
 	</c:choose>
-	<html:hidden property="localidad.id" value="${localidad.id}" />
+	<html:hidden property="localidadDTO.id" value="${localidad.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
@@ -44,7 +44,7 @@
 		<tr>
 			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Nombre'/></td>
 			<td align="left">
-				<html:text styleClass="botonerab" property="localidad.nombre" value="${localidad.nombre}" />
+				<html:text styleClass="botonerab" property="localidadDTO.nombre" value="${localidad.nombre}" />
 			</td>
 		</tr>
 		<tr>

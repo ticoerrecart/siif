@@ -73,7 +73,7 @@
 					<td><c:out value="${entidad.localidad.nombre}" /></td>
 					<td><c:out value="${entidad.telefono}" /></td>
 					<td><c:out value="${entidad.email}" /></td>
-					<td><c:out value="${entidad.tipoEntidad}" /></td>
+					<td><c:out value="${entidad.tipoEntidadDesc}" /></td>
 					<td><!--a href="../../entidad.do?metodo=cargarEntidadAModificar&id=<c:out value='${entidad.id}'/>">Editar</a-->
 					<a href="javascript:mostrarDatos(${entidad.id},${i.count});">
 						<bean:message key='SIIF.label.Editar'/>

@@ -76,16 +76,20 @@ function submitir(){
 			</tr>
 			<c:forEach items="${aforos}" var="aforo" varStatus="i">
 				<tr id="tr<c:out value='${i.count}'></c:out>">
-					<td class="botonerab"><c:choose>
-						<c:when test="${aforo.tipoProductor == 'PPF'}">
-										Pequeño Productor Forestal
-									</c:when>
-						<c:otherwise>
-										Obrajero
-									</c:otherwise>
-					</c:choose></td>
-					<td class="botonerab"><c:out
-						value="${aforo.tipoProducto.nombre}"></c:out></td>
+					<td class="botonerab">
+						<!--<c:choose>
+							<c:when test="${aforo.tipoProductor == 'PPF'}">
+								Pequeño Productor Forestal
+							</c:when>
+							<c:otherwise>
+								Obrajero
+							</c:otherwise>
+						</c:choose>-->
+						<c:out value="${aforo.tipoProductorDesc}"></c:out>
+					</td>
+					<td class="botonerab">
+						<c:out value="${aforo.tipoProducto.nombre}"></c:out>
+					</td>
 					<td class="botonerab"><c:out value="${aforo.estado}"></c:out></td>
 					<td class="botonerab"><c:out value="${aforo.valorAforo}"></c:out></td>
 					<td>
