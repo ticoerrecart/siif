@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
@@ -35,7 +36,7 @@ public class LocalidadAction extends ValidadorAction {
 			//rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			List<Localidad> localidades = localidadFachada.getLocalidades();
+			List<LocalidadDTO> localidades = localidadFachada.getLocalidadesDTO();
 			request.setAttribute("localidades", localidades);
 			
 		} catch (Exception e) {
@@ -44,18 +45,6 @@ public class LocalidadAction extends ValidadorAction {
 		}
 		
 		return mapping.findForward(strForward);
-	}
-
-	public boolean validarLocalidadForm(StringBuffer error, ActionForm form) {
-		LocalidadForm localidadForm = (LocalidadForm) form;
-		WebApplicationContext ctx = getWebApplicationContext();
-		ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-		boolean existe = localidadFachada.existeLocalidad(localidadForm.getLocalidad().getNombre(),
-				localidadForm.getLocalidad().getId());
-		if (existe) {
-			Validator.addErrorXML(error, Constantes.EXISTE_LOCALIDAD);
-		}
-		return !existe && localidadForm.validar(error);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,14 +61,12 @@ public class LocalidadAction extends ValidadorAction {
 			//rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());	
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			localidadForm.getLocalidad().setId(null);
-			localidadFachada.altaLocalidad(localidadForm.getLocalidad());
+			localidadFachada.altaLocalidad(localidadForm.getLocalidadDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_LOCALIDAD);
 		
 		/*} catch (AccesoDenegadoException ade) {
 			request.setAttribute("error", ade.getMessage());
-			strForward = "error";
-			*/			
+			strForward = "error";*/			
 		} catch (Exception e) {
 			strForward = "bloqueError";
 			request.setAttribute("error", e.getMessage());
@@ -101,7 +88,7 @@ public class LocalidadAction extends ValidadorAction {
 		
 			String id = request.getParameter("id");
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			request.setAttribute("localidad", localidadFachada.getLocalidadPorId(Long.valueOf(id)));
+			request.setAttribute("localidad", localidadFachada.getLocalidadDTOPorId(Long.valueOf(id)));
 			request.setAttribute("metodo", "modificacionLocalidad");
 		
 		} catch (Exception e) {
@@ -120,7 +107,7 @@ public class LocalidadAction extends ValidadorAction {
 			LocalidadForm localidadForm = (LocalidadForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			localidadFachada.altaLocalidad(localidadForm.getLocalidad());
+			localidadFachada.modificacionLocalidad(localidadForm.getLocalidadDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_LOCALIDAD);
 		
 		} catch (Exception e) {
@@ -128,4 +115,15 @@ public class LocalidadAction extends ValidadorAction {
 		}			
 		return mapping.findForward(strForward);
 	}
+	
+	public boolean validarLocalidadForm(StringBuffer error, ActionForm form) {
+		LocalidadForm localidadForm = (LocalidadForm) form;
+		WebApplicationContext ctx = getWebApplicationContext();
+		ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+		boolean existe = localidadFachada.existeLocalidad(localidadForm.getLocalidadDTO());
+		if (existe) {
+			Validator.addErrorXML(error, Constantes.EXISTE_LOCALIDAD);
+		}
+		return !existe && localidadForm.validar(error);
+	}	
 }

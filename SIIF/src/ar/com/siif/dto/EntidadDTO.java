@@ -8,11 +8,17 @@ public class EntidadDTO {
 
 	private long idLocalidad;
 
+	private String tipoEntidad;
+	
+	private String tipoEntidadDesc;
+	
 	private String direccion;
 
 	private String telefono;
 
 	private String email;
+	
+	private LocalidadDTO localidad;
 
 	public Long getId() {
 		return id;
@@ -61,4 +67,29 @@ public class EntidadDTO {
 	public void setIdLocalidad(long idLocalidad) {
 		this.idLocalidad = idLocalidad;
 	}
+
+	public String getTipoEntidad() {
+		return tipoEntidad;
+	}
+
+	public void setTipoEntidad(String tipoEntidad) {
+		this.tipoEntidad = tipoEntidad;
+	}
+
+	public LocalidadDTO getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(LocalidadDTO localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getTipoEntidadDesc() {
+		return tipoEntidadDesc;
+	}
+
+	public void setTipoEntidadDesc(String tipoEntidadDesc) {
+		this.tipoEntidadDesc = tipoEntidadDesc;
+	}
+	
 }

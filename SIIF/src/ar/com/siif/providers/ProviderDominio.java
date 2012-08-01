@@ -3,14 +3,23 @@ package ar.com.siif.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siif.dto.AforoDTO;
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.enums.TipoDeEntidad;
+import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Muestra;
+import ar.com.siif.negocio.Obrajero;
+import ar.com.siif.negocio.PPF;
+import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
@@ -67,6 +76,74 @@ public abstract class ProviderDominio {
 		
 		return tipoProducto;
 	}
+	
+	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad){
+		
+		Entidad entidad = null;
+		if (TipoDeEntidad.PPF.getName().equalsIgnoreCase(entidadDTO.getTipoEntidad())) {
+			entidad = new PPF();
+		} else {
+			if (TipoDeEntidad.OBR.getName().equals(entidadDTO.getTipoEntidad())) {
+				entidad = new Obrajero();
+			} else {
+				entidad = new RecursosNaturales();
+			}
+		}
+
+		entidad.setDireccion(entidadDTO.getDireccion());
+		entidad.setEmail(entidadDTO.getEmail());
+		entidad.setNombre(entidadDTO.getNombre());
+		entidad.setTelefono(entidadDTO.getTelefono());		
+		entidad.setLocalidad(localidad);
+		
+		return entidad;
+	}
+	
+	public static Entidad getEntidad(Entidad entidad, EntidadDTO entidadDTO, Localidad localidad){
+		
+		entidad.setDireccion(entidadDTO.getDireccion());
+		entidad.setEmail(entidadDTO.getEmail());
+		entidad.setLocalidad(localidad);
+		entidad.setNombre(entidadDTO.getNombre());
+		entidad.setTelefono(entidadDTO.getTelefono());
+		
+		return entidad;
+	}
+	
+	public static Aforo getAforo(AforoDTO aforoDTO, TipoProducto tipoProducto){
+		
+		Aforo aforo = new Aforo();
+		
+		aforo.setEstado(aforoDTO.getEstado());
+		aforo.setTipoProducto(tipoProducto);
+		aforo.setTipoProductor(aforoDTO.getTipoProductor());
+		aforo.setValorAforo(aforoDTO.getValorAforo());
+
+		return aforo;
+	}
+	
+	public static Aforo getAforo(Aforo aforo, AforoDTO aforoDTO, TipoProducto tipoProducto){
+		
+		aforo.setEstado(aforoDTO.getEstado());
+		aforo.setTipoProducto(tipoProducto);
+		aforo.setTipoProductor(aforoDTO.getTipoProductor());
+		aforo.setValorAforo(aforoDTO.getValorAforo());
+		
+		return aforo;
+	}	
+	
+	public static Localidad getLocalidad(LocalidadDTO localidadDTO){
+		
+		Localidad localidad = new Localidad();		
+		localidad.setNombre(localidadDTO.getNombre());
+		return localidad;
+	}
+
+	public static Localidad getLocalidad(Localidad localidad, LocalidadDTO localidadDTO){
+		
+		localidad.setNombre(localidadDTO.getNombre());
+		return localidad;
+	}	
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
 

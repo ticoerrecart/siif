@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
@@ -39,6 +40,9 @@ public class EntidadAction extends ValidadorAction {
 			//rolFachada.verificarMenu(Constantes.ALTA_ENTIDAD_MENU,usuario.getRol());
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");			
+			
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
 			request.setAttribute("metodo", "altaEntidad");
@@ -58,31 +62,11 @@ public class EntidadAction extends ValidadorAction {
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 			EntidadForm entidadForm = (EntidadForm) form;
-			Entidad entidad = null;
-			if ("PPF".equalsIgnoreCase(entidadForm.getTipoEntidad())) {
-				entidad = new PPF();
-			} else {
-				if ("OBR".equals(entidadForm.getTipoEntidad())) {
-					entidad = new Obrajero();
-				} else {
-					entidad = new RecursosNaturales();
-				}
-			}
-
-			// recuperar la localidad y setear el objeto
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");
-			entidad.setLocalidad(localidadFachada.getLocalidadPorId(Long.valueOf(entidadForm
-					.getIdLocalidad())));
-
-			entidad.setDireccion(entidadForm.getEntidad().getDireccion());
-			entidad.setEmail(entidadForm.getEntidad().getEmail());
-			entidad.setNombre(entidadForm.getEntidad().getNombre());
-			entidad.setTelefono(entidadForm.getEntidad().getTelefono());
-			// grabar la entidad
+			EntidadDTO entidadDTO = entidadForm.getEntidadDTO();
+			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
-			entidadFachada.altaEntidad(entidad);
+			entidadFachada.altaEntidad(entidadDTO);
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_ENTIDAD);
 		} catch (NegocioException ne) {
@@ -98,8 +82,8 @@ public class EntidadAction extends ValidadorAction {
 		EntidadForm entidadForm = (EntidadForm) form;
 		WebApplicationContext ctx = getWebApplicationContext();
 		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-		boolean existe = entidadFachada.existeEntidad(entidadForm.getEntidad().getNombre(),
-				entidadForm.getEntidad().getId());
+		boolean existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+				entidadForm.getEntidadDTO().getId());
 		if (existe) {
 			Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
 		}
@@ -119,7 +103,7 @@ public class EntidadAction extends ValidadorAction {
 			//rolFachada.verificarMenu(Constantes.MODIFICACION_ENTIDAD_MENU,usuario.getRol());
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-			List<Entidad> entidades = entidadFachada.getEntidades();
+			List<EntidadDTO> entidades = entidadFachada.getEntidadesDTO();
 			request.setAttribute("entidades", entidades);
 			
 		}catch(Exception e){
@@ -145,13 +129,11 @@ public class EntidadAction extends ValidadorAction {
 	
 			// recupero la entidad de la B.D.
 			String id = request.getParameter("id");
-			Entidad entidad = entidadFachada.getEntidad(Long.parseLong(id));
-			//request.getSession().setAttribute("entidad", entidad);
+			EntidadDTO entidad = entidadFachada.getEntidadDTO(Long.parseLong(id));
 			request.setAttribute("entidad", entidad);
 	
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
-			request.setAttribute("localidades", localidadFachada.getLocalidades());
-			//request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_ENTIDAD);
+			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("metodo", "modificacionEntidad");
 
 		}catch(Exception e){
@@ -167,24 +149,13 @@ public class EntidadAction extends ValidadorAction {
 
 		String strForward = "exitoModificacionEntidad";
 		try {
-			/*
-			 * Entidad entidad = (Entidad) request.getSession().getAttribute(
-			 * "entidad");
-			 */
 			WebApplicationContext ctx = getWebApplicationContext();
 			EntidadForm entidadForm = (EntidadForm) form;
-			Entidad entidad = entidadForm.getEntidad();
+			EntidadDTO entidad = entidadForm.getEntidadDTO();
 
-			// recuperar la localidad y setear el objeto
-			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-					.getBean("localidadFachada");
-			entidad.setLocalidad(localidadFachada.getLocalidadPorId(Long.valueOf(entidadForm
-					.getIdLocalidad())));
-
-			// grabar la entidad
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
-			entidadFachada.altaEntidad(entidad);
+			entidadFachada.modificacionEntidad(entidad);
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_ENTIDAD);
 		} catch (NegocioException ne) {

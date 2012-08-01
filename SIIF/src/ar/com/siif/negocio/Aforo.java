@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.enums.TipoDeEntidad;
+
 @Entity
 public class Aforo {
 
@@ -68,4 +70,13 @@ public class Aforo {
 		this.tipoProductor = tipoProductor;
 	}
 
+	public String getTipoProductorDesc(){
+		
+		if(this.getTipoProductor().equals(TipoDeEntidad.OBR.getName())){
+			return TipoDeEntidad.OBR.getDescripcion();
+		}
+		else{
+			return TipoDeEntidad.PPF.getDescripcion();
+		}
+	}
 }

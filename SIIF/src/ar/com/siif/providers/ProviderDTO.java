@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dto.ActaMartilladoDTO;
+import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
@@ -16,6 +17,7 @@ import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
@@ -44,7 +46,10 @@ public abstract class ProviderDTO {
 			entidadDTO.setDireccion(entidad.getDireccion());
 			entidadDTO.setTelefono(entidad.getTelefono());
 			entidadDTO.setEmail(entidad.getEmail());
-
+			entidadDTO.setLocalidad(ProviderDTO.getLocalidadDTO(entidad.getLocalidad()));
+			entidadDTO.setTipoEntidadDesc(entidad.getTipoEntidad());
+			entidadDTO.setTipoEntidad(entidad.getIdTipoEntidad());
+			
 			return entidadDTO;
 		}
 		
@@ -132,6 +137,20 @@ public abstract class ProviderDTO {
 			localidadDTO.setNombre(localidad.getNombre());
 			
 			return localidadDTO;
+		}
+		
+		public static AforoDTO getAforoDTO(Aforo aforo){
+			
+			AforoDTO aforoDTO = new AforoDTO();
+			
+			aforoDTO.setEstado(aforo.getEstado());
+			aforoDTO.setId(aforo.getId());
+			aforoDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(aforo.getTipoProducto()));
+			aforoDTO.setTipoProductor(aforo.getTipoProductor());
+			aforoDTO.setTipoProductorDesc(aforo.getTipoProductorDesc());
+			aforoDTO.setValorAforo(aforo.getValorAforo());
+			
+			return aforoDTO;
 		}
 		
 	/*	
