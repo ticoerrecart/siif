@@ -37,36 +37,45 @@ function submitir(){
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo$'/></td>
-			<td align="left"><input name="aforo.valorAforo"
-				class="botonerab" type="text" size="30"></td>
+			<td align="left">
+				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30">
+			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
-			<td align="left"><html:select styleClass="botonerab"
-				property="idTipoProductoForestal">
-
-				<c:forEach items="${tiposProducto}" var="tipoProducto">
-					<html:option value="${tipoProducto.id}">
-						<c:out value="${tipoProducto.nombre}"></c:out>
-					</html:option>
-				</c:forEach>
-
-			</html:select></td>
+			<td align="left">
+				<html:select styleClass="botonerab" property="aforoDTO.tipoProducto.id">
+					<c:forEach items="${tiposProducto}" var="tipoProducto">
+						<html:option value="${tipoProducto.id}">
+							<c:out value="${tipoProducto.nombre}"></c:out>
+						</html:option>
+					</c:forEach>
+				</html:select>
+			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Estado'/></td>
-			<td align="left"><select class="botonerab" name="aforo.estado">
-				<option value="Seco">Seco</option>
-				<option value="Verde">Verde</option>
-			</select></td>
+			<td align="left">
+				<select class="botonerab" name="aforoDTO.estado">
+					<c:forEach items="${estadosProducto}" var="estadoProducto" varStatus="i">
+						<option value="<c:out value='${estadoProducto.name}'></c:out>">
+							<c:out value="${estadoProducto.descripcion}"></c:out>
+						</option>							
+					</c:forEach>
+				</select>			
+			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProductor'/></td>
-			<td align="left"><select class="botonerab"
-				name="aforo.tipoProductor">
-				<option value="OBR">Obrajero</option>
-				<option value="PPF">Pequeño Productor Forestal</option>
-			</select></td>
+			<td align="left">
+				<select class="botonerab" name="aforoDTO.tipoProductor">
+					<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
+						<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
+							<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+						</option>							
+					</c:forEach>
+				</select>			
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>

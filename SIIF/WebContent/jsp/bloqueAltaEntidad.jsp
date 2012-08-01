@@ -16,7 +16,7 @@
 <div id="errores" class="rojoAdvertencia">${error}</div>
 <html:form action="entidad" styleId="entidadFormId">
 	<html:hidden property="metodo" value="${metodo}" />
-	<html:hidden property="entidad.id" value="${entidad.id}" />
+	<html:hidden property="entidadDTO.id" value="${entidad.id}" />
 
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
@@ -30,57 +30,59 @@
 			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 			<td align="left"><c:choose>
 				<c:when test="${metodo=='altaEntidad'}">
-					<html:select property="tipoEntidad" styleClass="botonerab"
-						value="${entidad.idTipoEntidad}">
-						<html:option value="OBR">Obrajero</html:option>
-						<html:option value="PPF">Pequeño Prod. Forestal</html:option>
-						<html:option value="RN">Recursos Naturales</html:option>
-					</html:select>
+					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad">
+						<option value="-1">-Seleccione un Tipo de Entidad-</option>
+						<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
+							<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
+								<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+							</option>							
+						</c:forEach>
+					</select>
 				</c:when>
 				<c:otherwise>
 					<!-- AL MODIFICAR NO PUEDO CAMBIAR EL TIPO DE ENTIDAD -->
-					<html:select property="tipoEntidad" styleClass="botonerab"
-						value="${entidad.idTipoEntidad}">
-						<html:option value="${entidad.idTipoEntidad}">${entidad.tipoEntidad}</html:option>
-					</html:select>
+					<input type="text" readonly="readonly" class="botonerab" name="entidadDTO.tipoEntidadDesc" 
+							value="${entidad.tipoEntidadDesc}" size="30">
+					<input type="hidden"" name="entidadDTO.tipoEntidad" value="${entidad.tipoEntidad}">
 				</c:otherwise>
 			</c:choose></td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Nombre'/></td>
-			<td align="left"><html:text property="entidad.nombre"
+			<td align="left"><html:text property="entidadDTO.nombre" size="30"
 				styleClass="botonerab" value="${entidad.nombre}" /></td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
-			<td align="left"><html:select styleClass="botonerab"
-				property="idLocalidad" value="${entidad.localidad.id}">
-				<c:forEach items="${localidades}" var="localidad">
-					<html:option value="${localidad.id}">
-						<c:out value="${localidad.nombre}" />
-					</html:option>
-				</c:forEach>
+			<td align="left">
+				<html:select styleClass="botonerab" property="entidadDTO.idLocalidad" value="${entidad.localidad.id}">
+					<c:forEach items="${localidades}" var="localidad">
+						<html:option value="${localidad.id}">
+							<c:out value="${localidad.nombre}" />
+						</html:option>
+					</c:forEach>
 
-			</html:select></td>
+				</html:select>
+			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Direccion'/></td>
-			<td align="left"><html:text property="entidad.direccion"
+			<td align="left"><html:text property="entidadDTO.direccion" size="30"
 				styleClass="botonerab" value="${entidad.direccion}" /></td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Telefono'/></td>
-			<td align="left"><html:text property="entidad.telefono"
+			<td align="left"><html:text property="entidadDTO.telefono" size="30"
 				styleClass="botonerab" value="${entidad.telefono}" /></td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.EMail'/></td>
-			<td align="left"><html:text property="entidad.email"
+			<td align="left"><html:text property="entidadDTO.email" size="30"
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ConfirmacionEMail'/></td>
-			<td align="left"><html:text property="confirmacionEmail"
+			<td align="left"><html:text property="confirmacionEmail" size="30"
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>
 		<tr>
