@@ -108,5 +108,13 @@ public class EntidadDAO extends HibernateDaoSupport {
 		oficinasForestales = criteria.list();
 		
 		return oficinasForestales;
+	}
+
+	public void modificacionEntidad(Entidad entidad) {
+		
+		this.getHibernateTemplate().saveOrUpdate(entidad);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();		
 	}	
+		
 }

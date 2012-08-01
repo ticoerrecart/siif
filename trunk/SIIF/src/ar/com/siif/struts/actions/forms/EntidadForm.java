@@ -20,6 +20,7 @@ public class EntidadForm extends ActionForm {
 	
 	public EntidadForm() {
 		this.entidad = new Entidad();
+		this.entidadDTO = new EntidadDTO();
 	}
 
 	/*

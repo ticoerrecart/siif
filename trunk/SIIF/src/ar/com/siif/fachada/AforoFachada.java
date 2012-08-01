@@ -1,39 +1,36 @@
 package ar.com.siif.fachada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.AforoDAO;
 import ar.com.siif.dao.TipoProductoForestalDAO;
+import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
+import ar.com.siif.providers.ProviderDominio;
 
 public class AforoFachada implements IAforoFachada {
 
 	private AforoDAO aforoDAO;
-
-	private TipoProductoForestalDAO tipoProductoDAO;
+	private ITipoProductoForestalFachada tipoProductoFachada;
 
 	public AforoFachada() {
 	}
 
-	public AforoFachada(AforoDAO aforoDAO, TipoProductoForestalDAO tipoProductoDAO) {
+	public AforoFachada(AforoDAO aforoDAO, ITipoProductoForestalFachada pTipoProductoFachada) {
 
 		this.aforoDAO = aforoDAO;
-		this.tipoProductoDAO = tipoProductoDAO;
+		this.tipoProductoFachada = pTipoProductoFachada;
 	}
 
-	public List<TipoProducto> recuperarTiposProducto() {
+	public void altaAforo(AforoDTO aforo) throws NegocioException {
 
-		return aforoDAO.recuperarTiposProducto();
-	}
+		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforo.getTipoProducto().getId());
 
-	public void altaAforo(Aforo aforo, long idTipoProducto) throws NegocioException {
-
-		TipoProducto tipoProducto = tipoProductoDAO.recuperarTipoProductoForestal(idTipoProducto);
-		aforo.setTipoProducto(tipoProducto);
-
-		aforoDAO.altaAforo(aforo);
+		aforoDAO.altaAforo(ProviderDominio.getAforo(aforo,tipoProducto));
 	}
 
 	public List<Aforo> recuperarAforos() {
@@ -46,17 +43,15 @@ public class AforoFachada implements IAforoFachada {
 		return aforoDAO.recuperarAforo(id);
 	}
 
-	public void modificacionAforo(Aforo aforo, long idTipoProducto) throws NegocioException {
-
-		if (aforo.getTipoProducto() == null || aforo.getTipoProducto().getId() != idTipoProducto) {
-			TipoProducto tipoProducto = tipoProductoDAO
-					.recuperarTipoProductoForestal(idTipoProducto);
-			aforo.setTipoProducto(tipoProducto);
-		}
-		aforoDAO.modificacionAforo(aforo);
+	public void modificacionAforo(AforoDTO aforoDTO) throws NegocioException {
+		
+		Aforo aforo = aforoDAO.recuperarAforo(aforoDTO.getId());
+		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforoDTO.getTipoProducto().getId());
+		
+		aforoDAO.modificacionAforo(ProviderDominio.getAforo(aforo, aforoDTO, tipoProducto));
 	}
 
-	public boolean existeAforo(Aforo aforo, Long idTipoProducto) {
+	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto) {
 
 		return aforoDAO.existeAforo(aforo, idTipoProducto);
 	}
@@ -72,4 +67,22 @@ public class AforoFachada implements IAforoFachada {
 			return null;
 		}	
 	}
+	
+	public List<AforoDTO> recuperarAforosDTO(){
+		
+		List<AforoDTO> listaAforosDTO = new ArrayList<AforoDTO>();
+		List<Aforo> listaAforos = aforoDAO.recuperarAforos();
+		
+		for (Aforo aforo : listaAforos) {
+			listaAforosDTO.add(ProviderDTO.getAforoDTO(aforo));
+		}
+		
+		return listaAforosDTO;
+	}	
+	
+	public AforoDTO recuperarAforoDTO(Long id){
+		
+		Aforo aforo = aforoDAO.recuperarAforo(id);
+		return ProviderDTO.getAforoDTO(aforo);
+	}	
 }

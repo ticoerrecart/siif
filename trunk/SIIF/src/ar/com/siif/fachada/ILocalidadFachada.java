@@ -12,9 +12,13 @@ public interface ILocalidadFachada {
 
 	public Localidad getLocalidadPorId(Long id);
 
-	public boolean existeLocalidad(String nombre, Long id);
+	public boolean existeLocalidad(LocalidadDTO localidad);
 
-	public void altaLocalidad(Localidad laLocalidad) throws NegocioException;
+	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException;
 	
 	public List<LocalidadDTO> getLocalidadesDTO();
+	
+	public LocalidadDTO getLocalidadDTOPorId(Long id);
+	
+	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException;
 }

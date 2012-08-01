@@ -3,6 +3,7 @@ package ar.com.siif.fachada;
 import java.util.List;
 
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -21,4 +22,6 @@ public interface ITipoProductoForestalFachada {
 	public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO);
 	
 	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO();
+	
+	public List<EstadoProducto> getEstadosProductos();
 }

@@ -7,23 +7,29 @@ import ar.com.siif.dao.EntidadDAO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
+import ar.com.siif.providers.ProviderDominio;
 
 public class EntidadFachada implements IEntidadFachada {
 
 	private EntidadDAO entidadDAO;
-
+	private ILocalidadFachada localidadFachada;
+	
 	public EntidadFachada() {
 
 	}
 
-	public EntidadFachada(EntidadDAO laEntidadDAO) {
+	public EntidadFachada(EntidadDAO laEntidadDAO, ILocalidadFachada pLocalidadFachada) {
 		this.entidadDAO = laEntidadDAO;
+		this.localidadFachada = pLocalidadFachada;
 	}
 
-	public void altaEntidad(Entidad laEntidad) throws NegocioException {
-		entidadDAO.altaEntidad(laEntidad);
+	public void altaEntidad(EntidadDTO entidadDTO) throws NegocioException {
+		
+		Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+		entidadDAO.altaEntidad(ProviderDominio.getEntidad(entidadDTO,localidad));
 	}
 
 	public List<Entidad> getEntidades() {
@@ -44,13 +50,21 @@ public class EntidadFachada implements IEntidadFachada {
 
 	public List<TipoDeEntidad> getTiposDeEntidad() {
 		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
+		tiposDeEntidad.add(TipoDeEntidad.RN);
 		tiposDeEntidad.add(TipoDeEntidad.OBR);
 		tiposDeEntidad.add(TipoDeEntidad.PPF);
 
 		return tiposDeEntidad;
+	}	
+	
+	public List<TipoDeEntidad> getTiposDeEntidadProductores() {
+		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
+		tiposDeEntidad.add(TipoDeEntidad.OBR);
+		tiposDeEntidad.add(TipoDeEntidad.PPF);
 
+		return tiposDeEntidad;
 	}
-
+	
 	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad) {
 		return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
 	}
@@ -80,4 +94,29 @@ public class EntidadFachada implements IEntidadFachada {
 		}
 		return entidadesDTO;
 	}	
+	
+	public List<EntidadDTO> getEntidadesDTO(){
+		
+		List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> listaEntidades = entidadDAO.getEntidades();
+		
+		for (Entidad entidad : listaEntidades) {
+			listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		
+		return listaEntidadesDTO;
+	}	
+	
+	public EntidadDTO getEntidadDTO(Long id){
+		
+		return ProviderDTO.getEntidadDTO(entidadDAO.getEntidad(id));
+	}	
+	
+	public void modificacionEntidad(EntidadDTO entidadDTO) throws NegocioException {
+		
+		Entidad entidad = entidadDAO.getEntidad(entidadDTO.getId());
+		Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+		
+		entidadDAO.modificacionEntidad(ProviderDominio.getEntidad(entidad, entidadDTO, localidad));
+	}
 }

@@ -8,6 +8,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.TipoProducto;
@@ -37,7 +38,7 @@ public class AforoDAO extends HibernateDaoSupport {
 			throw new NegocioException(Constantes.EXISTE_AFORO);
 		}
 
-		this.getHibernateTemplate().save(aforo);
+		this.getHibernateTemplate().saveOrUpdate(aforo);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
@@ -83,7 +84,7 @@ public class AforoDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().clear();
 	}
 
-	public boolean existeAforo(Aforo aforo, Long idTipoProducto) {
+	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto) {
 
 		Criteria criteria = getSession().createCriteria(Aforo.class);
 		Conjunction conj = Restrictions.conjunction();

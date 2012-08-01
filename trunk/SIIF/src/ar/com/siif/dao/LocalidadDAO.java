@@ -35,12 +35,12 @@ public class LocalidadDAO extends HibernateDaoSupport {
 		return (localidades.size() > 0);
 	}
 
-	public void altaLocalidad(Localidad laLocalidad) throws NegocioException {
+	public void alta_modficacion_Localidad(Localidad localidad) throws NegocioException {
 
-		if (existeLocalidad(laLocalidad.getNombre(), laLocalidad.getId())) {
+		if (existeLocalidad(localidad.getNombre(), localidad.getId())) {
 			throw new NegocioException(Constantes.EXISTE_LOCALIDAD);
 		}
-		this.getHibernateTemplate().saveOrUpdate(laLocalidad);
+		this.getHibernateTemplate().saveOrUpdate(localidad);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}

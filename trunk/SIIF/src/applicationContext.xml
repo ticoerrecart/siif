@@ -167,7 +167,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!--AFORO --> 
 	<bean id="aforoFachadaImpl" class="ar.com.siif.fachada.AforoFachada">
 		<constructor-arg ref="aforoDAO" />
-		<constructor-arg ref="tipoProductoForestalDAO" />
+		<constructor-arg ref="tipoProductoForestalFachada" />
 	</bean>	
 
 	<bean id="aforoFachada"
@@ -232,30 +232,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-	
-	<!-- ENTIDAD --> 
-	<bean id="entidadFachadaImpl" class="ar.com.siif.fachada.EntidadFachada">
-		<constructor-arg ref="entidadDAO" />
-	</bean>	
-
-	<bean id="entidadFachada"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager">
-			<ref bean="transactionManager" />
-		</property>
-		<property name="proxyTargetClass" value="true" />
-		<property name="target">
-			<ref bean="entidadFachadaImpl" />
-		</property>
-		<property name="proxyInterfaces" value="ar.com.siif.fachada.IEntidadFachada" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
-			</props>
-		</property>
-	</bean>	
-
-
 	<!-- LOCALIDAD --> 
 	<bean id="localidadFachadaImpl" class="ar.com.siif.fachada.LocalidadFachada">
 		<constructor-arg ref="localidadDAO" />
@@ -278,6 +254,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 		
+	<!-- ENTIDAD --> 
+	<bean id="entidadFachadaImpl" class="ar.com.siif.fachada.EntidadFachada">
+		<constructor-arg ref="entidadDAO" />
+		<constructor-arg ref="localidadFachada" />
+	</bean>	
+
+	<bean id="entidadFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="entidadFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IEntidadFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
 		
 	<!-- ROL --> 
 	<bean id="rolFachadaImpl" class="ar.com.siif.fachada.RolFachada">

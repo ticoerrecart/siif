@@ -5,6 +5,7 @@ import java.util.List;
 
 import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
@@ -66,5 +67,14 @@ public class TipoProductoForestalFachada implements ITipoProductoForestalFachada
 		}
 		
 		return tiposProductoDTO;
+	}	
+	
+	public List<EstadoProducto> getEstadosProductos(){
+		
+		List<EstadoProducto> estadosProductos = new ArrayList<EstadoProducto>();
+		estadosProductos.add(EstadoProducto.Seco);
+		estadosProductos.add(EstadoProducto.Verde);
+		
+		return estadosProductos;
 	}	
 }

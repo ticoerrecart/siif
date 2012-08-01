@@ -8,6 +8,7 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
+import ar.com.siif.providers.ProviderDominio;
 
 public class LocalidadFachada implements ILocalidadFachada {
 
@@ -28,12 +29,12 @@ public class LocalidadFachada implements ILocalidadFachada {
 		return localidadDAO.getLocalidadPorId(id);
 	}
 
-	public boolean existeLocalidad(String nombre, Long id) {
-		return localidadDAO.existeLocalidad(nombre, id);
+	public boolean existeLocalidad(LocalidadDTO localidad) {
+		return localidadDAO.existeLocalidad(localidad.getNombre(),localidad.getId());
 	}
 
-	public void altaLocalidad(Localidad laLocalidad) throws NegocioException {
-		localidadDAO.altaLocalidad(laLocalidad);
+	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException {
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidadDTO));
 	}
 	
 	public List<LocalidadDTO> getLocalidadesDTO(){
@@ -47,4 +48,18 @@ public class LocalidadFachada implements ILocalidadFachada {
 		
 		return localidadesDTO;
 	}	
+	
+	public LocalidadDTO getLocalidadDTOPorId(Long id){
+		
+		Localidad localidad = localidadDAO.getLocalidadPorId(id);
+		
+		return ProviderDTO.getLocalidadDTO(localidad);
+	}
+	
+	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException{
+		
+		Localidad localidad = localidadDAO.getLocalidadPorId(localidadDTO.getId());
+		
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidad,localidadDTO));
+	}
 }
