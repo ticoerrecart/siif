@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<script type="text/javascript" src="<html:rewrite page='/dwr/interface/ReportesAction.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
+<script type="text/javascript" src="<html:rewrite page='/dwr/interface/ReportesAction.js'/>"></script>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>

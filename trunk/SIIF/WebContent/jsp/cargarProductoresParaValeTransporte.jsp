@@ -11,10 +11,10 @@
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
-<script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">

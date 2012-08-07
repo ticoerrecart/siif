@@ -4,9 +4,9 @@
 
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/interface/RolFachada.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
+<script type="text/javascript" src="<html:rewrite page='/dwr/interface/RolFachada.js'/>"></script>
 
 <script type="text/javascript">
 	function submitir(){
