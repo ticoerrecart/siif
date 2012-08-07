@@ -1,6 +1,5 @@
 package ar.com.siif.struts.actions;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +10,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.Entidad;
-import ar.com.siif.negocio.Usuario;
 import ar.com.siif.struts.actions.forms.UbicacionForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
@@ -37,7 +36,7 @@ public class UbicacionAction extends ValidadorAction {
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
-			List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
+			List<EntidadDTO> productores = fiscalizacionFachada.recuperarProductoresDTO();
 
 			request.setAttribute("productores", productores);
 			strForward = "exitoRecuperarUbicacionParaAlta";
@@ -138,10 +137,10 @@ public class UbicacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-			request.setAttribute("rodales", ubicacionFachada.getRodales());
-			request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
-			request.setAttribute("tranzones", ubicacionFachada.getTranzones());
-			request.setAttribute("pmfs", ubicacionFachada.recuperarPMFs());
+			//request.setAttribute("rodales", ubicacionFachada.getRodales());
+			//request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
+			//request.setAttribute("tranzones", ubicacionFachada.getTranzones());
+			request.setAttribute("pmfs", ubicacionFachada.recuperarPMFsDTO());
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());

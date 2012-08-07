@@ -16,12 +16,15 @@ import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
+import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
@@ -144,6 +147,47 @@ public abstract class ProviderDominio {
 		localidad.setNombre(localidadDTO.getNombre());
 		return localidad;
 	}	
+	
+	public static PMF getPMF(String expediente,String nombre, Entidad entidad){
+		
+		PMF pmf = new PMF();
+		pmf.setExpediente(expediente);
+		pmf.setNombre(nombre);
+		pmf.setProductorForestal(entidad);
+		pmf.setTranzones(null);
+		
+		return pmf;
+	}
+	
+	public static Tranzon getTranzon(String numero, String disposicionTranzon,PMF pmf){
+		
+		Tranzon tranzon = new Tranzon();
+		tranzon.setDisposicion(disposicionTranzon);
+		tranzon.setNumero(numero);
+		tranzon.setPmf(pmf);
+		tranzon.setMarcaciones(null);
+		
+		return tranzon;
+	}
+	
+	public static Marcacion getMarcacion(String disposicionMarcacion, Tranzon tranzon){
+		
+		Marcacion marcacion = new Marcacion();
+		marcacion.setDisposicion(disposicionMarcacion);
+		marcacion.setTranzon(tranzon);
+		marcacion.setRodales(null);
+		
+		return marcacion;		
+	}
+	
+	public static Rodal getRodal(String nombre, Marcacion marcacion){
+		
+		Rodal rodal = new Rodal();
+		rodal.setNombre(nombre);
+		rodal.setMarcacion(marcacion);
+		
+		return rodal;
+	}
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
 
