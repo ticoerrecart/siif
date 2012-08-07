@@ -2,6 +2,7 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.negocio.Entidad;
@@ -41,4 +42,6 @@ public interface IFiscalizacionFachada {
 	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)throws DataBaseException;
 	
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws DataBaseException;	
+	
+	public List<EntidadDTO> recuperarProductoresDTO();
 }

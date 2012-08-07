@@ -2,6 +2,7 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 
+import ar.com.siif.dto.RolDTO;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.exception.AccesoDenegadoException;
@@ -24,4 +25,8 @@ public interface IRolFachada {
 	public boolean existeRol(Rol rol);
 	
 	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException;
+	
+	public List<RolDTO> getRolesDTO();
+	
+	public RolDTO getRolAdministrador()throws NegocioException;
 }

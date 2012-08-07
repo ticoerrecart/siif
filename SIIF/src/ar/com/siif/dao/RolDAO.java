@@ -3,13 +3,16 @@ package ar.com.siif.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.exception.AccesoDenegadoException;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -102,5 +105,26 @@ public class RolDAO extends HibernateDaoSupport {
 		}
 		
 		throw new AccesoDenegadoException("El rol "+pRol.getRol()+" no puede ejecutar la acción: "+pNombreMenu); 
-	}	
+	}
+	
+	public Rol getRolAdministrador()throws DataBaseException {
+		
+		try{
+			Criteria criteria = getSession().createCriteria(Rol.class);
+			Conjunction conj = Restrictions.conjunction();
+			conj.add(Restrictions.eq("rol", Constantes.ADMINISTRADOR));			
+			
+			criteria.add(conj);
+			List<Rol> roles = criteria.list();
+			
+			return roles.get(0);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException();
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException();
+		} catch (Exception e) {
+			throw new DataBaseException();
+		}		
+	}
 }
