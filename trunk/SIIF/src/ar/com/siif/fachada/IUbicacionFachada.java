@@ -65,4 +65,7 @@ public interface IUbicacionFachada {
 	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon);
 
 	public List<RodalDTO> getRodalesDTOById(Long idMarcacion);
+	
+	public List<PMFDTO> recuperarPMFsDTO();
+	
 }

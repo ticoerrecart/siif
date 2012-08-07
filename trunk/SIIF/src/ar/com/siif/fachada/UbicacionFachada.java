@@ -13,8 +13,11 @@ import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Tranzon;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
+import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.utils.Constantes;
 
 public class UbicacionFachada implements IUbicacionFachada {
 
@@ -80,35 +83,61 @@ public class UbicacionFachada implements IUbicacionFachada {
 	 * @throws NegocioException 
 	 */
 	public void altaRodal(String nombre, Long idMarcacion) throws NegocioException {
-		if (ubicacionDAO.getRodalesPorNombreParaMarcacion(nombre, idMarcacion).size() > 0 ){
-			throw new NegocioException("Ya Existe un Rodal con el nombre:" + nombre);
-		}
-		Marcacion marcacion = ubicacionDAO.getMarcacion(idMarcacion);
-		marcacion.getRodales().add(new Rodal(nombre, marcacion));
+		
+		try{
+			if (ubicacionDAO.getRodalesPorNombreParaMarcacion(nombre, idMarcacion).size() > 0 ){
+				throw new NegocioException(Constantes.ERROR_EXISTE_RODAL + nombre);
+			}
+			Marcacion marcacion = ubicacionDAO.getMarcacion(idMarcacion);
+			//marcacion.getRodales().add(new Rodal(nombre, marcacion));
+			ubicacionDAO.altaRodal(ProviderDominio.getRodal(nombre,marcacion));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public void altaMarcacion(String disposicionMarcacion, Long idTranzon) throws NegocioException {
-		if (ubicacionDAO.getMarcacionesPorDisposicionParaTranzon(disposicionMarcacion, idTranzon).size() > 0 ){
-			throw new NegocioException("Ya Existe una Marcación con la disposición:" + disposicionMarcacion);
-		}
-		Tranzon tranzon = ubicacionDAO.getTranzon(idTranzon);
-		tranzon.getMarcaciones().add(new Marcacion(disposicionMarcacion, tranzon));
+		
+		try{
+			if (ubicacionDAO.getMarcacionesPorDisposicionParaTranzon(disposicionMarcacion, idTranzon).size() > 0 ){
+				throw new NegocioException(Constantes.ERROR_EXISTE_MARCACION + disposicionMarcacion);
+			}
+			Tranzon tranzon = ubicacionDAO.getTranzon(idTranzon);
+			//tranzon.getMarcaciones().add(new Marcacion(disposicionMarcacion, tranzon));
+			ubicacionDAO.altaMarcacion(ProviderDominio.getMarcacion(disposicionMarcacion,tranzon));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public void altaTranzon(String numero, String disposicionTranzon, Long idPMF) throws NegocioException {
-		if (ubicacionDAO.getTranzonesPorNumeroParaPMF(numero, idPMF).size() > 0 ){
-			throw new NegocioException("Ya Existe un Tranzon con el número:" + numero);
-		}
-		PMF pmf = ubicacionDAO.getPMF(idPMF);
-		pmf.getTranzones().add(new Tranzon(numero, disposicionTranzon, pmf));
+		try{
+			if (ubicacionDAO.getTranzonesPorNumeroParaPMF(numero, idPMF).size() > 0 ){
+				throw new NegocioException(Constantes.ERROR_EXISTE_TRANZON + numero);
+			}
+			PMF pmf = ubicacionDAO.getPMF(idPMF);
+			ubicacionDAO.altaTranzon(ProviderDominio.getTranzon(numero, disposicionTranzon, pmf));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}	
 	}
 
 	public void altaPMF(String expediente, String nombre, Long idEntidad) throws NegocioException {
-		if (ubicacionDAO.getPMFsPorNombreParaPF(nombre, idEntidad) .size() > 0 ){
-			throw new NegocioException("Ya Existe un Plan de Manejo Forestal con el nombre:" + nombre);
-		}
-		Entidad e = ubicacionDAO.getEntidad(idEntidad);
-		e.getPmfs().add(new PMF(expediente, nombre, e));
+		
+		try{
+			if (ubicacionDAO.getPMFsPorNombreParaPF(nombre, idEntidad).size() > 0 ){
+				throw new NegocioException(Constantes.ERROR_EXISTE_PMF + nombre);
+			}
+			Entidad entidad = ubicacionDAO.getEntidad(idEntidad);
+			//entidad.getPmfs().add(new PMF(expediente, nombre, e));
+			ubicacionDAO.altaPMF(ProviderDominio.getPMF(expediente,nombre,entidad));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
 	}
 
 	public void deleteRodal(Long idRodal) {
@@ -204,5 +233,16 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}
 		
 		return rodalesDTO;
+	}	
+	
+	public List<PMFDTO> recuperarPMFsDTO(){
+		
+		List<PMFDTO> listaPmfDTO = new ArrayList<PMFDTO>();
+		List<PMF> listaPmf = this.ubicacionDAO.recuperarPMFs();
+		
+		for (PMF pmf : listaPmf) {
+			listaPmfDTO.add(ProviderDTO.getPMFDTO(pmf));
+		}
+		return listaPmfDTO;		
 	}	
 }

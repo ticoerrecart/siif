@@ -7,12 +7,15 @@ import java.util.List;
 import ar.com.siif.dao.EntidadDAO;
 import ar.com.siif.dao.RolDAO;
 import ar.com.siif.dao.UsuarioDAO;
+import ar.com.siif.dto.RolDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.AccesoDenegadoException;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.utils.Constantes;
 
 public class RolFachada implements IRolFachada {
@@ -132,4 +135,23 @@ public class RolFachada implements IRolFachada {
 		rolDAO.verificarMenu(pNombreMenu,pRol);
 	}	
 
+	public List<RolDTO> getRolesDTO(){
+		
+		List<RolDTO> listaRolesDTO = new ArrayList<RolDTO>();
+		List<Rol> listaRoles = rolDAO.getRoles();
+		
+		for (Rol rol : listaRoles) {
+			listaRolesDTO.add(ProviderDTO.getRolDTO(rol));			
+		}
+		return listaRolesDTO;
+	}	
+	
+	public RolDTO getRolAdministrador() throws NegocioException{
+		try{
+			Rol rolAdministrador = rolDAO.getRolAdministrador();
+			return ProviderDTO.getRolDTO(rolAdministrador);
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
 }

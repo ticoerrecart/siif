@@ -8,6 +8,8 @@ public class PMFDTO {
 
 	private String nombre;
 
+	private EntidadDTO productorForestal;
+	
 	public Long getId() {
 		return id;
 	}
@@ -32,8 +34,16 @@ public class PMFDTO {
 		this.nombre = nombre;
 	}	
 	
+	public EntidadDTO getProductorForestal() {
+		return productorForestal;
+	}
+
+	public void setProductorForestal(EntidadDTO productorForestal) {
+		this.productorForestal = productorForestal;
+	}
+
 	public String getNombreExpediente(){
 		
 		return this.getNombre()+" - "+this.getExpediente();
-	}	
+	}
 }

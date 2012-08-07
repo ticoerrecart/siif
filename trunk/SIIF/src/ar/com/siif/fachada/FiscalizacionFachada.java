@@ -1,7 +1,9 @@
 package ar.com.siif.fachada;
 
+import java.util.ArrayList;
 import java.util.List;
 import ar.com.siif.dao.FiscalizacionDAO;
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.negocio.Entidad;
@@ -11,6 +13,7 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 
 public class FiscalizacionFachada implements IFiscalizacionFachada {
@@ -113,4 +116,16 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 																		tipoProducto,usuario);
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}	
+	
+	public List<EntidadDTO> recuperarProductoresDTO(){
+		
+		List<EntidadDTO> listaProductoresDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> listaProductores = fiscalizacionDAO.recuperarProductores();
+		
+		for (Entidad entidad : listaProductores) {
+			listaProductoresDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		
+		return listaProductoresDTO;
+	}
 }
