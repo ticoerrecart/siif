@@ -71,6 +71,7 @@ public abstract class ProviderDTO {
 			pmfDTO.setId(pmf.getId());
 			pmfDTO.setExpediente(pmf.getExpediente());
 			pmfDTO.setNombre(pmf.getNombre());
+			pmfDTO.setProductorForestal(ProviderDTO.getEntidadDTO(pmf.getProductorForestal()));
 			
 			return pmfDTO;			
 		}

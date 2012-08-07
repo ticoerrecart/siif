@@ -37,12 +37,12 @@ public class UsuarioAction extends ValidadorAction {
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 	
-			request.setAttribute("entidades", entidadFachada.getEntidades());
-			request.setAttribute("roles", rolFachada.getRoles());
+			request.setAttribute("entidades", entidadFachada.getEntidadesDTO());
+			request.setAttribute("roles", rolFachada.getRolesDTO());
 	
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_USUARIO);
 			request.setAttribute("metodo", "altaUsuario");
-			request.setAttribute("idRolAdministrador", Constantes.ID_ROL_ADMINISTRADOR);
+			request.setAttribute("idRolAdministrador", rolFachada.getRolAdministrador().getId());
 			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
