@@ -72,6 +72,10 @@ public class Constantes {
 		public static final String EXITO_ALTA_USUARIO = "El Usuario se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_USUARIO = "El Usuario se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_USUARIO = "Ha ocurrido un error en el alta del usuario";
+		
+		public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificación del usuario";		
 	// FIN USUARIO
 
 	//TIPO PRODUCTO FORESTAL
@@ -91,13 +95,39 @@ public class Constantes {
 	// FIN AFORO
 
 	//ROL
+		public static final String ADMINISTRADOR = "Administrador";
+		
 		public static final String EXISTE_ROL = "Ya existe un Rol con ese nombre";
 	
 		public static final String EXITO_ALTA_ROL = "El Rol se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_ROL = "El Rol se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_ROL = "Ha ocurrido un error en el alta del rol";
+		
+		public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificación del rol";
 	// FIN ROL	
 	
+	//UBICACION
+		
+		public static final String ERROR_EXISTE_PMF = "Ya Existe un Plan de Manejo Forestal con el nombre: ";
+		
+		public static final String ERROR_EXISTE_TRANZON = "Ya Existe un Tranzon con el número: ";
+		
+		public static final String ERROR_EXISTE_MARCACION = "Ya Existe una Marcación con la disposición: ";
+		
+		public static final String ERROR_EXISTE_RODAL = "Ya Existe un Rodal con el nombre: ";
+		
+		public static final String ERROR_ALTA_PMF = "Ha ocurrido un error en el alta del Plan de Manejo Forestal";
+		
+		public static final String ERROR_ALTA_TRANZON = "Ha ocurrido un error en el alta del Tranzón";
+		
+		public static final String ERROR_ALTA_MARCACION = "Ha ocurrido un error en el alta de la Marcación";
+		
+		public static final String ERROR_ALTA_RODAL = "Ha ocurrido un error en el alta del Rodal";
+		
+	//FIN UBICACION		
+		
 	//CONSULTAS GUIA FORESTAL (POR PRODUCTOR)
 		public static final String TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES = "Consulta de Guías Forestales Vigentes";
 		
@@ -191,4 +221,6 @@ public class Constantes {
 		
 		public static final String MODIFICACION_USUARIO_MENU = "Modificación de Usuario";
 	//FIN MENU
+
+
 }
