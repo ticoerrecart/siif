@@ -16,7 +16,7 @@
 			$('#altaDeRodal').hide();
 
 		} else {
-			UbicacionFachada.getPMFs(idPF,actualizarComboPMFCallback );
+			UbicacionFachada.getPMFsDTO(idPF,actualizarComboPMFCallback );
 		}
 		
 	}
@@ -46,7 +46,7 @@
 		} else {
 			$('#altaDePMF').hide();
 			//UbicacionFachada.getTranzones(idPMF,actualizarComboTranzonCallback );
-			UbicacionFachada.getTranzonesById(idPMF,actualizarComboTranzonCallback );
+			UbicacionFachada.getTranzonesDTOById(idPMF,actualizarComboTranzonCallback );
 		}
 		
 	}
@@ -73,7 +73,7 @@
 		} else {
 			$('#altaDeTranzon').hide();
 			//UbicacionFachada.getMarcaciones(idTranzon,actualizarComboMarcacionCallback );
-			UbicacionFachada.getMarcacionesById(idTranzon,actualizarComboMarcacionCallback );
+			UbicacionFachada.getMarcacionesDTOById(idTranzon,actualizarComboMarcacionCallback );
 		}
 		
 	}
@@ -96,7 +96,7 @@
 		} else {
 			$('#altaDeMarcacion').hide();
 			//UbicacionFachada.getRodales(idMarcacion,actualizarComboRodalCallback );
-			UbicacionFachada.getRodalesById(idMarcacion,actualizarComboRodalCallback );
+			UbicacionFachada.getRodalesDTOById(idMarcacion,actualizarComboRodalCallback );
 		}
 		
 		
