@@ -33,11 +33,13 @@
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.EntidadDTO">
 			<param name="include" value="id, nombre" />
-		</convert>
-		
+		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Rol">
 			<param name="include" value="id, rol" />
 		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.RolDTO">
+			<param name="include" value="id, rol" />
+		</convert>		
 			
 		<convert converter="exception" match="ar.com.siif.negocio.exception.NegocioException">
 			<param name="include" value="message" />
