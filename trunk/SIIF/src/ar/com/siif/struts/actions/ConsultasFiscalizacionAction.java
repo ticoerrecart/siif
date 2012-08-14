@@ -148,8 +148,8 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<Fiscalizacion> fiscalizacionesSinGuia = consultasFiscalizacionFachada
-											.recuperarFiscalizacionesSinGuiaForestal(Long.parseLong(idProductor));
+			List<FiscalizacionDTO> fiscalizacionesSinGuia = consultasFiscalizacionFachada
+											.recuperarFiscalizacionesSinGuiaForestalDTO(Long.parseLong(idProductor));
 
 			request.setAttribute("fiscalizaciones", fiscalizacionesSinGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL);
