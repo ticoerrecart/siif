@@ -11,7 +11,7 @@
 %>
 <html:form action="rol" styleId="rolForm">
 	<html:hidden property="metodo" value="modificacionRol" />
-	<html:hidden property="rol.id" value="${rolF.id}" />
+	<html:hidden property="rolDTO.id" value="${rolF.id}" />
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td colspan="3" height="15"></td>
@@ -21,7 +21,7 @@
 				<bean:message key='SIIF.label.NombreRol'/>
 			</td>
 			<td>
-				<input name="rol.rol" class="botonerab" type="text"	size="30" 
+				<input name="rolDTO.rol" class="botonerab" type="text"	size="30" 
 						value="<c:out value='${rolF.rol}'></c:out>">
 			</td>
 			<td width="10%"></td>
@@ -86,7 +86,7 @@
 										</c:if>
 									</c:forEach> 
 									<input id="menu<%=i%>" type="checkbox" <%=checked%>
-											name='<%="menues["+i+"].id"%>' value="${menuHijoH.id}"
+											name='<%="menuesDTO["+i+"].id"%>' value="${menuHijoH.id}"
 											onchange="checkMenu('<%=i%>','${menuHijoH.id}');">
 								</td>
 								<td colspan="2" class="botoneralNegritaLeft">
@@ -108,13 +108,13 @@
 								<c:choose>
 									<c:when test="${menuHijo.item == 'Salir de la Aplicacion'}">
 										<input type="checkbox" checked="checked" disabled="disabled"
-												name='<%="menues["+i+"].id"%>' value="${menuHijo.id}">
-										<input type="hidden" name='<%="menues["+i+"].id"%>' 
+												name='<%="menuesDTO["+i+"].id"%>' value="${menuHijo.id}">
+										<input type="hidden" name='<%="menuesDTO["+i+"].id"%>' 
 												value="${menuHijo.id}">
 									</c:when>
 									<c:otherwise>
 										<input id="menu<%=i%>" type="checkbox" <%=checked%>
-												name='<%="menues["+i+"].id"%>' value="${menuHijo.id}"
+												name='<%="menuesDTO["+i+"].id"%>' value="${menuHijo.id}"
 												onchange="checkMenu('<%=i%>','${menuHijo.id}');">
 									</c:otherwise>
 								</c:choose>

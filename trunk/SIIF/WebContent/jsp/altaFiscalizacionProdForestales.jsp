@@ -353,7 +353,7 @@ function deshabilitarLocalizacion(ids){
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight">
-				Oficina
+				<bean:message key='SIIF.label.Oficina'/>
 			</td>
 			<td>
 				<select class="botonerab" name="fiscalizacionDTO.idOficinaForestal">
@@ -387,7 +387,7 @@ function deshabilitarLocalizacion(ids){
 							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td>
-							<select id="idPMF" class="botonerab" name="idPlanManejoForestal" disabled="disabled" 
+							<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" disabled="disabled" 
 									onchange="actualizarComboTranzon();">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
@@ -399,7 +399,7 @@ function deshabilitarLocalizacion(ids){
 							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td>
-							<select id="idTranzon" class="botonerab" name="idTranzon" disabled="disabled" 
+							<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" disabled="disabled" 
 									onchange="actualizarComboMarcacion();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
@@ -411,7 +411,7 @@ function deshabilitarLocalizacion(ids){
 							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td>
-							<select id="idMarcacion" class="botonerab" name="idMarcacion" disabled="disabled" 
+							<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" disabled="disabled" 
 									onchange="actualizarComboRodal();">
 								<option value="-1">- Seleccione -</option>
 							</select>					

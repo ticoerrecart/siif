@@ -120,8 +120,9 @@
 								</html:option>
 							</c:forEach>
 						</html:select>							
-					</c:when>  
+					</c:when> 
 					<c:otherwise><!-- AL MODIFICAR NO PUEDO CAMBIAR LA ENTIDAD -->
+						<input id="idEntidad" type="hidden" value='<c:out value='${usu.entidad.id}'></c:out>">
 						<html:select styleId="idSelectEntidad" styleClass="botonerab" property="usuarioDTO.entidad.id" 
 									 value="${usu.entidad.id}">
 							<html:option value="${usu.entidad.id}">${usu.entidad.nombre}</html:option>

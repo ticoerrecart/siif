@@ -55,7 +55,7 @@ function cargarProductores(){
 	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 	if(idTipoDeEntidad != "-1"){
 		$('#selectProductores').attr('disabled','');
-		EntidadFachada.getEntidadesPorTipoDeEntidad(idTipoDeEntidad,actualizarProductoresCallback );		
+		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
 	}else{
 		dwr.util.removeAllOptions("selectProductores");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
@@ -78,7 +78,7 @@ function cargarProductoresVolver(){
 	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
 
 	$('#selectProductores').attr('disabled','');
-	EntidadFachada.getEntidadesPorTipoDeEntidad(idTipoDeEntidad,actualizarProductoresVolverCallback );		
+	EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresVolverCallback );		
 
 	$('#divDetalle').hide(600);
 	$('#divDetalle').html("");

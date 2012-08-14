@@ -40,7 +40,7 @@ function submitir(){
 				<bean:message key='SIIF.label.NombreRol'/>
 			</td>
 			<td align="left">
-				<input name="rol.rol" class="botonerab"	type="text" size="30">
+				<input name="rolDTO.rol" class="botonerab"	type="text" size="30">
 			</td>
 		</tr>
 		<tr>
@@ -78,7 +78,7 @@ function submitir(){
 										<tr>
 											<td width="10%"></td>
 											<td width="10%">
-												<input type="checkbox" name='<%="menues["+i+"].id"%>' 
+												<input type="checkbox" name='<%="menuesDTO["+i+"].id"%>' 
 														value="${menuHijoH.id}">
 											</td>
 											<td colspan="2" class="botoneralNegritaLeft">
@@ -94,12 +94,12 @@ function submitir(){
 											<c:choose>
 												<c:when test="${menuHijo.item == 'Salir de la Aplicacion'}">
 													<input type="checkbox" checked="checked" disabled="disabled"
-															name='<%="menues["+i+"].id"%>' value="${menuHijo.id}">
-													<input type="hidden" name='<%="menues["+i+"].id"%>'
+															name='<%="menuesDTO["+i+"].id"%>' value="${menuHijo.id}">
+													<input type="hidden" name='<%="menuesDTO["+i+"].id"%>'
 															value="${menuHijo.id}">
 												</c:when>
 												<c:otherwise>
-													<input type="checkbox" name='<%="menues["+i+"].id"%>'
+													<input type="checkbox" name='<%="menuesDTO["+i+"].id"%>'
 															value="${menuHijo.id}">
 												</c:otherwise>
 											</c:choose>
