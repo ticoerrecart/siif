@@ -25,9 +25,9 @@ public interface IEntidadFachada {
 	
 	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad);
 	
-	public List<Entidad> getOficinasForestales();
+	public List<Entidad> getOficinasForestales()throws NegocioException;
 	
-	public List<EntidadDTO> getOficinasForestalesDTO();
+	public List<EntidadDTO> getOficinasForestalesDTO()throws NegocioException;
 	
 	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad);
 

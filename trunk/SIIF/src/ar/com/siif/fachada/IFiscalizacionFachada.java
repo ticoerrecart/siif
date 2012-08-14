@@ -10,6 +10,7 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IFiscalizacionFachada {
 
@@ -23,7 +24,7 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor);	
 	
-	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion);
+	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion)throws NegocioException;
 
 	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion, 
 										  List<Muestra> muestrasAEliminar)
@@ -41,7 +42,9 @@ public interface IFiscalizacionFachada {
 	
 	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)throws DataBaseException;
 	
-	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws DataBaseException;	
+	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws DataBaseException, NegocioException;	
 	
 	public List<EntidadDTO> recuperarProductoresDTO();
+	
+	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException;
 }

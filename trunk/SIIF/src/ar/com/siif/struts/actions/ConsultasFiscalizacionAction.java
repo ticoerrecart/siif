@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasFiscalizacionFachada;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
@@ -70,7 +71,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarTiposDeEntidadConsultaFiscalizacion(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String strForward = "exitoCargarLocalidadesConsultaFiscalizacion";
+		String strForward = "exitoCargarTiposDeEntidadConsultaFiscalizacion";
 
 		try {
 			String paramForward = request.getParameter("forward");	
@@ -93,7 +94,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -121,8 +122,8 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<Fiscalizacion> fiscalizacionesConGuia = consultasFiscalizacionFachada
-											.recuperarFiscalizacionesConGuiaForestal(Long.parseLong(idProductor));
+			List<FiscalizacionDTO> fiscalizacionesConGuia = consultasFiscalizacionFachada
+											.recuperarFiscalizacionesConGuiaForestalDTO(Long.parseLong(idProductor));
 
 			request.setAttribute("fiscalizaciones", fiscalizacionesConGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
@@ -185,7 +186,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			
 			long idFiscalizacion = new Long(request.getParameter("idFiscalizacion"));
 			
-			Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(idFiscalizacion);
+			FiscalizacionDTO fiscalizacion = fiscalizacionFachada.recuperarFiscalizacionDTO(idFiscalizacion);
 
 			request.setAttribute("fiscalizacion", fiscalizacion);
 			request.setAttribute("paramForward", paramForward);

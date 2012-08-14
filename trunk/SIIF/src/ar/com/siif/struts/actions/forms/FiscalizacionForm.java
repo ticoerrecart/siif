@@ -21,37 +21,25 @@ import ar.com.siif.utils.Fecha;
 
 public class FiscalizacionForm extends ActionForm {
 
-	/*private int nroOrden;	
-	private EntidadDTO productorForestal;
-	private String periodoForestal;
-	private String expediente;
-	private String fecha;
-	private String ubicacionZonal;
-	private String tipoTransporte;
-	private int cantidadUnidades;
-	private double cantidadMts;
-	private int tamanio;
-	private GuiaForestalDTO guiaForestal;*/
+	//private Fiscalizacion fiscalizacion;
 
-	private Fiscalizacion fiscalizacion;
+	//private long idProductorForestal;
 
-	private long idProductorForestal;
+	//private long idTipoProductoForestal;
 
-	private long idTipoProductoForestal;
-
-	private long idPlanManejoForestal;
+	//private long idPlanManejoForestal;
 	
-	private long idTranzon;
+	//private long idTranzon;
 	
-	private long idMarcacion;
+	//private long idMarcacion;
 	
-	private long idRodal;
+	//private long idRodal;
 
-	private long idOficinaForestal;
+	//private long idOficinaForestal;
 	
-	private String fecha;
+	//private String fecha;
 
-	private List<Muestra> muestras;
+	//private List<Muestra> muestras;
 
 	
 	//-------------//
@@ -62,13 +50,13 @@ public class FiscalizacionForm extends ActionForm {
 	
 	public FiscalizacionForm() {
 
-		fiscalizacion = new Fiscalizacion();
-
-		fiscalizacionDTO = new FiscalizacionDTO();
+		//fiscalizacion = new Fiscalizacion();	
 		
-		muestras = (List<Muestra>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(Muestra.class));
+		/*muestras = (List<Muestra>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(Muestra.class));*/
 
+		fiscalizacionDTO = new FiscalizacionDTO();		
+		
 		muestrasDTO = (List<MuestraDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(MuestraDTO.class));		
 		
@@ -77,21 +65,21 @@ public class FiscalizacionForm extends ActionForm {
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 
-		Fiscalizacion f = (Fiscalizacion)request.getSession().getAttribute("fiscalizacion");
+		/*Fiscalizacion f = (Fiscalizacion)request.getSession().getAttribute("fiscalizacion");
+		
+		muestras = (List<Muestra>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(Muestra.class));*/		
 		
 		FiscalizacionDTO fDTO = (FiscalizacionDTO)request.getSession().getAttribute("fiscalizacionDTO");
 		
-		if(f != null){
-			fiscalizacion = f;
+		if(fDTO != null){
+			//fiscalizacion = f;
 			fiscalizacionDTO = fDTO;
 		}
 		else{
-			fiscalizacion = new Fiscalizacion();
+			//fiscalizacion = new Fiscalizacion();
 			fiscalizacionDTO = new FiscalizacionDTO();
 		}
-		
-		muestras = (List<Muestra>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(Muestra.class));
 		
 		muestrasDTO = (List<MuestraDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(MuestraDTO.class));		
@@ -114,32 +102,6 @@ public class FiscalizacionForm extends ActionForm {
 		boolean ok14 = true;
 		boolean ok15 = true;
 		boolean ok16 = true;
-
-		/*ok2 = Validator.validarComboRequerido("-1",Long.toString(idProductorForestal), "Productor Forestal", error);		
-		
-		ok5 = Validator.requerido(fecha, "Fecha", error) && Validator.validarFechaValida(fecha, "Fecha", error);
-		
-		ok3 = Validator.requerido(fiscalizacion.getPeriodoForestal(), "Periodo Forestal", error);
-		
-		ok8 = Validator.validarEnteroMayorQue(0, Integer.toString(fiscalizacion.getCantidadUnidades()), "Cantidad Unidades", error);			
-		
-		ok11 = Validator.validarComboRequerido("-1",Long.toString(idTipoProductoForestal), "Tipo de Producto", error);
-		
-		ok9 = Validator.validarDoubleMayorQue(0, Double.toString(fiscalizacion.getCantidadMts()), "Cantidad Mts3", error);
-		
-		ok10 = Validator.validarEnteroMayorQue(0, Integer.toString(fiscalizacion.getTamanioMuestra()), "Tamaño de la Muestra", error);		
-		
-		ok12 = Validator.validarComboRequerido("-1",Long.toString(idPlanManejoForestal), "Plan de Manejo Forestal", error);
-		
-		ok13 = Validator.validarComboRequerido("-1",Long.toString(idTranzon), "Tranzón", error);
-		
-		ok14 = Validator.validarComboRequerido("-1",Long.toString(idMarcacion), "Marcación", error);
-		
-		ok15 = Validator.validarComboRequerido("-1",Long.toString(idRodal), "Rodal", error);
-		
-		if(ok10){
-			ok16 = Validator.validarMuestras(this.getMuestras(),error);
-		}	*/
 		
 		ok2 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getIdProductorForestal()), "Productor Forestal", error);		
 		
@@ -173,7 +135,7 @@ public class FiscalizacionForm extends ActionForm {
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13 && ok14 && ok15 && ok16;
 	}
 
-	public Fiscalizacion getFiscalizacion() {
+	/*public Fiscalizacion getFiscalizacion() {
 		return fiscalizacion;
 	}
 
@@ -251,7 +213,7 @@ public class FiscalizacionForm extends ActionForm {
 
 	public void setIdOficinaForestal(long idOficinaForestal) {
 		this.idOficinaForestal = idOficinaForestal;
-	}
+	}*/
 
 	public FiscalizacionDTO getFiscalizacionDTO() {
 		return fiscalizacionDTO;

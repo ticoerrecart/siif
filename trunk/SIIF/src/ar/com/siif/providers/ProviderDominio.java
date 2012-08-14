@@ -6,15 +6,19 @@ import java.util.List;
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
@@ -23,6 +27,7 @@ import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
+import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
@@ -187,6 +192,38 @@ public abstract class ProviderDominio {
 		rodal.setMarcacion(marcacion);
 		
 		return rodal;
+	}
+	
+	public static Usuario getUsuario(UsuarioDTO usuarioDTO, Entidad entidad, Rol rol){
+		
+		Usuario usuario = new Usuario();
+		usuario.setEntidad(entidad);
+		usuario.setHabilitado(usuarioDTO.isHabilitado());
+		usuario.setNombreUsuario(usuarioDTO.getNombreUsuario());
+		usuario.setPassword(usuarioDTO.getPassword());
+		usuario.setRol(rol);
+		
+		return usuario;
+	}
+	
+	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad, Rol rol){
+		
+		usuario.setEntidad(entidad);
+		usuario.setHabilitado(usuarioDTO.isHabilitado());
+		usuario.setNombreUsuario(usuarioDTO.getNombreUsuario());
+		usuario.setPassword(usuarioDTO.getPassword());
+		usuario.setRol(rol);
+		
+		return usuario;
+	}	
+	
+	public static Rol getRol(RolDTO rolDTO){
+		
+		Rol rol = new Rol();		
+		rol.setRol(rolDTO.getRol());
+		rol.setMenues(new ArrayList<ItemMenu>());
+
+		return rol;
 	}
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
