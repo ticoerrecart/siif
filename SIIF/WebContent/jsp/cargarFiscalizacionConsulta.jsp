@@ -36,7 +36,7 @@ function imprimir(){
 </script>
 
 <input id="idFiscalizacion" type="hidden" value="${fiscalizacion.id}">
-<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 <input id="paramForward" type="hidden" value="${paramForward}">
 
