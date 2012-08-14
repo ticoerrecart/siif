@@ -8,6 +8,8 @@ public class TranzonDTO {
 
 	private String disposicion;
 
+	private PMFDTO pmf;
+	
 	public Long getId() {
 		return id;
 	}
@@ -35,5 +37,13 @@ public class TranzonDTO {
 	public String getNumeroDisposicion(){
 		
 		return (this.getNumero()+" - "+this.getDisposicion());
+	}
+
+	public PMFDTO getPmf() {
+		return pmf;
+	}
+
+	public void setPmf(PMFDTO pmf) {
+		this.pmf = pmf;
 	}	
 }

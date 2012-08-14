@@ -5,12 +5,11 @@ import java.util.Date;
 import java.util.List;
 import ar.com.siif.negocio.Usuario;
 
-@Deprecated
 public class GuiaForestalDTO {
 
 	private int nroGuia;
 
-	private ActaMartilladoDTO fiscalizacion;
+	private FiscalizacionDTO fiscalizacion;
 
 	private String lugarCorte;
 
@@ -57,7 +56,7 @@ public class GuiaForestalDTO {
 
 	public GuiaForestalDTO() {
 
-		fiscalizacion = new ActaMartilladoDTO();
+		fiscalizacion = new FiscalizacionDTO();
 	}
 
 	public int getNroGuia() {
@@ -68,11 +67,11 @@ public class GuiaForestalDTO {
 		this.nroGuia = nroGuia;
 	}
 
-	public ActaMartilladoDTO getFiscalizacion() {
+	public FiscalizacionDTO getFiscalizacion() {
 		return fiscalizacion;
 	}
 
-	public void setFiscalizacion(ActaMartilladoDTO fiscalizacion) {
+	public void setFiscalizacion(FiscalizacionDTO fiscalizacion) {
 		this.fiscalizacion = fiscalizacion;
 	}
 

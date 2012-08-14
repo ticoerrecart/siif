@@ -304,6 +304,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!-- USUARIO --> 
 	<bean id="usuarioFachadaImpl" class="ar.com.siif.fachada.UsuarioFachada">
 		<constructor-arg ref="usuarioDAO" />
+		<constructor-arg ref="entidadFachada" />
+		<constructor-arg ref="rolFachada" />
 	</bean>	
 
 	<bean id="usuarioFachada"

@@ -1,7 +1,5 @@
 package ar.com.siif.dto;
 
-import javax.persistence.Column;
-
 public class UsuarioDTO {
 
 	private Long id;
@@ -11,6 +9,16 @@ public class UsuarioDTO {
 	private String password;
 
 	private RolDTO rol;
+	
+	private EntidadDTO entidad;
+	
+	private boolean habilitado;
+	
+	public UsuarioDTO(){
+		
+		entidad = new EntidadDTO();
+		rol = new RolDTO();
+	}
 	
 	public Long getId() {
 		return id;
@@ -43,6 +51,21 @@ public class UsuarioDTO {
 	public void setRol(RolDTO rol) {
 		this.rol = rol;
 	}
-	
+
+	public EntidadDTO getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(EntidadDTO entidad) {
+		this.entidad = entidad;
+	}
+
+	public boolean isHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
+	}
 	
 }

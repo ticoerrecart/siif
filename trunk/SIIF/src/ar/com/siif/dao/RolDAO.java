@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.RolDTO;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.exception.AccesoDenegadoException;
@@ -18,58 +19,100 @@ import ar.com.siif.utils.Constantes;
 
 public class RolDAO extends HibernateDaoSupport {
 
-	public List<Rol> getRoles() {
-		return getHibernateTemplate().loadAll(Rol.class);
+	public List<Rol> getRoles() throws DataBaseException {
+		try{
+			return getHibernateTemplate().loadAll(Rol.class);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		}			
 	}
 
-	public List<ItemMenu> recuperarMenues() {
+	public List<ItemMenu> recuperarMenues() throws DataBaseException {
 
 		//return getHibernateTemplate().loadAll(ItemMenu.class);
-
-		Criteria criteria = getSession().createCriteria(ItemMenu.class);
-		criteria.add(Restrictions.conjunction().add(Restrictions.gt("orden", 0)));
-
-		return criteria.list();
+		try{
+			Criteria criteria = getSession().createCriteria(ItemMenu.class);
+			criteria.add(Restrictions.conjunction().add(Restrictions.gt("orden", 0)));
+	
+			return criteria.list();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENUES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENUES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENUES);
+		}			
 	}
 
-	public void altaRol(Rol rol) throws NegocioException {
+	public void altaRol(Rol rol) throws NegocioException, DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(Rol.class);
-		criteria.add(Restrictions.disjunction().add(Restrictions.eq("rol", rol.getRol())));
-
-		List<Rol> listaRol = criteria.list();
-
-		if (listaRol.size() > 0) {
-			throw new NegocioException(Constantes.EXISTE_ROL);
-		}
-
-		this.getHibernateTemplate().save(rol);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();
+		try{
+			Criteria criteria = getSession().createCriteria(Rol.class);
+			criteria.add(Restrictions.disjunction().add(Restrictions.eq("rol", rol.getRol())));
+	
+			List<Rol> listaRol = criteria.list();
+	
+			if (listaRol.size() > 0) {
+				throw new NegocioException(Constantes.EXISTE_ROL);
+			}
+	
+			this.getHibernateTemplate().save(rol);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ROL);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ROL);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ROL);
+		}			
 	}
 
-	public Rol recuperarRol(long idRol) {
+	public Rol recuperarRol(long idRol) throws DataBaseException {
 
-		return (Rol) getSession().get(Rol.class, idRol);
+		try{
+			return (Rol) getSession().get(Rol.class, idRol);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
+		}			
 	}
 
-	public void modificacionRol(Rol rol) throws NegocioException {
+	public void modificacionRol(Rol rol) throws DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(Rol.class);
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("rol", rol.getRol()))).add(
-				Restrictions.ne("id", rol.getId()));
-
-		List<Rol> roles = criteria.list();
-
-		if (roles.size() > 0) {
-			throw new NegocioException(Constantes.EXISTE_ROL);
-		}
-
-		//Rol r = (Rol)this.getHibernateTemplate().get(Rol.class, rol.getId());
-		
-		this.getHibernateTemplate().saveOrUpdate(rol);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();
+		try{
+			Criteria criteria = getSession().createCriteria(Rol.class);
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("rol", rol.getRol()))).add(
+					Restrictions.ne("id", rol.getId()));
+	
+			List<Rol> roles = criteria.list();
+	
+			if (roles.size() > 0) {
+				throw new NegocioException(Constantes.EXISTE_ROL);
+			}
+			
+			/*this.getHibernateTemplate().saveOrUpdate(rol);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();*/
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ROL);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ROL);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ROL);
+		}				
 	}
 
 	public ItemMenu getItemMenu(Long idMenu) {
@@ -81,7 +124,7 @@ public class RolDAO extends HibernateDaoSupport {
 		return (Rol) this.getHibernateTemplate().get(Rol.class, id);
 	}
 
-	public boolean existeRol(Rol rol) {
+	public boolean existeRol(RolDTO rol) {
 
 		Criteria criteria = getSession().createCriteria(Rol.class);
 		Conjunction conj = Restrictions.conjunction();
