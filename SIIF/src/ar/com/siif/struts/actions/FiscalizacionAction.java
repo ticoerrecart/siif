@@ -59,7 +59,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
 					.getBean("entidadFachada");
-			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidad();
+			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidadProductores();
 			
 			List<TipoProductoDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
 
@@ -68,7 +68,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.setAttribute("tiposEntidad", tiposEntidad);
 			request.setAttribute("oficinas", oficinas);
-			request.getSession().setAttribute("fiscalizacion", null);//Por si quedo alguna Fiscalizacion en el session
+			//request.getSession().setAttribute("fiscalizacion", null);//Por si quedo alguna Fiscalizacion en el session
 			request.getSession().setAttribute("fiscalizacionDTO", null);//Por si quedo alguna Fiscalizacion en el session
 
 		} catch (Exception e) {
@@ -244,7 +244,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		String strForward = "exitoModificacionFiscalizacion";
 
-		try {
+		/*try {
 			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -308,16 +308,13 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			request.getSession().setAttribute("fiscalizacion", null);
 
-		/*} catch (AccesoDenegadoException ade) {
-			request.setAttribute("error", ade.getMessage());
-			strForward = "error";*/
 		} catch (DataBaseException dbe) {
 			request.setAttribute("errorModificacion", dbe.getMessage());
 			// strForward = "errorLogin";
 		} catch (Exception e) {
 			request.setAttribute("errorModificacion", e.getMessage());
 			// strForward = "errorLogin";
-		}
+		}*/
 
 		return mapping.findForward(strForward);
 	}

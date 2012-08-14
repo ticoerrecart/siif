@@ -7,9 +7,12 @@ import ar.com.siif.dto.ActaMartilladoDTO;
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MarcacionDTO;
+import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.RolDTO;
@@ -22,8 +25,10 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Marcacion;
+import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
@@ -83,6 +88,7 @@ public abstract class ProviderDTO {
 			tranzonDTO.setId(tranzon.getId());
 			tranzonDTO.setDisposicion(tranzon.getDisposicion());
 			tranzonDTO.setNumero(tranzon.getNumero());
+			tranzonDTO.setPmf(ProviderDTO.getPMFDTO(tranzon.getPmf()));
 			
 			return tranzonDTO;
 		}
@@ -93,6 +99,7 @@ public abstract class ProviderDTO {
 			
 			marcacionDTO.setId(marcacion.getId());
 			marcacionDTO.setDisposicion(marcacion.getDisposicion());
+			marcacionDTO.setTranzon(ProviderDTO.getTranzonDTO(marcacion.getTranzon()));
 			
 			return marcacionDTO;
 		}
@@ -103,29 +110,21 @@ public abstract class ProviderDTO {
 			
 			rodalDTO.setId(rodal.getId());
 			rodalDTO.setNombre(rodal.getNombre());
+			rodalDTO.setMarcacion(ProviderDTO.getMarcacionDTO(rodal.getMarcacion()));
 			
 			return rodalDTO;
 		}
-		
-		public static RolDTO getRolDTO(Rol rol){
-			
-			RolDTO rolDTO = new RolDTO();
-			
-			rolDTO.setId(rol.getId());
-			rolDTO.setRol(rol.getRol());
-			
-			return rolDTO;
-		}
-		
+				
 		public static UsuarioDTO getUsuarioDTO(Usuario usuario){
-			
-			
+						
 			UsuarioDTO usuarioDTO = new UsuarioDTO();
 			
 			usuarioDTO.setId(usuario.getId());
 			usuarioDTO.setNombreUsuario(usuario.getNombreUsuario());
 			usuarioDTO.setPassword(usuario.getPassword());
 			usuarioDTO.setRol(ProviderDTO.getRolDTO(usuario.getRol()));
+			usuarioDTO.setEntidad(ProviderDTO.getEntidadDTO(usuario.getEntidad()));
+			usuarioDTO.setHabilitado(usuario.isHabilitado());
 			
 			return usuarioDTO;
 		}
@@ -152,6 +151,91 @@ public abstract class ProviderDTO {
 			aforoDTO.setValorAforo(aforo.getValorAforo());
 			
 			return aforoDTO;
+		}
+		
+		public static RolDTO getRolDTO(Rol rol){
+			
+			List<ItemMenuDTO> listaMenuesDTO = new ArrayList<ItemMenuDTO>();
+			RolDTO rolDTO = new RolDTO();
+			
+			rolDTO.setId(rol.getId());
+			rolDTO.setRol(rol.getRol());
+			
+			for (ItemMenu menu : rol.getMenues()) {
+				listaMenuesDTO.add(ProviderDTO.getItemMenuDTO(menu));
+			}
+			rolDTO.setMenues(listaMenuesDTO);
+			
+			return rolDTO;
+		}		
+		
+		public static ItemMenuDTO getItemMenuDTO(ItemMenu menu){
+			return ProviderDTO.getItemMenuDTO(menu, null);
+		}
+		
+		private static ItemMenuDTO getItemMenuDTO(ItemMenu menu, ItemMenuDTO padre){
+			
+			if(menu != null){
+				List<ItemMenuDTO> listaMenuDTO = new ArrayList<ItemMenuDTO>();
+				ItemMenuDTO menuDTO = new ItemMenuDTO();
+				
+				menuDTO.setId(menu.getId());
+				menuDTO.setItem(menu.getItem());
+				menuDTO.setOrden(menu.getOrden());
+				menuDTO.setPadre(padre);
+				menuDTO.setUrl(menu.getUrl());
+
+				for (ItemMenu menuHijo : menu.getHijos()) {
+					listaMenuDTO.add(ProviderDTO.getItemMenuDTO(menuHijo,menuDTO));
+				}
+				menuDTO.setHijos(listaMenuDTO);
+				
+				return menuDTO;
+			}	
+			else{
+				return null;
+			}
+		}
+		
+		public static FiscalizacionDTO getFiscalizacionDTO(Fiscalizacion fiscalizacion){
+			
+			List<MuestraDTO> listaMuestrasDTO = new ArrayList<MuestraDTO>();
+			FiscalizacionDTO fiscalizacionDTO = new FiscalizacionDTO();
+			
+			fiscalizacionDTO.setCantidadMts(fiscalizacion.getCantidadMts());
+			fiscalizacionDTO.setCantidadUnidades(fiscalizacion.getCantidadUnidades());
+			fiscalizacionDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(fiscalizacion.getFecha())));
+			fiscalizacionDTO.setId(fiscalizacion.getId());
+			//fiscalizacionDTO.setIdMarcacion(fiscalizacion.getRodal().getMarcacion().getId());
+			fiscalizacionDTO.setOficinaAlta(ProviderDTO.getEntidadDTO(fiscalizacion.getOficinaAlta()));
+			//fiscalizacionDTO.setIdPlanManejoForestal(fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getId());
+			fiscalizacionDTO.setProductorForestal(ProviderDTO.getEntidadDTO(fiscalizacion.getProductorForestal()));
+			fiscalizacionDTO.setRodal(ProviderDTO.getRodalDTO(fiscalizacion.getRodal()));
+			fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(fiscalizacion.getTipoProducto()));
+			//fiscalizacionDTO.setIdTranzon(fiscalizacion.getRodal().getMarcacion().getTranzon().getId());
+			fiscalizacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuario()));
+			fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
+			fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());
+
+			List<Muestra> listaMuestra = fiscalizacion.getMuestra();
+			for (Muestra muestra : listaMuestra) {
+				listaMuestrasDTO.add(ProviderDTO.getMuestraDTO(muestra));
+			}			
+			fiscalizacionDTO.setMuestra(listaMuestrasDTO);
+			
+			return fiscalizacionDTO;
+		}
+		
+		public static MuestraDTO getMuestraDTO(Muestra muestra){
+			
+			MuestraDTO muestraDTO = new MuestraDTO();
+			
+			muestraDTO.setDiametro1(muestra.getDiametro1());
+			muestraDTO.setDiametro2(muestra.getDiametro2());
+			muestraDTO.setId(muestra.getId());
+			muestraDTO.setLargo(muestra.getLargo());
+
+			return muestraDTO;			
 		}
 		
 	/*	

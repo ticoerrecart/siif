@@ -8,6 +8,7 @@ import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
@@ -69,30 +70,43 @@ public class EntidadFachada implements IEntidadFachada {
 		return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
 	}
 
-	public List<Entidad> getOficinasForestales(){
-		return entidadDAO.getOficinasForestales();
+	public List<Entidad> getOficinasForestales()throws NegocioException{
+		try{
+			return entidadDAO.getOficinasForestales();
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		} catch (Exception e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
-	public List<EntidadDTO> getOficinasForestalesDTO(){
+	public List<EntidadDTO> getOficinasForestalesDTO()throws NegocioException{
 		
-		List<EntidadDTO> oficianasDTO = new ArrayList<EntidadDTO>();
-		List<Entidad> oficinas = entidadDAO.getOficinasForestales();
-		
-		for (Entidad entidad : oficinas) {
-			oficianasDTO.add(ProviderDTO.getEntidadDTO(entidad));
-		}
-		return oficianasDTO;
+		try{
+			List<EntidadDTO> oficianasDTO = new ArrayList<EntidadDTO>();
+			List<Entidad> oficinas = entidadDAO.getOficinasForestales();
+			
+			for (Entidad entidad : oficinas) {
+				oficianasDTO.add(ProviderDTO.getEntidadDTO(entidad));
+			}
+			return oficianasDTO;
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		} catch (Exception e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
 	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad){
 		
 		List<EntidadDTO> entidadesDTO = new ArrayList<EntidadDTO>();
 		List<Entidad> entidades = entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
-		
+			
 		for (Entidad entidad : entidades) {
 			entidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
 		}
-		return entidadesDTO;
+		return entidadesDTO;			
 	}	
 	
 	public List<EntidadDTO> getEntidadesDTO(){

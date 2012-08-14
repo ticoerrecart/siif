@@ -11,6 +11,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.ItemMenuDTO;
+import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
@@ -38,13 +40,17 @@ public class RolAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.ALTA_ROL_MENU,usuario.getRol());
 
-			List<ItemMenu> menues = rolFachada.recuperarMenues();
+			List<ItemMenuDTO> menues = rolFachada.recuperarMenuesDTO();
 			Collections.sort(menues);
 
 			request.setAttribute("menues", menues);
 
 			//request.setAttribute("exitoGrabado", request.getAttribute("exitoGrabado"));
 
+		} catch (NegocioException e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -64,13 +70,13 @@ public class RolAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 
 			RolForm rolForm = (RolForm) form;
-			//rolFachada.altaRol(rolForm.getRol(),rolForm.getMenues());
+			rolFachada.altaRol(rolForm.getRolDTO(),rolForm.getMenuesDTO());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_ROL);
 
-			/*} catch (NegocioException ne) {
-				request.setAttribute("error", ne.getMessage());
-				*/
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 
@@ -91,9 +97,12 @@ public class RolAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.MODIFICACION_ROL_MENU,usuario.getRol());
 
-			List<Rol> roles = rolFachada.getRoles();
+			List<RolDTO> roles = rolFachada.getRolesDTO();
 			request.setAttribute("roles", roles);
 
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());
+						
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -115,8 +124,8 @@ public class RolAction extends ValidadorAction {
 
 			String id = request.getParameter("id");
 
-			Rol rol = rolFachada.recuperarRol(new Long(id).longValue());
-			List<ItemMenu> menues = rolFachada.recuperarMenues();
+			RolDTO rol = rolFachada.recuperarRolDTO(new Long(id).longValue());
+			List<ItemMenuDTO> menues = rolFachada.recuperarMenuesDTO();
 			Collections.sort(menues);
 
 			request.setAttribute("menues", menues);
@@ -143,7 +152,7 @@ public class RolAction extends ValidadorAction {
 
 			rolForm = (RolForm) form;
 
-			rolFachada.modificacionRol(rolForm.getRol(), rolForm.getMenues());
+			rolFachada.modificacionRol(rolForm.getRolDTO(), rolForm.getMenuesDTO());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_ROL);
 
@@ -164,7 +173,7 @@ public class RolAction extends ValidadorAction {
 		IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 		RolForm rolForm = (RolForm) form;
 
-		boolean existe = rolFachada.existeRol(rolForm.getRol());
+		boolean existe = rolFachada.existeRol(rolForm.getRolDTO());
 
 		if (existe) {
 			Validator.addErrorXML(error, Constantes.EXISTE_ROL);

@@ -13,6 +13,7 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 
@@ -63,9 +64,14 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
 	}	
 	
-	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) {
+	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws NegocioException {
 
-		return fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion);
+		try {
+			return fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 
 	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion,
@@ -102,19 +108,23 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 	
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
-		throws DataBaseException{
-		
-		Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getIdRodal());
-		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdProductorForestal());
-		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdOficinaForestal());
-		TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(
-				fiscalizacionDTO.getIdTipoProductoForestal());
-		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getIdUsuario());
-		
-		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,muestrasDTO,rodal,
-																		productorForestal,oficinaForestal,
-																		tipoProducto,usuario);
-		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
+		throws NegocioException{
+		try{
+			Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getIdRodal());
+			Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdProductorForestal());
+			Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdOficinaForestal());
+			TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(
+					fiscalizacionDTO.getIdTipoProductoForestal());
+			Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getIdUsuario());
+			
+			Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,muestrasDTO,rodal,
+																			productorForestal,oficinaForestal,
+																			tipoProducto,usuario);
+			fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
+	
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
 	public List<EntidadDTO> recuperarProductoresDTO(){
@@ -127,5 +137,15 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 		
 		return listaProductoresDTO;
+	}
+	
+	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException{
+
+		try {
+			return ProviderDTO.getFiscalizacionDTO(fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 }
