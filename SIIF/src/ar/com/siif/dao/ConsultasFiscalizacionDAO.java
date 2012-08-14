@@ -15,20 +15,29 @@ import ar.com.siif.utils.Constantes;
 
 public class ConsultasFiscalizacionDAO extends HibernateDaoSupport {
 
-	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor)throws DataBaseException{
 		
-		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		criteria.createAlias("productorForestal", "pf");		
-		
-		criteria.add(Restrictions.conjunction()
-				.add(Restrictions.isNotNull("guiaForestal"))
-				.add(Restrictions.eq("pf.id", idProductor)));
-		
-		criteria.addOrder(Order.asc("pf.nombre"));
-		criteria.addOrder(Order.asc("fecha"));		
-		
-		List<Fiscalizacion> fiscalizaciones = criteria.list();
-		return fiscalizaciones;
+		try{
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+			criteria.createAlias("productorForestal", "pf");		
+			
+			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.isNotNull("guiaForestal"))
+					.add(Restrictions.eq("pf.id", idProductor)));
+			
+			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("fecha"));		
+			
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+			return fiscalizaciones;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}			
 	}
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor) throws DataBaseException{

@@ -8,9 +8,11 @@ import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IConsultasFiscalizacionFachada {
 
-	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor)throws NegocioException;
 	
 	public List<FiscalizacionDTO> recuperarFiscalizacionesConGuiaForestalDTO(long idProductor)throws NegocioException;
+	
+	public List<FiscalizacionDTO> recuperarFiscalizacionesSinGuiaForestalDTO(long idProductor) throws NegocioException;
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor)throws NegocioException;
 }
