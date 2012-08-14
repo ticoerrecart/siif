@@ -11,11 +11,16 @@ public class Constantes {
 	public static final Long ID_ROL_ADMINISTRADOR = 2L;
 
 	// FISCALIZACION
-		public static final String EXITO_ALTA_FISCALIZACION = "La Fiscalización se ha dado de alta con exito";
-		
-		public static final String ERROR_MODIFICACION_FISCALIZACION = "Ha ocurrido un error en la modificación de la fiscalización";
+		public static final String EXITO_ALTA_FISCALIZACION = "La Fiscalización se ha dado de alta con exito";			
 	
 		public static final String EXITO_MODIFICACION_FISCALIZACION = "La Fiscalización se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_FISCALIZACION = "Ha ocurrido un error en el alta de la fiscalización";		
+		
+		public static final String ERROR_MODIFICACION_FISCALIZACION = "Ha ocurrido un error en la modificación de la fiscalización";
+		
+		public static final String ERROR_RECUPERAR_FISCALIZACION = "Ha ocurrido un error en la recuperación de la fiscalización";
+		
 	// FIN FISCALIZACION
 	
 	// GUIA FORESTAL
@@ -52,6 +57,8 @@ public class Constantes {
 		public static final String EXISTE_ENTIDAD = "Ya existe una Entidad con éste nombre";
 	
 		public static final String ENTIDAD_RN = "RN";
+		
+		public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperación de las oficinas forestales";		
 	// FIN ENTIDAD
 
 	// LOCALIDAD
@@ -75,7 +82,11 @@ public class Constantes {
 		
 		public static final String ERROR_ALTA_USUARIO = "Ha ocurrido un error en el alta del usuario";
 		
-		public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificación del usuario";		
+		public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificación del usuario";
+		
+		public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperación de los usuarios";
+		
+		public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperación del usuario";		
 	// FIN USUARIO
 
 	//TIPO PRODUCTO FORESTAL
@@ -106,6 +117,14 @@ public class Constantes {
 		public static final String ERROR_ALTA_ROL = "Ha ocurrido un error en el alta del rol";
 		
 		public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificación del rol";
+		
+		public static final String ERROR_RECUPERACION_ROLES = "Ha ocurrido un error en la recuperación de los roles";
+		
+		public static final String ERROR_RECUPERACION_ROL = "Ha ocurrido un error en la recuperación del rol";
+		
+		public static final String ERROR_RECUPERACION_MENUES = "Ha ocurrido un error en la recuperación de los menues";
+		
+		public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperación del menú";
 	// FIN ROL	
 	
 	//UBICACION
@@ -153,7 +172,9 @@ public class Constantes {
 		
 		public static final String TITULO_CONSULTA_FISCALIZACIONES_CON_GUIA_FORESTAL = "Consulta de Fiscalizaciones con Guia Forestal";
 		
-		public static final String TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL = "Consulta de Fiscalizaciones sin Guia Forestal";		
+		public static final String TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL = "Consulta de Fiscalizaciones sin Guia Forestal";
+		
+		public static final String ERROR_RECUPERAR_FISCALIZACIONES = "Ha ocurrido un error en la recuperación de las fiscalizaciones";
 	//FIN CONSULTAS FISCALIZACIONES
 		
 	//REPORTES

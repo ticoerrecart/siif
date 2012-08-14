@@ -27,7 +27,7 @@
 					<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
 						onmouseover="javascript:mostrarDatos(<c:out value='${i.count}'></c:out>);">
 						<td class="botonerab">
-							<fmt:formatDate	value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />
+							<c:out value="${fiscalizacion.fecha}"></c:out>
 						</td>
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.productorForestal.nombre}"></c:out>

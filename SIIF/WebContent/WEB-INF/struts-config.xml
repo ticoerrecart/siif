@@ -273,7 +273,7 @@
 		<!-- CONSULTAS FISCALIZACION -->
 		<action path="/consultasFiscalizacion"
 			type="ar.com.siif.struts.actions.ConsultasFiscalizacionAction" parameter="metodo">
-			<forward name="exitoCargarLocalidadesConsultaFiscalizacion" path=".consultaFiscalizacion" />
+			<forward name="exitoCargarTiposDeEntidadConsultaFiscalizacion" path=".consultaFiscalizacion" />
 			<forward name="exitoRecuperarFiscalizacionesConGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />
 			<forward name="exitoRecuperarFiscalizacionesSinGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />			
 			<forward name="exitoCargarFiscalizacion" path=".cargarFiscalizacionConsulta" />									

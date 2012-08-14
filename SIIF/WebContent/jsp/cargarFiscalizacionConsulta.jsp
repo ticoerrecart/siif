@@ -36,13 +36,13 @@ function imprimir(){
 </script>
 
 <input id="idFiscalizacion" type="hidden" value="${fiscalizacion.id}">
-<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.idTipoEntidad}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.id}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 <input id="paramForward" type="hidden" value="${paramForward}">
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
-	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
 				<bean:message key='SIIF.titulo.FiscalizacionProdForest'/>
@@ -52,10 +52,10 @@ function imprimir(){
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="22%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
-			<td align="left" width="22%">
-				<input class="botonerab" type="text" size="20" readonly="readonly"
-					   value="<c:out value='${fiscalizacion.productorForestal.localidad.nombre}'></c:out>">			
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+			<td align="left" width="30%">
+				<input class="botonerab" type="text" size="29" readonly="readonly"
+					   value="<c:out value='${fiscalizacion.productorForestal.tipoEntidadDesc}'></c:out>">			
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td align="left">
@@ -66,8 +66,8 @@ function imprimir(){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td align="left">
-				<input class="botonerab" type="text" size="16" readonly="readonly"
-					   value="<fmt:formatDate value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />">
+				<input class="botonerab" type="text" size="25" readonly="readonly"
+					   value="<c:out value='${fiscalizacion.fecha}'></c:out>">
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 				align="top" width='17' height='21'>		
 			</td>
@@ -80,7 +80,7 @@ function imprimir(){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td align="left">
-				<input class="botonerab" type="text" size="20" readonly="readonly" 
+				<input class="botonerab" type="text" size="29" readonly="readonly" 
 					   value="<c:out value='${fiscalizacion.cantidadUnidades}'></c:out>">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
@@ -92,7 +92,7 @@ function imprimir(){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantMts3'/></td>
 			<td align="left">
-				<input class="botonerab" type="text" size="20" readonly="readonly"
+				<input class="botonerab" type="text" size="29" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.cantidadMts}'></c:out>">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TamañoMuestra'/></td>
@@ -101,6 +101,15 @@ function imprimir(){
 					   value="<c:out value='${fiscalizacion.tamanioMuestra}'></c:out>">
 			</td>
 		</tr>
+		<tr>		
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Oficina'/></td>
+			<td align="left">
+				<input class="botonerab" type="text" size="29" readonly="readonly"
+					   value="<c:out value='${fiscalizacion.oficinaAlta.nombre}'></c:out>">
+			</td>
+			<td colspan="2"></td>			
+		</tr>		
+				
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
@@ -111,7 +120,7 @@ function imprimir(){
 		<!-- LOCALIZACION -->
 		<tr>
 			<td colspan="4" align="left">
-				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
+				<table border="0" class="cuadrado" align="center" width="85%" cellpadding="2" cellspacing="0">
 					<tr>
 						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 					</tr>
@@ -172,7 +181,7 @@ function imprimir(){
 		<!-- MUESTRAS -->
 		<tr>
 			<td colspan="4" align="left">
-				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
+				<table border="0" class="cuadrado" align="center" width="85%" cellpadding="2" cellspacing="0">
 					<tr>
 						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Muestras'/></td>
 					</tr>
@@ -239,7 +248,7 @@ function imprimir(){
 		</tr>
 	</table>
 			
-	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="3"></td>
 		</tr>
