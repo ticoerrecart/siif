@@ -1,11 +1,15 @@
 package ar.com.siif.dto;
 
+import java.util.List;
+
 public class RolDTO {
 
 	private Long id;
 
 	private String rol;
 
+	private List<ItemMenuDTO> menues;
+	
 	public Long getId() {
 		return id;
 	}
@@ -20,6 +24,14 @@ public class RolDTO {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public List<ItemMenuDTO> getMenues() {
+		return menues;
+	}
+
+	public void setMenues(List<ItemMenuDTO> menues) {
+		this.menues = menues;
 	}
 	
 	

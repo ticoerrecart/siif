@@ -6,6 +6,8 @@ public class RodalDTO {
 
 	private String nombre;
 
+	private MarcacionDTO marcacion;
+	
 	public Long getId() {
 		return id;
 	}
@@ -20,6 +22,14 @@ public class RodalDTO {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public MarcacionDTO getMarcacion() {
+		return marcacion;
+	}
+
+	public void setMarcacion(MarcacionDTO marcacion) {
+		this.marcacion = marcacion;
 	}
 	
 	

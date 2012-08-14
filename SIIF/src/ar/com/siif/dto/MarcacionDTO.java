@@ -6,6 +6,8 @@ public class MarcacionDTO {
 
 	private String disposicion;
 
+	private TranzonDTO tranzon;
+	
 	public Long getId() {
 		return id;
 	}
@@ -20,6 +22,14 @@ public class MarcacionDTO {
 
 	public void setDisposicion(String disposicion) {
 		this.disposicion = disposicion;
+	}
+
+	public TranzonDTO getTranzon() {
+		return tranzon;
+	}
+
+	public void setTranzon(TranzonDTO tranzon) {
+		this.tranzon = tranzon;
 	}
 	
 }

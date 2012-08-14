@@ -86,10 +86,19 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		return fiscalizaciones;	
 	}	
 	
-	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) {
-
-		Fiscalizacion acta = (Fiscalizacion) getSession().get(Fiscalizacion.class, idFiscalizacion);
-		return acta;
+	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws DataBaseException {
+		
+		try{
+			Fiscalizacion acta = (Fiscalizacion) getSession().get(Fiscalizacion.class, idFiscalizacion);
+			return acta;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACION);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACION);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACION);
+		}
 	}
 
 	public void modificacionFiscalizacion(Fiscalizacion pFiscalizacion, List<Muestra> muestrasAEliminar)
@@ -125,11 +134,11 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			this.getHibernateTemplate().clear();
 			
 		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+			throw new DataBaseException(Constantes.ERROR_ALTA_FISCALIZACION);
 		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+			throw new DataBaseException(Constantes.ERROR_ALTA_FISCALIZACION);
 		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
+			throw new DataBaseException(Constantes.ERROR_ALTA_FISCALIZACION);
 		}			
 	}
 

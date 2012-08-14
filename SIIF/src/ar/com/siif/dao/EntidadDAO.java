@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.enums.TipoDeEntidad;
@@ -14,6 +16,7 @@ import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.RecursosNaturales;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -101,13 +104,22 @@ public class EntidadDAO extends HibernateDaoSupport {
 		return obrajeros;
 	}
 	
-	public List<Entidad> getOficinasForestales(){
+	public List<Entidad> getOficinasForestales()throws DataBaseException {
 		
-		List<Entidad> oficinasForestales = null;		
-		Criteria criteria = getSession().createCriteria(RecursosNaturales.class);
-		oficinasForestales = criteria.list();
-		
-		return oficinasForestales;
+		try{
+			List<Entidad> oficinasForestales = null;		
+			Criteria criteria = getSession().createCriteria(RecursosNaturales.class);
+			oficinasForestales = criteria.list();
+			
+			return oficinasForestales;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_OFICINAS_FORESTALES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_OFICINAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_OFICINAS_FORESTALES);
+		}			
 	}
 
 	public void modificacionEntidad(Entidad entidad) {
