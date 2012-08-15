@@ -11,26 +11,13 @@ public class GuiaForestalDTO {
 
 	private FiscalizacionDTO fiscalizacion;
 
-	private String lugarCorte;
-
-	//private long permisionario;
-	private Date fechaVencimiento;
+	private String fechaVencimiento;
 
 	private int distanciaAforoMovil;
-
-	private String nroExpediente;
-
-	private String periodoForestal;
-
-	private String disposicionNro;
-
-	private String tipo;
 
 	private String estado;
 
 	private String especie;
-
-	private double volumenTotal;
 
 	private int cantidad;
 
@@ -46,7 +33,7 @@ public class GuiaForestalDTO {
 
 	private String localidad;
 
-	private Date fecha;
+	private String fecha;
 
 	private List<ValeTransporteDTO> valesTransporte = new ArrayList<ValeTransporteDTO>();
 
@@ -75,25 +62,11 @@ public class GuiaForestalDTO {
 		this.fiscalizacion = fiscalizacion;
 	}
 
-	public String getLugarCorte() {
-		return lugarCorte;
-	}
-
-	public void setLugarCorte(String lugarCorte) {
-		this.lugarCorte = lugarCorte;
-	}
-
-	/*public long getPermisionario() {
-		return permisionario;
-	}
-	public void setPermisionario(long permisionario) {
-		this.permisionario = permisionario;
-	}*/
-	public Date getFechaVencimiento() {
+	public String getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(String fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
@@ -103,38 +76,6 @@ public class GuiaForestalDTO {
 
 	public void setDistanciaAforoMovil(int distanciaAforoMovil) {
 		this.distanciaAforoMovil = distanciaAforoMovil;
-	}
-
-	public String getNroExpediente() {
-		return nroExpediente;
-	}
-
-	public void setNroExpediente(String nroExpediente) {
-		this.nroExpediente = nroExpediente;
-	}
-
-	public String getPeriodoForestal() {
-		return periodoForestal;
-	}
-
-	public void setPeriodoForestal(String periodoForestal) {
-		this.periodoForestal = periodoForestal;
-	}
-
-	public String getDisposicionNro() {
-		return disposicionNro;
-	}
-
-	public void setDisposicionNro(String disposicionNro) {
-		this.disposicionNro = disposicionNro;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public String getEstado() {
@@ -151,14 +92,6 @@ public class GuiaForestalDTO {
 
 	public void setEspecie(String especie) {
 		this.especie = especie;
-	}
-
-	public double getVolumenTotal() {
-		return volumenTotal;
-	}
-
-	public void setVolumenTotal(double volumenTotal) {
-		this.volumenTotal = volumenTotal;
 	}
 
 	public int getCantidad() {
@@ -217,11 +150,11 @@ public class GuiaForestalDTO {
 		this.localidad = localidad;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

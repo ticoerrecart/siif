@@ -103,7 +103,7 @@ public class FiscalizacionForm extends ActionForm {
 		boolean ok15 = true;
 		boolean ok16 = true;
 		
-		ok2 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getIdProductorForestal()), "Productor Forestal", error);		
+		ok2 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getProductorForestal().getId()), "Productor Forestal", error);		
 		
 		ok5 = Validator.requerido(fiscalizacionDTO.getFecha(), "Fecha", error) && Validator.validarFechaValida(fiscalizacionDTO.getFecha(), "Fecha", error);
 		
@@ -111,13 +111,13 @@ public class FiscalizacionForm extends ActionForm {
 		
 		ok8 = Validator.validarEnteroMayorQue(0, Integer.toString(fiscalizacionDTO.getCantidadUnidades()), "Cantidad Unidades", error);			
 		
-		ok11 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getIdTipoProductoForestal()), "Tipo de Producto", error);
+		ok11 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getTipoProducto().getId()), "Tipo de Producto", error);
 		
 		ok9 = Validator.validarDoubleMayorQue(0, Double.toString(fiscalizacionDTO.getCantidadMts()), "Cantidad Mts3", error);
 		
 		ok10 = Validator.validarEnteroMayorQue(0, Integer.toString(fiscalizacionDTO.getTamanioMuestra()), "Tamaño de la Muestra", error);		
 		
-		ok11 = Validator.validarComboRequerido("-1", Long.toString(fiscalizacionDTO.getIdOficinaForestal()), "Oficina", error);		
+		ok11 = Validator.validarComboRequerido("-1", Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);		
 		
 		//ok12 = Validator.validarComboRequerido("-1",Long.toString(idPlanManejoForestal), "Plan de Manejo Forestal", error);
 		
@@ -125,7 +125,7 @@ public class FiscalizacionForm extends ActionForm {
 		
 		//ok14 = Validator.validarComboRequerido("-1",Long.toString(idMarcacion), "Marcación", error);
 		
-		ok15 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getIdRodal()), "Rodal", error);
+		ok15 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
 		
 		if(ok10){
 			ok16 = Validator.validarMuestras(this.getMuestrasDTO(),error);

@@ -16,10 +16,10 @@ public class FiscalizacionDTO {
 
 	private int tamanioMuestra;
 	
-	private long idProductorForestal;
+	//private long idProductorForestal;
 	private EntidadDTO productorForestal;
 
-	private long idTipoProductoForestal;
+	//private long idTipoProductoForestal;
 	private TipoProductoDTO tipoProducto;	
 
 	private long idPlanManejoForestal;
@@ -28,18 +28,27 @@ public class FiscalizacionDTO {
 	
 	private long idMarcacion;
 	
-	private long idRodal;
+	//private long idRodal;
 	private RodalDTO rodal;
 
-	private long idOficinaForestal;	
+	//private long idOficinaForestal;	
 	private EntidadDTO oficinaAlta;
 	
-	private long idUsuario;
+	//private long idUsuario;
 	private UsuarioDTO usuario;
 	
 	private List<MuestraDTO> muestra;
 
 	private GuiaForestalDTO guiaForestal;
+	
+	public FiscalizacionDTO(){
+		
+		productorForestal = new EntidadDTO();
+		tipoProducto = new TipoProductoDTO();
+		rodal = new RodalDTO();
+		oficinaAlta = new EntidadDTO();
+		usuario = new UsuarioDTO();
+	}
 	
 	public Long getId() {
 		return id;
@@ -89,22 +98,6 @@ public class FiscalizacionDTO {
 		this.tamanioMuestra = tamanioMuestra;
 	}
 
-	public long getIdProductorForestal() {
-		return idProductorForestal;
-	}
-
-	public void setIdProductorForestal(long idProductorForestal) {
-		this.idProductorForestal = idProductorForestal;
-	}
-
-	public long getIdTipoProductoForestal() {
-		return idTipoProductoForestal;
-	}
-
-	public void setIdTipoProductoForestal(long idTipoProductoForestal) {
-		this.idTipoProductoForestal = idTipoProductoForestal;
-	}
-
 	public long getIdPlanManejoForestal() {
 		return idPlanManejoForestal;
 	}
@@ -129,36 +122,12 @@ public class FiscalizacionDTO {
 		this.idMarcacion = idMarcacion;
 	}
 
-	public long getIdRodal() {
-		return idRodal;
-	}
-
-	public void setIdRodal(long idRodal) {
-		this.idRodal = idRodal;
-	}
-
-	public long getIdOficinaForestal() {
-		return idOficinaForestal;
-	}
-
-	public void setIdOficinaForestal(long idOficinaForestal) {
-		this.idOficinaForestal = idOficinaForestal;
-	}
-
 	public List<MuestraDTO> getMuestra() {
 		return muestra;
 	}
 
 	public void setMuestra(List<MuestraDTO> muestra) {
 		this.muestra = muestra;
-	}
-
-	public long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
 	}
 
 	public EntidadDTO getProductorForestal() {

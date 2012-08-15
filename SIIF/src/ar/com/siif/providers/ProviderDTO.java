@@ -222,6 +222,10 @@ public abstract class ProviderDTO {
 				listaMuestrasDTO.add(ProviderDTO.getMuestraDTO(muestra));
 			}			
 			fiscalizacionDTO.setMuestra(listaMuestrasDTO);
+			if(fiscalizacion.getGuiaForestal() != null){
+				fiscalizacionDTO.setGuiaForestal(ProviderDTO.getGuiaForestalDTODesdeFiscalizacionDTO(
+																			fiscalizacion.getGuiaForestal()));
+			}	
 			
 			return fiscalizacionDTO;
 		}
@@ -236,6 +240,28 @@ public abstract class ProviderDTO {
 			muestraDTO.setLargo(muestra.getLargo());
 
 			return muestraDTO;			
+		}
+		
+		public static GuiaForestalDTO getGuiaForestalDTODesdeFiscalizacionDTO(GuiaForestal guiaForestal){
+			
+			GuiaForestalDTO guiaForestalDTO = new GuiaForestalDTO();
+			
+			guiaForestalDTO.setAforo(guiaForestal.getAforo());
+			guiaForestalDTO.setCantidad(guiaForestal.getCantidad());
+			guiaForestalDTO.setDistanciaAforoMovil(guiaForestal.getDistanciaAforoMovil());
+			guiaForestalDTO.setEspecie(guiaForestal.getEspecie());
+			guiaForestalDTO.setEstado(guiaForestal.getEstado());
+			guiaForestalDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(guiaForestal.getFecha())));
+			guiaForestalDTO.setFechaVencimiento(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(
+																				guiaForestal.getFechaVencimiento())));
+			guiaForestalDTO.setImporte(guiaForestal.getImporte());
+			guiaForestalDTO.setInspFiscalizacion(guiaForestal.getInspFiscalizacion());
+			guiaForestalDTO.setLocalidad(guiaForestal.getLocalidad());
+			guiaForestalDTO.setNroGuia(guiaForestal.getNroGuia());
+			guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());
+			guiaForestalDTO.setValorAforos(guiaForestal.getValorAforos());
+			
+			return guiaForestalDTO;
 		}
 		
 	/*	
