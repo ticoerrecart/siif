@@ -302,7 +302,7 @@ function deshabilitarLocalizacion(ids){
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="30%">
-				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.idProductorForestal" onchange="actualizarComboPMF();" 
+				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.productorForestal.id" onchange="actualizarComboPMF();" 
 						disabled="disabled">
 					<option value="-1">-Seleccione un Productor-</option>
 				</select>
@@ -327,7 +327,7 @@ function deshabilitarLocalizacion(ids){
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
-				<select class="botonerab" name="fiscalizacionDTO.idTipoProductoForestal">
+				<select class="botonerab" name="fiscalizacionDTO.tipoProducto.id">
 					<option value="-1">- Seleccione un Producto -</option>
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
 						<option value="${tipoProducto.id}"><c:out value="${tipoProducto.nombre}"></c:out></option>
@@ -356,7 +356,7 @@ function deshabilitarLocalizacion(ids){
 				<bean:message key='SIIF.label.Oficina'/>
 			</td>
 			<td>
-				<select class="botonerab" name="fiscalizacionDTO.idOficinaForestal">
+				<select class="botonerab" name="fiscalizacionDTO.oficinaAlta.id">
 					<option value="-1">- Seleccione una Oficina -</option>
 					<c:forEach items="${oficinas}" var="oficina">
 						<option value="${oficina.id}"><c:out value="${oficina.nombre}"></c:out></option>
@@ -423,7 +423,7 @@ function deshabilitarLocalizacion(ids){
 							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>
-							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" disabled="disabled">
+							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.rodal.id" disabled="disabled">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>
