@@ -338,7 +338,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
-			fiscalizacionDTO.setIdUsuario(usuario.getId());
+			fiscalizacionDTO.setUsuario(usuario);
 			
 			/*Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
 

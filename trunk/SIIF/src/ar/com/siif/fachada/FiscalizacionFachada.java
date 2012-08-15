@@ -110,12 +110,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
 		throws NegocioException{
 		try{
-			Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getIdRodal());
-			Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdProductorForestal());
-			Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getIdOficinaForestal());
+			Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getRodal().getId());
+			Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getProductorForestal().getId());
+			Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta().getId());
 			TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(
-					fiscalizacionDTO.getIdTipoProductoForestal());
-			Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getIdUsuario());
+					fiscalizacionDTO.getTipoProducto().getId());
+			Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
 			
 			Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,muestrasDTO,rodal,
 																			productorForestal,oficinaForestal,
