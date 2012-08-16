@@ -21,6 +21,7 @@ public class Constantes {
 		
 		public static final String ERROR_RECUPERAR_FISCALIZACION = "Ha ocurrido un error en la recuperación de la fiscalización";
 		
+		
 	// FIN FISCALIZACION
 	
 	// GUIA FORESTAL
@@ -58,7 +59,15 @@ public class Constantes {
 	
 		public static final String ENTIDAD_RN = "RN";
 		
-		public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperación de las oficinas forestales";		
+		public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperación de las oficinas forestales";
+		
+		public static final String ERROR_MODIFICACION_ENTIDAD = "Ha ocurrido un error en la modificación de la entidad";
+		
+		public static final String ERROR_RECUPERACION_ENTIDAD = "Ha ocurrido un error en la recuperación de la entidad";
+		
+		public static final String ERROR_ALTA_ENTIDAD = "Ha ocurrido un error en el alta de la entidad";
+		
+		public static final String ERROR_RECUPERAR_PRODUCTORES = "Ha ocurrido un error en la recuperación de los productores";
 	// FIN ENTIDAD
 
 	// LOCALIDAD
@@ -103,6 +112,12 @@ public class Constantes {
 		public static final String EXITO_ALTA_AFORO = "El Aforo se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_AFORO = "El Aforo se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_AFORO = "Ha ocurrido un error en el alta del Aforo";
+		
+		public static final String ERROR_RECUPERACION_AFORO = "Ha ocurrido un error en la recuperación del Aforo";
+		
+		public static final String ERROR_MODIFICACION_AFORO = "Ha ocurrido un error en la modificación del Aforo";
 	// FIN AFORO
 
 	//ROL
