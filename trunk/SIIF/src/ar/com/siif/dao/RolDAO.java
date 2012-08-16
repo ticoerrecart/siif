@@ -115,27 +115,55 @@ public class RolDAO extends HibernateDaoSupport {
 		}				
 	}
 
-	public ItemMenu getItemMenu(Long idMenu) {
+	public ItemMenu getItemMenu(Long idMenu) throws DataBaseException {
 
-		return (ItemMenu) getHibernateTemplate().get(ItemMenu.class, idMenu);
+		try{
+			return (ItemMenu) getHibernateTemplate().get(ItemMenu.class, idMenu);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENU);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENU);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MENU);
+		}			
 	}
 
-	public Rol getRol(Long id) {
-		return (Rol) this.getHibernateTemplate().get(Rol.class, id);
-	}
-
-	public boolean existeRol(RolDTO rol) {
-
-		Criteria criteria = getSession().createCriteria(Rol.class);
-		Conjunction conj = Restrictions.conjunction();
-		conj.add(Restrictions.eq("rol", rol.getRol()));
-		if (rol.getId() != null) {
-			conj.add(Restrictions.ne("id", rol.getId()));
+	public Rol getRol(Long id) throws DataBaseException {
+		
+		try{
+			return (Rol) this.getHibernateTemplate().get(Rol.class, id);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROL);
 		}
-		criteria.add(conj);
+	}
 
-		List<Rol> roles = criteria.list();
-		return (roles.size() > 0);
+	public boolean existeRol(RolDTO rol) throws DataBaseException {
+
+		try{
+			Criteria criteria = getSession().createCriteria(Rol.class);
+			Conjunction conj = Restrictions.conjunction();
+			conj.add(Restrictions.eq("rol", rol.getRol()));
+			if (rol.getId() != null) {
+				conj.add(Restrictions.ne("id", rol.getId()));
+			}
+			criteria.add(conj);
+	
+			List<Rol> roles = criteria.list();
+			return (roles.size() > 0);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(he.getMessage());
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(he.getMessage());
+		} catch (Exception e) {
+			throw new DataBaseException(e.getMessage());
+		}			
 	}
 	
 	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException{

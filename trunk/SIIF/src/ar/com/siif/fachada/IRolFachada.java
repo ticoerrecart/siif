@@ -13,7 +13,7 @@ public interface IRolFachada {
 
 	public List<Rol> getRoles()throws NegocioException;
 
-	public Rol getRol(Long id);
+	public Rol getRol(Long id)throws NegocioException;
 
 	public List<ItemMenu> recuperarMenues()throws NegocioException;
 	
@@ -29,7 +29,7 @@ public interface IRolFachada {
 
 	public void modificacionRol(RolDTO rol, List<ItemMenuDTO> menues) throws NegocioException;
 
-	public boolean existeRol(RolDTO rol);
+	public boolean existeRol(RolDTO rol) throws NegocioException;
 	
 	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException;
 	

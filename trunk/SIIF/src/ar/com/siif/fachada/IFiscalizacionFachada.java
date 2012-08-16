@@ -14,37 +14,36 @@ import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IFiscalizacionFachada {
 
-	public List<Entidad> recuperarEntidades();
+	public List<Entidad> recuperarEntidades()throws NegocioException;
 
-	public List<Entidad> recuperarProductores();
+	public List<Entidad> recuperarProductores()throws NegocioException;
 
-	public List<Fiscalizacion> recuperarFiscalizaciones();
+	public List<Fiscalizacion> recuperarFiscalizaciones()throws NegocioException;
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor)throws NegocioException;
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor);	
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor)throws NegocioException;	
 	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion)throws NegocioException;
 
-	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion, 
-										  List<Muestra> muestrasAEliminar)
-											throws DataBaseException;
+	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion,List<Muestra> muestrasAEliminar)
+																						throws NegocioException;
 
-	public void altaFiscalizacion(Fiscalizacion acta)throws DataBaseException;
+	public void altaFiscalizacion(Fiscalizacion acta)throws NegocioException;
 
-	public Entidad getProductorForestal(long idProductorForestal);
+	public Entidad getProductorForestal(long idProductorForestal)throws NegocioException;
 
-	public TipoProducto getTipoProducto(long idTipoProductoForestal);
+	public TipoProducto getTipoProducto(long idTipoProductoForestal)throws NegocioException;
 	
 	//public List<Fiscalizacion> recuperarFiscalizacionesPorLocalidad(Long idLocalidad);
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor)throws NegocioException;
 	
-	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)throws DataBaseException;
+	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)throws NegocioException;
 	
-	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws DataBaseException, NegocioException;	
+	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws NegocioException;	
 	
-	public List<EntidadDTO> recuperarProductoresDTO();
+	public List<EntidadDTO> recuperarProductoresDTO()throws NegocioException;
 	
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException;
 }
