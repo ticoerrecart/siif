@@ -39,29 +39,51 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		this.usuarioFachada = pUsuarioFachada;
 	}
 
-	public List<Entidad> recuperarEntidades() {
+	public List<Entidad> recuperarEntidades() throws NegocioException {
+		try{
+			return fiscalizacionDAO.recuperarEntidades();
 
-		return fiscalizacionDAO.recuperarEntidades();
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public List<Entidad> recuperarProductores() {
-
-		return fiscalizacionDAO.recuperarProductores();
+	public List<Entidad> recuperarProductores() throws NegocioException {
+		try{
+			return fiscalizacionDAO.recuperarProductores();
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizaciones() {
-
-		return fiscalizacionDAO.recuperarFiscalizaciones();
+	public List<Fiscalizacion> recuperarFiscalizaciones() throws NegocioException {
+		try{
+			return fiscalizacionDAO.recuperarFiscalizaciones();
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor) {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor) throws NegocioException {
 
-		return fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
+		try{
+			return fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) throws NegocioException {
 
-		return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
+		try{
+			return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
+		
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws NegocioException {
@@ -74,16 +96,23 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion,
-										  List<Muestra> muestrasAEliminar)
-											throws DataBaseException 
+	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion, List<Muestra> muestrasAEliminar)
+																				throws NegocioException 
 	{
-		fiscalizacionDAO.modificacionFiscalizacion(fiscalizacion,muestrasAEliminar);
+		try{
+			fiscalizacionDAO.modificacionFiscalizacion(fiscalizacion,muestrasAEliminar);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}	
 	}
 
-	public void altaFiscalizacion(Fiscalizacion fiscalizacion)
-		throws DataBaseException{
-		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
+	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException{
+		try{
+			fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public Entidad getProductorForestal(long idProductorForestal) {
@@ -98,13 +127,22 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		return fiscalizacionDAO.recuperarFiscalizacionesPorLocalidad(idLocalidad);
 	}*/
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor){
-		return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor) throws NegocioException{
+		try{
+			return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
-	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion)
-		throws DataBaseException {
-		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
+	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
+		try{
+			fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 	
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
@@ -127,16 +165,20 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}			
 	}	
 	
-	public List<EntidadDTO> recuperarProductoresDTO(){
-		
-		List<EntidadDTO> listaProductoresDTO = new ArrayList<EntidadDTO>();
-		List<Entidad> listaProductores = fiscalizacionDAO.recuperarProductores();
-		
-		for (Entidad entidad : listaProductores) {
-			listaProductoresDTO.add(ProviderDTO.getEntidadDTO(entidad));
-		}
-		
-		return listaProductoresDTO;
+	public List<EntidadDTO> recuperarProductoresDTO() throws NegocioException{
+		try{
+			List<EntidadDTO> listaProductoresDTO = new ArrayList<EntidadDTO>();
+			List<Entidad> listaProductores = fiscalizacionDAO.recuperarProductores();
+			
+			for (Entidad entidad : listaProductores) {
+				listaProductoresDTO.add(ProviderDTO.getEntidadDTO(entidad));
+			}
+			
+			return listaProductoresDTO;
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 	
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException{

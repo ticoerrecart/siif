@@ -46,8 +46,13 @@ public class RolFachada implements IRolFachada {
 		}			
 	}
 
-	public Rol getRol(Long id) {
-		return rolDAO.getRol(id);
+	public Rol getRol(Long id) throws NegocioException {
+		try{
+			return rolDAO.getRol(id);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public List<ItemMenu> recuperarMenues() throws NegocioException{
@@ -136,9 +141,14 @@ public class RolFachada implements IRolFachada {
 		
 	}
 
-	public boolean existeRol(RolDTO rol) {
+	public boolean existeRol(RolDTO rol) throws NegocioException {
 
-		return rolDAO.existeRol(rol);
+		try {
+			return rolDAO.existeRol(rol);
+		} catch (DataBaseException e) {
+
+			throw new NegocioException(e.getMessage());
+		}
 	}
 
 	public List<RolDTO> cargarRolesSegunEntidad(Long idEntidad, Long idUsuarioLogueado) throws NegocioException{
@@ -181,30 +191,33 @@ public class RolFachada implements IRolFachada {
 		}			
 	}
 
-	private void getItemsMenues(Rol rol, List<ItemMenuDTO> menues) {
+	private void getItemsMenues(Rol rol, List<ItemMenuDTO> menues) throws NegocioException {
 
-		HashMap<Long, String> hashMenu = new HashMap<Long, String>();
-
-		for (ItemMenuDTO itemMenu : menues) {
-			if (itemMenu != null) {
-				ItemMenu item = rolDAO.getItemMenu(itemMenu.getId());
-				rol.getMenues().add(item);
-
-				ItemMenu itemPadre = item.getPadre();
-
-				while (itemPadre != null) {
-
-					if (hashMenu.get(itemPadre.getId()) == null) {
-						rol.getMenues().add(itemPadre);
-						hashMenu.put(itemPadre.getId(), "S");
-						itemPadre = itemPadre.getPadre();
-					} else {
-						itemPadre = null;
+		try{
+			HashMap<Long, String> hashMenu = new HashMap<Long, String>();
+	
+			for (ItemMenuDTO itemMenu : menues) {
+				if (itemMenu != null) {
+					ItemMenu item = rolDAO.getItemMenu(itemMenu.getId());
+					rol.getMenues().add(item);
+	
+					ItemMenu itemPadre = item.getPadre();
+	
+					while (itemPadre != null) {
+	
+						if (hashMenu.get(itemPadre.getId()) == null) {
+							rol.getMenues().add(itemPadre);
+							hashMenu.put(itemPadre.getId(), "S");
+							itemPadre = itemPadre.getPadre();
+						} else {
+							itemPadre = null;
+						}
 					}
 				}
 			}
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
 		}
-
 	}
 	
 	public void verificarMenu(String pNombreMenu,Rol pRol)throws AccesoDenegadoException{

@@ -22,14 +22,23 @@ import ar.com.siif.utils.Constantes;
 
 public class EntidadDAO extends HibernateDaoSupport {
 
-	public void altaEntidad(Entidad laEntidad) throws NegocioException {
+	public void altaEntidad(Entidad laEntidad) throws NegocioException, DataBaseException {
 
-		if (existeEntidad(laEntidad.getNombre(), laEntidad.getId())) {
-			throw new NegocioException(Constantes.EXISTE_ENTIDAD);
-		}
-		this.getHibernateTemplate().saveOrUpdate(laEntidad);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();
+		try{
+			if (existeEntidad(laEntidad.getNombre(), laEntidad.getId())) {
+				throw new NegocioException(Constantes.EXISTE_ENTIDAD);
+			}
+			this.getHibernateTemplate().saveOrUpdate(laEntidad);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_ENTIDAD);
+		}			
 	}
 
 	public boolean existeEntidad(String nombre, Long id) {
@@ -45,63 +54,105 @@ public class EntidadDAO extends HibernateDaoSupport {
 		return (entidades.size() > 0);
 	}
 
-	public Entidad getEntidadPorNombre(String nombre) {
-		Criteria criteria = getSession().createCriteria(Entidad.class);
-		criteria.add(Restrictions.eq("nombre", nombre));
-
-		List<Entidad> entidades = criteria.list();
-		if (entidades.size() > 0) {
-			return entidades.get(0);
-		} else {
-			return null;
+	public Entidad getEntidadPorNombre(String nombre) throws DataBaseException {
+		try{
+			Criteria criteria = getSession().createCriteria(Entidad.class);
+			criteria.add(Restrictions.eq("nombre", nombre));
+	
+			List<Entidad> entidades = criteria.list();
+			if (entidades.size() > 0) {
+				return entidades.get(0);
+			} else {
+				return null;
+			}
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
 		}
 	}
 
-	public List<Entidad> getEntidades() {
-		return getHibernateTemplate().loadAll(Entidad.class);
+	public List<Entidad> getEntidades() throws DataBaseException {
+		try{
+			return getHibernateTemplate().loadAll(Entidad.class);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		}			
 	}
 
-	public Entidad getEntidad(Long id) {
-		return (Entidad) getHibernateTemplate().get(Entidad.class, id);
+	public Entidad getEntidad(Long id) throws DataBaseException {
+		try{
+			return (Entidad) getHibernateTemplate().get(Entidad.class, id);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		}			
 	}
 
-	public List<Entidad> getEntidades(Long idLocalidad) {
+	public List<Entidad> getEntidades(Long idLocalidad) throws DataBaseException {
 
-		Localidad localidad = (Localidad) getHibernateTemplate().get(Localidad.class, idLocalidad);
-
-		Criteria criteria = getSession().createCriteria(Obrajero.class);
-		criteria.add(Restrictions.eq("localidad", localidad));
-		List<Entidad> obrajeros = criteria.list();
-
-		criteria = getSession().createCriteria(PPF.class);
-		criteria.add(Restrictions.eq("localidad", localidad));
-		List<Entidad> ppf = criteria.list();
-
-		obrajeros.addAll(ppf);
-		Collections.sort(obrajeros);
-
-		//TreeSet<Entidad> lista = new TreeSet<Entidad>(obrajeros);
-
-		return obrajeros;
-		//return lista;				
-	}
-
-	public List<Entidad> getEntidades(TipoDeEntidad tipoDeEntidad) {
-		List<Entidad> obrajeros = null;
-		Criteria criteria = null;
-		if (tipoDeEntidad == TipoDeEntidad.OBR) {
-			criteria = getSession().createCriteria(Obrajero.class);
-			obrajeros = criteria.list();
-		}
-
-		if (tipoDeEntidad == TipoDeEntidad.PPF) {
+		try{
+			Localidad localidad = (Localidad) getHibernateTemplate().get(Localidad.class, idLocalidad);
+	
+			Criteria criteria = getSession().createCriteria(Obrajero.class);
+			criteria.add(Restrictions.eq("localidad", localidad));
+			List<Entidad> obrajeros = criteria.list();
+	
 			criteria = getSession().createCriteria(PPF.class);
-			obrajeros = criteria.list();
-		}
+			criteria.add(Restrictions.eq("localidad", localidad));
+			List<Entidad> ppf = criteria.list();
+	
+			obrajeros.addAll(ppf);
+			Collections.sort(obrajeros);
+	
+			return obrajeros;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		}			
+	}
 
-		Collections.sort(obrajeros);
-
-		return obrajeros;
+	public List<Entidad> getEntidades(TipoDeEntidad tipoDeEntidad) throws DataBaseException {
+		
+		try{
+			List<Entidad> obrajeros = null;
+			Criteria criteria = null;
+			if (tipoDeEntidad == TipoDeEntidad.OBR) {
+				criteria = getSession().createCriteria(Obrajero.class);
+				obrajeros = criteria.list();
+			}
+	
+			if (tipoDeEntidad == TipoDeEntidad.PPF) {
+				criteria = getSession().createCriteria(PPF.class);
+				obrajeros = criteria.list();
+			}
+	
+			Collections.sort(obrajeros);
+	
+			return obrajeros;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		}			
 	}
 	
 	public List<Entidad> getOficinasForestales()throws DataBaseException {
@@ -122,11 +173,20 @@ public class EntidadDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public void modificacionEntidad(Entidad entidad) {
+	public void modificacionEntidad(Entidad entidad) throws DataBaseException {
 		
-		this.getHibernateTemplate().saveOrUpdate(entidad);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();		
+		try{
+			this.getHibernateTemplate().saveOrUpdate(entidad);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ENTIDAD);
+		}			
 	}	
 		
 }

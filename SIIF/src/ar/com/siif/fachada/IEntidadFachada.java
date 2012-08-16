@@ -11,29 +11,29 @@ public interface IEntidadFachada {
 
 	public void altaEntidad(EntidadDTO entidadDTO) throws NegocioException;
 
-	public List<Entidad> getEntidades();
+	public List<Entidad> getEntidades()throws NegocioException;
 
-	public Entidad getEntidad(Long id);
+	public Entidad getEntidad(Long id)throws NegocioException;
 
 	public boolean existeEntidad(String nombre, Long id);
 
-	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad);
+	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad)throws NegocioException;
 
-	public List<TipoDeEntidad> getTiposDeEntidad();
+	public List<TipoDeEntidad> getTiposDeEntidad()throws NegocioException;
 
-	public List<TipoDeEntidad> getTiposDeEntidadProductores();
+	public List<TipoDeEntidad> getTiposDeEntidadProductores()throws NegocioException;
 	
-	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad);
+	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad)throws NegocioException;
 	
 	public List<Entidad> getOficinasForestales()throws NegocioException;
 	
 	public List<EntidadDTO> getOficinasForestalesDTO()throws NegocioException;
 	
-	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad);
+	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad)throws NegocioException;
 
-	public List<EntidadDTO> getEntidadesDTO();
+	public List<EntidadDTO> getEntidadesDTO()throws NegocioException;
 	
-	public EntidadDTO getEntidadDTO(Long id);	
+	public EntidadDTO getEntidadDTO(Long id)throws NegocioException;	
 	
 	public void modificacionEntidad(EntidadDTO entidad)throws NegocioException ;
 }

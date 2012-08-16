@@ -169,16 +169,22 @@ public class RolAction extends ValidadorAction {
 
 	public boolean validarRolForm(StringBuffer error, ActionForm form) {
 
-		WebApplicationContext ctx = getWebApplicationContext();
-		IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-		RolForm rolForm = (RolForm) form;
-
-		boolean existe = rolFachada.existeRol(rolForm.getRolDTO());
-
-		if (existe) {
-			Validator.addErrorXML(error, Constantes.EXISTE_ROL);
-		}
-
-		return !existe && rolForm.validar(error);
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			RolForm rolForm = (RolForm) form;
+	
+			boolean existe;
+				existe = rolFachada.existeRol(rolForm.getRolDTO());
+	
+			if (existe) {
+				Validator.addErrorXML(error, Constantes.EXISTE_ROL);
+			}
+	
+			return !existe && rolForm.validar(error);
+		} catch (NegocioException e) {
+			e.printStackTrace();
+		}	
+		return true;
 	}
 }

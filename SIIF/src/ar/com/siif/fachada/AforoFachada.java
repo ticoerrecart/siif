@@ -8,6 +8,7 @@ import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
@@ -28,61 +29,90 @@ public class AforoFachada implements IAforoFachada {
 
 	public void altaAforo(AforoDTO aforo) throws NegocioException {
 
-		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforo.getTipoProducto().getId());
-
-		aforoDAO.altaAforo(ProviderDominio.getAforo(aforo,tipoProducto));
+		try{
+			TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforo.getTipoProducto().getId());
+	
+			aforoDAO.altaAforo(ProviderDominio.getAforo(aforo,tipoProducto));
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}				
 	}
 
-	public List<Aforo> recuperarAforos() {
+	public List<Aforo> recuperarAforos() throws NegocioException {
 
-		return aforoDAO.recuperarAforos();
+		try{
+			return aforoDAO.recuperarAforos();
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public Aforo recuperarAforo(Long id) {
+	public Aforo recuperarAforo(Long id) throws NegocioException {
 
-		return aforoDAO.recuperarAforo(id);
+		try{
+			return aforoDAO.recuperarAforo(id);
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public void modificacionAforo(AforoDTO aforoDTO) throws NegocioException {
 		
-		Aforo aforo = aforoDAO.recuperarAforo(aforoDTO.getId());
-		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforoDTO.getTipoProducto().getId());
-		
-		aforoDAO.modificacionAforo(ProviderDominio.getAforo(aforo, aforoDTO, tipoProducto));
+		try{
+			Aforo aforo = aforoDAO.recuperarAforo(aforoDTO.getId());
+			TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforoDTO.getTipoProducto().getId());
+			
+			aforoDAO.modificacionAforo(ProviderDominio.getAforo(aforo, aforoDTO, tipoProducto));
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto) {
-
+	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto){
+		
 		return aforoDAO.existeAforo(aforo, idTipoProducto);
 	}
 	
-	public String getValor(Long idFiscalizacion, String estado){
+	public String getValor(Long idFiscalizacion, String estado) throws NegocioException{
 		
 		try{
 			Aforo aforo = aforoDAO.getAforo(idFiscalizacion,estado);
 			
 			return String.valueOf(aforo.getValorAforo());
 			
-		}catch(Exception e){
-			return null;
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
 		}	
 	}
 	
-	public List<AforoDTO> recuperarAforosDTO(){
+	public List<AforoDTO> recuperarAforosDTO() throws NegocioException{
 		
-		List<AforoDTO> listaAforosDTO = new ArrayList<AforoDTO>();
-		List<Aforo> listaAforos = aforoDAO.recuperarAforos();
-		
-		for (Aforo aforo : listaAforos) {
-			listaAforosDTO.add(ProviderDTO.getAforoDTO(aforo));
-		}
-		
-		return listaAforosDTO;
+		try{
+			List<AforoDTO> listaAforosDTO = new ArrayList<AforoDTO>();
+			List<Aforo> listaAforos = aforoDAO.recuperarAforos();
+			
+			for (Aforo aforo : listaAforos) {
+				listaAforosDTO.add(ProviderDTO.getAforoDTO(aforo));
+			}
+			
+			return listaAforosDTO;
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
-	public AforoDTO recuperarAforoDTO(Long id){
-		
-		Aforo aforo = aforoDAO.recuperarAforo(id);
-		return ProviderDTO.getAforoDTO(aforo);
+	public AforoDTO recuperarAforoDTO(Long id) throws NegocioException{
+		try{
+			Aforo aforo = aforoDAO.recuperarAforo(id);
+			return ProviderDTO.getAforoDTO(aforo);
+			
+		}catch(DataBaseException e){
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 }

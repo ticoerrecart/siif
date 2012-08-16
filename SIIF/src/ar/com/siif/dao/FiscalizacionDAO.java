@@ -27,63 +27,105 @@ import ar.com.siif.utils.Constantes;
 public class FiscalizacionDAO extends HibernateDaoSupport {
 
 	@SuppressWarnings("unchecked")
-	public List<Entidad> recuperarEntidades() {
-		return this.getHibernateTemplate().loadAll(Entidad.class);
+	public List<Entidad> recuperarEntidades() throws DataBaseException {
+		try{
+			return this.getHibernateTemplate().loadAll(Entidad.class);
+
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
+		}			
 	}
 
-	public List<Entidad> recuperarProductores() {
-
-		Criteria criteria = getSession().createCriteria(Obrajero.class);
-		List<Entidad> obrajeros = criteria.list();
-		criteria = getSession().createCriteria(PPF.class);
-		List<Entidad> ppf = criteria.list();
-
-		obrajeros.addAll(ppf);
-		Collections.sort(obrajeros);
-		//TreeSet<Entidad> lista = new TreeSet<Entidad>(obrajeros);
-		
-		return obrajeros;
-		//return lista;
+	public List<Entidad> recuperarProductores() throws DataBaseException {
+		try{
+			Criteria criteria = getSession().createCriteria(Obrajero.class);
+			List<Entidad> obrajeros = criteria.list();
+			criteria = getSession().createCriteria(PPF.class);
+			List<Entidad> ppf = criteria.list();
+	
+			obrajeros.addAll(ppf);
+			Collections.sort(obrajeros);
+			
+			return obrajeros;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		}
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizaciones() {
+	public List<Fiscalizacion> recuperarFiscalizaciones() throws DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		List<Fiscalizacion> fiscalizaciones = criteria.list();
-
-		return fiscalizaciones;
+		try{
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+	
+			return fiscalizaciones;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor) {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor) throws DataBaseException {
 		
-		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		criteria.createAlias("productorForestal", "pf");		
-		
-		criteria.add(Restrictions.conjunction()
-				.add(Restrictions.isNull("guiaForestal"))
-				.add(Restrictions.eq("pf.id", idProductor)));
-		
-		criteria.addOrder(Order.asc("pf.nombre"));
-		criteria.addOrder(Order.asc("fecha"));		
-		
-		List<Fiscalizacion> fiscalizaciones = criteria.list();
-		return fiscalizaciones;
+		try{
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+			criteria.createAlias("productorForestal", "pf");		
+			
+			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.isNull("guiaForestal"))
+					.add(Restrictions.eq("pf.id", idProductor)));
+			
+			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("fecha"));		
+			
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+			return fiscalizaciones;
+
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) throws DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		criteria.createAlias("productorForestal", "pf");		
-		
-		criteria.add(Restrictions.conjunction()
-				.add(Restrictions.isNull("guiaForestal"))
-				.add(Restrictions.eq("pf.id", idProductor)));
-		
-		criteria.addOrder(Order.asc("pf.nombre"));
-		criteria.addOrder(Order.asc("fecha"));		
-		
-		List<Fiscalizacion> fiscalizaciones = criteria.list();
-		return fiscalizaciones;	
+		try{
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+			criteria.createAlias("productorForestal", "pf");		
+			
+			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.isNull("guiaForestal"))
+					.add(Restrictions.eq("pf.id", idProductor)));
+			
+			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("fecha"));		
+			
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+			return fiscalizaciones;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}			
 	}	
 	
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws DataBaseException {
@@ -184,17 +226,26 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		
 	}*/
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor) throws DataBaseException{
 	
-		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		//criteria.createAlias("productorForestal.l", "localidad");
-		criteria.createAlias("productorForestal", "pf");
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productorForestal.id", idProductor)));
-
-		criteria.addOrder(Order.asc("pf.nombre"));
-		criteria.addOrder(Order.asc("fecha"));
-		
-		List<Fiscalizacion> fiscalizaciones = criteria.list();
-		return fiscalizaciones;			
+		try{
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+			//criteria.createAlias("productorForestal.l", "localidad");
+			criteria.createAlias("productorForestal", "pf");
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productorForestal.id", idProductor)));
+	
+			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("fecha"));
+			
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+			return fiscalizaciones;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}			
 	}	
 }
