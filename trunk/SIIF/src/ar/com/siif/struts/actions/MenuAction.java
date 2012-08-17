@@ -61,6 +61,7 @@ public class MenuAction extends DispatchActionSupport {
 			request.getSession().setAttribute("roles", rolesStr);
 
 		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
 			mapping.findForward("error");
 		}
 		return null;

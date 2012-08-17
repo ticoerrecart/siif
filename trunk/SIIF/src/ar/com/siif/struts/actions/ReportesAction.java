@@ -11,7 +11,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
@@ -145,10 +147,10 @@ public class ReportesAction extends ValidadorAction {
 			
 			//rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
 			
-			IFiscalizacionFachada fiscalizacionFachada = 
-											(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");
+			IEntidadFachada entidadFachada = 
+											(IEntidadFachada) ctx.getBean("entidadFachada");
 
-			List<Entidad> productores = fiscalizacionFachada.recuperarProductores();			
+			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();			
 			
 			request.setAttribute("productores", productores);
 			request.setAttribute("paramForward", paramForward);

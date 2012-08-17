@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -637,18 +638,16 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String forwardBuscarNroGuia = request.getParameter("forwardBuscarNroGuia");
 
-			IFiscalizacionFachada fiscalizacionFachada = 
-				(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");
-
+			IEntidadFachada entidadFachada = 
+				(IEntidadFachada) ctx.getBean("entidadFachada");
 			
-			List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
-			request.setAttribute("productores", productores);
-			
-			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
+			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 			
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			request.setAttribute("productores", productores);
+			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);			
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);

@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -87,10 +88,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			String paramProd = request.getParameter("idProd");
 
 			WebApplicationContext ctx = getWebApplicationContext();
-			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
-					.getBean("fiscalizacionFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
-			List<Entidad> productores = fiscalizacionFachada.recuperarProductores();
+			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 
 			request.setAttribute("productores", productores);
 			request.setAttribute("paramForward", paramForward);
