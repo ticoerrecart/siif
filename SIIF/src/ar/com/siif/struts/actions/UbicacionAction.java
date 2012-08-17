@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
@@ -33,10 +34,10 @@ public class UbicacionAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.ALTA_PMF_MENU,usuario.getRol());
 			
-			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
-					.getBean("fiscalizacionFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
-			List<EntidadDTO> productores = fiscalizacionFachada.recuperarProductoresDTO();
+			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 
 			request.setAttribute("productores", productores);
 			strForward = "exitoRecuperarUbicacionParaAlta";

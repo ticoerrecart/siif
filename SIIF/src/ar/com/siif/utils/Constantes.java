@@ -33,17 +33,27 @@ public class Constantes {
 		
 		public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO = "Ha ocurrido un error en el reemplazo de la boleta de depósito";
 		
+		public static final String ERROR_PAGO_BOLETA_DEPOSITO = "Ha ocurrido un error en el pago de la boleta de depósito";
+		
 		public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO_NRO_EXISTENTE = "El número de boleta de deposito ya existe, por favor especifique otro";
 		
 		public static final String ERROR_REEMPLAZAR_VALE_TRANSPORTE = "Ha ocurrido un error en el reemplazo del vale de transporte";
 		
 		public static final String ERROR_REEMPLAZAR_VALE_TRANSPORTE_NRO_EXISTENTE = "El número de vale de transporte ya existe, por favor especifique otro";		
 		
+		public static final String ERROR_DEVOLUCION_VALE_TRANSPORTE = "Ha ocurrido un error en la devolución del vale de transporte";
+		
 		public static final String METODO_CARGAR_GUIA_DEVOLUCION_VALE = "cargarGuiaForestalDevolucionValeTransporte";
 		
 		public static final String NO_EXISTE_GUIA = "Guía Forestal no encontrada";
 		
 		public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
+		
+		public static final String ERROR_RECUPERAR_GUIA_FORESTAL = "Ha ocurrido un error en la recuperación de la guía forestal";
+		
+		public static final String ERROR_RECUPERAR_GUIAS_FORESTALES = "Ha ocurrido un error en la recuperación de la guías forestales";
+		
+		public static final String ERROR_ALTA_GUIA_FORESTAL = "Ha ocurrido un error en el alta de la guía forestal";
 	// FIN GUIA FORESTAL
 	
 	// ENTIDAD
@@ -76,6 +86,12 @@ public class Constantes {
 		public static final String EXITO_ALTA_LOCALIDAD = "La Localidad se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_LOCALIDAD = "La Localidad se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_LOCALIDAD = "Ha ocurrido un error en el alta de la localidad";
+		
+		public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperación de la localidad";
+		
+		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperación de las localidades";
 	// FIN LOCALIDAD
 
 	// USUARIO
@@ -84,6 +100,8 @@ public class Constantes {
 		public static final String TITULO_MODIFICACION_USUARIO = "Modificación de Usuario";//solo para cuando no es Administrador
 	
 		public static final String EXISTE_USUARIO = "Ya existe un Usuario con éste nombre";
+		
+		public static final String USUARIO_INVALIDO = "Usuario y/o Contraseña invalido";
 	
 		public static final String EXITO_ALTA_USUARIO = "El Usuario se ha dado de alta con exito";
 	
@@ -95,7 +113,9 @@ public class Constantes {
 		
 		public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperación de los usuarios";
 		
-		public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperación del usuario";		
+		public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperación del usuario";
+		
+		public static final String ERROR_LOGIN_USUARIO = "Ha ocurrido un error en el login del usuario";
 	// FIN USUARIO
 
 	//TIPO PRODUCTO FORESTAL
@@ -104,6 +124,14 @@ public class Constantes {
 		public static final String EXITO_ALTA_TIPO_PRODUCTO = "El Tipo de Producto Forestal se ha dado de alta con exito";
 	
 		public static final String EXITO_MODIFICACION_TIPO_PRODUCTO = "El Tipo de Producto Forestal se ha modificado con exito";
+		
+		public static final String ERROR_ALTA_TIPO_PRODUCTO = "Ha ocurrido un error en el alta del tipo de producto";
+		
+		public static final String ERROR_MODIFICACION_TIPO_PRODUCTO = "Ha ocurrido un error en la modificación del tipo de producto";
+		
+		public static final String ERROR_RECUPERACION_TIPOS_PRODUCTOS = "Ha ocurrido un error en la recuperacion del los tipos de producto";
+		
+		public static final String ERROR_RECUPERACION_TIPO_PRODUCTO = "Ha ocurrido un error en la recuperacion del tipo de producto";
 	// FIN TIPO PRODUCTO FORESTAL
 
 	//AFORO
@@ -196,6 +224,8 @@ public class Constantes {
 		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS = "Volumen Fiscalizado Por Productor entre Fechas";
 		
 		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTO_FORESTAL_ENTRE_FECHAS = "Volumen Fiscalizado Por Producto Forestal entre Fechas";
+		
+		public static final String ERROR_GENERACION_REPORTE = "Ha ocurrido un error en la generación del reporte";
 	//FIN REPORTES	
 		
 	//MENU
