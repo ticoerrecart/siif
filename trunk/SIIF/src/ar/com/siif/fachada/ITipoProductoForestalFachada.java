@@ -11,17 +11,17 @@ public interface ITipoProductoForestalFachada {
 
 	public void altaTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO) throws NegocioException;
 
-	public List<TipoProducto> recuperarTiposProductoForestal();
+	public List<TipoProducto> recuperarTiposProductoForestal()throws NegocioException;
 
-	public TipoProducto recuperarTipoProductoForestal(long id);
+	public TipoProducto recuperarTipoProductoForestal(long id)throws NegocioException;
 	
-	public TipoProductoDTO recuperarTipoProductoForestalDTO(long id);
+	public TipoProductoDTO recuperarTipoProductoForestalDTO(long id)throws NegocioException;
 
 	public void modificacionTipoProductoForestal(TipoProductoDTO tipoProductoDTO) throws NegocioException;
 
 	public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO);
 	
-	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO();
+	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO()throws NegocioException;
 	
 	public List<EstadoProducto> getEstadosProductos();
 }

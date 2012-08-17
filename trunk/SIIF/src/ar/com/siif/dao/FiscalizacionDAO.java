@@ -27,7 +27,7 @@ import ar.com.siif.utils.Constantes;
 public class FiscalizacionDAO extends HibernateDaoSupport {
 
 	@SuppressWarnings("unchecked")
-	public List<Entidad> recuperarEntidades() throws DataBaseException {
+	/*public List<Entidad> recuperarEntidades() throws DataBaseException {
 		try{
 			return this.getHibernateTemplate().loadAll(Entidad.class);
 
@@ -38,9 +38,9 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ENTIDAD);
 		}			
-	}
+	}*/
 
-	public List<Entidad> recuperarProductores() throws DataBaseException {
+	/*public List<Entidad> recuperarProductores() throws DataBaseException {
 		try{
 			Criteria criteria = getSession().createCriteria(Obrajero.class);
 			List<Entidad> obrajeros = criteria.list();
@@ -59,7 +59,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
 		}
-	}
+	}*/
 
 	public List<Fiscalizacion> recuperarFiscalizaciones() throws DataBaseException {
 
@@ -202,14 +202,14 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		}			
 	}	
 	
-	public Entidad getProductorForestal(long idProductorForestal) {
+	/*public Entidad getProductorForestal(long idProductorForestal) {
 		return (Entidad) this.getHibernateTemplate().get(Entidad.class, idProductorForestal);
-	}
+	}*/
 
-	public TipoProducto getTipoProducto(long idTipoProductoForestal) {
+	/*public TipoProducto getTipoProducto(long idTipoProductoForestal) {
 		return (TipoProducto) this.getHibernateTemplate().get(TipoProducto.class,
 				idTipoProductoForestal);
-	}
+	}*/
 
 	/*public List<Fiscalizacion> recuperarFiscalizacionesPorLocalidad(Long idLocalidad){
 		

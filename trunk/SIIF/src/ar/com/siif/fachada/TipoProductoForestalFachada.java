@@ -7,6 +7,7 @@ import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
@@ -25,30 +26,54 @@ public class TipoProductoForestalFachada implements ITipoProductoForestalFachada
 
 	public void altaTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO) throws NegocioException {
 
-		datosSistemaDAO.altaTipoProductoForestal(ProviderDominio.getTipoProductoForestal(tipoProductoForestalDTO));
-	}
-
-	public List<TipoProducto> recuperarTiposProductoForestal() {
-
-		return datosSistemaDAO.recuperarTiposProducto(); 
+		try{
+			datosSistemaDAO.altaTipoProductoForestal(ProviderDominio.getTipoProductoForestal(tipoProductoForestalDTO));
 		
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
-	public TipoProducto recuperarTipoProductoForestal(long id) {
+	public List<TipoProducto> recuperarTiposProductoForestal()throws NegocioException {
 
-		return datosSistemaDAO.recuperarTipoProductoForestal(id);
+		try{
+			return datosSistemaDAO.recuperarTiposProducto();
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}
+
+	public TipoProducto recuperarTipoProductoForestal(long id)throws NegocioException {
+
+		try{
+			return datosSistemaDAO.recuperarTipoProductoForestal(id);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
-	public TipoProductoDTO recuperarTipoProductoForestalDTO(long id) {
-
-		return ProviderDTO.getTipoProductoDTO(datosSistemaDAO.recuperarTipoProductoForestal(id));
+	public TipoProductoDTO recuperarTipoProductoForestalDTO(long id)throws NegocioException {
+		
+		try{
+			return ProviderDTO.getTipoProductoDTO(datosSistemaDAO.recuperarTipoProductoForestal(id));
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public void modificacionTipoProductoForestal(TipoProductoDTO tipoProductoDTO) throws NegocioException {
 
-		TipoProducto tipoProducto = datosSistemaDAO.recuperarTipoProductoForestal(tipoProductoDTO.getId());
-		tipoProducto.setNombre(tipoProductoDTO.getNombre());
-		datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
+		try{
+			TipoProducto tipoProducto = datosSistemaDAO.recuperarTipoProductoForestal(tipoProductoDTO.getId());
+			tipoProducto.setNombre(tipoProductoDTO.getNombre());
+			datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}
 
 	public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO) {
@@ -56,17 +81,22 @@ public class TipoProductoForestalFachada implements ITipoProductoForestalFachada
 		return datosSistemaDAO.existeTipoProductoForestal(tipoProdructoDTO);
 	}
 	
-	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO(){
+	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO()throws NegocioException{
 		
-		List<TipoProductoDTO> tiposProductoDTO = new ArrayList<TipoProductoDTO>();
-		List<TipoProducto> tiposProducto = datosSistemaDAO.recuperarTiposProducto();
-		
-		for (TipoProducto tipoProducto : tiposProducto) {
+		try{
+			List<TipoProductoDTO> tiposProductoDTO = new ArrayList<TipoProductoDTO>();
+			List<TipoProducto> tiposProducto = datosSistemaDAO.recuperarTiposProducto();
 			
-			tiposProductoDTO.add(ProviderDTO.getTipoProductoDTO(tipoProducto));
-		}
-		
-		return tiposProductoDTO;
+			for (TipoProducto tipoProducto : tiposProducto) {
+				
+				tiposProductoDTO.add(ProviderDTO.getTipoProductoDTO(tipoProducto));
+			}
+			
+			return tiposProductoDTO;
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
 	
 	public List<EstadoProducto> getEstadosProductos(){
