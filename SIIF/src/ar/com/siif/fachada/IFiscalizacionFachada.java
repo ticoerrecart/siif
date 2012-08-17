@@ -14,9 +14,9 @@ import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IFiscalizacionFachada {
 
-	public List<Entidad> recuperarEntidades()throws NegocioException;
+	//public List<Entidad> recuperarEntidades()throws NegocioException;
 
-	public List<Entidad> recuperarProductores()throws NegocioException;
+	//public List<Entidad> recuperarProductores()throws NegocioException;
 
 	public List<Fiscalizacion> recuperarFiscalizaciones()throws NegocioException;
 
@@ -31,9 +31,9 @@ public interface IFiscalizacionFachada {
 
 	public void altaFiscalizacion(Fiscalizacion acta)throws NegocioException;
 
-	public Entidad getProductorForestal(long idProductorForestal)throws NegocioException;
+	//public Entidad getProductorForestal(long idProductorForestal)throws NegocioException;
 
-	public TipoProducto getTipoProducto(long idTipoProductoForestal)throws NegocioException;
+	//public TipoProducto getTipoProducto(long idTipoProductoForestal)throws NegocioException;
 	
 	//public List<Fiscalizacion> recuperarFiscalizacionesPorLocalidad(Long idLocalidad);
 	
@@ -43,7 +43,7 @@ public interface IFiscalizacionFachada {
 	
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)throws NegocioException;	
 	
-	public List<EntidadDTO> recuperarProductoresDTO()throws NegocioException;
+	//public List<EntidadDTO> recuperarProductoresDTO()throws NegocioException;
 	
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException;
 }

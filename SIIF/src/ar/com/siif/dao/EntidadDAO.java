@@ -188,5 +188,27 @@ public class EntidadDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ENTIDAD);
 		}			
 	}	
-		
+	
+	public List<Entidad> getProductores() throws DataBaseException {
+
+		try{	
+			Criteria criteria = getSession().createCriteria(Obrajero.class);
+			List<Entidad> obrajeros = criteria.list();
+	
+			criteria = getSession().createCriteria(PPF.class);
+			List<Entidad> ppf = criteria.list();
+	
+			obrajeros.addAll(ppf);
+			Collections.sort(obrajeros);
+	
+			return obrajeros;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
+		}			
+	}	
 }

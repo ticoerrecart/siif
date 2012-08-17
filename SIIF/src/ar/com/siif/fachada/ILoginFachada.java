@@ -8,6 +8,6 @@ public interface ILoginFachada {
 
 	public UsuarioDTO login(String usuario, String password) throws NegocioException;
 
-	public Usuario getUsuario(Long id);
+	public Usuario getUsuario(Long id)throws NegocioException;
 
 }

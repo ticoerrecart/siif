@@ -173,4 +173,19 @@ public class EntidadFachada implements IEntidadFachada {
 			throw new NegocioException(e.getMessage());
 		}			
 	}
+	
+	public List<EntidadDTO> getProductoresDTO() throws NegocioException{
+		try{
+			List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
+			List<Entidad> listaEntidades = entidadDAO.getProductores();
+			
+			for (Entidad entidad : listaEntidades) {
+				listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
+			}
+			return listaEntidadesDTO;
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
 }

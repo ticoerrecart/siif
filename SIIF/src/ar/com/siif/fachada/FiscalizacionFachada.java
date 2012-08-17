@@ -39,23 +39,23 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		this.usuarioFachada = pUsuarioFachada;
 	}
 
-	public List<Entidad> recuperarEntidades() throws NegocioException {
+	/*public List<Entidad> recuperarEntidades() throws NegocioException {
 		try{
 			return fiscalizacionDAO.recuperarEntidades();
 
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
-	}
+	}*/
 
-	public List<Entidad> recuperarProductores() throws NegocioException {
+	/*public List<Entidad> recuperarProductores() throws NegocioException {
 		try{
 			return fiscalizacionDAO.recuperarProductores();
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
-	}
+	}*/
 
 	public List<Fiscalizacion> recuperarFiscalizaciones() throws NegocioException {
 		try{
@@ -115,13 +115,13 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}			
 	}
 
-	public Entidad getProductorForestal(long idProductorForestal) {
+	/*public Entidad getProductorForestal(long idProductorForestal) {
 		return fiscalizacionDAO.getProductorForestal(idProductorForestal);
-	}
+	}*/
 
-	public TipoProducto getTipoProducto(long idTipoProductoForestal) {
+	/*public TipoProducto getTipoProducto(long idTipoProductoForestal) {
 		return fiscalizacionDAO.getTipoProducto(idTipoProductoForestal);
-	}
+	}*/
 
 	/*public List<Fiscalizacion> recuperarFiscalizacionesPorLocalidad(Long idLocalidad){
 		return fiscalizacionDAO.recuperarFiscalizacionesPorLocalidad(idLocalidad);
@@ -165,7 +165,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}			
 	}	
 	
-	public List<EntidadDTO> recuperarProductoresDTO() throws NegocioException{
+	/*public List<EntidadDTO> recuperarProductoresDTO() throws NegocioException{
 		try{
 			List<EntidadDTO> listaProductoresDTO = new ArrayList<EntidadDTO>();
 			List<Entidad> listaProductores = fiscalizacionDAO.recuperarProductores();
@@ -179,7 +179,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
-	}
+	}*/
 	
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion)throws NegocioException{
 

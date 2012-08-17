@@ -12,15 +12,19 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.hibernate.HibernateException;
 import org.jfree.chart.plot.PlotOrientation;
+import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 
 public class ReportesDAO extends HibernateDaoSupport {
 
 	@SuppressWarnings("deprecation")
-	public byte[] pruebaJasper(String path){
+	public byte[] pruebaJasper(String path) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
@@ -34,21 +38,22 @@ public class ReportesDAO extends HibernateDaoSupport {
 			
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());
 			
-			//baos = new ByteArrayOutputStream();
-			//baos.write(bytes, 0, bytes.length);		
-			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;		
 	}	
 	
 	@SuppressWarnings("deprecation")
-	public byte[] generarReporteGuiaForestal(long idGuiaForestal,String path){
+	public byte[] generarReporteGuiaForestal(long idGuiaForestal,String path) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
@@ -61,21 +66,22 @@ public class ReportesDAO extends HibernateDaoSupport {
 			parameters.put("PATH_SUB_REPORTES", path);
 			
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());
-			
-			//baos = new ByteArrayOutputStream();
-			//baos.write(bytes, 0, bytes.length);		
-			
+
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;		
 	}	
 	
-	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path){
+	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
@@ -90,16 +96,21 @@ public class ReportesDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;	
 	}	
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,String fechaDesde,String fechaHasta){
+	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
+									String fechaDesde,String fechaHasta) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
@@ -115,16 +126,21 @@ public class ReportesDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;
 	}
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, String fechaDesde, String fechaHasta, String path){
+	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, 
+						String fechaDesde, String fechaHasta, String path) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
@@ -141,11 +157,15 @@ public class ReportesDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;		
 	}	

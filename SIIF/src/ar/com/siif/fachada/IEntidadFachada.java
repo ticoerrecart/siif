@@ -36,4 +36,6 @@ public interface IEntidadFachada {
 	public EntidadDTO getEntidadDTO(Long id)throws NegocioException;	
 	
 	public void modificacionEntidad(EntidadDTO entidad)throws NegocioException ;
+	
+	public List<EntidadDTO> getProductoresDTO() throws NegocioException;
 }
