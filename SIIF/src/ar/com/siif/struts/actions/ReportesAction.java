@@ -185,7 +185,7 @@ public class ReportesAction extends ValidadorAction {
 	public ActionForward generarReporteVolumenFiscalizadoPorProductoForestalEntreFecha(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		Usuario u = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
 		
 		String path = request.getSession().getServletContext().getRealPath("jasper");
 		try {
