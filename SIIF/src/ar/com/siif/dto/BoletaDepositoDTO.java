@@ -1,10 +1,5 @@
 package ar.com.siif.dto;
 
-import java.util.Date;
-
-import ar.com.siif.negocio.Entidad;
-
-@Deprecated
 public class BoletaDepositoDTO {
 
 	private long idBoleta;
