@@ -102,9 +102,9 @@ public class RolDAO extends HibernateDaoSupport {
 				throw new NegocioException(Constantes.EXISTE_ROL);
 			}
 			
-			/*this.getHibernateTemplate().saveOrUpdate(rol);
+			this.getHibernateTemplate().saveOrUpdate(rol);
 			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();*/
+			this.getHibernateTemplate().clear();
 			
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_MODIFICACION_ROL);

@@ -31,7 +31,7 @@ public class LoginDAO extends HibernateDaoSupport {
 			if (usuarios.size() == 0) {
 				throw new DataBaseException(Constantes.USUARIO_INVALIDO);
 			}
-	
+			
 			return (Usuario) usuarios.get(0);
 
 		} catch (DataBaseException he) {

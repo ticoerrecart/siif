@@ -19,12 +19,16 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.utils.Constantes;
 
 public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 
@@ -63,22 +67,31 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor) {
+	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor) throws DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
-
-		criteria.createAlias("fiscalizacion.productorForestal", "productor");
-
-		criteria.addOrder(Order.asc("nroGuia"));
-
-		Date fechaActual = new Date();
-		
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
-				.add(Restrictions.lt("fechaVencimiento", fechaActual)));
-
-		List<GuiaForestal> lista = criteria.list();
-
-		return lista;
+		try{
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
+	
+			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+	
+			criteria.addOrder(Order.asc("nroGuia"));
+	
+			Date fechaActual = new Date();
+			
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
+					.add(Restrictions.lt("fechaVencimiento", fechaActual)));
+	
+			List<GuiaForestal> lista = criteria.list();
+	
+			return lista;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}			
 	}	
 	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
