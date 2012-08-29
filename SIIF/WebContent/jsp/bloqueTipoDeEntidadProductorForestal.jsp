@@ -54,7 +54,7 @@ function cargarProductores(){
 
 	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 	if(idTipoDeEntidad != "-1"){
-		$('#selectProductores').attr('disabled','');
+		$('#selectProductores').attr('disabled',false);
 		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
 	}else{
 		dwr.util.removeAllOptions("selectProductores");
@@ -77,7 +77,7 @@ function cargarProductoresVolver(){
 	$('#selectTiposDeEntidad').val($('#paramIdTipoDeEntidad').val());
 	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
 
-	$('#selectProductores').attr('disabled','');
+	$('#selectProductores').attr('disabled',false);
 	EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresVolverCallback );		
 
 	$('#divDetalle').hide(600);

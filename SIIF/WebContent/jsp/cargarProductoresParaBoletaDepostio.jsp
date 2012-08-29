@@ -27,8 +27,7 @@
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
 <br>
-<table border="0" class="cuadrado" align="center" width="70%"
-	cellpadding="2">
+<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 
 	<tr>
 		<td class="azulAjustado"><c:out value="${titulo}" /></td>
@@ -63,13 +62,7 @@
 		</td>
 	</tr>				
 	<tr>
-		<td>
-			<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
-				<tr>
-					<td height="10"></td>
-				</tr>
-				<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
-			</table>
-		</td>
+		<td height="10"></td>
 	</tr>
+	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
 </table>

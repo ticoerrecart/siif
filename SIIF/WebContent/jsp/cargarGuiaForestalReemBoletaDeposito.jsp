@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import= "ar.com.siif.negocio.Fiscalizacion" %>
-<%@ page import= "ar.com.siif.negocio.GuiaForestal" %> 
+<%@ page import= "ar.com.siif.dto.FiscalizacionDTO" %>
+<%@ page import= "ar.com.siif.dto.GuiaForestalDTO" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -90,7 +90,7 @@ function reemplazarBoleta(idBoleta){
 		cambiarAtributos(idBoleta,false);
 		
 		$("#idInputFechaVenc"+idBoleta).datepicker({ dateFormat: 'dd/mm/yy'});
-		$('input[value*="Reemplazar Boleta"]').attr('disabled', 'disabled');
+		$('input[value*="Reemplazar Boleta"]').attr('disabled', true);
 		
 	//}		
 }
@@ -112,7 +112,7 @@ function aceptarReemplazoBoleta(idBoleta){
 
 		cambiarAtributos(idBoleta,true);		
 
-		$('input[value*="Reemplazar Boleta"]').attr('disabled', '');
+		$('input[value*="Reemplazar Boleta"]').attr('disabled', false);
 		
 		GuiaForestalFachada.reemplazarBoletaDeDeposito(idBoleta,$("#idCuota"+idBoleta).val(),$("#idConcepto"+idBoleta).val(),
 						   $("#idArea"+idBoleta).val(),$("#idEfectivo"+idBoleta).val(),$("#idInputFechaVenc"+idBoleta).val(),
@@ -170,7 +170,7 @@ function cancelarReemplazoBoleta(idBoleta){
 		
 		document.getElementById("idInputFechaVenc"+idBoleta).value = fechaVencimiento;
 		
-		$('input[value*="Reemplazar Boleta"]').attr('disabled', '');
+		$('input[value*="Reemplazar Boleta"]').attr('disabled', false);
 	}
 }
 
@@ -188,11 +188,11 @@ function cambiarAtributos(idBoleta,readonly){
 </script>
 
 <%
-	GuiaForestal guia = (GuiaForestal)request.getAttribute("guiaForestal");
+	GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
 %>
 
 <div id="error" class="rojoAdvertencia"></div>
-<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.idTipoEntidad}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
@@ -220,8 +220,7 @@ function cambiarAtributos(idBoleta,readonly){
 	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 		<td width="30%" align="left">
-			<input type="text" value="<fmt:formatDate value='${guiaForestal.fechaVencimiento}' pattern='dd/MM/yyyy' />" 
-				readonly="readonly" class="botonerab">
+			<input type="text" value="${guiaForestal.fechaVencimiento}" readonly="readonly" class="botonerab">
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 				align="top" width='17' height='21'>
 		</td>
@@ -291,7 +290,7 @@ function cambiarAtributos(idBoleta,readonly){
 		<td height="10" colspan="4"></td>
 	</tr>
 
-	<!-- PRODUCTOS FORESTALES
+	<!-- PRODUCTOS FORESTALES -->
 	<tr>
 		<td colspan="4" align="left">
 			<div id="e1" style="DISPLAY: ">
@@ -402,7 +401,7 @@ function cambiarAtributos(idBoleta,readonly){
 				</table>
 			</div>
 		</td>
-	</tr> -->
+	</tr>
 
 	<!-- PLAN DE PAGO --> 
 
@@ -431,7 +430,7 @@ function cambiarAtributos(idBoleta,readonly){
 				<c:choose>					
 					<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">					
 						<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">
-							<tr id="idTr<c:out value='${boletaDeposito.id}'></c:out>">
+							<tr id="idTr<c:out value='${boletaDeposito.idBoleta}'></c:out>">
 								<td colspan="2" width="85%">			
 									<table border="0" class="cuadrado" align="right" width="80%" cellpadding="2">
 										<tr>
@@ -447,7 +446,7 @@ function cambiarAtributos(idBoleta,readonly){
 												<bean:message key='SIIF.label.BoletaDeposito'/>
 											</td>
 											<td width="35%" align="left">
-												<input id="idCuota<c:out value='${boletaDeposito.id}'></c:out>" 
+												<input id="idCuota<c:out value='${boletaDeposito.idBoleta}'></c:out>" 
 													   value="${boletaDeposito.numero}" class="botonerab" type="text"
 													   size="20" readonly="readonly">
 											</td>
@@ -460,7 +459,7 @@ function cambiarAtributos(idBoleta,readonly){
 										<tr>
 											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
 											<td colspan="4" align="left">
-												<input id="idConcepto<c:out value='${boletaDeposito.id}'></c:out>"
+												<input id="idConcepto<c:out value='${boletaDeposito.idBoleta}'></c:out>"
 													   value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
 												 	   readonly="readonly">
 											</td>
@@ -470,7 +469,7 @@ function cambiarAtributos(idBoleta,readonly){
 												<bean:message key='SIIF.label.Area'/>
 											</td>
 											<td colspan="4" align="left">
-												<input id="idArea<c:out value='${boletaDeposito.id}'></c:out>"
+												<input id="idArea<c:out value='${boletaDeposito.idBoleta}'></c:out>"
 													   value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
 													   readonly="readonly">
 											</td>
@@ -480,7 +479,7 @@ function cambiarAtributos(idBoleta,readonly){
 												<bean:message key='SIIF.label.EfecticoCheque'/>
 											</td>
 											<td width="35%" align="left">
-												<input id="idEfectivo<c:out value='${boletaDeposito.id}'></c:out>"
+												<input id="idEfectivo<c:out value='${boletaDeposito.idBoleta}'></c:out>"
 													   value="${boletaDeposito.efectivoCheque}" class="botonerab"
 													   type="text" size="20" readonly="readonly">
 											</td>
@@ -496,10 +495,10 @@ function cambiarAtributos(idBoleta,readonly){
 											<td width="10%" class="botoneralNegritaRight">
 												<bean:message key='SIIF.label.Fecha_Venc'/>
 											</td>
-											<td id="idFechaVenc<c:out value='${boletaDeposito.id}'></c:out>" width="35%" align="left">
-												<input id="idInputFechaVenc<c:out value='${boletaDeposito.id}'></c:out>" 
+											<td id="idFechaVenc<c:out value='${boletaDeposito.idBoleta}'></c:out>" width="35%" align="left">
+												<input id="idInputFechaVenc<c:out value='${boletaDeposito.idBoleta}'></c:out>" 
 													   type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<fmt:formatDate value='${boletaDeposito.fechaVencimiento}' pattern='dd/MM/yyyy' />">
+													   value="${boletaDeposito.fechaVencimiento}">
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>		
 											</td>
@@ -508,7 +507,7 @@ function cambiarAtributos(idBoleta,readonly){
 											</td>
 											<td width="23%" align="left">
 												<input type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<fmt:formatDate value='${boletaDeposito.fechaPago}' pattern='dd/MM/yyyy' />">
+													   value="${boletaDeposito.fechaPago}">
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>																						
 											</td>										
@@ -533,17 +532,17 @@ function cambiarAtributos(idBoleta,readonly){
 								</td>
 								<td>
 									<c:if test="${boletaDeposito.fechaPago ==null}">
-										<input id="idReemplazar<c:out value='${boletaDeposito.id}'></c:out>" type="button" 
+										<input id="idReemplazar<c:out value='${boletaDeposito.idBoleta}'></c:out>" type="button" 
 												value="Reemplazar Boleta" class="botonerab" 
-												onclick="reemplazarBoleta(<c:out value='${boletaDeposito.id}'></c:out>);">
+												onclick="reemplazarBoleta(<c:out value='${boletaDeposito.idBoleta}'></c:out>);">
 												
-										<input id="idAceptar<c:out value='${boletaDeposito.id}'></c:out>" type="button" 
+										<input id="idAceptar<c:out value='${boletaDeposito.idBoleta}'></c:out>" type="button" 
 												style="display: none;" value="Aceptar" class="botonerab"
-												onclick="aceptarReemplazoBoleta(<c:out value='${boletaDeposito.id}'></c:out>);">
+												onclick="aceptarReemplazoBoleta(<c:out value='${boletaDeposito.idBoleta}'></c:out>);">
 												
-										<input id="idCancelar<c:out value='${boletaDeposito.id}'></c:out>" type="button" 
+										<input id="idCancelar<c:out value='${boletaDeposito.idBoleta}'></c:out>" type="button" 
 												style="display: none" value="Cancelar" class="botonerab"
-												onclick="cancelarReemplazoBoleta(<c:out value='${boletaDeposito.id}'></c:out>);">																																				
+												onclick="cancelarReemplazoBoleta(<c:out value='${boletaDeposito.idBoleta}'></c:out>);">																																				
 									</c:if>	
 								</td>
 							</tr>
@@ -558,180 +557,10 @@ function cambiarAtributos(idBoleta,readonly){
 		</div>
 		</td>
 	</tr> 
-
-	<!-- VALES DE TRANSPORTE
-	<tr>
-		<td colspan="4" align="left">
-		<div id="e3" style="DISPLAY: ">
-			<label onclick="javascript:exp('3')"> 
-				<img src="../../imagenes/expand.gif" border="0" /> 
-				<U class="azulOpcion">Vales de Transporte</U>
-				<BR>
-			</label>
-		</div>
-		<div id="c3" style="DISPLAY: none">
-			<label onclick="javascript:col('3')"> 
-				<img src="../../imagenes/collapse.gif" border="0" /> 
-				<U class="azulOpcion">Vales de Transporte</U>
-				<BR>
-			</label>
-			<br>
-			<table class="cuadrado" align="center" width="90%" cellpadding="2">
-				<tr>
-					<td colspan="4" class="azulAjustado">Vales de Transporte</td>
-				</tr>				
-				<tr>
-					<td height="10" colspan="4"></td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<c:choose>					
-							<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
-								<c:forEach items="${guiaForestal.valesTransporte}" var="valeTransporte" varStatus="index">						
-									<table border="0" class="cuadrado" align="center"
-										width="80%" cellpadding="2">
-				
-										<tr>
-											<td colspan="4" class="grisSubtitulo">
-												Vale de Transporte n°<c:out value="${index.index+1}"></c:out>
-											</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												Número de Vale
-											</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.numero}" class="botonerab" type="text"
-													   size="25" readonly="readonly">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">
-												Transportados por
-											</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.guiaForestal.fiscalizacion.productorForestal.nombre}"
-													   class="botonerab" type="text" size="40" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">Origen</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.origen}" class="botonerab" type="text"
-													   size="25" readonly="readonly">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">Destino</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.destino}" class="botonerab"
-													   type="text" size="25" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">Vehiculo</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.vehiculo}" class="botonerab"
-													   type="text" size="25" readonly="readonly">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">Marca</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.marca}" class="botonerab" type="text"
-													   size="25" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">Dominio</td>
-											<td width="40%" align="left">
-												<input value="${valeTransporte.dominio}" class="botonerab"
-													   type="text" size="7" readonly="readonly">
-											</td>
-											<td width="10%" class="botoneralNegritaRight">
-												Fecha Vencimiento
-											</td>
-											<td width="40%" align="left">
-												<input type="text" readonly="readonly" class="botonerab"
-													   value="<fmt:formatDate value='${valeTransporte.fechaVencimiento}' pattern='dd/MM/yyyy'/>"> 
-												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-													 align="top" width='17' height='21'>																							
-											</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-										<tr>
-											<td colspan="4">
-											<table class="cuadradoSinBorde" align="center" width="80%"
-												cellpadding="2">
-												<tr>
-													<td class="grisSubtitulo">Producto</td>
-													<td class="grisSubtitulo">N° de Piezas</td>
-													<td class="grisSubtitulo">Cantidad m³</td>
-													<td class="grisSubtitulo">Especie</td>
-												</tr>
-												<tr>
-													<td>
-														<input class="botonerab" type="text" value="${valeTransporte.producto}" readonly="readonly">
-													</td>
-													<td>
-														<input class="botonerab" type="text" value="${valeTransporte.nroPiezas}" readonly="readonly">
-													</td>
-													<td>
-														<input class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">
-													</td>
-													<td>
-														<input class="botonerab" type="text" value="${valeTransporte.especie}" readonly="readonly">
-													</td>
-												</tr>
-											</table>
-											</td>
-										</tr>
-				
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>
-									</table>
-									<br>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								No existen Vales de Transporte para esta Guía Forestal
-							</c:otherwise>													
-						</c:choose>	
-					</td>
-				</tr>
-			</table>
-		</div>
-		</td>
-	</tr>-->
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
 </table>
-<!-- 
-<table border="0" class="cuadrado" align="center" width="80%"
-	cellpadding="2">
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight">Localidad</td>
-		<td width="30%" align="left"><input
-			name="guiaForestal.localidad" class="botonerab" type="text"
-			size="40"></td>
-		<td width="30%" class="botoneralNegritaRight">Fecha</td>
-		<td align="left">
-			
-			<input id="datepickerFecha" type="text" name="fecha" readonly="readonly" class="botonerab">
-			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-				align="top" width='17' height='21'>				
-			
-		</td>
-
-	</tr>
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-</table>-->
 <table border="0" class="cuadrado" align="center" width="80%"
 	cellpadding="2">
 	<tr>
