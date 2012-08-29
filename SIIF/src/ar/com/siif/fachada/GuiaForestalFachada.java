@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import ar.com.siif.dao.GuiaForestalDAO;
-import ar.com.siif.negocio.BoletaDeposito;
-import ar.com.siif.negocio.Entidad;
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDTO;
 
 public class GuiaForestalFachada implements IGuiaForestalFachada {
 
@@ -47,21 +47,25 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}			
 	}
 
-	public GuiaForestal recuperarGuiaForestal(long idGuiaForestal) throws NegocioException {
+	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal) throws NegocioException {
 
 		try{
-			return guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
+			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
+			
+			return ProviderDTO.getGuiaForestalDTO(guiaForestal);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
 	}
 
-	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal) throws NegocioException{
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal) throws NegocioException{
 		
 		try{
-			return guiaForestalDAO.recuperarGuiaForestalPorNroGuia(nroGuiaForestal);
-
+			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestalPorNroGuia(nroGuiaForestal);
+			
+			return ProviderDTO.getGuiaForestalDTO(guiaForestal);
+			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
