@@ -160,7 +160,7 @@ var primeraFila = '<tr id="fila0">' +
 		deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
 				"idRodal" ]);
 
-		if ($("#idLocalidad").val() != "-1") {
+		/*if ($("#idLocalidad").val() != "-1") {
 			$('#idProductor').removeAttr('disabled');
 			EntidadFachada.getEntidadesPorLocalidad($("#idLocalidad").val(),
 					actualizarProductoresCallback);
@@ -172,7 +172,18 @@ var primeraFila = '<tr id="fila0">' +
 			} ];
 			dwr.util.addOptions("idProductor", data, "id", "nombre");
 			$('#idProductor').attr('disabled', 'disabled');
-		}
+		}*/
+
+		var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
+		if(idTipoDeEntidad != "-1"){
+			$('#idProductor').attr('disabled',false);
+			EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
+		}else{
+			dwr.util.removeAllOptions("idProductor");
+			var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
+			dwr.util.addOptions("idProductor", data, "id", "nombre");		
+			$('#idProductor').attr('disabled',true);
+		}		
 	}
 
 	function actualizarProductoresCallback(productores) {
@@ -353,14 +364,14 @@ var primeraFila = '<tr id="fila0">' +
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 			<td width="30%">
-				<select id="idLocalidad" class="botonerab" onchange="actualizarComboProductores();">
-					<option value="-1">-Seleccione una Localidad-</option>
-					<c:forEach items="${localidades}" var="localidad">
-						<option value="${localidad.id}">
-							<c:out value="${localidad.nombre}"></c:out>
-						</option>
+				<select id="selectTiposDeEntidad" class="botonerab" onchange="actualizarComboProductores();">
+					<option value="-1">-Seleccione una Entidad-</option>
+					<c:forEach items="${tiposEntidad}" var="tipoDeEntidad" varStatus="i">
+						<option value="${tipoDeEntidad.name}">
+							<c:out value="${tipoDeEntidad.descripcion}"></c:out>
+						</option>						
 					</c:forEach>	
 				</select>
 			</td>
@@ -405,7 +416,7 @@ var primeraFila = '<tr id="fila0">' +
 			</td>
 			<td>
 				<input id="cantidadMts" name="fiscalizacion.cantidadMts" class="botonerab" type="text" size="27"
-					   onkeypress="javascript:esNumericoConDecimal(event);">
+					   readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
 			</td>
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TamañoMuestra'/>
