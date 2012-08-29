@@ -10,17 +10,13 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
-import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
-import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
-import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.GuiaForestal;
-import ar.com.siif.negocio.Localidad;
-import ar.com.siif.negocio.Usuario;
 import ar.com.siif.utils.Constantes;
 
 public class ConsultasPorProductorAction extends ValidadorAction {
@@ -154,10 +150,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestalesNoVigentes = consultasPorProductorFachada
 					.recuperarGuiasForestalesNoVigentes(Long.parseLong(idProductor));
 
-			request.setAttribute("guiasForestales", guiasForestalesVigentes);
+			request.setAttribute("guiasForestales", guiasForestalesNoVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES);
 
 		} catch (Exception e) {
@@ -180,10 +176,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
+			List<GuiaForestal> guiasForestalesDeudaAforo = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
 
-			request.setAttribute("guiasForestales", guiasForestalesVigentes);
+			request.setAttribute("guiasForestales", guiasForestalesDeudaAforo);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO);
 
 		} catch (Exception e) {
@@ -206,10 +202,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
+			List<GuiaForestal> guiasForestalesDeudaVale = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
 
-			request.setAttribute("guiasForestales", guiasForestalesVigentes);
+			request.setAttribute("guiasForestales", guiasForestalesDeudaVale);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_VALE_TRANSPORTE);
 
 		} catch (Exception e) {
@@ -254,7 +250,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestal guiaForestalVigente = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestalVigente = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("paramForward", paramForward);
 			request.setAttribute("guiaForestal", guiaForestalVigente);

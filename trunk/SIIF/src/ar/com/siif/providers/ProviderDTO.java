@@ -197,7 +197,8 @@ public abstract class ProviderDTO {
 			}
 		}
 		
-		public static FiscalizacionDTO getFiscalizacionDTO(Fiscalizacion fiscalizacion){
+		//Genera una FiscalizacionDTO sin los datos de la guiaForestal.
+		private static FiscalizacionDTO getFiscalizacionDTODatosGenerales(Fiscalizacion fiscalizacion){
 			
 			List<MuestraDTO> listaMuestrasDTO = new ArrayList<MuestraDTO>();
 			FiscalizacionDTO fiscalizacionDTO = new FiscalizacionDTO();
@@ -206,13 +207,10 @@ public abstract class ProviderDTO {
 			fiscalizacionDTO.setCantidadUnidades(fiscalizacion.getCantidadUnidades());
 			fiscalizacionDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(fiscalizacion.getFecha())));
 			fiscalizacionDTO.setId(fiscalizacion.getId());
-			//fiscalizacionDTO.setIdMarcacion(fiscalizacion.getRodal().getMarcacion().getId());
 			fiscalizacionDTO.setOficinaAlta(ProviderDTO.getEntidadDTO(fiscalizacion.getOficinaAlta()));
-			//fiscalizacionDTO.setIdPlanManejoForestal(fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getId());
 			fiscalizacionDTO.setProductorForestal(ProviderDTO.getEntidadDTO(fiscalizacion.getProductorForestal()));
 			fiscalizacionDTO.setRodal(ProviderDTO.getRodalDTO(fiscalizacion.getRodal()));
 			fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(fiscalizacion.getTipoProducto()));
-			//fiscalizacionDTO.setIdTranzon(fiscalizacion.getRodal().getMarcacion().getTranzon().getId());
 			fiscalizacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuario()));
 			fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
 			fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());
@@ -222,8 +220,16 @@ public abstract class ProviderDTO {
 				listaMuestrasDTO.add(ProviderDTO.getMuestraDTO(muestra));
 			}			
 			fiscalizacionDTO.setMuestra(listaMuestrasDTO);
+			
+			return fiscalizacionDTO;
+		}
+		
+		public static FiscalizacionDTO getFiscalizacionDTO(Fiscalizacion fiscalizacion){
+						
+			FiscalizacionDTO fiscalizacionDTO = getFiscalizacionDTODatosGenerales(fiscalizacion);
+			
 			if(fiscalizacion.getGuiaForestal() != null){
-				fiscalizacionDTO.setGuiaForestal(ProviderDTO.getGuiaForestalDTODesdeFiscalizacionDTO(
+				fiscalizacionDTO.setGuiaForestal(ProviderDTO.getGuiaForestalDTODatosGenerales(
 																			fiscalizacion.getGuiaForestal()));
 			}	
 			
@@ -242,10 +248,14 @@ public abstract class ProviderDTO {
 			return muestraDTO;			
 		}
 		
-		public static GuiaForestalDTO getGuiaForestalDTODesdeFiscalizacionDTO(GuiaForestal guiaForestal){
+		//Genera una GuiaForestalDTO sin los datos de la Fiscalización.
+		private static GuiaForestalDTO getGuiaForestalDTODatosGenerales(GuiaForestal guiaForestal){
 			
 			GuiaForestalDTO guiaForestalDTO = new GuiaForestalDTO();
+			List<BoletaDepositoDTO> listaBoletasDTO = new ArrayList<BoletaDepositoDTO>();
+			List<ValeTransporteDTO> listaValesTransporteDTO = new ArrayList<ValeTransporteDTO>();
 			
+			guiaForestalDTO.setId(guiaForestal.getId());
 			guiaForestalDTO.setAforo(guiaForestal.getAforo());
 			guiaForestalDTO.setCantidad(guiaForestal.getCantidad());
 			guiaForestalDTO.setDistanciaAforoMovil(guiaForestal.getDistanciaAforoMovil());
@@ -259,9 +269,77 @@ public abstract class ProviderDTO {
 			guiaForestalDTO.setLocalidad(guiaForestal.getLocalidad());
 			guiaForestalDTO.setNroGuia(guiaForestal.getNroGuia());
 			guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());
-			guiaForestalDTO.setValorAforos(guiaForestal.getValorAforos());
+			guiaForestalDTO.setValorAforos(guiaForestal.getValorAforos());			
+			
+			if(guiaForestal.getUsuario() != null){
+				guiaForestalDTO.setUsuario(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuario()));
+			}
+			
+			List<BoletaDeposito> listaBoletas = guiaForestal.getBoletasDeposito();
+			for (BoletaDeposito boletaDeposito : listaBoletas) {
+				listaBoletasDTO.add(ProviderDTO.getBoletaDepositoDTO(boletaDeposito,guiaForestalDTO));
+			}
+			guiaForestalDTO.setBoletasDeposito(listaBoletasDTO);
+
+			List<ValeTransporte> listaValesTransporte = guiaForestal.getValesTransporte();
+			for (ValeTransporte valeTransporte : listaValesTransporte) {
+				listaValesTransporteDTO.add(ProviderDTO.getValeTransporteDTO(valeTransporte,guiaForestalDTO));
+			}
+			guiaForestalDTO.setValesTransporte(listaValesTransporteDTO);			
+						
+			return guiaForestalDTO;			
+		}
+		
+		public static GuiaForestalDTO getGuiaForestalDTO(GuiaForestal guiaForestal){
+						
+			GuiaForestalDTO guiaForestalDTO = getGuiaForestalDTODatosGenerales(guiaForestal);
+			
+			guiaForestalDTO.setFiscalizacion(ProviderDTO.getFiscalizacionDTODatosGenerales(guiaForestal.getFiscalizacion()));
 			
 			return guiaForestalDTO;
+		}
+		
+		public static BoletaDepositoDTO getBoletaDepositoDTO(BoletaDeposito boleta, GuiaForestalDTO guiaForestalDTO){
+			
+			BoletaDepositoDTO boletaDTO = new BoletaDepositoDTO();
+			
+			boletaDTO.setArea(boleta.getArea());
+			boletaDTO.setConcepto(boleta.getConcepto());
+			boletaDTO.setEfectivoCheque(boleta.getEfectivoCheque());
+			if(boleta.getFechaPago() != null){
+				boletaDTO.setFechaPago(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(boleta.getFechaPago())));
+			}	
+			boletaDTO.setFechaVencimiento(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(boleta.getFechaVencimiento())));
+			boletaDTO.setGuiaForestal(guiaForestalDTO);
+			boletaDTO.setIdBoleta(boleta.getId());
+			boletaDTO.setMonto(boleta.getMonto());
+			boletaDTO.setNumero(boleta.getNumero());
+			
+			return boletaDTO;
+		}
+		
+		public static ValeTransporteDTO getValeTransporteDTO(ValeTransporte vale, GuiaForestalDTO guiaForestalDTO){
+			
+			ValeTransporteDTO valeDTO = new ValeTransporteDTO(); 
+			
+			valeDTO.setId(vale.getId());
+			valeDTO.setCantidadMts(vale.getCantidadMts());
+			valeDTO.setDestino(vale.getDestino());
+			valeDTO.setDominio(vale.getDominio());
+			valeDTO.setEspecie(vale.getEspecie());
+			if(vale.getFechaDevolucion() != null){
+				valeDTO.setFechaDevolucion(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(vale.getFechaDevolucion())));
+			}	
+			valeDTO.setFechaVencimiento(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(vale.getFechaVencimiento())));
+			valeDTO.setGuiaForestal(guiaForestalDTO);
+			valeDTO.setMarca(vale.getMarca());
+			valeDTO.setNroPiezas(vale.getNroPiezas());
+			valeDTO.setNumero(vale.getNumero());
+			valeDTO.setOrigen(vale.getOrigen());
+			valeDTO.setProducto(vale.getProducto());
+			valeDTO.setVehiculo(vale.getVehiculo());
+			
+			return valeDTO;
 		}
 		
 	/*	
