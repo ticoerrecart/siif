@@ -1,23 +1,20 @@
 package ar.com.siif.fachada;
 
 import java.util.List;
-import ar.com.siif.negocio.Entidad;
+
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IGuiaForestalFachada {
 
-	//public List<Entidad> recuperarPermicionarios()throws NegocioException;
-
 	public void altaGuiaForestalBasica(GuiaForestal guia)throws NegocioException;
 
 	public List<GuiaForestal> recuperarGuiasForestales()throws NegocioException;
 
-	public GuiaForestal recuperarGuiaForestal(long idGuiaForestal)throws NegocioException;
+	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal)throws NegocioException;
 	
-	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)throws NegocioException;
-
-	//public GuiaForestal registrarPagoBoletaDeposito(long idBoleta);
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)throws NegocioException;
 	
 	public String registrarPagoBoletaDeposito(long idBoleta);	
 	
