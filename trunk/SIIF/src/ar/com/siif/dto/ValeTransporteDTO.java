@@ -1,13 +1,13 @@
 package ar.com.siif.dto;
 
-import java.util.Date;
 
-@Deprecated
 public class ValeTransporteDTO {
 
+	private long id;
+	
 	private int numero;
 
-	private String fecha = "12/10/2010";
+	private String fechaDevolucion;
 
 	private String origen;
 
@@ -19,7 +19,7 @@ public class ValeTransporteDTO {
 
 	private String dominio;
 
-	private String fechaVencimiento = "12/12/2010";;
+	private String fechaVencimiento;
 
 	private String producto;
 
@@ -30,8 +30,6 @@ public class ValeTransporteDTO {
 	private String especie;
 
 	private GuiaForestalDTO guiaForestal;
-
-	//private long productor;
 
 	public ValeTransporteDTO() {
 
@@ -46,12 +44,12 @@ public class ValeTransporteDTO {
 		this.numero = numero;
 	}
 
-	public String getFecha() {
-		return fecha;
+	public String getFechaDevolucion() {
+		return fechaDevolucion;
 	}
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFechaDevolucion(String fecha) {
+		this.fechaDevolucion = fecha;
 	}
 
 	public String getOrigen() {
@@ -140,6 +138,14 @@ public class ValeTransporteDTO {
 
 	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

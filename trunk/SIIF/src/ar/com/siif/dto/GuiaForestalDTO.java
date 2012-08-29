@@ -7,6 +7,8 @@ import ar.com.siif.negocio.Usuario;
 
 public class GuiaForestalDTO {
 
+	private Long id;
+	
 	private int nroGuia;
 
 	private FiscalizacionDTO fiscalizacion;
@@ -35,15 +37,18 @@ public class GuiaForestalDTO {
 
 	private String fecha;
 
-	private List<ValeTransporteDTO> valesTransporte = new ArrayList<ValeTransporteDTO>();
+	private List<ValeTransporteDTO> valesTransporte;
 
-	private List<BoletaDepositoDTO> boletasDeposito = new ArrayList<BoletaDepositoDTO>();
+	private List<BoletaDepositoDTO> boletasDeposito;
 
-	private Usuario usuario;
+	private UsuarioDTO usuario;
 
 	public GuiaForestalDTO() {
 
 		fiscalizacion = new FiscalizacionDTO();
+		valesTransporte = new ArrayList<ValeTransporteDTO>();
+		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
+		usuario = new UsuarioDTO();
 	}
 
 	public int getNroGuia() {
@@ -174,12 +179,20 @@ public class GuiaForestalDTO {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public Usuario getUsuario() {
+	public UsuarioDTO getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(UsuarioDTO usuario) {
 		this.usuario = usuario;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
