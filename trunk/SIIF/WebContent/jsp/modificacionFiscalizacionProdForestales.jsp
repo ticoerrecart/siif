@@ -105,7 +105,7 @@ function actualizarComboPMFCallback(pmfs){
 	var data = [ { nombre:"- Seleccione -", id:-1 }];
 	dwr.util.addOptions("idPMF", data, "id", "nombre");	
 	dwr.util.addOptions("idPMF", pmfs,"id","nombreExpediente");	
-	$('#idPMF').attr('disabled','');
+	$('#idPMF').attr('disabled',false);
 }
 
 function actualizarComboTranzon(){
@@ -123,7 +123,7 @@ function actualizarComboTranzonCallback(tranzones){
 	var data = [ { nombre:"- Seleccione -", id:-1 }];
 	dwr.util.addOptions("idTranzon", data, "id", "nombre");	
 	dwr.util.addOptions("idTranzon", tranzones,"id","numeroDisposicion");	
-	$('#idTranzon').attr('disabled','');
+	$('#idTranzon').attr('disabled',false);
 }
 
 function actualizarComboMarcacion(){
@@ -141,7 +141,7 @@ function actualizarComboMarcacionCallback(marcaciones){
 	var data = [ { nombre:"- Seleccione -", id:-1 }];
 	dwr.util.addOptions("idMarcacion", data, "id", "nombre");	
 	dwr.util.addOptions("idMarcacion", marcaciones,"id","disposicion");	
-	$('#idMarcacion').attr('disabled','');
+	$('#idMarcacion').attr('disabled',false);
 }
 
 function actualizarComboRodal(){
@@ -159,7 +159,7 @@ function actualizarComboRodalCallback(rodales){
 	var data = [ { nombre:"- Seleccione -", id:-1 }];
 	dwr.util.addOptions("idRodal", data, "id", "nombre");	
 	dwr.util.addOptions("idRodal", rodales,"id","nombre");	
-	$('#idRodal').attr('disabled','');
+	$('#idRodal').attr('disabled',false);
 }
 
 function deshabilitarLocalizacion(ids){

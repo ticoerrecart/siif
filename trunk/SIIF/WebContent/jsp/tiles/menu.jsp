@@ -4,7 +4,7 @@
 <html>
 <head>
 <script type="text/javascript"
-	src="<html:rewrite page='/js/JQuery/jquery-1.7.2.min.js'/>"></script>
+	src="<html:rewrite page='/js/JQuery/jquery-1.7.2.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JSCookMenu/JSCookMenu.js'/>"></script>
 <script type="text/javascript"

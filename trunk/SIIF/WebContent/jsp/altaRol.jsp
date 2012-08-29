@@ -26,7 +26,7 @@ function submitir(){
 
 <html:form action="rol" styleId="rolForm">
 	<html:hidden property="metodo" value="altaRol" />
-	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="2" class="azulAjustado">
 				<bean:message key='SIIF.titulo.AltaRol'/>
@@ -50,42 +50,77 @@ function submitir(){
 			<td colspan="2">
 				<table id="idMenues" border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 					<tr>
-						<td colspan="4" class="azulAjustado">
+						<td colspan="5" class="azulAjustado">
 							<bean:message key='SIIF.subTitulo.SeleccionMenues'/>
 						</td>
 					</tr>
 					<%int i=0; %>
 					<c:forEach items="${menues}" var="menu">
 						<tr>
-							<td colspan="4" class="grisSubtitulo">
+							<td colspan="5" class="grisSubtitulo">
 								<c:out value="${menu.item}"></c:out>
 							</td>
 						</tr>
 						<tr height="10">
-							<td colspan="4"></td>
+							<td colspan="5"></td>
 						</tr>
 						<c:forEach items="${menu.hijos}" var="menuHijo">
 							<c:choose>
 								<c:when test="${fn:length(menuHijo.hijos)>0}">
 									<tr>
 										<td width="10%"></td>
-										<td colspan="2" class="grisSubtitulo">
+										<td colspan="3" class="grisSubtitulo">
 											<c:out value="${menuHijo.item}"></c:out>
 										</td>
 										<td width="10%"></td>
 									</tr>
 									<c:forEach items="${menuHijo.hijos}" var="menuHijoH">
-										<tr>
-											<td width="10%"></td>
-											<td width="10%">
-												<input type="checkbox" name='<%="menuesDTO["+i+"].id"%>' 
+										
+										<c:choose>
+											<c:when test="${fn:length(menuHijoH.hijos)>0}">
+												<tr height="5">
+													<td colspan="5"></td>
+												</tr>								
+												<tr>
+													<td colspan="2"></td>
+													<td colspan="2" class="grisSubtitulo">
+														<c:out value="${menuHijoH.item}"></c:out>
+													</td>
+													<td width="5%"></td>
+												</tr>	
+			
+												<c:forEach items="${menuHijoH.hijos}" var="menuHijoHH">
+													<tr>
+														<td colspan="2"></td>
+														<td width="10%">
+															<input type="checkbox" name='<%="menuesDTO["+i+"].id"%>' 
+																	value="${menuHijoHH.id}">
+														</td>			
+														<td class="botoneralNegritaLeft">			
+															<c:out value="${menuHijoHH.item}"></c:out>														
+														</td>
+														<td width="5%"></td>
+													</tr>
+													<%i++; %>									
+												</c:forEach>			
+																	
+											</c:when>
+											<c:otherwise>
+											
+												<tr>
+													<td width="10%"></td>
+													<td width="10%">
+														<input type="checkbox" name='<%="menuesDTO["+i+"].id"%>' 
 														value="${menuHijoH.id}">
-											</td>
-											<td colspan="2" class="botoneralNegritaLeft">
-												<c:out value="${menuHijoH.item}"></c:out>
-											</td>
-										</tr>
-										<%i++; %>
+													</td>
+													<td colspan="3" class="botoneralNegritaLeft">
+														<c:out value="${menuHijoH.item}"></c:out>
+													</td>
+												</tr>
+												<%i++; %>								
+											
+											</c:otherwise>
+										</c:choose>	
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
@@ -104,7 +139,7 @@ function submitir(){
 												</c:otherwise>
 											</c:choose>
 										</td>
-										<td colspan="3" class="botoneralNegritaLeft">
+										<td colspan="4" class="botoneralNegritaLeft">
 											<c:out value="${menuHijo.item}"></c:out>
 										</td>
 									</tr>
@@ -113,7 +148,7 @@ function submitir(){
 							</c:choose>
 						</c:forEach>
 						<tr height="10">
-							<td colspan="4"></td>
+							<td colspan="5"></td>
 						</tr>
 					</c:forEach>
 				</table>

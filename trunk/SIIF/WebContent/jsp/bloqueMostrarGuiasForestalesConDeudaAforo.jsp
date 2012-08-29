@@ -11,7 +11,7 @@
    response.setHeader("Cache-Control", "private");
    response.setDateHeader("Expires",0);
 %>
-<!-- <td colspan="2"> -->
+
 <br>
 <c:choose>
 	<c:when test="${fn:length(guiasForestales)>0}">
@@ -58,4 +58,4 @@
 		<bean:message key='SIIF.error.NoExiGF'/>
 	</c:otherwise>	
 </c:choose>
-<!-- </td> -->
+

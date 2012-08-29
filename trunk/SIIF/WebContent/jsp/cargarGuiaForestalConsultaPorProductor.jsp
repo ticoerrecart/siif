@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import= "ar.com.siif.negocio.Fiscalizacion" %>
-<%@ page import= "ar.com.siif.negocio.GuiaForestal" %> 
+<%@ page import= "ar.com.siif.dto.FiscalizacionDTO" %>
+<%@ page import= "ar.com.siif.dto.GuiaForestalDTO" %> 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -67,13 +67,13 @@ function col(sec) {
 </script>
 
 <%
-	GuiaForestal guia = (GuiaForestal)request.getAttribute("guiaForestal");
+	GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
 %>
 
 <input id="idGuia" type="hidden" value="${guiaForestal.id}">
 <input id="paramForward" type="hidden" value="${paramForward}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
-<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.idTipoEntidad}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.tipoEntidad}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
@@ -100,7 +100,8 @@ function col(sec) {
 	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 		<td width="30%" align="left">
-			<input type="text" value="<fmt:formatDate value='${guiaForestal.fechaVencimiento}' pattern='dd/MM/yyyy'/>" 
+			
+			<input type="text" value="<c:out value='${guiaForestal.fechaVencimiento}'/>" 
 				readonly="readonly" class="botonerab">
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 				align="top" width='17' height='21'>
@@ -372,7 +373,7 @@ function col(sec) {
 											</td>
 											<td width="35%" align="left">
 												<input type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<fmt:formatDate value='${boletaDeposito.fechaVencimiento}' pattern='dd/MM/yyyy' />">
+													   value="<c:out value='${boletaDeposito.fechaVencimiento}'/>">
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>		
 											</td>
@@ -381,7 +382,7 @@ function col(sec) {
 											</td>
 											<td width="23%" align="left">
 												<input type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<fmt:formatDate value='${boletaDeposito.fechaPago}' pattern='dd/MM/yyyy' />">
+													   value="<c:out value='${boletaDeposito.fechaPago}'/>">
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>																						
 											</td>										
@@ -502,7 +503,7 @@ function col(sec) {
 											</td>
 											<td width="40%" align="left">
 												<input type="text" readonly="readonly" class="botonerab"
-													   value="<fmt:formatDate value='${valeTransporte.fechaVencimiento}' pattern='dd/MM/yyyy'/>"> 
+													   value="<c:out value='${valeTransporte.fechaVencimiento}'/>"> 
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>	
 											</td>
@@ -520,7 +521,7 @@ function col(sec) {
 											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha_Dev'/></td>
 											<td width="40%" align="left">
 												<input type="text" readonly="readonly" class="botonerab"
-													   value="<fmt:formatDate value='${valeTransporte.fechaDevolucion}' pattern='dd/MM/yyyy'/>"> 
+													   value="<c:out value='${valeTransporte.fechaDevolucion}'/>"> 
 												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 													 align="top" width='17' height='21'>					
 											</td>

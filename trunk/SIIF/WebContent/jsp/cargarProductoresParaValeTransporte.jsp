@@ -62,14 +62,8 @@
 		</td>
 	</tr>	
 	<tr>
-		<td>
-			<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
-				<tr>
-					<td height="10"></td>
-				</tr>
-				<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
-			</table>
-		</td>
+		<td height="10"></td>
 	</tr>
+	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
 	
 </table>

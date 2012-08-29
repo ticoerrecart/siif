@@ -78,8 +78,7 @@ function submitir(){
 
 
 
-<table border="0" class="cuadrado" align="center" width="60%"
-	cellpadding="2">
+<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
 			<bean:message key='SIIF.titulo.ModificacionRol'/>
