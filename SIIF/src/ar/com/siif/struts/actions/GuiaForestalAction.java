@@ -11,19 +11,17 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
-import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.negocio.BoletaDeposito;
-import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
-import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
@@ -177,7 +175,7 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("guiaForestalFachada");
 
 			long idGuiaForestal = new Long(request.getParameter("id"));
-			GuiaForestal guia = guiaForestalFachada.recuperarGuiaForestal(idGuiaForestal);
+			GuiaForestalDTO guia = guiaForestalFachada.recuperarGuiaForestal(idGuiaForestal);
 
 			request.setAttribute("guia", guia);
 
@@ -408,7 +406,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -449,7 +447,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -507,7 +505,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -544,7 +542,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			//String idGuia = (request.getParameter("idGuia")!=null)?request.getParameter("idGuia"):(String)request.getAttribute("idGuia");
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -570,7 +568,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -604,7 +602,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -648,7 +646,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			request.setAttribute("productores", productores);
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);			
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -709,7 +707,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -738,7 +736,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -765,7 +763,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -794,7 +792,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestal guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
