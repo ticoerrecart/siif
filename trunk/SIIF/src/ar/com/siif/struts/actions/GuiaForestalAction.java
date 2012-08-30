@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
@@ -45,9 +46,9 @@ public class GuiaForestalAction extends ValidadorAction {
 			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
-			Fiscalizacion actaMartillado = fiscalizacionFachada.recuperarFiscalizacion(Long
-					.parseLong(idFiscalizacion));
-			request.setAttribute("fiscalizacion", actaMartillado);
+			FiscalizacionDTO fiscalizacion = fiscalizacionFachada.recuperarFiscalizacionDTO(
+															Long.parseLong(idFiscalizacion));
+			request.setAttribute("fiscalizacion", fiscalizacion);
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -243,7 +244,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidad());
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -272,8 +273,8 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada
-					.recuperarFiscalizacionesParaAltaGFB(new Long(idProductor));
+			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
+					.recuperarFiscalizacionesDTOParaAltaGFB(new Long(idProductor));
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("idLocalidad", idProductor);

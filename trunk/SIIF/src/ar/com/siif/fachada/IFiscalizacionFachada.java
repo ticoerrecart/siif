@@ -20,7 +20,7 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizaciones()throws NegocioException;
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor)throws NegocioException;
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor)throws NegocioException;
 
 	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor)throws NegocioException;	
 	

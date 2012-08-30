@@ -82,7 +82,11 @@ public class AforoFachada implements IAforoFachada {
 		try{
 			Aforo aforo = aforoDAO.getAforo(idFiscalizacion,estado);
 			
-			return String.valueOf(aforo.getValorAforo());
+			if(aforo != null){
+				return String.valueOf(aforo.getValorAforo());
+			}	
+			
+			return null;
 			
 		}catch(DataBaseException e){
 			throw new NegocioException(e.getMessage());

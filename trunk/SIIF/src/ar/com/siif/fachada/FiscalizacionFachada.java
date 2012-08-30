@@ -66,11 +66,18 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(Long idProductor) throws NegocioException {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor) throws NegocioException {
 
 		try{
-			return fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
+			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
+			
+			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+			}
 
+			return listaFiscalizacionesDTO;
+			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			

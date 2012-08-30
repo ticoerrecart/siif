@@ -1,6 +1,5 @@
 package ar.com.siif.struts.actions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,25 +17,18 @@ import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
-import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Marcacion;
-import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
-import ar.com.siif.negocio.Usuario;
-import ar.com.siif.negocio.exception.AccesoDenegadoException;
-import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.utils.Constantes;
-import ar.com.siif.utils.Fecha;
 
 public class FiscalizacionAction extends ValidadorAction {
 
