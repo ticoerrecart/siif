@@ -94,7 +94,7 @@ function agregarMuestras(){
 	for ( var i = 0; i < cantMuestras; i++) {
 		agregarFila();
 	}	
-	$('[name="fiscalizacion.tamanioMuestra"]').val($('#tablaMuestras [id*=fila]').size());
+	$('[name="fiscalizacionDTO.tamanioMuestra"]').val($('#tablaMuestras [id*=fila]').size());
 	
 	
 }	
@@ -108,9 +108,9 @@ var headerTabla = '<tr id="headerT">' +
 
 var primeraFila = '<tr id="fila0">' +
 						'   <td class="botoneralNegritaRight ind">1</td> ' +
-						'   <td><input class="botonerab" type="text" name="muestras[0].largo"></td>' +
-						'   <td><input class="botonerab" type="text" name="muestras[0].diametro1"></td>' +
-						'   <td class="diam2"><input class="botonerab" type="text" name="muestras[0].diametro2"></td>' +
+						'   <td><input class="botonerab" type="text" name="muestrasDTO[0].largo"></td>' +
+						'   <td><input class="botonerab" type="text" name="muestrasDTO[0].diametro1"></td>' +
+						'   <td class="diam2"><input class="botonerab" type="text" name="muestrasDTO[0].diametro2"></td>' +
 						'</tr>';
 
 	function agregarFila() {
@@ -151,7 +151,7 @@ var primeraFila = '<tr id="fila0">' +
 				break;
 			}
 		}
-		$('[name="fiscalizacion.tamanioMuestra"]').val(cantTotales);
+		$('[name="fiscalizacionDTO.tamanioMuestra"]').val(cantTotales);
 		
 	}
 
@@ -303,24 +303,30 @@ var primeraFila = '<tr id="fila0">' +
 
 		var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
 		var vol = 0;
-		for ( var i = 0; i < cantidadDeFilas; i++) {
-			var largo = $('#tablaMuestras [id=fila' + i + '] [name*=largo]')
-					.val();
-			var r = $('#tablaMuestras [id=fila' + i + '] [name*=diametro1]')
-					.val() / 2;
-			if (! $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').is(":visible")){
-				$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
-						.val(r * 2);
+		if(cantidadDeFilas > 0){
+			for ( var i = 0; i < cantidadDeFilas; i++) {
+				var largo = $('#tablaMuestras [id=fila' + i + '] [name*=largo]')
+						.val();
+				var r = $('#tablaMuestras [id=fila' + i + '] [name*=diametro1]')
+						.val() / 2;
+				if (! $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').is(":visible")){
+					$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
+							.val(r * 2);
+				}
+				var r2 = $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
+						.val() / 2;
+	
+				var v = volumenTroncoDelCono(r, r2, largo);
+				vol = vol + v;
 			}
-			var r2 = $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
-					.val() / 2;
+			var prom = vol / cantidadDeFilas;
+			
+			$('#cantidadMts').val(prom * $('[name="fiscalizacionDTO.cantidadUnidades"]').val());
 
-			var v = volumenTroncoDelCono(r, r2, largo);
-			vol = vol + v;
-		}
-		var prom = vol / cantidadDeFilas;
-		
-		$('#cantidadMts').val(prom * $('[name="fiscalizacion.cantidadUnidades"]').val());
+			
+			var num1 = new Number($('#cantidadMts').val());			
+			$('#cantidadMts').val(num1.toFixed(2)); // 3.14
+		}	
 
 	}
 
@@ -332,6 +338,7 @@ var primeraFila = '<tr id="fila0">' +
 	}
 	
 	function actualizarMuestras() {
+		$('#cantidadMts').val('');
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
 		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
 			$('#trMuestras').show();
@@ -340,7 +347,7 @@ var primeraFila = '<tr id="fila0">' +
 			$('#trMuestras').show();
 			$('.diam2').hide();
 		} else {
-			removerNMuestras($('[name="fiscalizacion.tamanioMuestra"]').val()); 
+			removerNMuestras($('[name="fiscalizacionDTO.tamanioMuestra"]').val()); 
 			$('#trMuestras').hide();
 		}
 			
@@ -354,7 +361,7 @@ var primeraFila = '<tr id="fila0">' +
 
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="altaFiscalizacion" />
-	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
 				<bean:message key='SIIF.titulo.AltaFiscalizacion'/>
@@ -377,7 +384,7 @@ var primeraFila = '<tr id="fila0">' +
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="30%">
-				<select id="idProductor" class="botonerab" name="idProductorForestal" onchange="actualizarComboPMF();" 
+				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.productorForestal.id" onchange="actualizarComboPMF();" 
 						disabled="disabled">
 					<option value="-1">-Seleccione un Productor-</option>
 				</select>
@@ -386,23 +393,23 @@ var primeraFila = '<tr id="fila0">' +
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td>			
-				<input id="datepicker" name="fecha" class="botonerab" type="text" size="23"	readonly="readonly">
+				<input id="datepicker" name="fiscalizacionDTO.fecha" class="botonerab" type="text" size="23"	readonly="readonly">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td>
-				<input name="fiscalizacion.periodoForestal"	class="botonerab" type="text" size="27">
+				<input name="fiscalizacionDTO.periodoForestal"	class="botonerab" type="text" size="27">
 			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td>
-				<input name="fiscalizacion.cantidadUnidades" class="botonerab" type="text" size="27"
+				<input name="fiscalizacionDTO.cantidadUnidades" class="botonerab" type="text" size="27"
 					   onkeypress="javascript:esNumerico(event);">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
-				<select class="botonerab" name="idTipoProductoForestal" id="idTipoProductoForestal" onchange="actualizarMuestras();" >
+				<select class="botonerab" name="fiscalizacionDTO.tipoProducto.id" id="idTipoProductoForestal" onchange="actualizarMuestras();" >
 					<option value="-1">- Seleccione un Producto -</option>
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
 						<option value="${tipoProducto.id}"><c:out value="${tipoProducto.nombre}"></c:out></option>
@@ -415,17 +422,33 @@ var primeraFila = '<tr id="fila0">' +
 				<bean:message key='SIIF.label.CantMts3'/>
 			</td>
 			<td>
-				<input id="cantidadMts" name="fiscalizacion.cantidadMts" class="botonerab" type="text" size="27"
+				<input id="cantidadMts" name="fiscalizacionDTO.cantidadMts" class="botonerab" type="text" size="27"
 					   readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
 			</td>
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TamañoMuestra'/>
 			</td>
 			<td>
-				<input name="fiscalizacion.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
+				<input name="fiscalizacionDTO.tamanioMuestra" class="botonerab" type="text" size="27" value="0"
 				 	   id="idTamanioMuestra" readonly="readonly" onkeypress="javascript:esNumerico(event);">
 			</td>
 		</tr>
+		<tr>
+			<td class="botoneralNegritaRight">
+				<bean:message key='SIIF.label.Oficina'/>
+			</td>
+			<td>
+				<select class="botonerab" name="fiscalizacionDTO.oficinaAlta.id">
+					<option value="-1">- Seleccione una Oficina -</option>
+					<c:forEach items="${oficinas}" var="oficina">
+						<option value="${oficina.id}"><c:out value="${oficina.nombre}"></c:out></option>
+					</c:forEach>
+				</select>
+			</td>
+			<td class="botoneralNegritaRight" colspan="2">
+
+			</td>
+		</tr>		
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
@@ -433,8 +456,7 @@ var primeraFila = '<tr id="fila0">' +
 		<!-- LOCALIZACION -->
 		<tr>
 			<td colspan="4" align="left">
-				<table border="0" class="cuadrado" align="center" width="80%"
-					cellpadding="2" cellspacing="0">
+				<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 					<tr>
 						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 					</tr>
@@ -442,54 +464,54 @@ var primeraFila = '<tr id="fila0">' +
 						<td colspan="3" height="10"></td>
 					</tr>				
 					<tr>
-						<td width="40%" class="botoneralNegritaRight">
+						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
-						<td>
-							<select id="idPMF" class="botonerab" name="idPlanManejoForestal" disabled="disabled" 
+						<td width="4%"></td>						
+						<td align="left">
+							<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" disabled="disabled" 
 									onchange="actualizarComboTranzon();">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
-						</td>
-						<td width="25%"></td>
+						</td>						
 					</tr>				
 					<tr>
-						<td width="40%" class="botoneralNegritaRight">
+						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
-						<td>
-							<select id="idTranzon" class="botonerab" name="idTranzon" disabled="disabled" 
+						<td width="4%"></td>						
+						<td align="left">
+							<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" disabled="disabled" 
 									onchange="actualizarComboMarcacion();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
 						</td>
-						<td width="25%"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight">
+						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
-						<td>
-							<select id="idMarcacion" class="botonerab" name="idMarcacion" disabled="disabled" 
+						<td width="4%"></td>
+						<td align="left">
+							<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" disabled="disabled" 
 									onchange="actualizarComboRodal();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
 						</td>
-						<td width="25%"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight">
+						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Rodal'/>
 						</td>
-						<td>
-							<select id="idRodal" class="botonerab" name="idRodal" disabled="disabled">
+						<td width="4%"></td>
+						<td align="left">
+							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.rodal.id" disabled="disabled">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>
-						<td width="25%"></td>
 					</tr>															
 					<tr>
-						<td colspan="2" height="10"></td>
+						<td colspan="3" height="10"></td>
 					</tr>				
 				</table>
 			</td>
@@ -554,7 +576,7 @@ var primeraFila = '<tr id="fila0">' +
 	
 	<div id="muestrasAux" style="display: none;"></div>
 	
-	<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>

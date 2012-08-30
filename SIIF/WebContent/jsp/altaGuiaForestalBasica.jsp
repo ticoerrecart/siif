@@ -238,7 +238,7 @@ function calcularTotales(){
 
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${warning}</div>
-<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.idTipoEntidad}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${fiscalizacion.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${fiscalizacion.productorForestal.id}">
 
 <html:form action="guiaForestal" styleId="guiaForestalForm">

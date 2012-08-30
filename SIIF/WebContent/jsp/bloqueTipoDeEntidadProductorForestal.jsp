@@ -15,14 +15,32 @@
 
 var tr = null;
 var clase = null;
+var clase2;
 function mostrarDatos(idTr){
-
+	
 	if(tr!=null){
 		$('#tr'+tr).attr("class", clase);	
 	}
 	tr=idTr;
 	clase = $('#tr'+tr).attr("class");
 	$('#tr'+tr).attr("class", "seleccionado");	
+}
+
+function pintarFila(idTr){
+
+	$('#tr'+idTr).attr("class", "seleccionado");	
+}
+
+function despintarFila(idTr){
+
+	if(!$('#idCheck'+idTr).is(':checked')){
+		if(idTr%2){
+			clase2 = "par";		
+		}else{
+			clase2 = "";
+		}	
+		$('#tr'+idTr).attr("class", clase2);
+	}		
 }
 
 function mostrarDetalle(){

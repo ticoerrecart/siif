@@ -16,21 +16,31 @@
 			<table border="0" class="cuadrado" 
 				align="center" width="60%" cellpadding="2">
 				<tr>
+					<td class="azulAjustado"></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
 					<td class="azulAjustado"></td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
 					<%clase=(clase.equals("")?"par":""); %>
 					<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
-						onmouseover="javascript:mostrarDatos(<c:out value='${i.count}'></c:out>);">
+						onmouseover="javascript:pintarFila(<c:out value='${i.count}'></c:out>);"
+						onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
 						<td class="botonerab">
-							<fmt:formatDate	value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />
+							<input type="checkbox" id="idCheck<c:out value='${i.count}'></c:out>"
+								onclick="pintarFila(<c:out value='${i.count}'></c:out>)">
+						</td>						
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.fecha}"></c:out>
 						</td>
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.productorForestal.nombre}"></c:out>
 						</td>
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
+						</td>						
 						<td class="botonerab">
 							<a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
 								<bean:message key='SIIF.label.Seleccionar'/>
