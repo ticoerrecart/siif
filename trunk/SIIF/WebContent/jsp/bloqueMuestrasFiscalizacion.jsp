@@ -6,15 +6,6 @@
   Integer indiceDiv = Integer.parseInt(request.getParameter("indiceDiv"));
 %>
 
-<!-- <table id="tablaMuestras" border="0" class="cuadrado" align="center"
-	width="70%" cellpadding="2" cellspacing="0">
-	<tr>
-		<td class="azulAjustado"></td>
-		<td class="azulAjustado">Largo</td>
-		<td class="azulAjustado">Diametro 1</td>
-		<td class="azulAjustado">Diametro 2</td>
-	</tr>
- -->
  <table id="tablaMuestras" border="0" class="cuadradoSinBorde" align="center"
 	width="70%" cellpadding="2" cellspacing="0">
 	<%for(int i=cantT;i<=cantT-1+cant;i++){%>
