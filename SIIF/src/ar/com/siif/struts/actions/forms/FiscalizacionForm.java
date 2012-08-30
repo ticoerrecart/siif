@@ -1,7 +1,6 @@
 package ar.com.siif.struts.actions.forms;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +12,7 @@ import org.apache.struts.action.ActionMapping;
 
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
-import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.negocio.Entidad;
-import ar.com.siif.negocio.Muestra;
 import ar.com.siif.struts.utils.Validator;
-import ar.com.siif.utils.Fecha;
 
 public class FiscalizacionForm extends ActionForm {
 
@@ -134,86 +129,6 @@ public class FiscalizacionForm extends ActionForm {
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13 && ok14 && ok15 && ok16;
 	}
-
-	/*public Fiscalizacion getFiscalizacion() {
-		return fiscalizacion;
-	}
-
-	public void setFiscalizacion(Fiscalizacion fiscalizacion) {
-		this.fiscalizacion = fiscalizacion;
-	}
-
-	public long getIdProductorForestal() {
-		return idProductorForestal;
-	}
-
-	public void setIdProductorForestal(long idProductorForestal) {
-		this.idProductorForestal = idProductorForestal;
-	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public long getIdTipoProductoForestal() {
-		return idTipoProductoForestal;
-	}
-
-	public void setIdTipoProductoForestal(long idTipoProductoForestal) {
-		this.idTipoProductoForestal = idTipoProductoForestal;
-	}
-
-	public List<Muestra> getMuestras() {
-		return muestras;
-	}
-
-	public void setMuestras(List<Muestra> muestras) {
-		this.muestras = muestras;
-	}
-
-	public long getIdPlanManejoForestal() {
-		return idPlanManejoForestal;
-	}
-
-	public void setIdPlanManejoForestal(long idPlanManejoForestal) {
-		this.idPlanManejoForestal = idPlanManejoForestal;
-	}
-
-	public long getIdTranzon() {
-		return idTranzon;
-	}
-
-	public void setIdTranzon(long idTranzon) {
-		this.idTranzon = idTranzon;
-	}
-
-	public long getIdMarcacion() {
-		return idMarcacion;
-	}
-
-	public void setIdMarcacion(long idMarcacion) {
-		this.idMarcacion = idMarcacion;
-	}
-
-	public long getIdRodal() {
-		return idRodal;
-	}
-
-	public void setIdRodal(long idRodal) {
-		this.idRodal = idRodal;
-	}
-
-	public long getIdOficinaForestal() {
-		return idOficinaForestal;
-	}
-
-	public void setIdOficinaForestal(long idOficinaForestal) {
-		this.idOficinaForestal = idOficinaForestal;
-	}*/
 
 	public FiscalizacionDTO getFiscalizacionDTO() {
 		return fiscalizacionDTO;

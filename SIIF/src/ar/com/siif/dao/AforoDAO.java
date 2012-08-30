@@ -154,7 +154,11 @@ public class AforoDAO extends HibernateDaoSupport {
 			criteria.add(conj);
 	
 			List<Aforo> aforos = criteria.list();
-			return aforos.get(0);
+			
+			if((aforos.size() > 0)){
+				return aforos.get(0);	
+			}
+			return null;			
 			
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
