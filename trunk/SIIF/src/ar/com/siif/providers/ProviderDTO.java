@@ -258,6 +258,8 @@ public abstract class ProviderDTO {
 			guiaForestalDTO.setId(guiaForestal.getId());
 			guiaForestalDTO.setAforo(guiaForestal.getAforo());
 			guiaForestalDTO.setCantidad(guiaForestal.getCantidad());
+			guiaForestalDTO.setCantidadMts(guiaForestal.getCantidadMts());
+			guiaForestalDTO.setCantidadUnidades(guiaForestal.getCantidadUnidades());
 			guiaForestalDTO.setDistanciaAforoMovil(guiaForestal.getDistanciaAforoMovil());
 			guiaForestalDTO.setEspecie(guiaForestal.getEspecie());
 			guiaForestalDTO.setEstado(guiaForestal.getEstado());

@@ -75,33 +75,13 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
-			Usuario usuario = loginFachada.getUsuario(usr.getId());
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
-			GuiaForestal guiaForestal = guiaForm.getGuiaForestal();
+			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
 
-			Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(guiaForm
-					.getIdFiscalizacion());
-
-			guiaForestal.setFiscalizacion(fiscalizacion);
-			fiscalizacion.setGuiaForestal(guiaForestal);
-
-			for (BoletaDeposito boleta : guiaForm.getBoletasDeposito()) {
-
-				boleta.setGuiaForestal(guiaForestal);
-				guiaForestal.getBoletasDeposito().add(boleta);
-			}
-			for (ValeTransporte vale : guiaForm.getValesTransporte()) {
-
-				vale.setGuiaForestal(guiaForestal);
-				guiaForestal.getValesTransporte().add(vale);
-			}
-
-			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
-
-			//guiaForestalFachada.altaGuiaForestalBasica(guiaForestal);
-
-			//guiaForestalFachada.altaGuiaForestalBasica(ProviderDominio.getGuiaForestal(guiaForm,
-			//		actaMartillado, usuario));
+			guiaForestal.setUsuario(usr);
+			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
+													   guiaForm.getBoletasDeposito(),
+													   guiaForm.getValesTransporte());
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -478,7 +458,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestales = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
@@ -679,7 +659,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestales = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
