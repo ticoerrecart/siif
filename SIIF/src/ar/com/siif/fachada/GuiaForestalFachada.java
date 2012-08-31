@@ -4,33 +4,52 @@ import java.util.Date;
 import java.util.List;
 
 import ar.com.siif.dao.GuiaForestalDAO;
+import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
+import ar.com.siif.providers.ProviderDominio;
 
 public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	private GuiaForestalDAO guiaForestalDAO;
-
+	private IUsuarioFachada usuarioFachada;
+	private IFiscalizacionFachada fiscalizacionFachada;
+	
 	public GuiaForestalFachada() {
 	}
 
-	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO) {
+	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada, 
+								IFiscalizacionFachada pFiscalizacionFachada) 
+	{
 
 		this.guiaForestalDAO = guiaForestalDAO;
+		this.usuarioFachada = pUsuarioFachada;
+		this.fiscalizacionFachada = pFiscalizacionFachada;
 	}
 
-	/*public List<Entidad> recuperarPermicionarios() {
-
-		return guiaForestalDAO.recuperarPermicionarios();
-	}*/
-
-	public void altaGuiaForestalBasica(GuiaForestal guia) throws NegocioException {
+	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
+									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+									   List<ValeTransporteDTO> listaValeTransporteDTO
+									   ) throws NegocioException {
 
 		try{
-			this.guiaForestalDAO.altaGuiaForestalBasica(guia);
+			
+			Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(guia.getFiscalizacion().getId()); 
+			Usuario usuario = usuarioFachada.getUsuario(guia.getUsuario().getId());
+			
+			GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia,listaBoletaDepositoDTO,
+																		listaValeTransporteDTO,fiscalizacion,usuario);
+			fiscalizacion.setGuiaForestal(guiaForestal);
+			
+			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+			
+			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
