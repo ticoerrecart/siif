@@ -118,29 +118,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 	
-	<!-- GUIA FORESTAL --> 
-	<bean id="guiaForestalFachadaImpl" class="ar.com.siif.fachada.GuiaForestalFachada">
-		<constructor-arg ref="guiaForestalDAO" />
-	</bean>	
-
-	<bean id="guiaForestalFachada"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager">
-			<ref bean="transactionManager" />
-		</property>
-		<property name="proxyTargetClass" value="true" />
-		<property name="target">
-			<ref bean="guiaForestalFachadaImpl" />
-		</property>
-		<property name="proxyInterfaces" value="ar.com.siif.fachada.IGuiaForestalFachada" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
-			</props>
-		</property>
-	</bean>	
-
-
 	<!--TIPO PRODUCTO --> 
 	<bean id="tipoProductoForestalFachadaImpl" class="ar.com.siif.fachada.TipoProductoForestalFachada">
 		<constructor-arg ref="tipoProductoForestalDAO" />
@@ -395,6 +372,30 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			</props>
 		</property>
 	</bean>
+
+	<!-- GUIA FORESTAL --> 
+	<bean id="guiaForestalFachadaImpl" class="ar.com.siif.fachada.GuiaForestalFachada">
+		<constructor-arg ref="guiaForestalDAO" />
+		<constructor-arg ref="usuarioFachada" />
+		<constructor-arg ref="fiscalizacionFachada" />
+	</bean>	
+
+	<bean id="guiaForestalFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="guiaForestalFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IGuiaForestalFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
 
 	<!--  *******************-->
 	<!--       Parameters    -->

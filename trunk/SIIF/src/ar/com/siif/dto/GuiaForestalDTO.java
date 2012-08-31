@@ -23,6 +23,10 @@ public class GuiaForestalDTO {
 
 	private int cantidad;
 
+	private int cantidadUnidades;
+
+	private double cantidadMts;	
+	
 	private double importe;
 
 	private double aforo;
@@ -193,6 +197,22 @@ public class GuiaForestalDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public int getCantidadUnidades() {
+		return cantidadUnidades;
+	}
+
+	public void setCantidadUnidades(int cantidadUnidades) {
+		this.cantidadUnidades = cantidadUnidades;
+	}
+
+	public double getCantidadMts() {
+		return cantidadMts;
+	}
+
+	public void setCantidadMts(double cantidadMts) {
+		this.cantidadMts = cantidadMts;
 	}
 
 }

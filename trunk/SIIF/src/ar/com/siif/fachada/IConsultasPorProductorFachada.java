@@ -8,15 +8,15 @@ import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IConsultasPorProductorFachada {
 
-	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesVigentes(long idProductor)throws NegocioException;
 	
 	public List<GuiaForestal> recuperarGuiasForestales(long idProductor);
 	
 	public List<GuiaForestalDTO> recuperarGuiasForestalesNoVigentes(long idProductor)throws NegocioException;
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor)throws NegocioException;
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasVales(long idProductor)throws NegocioException;
 	
 	public byte[] pruebaJasper(String path);
 }

@@ -27,9 +27,22 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return consultasPorProductorDAO.recuperarGuiasForestales(idProductor);
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor) {
-
-		return consultasPorProductorDAO.recuperarGuiasForestalesVigentes(idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesVigentes(long idProductor) throws NegocioException {
+		
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesVigentes(idProductor);
+			
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			
+			return listaGuiasForestalesDTO;
+			
+		}catch(DataBaseException dbe){
+			throw new NegocioException(dbe.getMessage());
+		}		
+		
 	}
 	
 	public List<GuiaForestalDTO> recuperarGuiasForestalesNoVigentes(long idProductor) throws NegocioException {
@@ -48,14 +61,38 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		}			
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
-		
-		return consultasPorProductorDAO.recuperarGuiasForestalesConDeudasAforo(idProductor);		
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor) throws NegocioException{
+
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasAforo(idProductor);
+			
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			
+			return listaGuiasForestalesDTO;
+			
+		}catch(DataBaseException dbe){
+			throw new NegocioException(dbe.getMessage());
+		}		
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor){
-		
-		return consultasPorProductorDAO.recuperarGuiasForestalesConDeudasVales(idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasVales(long idProductor) throws NegocioException{
+
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasVales(idProductor);
+			
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			
+			return listaGuiasForestalesDTO;
+			
+		}catch(DataBaseException dbe){
+			throw new NegocioException(dbe.getMessage());
+		}		
 	}
 	
 	public byte[] pruebaJasper(String path){

@@ -48,23 +48,31 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor) {
+	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor) throws DataBaseException {
 
-		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
-
-		criteria.createAlias("fiscalizacion.productorForestal", "productor");
-
-		criteria.addOrder(Order.asc("nroGuia"));
-
-		Date fechaActual = new Date();
-		
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
-				.add(Restrictions.ge("fechaVencimiento", fechaActual)));
-
-		List<GuiaForestal> lista = criteria.list();
-
-		return lista;
-
+		try{
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
+	
+			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+	
+			criteria.addOrder(Order.asc("nroGuia"));
+	
+			Date fechaActual = new Date();
+			
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
+					.add(Restrictions.ge("fechaVencimiento", fechaActual)));
+	
+			List<GuiaForestal> lista = criteria.list();
+	
+			return lista;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}			
 	}
 	
 	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor) throws DataBaseException {
@@ -94,43 +102,61 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		}			
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor) throws DataBaseException{
 		
-		Criteria criteria = getSession().createCriteria(GuiaForestal.class)
-							.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-		criteria.createAlias("fiscalizacion.productorForestal", "productor");
-		criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
-
-		criteria.addOrder(Order.asc("nroGuia"));
-		
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
-				.add(Restrictions.isNull("listaBoletasDeposito.fechaPago")));
-
-		List<GuiaForestal> lista = criteria.list();
-
-		return lista;		
+		try{
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
+								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+	
+			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
+	
+			criteria.addOrder(Order.asc("nroGuia"));
+			
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
+					.add(Restrictions.isNull("listaBoletasDeposito.fechaPago")));
+	
+			List<GuiaForestal> lista = criteria.list();
+	
+			return lista;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}			
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor) throws DataBaseException{
 		
-		Date fechaActual = new Date();
-		
-		Criteria criteria = getSession().createCriteria(GuiaForestal.class)
-							.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-
-		criteria.createAlias("fiscalizacion.productorForestal", "productor");
-		criteria.createAlias("valesTransporte", "listaValesTransporte");
-		
-		criteria.addOrder(Order.asc("nroGuia"));
-		
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)) 
-				//.add(Restrictions.ge("fechaVencimiento", fechaActual))				
-				.add(Restrictions.isNull("listaValesTransporte.fechaDevolucion")));
-		
-		List<GuiaForestal> lista = criteria.list();
-		
-		return lista;	
+		try{
+			Date fechaActual = new Date();
+			
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
+								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+	
+			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("valesTransporte", "listaValesTransporte");
+			
+			criteria.addOrder(Order.asc("nroGuia"));
+			
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)) 
+					//.add(Restrictions.ge("fechaVencimiento", fechaActual))				
+					.add(Restrictions.isNull("listaValesTransporte.fechaDevolucion")));
+			
+			List<GuiaForestal> lista = criteria.list();
+			
+			return lista;	
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}			
 	}	
 	
 	@SuppressWarnings("deprecation")
