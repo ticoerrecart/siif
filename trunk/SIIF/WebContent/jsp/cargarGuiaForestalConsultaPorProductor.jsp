@@ -129,7 +129,7 @@ function col(sec) {
 		<td height="10" colspan="4"></td>
 	</tr>
 </table>
- 
+<!--  
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
@@ -166,7 +166,7 @@ function col(sec) {
 		<td height="10" colspan="4"></td>
 	</tr>
 </table>
-
+ -->
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
@@ -226,12 +226,12 @@ function col(sec) {
 									</td>
 									<td>
 										<input id="idCantidadMts" class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.fiscalizacion.cantidadMts}'/>"
+											value="<c:out value='${guiaForestal.cantidadMts}'/>"
 											readonly="readonly">
 									</td>
 									<td>
 										<input class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.fiscalizacion.cantidadUnidades}'/>"
+											value="<c:out value='${guiaForestal.cantidadUnidades}'/>"
 											readonly="readonly">
 									</td>
 									<td>
