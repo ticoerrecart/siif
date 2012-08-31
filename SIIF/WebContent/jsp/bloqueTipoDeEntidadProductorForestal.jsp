@@ -15,7 +15,6 @@
 
 var tr = null;
 var clase = null;
-var clase2;
 function mostrarDatos(idTr){
 	
 	if(tr!=null){
@@ -26,6 +25,7 @@ function mostrarDatos(idTr){
 	$('#tr'+tr).attr("class", "seleccionado");	
 }
 
+var clase2;
 function pintarFila(idTr){
 
 	$('#tr'+idTr).attr("class", "seleccionado");	

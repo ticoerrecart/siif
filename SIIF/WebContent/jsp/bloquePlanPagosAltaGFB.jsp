@@ -64,7 +64,7 @@
 				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha_Venc'/></td>
 				<td colspan="3" align="left">
 					<input id="datepicker<%=i-1%>" type="text" readonly="readonly" class="botonerab" 
-							name='<%="boletasDeposito["+(i-1)+"].fechaVencimientoTransient"%>'>
+							name='<%="boletasDeposito["+(i-1)+"].fechaVencimiento"%>'>
 					<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 						align="top" width='17' height='21'>															
 			

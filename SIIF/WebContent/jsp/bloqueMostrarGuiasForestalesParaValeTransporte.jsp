@@ -31,10 +31,10 @@
 					onmouseover="javascript:mostrarDatos(<c:out value='${i.count}'></c:out>);">
 					<td class="botonerab"><c:out value="${guia.nroGuia}" /></td>				
 					<td class="botonerab">
-						<fmt:formatDate value="${guia.fecha}" pattern="dd/MM/yyyy" />
+						<c:out value="${guia.fecha}"></c:out>
 					</td>
 					<td class="botonerab">
-						<fmt:formatDate value="${guia.fechaVencimiento}" pattern="dd/MM/yyyy" />
+						<c:out value="${guia.fechaVencimiento}"></c:out>
 					</td>
 					<!-- <td class="botonerab">
 						<c:set var="monto" value="${0}"></c:set>
