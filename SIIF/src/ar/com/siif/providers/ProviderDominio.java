@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dto.AforoDTO;
+import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.BoletaDeposito;
@@ -224,6 +227,92 @@ public abstract class ProviderDominio {
 		rol.setMenues(new ArrayList<ItemMenu>());
 
 		return rol;
+	}
+	
+	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+			   									List<ValeTransporteDTO> listaValeTransporteDTO,
+			   									Fiscalizacion fiscalizacion, Usuario usuario)
+	{
+		
+		GuiaForestal guia = new GuiaForestal();
+		
+		if(guiaDTO.getId() != null && guiaDTO.getId() != 0){
+			guia.setId(guiaDTO.getId());
+		}	
+		guia.setAforo(guiaDTO.getAforo());
+		guia.setCantidad(guiaDTO.getCantidad());
+		guia.setCantidadMts(guiaDTO.getCantidadMts());
+		guia.setCantidadUnidades(guiaDTO.getCantidadUnidades());
+		guia.setDistanciaAforoMovil(guiaDTO.getDistanciaAforoMovil());
+		guia.setEspecie(guiaDTO.getEspecie());
+		guia.setEstado(guiaDTO.getEstado());
+		guia.setFecha(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFecha()));
+		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFechaVencimiento()));
+		guia.setFiscalizacion(fiscalizacion);
+		guia.setImporte(guiaDTO.getImporte());
+		guia.setInspFiscalizacion(guiaDTO.getInspFiscalizacion());
+		guia.setLocalidad(guiaDTO.getLocalidad());
+		guia.setNroGuia(guiaDTO.getNroGuia());
+		guia.setObservaciones(guiaDTO.getObservaciones());
+		guia.setUsuario(usuario);
+		guia.setValorAforos(guiaDTO.getValorAforos());
+
+		for (BoletaDepositoDTO boletaDTO : listaBoletaDepositoDTO) {
+			guia.getBoletasDeposito().add(ProviderDominio.getBoletaDeposito(guia,boletaDTO));
+		}
+		
+		for (ValeTransporteDTO valeDTO : listaValeTransporteDTO) {
+			guia.getValesTransporte().add(ProviderDominio.getValeTransporte(guia,valeDTO));
+		}		
+		
+		return guia;
+	}
+	
+	public static BoletaDeposito getBoletaDeposito(GuiaForestal guia, BoletaDepositoDTO boletaDTO){
+		
+		BoletaDeposito boleta = new BoletaDeposito();
+		
+		if(boletaDTO.getIdBoleta() != 0){
+			boleta.setId(boletaDTO.getIdBoleta());
+		}	
+		boleta.setArea(boletaDTO.getArea());
+		boleta.setConcepto(boletaDTO.getConcepto());
+		boleta.setEfectivoCheque(boletaDTO.getEfectivoCheque());
+		if(boletaDTO.getFechaPago() != null && !boletaDTO.getFechaPago().equals("")){
+			boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO.getFechaPago()));
+		}	
+		boleta.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(boletaDTO.getFechaVencimiento()));
+		boleta.setGuiaForestal(guia);
+		boleta.setMonto(boletaDTO.getMonto());
+		boleta.setNumero(boletaDTO.getNumero());
+				
+		return boleta;
+	}
+	
+	public static ValeTransporte getValeTransporte(GuiaForestal guia, ValeTransporteDTO valeDTO){
+		
+		ValeTransporte vale = new ValeTransporte();
+		
+		vale.setCantidadMts(valeDTO.getCantidadMts());
+		vale.setDestino(valeDTO.getDestino());
+		vale.setDominio(valeDTO.getDominio());
+		vale.setEspecie(valeDTO.getEspecie());
+		if(valeDTO.getFechaDevolucion() != null && !valeDTO.getFechaDevolucion().equals("")){
+			vale.setFechaDevolucion(Fecha.stringDDMMAAAAToUtilDate(valeDTO.getFechaDevolucion()));
+		}	
+		vale.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(valeDTO.getFechaVencimiento()));
+		vale.setGuiaForestal(guia);
+		if(valeDTO.getId() != 0){
+			vale.setId(valeDTO.getId());
+		}	
+		vale.setMarca(valeDTO.getMarca());
+		vale.setNroPiezas(valeDTO.getNroPiezas());
+		vale.setNumero(valeDTO.getNumero());
+		vale.setOrigen(valeDTO.getOrigen());
+		vale.setProducto(valeDTO.getProducto());
+		vale.setVehiculo(valeDTO.getVehiculo());
+				
+		return vale;
 	}
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {

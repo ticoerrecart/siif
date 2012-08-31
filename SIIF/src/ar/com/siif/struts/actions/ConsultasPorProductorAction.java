@@ -124,7 +124,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesVigentes = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestalesVigentes = consultasPorProductorFachada
 					.recuperarGuiasForestalesVigentes(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestalesVigentes);
@@ -176,7 +176,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesDeudaAforo = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestalesDeudaAforo = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestalesDeudaAforo);
@@ -202,7 +202,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestal> guiasForestalesDeudaVale = consultasPorProductorFachada
+			List<GuiaForestalDTO> guiasForestalesDeudaVale = consultasPorProductorFachada
 					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestalesDeudaVale);

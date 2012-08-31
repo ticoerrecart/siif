@@ -10,6 +10,9 @@ import org.apache.commons.collections.list.LazyList;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
+import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.ValeTransporte;
@@ -46,7 +49,7 @@ public class GuiaForestalForm extends ActionForm {
 	// private String localidad;
 	// private String fecha;
 
-	private GuiaForestal guiaForestal;
+	/*private GuiaForestal guiaForestal;
 
 	private long idFiscalizacion;
 
@@ -58,60 +61,48 @@ public class GuiaForestalForm extends ActionForm {
 
 	private List<BoletaDeposito> boletasDeposito;
 
-	private List<ValeTransporte> valesTransporte;
+	private List<ValeTransporte> valesTransporte;*/
 
+	private GuiaForestalDTO guiaForestal;
+	
+	private List<BoletaDepositoDTO> boletasDeposito;
+	
+	private List<ValeTransporteDTO> valesTransporte;	
+	
 	public GuiaForestalForm() {
 
-		guiaForestal = new GuiaForestal();
+		guiaForestal = new GuiaForestalDTO();
 
-		boletasDeposito = (List<BoletaDeposito>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(BoletaDeposito.class));
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
 
-		valesTransporte = (List<ValeTransporte>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(ValeTransporte.class));
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 
-		/*
-		 * boletasDeposito = new Vector<BoletaDeposito>(); for (int i = 0; i <
-		 * Constantes.COLECCION_BOLETAS_DEPOSITO_MAX; i++) {
-		 * boletasDeposito.add(new BoletaDeposito()); }
-		 * 
-		 * valesTransporte = new Vector<ValeTransporte>(); for (int i = 0; i <
-		 * Constantes.COLECCION_VALES_TRANSPORTE_MAX; i++) {
-		 * valesTransporte.add(new ValeTransporte()); }
-		 */
 	}
 
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 
-		GuiaForestal guia = (GuiaForestal) request.getAttribute("guia");
+		GuiaForestalDTO guia = (GuiaForestalDTO) request.getAttribute("guia");
 
 		if (guiaForestal.getNroGuia() == 0) {
 			if (guia != null) {
 				guiaForestal = guia;
 			} else {
-				guiaForestal = new GuiaForestal();
+				guiaForestal = new GuiaForestalDTO();
 			}
 		}
 
-		boletasDeposito = (List<BoletaDeposito>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(BoletaDeposito.class));
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
 
-		valesTransporte = (List<ValeTransporte>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(ValeTransporte.class));
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 
-		/*
-		 * boletasDeposito = new Vector<BoletaDeposito>(); for (int i = 0; i <
-		 * Constantes.COLECCION_BOLETAS_DEPOSITO_MAX; i++) {
-		 * boletasDeposito.add(new BoletaDeposito()); }
-		 * 
-		 * valesTransporte = new Vector<ValeTransporte>(); for (int i = 0; i <
-		 * Constantes.COLECCION_VALES_TRANSPORTE_MAX; i++) {
-		 * valesTransporte.add(new ValeTransporte()); }
-		 */
 	}
 
-	public long getPermisionario() {
+	/*public long getPermisionario() {
 		return permisionario;
 	}
 
@@ -119,11 +110,11 @@ public class GuiaForestalForm extends ActionForm {
 		this.permisionario = permisionario;
 	}
 
-	public GuiaForestal getGuiaForestal() {
+	public GuiaForestalDTO getGuiaForestal() {
 		return guiaForestal;
 	}
 
-	public void setGuiaForestal(GuiaForestal guiaForestal) {
+	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
 	}
 
@@ -156,23 +147,30 @@ public class GuiaForestalForm extends ActionForm {
 		
 		if (this.fecha != null && this.fecha != "") {
 			this.getGuiaForestal().setFecha(Fecha.stringDDMMAAAAToDate(this.fecha));
-		}		
-		
+		}			
+	}*/
+
+	public GuiaForestalDTO getGuiaForestal() {
+		return guiaForestal;
 	}
 
-	public List<BoletaDeposito> getBoletasDeposito() {
+	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
+		this.guiaForestal = guiaForestal;
+	}	
+	
+	public List<BoletaDepositoDTO> getBoletasDeposito() {
 		return boletasDeposito;
 	}
 
-	public void setBoletasDeposito(List<BoletaDeposito> boletasDeposito) {
+	public void setBoletasDeposito(List<BoletaDepositoDTO> boletasDeposito) {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public List<ValeTransporte> getValesTransporte() {
+	public List<ValeTransporteDTO> getValesTransporte() {
 		return valesTransporte;
 	}
 
-	public void setValesTransporte(List<ValeTransporte> valesTransporte) {
+	public void setValesTransporte(List<ValeTransporteDTO> valesTransporte) {
 		this.valesTransporte = valesTransporte;
 	}
 	
@@ -190,7 +188,7 @@ public class GuiaForestalForm extends ActionForm {
 
 		ok = Validator.validarEnteroMayorQue(0,
 				Integer.toString(this.getGuiaForestal().getNroGuia()), "Nro de Guía", error);		
-		ok2 = Validator.requerido(this.getFechaVencimiento(), "Valido Hasta", error);
+		ok2 = Validator.requerido(this.getGuiaForestal().getFechaVencimiento(), "Valido Hasta", error);
 		
 		ok3 = Validator.requerido(String.valueOf(this.getGuiaForestal().getImporte()), "Importe", error);
 		if(ok3){
@@ -203,53 +201,7 @@ public class GuiaForestalForm extends ActionForm {
 		ok6 = Validator.validarBoletasDeposito(this.getBoletasDeposito(),montoTotal,error);
 		ok7 = Validator.validarValesTransporte(this.getValesTransporte(),error);
 		ok9 = Validator.requerido(this.getGuiaForestal().getLocalidad(), "Localidad", error);
-		ok10 = Validator.requerido(this.getFecha(), "Fecha", error);
-
-		/*
-		 * ok = Validator.requerido(Integer.toString(nroOrden), "Nro de Orden",
-		 * error) && Validator.validarEnteroMayorQue(0,
-		 * Integer.toString(nroOrden), "Nro de Orden", error);
-		 * 
-		 * ok2 = Validator.requerido(Long.toString(productorForestal),
-		 * "Productor Forestal", error);
-		 * 
-		 * ok3 = Validator.requerido(periodoForestal, "Periodo Forestal",
-		 * error);
-		 * 
-		 * ok4 = Validator.requerido(expediente, "Expediente", error);
-		 * 
-		 * ok5 = Validator.requerido(fecha, "Fecha", error) &&
-		 * Validator.validarFechaValida(fecha, "Fecha", error);
-		 * 
-		 * ok6 = Validator.requerido(ubicacionZonal, "Ubicacion Zonal", error);
-		 * 
-		 * ok7 = Validator.requerido(tipoTransporte, "Tipo Transporte", error);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * ok8 = Validator.validarRequeridoSi(Double.toString(cantidadMts),
-		 * "0.0", Integer.toString(cantidadUnidades), "Cantidad Unidades",
-		 * error); if(ok8){
-		 * 
-		 * ok8=Validator.validarEnteroMayorQue(0,
-		 * Integer.toString(cantidadUnidades), "Cantidad Unidades", error); }
-		 * else{ ok9 =
-		 * Validator.validarRequeridoSi(Integer.toString(cantidadUnidades), "0",
-		 * Double.toString(cantidadMts), "Cantidad Mts3", error); if(ok9){
-		 * ok9=Validator.validarEnteroMayorQue(0, Double.toString(cantidadMts),
-		 * "Cantidad Mts3", error); } }
-		 * 
-		 * 
-		 * 
-		 * 
-		 * ok10 = Validator.requerido(Integer.toString(tamanio), "Tamaño",
-		 * error) && Validator.validarEnteroMayorQue(0,
-		 * Integer.toString(tamanio), "Tamaño", error);
-		 */
+		ok10 = Validator.requerido(this.getGuiaForestal().getFecha(), "Fecha", error);
 
 		return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10;
 	}	

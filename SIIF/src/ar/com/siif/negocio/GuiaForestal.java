@@ -35,6 +35,10 @@ public class GuiaForestal {
 	private String especie;
 
 	private int cantidad;
+	
+	private int cantidadUnidades;
+
+	private double cantidadMts;	
 
 	private double importe;
 
@@ -68,6 +72,12 @@ public class GuiaForestal {
 	@JoinColumn(name = "fiscalizacion_fk")
 	private Fiscalizacion fiscalizacion;
 
+	public GuiaForestal(){
+		
+		boletasDeposito = new ArrayList<BoletaDeposito>();
+		valesTransporte = new ArrayList<ValeTransporte>();
+	}
+	
 	public int getNroGuia() {
 		return nroGuia;
 	}
@@ -210,6 +220,22 @@ public class GuiaForestal {
 
 	public void setFiscalizacion(Fiscalizacion fiscalizacion) {
 		this.fiscalizacion = fiscalizacion;
+	}
+
+	public int getCantidadUnidades() {
+		return cantidadUnidades;
+	}
+
+	public void setCantidadUnidades(int cantidadUnidades) {
+		this.cantidadUnidades = cantidadUnidades;
+	}
+
+	public double getCantidadMts() {
+		return cantidadMts;
+	}
+
+	public void setCantidadMts(double cantidadMts) {
+		this.cantidadMts = cantidadMts;
 	}
 
 }
