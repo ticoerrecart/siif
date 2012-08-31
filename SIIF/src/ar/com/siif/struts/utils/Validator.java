@@ -12,7 +12,9 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.ValeTransporte;
@@ -453,14 +455,14 @@ public abstract class Validator {
 		return true;
 	}
 	
-	public static boolean validarBoletasDeposito(List<BoletaDeposito> boletas, double montoTotal, StringBuffer pError){
+	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas, double montoTotal, StringBuffer pError){
 		
 		if(boletas.size() == 0){
 			addErrorXML(pError, "La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
 			return false;
 		}
 		double montoSumaBoletas = 0;
-		for (BoletaDeposito boleta : boletas) {
+		for (BoletaDepositoDTO boleta : boletas) {
 			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
 			if(boleta.getNumero() <= 0 || boleta.getConcepto() == null || boleta.getConcepto().equals("")
 					|| boleta.getArea() == null || boleta.getArea().equals("")  
@@ -477,13 +479,13 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarValesTransporte(List<ValeTransporte> vales, StringBuffer pError){
+	public static boolean validarValesTransporte(List<ValeTransporteDTO> vales, StringBuffer pError){
 		
 		if(vales.size() == 0){
 			addErrorXML(pError, "La Cantidad de Vales de Transporte debe ser un numero mayor a 0");
 			return false;
 		}
-		for (ValeTransporte vale : vales) {
+		for (ValeTransporteDTO vale : vales) {
 			
 			if(vale.getNumero() <= 0 || vale.getOrigen() == null || vale.getOrigen().equals("")
 					|| vale.getDestino() == null || vale.getDestino().equals("")
