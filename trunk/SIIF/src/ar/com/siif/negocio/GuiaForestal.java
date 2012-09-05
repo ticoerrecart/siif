@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.TipoProductoDTO;
+
 @Entity
 public class GuiaForestal {
 
@@ -28,6 +31,8 @@ public class GuiaForestal {
 
 	private Date fechaVencimiento;
 
+	private String periodoForestal;
+	
 	private int distanciaAforoMovil;
 
 	private String estado;
@@ -54,6 +59,16 @@ public class GuiaForestal {
 
 	private Date fecha;
 
+	@ManyToOne()
+	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+	@JoinColumn(name = "tipoProducto_fk")	
+	private TipoProducto tipoProducto;
+	
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "entidad_fk")	
+	private Entidad productorForestal;
+	
 	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<ValeTransporte> valesTransporte = new ArrayList<ValeTransporte>();
@@ -236,6 +251,30 @@ public class GuiaForestal {
 
 	public void setCantidadMts(double cantidadMts) {
 		this.cantidadMts = cantidadMts;
+	}
+
+	public String getPeriodoForestal() {
+		return periodoForestal;
+	}
+
+	public void setPeriodoForestal(String periodoForestal) {
+		this.periodoForestal = periodoForestal;
+	}
+
+	public TipoProducto getTipoProducto() {
+		return tipoProducto;
+	}
+
+	public void setTipoProducto(TipoProducto tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+
+	public Entidad getProductorForestal() {
+		return productorForestal;
+	}
+
+	public void setProductorForestal(Entidad productorForestal) {
+		this.productorForestal = productorForestal;
 	}
 
 }

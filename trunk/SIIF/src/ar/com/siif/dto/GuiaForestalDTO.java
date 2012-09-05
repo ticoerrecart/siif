@@ -11,8 +11,14 @@ public class GuiaForestalDTO {
 	
 	private int nroGuia;
 
+	private EntidadDTO productorForestal;
+	
+	private String periodoForestal;
+	
 	private FiscalizacionDTO fiscalizacion;
 
+	private TipoProductoDTO tipoProducto;
+	
 	private String fechaVencimiento;
 
 	private int distanciaAforoMovil;
@@ -53,6 +59,8 @@ public class GuiaForestalDTO {
 		valesTransporte = new ArrayList<ValeTransporteDTO>();
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
 		usuario = new UsuarioDTO();
+		productorForestal = new EntidadDTO();
+		tipoProducto = new TipoProductoDTO();
 	}
 
 	public int getNroGuia() {
@@ -213,6 +221,30 @@ public class GuiaForestalDTO {
 
 	public void setCantidadMts(double cantidadMts) {
 		this.cantidadMts = cantidadMts;
+	}
+
+	public EntidadDTO getProductorForestal() {
+		return productorForestal;
+	}
+
+	public void setProductorForestal(EntidadDTO productorForestal) {
+		this.productorForestal = productorForestal;
+	}
+
+	public String getPeriodoForestal() {
+		return periodoForestal;
+	}
+
+	public void setPeriodoForestal(String periodoForestal) {
+		this.periodoForestal = periodoForestal;
+	}
+
+	public TipoProductoDTO getTipoProducto() {
+		return tipoProducto;
+	}
+
+	public void setTipoProducto(TipoProductoDTO tipoProducto) {
+		this.tipoProducto = tipoProducto;
 	}
 
 }

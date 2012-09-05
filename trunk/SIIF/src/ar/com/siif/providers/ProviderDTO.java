@@ -273,6 +273,10 @@ public abstract class ProviderDTO {
 			guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());
 			guiaForestalDTO.setValorAforos(guiaForestal.getValorAforos());			
 			
+			guiaForestalDTO.setPeriodoForestal(guiaForestal.getPeriodoForestal());
+			guiaForestalDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(guiaForestal.getTipoProducto()));
+			guiaForestalDTO.setProductorForestal(ProviderDTO.getEntidadDTO(guiaForestal.getProductorForestal()));
+			
 			if(guiaForestal.getUsuario() != null){
 				guiaForestalDTO.setUsuario(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuario()));
 			}
