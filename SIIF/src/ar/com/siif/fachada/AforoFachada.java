@@ -77,10 +77,10 @@ public class AforoFachada implements IAforoFachada {
 		return aforoDAO.existeAforo(aforo, idTipoProducto);
 	}
 	
-	public String getValor(Long idFiscalizacion, String estado) throws NegocioException{
+	public String getValor(String estado, Long idTipoProducto, Long idProdForestal) throws NegocioException{
 		
 		try{
-			Aforo aforo = aforoDAO.getAforo(idFiscalizacion,estado);
+			Aforo aforo = aforoDAO.getAforo(estado,idTipoProducto,idProdForestal);
 			
 			if(aforo != null){
 				return String.valueOf(aforo.getValorAforo());

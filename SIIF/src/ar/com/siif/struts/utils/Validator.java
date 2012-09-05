@@ -502,4 +502,15 @@ public abstract class Validator {
 		}
 		return true;
 	}	
+	
+	public static boolean validarTipoProductoAltaGFB(Long idTipoProductoGuia, 
+													 Long idTipoProductoFiscalizacion, 
+													 StringBuffer pError){
+		
+		if(idTipoProductoGuia.longValue() != idTipoProductoFiscalizacion.longValue()){
+			addErrorXML(pError, "El Tipo de Producto debe ser igual al de las Fiscalizaciones");
+			return false;			
+		}
+		return true;		
+	}
 }

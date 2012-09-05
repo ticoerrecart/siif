@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.negocio.Aforo;
+import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.exception.DataBaseException;
@@ -140,16 +141,16 @@ public class AforoDAO extends HibernateDaoSupport {
 	}
 	
 	@SuppressWarnings("finally")
-	public Aforo getAforo(Long idFiscalizacion,String estado)throws DataBaseException{
+	public Aforo getAforo(String estado, Long idTipoProducto, Long idProdForestal)throws DataBaseException{
 		
 		try{
-			Fiscalizacion fiscalizacion = (Fiscalizacion)this.getHibernateTemplate().get(Fiscalizacion.class, idFiscalizacion);
+			Entidad productor = (Entidad)this.getHibernateTemplate().get(Entidad.class, idProdForestal);
 			
 			Criteria criteria = getSession().createCriteria(Aforo.class);
 			Conjunction conj = Restrictions.conjunction();
 			conj.add(Restrictions.eq("estado", estado));
-			conj.add(Restrictions.eq("tipoProductor", fiscalizacion.getProductorForestal().getIdTipoEntidad()));
-			conj.add(Restrictions.eq("tipoProducto.id", fiscalizacion.getTipoProducto().getId()));
+			conj.add(Restrictions.eq("tipoProductor", productor.getIdTipoEntidad()));
+			conj.add(Restrictions.eq("tipoProducto.id", idTipoProducto));
 			
 			criteria.add(conj);
 	

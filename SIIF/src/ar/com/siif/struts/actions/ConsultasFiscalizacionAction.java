@@ -186,6 +186,14 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			
 			long idFiscalizacion = new Long(request.getParameter("idFiscalizacion"));
 			
+			request.setAttribute("botonVolver", "javascript:volver();");
+			
+			if(request.getParameter("strForward") != null){//Se usa para mostrar las fiscalizaciones en el alta de GFB
+				
+				strForward = request.getParameter("strForward");
+				request.setAttribute("botonVolver", "javascript:volverAltaGFB();");				
+			}
+						
 			FiscalizacionDTO fiscalizacion = fiscalizacionFachada.recuperarFiscalizacionDTO(idFiscalizacion);
 
 			request.setAttribute("fiscalizacion", fiscalizacion);

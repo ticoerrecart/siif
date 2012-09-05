@@ -1,5 +1,6 @@
 package ar.com.siif.struts.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -20,6 +22,7 @@ import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IRolFachada;
+import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -36,10 +39,14 @@ public class GuiaForestalAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoCargaAltaGuiaForestalBasica";
-		String idFiscalizacion = request.getParameter("id");
+		String idFiscalizacion = "10";//request.getParameter("id");
 		try {
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			ITipoProductoForestalFachada tipoProdFachada = (ITipoProductoForestalFachada) 
+																ctx.getBean("tipoProductoForestalFachada");
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
 			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
@@ -48,8 +55,29 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 			FiscalizacionDTO fiscalizacion = fiscalizacionFachada.recuperarFiscalizacionDTO(
 															Long.parseLong(idFiscalizacion));
+			
 			request.setAttribute("fiscalizacion", fiscalizacion);
-
+			
+			
+			//------------
+			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
+			
+			EntidadDTO productorForestal = entidadFachada.getEntidadDTO(guiaForm.getGuiaForestal().getProductorForestal().getId());
+			
+			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+			for (FiscalizacionDTO fiscalizacionDTO : guiaForm.getListaFiscalizaciones()) {
+				if(fiscalizacionDTO.getId() != 0){
+					listaFiscalizacionesDTO.add(fiscalizacionFachada.recuperarFiscalizacionDTO(
+																fiscalizacionDTO.getId()));
+				}	
+			}
+			request.setAttribute("tiposProductosForestales",tipoProdFachada.recuperarTiposProductoForestalDTO());
+			request.setAttribute("estadosProductoForestal",tipoProdFachada.getEstadosProductos());
+			request.setAttribute("productorForestal",productorForestal);
+			request.setAttribute("fiscalizaciones",listaFiscalizacionesDTO);
+			//------------
+			
+												
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -790,6 +818,37 @@ public class GuiaForestalAction extends ValidadorAction {
 		return guiaForestalForm.validar(error);
 	}
 
+	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error, ActionForm form) {
+		
+		/*GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+		Long idTipoProd = null;
+		List<FiscalizacionDTO> listaFiscalizacion = normalizarListaFiscalizacionesParaAltaGuia(guiaForestalForm.getListaFiscalizaciones());
+		FiscalizacionDTO fis = listaFiscalizacion.get(0)
+		if (fis != null){
+			idTipoProd = fis.getTipoProducto().getId();
+		}
+		for (FiscalizacionDTO fiscalizacion : guiaForestalForm.getListaFiscalizaciones()) {
+			if(idTipoProd.longValue() != fiscalizacion.getTipoProducto().getId()){
+				Validator.addErrorXML(error, "Las Fiscalizaciones seleccionadas deben tener el mismo Tipo de Producto");
+				return false;
+			}
+		} */
+		
+		return true;
+	}	
+	
+	private List<FiscalizacionDTO> normalizarListaFiscalizacionesParaAltaGuia(List<FiscalizacionDTO> listaFiscalizaciones){
+		
+		List<FiscalizacionDTO> listaFis = new ArrayList<FiscalizacionDTO>();
+		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
+			TipoProductoDTO tipoProd = fiscalizacionDTO.getTipoProducto();
+			if(tipoProd.getId() != null && tipoProd.getId().longValue() != 0){
+				listaFis.add(fiscalizacionDTO);
+			}
+		}
+		return listaFis;
+	}
+	
 	public boolean validarNroGuiaForm(StringBuffer error, ActionForm form) {
 
 		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;

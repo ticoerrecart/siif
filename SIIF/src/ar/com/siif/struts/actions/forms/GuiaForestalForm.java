@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.BoletaDeposito;
@@ -69,6 +70,8 @@ public class GuiaForestalForm extends ActionForm {
 	
 	private List<ValeTransporteDTO> valesTransporte;	
 	
+	private List<FiscalizacionDTO> listaFiscalizaciones; 
+	
 	public GuiaForestalForm() {
 
 		guiaForestal = new GuiaForestalDTO();
@@ -79,6 +82,9 @@ public class GuiaForestalForm extends ActionForm {
 		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 
+		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));
+		
 	}
 
 	@Override
@@ -100,6 +106,8 @@ public class GuiaForestalForm extends ActionForm {
 		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 
+		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));		
 	}
 
 	/*public long getPermisionario() {
@@ -173,7 +181,15 @@ public class GuiaForestalForm extends ActionForm {
 	public void setValesTransporte(List<ValeTransporteDTO> valesTransporte) {
 		this.valesTransporte = valesTransporte;
 	}
-	
+
+	public List<FiscalizacionDTO> getListaFiscalizaciones() {
+		return listaFiscalizaciones;
+	}
+
+	public void setListaFiscalizaciones(List<FiscalizacionDTO> listaFiscalizaciones) {
+		this.listaFiscalizaciones = listaFiscalizaciones;
+	}
+
 	public boolean validar(StringBuffer error) {
 		boolean ok = true;
 		boolean ok2 = true;
@@ -185,10 +201,17 @@ public class GuiaForestalForm extends ActionForm {
 		boolean ok8 = true;
 		boolean ok9 = true;
 		boolean ok10 = true;
+		boolean ok11 = true;
 
 		ok = Validator.validarEnteroMayorQue(0,
 				Integer.toString(this.getGuiaForestal().getNroGuia()), "Nro de Guía", error);		
 		ok2 = Validator.requerido(this.getGuiaForestal().getFechaVencimiento(), "Valido Hasta", error);
+		
+		FiscalizacionDTO fiscalizacion = listaFiscalizaciones.get(0);
+		if(fiscalizacion != null && fiscalizacion.getId() != null){
+			ok11 = Validator.validarTipoProductoAltaGFB(this.getGuiaForestal().getTipoProducto().getId(),
+														fiscalizacion.getTipoProducto().getId(), error);
+		}
 		
 		ok3 = Validator.requerido(String.valueOf(this.getGuiaForestal().getImporte()), "Importe", error);
 		if(ok3){
@@ -203,6 +226,6 @@ public class GuiaForestalForm extends ActionForm {
 		ok9 = Validator.requerido(this.getGuiaForestal().getLocalidad(), "Localidad", error);
 		ok10 = Validator.requerido(this.getGuiaForestal().getFecha(), "Fecha", error);
 
-		return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10;
+		return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11;
 	}	
 }
