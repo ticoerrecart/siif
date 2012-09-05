@@ -276,7 +276,8 @@
 			<forward name="exitoCargarTiposDeEntidadConsultaFiscalizacion" path=".consultaFiscalizacion" />
 			<forward name="exitoRecuperarFiscalizacionesConGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />
 			<forward name="exitoRecuperarFiscalizacionesSinGuiaForestal" path="/jsp/bloqueMostrarConsultaFiscalizaciones.jsp" />			
-			<forward name="exitoCargarFiscalizacion" path=".cargarFiscalizacionConsulta" />									
+			<forward name="exitoCargarFiscalizacion" path=".cargarFiscalizacionConsulta" />
+			<forward name="exitoCargarFiscalizacionDesdeAltaGFB" path="/jsp/cargarFiscalizacionConsulta.jsp" />										
 		</action>
 		<!-- FIN CONSULTAS FISCALIZACION -->
 
