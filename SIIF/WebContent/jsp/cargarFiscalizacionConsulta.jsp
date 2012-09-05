@@ -254,7 +254,7 @@ function imprimir(){
 		</tr>
 		<tr>
 			<td height="20" width="49%" align="right">
-				<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();">			
+				<input type="button" class="botonerab" value="Volver" onclick="${botonVolver}">			
 			</td>
 			<td height="20">
 			</td>

@@ -16,6 +16,7 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 
+
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <div id="exitoGrabado" class="verdeExito">${exitoModificacion}</div>
@@ -31,4 +32,5 @@
 		<td height="20"></td>
 	</tr>
 	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
+	
 </table>
