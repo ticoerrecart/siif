@@ -274,6 +274,7 @@ function volverAltaGFB(){
 
 	$("#idGuia").show();
 	$("#idDivFiscalizacion").hide();
+	$("#idDivFiscalizacion").empty();
 	$("#errores").show();
 }
 

@@ -90,8 +90,8 @@ function registrarPagoCallback(valor){
 	GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
 %>
 
-<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.tipoEntidad}">
-<input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
+<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
+<input id="paramProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
@@ -110,7 +110,7 @@ function registrarPagoCallback(valor){
 
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 		<td align="left">
-			<input id="nombreProductor" value="${guiaForestal.fiscalizacion.productorForestal.nombre}" 
+			<input id="nombreProductor" value="${guiaForestal.productorForestal.nombre}" 
 				   class="botonerab" type="text" size="40" readonly="readonly">			
 		</td>
 	</tr>
@@ -125,13 +125,13 @@ function registrarPagoCallback(valor){
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.periodoForestal}" class="botonerab" type="text" size="40" readonly="readonly">
+			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 	</tr>
 	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
+			<input value="${guiaForestal.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
 		</td>
 	
 		<td width="30%" class="botoneralNegritaRight">
@@ -141,46 +141,6 @@ function registrarPagoCallback(valor){
 			<input value="${guiaForestal.distanciaAforoMovil}" readonly="readonly" class="botonerab" type="text" size="10">km
 		</td>				
 	</tr>
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-</table>
- 
-<table border="0" class="cuadrado" align="center" width="80%"
-	cellpadding="2">
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.PlanManejoForestal'/>
-		</td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Tranzon'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.numero} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Rodal'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.nombre}" 
-				   class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>		
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
@@ -234,7 +194,7 @@ function registrarPagoCallback(valor){
 								<tr>
 									<td>
 										<input class="botonerab" type="text" 
-											value="<c:out value='${guiaForestal.fiscalizacion.tipoProducto.nombre}'/>"
+											value="<c:out value='${guiaForestal.tipoProducto.nombre}'/>"
 											readonly="readonly">																							
 									</td>
 									<td>
@@ -245,12 +205,12 @@ function registrarPagoCallback(valor){
 									</td>
 									<td>
 										<input id="idCantidadMts" class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.fiscalizacion.cantidadMts}'/>"
+											value="<c:out value='${guiaForestal.cantidadMts}'/>"
 											readonly="readonly">
 									</td>
 									<td>
 										<input class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.fiscalizacion.cantidadUnidades}'/>"
+											value="<c:out value='${guiaForestal.cantidadUnidades}'/>"
 											readonly="readonly">
 									</td>
 									<td>
@@ -358,7 +318,7 @@ function registrarPagoCallback(valor){
 														<bean:message key='SIIF.label.Productor'/>
 													</td>
 													<td width="40%" align="left" colspan="2">
-														<input value="${boletaDeposito.guiaForestal.fiscalizacion.productorForestal.nombre}"
+														<input value="${boletaDeposito.guiaForestal.productorForestal.nombre}"
 															   class="botonerab" type="text" size="40" readonly="readonly">
 													</td>
 												</tr>
