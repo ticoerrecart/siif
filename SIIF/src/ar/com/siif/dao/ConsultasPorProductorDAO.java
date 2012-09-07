@@ -36,7 +36,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 
-		criteria.createAlias("fiscalizacion.productorForestal", "productor");
+		criteria.createAlias("productorForestal", "productor");
 
 		criteria.addOrder(Order.asc("nroGuia"));
 		
@@ -53,7 +53,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		try{
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 	
-			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("productorForestal", "productor");
 	
 			criteria.addOrder(Order.asc("nroGuia"));
 	
@@ -80,7 +80,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		try{
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 	
-			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("productorForestal", "productor");
 	
 			criteria.addOrder(Order.asc("nroGuia"));
 	
@@ -108,7 +108,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
 								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	
-			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("productorForestal", "productor");
 			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
 	
 			criteria.addOrder(Order.asc("nroGuia"));
@@ -137,7 +137,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
 								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	
-			criteria.createAlias("fiscalizacion.productorForestal", "productor");
+			criteria.createAlias("productorForestal", "productor");
 			criteria.createAlias("valesTransporte", "listaValesTransporte");
 			
 			criteria.addOrder(Order.asc("nroGuia"));

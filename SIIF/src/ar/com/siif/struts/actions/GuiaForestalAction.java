@@ -109,7 +109,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestal.setUsuario(usr);
 			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 													   guiaForm.getBoletasDeposito(),
-													   guiaForm.getValesTransporte());
+													   guiaForm.getValesTransporte(),
+													   guiaForm.getListaFiscalizaciones());
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

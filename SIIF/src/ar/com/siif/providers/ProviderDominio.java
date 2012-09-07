@@ -231,9 +231,9 @@ public abstract class ProviderDominio {
 	
 	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,List<BoletaDepositoDTO> listaBoletaDepositoDTO,
 			   									List<ValeTransporteDTO> listaValeTransporteDTO,
-			   									Fiscalizacion fiscalizacion, Usuario usuario)
+			   									List<Fiscalizacion> listaFiscalizaciones, 
+			   									Entidad productorForestal, TipoProducto tipoProducto,Usuario usuario)
 	{
-		
 		GuiaForestal guia = new GuiaForestal();
 		
 		if(guiaDTO.getId() != null && guiaDTO.getId() != 0){
@@ -248,7 +248,7 @@ public abstract class ProviderDominio {
 		guia.setEstado(guiaDTO.getEstado());
 		guia.setFecha(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFecha()));
 		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFechaVencimiento()));
-		guia.setFiscalizacion(fiscalizacion);
+		guia.setFiscalizaciones(listaFiscalizaciones);
 		guia.setImporte(guiaDTO.getImporte());
 		guia.setInspFiscalizacion(guiaDTO.getInspFiscalizacion());
 		guia.setLocalidad(guiaDTO.getLocalidad());
@@ -257,6 +257,10 @@ public abstract class ProviderDominio {
 		guia.setUsuario(usuario);
 		guia.setValorAforos(guiaDTO.getValorAforos());
 
+		guia.setPeriodoForestal(guiaDTO.getPeriodoForestal());
+		guia.setProductorForestal(productorForestal);
+		guia.setTipoProducto(tipoProducto);
+		
 		for (BoletaDepositoDTO boletaDTO : listaBoletaDepositoDTO) {
 			guia.getBoletasDeposito().add(ProviderDominio.getBoletaDeposito(guia,boletaDTO));
 		}

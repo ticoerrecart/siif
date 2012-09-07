@@ -300,7 +300,11 @@ public abstract class ProviderDTO {
 						
 			GuiaForestalDTO guiaForestalDTO = getGuiaForestalDTODatosGenerales(guiaForestal);
 			
-			guiaForestalDTO.setFiscalizacion(ProviderDTO.getFiscalizacionDTODatosGenerales(guiaForestal.getFiscalizacion()));
+			for (Fiscalizacion fiscalizacion : guiaForestal.getFiscalizaciones()) {
+				guiaForestalDTO.getFiscalizaciones().add(ProviderDTO.getFiscalizacionDTODatosGenerales(fiscalizacion));
+			}
+			
+			//guiaForestalDTO.setFiscalizacion(ProviderDTO.getFiscalizacionDTODatosGenerales(guiaForestal.getFiscalizacion()));
 			
 			return guiaForestalDTO;
 		}

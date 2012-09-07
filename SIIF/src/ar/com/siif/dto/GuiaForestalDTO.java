@@ -3,6 +3,8 @@ package ar.com.siif.dto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Usuario;
 
 public class GuiaForestalDTO {
@@ -15,7 +17,8 @@ public class GuiaForestalDTO {
 	
 	private String periodoForestal;
 	
-	private FiscalizacionDTO fiscalizacion;
+	//private FiscalizacionDTO fiscalizacion;
+	private List<FiscalizacionDTO> fiscalizaciones;
 
 	private TipoProductoDTO tipoProducto;
 	
@@ -55,7 +58,7 @@ public class GuiaForestalDTO {
 
 	public GuiaForestalDTO() {
 
-		fiscalizacion = new FiscalizacionDTO();
+		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
 		valesTransporte = new ArrayList<ValeTransporteDTO>();
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
 		usuario = new UsuarioDTO();
@@ -69,14 +72,6 @@ public class GuiaForestalDTO {
 
 	public void setNroGuia(int nroGuia) {
 		this.nroGuia = nroGuia;
-	}
-
-	public FiscalizacionDTO getFiscalizacion() {
-		return fiscalizacion;
-	}
-
-	public void setFiscalizacion(FiscalizacionDTO fiscalizacion) {
-		this.fiscalizacion = fiscalizacion;
 	}
 
 	public String getFechaVencimiento() {
@@ -245,6 +240,14 @@ public class GuiaForestalDTO {
 
 	public void setTipoProducto(TipoProductoDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
+	}
+
+	public List<FiscalizacionDTO> getFiscalizaciones() {
+		return fiscalizaciones;
+	}
+
+	public void setFiscalizaciones(List<FiscalizacionDTO> fiscalizaciones) {
+		this.fiscalizaciones = fiscalizaciones;
 	}
 
 }
