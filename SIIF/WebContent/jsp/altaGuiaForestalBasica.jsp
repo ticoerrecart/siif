@@ -189,8 +189,8 @@ function cambiarEstado(){
 
 	var estado = $('#idEstado').val();
 	var idTipoProducto = $('#selectTiposDeProductos').val();
+	idTipoProducto = (idTipoProducto ==null)?$('#idTipoProducto').val():idTipoProducto;
 	var idProdForestal = $('#idProdForestal').val();
-	//var idFiscalizacion = $('#idFiscalizacion').val();	
 
 	if(estado != ""){
 
@@ -267,12 +267,14 @@ function mostrarFiscalizacion(idFiscalizacion){
 	$("#idGuia").hide();	
 	$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
 	$("#idDivFiscalizacion").show(); 
+	$("#errores").hide();
 }
 
 function volverAltaGFB(){
 
 	$("#idGuia").show();
 	$("#idDivFiscalizacion").hide();
+	$("#errores").show();
 }
 
 </script>
@@ -512,17 +514,25 @@ function volverAltaGFB(){
 								<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 							</tr>
 							<tr>
-								<td>
-									<!-- <input class="botonerab" type="text" readonly="readonly"
-										value="<c:out value='${fiscalizacion.tipoProducto.nombre}'/>">-->
-									<select id="selectTiposDeProductos" name="guiaForestal.tipoProducto.id" 
-											class="botonerab" onchange="cambiarEstado();">
-										<c:forEach items="${tiposProductosForestales}" var="tipoProducto" varStatus="i">
-											<option value="<c:out value='${tipoProducto.id}'></c:out>">
-												<c:out value="${tipoProducto.nombre}"></c:out>
-											</option>
-										</c:forEach>
-									</select>				
+								<td>										
+									<c:choose>
+										<c:when test="${fn:length(fiscalizaciones)>0}">
+											<html:hidden styleId="idTipoProducto" property="guiaForestal.tipoProducto.id"
+											 		value="${fiscalizaciones[0].tipoProducto.id}"/>											
+											<input class="botonerab" type="text" readonly="readonly"
+												value="<c:out value='${fiscalizaciones[0].tipoProducto.nombre}'/>">		
+										</c:when>
+										<c:otherwise>
+											<select id="selectTiposDeProductos" name="guiaForestal.tipoProducto.id" 
+													class="botonerab" onchange="cambiarEstado();">
+												<c:forEach items="${tiposProductosForestales}" var="tipoProducto" varStatus="i">
+													<option value="<c:out value='${tipoProducto.id}'></c:out>">
+														<c:out value="${tipoProducto.nombre}"></c:out>
+													</option>
+												</c:forEach>
+											</select>										
+										</c:otherwise>
+									</c:choose>		
 								</td>
 								<td>
 									<!-- 
