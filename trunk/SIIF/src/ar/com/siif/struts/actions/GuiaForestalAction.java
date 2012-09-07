@@ -820,19 +820,21 @@ public class GuiaForestalAction extends ValidadorAction {
 
 	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error, ActionForm form) {
 		
-		/*GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 		Long idTipoProd = null;
 		List<FiscalizacionDTO> listaFiscalizacion = normalizarListaFiscalizacionesParaAltaGuia(guiaForestalForm.getListaFiscalizaciones());
-		FiscalizacionDTO fis = listaFiscalizacion.get(0)
-		if (fis != null){
+		//FiscalizacionDTO fis = listaFiscalizacion.get(0);
+		//if (fis != null){
+		if(listaFiscalizacion.size() > 0){
+			FiscalizacionDTO fis = listaFiscalizacion.get(0);
 			idTipoProd = fis.getTipoProducto().getId();
 		}
-		for (FiscalizacionDTO fiscalizacion : guiaForestalForm.getListaFiscalizaciones()) {
+		for (FiscalizacionDTO fiscalizacion : listaFiscalizacion) {
 			if(idTipoProd.longValue() != fiscalizacion.getTipoProducto().getId()){
 				Validator.addErrorXML(error, "Las Fiscalizaciones seleccionadas deben tener el mismo Tipo de Producto");
 				return false;
 			}
-		} */
+		}
 		
 		return true;
 	}	
