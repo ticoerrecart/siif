@@ -40,7 +40,7 @@
 							</c:if>														
 						</c:forEach>-->						
 					</td>
-					<td class="botonerab">  
+					<td class="botoneralNegrita">  
 						<c:set var="monto" value="${0}"></c:set>
 						<c:forEach items="${guia.boletasDeposito}" var="boleta">
 							<c:if test="${boleta.fechaPago == null}">

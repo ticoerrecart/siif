@@ -20,10 +20,10 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volver(){	
-	var metodo = $('#paramForward').val();
-	var productor = $('#paramProductor').val();
-	var entidad = $('#paramIdTipoDeEntidad').val();
+function volverConsultaGuia(){	
+	var metodo = $('#idParamForward').val();
+	var productor = $('#idParamProductor').val();
+	var entidad = $('#idParamIdTipoDeEntidad').val();
 	parent.location = contextRoot() +  '/consultasPorProductor.do?metodo=cargarConsultaPorProductores&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;
 
 	/*var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
@@ -64,6 +64,40 @@ function col(sec) {
     eval("document.getElementById('" + "e"+sec + "').style.display=''");
    }
 }
+
+var clase2;
+function pintarFila(idTr){
+
+	$('#tr'+idTr).attr("class", "seleccionado");	
+}
+
+function despintarFila(idTr){
+
+	if(!$('#idCheck'+idTr).is(':checked')){
+		if(idTr%2){
+			clase2 = "par";		
+		}else{
+			clase2 = "";
+		}	
+		$('#tr'+idTr).attr("class", clase2);
+	}		
+}
+
+function mostrarFiscalizacion(idFiscalizacion){
+
+	$("#idGuiaForestal").hide();	
+	$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
+	$("#idDivFiscalizacion").show(); 
+	$("#errores").hide();
+}
+
+function volverAltaGFB(){
+
+	$("#idGuiaForestal").show();
+	$("#idDivFiscalizacion").hide();
+	$("#idDivFiscalizacion").empty();
+	$("#errores").show();
+}
 </script>
 
 <%
@@ -71,9 +105,11 @@ function col(sec) {
 %>
 
 <input id="idGuia" type="hidden" value="${guiaForestal.id}">
-<input id="paramForward" type="hidden" value="${paramForward}">
-<input id="paramProductor" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.id}">
-<input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.fiscalizacion.productorForestal.tipoEntidad}">
+<input id="idParamForward" type="hidden" value="${paramForward}">
+<input id="idParamProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
+<input id="idParamIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
+
+<div id="idGuiaForestal">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
@@ -92,7 +128,7 @@ function col(sec) {
 
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 		<td align="left">
-			<input id="nombreProductor" value="${guiaForestal.fiscalizacion.productorForestal.nombre}" 
+			<input id="nombreProductor" value="${guiaForestal.productorForestal.nombre}" 
 				   class="botonerab" type="text" size="40" readonly="readonly">			
 		</td>
 	</tr>
@@ -108,14 +144,14 @@ function col(sec) {
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.periodoForestal}" class="botonerab" type="text" 
+			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
 				   size="40" readonly="readonly">
 		</td>
 	</tr>
 	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
+			<input value="${guiaForestal.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
 		</td>
 		<td width="30%" class="botoneralNegritaRight">
 			<bean:message key='SIIF.label.DistanciaEstablecida'/>
@@ -129,47 +165,85 @@ function col(sec) {
 		<td height="10" colspan="4"></td>
 	</tr>
 </table>
-<!--  
+
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
+
+	<!-- FISCALIZACIONES -->
 	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
+		<td colspan="4" align="left">
+			<div id="e0" style="DISPLAY: ">
+				<label onclick="javascript:exp('0')"> 
+					<img src="../../imagenes/expand.gif" border="0" /> 
+					<U class="azulOpcion">
+						<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>
+					</U>
+					<BR>
+				</label>
+			</div>
+			<div id="c0" style="DISPLAY: none">
+				<label onclick="javascript:col('0')"> 
+					<img src="../../imagenes/collapse.gif" border="0" /> 
+					<U class="azulOpcion">
+						<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>
+					</U>
+					<BR>
+				</label>
+				<c:choose>
+					<c:when test="${fn:length(guiaForestal.fiscalizaciones)>0}">	
+						<br>
+						<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+							<tr>
+								<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
+								<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
+								<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
+								<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
+								<td class="azulAjustado"></td>
+							</tr>							
+							<%String clase=""; %>
+							<c:forEach items="${guiaForestal.fiscalizaciones}" var="fiscalizacion" varStatus="i">
+								<%clase=(clase.equals("")?"par":""); %>
+								<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
+									onmouseover="javascript:pintarFila(<c:out value='${i.count}'></c:out>);"
+									onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
+									<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
+									<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>
+									<td class="botonerab">
+										<c:out value="${fiscalizacion.fecha}"></c:out>
+									</td>
+									<td class="botonerab">
+										<c:out value="${fiscalizacion.productorForestal.nombre}"></c:out>
+									</td>
+									<td class="botonerab">
+										<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
+									</td>	
+									<td class="botonerab">
+										<c:out value="${fiscalizacion.cantidadMts}"></c:out>
+									</td>
+									<td class="botonerab">
+										<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
+											<bean:message key='SIIF.label.Ver'/>	
+										</a>									
+									</td>																
+								</tr>
+							</c:forEach>	
+						</table>
+						<br>				
+					</c:when>
+					<c:otherwise>
+						<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
+							<tr>
+								<td class="botonerab">
+									No se han seleccionado Fiscalizaciones
+								</td>
+							</tr>
+						</table>													
+					</c:otherwise>
+				</c:choose>	
+			</div>	
 		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Tranzon'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.numero} - ${guiaForestal.fiscalizacion.rodal.marcacion.tranzon.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.marcacion.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Rodal'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.fiscalizacion.rodal.nombre}" 
-				   class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>		
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-</table>
- -->
-<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-	<tr>
-		<td height="10" colspan="4"></td>
 	</tr>
 
 	<!-- PRODUCTOS FORESTALES -->
@@ -215,7 +289,7 @@ function col(sec) {
 								<tr>
 									<td>
 										<input class="botonerab" type="text" 
-											value="<c:out value='${guiaForestal.fiscalizacion.tipoProducto.nombre}'/>"
+											value="<c:out value='${guiaForestal.tipoProducto.nombre}'/>"
 											readonly="readonly">																							
 									</td>
 									<td>
@@ -337,7 +411,7 @@ function col(sec) {
 											</td>
 											<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Productor'/></td>
 											<td width="40%" align="left" colspan="2">
-												<input value="${boletaDeposito.guiaForestal.fiscalizacion.productorForestal.nombre}"
+												<input value="${boletaDeposito.guiaForestal.productorForestal.nombre}"
 													   class="botonerab" type="text" size="40" readonly="readonly">
 											</td>
 										</tr>
@@ -467,7 +541,7 @@ function col(sec) {
 												<bean:message key='SIIF.label.TransportadosPor'/>
 											</td>
 											<td width="40%" align="left">
-												<input value="${valeTransporte.guiaForestal.fiscalizacion.productorForestal.nombre}"
+												<input value="${valeTransporte.guiaForestal.productorForestal.nombre}"
 													   class="botonerab" type="text" size="40" readonly="readonly">
 											</td>
 										</tr>
@@ -599,7 +673,7 @@ function col(sec) {
 	</tr>
 	<tr>
 		<td height="20" width="49%" align="right">
-			<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();">
+			<input type="button" class="botonerab" value="Volver" onclick="javascript:volverConsultaGuia();">
 		</td>
 		<td height="20" colspan="2">
 		</td>
@@ -611,3 +685,6 @@ function col(sec) {
 		<td height="10" colspan="4"></td>
 	</tr> 
 </table>
+</div>	 				  
+<div id="idDivFiscalizacion" style="display: none;">
+</div>
