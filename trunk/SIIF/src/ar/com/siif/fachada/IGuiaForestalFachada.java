@@ -3,6 +3,7 @@ package ar.com.siif.fachada;
 import java.util.List;
 
 import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.GuiaForestal;
@@ -12,7 +13,8 @@ public interface IGuiaForestalFachada {
 
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-									   List<ValeTransporteDTO> listaValeTransporteDTO)
+									   List<ValeTransporteDTO> listaValeTransporteDTO,
+									   List<FiscalizacionDTO> listaFiscalizacionesDTO)
 									   throws NegocioException;
 
 	public List<GuiaForestal> recuperarGuiasForestales()throws NegocioException;

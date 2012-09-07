@@ -81,16 +81,16 @@ public class GuiaForestal {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "usuario_fk")
 	private Usuario usuario;
-
-	@ManyToOne()
+	
+	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "fiscalizacion_fk")
-	private Fiscalizacion fiscalizacion;
+	private List<Fiscalizacion> fiscalizaciones;
 
 	public GuiaForestal(){
 		
 		boletasDeposito = new ArrayList<BoletaDeposito>();
 		valesTransporte = new ArrayList<ValeTransporte>();
+		fiscalizaciones = new ArrayList<Fiscalizacion>();
 	}
 	
 	public int getNroGuia() {
@@ -229,14 +229,6 @@ public class GuiaForestal {
 		this.valorAforos = valorAforos;
 	}
 
-	public Fiscalizacion getFiscalizacion() {
-		return fiscalizacion;
-	}
-
-	public void setFiscalizacion(Fiscalizacion fiscalizacion) {
-		this.fiscalizacion = fiscalizacion;
-	}
-
 	public int getCantidadUnidades() {
 		return cantidadUnidades;
 	}
@@ -275,6 +267,14 @@ public class GuiaForestal {
 
 	public void setProductorForestal(Entidad productorForestal) {
 		this.productorForestal = productorForestal;
+	}
+
+	public List<Fiscalizacion> getFiscalizaciones() {
+		return fiscalizaciones;
+	}
+
+	public void setFiscalizaciones(List<Fiscalizacion> fiscalizaciones) {
+		this.fiscalizaciones = fiscalizaciones;
 	}
 
 }

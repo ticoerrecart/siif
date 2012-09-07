@@ -1,14 +1,18 @@
 package ar.com.siif.fachada;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -20,36 +24,53 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	private GuiaForestalDAO guiaForestalDAO;
 	private IUsuarioFachada usuarioFachada;
 	private IFiscalizacionFachada fiscalizacionFachada;
+	private IEntidadFachada entidadFachada;
+	private ITipoProductoForestalFachada tipoProductoForestalFachada;
 	
 	public GuiaForestalFachada() {
 	}
 
 	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada, 
-								IFiscalizacionFachada pFiscalizacionFachada) 
+								IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
+								ITipoProductoForestalFachada pTipoProductoForestalFachada) 
 	{
 
 		this.guiaForestalDAO = guiaForestalDAO;
 		this.usuarioFachada = pUsuarioFachada;
 		this.fiscalizacionFachada = pFiscalizacionFachada;
+		this.entidadFachada = pEntidadFachada;
+		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
 	}
 
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-									   List<ValeTransporteDTO> listaValeTransporteDTO
+									   List<ValeTransporteDTO> listaValeTransporteDTO,
+									   List<FiscalizacionDTO> listaFiscalizacionesDTO
 									   ) throws NegocioException {
 
 		try{
 			
-			Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(guia.getFiscalizacion().getId()); 
+			//Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(guia.getFiscalizacion().getId());
+			
+			List<Fiscalizacion> listaFiscalizaciones = new ArrayList<Fiscalizacion>();
+			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesDTO) {
+				listaFiscalizaciones.add(fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId()));
+			}
+			
 			Usuario usuario = usuarioFachada.getUsuario(guia.getUsuario().getId());
+			Entidad productorForestal = entidadFachada.getEntidad(guia.getProductorForestal().getId());
+			TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(guia.getTipoProducto().getId());
 			
 			GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia,listaBoletaDepositoDTO,
-																		listaValeTransporteDTO,fiscalizacion,usuario);
-			fiscalizacion.setGuiaForestal(guiaForestal);
+																		listaValeTransporteDTO,listaFiscalizaciones,
+																		productorForestal,tipoProducto,usuario);
 			
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 			
-			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
+			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+				fiscalizacion.setGuiaForestal(guiaForestal);
+				fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
+			}												
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
