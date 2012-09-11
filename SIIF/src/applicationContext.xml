@@ -380,6 +380,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<constructor-arg ref="fiscalizacionFachada" />
 		<constructor-arg ref="entidadFachada" />
 		<constructor-arg ref="tipoProductoForestalFachada" />
+		<constructor-arg ref="ubicacionFachada" />
 		
 	</bean>	
 

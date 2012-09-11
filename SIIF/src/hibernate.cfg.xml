@@ -27,6 +27,7 @@
 		<mapping class='ar.com.siif.negocio.Usuario' />
 		<mapping class='ar.com.siif.negocio.BoletaDeposito' />
 		<mapping class='ar.com.siif.negocio.ValeTransporte' />
+		<mapping class='ar.com.siif.negocio.SubImporte' />		
 		<mapping class='ar.com.siif.negocio.GuiaForestal' />
 		<mapping class='ar.com.siif.negocio.Entidad' />
 		<mapping class='ar.com.siif.negocio.RecursosNaturales' />
