@@ -15,18 +15,13 @@ public class GuiaForestalDTO {
 
 	private EntidadDTO productorForestal;
 	
-	private String periodoForestal;
-	
-	//private FiscalizacionDTO fiscalizacion;
-	private List<FiscalizacionDTO> fiscalizaciones;
-
-	private TipoProductoDTO tipoProducto;
-	
+	private String periodoForestal;	
+		
 	private String fechaVencimiento;
 
 	private int distanciaAforoMovil;
 
-	private String estado;
+	/*private String estado;
 
 	private String especie;
 
@@ -34,15 +29,17 @@ public class GuiaForestalDTO {
 
 	private int cantidadUnidades;
 
-	private double cantidadMts;	
-	
-	private double importe;
+	private double cantidadMts;		
 
 	private double aforo;
 
-	private double inspFiscalizacion;
-
 	private String valorAforos;
+	
+	private TipoProductoDTO tipoProducto;*/	
+	
+	private double importeTotal;	
+	
+	private double inspFiscalizacion;
 
 	private String observaciones;
 
@@ -56,6 +53,12 @@ public class GuiaForestalDTO {
 
 	private UsuarioDTO usuario;
 
+	private RodalDTO rodal;
+	
+	private List<FiscalizacionDTO> fiscalizaciones;	
+	
+	private List<SubImporteDTO> subImportes;
+	
 	public GuiaForestalDTO() {
 
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
@@ -63,7 +66,8 @@ public class GuiaForestalDTO {
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
 		usuario = new UsuarioDTO();
 		productorForestal = new EntidadDTO();
-		tipoProducto = new TipoProductoDTO();
+		rodal = new RodalDTO();
+		subImportes = new ArrayList<SubImporteDTO>();
 	}
 
 	public int getNroGuia() {
@@ -90,7 +94,7 @@ public class GuiaForestalDTO {
 		this.distanciaAforoMovil = distanciaAforoMovil;
 	}
 
-	public String getEstado() {
+	/*public String getEstado() {
 		return estado;
 	}
 
@@ -130,20 +134,20 @@ public class GuiaForestalDTO {
 		this.aforo = aforo;
 	}
 
-	public double getInspFiscalizacion() {
-		return inspFiscalizacion;
-	}
-
-	public void setInspFiscalizacion(double inspFiscalizacion) {
-		this.inspFiscalizacion = inspFiscalizacion;
-	}
-
 	public String getValorAforos() {
 		return valorAforos;
 	}
 
 	public void setValorAforos(String valorAforos) {
 		this.valorAforos = valorAforos;
+	}*/
+
+	public double getInspFiscalizacion() {
+		return inspFiscalizacion;
+	}
+
+	public void setInspFiscalizacion(double inspFiscalizacion) {
+		this.inspFiscalizacion = inspFiscalizacion;
 	}
 
 	public String getObservaciones() {
@@ -202,7 +206,7 @@ public class GuiaForestalDTO {
 		this.id = id;
 	}
 
-	public int getCantidadUnidades() {
+	/*public int getCantidadUnidades() {
 		return cantidadUnidades;
 	}
 
@@ -216,7 +220,7 @@ public class GuiaForestalDTO {
 
 	public void setCantidadMts(double cantidadMts) {
 		this.cantidadMts = cantidadMts;
-	}
+	}*/
 
 	public EntidadDTO getProductorForestal() {
 		return productorForestal;
@@ -234,13 +238,13 @@ public class GuiaForestalDTO {
 		this.periodoForestal = periodoForestal;
 	}
 
-	public TipoProductoDTO getTipoProducto() {
+	/*public TipoProductoDTO getTipoProducto() {
 		return tipoProducto;
 	}
 
 	public void setTipoProducto(TipoProductoDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
-	}
+	}*/
 
 	public List<FiscalizacionDTO> getFiscalizaciones() {
 		return fiscalizaciones;
@@ -248,6 +252,30 @@ public class GuiaForestalDTO {
 
 	public void setFiscalizaciones(List<FiscalizacionDTO> fiscalizaciones) {
 		this.fiscalizaciones = fiscalizaciones;
+	}
+
+	public RodalDTO getRodal() {
+		return rodal;
+	}
+
+	public void setRodal(RodalDTO rodal) {
+		this.rodal = rodal;
+	}
+
+	public double getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(double importeTotal) {
+		this.importeTotal = importeTotal;
+	}
+
+	public List<SubImporteDTO> getSubImportes() {
+		return subImportes;
+	}
+
+	public void setSubImportes(List<SubImporteDTO> subImportes) {
+		this.subImportes = subImportes;
 	}
 
 }
