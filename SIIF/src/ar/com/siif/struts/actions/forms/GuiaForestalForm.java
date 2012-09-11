@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.GuiaForestal;
@@ -22,55 +23,15 @@ import ar.com.siif.utils.Fecha;
 
 public class GuiaForestalForm extends ActionForm {
 
-	// private int nroGuia;
-	// private ActaMartilladoDTO fiscalizacion;
-	// private long permisionario;
-	// private String lugarCorte;
-	// private String fechaVencimiento;
-	// /private int distanciaAforoMovil;
-	// private String periodoForestal;
-	// private String nroExpediente;
-	// private String disposicionNro;
-
-	// private String tipo;
-	// private String estado;
-	// private String especie;
-	// private double volumenTotal;
-	// private int cantidad;
-	// private double importe;
-
-	// private double aforo;
-	// private double inspFiscalizacion;
-	// private String valorAforos;
-	// private String observaciones;
-
-	// private List<BoletaDepositoDTO> boletasDeposito;
-	// private List<ValeTransporteDTO> valesTransporte;
-
-	// private String localidad;
-	// private String fecha;
-
-	/*private GuiaForestal guiaForestal;
-
-	private long idFiscalizacion;
-
-	private long permisionario;
-
-	private String fechaVencimiento;
-
-	private String fecha;
-
-	private List<BoletaDeposito> boletasDeposito;
-
-	private List<ValeTransporte> valesTransporte;*/
-
 	private GuiaForestalDTO guiaForestal;
 	
 	private List<BoletaDepositoDTO> boletasDeposito;
 	
 	private List<ValeTransporteDTO> valesTransporte;	
 	
-	private List<FiscalizacionDTO> listaFiscalizaciones; 
+	private List<FiscalizacionDTO> listaFiscalizaciones;
+	
+	private List<SubImporteDTO> listaSubImportes;
 	
 	public GuiaForestalForm() {
 
@@ -84,7 +45,9 @@ public class GuiaForestalForm extends ActionForm {
 
 		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));
-		
+
+		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(SubImporteDTO.class));		
 	}
 
 	@Override
@@ -107,56 +70,11 @@ public class GuiaForestalForm extends ActionForm {
 				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 
 		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
-				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));		
-	}
-
-	/*public long getPermisionario() {
-		return permisionario;
-	}
-
-	public void setPermisionario(long permisionario) {
-		this.permisionario = permisionario;
-	}
-
-	public GuiaForestalDTO getGuiaForestal() {
-		return guiaForestal;
-	}
-
-	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
-		this.guiaForestal = guiaForestal;
-	}
-
-	public long getIdFiscalizacion() {
-		return idFiscalizacion;
-	}
-
-	public void setIdFiscalizacion(long idFiscalizacion) {
-		this.idFiscalizacion = idFiscalizacion;
-	}
-
-	public String getFechaVencimiento() {
-		return fechaVencimiento;
-	}
-
-	public void setFechaVencimiento(String fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
+				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));	
 		
-		if (this.fechaVencimiento != null && this.fechaVencimiento != "") {
-			this.getGuiaForestal().setFechaVencimiento(Fecha.stringDDMMAAAAToDate(this.fechaVencimiento));
-		}		
+		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(new ArrayList(),
+				FactoryUtils.instantiateFactory(SubImporteDTO.class));		
 	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-		
-		if (this.fecha != null && this.fecha != "") {
-			this.getGuiaForestal().setFecha(Fecha.stringDDMMAAAAToDate(this.fecha));
-		}			
-	}*/
 
 	public GuiaForestalDTO getGuiaForestal() {
 		return guiaForestal;
@@ -190,6 +108,14 @@ public class GuiaForestalForm extends ActionForm {
 		this.listaFiscalizaciones = listaFiscalizaciones;
 	}
 
+	public List<SubImporteDTO> getListaSubImportes() {
+		return listaSubImportes;
+	}
+
+	public void setListaSubImportes(List<SubImporteDTO> listaSubImportes) {
+		this.listaSubImportes = listaSubImportes;
+	}
+
 	public boolean validar(StringBuffer error) {
 		boolean ok = true;
 		boolean ok2 = true;
@@ -209,18 +135,18 @@ public class GuiaForestalForm extends ActionForm {
 		
 		FiscalizacionDTO fiscalizacion = listaFiscalizaciones.get(0);
 		if(fiscalizacion != null && fiscalizacion.getId() != null){
-			ok11 = Validator.validarTipoProductoAltaGFB(this.getGuiaForestal().getTipoProducto().getId(),
-														fiscalizacion.getTipoProducto().getId(), error);
+			/*ok11 = Validator.validarTipoProductoAltaGFB(this.getGuiaForestal().getTipoProducto().getId(),
+														fiscalizacion.getTipoProducto().getId(), error);*/
 		}
 		
-		ok3 = Validator.requerido(String.valueOf(this.getGuiaForestal().getImporte()), "Importe", error);
+		/*ok3 = Validator.requerido(String.valueOf(this.getGuiaForestal().getImporte()), "Importe", error);
 		if(ok3){
 			ok3 = Validator.validarDoubleMayorQue(0,String.valueOf(this.getGuiaForestal().getImporte()), "Importe", error);
-		}
+		}*/
 		
-		ok4 = Validator.requerido(this.getGuiaForestal().getEstado(), "Estado", error);
-		ok5 = Validator.requerido(this.getGuiaForestal().getEspecie(), "Especie", error);
-		double montoTotal = this.getGuiaForestal().getImporte() + this.getGuiaForestal().getInspFiscalizacion(); 
+		/*ok4 = Validator.requerido(this.getGuiaForestal().getEstado(), "Estado", error);
+		ok5 = Validator.requerido(this.getGuiaForestal().getEspecie(), "Especie", error);*/
+		double montoTotal = this.getGuiaForestal().getImporteTotal() + this.getGuiaForestal().getInspFiscalizacion(); 
 		ok6 = Validator.validarBoletasDeposito(this.getBoletasDeposito(),montoTotal,error);
 		ok7 = Validator.validarValesTransporte(this.getValesTransporte(),error);
 		ok9 = Validator.requerido(this.getGuiaForestal().getLocalidad(), "Localidad", error);

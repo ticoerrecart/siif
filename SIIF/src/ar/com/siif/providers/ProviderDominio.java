@@ -12,6 +12,7 @@ import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.RolDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
@@ -31,6 +32,7 @@ import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
@@ -231,35 +233,29 @@ public abstract class ProviderDominio {
 	
 	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,List<BoletaDepositoDTO> listaBoletaDepositoDTO,
 			   									List<ValeTransporteDTO> listaValeTransporteDTO,
-			   									List<Fiscalizacion> listaFiscalizaciones, 
-			   									Entidad productorForestal, TipoProducto tipoProducto,Usuario usuario)
+			   									List<Fiscalizacion> listaFiscalizaciones, List<SubImporte> listaSubImportes, 
+			   									Entidad productorForestal, Rodal rodal, Usuario usuario)
 	{
 		GuiaForestal guia = new GuiaForestal();
 		
 		if(guiaDTO.getId() != null && guiaDTO.getId() != 0){
 			guia.setId(guiaDTO.getId());
 		}	
-		guia.setAforo(guiaDTO.getAforo());
-		guia.setCantidad(guiaDTO.getCantidad());
-		guia.setCantidadMts(guiaDTO.getCantidadMts());
-		guia.setCantidadUnidades(guiaDTO.getCantidadUnidades());
+
 		guia.setDistanciaAforoMovil(guiaDTO.getDistanciaAforoMovil());
-		guia.setEspecie(guiaDTO.getEspecie());
-		guia.setEstado(guiaDTO.getEstado());
 		guia.setFecha(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFecha()));
 		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFechaVencimiento()));
 		guia.setFiscalizaciones(listaFiscalizaciones);
-		guia.setImporte(guiaDTO.getImporte());
+		guia.setImporteTotal(guiaDTO.getImporteTotal());
 		guia.setInspFiscalizacion(guiaDTO.getInspFiscalizacion());
 		guia.setLocalidad(guiaDTO.getLocalidad());
 		guia.setNroGuia(guiaDTO.getNroGuia());
 		guia.setObservaciones(guiaDTO.getObservaciones());
 		guia.setUsuario(usuario);
-		guia.setValorAforos(guiaDTO.getValorAforos());
 
 		guia.setPeriodoForestal(guiaDTO.getPeriodoForestal());
 		guia.setProductorForestal(productorForestal);
-		guia.setTipoProducto(tipoProducto);
+		guia.setRodal(rodal);
 		
 		for (BoletaDepositoDTO boletaDTO : listaBoletaDepositoDTO) {
 			guia.getBoletasDeposito().add(ProviderDominio.getBoletaDeposito(guia,boletaDTO));
@@ -268,6 +264,11 @@ public abstract class ProviderDominio {
 		for (ValeTransporteDTO valeDTO : listaValeTransporteDTO) {
 			guia.getValesTransporte().add(ProviderDominio.getValeTransporte(guia,valeDTO));
 		}		
+
+		for (SubImporte subImporte : listaSubImportes) {
+			subImporte.setGuiaForestal(guia);
+		}		
+		guia.setSubImportes(listaSubImportes);
 		
 		return guia;
 	}
@@ -317,6 +318,22 @@ public abstract class ProviderDominio {
 		vale.setVehiculo(valeDTO.getVehiculo());
 				
 		return vale;
+	}
+	
+	public static SubImporte getSubImporte(GuiaForestal guia, TipoProducto tipoProducto, SubImporteDTO subImporteDTO){
+		
+		SubImporte subImporte = new SubImporte();
+		
+		subImporte.setCantidadMts(subImporteDTO.getCantidadMts());
+		subImporte.setCantidadUnidades(subImporteDTO.getCantidadUnidades());
+		subImporte.setEspecie(subImporteDTO.getEspecie());
+		subImporte.setEstado(subImporteDTO.getEstado());
+		subImporte.setGuiaForestal(guia);
+		subImporte.setImporte(subImporteDTO.getImporte());
+		subImporte.setTipoProducto(tipoProducto);
+		subImporte.setValorAforos(subImporteDTO.getValorAforos());
+		
+		return subImporte;
 	}
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {

@@ -35,7 +35,7 @@ public class GuiaForestal {
 	
 	private int distanciaAforoMovil;
 
-	private String estado;
+	/*private String estado;
 
 	private String especie;
 
@@ -43,16 +43,16 @@ public class GuiaForestal {
 	
 	private int cantidadUnidades;
 
-	private double cantidadMts;	
+	private double cantidadMts;
+	
+	private String valorAforos;
+	
+	private double aforo;*/	
 
-	private double importe;
-
-	private double aforo;
+	private double importeTotal;
 
 	private double inspFiscalizacion;
-
-	private String valorAforos;
-
+	
 	private String observaciones;
 
 	private String localidad;
@@ -61,8 +61,13 @@ public class GuiaForestal {
 
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
+	@JoinColumn(name = "rodal_fk")
+	private Rodal rodal;	
+	
+	/*@ManyToOne()
+	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "tipoProducto_fk")	
-	private TipoProducto tipoProducto;
+	private TipoProducto tipoProducto;*/
 	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -86,11 +91,16 @@ public class GuiaForestal {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Fiscalizacion> fiscalizaciones;
 
+	@OneToMany(mappedBy = "guiaForestal")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	private List<SubImporte> subImportes;	
+	
 	public GuiaForestal(){
 		
 		boletasDeposito = new ArrayList<BoletaDeposito>();
 		valesTransporte = new ArrayList<ValeTransporte>();
 		fiscalizaciones = new ArrayList<Fiscalizacion>();
+		subImportes = new ArrayList<SubImporte>();
 	}
 	
 	public int getNroGuia() {
@@ -117,7 +127,7 @@ public class GuiaForestal {
 		this.distanciaAforoMovil = distanciaAforoMovil;
 	}
 
-	public String getEstado() {
+	/*public String getEstado() {
 		return estado;
 	}
 
@@ -147,7 +157,7 @@ public class GuiaForestal {
 
 	public void setAforo(double aforo) {
 		this.aforo = aforo;
-	}
+	}*/
 
 	public double getInspFiscalizacion() {
 		return inspFiscalizacion;
@@ -213,7 +223,7 @@ public class GuiaForestal {
 		this.id = id;
 	}
 
-	public int getCantidad() {
+	/*public int getCantidad() {
 		return cantidad;
 	}
 
@@ -243,7 +253,7 @@ public class GuiaForestal {
 
 	public void setCantidadMts(double cantidadMts) {
 		this.cantidadMts = cantidadMts;
-	}
+	}*/
 
 	public String getPeriodoForestal() {
 		return periodoForestal;
@@ -253,13 +263,13 @@ public class GuiaForestal {
 		this.periodoForestal = periodoForestal;
 	}
 
-	public TipoProducto getTipoProducto() {
+	/*public TipoProducto getTipoProducto() {
 		return tipoProducto;
 	}
 
 	public void setTipoProducto(TipoProducto tipoProducto) {
 		this.tipoProducto = tipoProducto;
-	}
+	}*/
 
 	public Entidad getProductorForestal() {
 		return productorForestal;
@@ -277,4 +287,29 @@ public class GuiaForestal {
 		this.fiscalizaciones = fiscalizaciones;
 	}
 
+	public Rodal getRodal() {
+		return rodal;
+	}
+
+	public void setRodal(Rodal rodal) {
+		this.rodal = rodal;
+	}
+
+	public List<SubImporte> getSubImportes() {
+		return subImportes;
+	}
+
+	public void setSubImportes(List<SubImporte> subImportes) {
+		this.subImportes = subImportes;
+	}
+
+	public double getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(double importeTotal) {
+		this.importeTotal = importeTotal;
+	}
+
+	
 }

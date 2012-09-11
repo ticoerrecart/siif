@@ -8,10 +8,13 @@ import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Rodal;
+import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.DataBaseException;
@@ -26,13 +29,15 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	private IFiscalizacionFachada fiscalizacionFachada;
 	private IEntidadFachada entidadFachada;
 	private ITipoProductoForestalFachada tipoProductoForestalFachada;
+	private IUbicacionFachada ubicacionFachada;
 	
 	public GuiaForestalFachada() {
 	}
 
 	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada, 
 								IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
-								ITipoProductoForestalFachada pTipoProductoForestalFachada) 
+								ITipoProductoForestalFachada pTipoProductoForestalFachada, 
+								IUbicacionFachada pUbicacionFachada) 
 	{
 
 		this.guiaForestalDAO = guiaForestalDAO;
@@ -40,12 +45,14 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		this.fiscalizacionFachada = pFiscalizacionFachada;
 		this.entidadFachada = pEntidadFachada;
 		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
+		this.ubicacionFachada = pUbicacionFachada;
 	}
 
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
 									   List<ValeTransporteDTO> listaValeTransporteDTO,
-									   List<FiscalizacionDTO> listaFiscalizacionesDTO
+									   List<FiscalizacionDTO> listaFiscalizacionesDTO,
+									   List<SubImporteDTO> listaSubImportesDTO
 									   ) throws NegocioException {
 
 		try{
@@ -57,13 +64,20 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				listaFiscalizaciones.add(fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId()));
 			}
 			
+			TipoProducto tipoProducto;
+			List<SubImporte> listaSubImporte = new ArrayList<SubImporte>();
+			for (SubImporteDTO subImporteDTO : listaSubImportesDTO) {
+				tipoProducto =  tipoProductoForestalFachada.recuperarTipoProductoForestal(subImporteDTO.getTipoProducto().getId());
+				listaSubImporte.add(ProviderDominio.getSubImporte(null, tipoProducto, subImporteDTO));
+			}
+			
 			Usuario usuario = usuarioFachada.getUsuario(guia.getUsuario().getId());
 			Entidad productorForestal = entidadFachada.getEntidad(guia.getProductorForestal().getId());
-			TipoProducto tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(guia.getTipoProducto().getId());
+			Rodal rodal = ubicacionFachada.getRodal(guia.getRodal().getId());
 			
 			GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia,listaBoletaDepositoDTO,
 																		listaValeTransporteDTO,listaFiscalizaciones,
-																		productorForestal,tipoProducto,usuario);
+																		listaSubImporte,productorForestal,rodal,usuario);
 			
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 			

@@ -181,6 +181,12 @@ public class UbicacionFachada implements IUbicacionFachada {
 	public Rodal getRodal(Long idRodal){
 		return this.ubicacionDAO.getRodal(idRodal);
 	}	
+
+	public RodalDTO getRodalDTO(Long idRodal){
+		Rodal rodal = this.ubicacionDAO.getRodal(idRodal);
+		
+		return ProviderDTO.getRodalDTO(rodal);
+	}
 	
 	public List<PMFDTO> getPMFsDTO(Long idPF){
 		

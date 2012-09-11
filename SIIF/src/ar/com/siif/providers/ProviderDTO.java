@@ -16,6 +16,7 @@ import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.RolDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.dto.UsuarioDTO;
@@ -32,6 +33,7 @@ import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
+import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
@@ -254,28 +256,25 @@ public abstract class ProviderDTO {
 			GuiaForestalDTO guiaForestalDTO = new GuiaForestalDTO();
 			List<BoletaDepositoDTO> listaBoletasDTO = new ArrayList<BoletaDepositoDTO>();
 			List<ValeTransporteDTO> listaValesTransporteDTO = new ArrayList<ValeTransporteDTO>();
+			List<SubImporteDTO> listaSubImportesDTO = new ArrayList<SubImporteDTO>();
 			
 			guiaForestalDTO.setId(guiaForestal.getId());
-			guiaForestalDTO.setAforo(guiaForestal.getAforo());
-			guiaForestalDTO.setCantidad(guiaForestal.getCantidad());
-			guiaForestalDTO.setCantidadMts(guiaForestal.getCantidadMts());
-			guiaForestalDTO.setCantidadUnidades(guiaForestal.getCantidadUnidades());
 			guiaForestalDTO.setDistanciaAforoMovil(guiaForestal.getDistanciaAforoMovil());
-			guiaForestalDTO.setEspecie(guiaForestal.getEspecie());
-			guiaForestalDTO.setEstado(guiaForestal.getEstado());
 			guiaForestalDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(guiaForestal.getFecha())));
 			guiaForestalDTO.setFechaVencimiento(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(
 																				guiaForestal.getFechaVencimiento())));
-			guiaForestalDTO.setImporte(guiaForestal.getImporte());
+			guiaForestalDTO.setImporteTotal(guiaForestal.getImporteTotal());
 			guiaForestalDTO.setInspFiscalizacion(guiaForestal.getInspFiscalizacion());
 			guiaForestalDTO.setLocalidad(guiaForestal.getLocalidad());
 			guiaForestalDTO.setNroGuia(guiaForestal.getNroGuia());
-			guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());
-			guiaForestalDTO.setValorAforos(guiaForestal.getValorAforos());			
+			guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());						
 			
 			guiaForestalDTO.setPeriodoForestal(guiaForestal.getPeriodoForestal());
-			guiaForestalDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(guiaForestal.getTipoProducto()));
 			guiaForestalDTO.setProductorForestal(ProviderDTO.getEntidadDTO(guiaForestal.getProductorForestal()));
+
+			if(guiaForestal.getRodal() != null){
+				guiaForestalDTO.setRodal(ProviderDTO.getRodalDTO(guiaForestal.getRodal()));
+			}			
 			
 			if(guiaForestal.getUsuario() != null){
 				guiaForestalDTO.setUsuario(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuario()));
@@ -292,7 +291,13 @@ public abstract class ProviderDTO {
 				listaValesTransporteDTO.add(ProviderDTO.getValeTransporteDTO(valeTransporte,guiaForestalDTO));
 			}
 			guiaForestalDTO.setValesTransporte(listaValesTransporteDTO);			
-						
+					
+			List<SubImporte> listaSubImportes = guiaForestal.getSubImportes();
+			for (SubImporte subImporte : listaSubImportes) {
+				listaSubImportesDTO.add(ProviderDTO.getSubImporteDTO(subImporte,guiaForestalDTO));
+			}
+			guiaForestalDTO.setSubImportes(listaSubImportesDTO);
+			
 			return guiaForestalDTO;			
 		}
 		
@@ -350,6 +355,23 @@ public abstract class ProviderDTO {
 			valeDTO.setVehiculo(vale.getVehiculo());
 			
 			return valeDTO;
+		}
+		
+		public static SubImporteDTO getSubImporteDTO(SubImporte subImporte, GuiaForestalDTO guiaDTO){
+			
+			SubImporteDTO subImporteDTO = new SubImporteDTO();
+			
+			subImporteDTO.setCantidadMts(subImporte.getCantidadMts());
+			subImporteDTO.setCantidadUnidades(subImporte.getCantidadUnidades());
+			subImporteDTO.setEspecie(subImporte.getEspecie());
+			subImporteDTO.setEstado(subImporte.getEstado());
+			subImporteDTO.setGuiaForestal(guiaDTO);
+			subImporteDTO.setId(subImporte.getId());
+			subImporteDTO.setImporte(subImporte.getImporte());
+			subImporteDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(subImporte.getTipoProducto()));
+			subImporteDTO.setValorAforos(subImporte.getValorAforos());
+
+			return subImporteDTO;
 		}
 		
 	/*	
