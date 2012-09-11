@@ -58,6 +58,8 @@ public interface IUbicacionFachada {
 	
 	public Rodal getRodal(Long idRodal);
 	
+	public RodalDTO getRodalDTO(Long idRodal);
+	
 	public List<PMFDTO> getPMFsDTO(Long idPF);
 	
 	public List<TranzonDTO> getTranzonesDTOById(Long idPMF);

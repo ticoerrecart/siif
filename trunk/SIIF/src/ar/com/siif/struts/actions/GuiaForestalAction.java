@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
@@ -23,6 +24,7 @@ import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
+import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -39,7 +41,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoCargaAltaGuiaForestalBasica";
-		String idFiscalizacion = "10";//request.getParameter("id");
+
 		try {
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -51,18 +53,16 @@ public class GuiaForestalAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
 			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
 			
+			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
+					.getBean("ubicacionFachada");			
+			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
-			FiscalizacionDTO fiscalizacion = fiscalizacionFachada.recuperarFiscalizacionDTO(
-															Long.parseLong(idFiscalizacion));
-			
-			request.setAttribute("fiscalizacion", fiscalizacion);
-			
-			
-			//------------
+					
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			
 			EntidadDTO productorForestal = entidadFachada.getEntidadDTO(guiaForm.getGuiaForestal().getProductorForestal().getId());
+			RodalDTO rodal = ubicacionFachada.getRodalDTO(guiaForm.getGuiaForestal().getRodal().getId());
 			
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			for (FiscalizacionDTO fiscalizacionDTO : guiaForm.getListaFiscalizaciones()) {
@@ -74,10 +74,9 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("tiposProductosForestales",tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal",productorForestal);
+			request.setAttribute("rodal",rodal);
 			request.setAttribute("fiscalizaciones",listaFiscalizacionesDTO);
-			//------------
-			
-												
+									
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -110,7 +109,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 													   guiaForm.getBoletasDeposito(),
 													   guiaForm.getValesTransporte(),
-													   guiaForm.getListaFiscalizaciones());
+													   guiaForm.getListaFiscalizaciones(),
+													   guiaForm.getListaSubImportes());
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -251,11 +251,13 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
+			String idRodal = request.getParameter("idRodal");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idRodal", idRodal);
 			request.setAttribute("urlDetalle",
 					"../../guiaForestal.do?metodo=recuperarFiscalizacionesParaAltaGFB");
 
@@ -281,9 +283,10 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idRodal = request.getParameter("idRodal");
 
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
-					.recuperarFiscalizacionesDTOParaAltaGFB(new Long(idProductor));
+					.recuperarFiscalizacionesDTOParaAltaGFB(new Long(idProductor),new Long(idRodal));
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("idLocalidad", idProductor);
@@ -821,7 +824,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error, ActionForm form) {
 		
-		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+		/*GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 		Long idTipoProd = null;
 		List<FiscalizacionDTO> listaFiscalizacion = normalizarListaFiscalizacionesParaAltaGuia(guiaForestalForm.getListaFiscalizaciones());
 		//FiscalizacionDTO fis = listaFiscalizacion.get(0);
@@ -835,7 +838,7 @@ public class GuiaForestalAction extends ValidadorAction {
 				Validator.addErrorXML(error, "Las Fiscalizaciones seleccionadas deben tener el mismo Tipo de Producto");
 				return false;
 			}
-		}
+		}*/
 		
 		return true;
 	}	
