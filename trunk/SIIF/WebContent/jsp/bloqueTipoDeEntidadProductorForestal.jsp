@@ -120,7 +120,7 @@ function actualizarProductoresVolverCallback(productores){
 <input id="paramForward" type="hidden" value="${paramForward}">
 <tr>
 	<td>
-		<table border="0" class="cuadrado" align="center" width="60%"
+		<table border="0" class="cuadrado" align="center" width="70%"
 			cellpadding="2">
 			<tr>
 				<td height="10" colspan="3"></td>

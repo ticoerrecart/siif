@@ -23,9 +23,10 @@
 	function submitCrearGuia(){
 		
 		$("#idProdForestal").val($("#selectProductores").val());
+		$("#idLocalizacionRodal").val($("#idRodal").val());
 		
-		validarForm("guiaForestalForm","../guiaForestal","validarFiscalizacionesParaAltaGuiaForestalForm","GuiaForestalForm");
-		//document.forms[0].submit();
+		//validarForm("guiaForestalForm","../guiaForestal","validarFiscalizacionesParaAltaGuiaForestalForm","GuiaForestalForm");
+		document.forms[0].submit();
 	}
 	
 </script>
@@ -33,6 +34,7 @@
 <html:form action="guiaForestal" styleId="guiaForestalForm">
 	<html:hidden property="metodo" value="cargarAltaGuiaForestalBasica" />
 	<html:hidden styleId="idProdForestal" property="guiaForestal.productorForestal.id" value="" />
+	<html:hidden styleId="idLocalizacionRodal" property="guiaForestal.rodal.id" value="" />
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
@@ -42,15 +44,13 @@
 					</td>
 				</tr>
 			</table>			
-			<table border="0" class="cuadrado" 
-				align="center" width="70%" cellpadding="2">
+			<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 				<tr>
 					<td class="azulAjustado"></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
-					<td class="azulAjustado"></td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
@@ -77,11 +77,11 @@
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
 						</td>						
-						<td class="botonerab">
-							<a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
+						<!--<td class="botonerab">
+							 <a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
 								<bean:message key='SIIF.label.Seleccionar'/>
-							</a>
-						</td>
+							</a> 
+						</td>-->
 					</tr>
 				</c:forEach>
 			</table>
