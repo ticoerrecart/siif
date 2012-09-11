@@ -31,6 +31,6 @@
 	<tr>
 		<td height="20"></td>
 	</tr>
-	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
 	
+	<%@include file="bloqueSeleccionFiscalizaciones.jsp" %>	
 </table>

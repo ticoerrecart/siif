@@ -328,7 +328,8 @@ function volverAltaGFB(){
 									<td class="botoneralNegrita"><bean:message key='SIIF.label.TOTAL'/></td>
 									<td>
 										<input readonly="readonly" class="botonerab" type="text"
-										 value="<%= guia.getImporte() + guia.getInspFiscalizacion()%>">
+										 	value="<%= guia.getImporteTotal()%>">
+											<!--guia.getImporte() + guia.getInspFiscalizacion() -->
 									</td>
 								</tr>
 							</table>

@@ -332,7 +332,8 @@ function cambiarAtributos(idBoleta,readonly){
 									<td class="botoneralNegrita">TOTAL</td>
 									<td>
 										<input readonly="readonly" class="botonerab" type="text"
-										 value="<%= guia.getImporte() + guia.getInspFiscalizacion()%>">
+										 	value="<%= guia.getImporteTotal()%>">
+											<!--guia.getImporte() + guia.getInspFiscalizacion() -->
 									</td>
 								</tr>
 							</table>

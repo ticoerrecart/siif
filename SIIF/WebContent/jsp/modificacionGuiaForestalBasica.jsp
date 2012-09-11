@@ -507,7 +507,8 @@ function calcularTotales(){
 							<td class="botoneralNegrita"><bean:message key='SIIF.label.TOTAL'/></td>
 							<td>
 								<input id="idTotal" readonly="readonly"	class="botonerab" type="text"
-									   value="<%= guia.getImporte() + guia.getInspFiscalizacion()%>">
+										 	value="<%= guia.getImporteTotal()%>">
+											<!--guia.getImporte() + guia.getInspFiscalizacion() -->
 							</td>
 						</tr>
 					</table>
