@@ -25,14 +25,11 @@ import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
-import ar.com.siif.negocio.BoletaDeposito;
-import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
-import ar.com.siif.negocio.Usuario;
-import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.Fecha;
 
 public class GuiaForestalAction extends ValidadorAction {
 
@@ -108,7 +105,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestal.setUsuario(usr);
 			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 													   guiaForm.getBoletasDeposito(),
-													   guiaForm.getValesTransporte(),
+													   guiaForm.getRangos(), 
+													   Fecha.stringDDMMAAAAToUtilDate(guiaForm.getFechaVencimiento()),
 													   guiaForm.getListaFiscalizaciones(),
 													   guiaForm.getListaSubImportes());
 
