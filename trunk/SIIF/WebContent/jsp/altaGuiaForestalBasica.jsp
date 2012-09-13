@@ -15,9 +15,6 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/engine.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
-<script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/AforoFachada.js'/>"></script>	
 
 
@@ -140,48 +137,32 @@ function removerCuota(){
 	}																			
 }
 
-var indiceVale = 2;										 
+
+								 
 function agregarVale(){
-	var nom = $("#nombreProductor").val();
-
-	var nombre = "";
-
-	nombre = reemplazarCaracter(" ","%20",nom,nombre);
-	
-	$('#dummyVales').load('/SIIF/jsp/bloqueValesTransporteAltaGFB.jsp?nombreProductor='+ nombre +'&indice=' + indiceVale , 
-			function(){
-				//$("#prueba1").append($("#dummy").html()); NO ANDA ESTA LINEA EN IE
-								
-				/*document.getElementById("divPlanVales").innerHTML = document.getElementById("divPlanVales").innerHTML 
-																	+ document.getElementById("dummyVales").innerHTML*/
-
-				var i = "divPlanVales"+indiceVale;																
-				document.getElementById(i).innerHTML = document.getElementById("dummyVales").innerHTML;
-				document.getElementById("dummyVales").innerHTML = "";
-
-				var ind = indiceVale-1;
-				var indiceDate = "#datepickerVale"+ind;											
-				$( indiceDate ).datepicker({ dateFormat: 'dd/mm/yy'});
-				
-				document.getElementById("idBotonRemoverVale").disabled="";
-				indiceVale++;				
-			}								
-	);
+	var j = $('#tablaVales tr:last .ind').text().trim();
+	$("#tablaVales tr:last").clone().find("input").each(function() {
+		$(this).attr({
+			'name' : function(_, name) {
+				return name.replace([j-1], [j]);
+			},
+			'value' : ''
+		});
+	}).end().appendTo("#tablaVales");
+	$('#tablaVales tr:last .ind').text(1 + parseInt(j));
+	var newId = $("#tablaVales tr:last").attr('id')
+			.replace(j - 1, j);
+	$("#tablaVales tr:last").attr('id', newId);
+	$("#idBotonRemoverVale").attr("disabled",false);
 }
 
 function removerVale(){
-
-	indiceVale--;
-	document.getElementById("dummyVales").innerHTML = "";	
+	var j = $('#tablaVales tr:last .ind').text().trim();
 	
-	/*var i = "#idTableVale"+indiceVale;	
-	$(i).remove();*/
+	$('#tablaVales tr:last').remove();
 
-	var i = "divPlanVales"+indiceVale;
-	document.getElementById(i).innerHTML = "";	
-
-	if(indiceVale == 2){
-		document.getElementById("idBotonRemoverVale").disabled="disabled";
+	if(j <= 2){
+		$("#idBotonRemoverVale").attr("disabled",true);
 	}																			
 }
 
@@ -905,149 +886,45 @@ function agregarFila() {
 					</tr>
 					<tr>
 						<td colspan="4">
-						<table border="0" class="cuadrado" align="center"
-							width="80%" cellpadding="2">
-
-							<tr>
-								<td colspan="4" class="grisSubtitulo">
-									<bean:message key='SIIF.label.ValeTransporteNro'/>1
-								</td>
-							</tr>
-							<tr>
-								<td height="5" colspan="4"></td>
-							</tr>
-							<tr>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.NumeroVale'/>
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].numero" class="botonerab" type="text"
-										size="25" onkeypress="javascript:esNumerico(event);">
-								</td>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.TransportadosPor'/>
-								</td>
-								<td width="40%" align="left">
-									<input value="${productorForestal.nombre}"
-										class="botonerab" type="text" size="40" readonly="readonly">
-								</td>
-							</tr>
-							<tr>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Origen'/>
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].origen" class="botonerab" type="text" size="25">
-								</td>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Destino'/>
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].destino" class="botonerab" type="text" size="25">
-								</td>
-							</tr>
-							<tr>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Vehiculo'/>     
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].vehiculo" class="botonerab" type="text" size="25">
-								</td>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Marca'/>
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].marca" class="botonerab" type="text" size="25">
-								</td>
-							</tr>
-							<tr>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Dominio'/>
-								</td>
-								<td width="40%" align="left">
-									<input name="valesTransporte[0].dominio" class="botonerab" type="text" size="7">
-								</td>
-								<td width="10%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.Fecha_Venc'/>
-								</td>
-								<td width="40%" align="left">
-									<input id="datepickerVale0" type="text" readonly="readonly" class="botonerab" 
-											name='valesTransporte[0].fechaVencimiento'>
-									<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-										align="top" width='17' height='21'>		
-																																										
-									<script>
-										$(function() {
-									
-											$( "#datepickerVale0" ).datepicker({ dateFormat: 'dd/mm/yy'});
-										});
-									</script>
-																						
-								</td>
-							</tr>
-	
-							<tr>
-								<td height="5" colspan="4"></td>
-							</tr>
-							<tr>
-								<td colspan="4">
-								<table class="cuadradoSinBorde" align="center" width="80%"
-									cellpadding="2">
-									<tr>
-										<td class="grisSubtitulo"><bean:message key='SIIF.label.Producto'/></td>
-										<td class="grisSubtitulo"><bean:message key='SIIF.label.NroPiezas'/></td>
-										<td class="grisSubtitulo"><bean:message key='SIIF.label.CantMts3'/></td>
-										<td class="grisSubtitulo"><bean:message key='SIIF.label.Especie'/></td>
-									</tr>
-									<tr>
-										<td>
-											<input class="botonerab" type="text" name="valesTransporte[0].producto">
-										</td>
-										<td>
-											<input class="botonerab" type="text" name="valesTransporte[0].nroPiezas"
-												onkeypress="javascript:esNumerico(event);">
-										</td>
-										<td>
-											<input class="botonerab" type="text" name="valesTransporte[0].cantidadMts"
-												onkeypress="javascript:esNumericoConDecimal(event);">
-										</td>
-										<td>
-											<input class="botonerab" type="text" name="valesTransporte[0].especie">
-										</td>
-									</tr>
-								</table>
-								</td>
-							</tr>
-	
-							<tr>
-								<td height="5" colspan="4"></td>
+						<table border="0" class="cuadrado" align="center"  width="80%" cellpadding="2" id="tablaVales">
+							
+							<tr id="filaVales0">
+								<td width="2%" class="botoneralNegritaRight grisSubtitulo ind"> 1 </td>
+								<td width="10%" class="botoneralNegritaRight"> Desde </td>
+								<td width="40%" align="left"> <input name="rangos[0].desde" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>
+								<td width="10%" class="botoneralNegritaRight"> Hasta</td>
+								<td width="40%" align="left"> <input name="rangos[0].hasta" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>
 							</tr>
 						</table>
 
-	
-						<div id="dummyVales" style="display: none"></div>
-						<!-- <div id="divPlanVales"></div> -->
-						<div id="divPlanVales2"></div>
-						<script>
-								var indice = 2;
-								function cargar(){
-									$('#dummy2').load('/SIIF/jsp/bloquePlanPagosAltaGFB.jsp?indice=' + indice, 
-										function(){
-											//$("#prueba1").append($("#dummy").html()); NO ANDA ESTA LINEA EN IE
-											document.getElementById("divPlanDePagos").innerHTML = document.getElementById("divPlanDePagos").innerHTML + document.getElementById("dummy2").innerHTML  
-											
-											indice++;	
-										}								
-									);
-								}
-								
-						</script>
 
 
 						<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
 							<tr>
 								<td height="5" colspan="4"></td>
 							</tr>
+							
+							<tr>
+								<td width="10%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Fecha_Venc'/>
+								</td>
+								<td width="40%" align="left">
+									<input id="datepickerVale0" type="text" readonly="readonly" class="botonerab" 
+											name='fechaVencimiento'>
+									<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+										align="top" width='17' height='21'>		
+																																										
+									<script>
+										$(function() {
+											$( "#datepickerVale0" ).datepicker({ dateFormat: 'dd/mm/yy'});
+										});
+									</script>
+								</td>
+							</tr>	
+							<tr>
+								<td height="5" colspan="4"></td>
+							</tr>
+							
 							<tr>
 								<td colspan="4">
 									<input id="idBotonAgregarVale" type="button" value="+" 
@@ -1097,12 +974,12 @@ function agregarFila() {
 		<tr>
 			<td height="20" colspan="4">
 				<input type="button" value="Aceptar" id="enviar" 
-					class="botonerab" onclick="javascript:submitir();"> 
+					class="botonerab" onclick="javascript:submitir();" > 
 				<input type="button" class="botonerab" value="Volver" onclick="javascript:volverAltaGuia();">
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="4"></td>
+			<td height="10" colspan="4"></td> 
 		</tr>
 	</table>
 </html:form>
