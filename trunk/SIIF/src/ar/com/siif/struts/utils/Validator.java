@@ -6,6 +6,7 @@
  */
 package ar.com.siif.struts.utils;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -14,10 +15,8 @@ import java.util.regex.Pattern;
 
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
-import ar.com.siif.negocio.BoletaDeposito;
-import ar.com.siif.negocio.Muestra;
-import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.utils.DateUtils;
 
 /**
@@ -512,5 +511,37 @@ public abstract class Validator {
 			return false;			
 		}
 		return true;		
+	}
+
+	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError){
+			if (rangos.size() == 0){
+				addErrorXML(pError, "La Cantidad de Rangos debe ser un numero mayor a 0");
+				return false;
+			}
+			for (RangoDTO rango : rangos){
+				if (rango.getDesde() <= 0 || rango.getHasta() <= 0){
+					addErrorXML(pError, "Los valores Desde y Hasta deben ser enteros positivos");
+					return false;
+				}
+				if (rango.getDesde() >  rango.getHasta() ){
+					addErrorXML(pError, "El valor Desde no puede ser mayor que el valor Hasta");
+					return false;
+				}				
+			}
+			List<Integer> lista = new ArrayList<Integer>();
+			for (RangoDTO rango : rangos){
+				lista.add(rango.getDesde());
+				lista.add(rango.getHasta()+1);
+			}
+			Integer i = new Integer(-1); 
+			for (Integer integer : lista) {
+				if (i > integer){
+					addErrorXML(pError, "Los valores de los rangos estan superpuestos");
+					return false;
+				} else {
+					i = integer;
+				}
+			}
+		return true;
 	}
 }

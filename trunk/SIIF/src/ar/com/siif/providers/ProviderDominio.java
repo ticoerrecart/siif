@@ -1,6 +1,7 @@
 package ar.com.siif.providers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ar.com.siif.dto.AforoDTO;
@@ -8,9 +9,9 @@ import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
-import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
@@ -37,8 +38,6 @@ import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
-import ar.com.siif.struts.actions.forms.FiscalizacionForm;
-import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.utils.Fecha;
 
 public abstract class ProviderDominio {
@@ -232,7 +231,7 @@ public abstract class ProviderDominio {
 	}
 	
 	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-			   									List<ValeTransporteDTO> listaValeTransporteDTO,
+			  									List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
 			   									List<Fiscalizacion> listaFiscalizaciones, List<SubImporte> listaSubImportes, 
 			   									Entidad productorForestal, Rodal rodal, Usuario usuario)
 	{
@@ -261,8 +260,8 @@ public abstract class ProviderDominio {
 			guia.getBoletasDeposito().add(ProviderDominio.getBoletaDeposito(guia,boletaDTO));
 		}
 		
-		for (ValeTransporteDTO valeDTO : listaValeTransporteDTO) {
-			guia.getValesTransporte().add(ProviderDominio.getValeTransporte(guia,valeDTO));
+		for (RangoDTO rangoDTO : listaRangosDTO) {
+			guia.getValesTransporte().addAll(ProviderDominio.getValesTransportes(guia,rangoDTO, fechaVencimiento));
 		}		
 
 		for (SubImporte subImporte : listaSubImportes) {
@@ -273,6 +272,8 @@ public abstract class ProviderDominio {
 		return guia;
 	}
 	
+
+
 	public static BoletaDeposito getBoletaDeposito(GuiaForestal guia, BoletaDepositoDTO boletaDTO){
 		
 		BoletaDeposito boleta = new BoletaDeposito();
@@ -292,6 +293,21 @@ public abstract class ProviderDominio {
 		boleta.setNumero(boletaDTO.getNumero());
 				
 		return boleta;
+	}
+	
+	
+	private static List<ValeTransporte> getValesTransportes(
+			GuiaForestal guia, RangoDTO rangoDTO, Date fechaVencimiento) {
+		List<ValeTransporte>  vales = new ArrayList<ValeTransporte>();
+		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta();i++){
+			ValeTransporte vale = new ValeTransporte();
+			vale.setFechaVencimiento(fechaVencimiento);
+			vale.setGuiaForestal(guia);
+			vale.setNumero(i);
+			vale.setOrigen(guia.getRodal().getNombre());
+			vales.add(vale);
+		}	
+		return vales;
 	}
 	
 	public static ValeTransporte getValeTransporte(GuiaForestal guia, ValeTransporteDTO valeDTO){

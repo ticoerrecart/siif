@@ -1,12 +1,13 @@
 package ar.com.siif.fachada;
 
+import java.util.Date;
 import java.util.List;
 
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
-import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -14,7 +15,7 @@ public interface IGuiaForestalFachada {
 
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-									   List<ValeTransporteDTO> listaValeTransporteDTO,
+									   List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
 									   List<FiscalizacionDTO> listaFiscalizacionesDTO,
 									   List<SubImporteDTO> listaSubImportesDTO)
 									   throws NegocioException;

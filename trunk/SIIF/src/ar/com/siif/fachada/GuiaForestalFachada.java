@@ -8,8 +8,8 @@ import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
-import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -50,7 +50,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 									   List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-									   List<ValeTransporteDTO> listaValeTransporteDTO,
+									   List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
 									   List<FiscalizacionDTO> listaFiscalizacionesDTO,
 									   List<SubImporteDTO> listaSubImportesDTO
 									   ) throws NegocioException {
@@ -76,7 +76,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			Rodal rodal = ubicacionFachada.getRodal(guia.getRodal().getId());
 			
 			GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia,listaBoletaDepositoDTO,
-																		listaValeTransporteDTO,listaFiscalizaciones,
+																		listaRangosDTO, fechaVencimiento, listaFiscalizaciones,
 																		listaSubImporte,productorForestal,rodal,usuario);
 			
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
