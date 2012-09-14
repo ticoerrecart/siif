@@ -123,7 +123,7 @@ public class FiscalizacionForm extends ActionForm {
 		ok15 = Validator.validarComboRequerido("-1",Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
 		
 		if(ok10){
-			ok16 = Validator.validarMuestras(this.getMuestrasDTO(),error);
+			ok16 = Validator.validarMuestras(this.getMuestrasDTO(),fiscalizacionDTO.getTipoProducto().getId(),error);
 		}		
 		
 		//VALIDACIONES FISCALIZACION
