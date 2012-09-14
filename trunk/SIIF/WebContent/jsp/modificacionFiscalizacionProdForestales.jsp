@@ -188,7 +188,7 @@ $(function() {
 			<td width="20%" class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.TipoEntidad' />
 			</td>
-			<td width="30%"><html:select styleId="selectTiposDeEntidad"
+			<td width="30%" align="left"><html:select styleId="selectTiposDeEntidad"
 					property="selectTiposDeEntidad" styleClass="botonerab disabled"
 					value="${fiscalizacionDTO.productorForestal.tipoEntidad}"
 					onchange="actualizarComboProductores();">
@@ -201,7 +201,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.ProductorForestal' />
 			</td>
-			<td><html:select styleId="idProductor"
+			<td align="left"><html:select styleId="idProductor"
 					property="idProductor" styleClass="botonerab disabled"
 					value="${fiscalizacionDTO.productorForestal.id}"
 					onchange="actualizarComboPMF();">
@@ -217,7 +217,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.Fecha' />
 			</td>
-			<td><input id="datepicker" name="fiscalizacionDTO.fecha"
+			<td align="left"><input id="datepicker" name="fiscalizacionDTO.fecha"
 				class="botonerab" type="text" size="23"
 				value="${fiscalizacionDTO.fecha}"> <img alt=""
 				src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>"
@@ -225,7 +225,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.PeríodoForestal' />
 			</td>
-			<td><input name="fiscalizacionDTO.periodoForestal"
+			<td align="left"><input name="fiscalizacionDTO.periodoForestal"
 				class="botonerab" type="text" size="20"
 				value="<c:out value='${fiscalizacionDTO.periodoForestal}'></c:out>">
 			</td>
@@ -234,7 +234,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.CantUnd' />
 			</td>
-			<td><input name="fiscalizacionDTO.cantidadUnidades"
+			<td align="left"><input name="fiscalizacionDTO.cantidadUnidades"
 				class="botonerab" type="text" size="20"
 				value="<c:out value='${fiscalizacionDTO.cantidadUnidades}'></c:out>"
 				onkeypress="javascript:esNumerico(event);">
@@ -242,7 +242,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.TipoProducto' />
 			</td>
-			<td><html:select property="idTipoProductoForestal"
+			<td align="left"><html:select property="idTipoProductoForestal"
 					styleClass="botonerab disabled" value="${fiscalizacionDTO.tipoProducto.id}"
 					styleId="idTipoProductoForestal" onchange="actualizarMuestras();">
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
@@ -256,14 +256,14 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.CantMts3' />
 			</td>
-			<td><input id="cantidadMts" name="fiscalizacionDTO.cantidadMts"
+			<td align="left"><input id="cantidadMts" name="fiscalizacionDTO.cantidadMts"
 				class="botonerab" type="text" size="20"
 				value="<c:out value='${fiscalizacionDTO.cantidadMts}'></c:out>"
-				onkeypress="javascript:esNumericoConDecimal(event);"></td>
+				onkeypress="javascript:esNumericoConDecimal(event);" readonly="readonly"></td>
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.TamañoMuestra' />
 			</td>
-			<td><input name="fiscalizacionDTO.tamanioMuestra"
+			<td align="left"><input name="fiscalizacionDTO.tamanioMuestra"
 				class="botonerab" type="text" size="20" id="idTamanioMuestra"
 				readonly="readonly"
 				value="<c:out value='${fiscalizacionDTO.tamanioMuestra}'></c:out>">
@@ -274,7 +274,7 @@ $(function() {
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.Oficina'/>
 			</td>
-			<td>
+			<td align="left">
 				<html:select property="fiscalizacionDTO.oficinaAlta.id"
 					styleClass="botonerab" value="${fiscalizacionDTO.oficinaAlta.id}"
 					styleId="idOficinaAlta" onchange="actualizarMuestras();">
@@ -286,10 +286,13 @@ $(function() {
 					</c:forEach>
 				</html:select>
 			</td>
-			<td class="botoneralNegritaRight" colspan="2">
-
+			<td class="botoneralNegritaRight">
+				<bean:message key='SIIF.label.NroDeGuia'/>
 			</td>
-		</tr>		
+			<td align="left">
+				<input type="text" class="botonerab" value="${fiscalizacionDTO.guiaForestal.nroGuia}" readonly="readonly">
+			</td>
+		</tr>
 		<tr>
 			<td height="20" colspan="4"></td>
 		</tr>
