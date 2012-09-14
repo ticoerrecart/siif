@@ -1,6 +1,6 @@
 package ar.com.siif.dto;
 
-public class SubImporteDTO {
+public class SubImporteDTO implements Comparable<SubImporteDTO>{
 
 	private Long id;	
 	
@@ -98,5 +98,13 @@ public class SubImporteDTO {
 		this.guiaForestal = guiaForestal;
 	}
 	
-	
+	public int compareTo(SubImporteDTO o) {
+		
+		if(this.getTipoProducto().getId().longValue() == o.getTipoProducto().getId().longValue() && 
+				this.getEstado().equals(o.getEstado())){
+				
+				return 0;
+			}
+			return 1;
+	}
 }

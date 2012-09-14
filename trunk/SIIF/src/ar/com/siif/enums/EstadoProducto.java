@@ -1,7 +1,8 @@
 package ar.com.siif.enums;
 
 public enum EstadoProducto {
-	Seco("Seco"), Verde("Verde");
+	//Seco("Seco"), Verde("Verde");
+	Verde("Verde");
 	
 	private String descripcion;
 

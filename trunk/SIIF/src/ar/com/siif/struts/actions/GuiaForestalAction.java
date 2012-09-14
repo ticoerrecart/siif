@@ -1,6 +1,7 @@
 package ar.com.siif.struts.actions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RodalDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
@@ -62,17 +64,32 @@ public class GuiaForestalAction extends ValidadorAction {
 			RodalDTO rodal = ubicacionFachada.getRodalDTO(guiaForm.getGuiaForestal().getRodal().getId());
 			
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+			HashMap<Long,SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
 			for (FiscalizacionDTO fiscalizacionDTO : guiaForm.getListaFiscalizaciones()) {
 				if(fiscalizacionDTO.getId() != 0){
-					listaFiscalizacionesDTO.add(fiscalizacionFachada.recuperarFiscalizacionDTO(
-																fiscalizacionDTO.getId()));
+					FiscalizacionDTO fis = fiscalizacionFachada.recuperarFiscalizacionDTO(
+																		fiscalizacionDTO.getId());
+					listaFiscalizacionesDTO.add(fis);
+																		
+					//Esto es para mostrar los subImportes
+					SubImporteDTO subImporte = hashProductosFiscalizados.get(fis.getTipoProducto().getId());
+					if(subImporte != null){
+						subImporte.setCantidadMts(subImporte.getCantidadMts()+fis.getCantidadMts());
+					}else{
+						subImporte = new SubImporteDTO();
+						subImporte.setCantidadMts(fis.getCantidadMts());
+						subImporte.setTipoProducto(fis.getTipoProducto());
+					}
+					hashProductosFiscalizados.put(subImporte.getTipoProducto().getId(), subImporte);
 				}	
 			}
+						
 			request.setAttribute("tiposProductosForestales",tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal",productorForestal);
 			request.setAttribute("rodal",rodal);
 			request.setAttribute("fiscalizaciones",listaFiscalizacionesDTO);
+			request.setAttribute("subImportes",hashProductosFiscalizados.values());
 									
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

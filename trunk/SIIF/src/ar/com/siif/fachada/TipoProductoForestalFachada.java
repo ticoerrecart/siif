@@ -102,7 +102,7 @@ public class TipoProductoForestalFachada implements ITipoProductoForestalFachada
 	public List<EstadoProducto> getEstadosProductos(){
 		
 		List<EstadoProducto> estadosProductos = new ArrayList<EstadoProducto>();
-		estadosProductos.add(EstadoProducto.Seco);
+		//estadosProductos.add(EstadoProducto.Seco);
 		estadosProductos.add(EstadoProducto.Verde);
 		
 		return estadosProductos;

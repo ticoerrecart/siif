@@ -7,7 +7,7 @@
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadrado" 
-				align="center" width="60%" cellpadding="2">
+				align="center" width="70%" cellpadding="2">
 				<tr>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>

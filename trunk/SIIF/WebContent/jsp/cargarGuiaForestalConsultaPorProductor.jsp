@@ -286,71 +286,62 @@ function volverAltaGFB(){
 									<td class="azulAjustado"><bean:message key='SIIF.label.Unidad'/></td>
 									<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 								</tr>
+
+								<c:forEach items="${guiaForestal.subImportes}" var="subImporte" varStatus="i">	
 								<tr>
 									<td>
-										<input class="botonerab" type="text" 
-											value="<c:out value='${guiaForestal.tipoProducto.nombre}'/>"
-											readonly="readonly">																							
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.tipoProducto.nombre}">														
 									</td>
 									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.estado}" readonly="readonly">							
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.estado}">														
+									</td> 
+									<td>
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.especie}">
 									</td>
 									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.especie}" readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.cantidadMts}">									
 									</td>
 									<td>
-										<input id="idCantidadMts" class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.cantidadMts}'/>"
-											readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.valorAforos}">													
 									</td>
 									<td>
-										<input class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.cantidadUnidades}'/>"
-											readonly="readonly">
-									</td>
-									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.importe}" readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.importe}">
 									</td>
 								</tr>
-								<tr>
-									<td colspan="6">&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan="3">&nbsp;</td>
-									<td colspan="2"><bean:message key='SIIF.label.DerechoInspFisca'/></td>
-									<td>
-										<input value="${guiaForestal.inspFiscalizacion}" readonly="readonly"
-												class="botonerab" type="text">
-									</td>
-								</tr>
-								<tr>
-									<td colspan="4"></td>
-									<td class="botoneralNegrita"><bean:message key='SIIF.label.TOTAL'/></td>
-									<td>
-										<input readonly="readonly" class="botonerab" type="text"
-										 	value="<%= guia.getImporteTotal()%>">
-											<!--guia.getImporte() + guia.getInspFiscalizacion() -->
-									</td>
-								</tr>
+								</c:forEach>	
 							</table>
+							<table border="0" class="cuadrado" align="center" width="90%"
+								cellpadding="2" cellspacing="0">				
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right"width="82%">
+										<bean:message key='SIIF.label.DerechoInspFisca'/>
+									</td>
+									<td width="18%">
+										<input value="${guiaForestal.inspFiscalizacion}" readonly="readonly" class="botonerab" type="text">
+									</td>
+								</tr> 
+								<tr>
+									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
+									<td>
+										<input readonly="readonly" value="${guiaForestal.importeTotal}" class="botonerab" type="text">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+							</table>							
 						</td>
 					</tr>
 					<tr>
 						<td height="15" colspan="4"></td>
 					</tr>
 					<tr>
-						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo'/></td>
-						<td width="55%" align="left">
-							<input value="${guiaForestal.valorAforos}" class="botonerab" type="text" 
-								size="70" readonly="readonly">
-						</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
 						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
 						<td align="left" colspan="3">
-							<textarea class="botonerab" cols="130" rows="3" readonly="readonly">
+							<textarea class="botonerab" cols="130" rows="3">
 								<c:out value="${guiaForestal.observaciones}"></c:out>
 							</textarea>
 						</td>
@@ -361,7 +352,7 @@ function volverAltaGFB(){
 				</table>
 			</div>
 		</td>
-	</tr> 
+	</tr>
 
 	<!-- PLAN DE PAGO --> 
 
