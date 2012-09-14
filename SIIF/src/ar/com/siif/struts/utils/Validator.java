@@ -8,14 +8,19 @@ package ar.com.siif.struts.utils;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.RangoDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.utils.DateUtils;
 
@@ -553,6 +558,69 @@ public abstract class Validator {
 				i = integer;
 			}
 		}
+		return true;
+	}		
+	
+	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes, List<FiscalizacionDTO> listaFiscalizaciones,
+													StringBuffer pError)
+	{
+		/*Double volumen  = null;
+		HashMap<Long,Double> hashProductosFiscalizados = new HashMap<Long, Double>();
+		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
+			
+			volumen = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
+			if(volumen != null){
+				volumen = volumen.doubleValue() + fiscalizacionDTO.getCantidadMts();
+			}else{
+				volumen = fiscalizacionDTO.getCantidadMts();
+			}
+			hashProductosFiscalizados.put(fiscalizacionDTO.getTipoProducto().getId(), volumen);
+		}*/
+		
+		HashMap<Long,SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
+		Set<SubImporteDTO> listaIdTipoProducto = new TreeSet<SubImporteDTO>();
+		
+		for (SubImporteDTO subImporteDTO : listaSubImportes) {
+			
+			hashProductosFiscalizados.put(subImporteDTO.getTipoProducto().getId(), subImporteDTO);
+			
+			if(listaIdTipoProducto.contains(subImporteDTO)){
+				addErrorXML(pError, "Debe especificar un solo subImporte por cada Tipo de Producto");
+				return false;
+			}
+			if(subImporteDTO.getEstado()== null || subImporteDTO.getEstado().equals("")){
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}
+			if(subImporteDTO.getEspecie()== null || subImporteDTO.getEspecie().trim().equals("")){
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}	
+			if(subImporteDTO.getCantidadMts() <= 0.0){
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}
+			if(subImporteDTO.getValorAforos() <= 0.0){
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}
+			if(subImporteDTO.getImporte() <= 0.0){
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}			
+			listaIdTipoProducto.add(subImporteDTO);
+		}
+		
+		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
+			if(fiscalizacionDTO.getId() != null){
+				SubImporteDTO subImporte = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
+				if(subImporte == null){
+					addErrorXML(pError, "Debe agregar todas las fiscalizaciones al calculo del importe");
+					return false;				
+				}				
+			}	
+		}		
+		
 		return true;
 	}
 }

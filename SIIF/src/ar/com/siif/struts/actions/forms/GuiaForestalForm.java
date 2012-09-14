@@ -176,8 +176,10 @@ public class GuiaForestalForm extends ActionForm {
 		 * Validator.requerido(this.getGuiaForestal().getEspecie(), "Especie",
 		 * error);
 		 */
-		double montoTotal = this.getGuiaForestal().getImporteTotal()
-				+ this.getGuiaForestal().getInspFiscalizacion();
+		ok3 = Validator.validarSubImportes(this.getListaSubImportes(),this.getListaFiscalizaciones(),error);
+		ok4 = Validator.validarDoubleMayorQue(0, String.valueOf(this.getGuiaForestal().getImporteTotal()),"Importe Total", error);		
+		
+		double montoTotal = this.getGuiaForestal().getImporteTotal();
 		ok6 = Validator.validarBoletasDeposito(this.getBoletasDeposito(),
 				montoTotal, error);
 		ok7 = Validator.validarRangos(this.getRangos(), error);

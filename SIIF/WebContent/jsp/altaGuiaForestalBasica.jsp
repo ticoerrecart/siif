@@ -171,7 +171,7 @@ function cambiarEstado(ind){
 
 	var estado = $('#idEstado'+ind).val();
 	var idTipoProducto = $('#selectTiposDeProductos'+ind).val();
-	idTipoProducto = (idTipoProducto ==null)?$('#idTipoProducto'+ind).val():idTipoProducto;
+	//idTipoProducto = (idTipoProducto ==null)?$('#idTipoProducto'+ind).val():idTipoProducto;
 	var idProdForestal = $('#idProdForestal').val();
 
 	if(estado != ""){
@@ -216,8 +216,8 @@ function calcularTotales(){
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 	var sumaImportes = 0;
 	for ( var i = 0; i <= j; i++) {
-		if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null){
-			sumaImportes += parseInt($('#idImporte'+i).val());  
+		if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null && $('#idImporte'+i).val() != ""){
+			sumaImportes += parseFloat($('#idImporte'+i).val());  
 		}	 
 	}
 			
@@ -273,58 +273,53 @@ function volverAltaGFB(){
 
 function agregarFila() {
 
+	$('#idRemFila').attr('disabled',false);
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
-	$("#tablaImportes tr[id*=fila]:last").clone().find("input").each(function() {
+
+	if(j==3){
+		$('#idAgrFila').attr('disabled',true);	
+	}
+
+	var k = parseInt(j)+1;
+	
+	$("#tablaImportes tr[id*=fila]:last").clone().find("input,select,td").each(function() {
 		$(this).attr(
 			{'name' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ parseInt(j)+1 ]);
+								return name.replace([ j ], [ k ]);
 					  },
 			'value' : '',
 			'onchange' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ parseInt(j)+1 ]);
+								return name.replace([ j ], [ k ]);
 						  },
 			'id' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ parseInt(j)+1 ]);
+								return name.replace([ j ], [ k ]);
 					  	  }
 			}
 		);
 	}).end().appendTo("#tablaImportes");
-	$("#tablaImportes tr[id*=fila]:last").find("select").each(function() {
-		$(this).attr(
-			{'name' : function(_, name){
-						if(name != null)
-							return name.replace([ j ], [ parseInt(j)+1 ]);
-					  },
-			'onchange' : function(_, name){
-						if(name != null)
-							return name.replace([ j ], [ parseInt(j)+1 ]);
-					  },
-			'id' : function(_, name){
-						if(name != null)
-							return name.replace([ j ], [ parseInt(j)+1 ]);
-				  	  }
-			}
-		);
-	}).end();
-	$("#tablaImportes tr[id*=fila]:last").find("td").each(function() {
-		$(this).attr(
-			{'id' : function(_, name){
-						if(name != null)
-							return name.replace([ j ], [ parseInt(j)+1 ]);
-				  	  }
-			}
-		);
-	}).end();
-	
-	var newId = 1 + parseInt(j);
-	$('#tablaImportes tr[id*=fila]:last input.ind').val(newId);
+		
+	$('#tablaImportes tr[id*=fila]:last input.ind').val(k);
 
-	$("#tablaImportes tr[id*=fila]:last").attr('id', "fila"+newId);
+	$("#tablaImportes tr[id*=fila]:last").attr('id', "fila"+k);
 }
-						
+
+function removerFila() {
+
+	var cantSubImportes = (${fn:length(subImportes)}>0)?${fn:length(subImportes)}-1:0;
+	
+	$('#idAgrFila').attr('disabled',false);
+	$('#tablaImportes tr:last').remove();
+	calcularTotales();
+
+	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+	if(j==cantSubImportes){
+		$('#idRemFila').attr('disabled',true);
+	}
+}
+
 //-----------------------------------------------------//
 
 </script>
@@ -564,46 +559,55 @@ function agregarFila() {
 									<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 								</tr>
 								<c:choose>
-									<c:when test="${fn:length(fiscalizaciones)>0}">
-										<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">	
-										<tr>
-											<td>										
-												<html:hidden styleId="idTipoProducto${i-1}" property="guiaForestal.subImportes[${i-1}].tipoProducto.id"
-											 		value="${fiscalizacion.tipoProducto.id}"/>											
-												<input class="botonerab" type="text" readonly="readonly"
-													value="<c:out value='${fiscalizacion.tipoProducto.nombre}'/>">		
+									<c:when test="${fn:length(subImportes)>0}">
+										<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
+										<tr id="fila${i.count-1}">
+											<td>
+												<input class="ind" type="hidden" value="${i.count-1}">		
+																
+												<html:select styleId="selectTiposDeProductos${i.count-1}" onchange="cambiarEstado(${i.count-1});"
+														property="listaSubImportes[${i.count-1}].tipoProducto.id" 
+														styleClass="botonerab" value="${subImporte.tipoProducto.id}">
+																																										
+													<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
+														<html:option value="${tipoProducto.id}">
+															<c:out value="${tipoProducto.nombre}"></c:out>
+														</html:option>
+													</c:forEach>
+												</html:select>															
 											</td>
 											<td>
-												<select id="idEstado${i-1}" name="guiaForestal.subImportes[${i-1}].estado" class="botonerab" 
-													onchange="cambiarEstado(${i-1});">
+												<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estado" class="botonerab" 
+													onchange="cambiarEstado(${i.count-1});">
 													<option value="">-Seleccione un Estado-</option>									
-													<c:forEach items="${estadosProductoForestal}" var="estado" varStatus="i">
+													<c:forEach items="${estadosProductoForestal}" var="estado">
 														<option value="<c:out value='${estado.name}'></c:out>">
 															<c:out value="${estado.descripcion}"></c:out>
 														</option>
 													</c:forEach>
 												</select>																									
+											</td> 
+											<td>
+												<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie">
 											</td>
 											<td>
-												<input class="botonerab" type="text" name="guiaForestal.subImportes[${i-1}].especie">
+												<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" 
+													name="listaSubImportes[${i.count-1}].cantidadMts" onchange="javascript:actualizarImporte(${i.count-1});"
+													onkeypress="javascript:esNumericoConDecimal(event);"
+													value="${subImporte.cantidadMts}">									
 											</td>
-											<td>
-												<input id="idCantidadMts${i-1}" class="botonerab" type="text" 
-													name="guiaForestal.subImportes[${i-1}].cantidadMts" onchange="javascript:actualizarImporte(${i-1});"
-													onkeypress="javascript:esNumericoConDecimal(event);">									
-											</td>
-											<td id="TDValorAforo${i-1}">
-												<input id="idValorAforo${i-1}" name="guiaForestal.subImportes[${i-1}].valorAforos" class="botonerab" 
+											<td id="TDValorAforo${i.count-1}">
+												<input id="idValorAforo${i.count-1}" name="listaSubImportes[${i.count-1}].valorAforos" class="botonerab" 
 													type="text"	readonly="readonly">				
 																	
 												<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
 													onkeypress="javascript:esNumerico(event);"> -->
 											</td>
-											<td id="errorAforo${i-1}" class="rojoAdvertenciaLeft" style="display: none;">
+											<td id="errorAforo${i.count-1}" class="rojoAdvertenciaLeft" style="display: none;">
 												No Definido 
 											</td>
 											<td>
-												<input id="idImporte${i-1}" class="botonerab" type="text" name="guiaForestal.subImportes[${i-1}].importe" 
+												<input id="idImporte${i.count-1}" class="botonerab" type="text" name="listaSubImportes[${i.count-1}].importe" 
 													readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
 											</td>
 										</tr>
@@ -615,7 +619,7 @@ function agregarFila() {
 											<tr id="fila0">
 												<td>
 													<input class="ind" type="hidden" value="0">										
-													<select id="selectTiposDeProductos0" name="guiaForestal.subImportes[0].tipoProducto.id" 
+													<select id="selectTiposDeProductos0" name="listaSubImportes[0].tipoProducto.id" 
 															class="botonerab" onchange="cambiarEstado(0);">
 														<c:forEach items="${tiposProductosForestales}" var="tipoProducto" varStatus="i">
 															<option value="<c:out value='${tipoProducto.id}'></c:out>">
@@ -625,7 +629,7 @@ function agregarFila() {
 													</select>												
 												</td>
 												<td>
-													<select id="idEstado0" name="guiaForestal.subImportes[0].estado" class="botonerab" 
+													<select id="idEstado0" name="listaSubImportes[0].estado" class="botonerab" 
 														onchange="cambiarEstado(0);">
 														<option value="">-Seleccione un Estado-</option>									
 														<c:forEach items="${estadosProductoForestal}" var="estado" varStatus="i">
@@ -636,15 +640,15 @@ function agregarFila() {
 													</select>																									
 												</td>
 												<td>
-													<input class="botonerab" type="text" name="guiaForestal.subImportes[0].especie">
+													<input class="botonerab" type="text" name="listaSubImportes[0].especie">
 												</td>
 												<td>
 													<input id="idCantidadMts0" class="botonerab" type="text" 
-														name="guiaForestal.subImportes[0].cantidadMts" onchange="javascript:actualizarImporte(0);"
+														name="listaSubImportes[0].cantidadMts" onchange="javascript:actualizarImporte(0);"
 														onkeypress="javascript:esNumericoConDecimal(event);">		
 												</td>
 												<td id="TDValorAforo0">
-													<input id="idValorAforo0" name="guiaForestal.subImportes[0].valorAforos" class="botonerab" 
+													<input id="idValorAforo0" name="listaSubImportes[0].valorAforos" class="botonerab" 
 														type="text" readonly="readonly">				
 																		
 													<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
@@ -654,7 +658,7 @@ function agregarFila() {
 													No Definido 
 												</td>
 												<td>
-													<input id="idImporte0" class="botonerab" type="text" name="guiaForestal.subImportes[0].importe" 
+													<input id="idImporte0" class="botonerab" type="text" name="listaSubImportes[0].importe" 
 														readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
 												</td>
 											</tr>	
@@ -680,7 +684,7 @@ function agregarFila() {
 									</td>
 								</tr> 
 								<tr>
-									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TOTAL'/></td>
+									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
 									<td>
 										<input id="idTotal" readonly="readonly" name="guiaForestal.importeTotal" 
 											class="botonerab" type="text">
@@ -694,8 +698,8 @@ function agregarFila() {
 					</tr>
 					<tr>
 						<td colspan="4">
-							<input type="button" value="+" onclick="agregarFila();">
-							<input type="button" value="-" onclick="removerFila();">
+							<input id="idAgrFila" type="button" value="+" onclick="agregarFila();">
+							<input id="idRemFila" type="button" value="-" onclick="removerFila();" disabled="disabled">
 						</td>
 					</tr>					
 					<tr>
@@ -889,7 +893,7 @@ function agregarFila() {
 						<table border="0" class="cuadrado" align="center"  width="80%" cellpadding="2" id="tablaVales">
 							
 							<tr id="filaVales0">
-								<td width="2%" class="botoneralNegritaRight grisSubtitulo ind"> 1 </td>
+								<td width="2%" class="botoneralNegrita grisSubtitulo ind"> 1 </td>
 								<td width="10%" class="botoneralNegritaRight"> Desde </td>
 								<td width="40%" align="left"> <input name="rangos[0].desde" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>
 								<td width="10%" class="botoneralNegritaRight"> Hasta</td>
