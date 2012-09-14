@@ -42,7 +42,11 @@
 		</convert>		
 		<convert converter="bean" match="ar.com.siif.dto.ItemMenuDTO">
 			<param name="include" value="id, item, url, padre, hijos, orden" />
-		</convert>	
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.MuestraDTO">
+			<param name="include" value="id,largo,diametro1,diametro2" />
+		</convert>
+		
 
 		<convert converter="exception" match="ar.com.siif.negocio.exception.NegocioException">
 			<param name="include" value="message" />
@@ -80,9 +84,14 @@
 			<param name="beanName" value="guiaForestalFachada" />
 		</create>
 		
+		<create creator="spring" javascript="FiscalizacionFachada">
+			<param name="beanName" value="fiscalizacionFachada" />
+		</create>
+
 		<create creator="new" javascript="ReportesAction">
 			<param name="class" value="ar.com.siif.struts.actions.ReportesAction"/>
-		</create>				
+		</create>
+		
 	</allow>
 
 </dwr> 
