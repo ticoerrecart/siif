@@ -389,6 +389,7 @@ function removerFila() {
 		</tr>
 	</table>
 
+	<!-- LOCALIZACION -->
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
 		<tr>
