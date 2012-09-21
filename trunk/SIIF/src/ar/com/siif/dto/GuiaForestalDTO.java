@@ -278,4 +278,33 @@ public class GuiaForestalDTO {
 		this.subImportes = subImportes;
 	}
 
+	/**
+	 * me fijo en los subimportes para ver los productos que tiene la guia
+	 * Los estados tambien los saco de Ahi
+	 * y la relacion la saco de las fiscalizaciones... si no hay devuelvo 0
+	 * 
+	 */
+	public List<ProductoEspecieYRelacionMtsPorPiezaDTO> getProductosEspeciesYRelacionMtsPorPieza(){
+		 
+		List<ProductoEspecieYRelacionMtsPorPiezaDTO> prods = new ArrayList<ProductoEspecieYRelacionMtsPorPiezaDTO>();
+		for (SubImporteDTO subImporteDTO : this.getSubImportes() ) {
+			ProductoEspecieYRelacionMtsPorPiezaDTO prod = new ProductoEspecieYRelacionMtsPorPiezaDTO();
+			prod.setProducto(subImporteDTO.getTipoProducto().getNombre());
+			prod.setEspecie(subImporteDTO.getEspecie());
+			double mts3 = 0;
+			double piezas = 0;
+			for ( FiscalizacionDTO fisc : this.getFiscalizaciones()){
+				if (fisc.getTipoProducto().getNombre().equalsIgnoreCase(prod.getProducto())){
+					mts3 = mts3 + fisc.getCantidadMts();
+					piezas = piezas + fisc.getCantidadUnidades();
+				}
+			}
+			if (mts3 > 0) {
+				prod.setMts3xpieza(mts3/piezas);
+			}
+			prods.add(prod);
+		}
+		return prods;
+	}
+	
 }

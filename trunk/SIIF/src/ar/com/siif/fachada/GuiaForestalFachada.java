@@ -155,6 +155,22 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}			
 	}
 
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
+			String destino, String vehiculo, String marca, String dominio,
+			String producto, int nroPiezas, double cantM3, String especie,
+			String fechaDevolucion) {
+
+		try {
+			return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
+					destino, vehiculo, marca, dominio,
+					producto, nroPiezas, cantM3,especie,
+					fechaDevolucion);
+
+		} catch (DataBaseException e) {
+			return e.getMessage();
+		}
+	}
+	
 	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento) {

@@ -187,6 +187,40 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
+			String destino, String vehiculo, String marca, String dominio,
+			String producto, int nroPiezas, double cantM3, String especie,
+			String fechaDevolucion) throws DataBaseException{
+		
+		try{
+			ValeTransporte vale = (ValeTransporte)getSession().get(ValeTransporte.class,idVale);
+			vale.setDestino(destino);
+			vale.setVehiculo(vehiculo);
+			vale.setMarca(marca);
+			vale.setDominio(dominio);
+			vale.setProducto(producto);
+			vale.setNroPiezas(nroPiezas);
+			vale.setCantidadMts(cantM3);
+			vale.setEspecie(especie);
+			vale.setFechaDevolucion(Fecha.stringDDMMAAAAToDate(fechaDevolucion));
+			
+			this.getHibernateTemplate().saveOrUpdate(vale);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+	
+			return fechaDevolucion;
+
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
+		}			
+	}
+	
+	
+	
 	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento) throws DataBaseException {
