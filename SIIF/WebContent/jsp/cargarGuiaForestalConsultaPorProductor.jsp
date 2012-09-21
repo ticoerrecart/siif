@@ -322,7 +322,7 @@ function volverAltaGFB(){
 									<td class="azulAjustado"><bean:message key='SIIF.label.Estado'/></td>
 									<td class="azulAjustado"><bean:message key='SIIF.label.Especie'/></td>
 									<td class="azulAjustado"><bean:message key='SIIF.label.M3'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.Unidad'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.ValorAforo'/></td>
 									<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 								</tr>
 

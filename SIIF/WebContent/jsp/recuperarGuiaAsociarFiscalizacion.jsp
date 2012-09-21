@@ -11,6 +11,8 @@
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
+
+
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
 <script type="text/javascript"
@@ -18,7 +20,6 @@
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
-
 	function submitir(){
 		validarForm("guiaForestalForm","../guiaForestal","validarNroGuiaForm","GuiaForestalForm");
 	}
@@ -26,22 +27,23 @@
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
 <br>
-<table border="0" class="cuadrado" align="center" width="70%"
-	cellpadding="2">
+<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 
 	<tr>
-		<td class="azulAjustado"><c:out value="${titulo}" /></td>
+		<td class="azulAjustado">
+			<bean:message key='SIIF.titulo.AsociarGuiaAFiscalizacion'/>		
+		</td>
 	</tr>
 	<tr>
-		<td height="20"></td>
+		<td height="30"></td>
 	</tr>
 	<tr>
-		<td>
+		<td>	
 			<html:form action="guiaForestal" styleId="guiaForestalForm">
-				<html:hidden property="metodo" value="${forwardBuscarNroGuia}"/>		
+				<html:hidden property="metodo" value="recuperarGuiaAsociarFiscalizacion"/>		
 				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 					<tr>
-						<td height="10"></td>
+						<td height="20"></td>
 					</tr>
 					<tr>
 						<td width="30%" class="botoneralNegritaRight">
@@ -54,17 +56,16 @@
 							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
 							<input class="botonerab" type="button" value="Buscar" onclick="javascript:submitir();">
 						</td>	
+									
 					</tr>				
 					<tr>
-						<td height="10"></td>
+						<td height="20"></td>
 					</tr>				
 				</table>
-			</html:form>	
+			</html:form>		
 		</td>
-	</tr>	
+	</tr>				
 	<tr>
-		<td height="10"></td>
+		<td height="30"></td>
 	</tr>
-	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
-	
 </table>
