@@ -10,8 +10,6 @@
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
-<script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/interface/GuiaForestalFachada.js'/>"></script>	
 
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
@@ -67,7 +65,12 @@ function registrarDevolucion(vale){
 		$("#idBoletas").load('../../guiaForestal.do?metodo=registrarPagoBoletaDeposito&idBoleta='+idBoleta);*/
 
 		idVale = vale;
-		GuiaForestalFachada.registrarDevolucionValeTransporte(idVale,registrarDevolucionCallback);		
+		GuiaForestalFachada.registrarDevolucionYCompletarDatosValeTransporte(idVale, 
+				   $("#idDestino"+idVale).val(),$("#idVehiculo"+idVale).val(),$("#idMarca"+idVale).val(),
+				   $("#idDominio"+idVale).val(),$("#idProducto"+idVale).val(),$("#idNroPiezas"+idVale).val(),
+				   $("#idCantM3"+idVale).val(),$("#idEspecie"+idVale).val(), $("#idFechaDevolucion"+idVale).val(),
+				   registrarDevolucionCallback);
+		
 	}		
 }
 
@@ -83,6 +86,45 @@ function registrarDevolucionCallback(valor){
 	var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
 	$(idFechaDevolucion).attr('value', valor);		
 }
+
+function expValeNro(){
+	var idValeExp = $('#expVale').val();
+	$('[id="idTr' + idValeExp +'"]').show();
+}
+
+function expValesDevueltos(){
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').show();
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').hide();
+}
+
+function expValesNoDevueltos(){
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').show();
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').hide();	
+}
+
+
+function actEspecie(indice){
+	var prodEst = $("#idProductoSel"+indice).val();
+	var prodArray = prodEst.split("-");
+	var prod = prodArray[0]; 
+	var esp = prodArray[1];
+	var rel = prodArray[2];
+	var piezas = $("#idNroPiezas"+indice).val();
+	
+	$("#idProducto"+indice).val(prod);
+	$("#idEspecie"+indice).val(esp);
+	
+	if (piezas != null) {
+		$("#idCantM3"+indice).val(roundNumber(rel*piezas,2));	
+	}
+}
+
+
+function roundNumber(num, dec) {
+	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+	return result;
+}
+
 
 </script>
 
@@ -171,29 +213,37 @@ function registrarDevolucionCallback(valor){
 				<tr>
 					<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
 				</tr>				
+				
+					<c:choose>					
+						<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
+
+								<tr >
+									<td colspan="4"  class="azulAjustado">
+										<button class="botonerab" onclick="expValesNoDevueltos();"> Expandir Vales No Devueltos </button> 
+										<button class="botonerab" onclick="expValesDevueltos();"> Expandir Vales Devueltos </button>
+										<button class="botonerab" onclick="expValeNro();"> Expandir Vale Nro </button> <Input type="text" value="" id="expVale">
+									</td>
+								</tr>
 				<tr>
 					<td height="10" colspan="3"></td>
 				</tr>
-					<c:choose>					
-						<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
+
 							<c:forEach items="${guiaForestal.valesTransporte}" var="valeTransporte" varStatus="index">
-								<tr id="idTr<c:out value='${valeTransporte.id}'></c:out>">
+								<tr onclick="$('#idTr<c:out value='${valeTransporte.numero}'/>').toggle();">
+									<td colspan="4" class="grisSubtitulo" >
+										<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out>
+									</td>
+								</tr>
+								<tr id="idTr<c:out value='${valeTransporte.numero}'/>" style="display: none" >
 									<td colspan="2" width="85%">														
 										<table class="cuadrado" align="right" width="90%" cellpadding="2">
-											<tr>
-												<td colspan="4" class="grisSubtitulo">
-													<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${index.index+1}"></c:out>
-												</td>
-											</tr>
-											<tr>
-												<td height="5" colspan="4"></td>
-											</tr>
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.NumeroVale'/>
 												</td>
 												<td width="40%" align="left">
-													<input value="${valeTransporte.numero}" class="botonerab" type="text"
+													<input id="idNroVale<c:out value='${valeTransporte.id}'/>"
+													value="${valeTransporte.numero}" class="botonerab" type="text"
 														   size="25" readonly="readonly">
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
@@ -209,41 +259,45 @@ function registrarDevolucionCallback(valor){
 													<bean:message key='SIIF.label.Origen'/>
 												</td>
 												<td width="40%" align="left">
-													<input value="${valeTransporte.origen}" class="botonerab" type="text"
+													<input id="idOrigen<c:out value='${valeTransporte.id}'/>" 
+														   value="${valeTransporte.origen}" class="botonerab" type="text"
 														   size="25" readonly="readonly">
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Destino'/>
 												</td>
 												<td width="40%" align="left">
-													<input value="${valeTransporte.destino}" class="botonerab"
-														   type="text" size="25" readonly="readonly">
+													<input id="idDestino<c:out value='${valeTransporte.id}'/>"
+														   value="${valeTransporte.destino}" class="botonerab"
+														   type="text" size="25" >
 												</td>
 											</tr>
+											
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Vehiculo'/>
 												</td>
 												<td width="40%" align="left">
-													<input value="${valeTransporte.vehiculo}" class="botonerab"
-														   type="text" size="25" readonly="readonly">
+													<input id="idVehiculo<c:out value='${valeTransporte.id}'/>"
+														   value="${valeTransporte.vehiculo}" class="botonerab"
+														   type="text" size="25" >
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Marca'/>
 												</td>
 												<td width="40%" align="left">
-													<input value="${valeTransporte.marca}" class="botonerab" type="text"
-														   size="25" readonly="readonly">
+													<input id="idMarca<c:out value='${valeTransporte.id}'/>"
+														   value="${valeTransporte.marca}" class="botonerab" type="text"
+														   size="25">
 												</td>
 											</tr>
-											
 											
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Fecha_Venc'/>
 												</td>
 												<td width="40%" align="left">
-													<input type="text" readonly="readonly" class="botonerab"
+													<input id="idFechaVenc<c:out value='${valeTransporte.id}'></c:out>"  type="text" readonly="readonly" class="botonerab"
 														   value="${valeTransporte.fechaVencimiento}"> 
 													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 														 align="top" width='17' height='21'>	
@@ -252,21 +306,26 @@ function registrarDevolucionCallback(valor){
 													<bean:message key='SIIF.label.Dominio'/>
 												</td>											
 												<td width="40%" align="left">
-													<input value="${valeTransporte.dominio}" class="botonerab"
-														   type="text" size="7" readonly="readonly">																							
+													<input   id="idDominio<c:out value='${valeTransporte.id}'></c:out>" value="${valeTransporte.dominio}" class="botonerab"
+														   type="text" size="7">																							
 												</td>
 											</tr>											
-											
+					
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Fecha_Dev'/>
 												</td>
 												<td width="40%" align="left">
 													<input id="idFechaDevolucion<c:out value='${valeTransporte.id}'></c:out>"
-														   type="text" readonly="readonly" class="botonerab"
+														   type="text"  class="botonerab"
 														   value="${valeTransporte.fechaDevolucion}"> 
 													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-														 align="top" width='17' height='21'>					
+														 align="top" width='17' height='21'>
+											<script>
+											$(function() {
+												$( "#idFechaDevolucion<c:out value='${valeTransporte.id}'/>" ).datepicker({ dateFormat: 'dd/mm/yy'});
+											});
+											</script>														 					
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													
@@ -303,22 +362,32 @@ function registrarDevolucionCallback(valor){
 													</tr>
 													<tr>
 														<td>
-															<input class="botonerab" type="text" value="${valeTransporte.producto}" readonly="readonly">
+															<select id="idProductoSel<c:out value='${valeTransporte.id}'/>" class="botonerab"  onchange="actEspecie(<c:out value='${valeTransporte.id}'/>)">
+																	<c:forEach items="${guiaForestal.productosEspeciesYRelacionMtsPorPieza}" var="prod">
+																		<option value="${prod.producto}-${prod.especie}-${prod.mts3xpieza}">${prod.producto}</option> 
+																	</c:forEach>
+															</select> 
+															
+															<input id="idProducto<c:out value='${valeTransporte.id}'/>"  type="hidden" value="" />
 														</td>
 														<td>
-															<input class="botonerab" type="text" value="${valeTransporte.nroPiezas}" readonly="readonly">
+															<input id="idNroPiezas<c:out value='${valeTransporte.id}'/>"  class="botonerab" type="text" value="${valeTransporte.nroPiezas}" onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" >
 														</td>
 														<td>
-															<input class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">
+															<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" >
 														</td>
 														<td>
-															<input class="botonerab" type="text" value="${valeTransporte.especie}" readonly="readonly">
+															<input id="idEspecie<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.especie}" readonly="readonly">
+															<script>
+																actEspecie(<c:out value='${valeTransporte.id}'/>);
+															</script>
 														</td>
+														
 													</tr>
 												</table>
 												</td>
 											</tr>
-					
+													
 											<tr>
 												<td height="5" colspan="4"></td>
 											</tr>
@@ -328,7 +397,7 @@ function registrarDevolucionCallback(valor){
 										<c:if test="${valeTransporte.fechaDevolucion ==null}">
 											<input id="idBotonDevolucion<c:out value='${valeTransporte.id}'></c:out>"
 												   type="button" value="Registrar Devolución" class="botonerab" 
-												   onclick="registrarDevolucion(<c:out value='${valeTransporte.id}'></c:out>);">
+												   onclick="registrarDevolucion(<c:out value='${valeTransporte.id}'></c:out>);" />
 										</c:if>	
 									</td>
 								</tr>
