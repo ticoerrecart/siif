@@ -61,7 +61,9 @@
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
 			<forward name=".altaUsuario" path=".altaUsuario" />
 			<forward name=".recuperarUsuarios" path=".recuperarUsuarios" />
-			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
+			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" 
+						path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
+			<forward name=".recuperarGuiaAsociarFiscalizacion" path=".recuperarGuiaAsociarFiscalizacion" />
 						    
 		</action>
 
@@ -127,6 +129,10 @@
 				<forward name="exitoCargarModificacionGuiaForestalBasica" path=".cargarModificacionGFB" />
 				<forward name="exitoModificacionGuiaForestalBasica" 
 						 path="/guiaForestal.do?metodo=recuperarTiposDeEntidadParaModificacionGFB" />
+			
+				<!-- Asociar Fiscalizacion a Guia -->
+				<forward name="exitoRecuperarGuiaAsociarFiscalizacion" path=".cargarGuiaAsociarFiscalizacion" />
+				<forward name="exitoAsociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaAsociarFiscalizacion" />
 			
 			<!-- Boleta de Deposito  -->			
 			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					

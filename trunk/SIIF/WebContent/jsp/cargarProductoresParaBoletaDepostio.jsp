@@ -39,20 +39,22 @@
 		<td>
 			<html:form action="guiaForestal" styleId="guiaForestalForm">
 				<html:hidden property="metodo" value="${forwardBuscarNroGuia}"/>		
-				<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 					<tr>
 						<td height="10"></td>
 					</tr>
 					<tr>
-						<td width="38%" class="botoneralNegritaRight">
+						<td width="30%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.NroDeGuia'/>
 						</td>
-						<td align="right">
+						<td width="10%">
+							
+						</td>						
+						<td align="left">
 							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
-						</td>	
-						<td>
 							<input class="botonerab" type="button" value="Buscar" onclick="javascript:submitir();">
-						</td>									
+						</td>	
+									
 					</tr>				
 					<tr>
 						<td height="10"></td>

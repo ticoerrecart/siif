@@ -112,6 +112,16 @@
 			<put name="body" value="/jsp/modificacionGuiaForestalBasica.jsp" />
 		</definition>
 
+		<definition name=".recuperarGuiaAsociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiaAsociarFiscalizacion.jsp" />
+		</definition>
+
+		<definition name=".cargarGuiaAsociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/cargarGuiaAsociarFiscalizacion.jsp" />
+		</definition>
+
 		<!-- Boleta de Deposito  -->
 			<definition name=".cargarProductoresParaBoletaDepostio"
 				extends=".base">
