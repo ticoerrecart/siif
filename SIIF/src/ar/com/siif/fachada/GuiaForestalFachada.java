@@ -188,4 +188,26 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return guiaForestalDAO.existeGuiaForestal(nroGuia); 
 	}
 
+	public void asociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
+														throws NegocioException
+	{
+		try {
+			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);
+			Fiscalizacion fiscalizacion;
+			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
+				
+				fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());				
+				guiaForestal.getFiscalizaciones().add(fiscalizacion);
+				fiscalizacion.setGuiaForestal(guiaForestal);
+				
+				fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
+			}
+			
+			guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
+	
 }

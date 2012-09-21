@@ -6,6 +6,7 @@ import java.util.List;
 import ar.com.siif.dao.FiscalizacionDAO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Muestra;
@@ -43,24 +44,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
 		this.usuarioFachada = pUsuarioFachada;
 	}
-
-	/*public List<Entidad> recuperarEntidades() throws NegocioException {
-		try{
-			return fiscalizacionDAO.recuperarEntidades();
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
-	}*/
-
-	/*public List<Entidad> recuperarProductores() throws NegocioException {
-		try{
-			return fiscalizacionDAO.recuperarProductores();
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
-	}*/
 
 	public List<Fiscalizacion> recuperarFiscalizaciones() throws NegocioException {
 		try {
@@ -208,6 +191,25 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
+			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException
+	{
+		try {
+			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
+					.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal, listaSubImportesDTO);
+
+			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+			}
+
+			return listaFiscalizacionesDTO;
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}		
+	
 	public void validarFiscalizacionDTO(String idFiscalizacion, String tipoEntidad,
 			String idProductorForestal, String idTipoProducto, String idPMF, String idTranzon,
 			String idMarcacion, String idRodal, MuestraDTO[] muestras)
