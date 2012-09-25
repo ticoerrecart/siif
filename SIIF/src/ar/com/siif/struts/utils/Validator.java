@@ -437,7 +437,7 @@ public abstract class Validator {
 						return false;
 					}
 				} else {
-					if (idTipoProducto == 1) {
+					if (idTipoProducto == 1 || idTipoProducto == 4) {
 						if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0) {
 							addErrorXML(pError,
 									"Faltan datos de Largo y/o Diametro en las Muestras");
