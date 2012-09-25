@@ -44,8 +44,7 @@ public interface IFiscalizacionFachada {
 
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion) throws NegocioException;
 
-	public void validarFiscalizacionDTO(String idFiscalizacion, String idTipoEntidad,
-			String idProductorForestal, String idTipoProducto, String idPMF, String idTranzon,
-			String idMarcacion, String idRodal, MuestraDTO[] muestras)
-			throws NumberFormatException, DataBaseException, NegocioException;
+	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
+			String idTipoProducto, String idRodal) throws NumberFormatException, DataBaseException,
+			NegocioException;
 }

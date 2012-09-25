@@ -148,16 +148,18 @@ function calcularVolumen() {
 		if(cantidadDeFilas > 0){
 			for ( var i = 0; i < cantidadDeFilas; i++) {
 				var largo = $('#tablaMuestras [id=fila' + i + '] [name*=largo]')
-						.val();
+						.val().replace("," , ".");
+
 				var r = $('#tablaMuestras [id=fila' + i + '] [name*=diametro1]')
-						.val() / 2;
+						.val().replace("," , ".") / 2;
+
 				if (! $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').is(":visible")){
 					$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
 							.val(r * 2);
 				}
 				var r2 = $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
-						.val() / 2;
-	
+						.val().replace(",",".") / 2;
+
 				var v = volumenTroncoDelCono(r, r2, largo);
 				vol = vol + v;
 			}
@@ -250,7 +252,13 @@ function calcularVolumen() {
 
 	}
 
-
+/*
+	'1', 'Rollizos'
+	'2', 'Fustes'
+	'3', 'Leña'
+	'4', 'Postes'
+	'5', 'Trineos'
+ */
 	function actualizarMuestras() {
 		$('#cantidadMts').val('');
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
@@ -263,8 +271,9 @@ function calcularVolumen() {
 				$('#tablaMuestras').hide();
 				$('#calcularVolumen').hide();
 			}
+			$("#cantidadMts").attr("readonly",true);
 			$('#trMuestras').show();
-		}  else if (idTipoProductoForestal == 1 ){
+		}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
@@ -273,10 +282,12 @@ function calcularVolumen() {
 				$('#tablaMuestras').hide();
 				$('#calcularVolumen').hide();
 			}
+			$("#cantidadMts").attr("readonly",true);
 			$('#trMuestras').show();
 		} else {
-			removerNMuestras($('[name="fiscalizacionDTO.tamanioMuestra"]').val()); 
-			$('#trMuestras').hide();
+				removerNMuestras($('[name="fiscalizacionDTO.tamanioMuestra"]').val()); 
+				$("#cantidadMts").attr("readonly",false);
+				$('#trMuestras').hide();
 		}
 
 	}

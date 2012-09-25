@@ -210,63 +210,58 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}		
 	}		
 	
-	public void validarFiscalizacionDTO(String idFiscalizacion, String tipoEntidad,
-			String idProductorForestal, String idTipoProducto, String idPMF, String idTranzon,
-			String idMarcacion, String idRodal, MuestraDTO[] muestras)
-			throws NumberFormatException, DataBaseException, NegocioException {
+	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
+			String idTipoProducto, String idRodal) throws NumberFormatException, DataBaseException,
+			NegocioException {
 		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(Long
 				.parseLong(idFiscalizacion));
 		if (fiscalizacion.getGuiaForestal() != null) {
 			String msjPrefijo = "La Fiscalización tiene asociada la Guía Forestal Nro. "
 					+ fiscalizacion.getGuiaForestal().getNroGuia() + " y se está/n cambiando ";
 			String msjDesvincular = " Desea desvincularla de la Guía Forestal y guardarla de todas formas?";
-			if (!fiscalizacion.getProductorForestal().getIdTipoEntidad()
+			/*if (!fiscalizacion.getProductorForestal().getIdTipoEntidad()
 					.equalsIgnoreCase(tipoEntidad)) {
 				throw new NegocioException(msjPrefijo + "el Tipo De Entidad." + msjDesvincular);
+			} else {*/
+			if (fiscalizacion.getProductorForestal().getId() != Long.parseLong(idProductorForestal)) {
+				throw new NegocioException(msjPrefijo + "el Productor Forestal." + msjDesvincular);
 			} else {
-				if (fiscalizacion.getProductorForestal().getId() != Long
-						.parseLong(idProductorForestal)) {
-					throw new NegocioException(msjPrefijo + "el Productor Forestal."
-							+ msjDesvincular);
+				if (fiscalizacion.getTipoProducto().getId() != Long.parseLong(idTipoProducto)) {
+					throw new NegocioException(msjPrefijo + "el Tipo de Producto." + msjDesvincular);
 				} else {
-					if (fiscalizacion.getTipoProducto().getId() != Long.parseLong(idTipoProducto)) {
-						throw new NegocioException(msjPrefijo + "el Tipo de Producto."
+					/*if (fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getId() != Long
+							.parseLong(idPMF)) {
+						throw new NegocioException(msjPrefijo + "el Plan de Manejo Forestal."
 								+ msjDesvincular);
 					} else {
-						if (fiscalizacion.getRodal().getMarcacion().getTranzon().getPmf().getId() != Long
-								.parseLong(idPMF)) {
-							throw new NegocioException(msjPrefijo + "el Plan de Manejo Forestal."
+						if (fiscalizacion.getRodal().getMarcacion().getTranzon().getId() != Long
+								.parseLong(idTranzon)) {
+							throw new NegocioException(msjPrefijo + "el Tranzón."
 									+ msjDesvincular);
 						} else {
-							if (fiscalizacion.getRodal().getMarcacion().getTranzon().getId() != Long
-									.parseLong(idTranzon)) {
-								throw new NegocioException(msjPrefijo + "el Tranzón."
+							if (fiscalizacion.getRodal().getMarcacion().getId() != Long
+									.parseLong(idMarcacion)) {
+								throw new NegocioException(msjPrefijo + "la Marcación."
 										+ msjDesvincular);
-							} else {
-								if (fiscalizacion.getRodal().getMarcacion().getId() != Long
-										.parseLong(idMarcacion)) {
-									throw new NegocioException(msjPrefijo + "la Marcación."
-											+ msjDesvincular);
-								} else {
-									if (fiscalizacion.getRodal().getId() != Long.parseLong(idRodal)) {
-										throw new NegocioException(msjPrefijo + "el Rodal."
-												+ msjDesvincular);
-									} else {
-										//valido las muestras
-										if (muestras.length > 0) {
-											if (muestras.length != fiscalizacion.getMuestra()
-													.size()) {
-												throw new NegocioException(msjPrefijo
-														+ "las Muestras." + msjDesvincular);
-											}
-										}
-									}//else Rodal
-								}//else Marcacion
-							}//else Tranzon
-						}//else PMF
-					}//else TipoProducto
-				}//else Prod. Forestal
-			}//else tipoEntidad
+							} else {*/
+					if (fiscalizacion.getRodal().getId() != Long.parseLong(idRodal)) {
+						throw new NegocioException(msjPrefijo + "el Rodal." + msjDesvincular);
+						/*} else {
+							//valido las muestras
+							if (muestras.length > 0) {
+								if (muestras.length != fiscalizacion.getMuestra()
+										.size()) {
+									throw new NegocioException(msjPrefijo
+											+ "las Muestras." + msjDesvincular);
+								}
+							}*/
+					}//else Rodal
+						//}//else Marcacion
+						//}//else Tranzon
+						//}//else PMF
+				}//else TipoProducto
+			}//else Prod. Forestal
+			//}//else tipoEntidad
 		}//hay GForestal
 
 	}
