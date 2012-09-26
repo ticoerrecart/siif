@@ -9,7 +9,6 @@ import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
@@ -17,6 +16,7 @@ import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.utils.Fecha;
 
 public class FiscalizacionFachada implements IFiscalizacionFachada {
 
@@ -54,8 +54,8 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor) 
-																	throws NegocioException {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor)
+			throws NegocioException {
 
 		try {
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
@@ -94,15 +94,39 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public void modificacionFiscalizacion(Fiscalizacion fiscalizacion,
-			List<Muestra> muestrasAEliminar) throws NegocioException {
+	/**
+	 * Modificación de Fiscalización.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
+	 * @param fiscalizacionDTO
+	 * @param muestrasNuevasDTO
+	 * @throws NegocioException 
+	 */
+	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
+			List<MuestraDTO> muestrasNuevasDTO) throws NegocioException {
 		try {
-			fiscalizacionDAO.modificacionFiscalizacion(fiscalizacion, muestrasAEliminar);
+			Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(fiscalizacionDTO
+					.getId());
+
+			fiscalizacion.setFecha((Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha())));
+			fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
+			fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
+			fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
+			Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
+					.getId());
+			fiscalizacion.setOficinaAlta(oficinaAlta);
+			fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
+
+			fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion, muestrasNuevasDTO);
+			//fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
 
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
+
+/*	public void modificacionFiscalizacion(Fiscalizacion pFiscalizacion) throws DataBaseException {
+		fiscalizacionDAO.modificacionFiscalizacion(pFiscalizacion, pFiscalizacion.getMuestra());
+	}
+*/
 
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
 		try {
@@ -134,7 +158,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
+/*	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
 		try {
 			fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
 
@@ -142,6 +166,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 			throw new NegocioException(e.getMessage());
 		}
 	}
+*/
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
 			throws NegocioException {
@@ -192,12 +217,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException
-	{
+			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException {
 		try {
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-					.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal, listaSubImportesDTO);
+					.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal,
+							listaSubImportesDTO);
 
 			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
@@ -207,9 +232,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
-		}		
-	}		
-	
+		}
+	}
+
 	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
 			String idTipoProducto, String idRodal) throws NumberFormatException, DataBaseException,
 			NegocioException {
@@ -261,7 +286,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 						//}//else PMF
 				}//else TipoProducto
 			}//else Prod. Forestal
-			//}//else tipoEntidad
+				//}//else tipoEntidad
 		}//hay GForestal
 
 	}

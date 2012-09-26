@@ -200,9 +200,9 @@ function calcularVolumen() {
 
 	var primeraFila = '<tr id="fila0">' +
 							'   <td class="botoneralNegritaRight ind">1</td> ' +
-							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].largo"></td>' +
-							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].diametro1"></td>' +
-							'   <td class="diam2"><input class="botonerab" type="text" name="muestrasDTO[0].diametro2"></td>' +
+							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].largo" onblur="this.value = reemplazarComa(this.value)"></td>' +
+							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].diametro1" onblur="this.value = reemplazarComa(this.value)"></td>' +
+							'   <td class="diam2"><input class="botonerab" type="text" name="muestrasDTO[0].diametro2" onblur="this.value = reemplazarComa(this.value)"></td>' +
 							'</tr>';
 
 	function agregarFila() {
@@ -290,4 +290,8 @@ function calcularVolumen() {
 				$('#trMuestras').hide();
 		}
 
+	}
+	
+	function reemplazarComa(valor){
+		return valor.replace(",",".");
 	}

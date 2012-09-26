@@ -433,14 +433,14 @@ $(function() {
 										<tr id="fila${i.index}">
 											<td class="botoneralNegritaRight ind">${i.index+1}</td>
 											<td><input class="botonerab" type="text"
-												name="muestrasDTO[${i.index}].largo" value="${muestra.largo}">
+												name="muestrasDTO[${i.index}].largo" value="${muestra.largo}" onblur="this.value = reemplazarComa(this.value)">
 											</td>
 											<td><input class="botonerab" type="text"
 												name="muestrasDTO[${i.index}].diametro1"
-												value="${muestra.diametro1}"></td>
+												value="${muestra.diametro1}" onblur="this.value = reemplazarComa(this.value)"></td>
 											<td><input class="botonerab diam2" type="text"
 												name="muestrasDTO[${i.index}].diametro2"
-												value="${muestra.diametro2}"></td>
+												value="${muestra.diametro2}" onblur="this.value = reemplazarComa(this.value)"></td>
 										</tr>
 
 									</c:forEach>
