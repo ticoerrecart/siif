@@ -104,32 +104,6 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		}
 	}
 
-	/*	public void modificacionFiscalizacion(Fiscalizacion pFiscalizacion,
-				List<Muestra> muestrasAEliminar) throws DataBaseException {
-
-			try {
-
-				for (Muestra muestra : muestrasAEliminar) {
-
-					muestra.setFiscalizacion(null);
-
-					this.getHibernateTemplate().delete(muestra);
-					//this.getHibernateTemplate().flush();
-					//this.getHibernateTemplate().clear();
-				}
-				pFiscalizacion.setMuestra(null);
-				this.getHibernateTemplate().saveOrUpdate(pFiscalizacion);
-
-			} catch (HibernateException he) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			} catch (HibernateSystemException he) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			} catch (Exception e) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			}
-		}
-	*/
-
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws DataBaseException {
 		try {
 			this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
@@ -167,23 +141,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
 	}
 
-	/*	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws DataBaseException {
 
-			try {
-
-				this.getHibernateTemplate().merge(fiscalizacion);
-				this.getHibernateTemplate().flush();
-				this.getHibernateTemplate().clear();
-
-			} catch (HibernateException he) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			} catch (HibernateSystemException he) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			} catch (Exception e) {
-				throw new DataBaseException(Constantes.ERROR_MODIFICACION_FISCALIZACION);
-			}
-		}
-	*/
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor)
 			throws DataBaseException {
 

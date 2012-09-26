@@ -123,10 +123,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-/*	public void modificacionFiscalizacion(Fiscalizacion pFiscalizacion) throws DataBaseException {
-		fiscalizacionDAO.modificacionFiscalizacion(pFiscalizacion, pFiscalizacion.getMuestra());
-	}
-*/
 
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
 		try {
@@ -157,16 +153,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
-/*	public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
-		try {
-			fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
-	}
-*/
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
 			throws NegocioException {

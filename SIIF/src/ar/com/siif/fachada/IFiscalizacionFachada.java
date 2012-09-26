@@ -28,10 +28,6 @@ public interface IFiscalizacionFachada {
 
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws NegocioException;
 
-	/*public void modificacionFiscalizacion(Fiscalizacion fiscalizacion,
-			List<Muestra> muestrasAEliminar) throws NegocioException;*/
-
-	//public void modificacionFiscalizacion(Fiscalizacion pFiscalizacion) throws DataBaseException;
 
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasNuevasDTO) throws NegocioException;
@@ -40,8 +36,6 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor)
 			throws NegocioException;
-
-	//public void actualizarFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException;
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO)
 			throws NegocioException;

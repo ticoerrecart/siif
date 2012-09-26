@@ -269,77 +269,6 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("errorModificacion", e.getMessage());
 		}
 
-		/*try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
-			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
-
-			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
-					.getBean("fiscalizacionFachada");
-
-			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
-					.getBean("ubicacionFachada");
-
-			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
-			Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
-
-			fiscalizacion.setProductorForestal(fiscalizacionFachada
-					.getProductorForestal(fiscalizacionForm.getIdProductorForestal()));
-			fiscalizacion.setTipoProducto(fiscalizacionFachada.getTipoProducto(fiscalizacionForm
-					.getIdTipoProductoForestal()));
-			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));			
-			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
-			fiscalizacion.setTamanioMuestra(fiscalizacionForm.getMuestras().size());
-
-			int i = 0;
-			for (Muestra muestra : fiscalizacionForm.getMuestras()) {
-
-				if (fiscalizacion.getMuestra().size() <= i) {
-					if (muestra.getLargo() > 0.0) {
-						muestra.setFiscalizacion(fiscalizacion);
-						fiscalizacion.getMuestra().add(muestra);
-					}
-				} else {
-					Muestra muestraAModificar = fiscalizacion.getMuestra().get(i);
-					muestraAModificar.setDiametro1(muestra.getDiametro1());
-					muestraAModificar.setDiametro2(muestra.getDiametro2());
-					muestraAModificar.setLargo(muestra.getLargo());
-				}
-				i++;
-			}
-			List<Muestra> muestrasAEliminar = new ArrayList<Muestra>();
-			for (int j = fiscalizacion.getMuestra().size() - 1; j >= fiscalizacionForm
-					.getMuestras().size(); j--) {
-
-				muestrasAEliminar.add(fiscalizacion.getMuestra().get(j));
-				fiscalizacion.getMuestra().set(j, null);
-			}
-
-			Usuario usr = fiscalizacion.getUsuario();
-			fiscalizacion.setUsuario(null);
-			Entidad oficina = fiscalizacion.getOficinaAlta();
-			fiscalizacion.setOficinaAlta(null);			
-			
-			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion, muestrasAEliminar);
-
-			fiscalizacion.setUsuario(usr);
-			fiscalizacion.setOficinaAlta(oficina);			
-			
-			fiscalizacionFachada.actualizarFiscalizacion(fiscalizacion);
-			
-			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_FISCALIZACION);
-			request.getSession().setAttribute("fiscalizacion", null);
-
-		} catch (DataBaseException dbe) {
-			request.setAttribute("errorModificacion", dbe.getMessage());
-			// strForward = "errorLogin";
-		} catch (Exception e) {
-			request.setAttribute("errorModificacion", e.getMessage());
-			// strForward = "errorLogin";
-		}*/
 
 		return mapping.findForward(strForward);
 	}
@@ -364,30 +293,6 @@ public class FiscalizacionAction extends ValidadorAction {
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
 			fiscalizacionDTO.setUsuario(usuario);
-
-			/*Fiscalizacion fiscalizacion = fiscalizacionForm.getFiscalizacion();
-
-			Entidad productorForestal = fiscalizacionFachada.getProductorForestal(fiscalizacionForm
-					.getIdProductorForestal());
-			TipoProducto tipoProducto = fiscalizacionFachada.getTipoProducto(fiscalizacionForm
-					.getIdTipoProductoForestal());
-			fiscalizacion.setProductorForestal(productorForestal);
-			fiscalizacion.setTipoProducto(tipoProducto);
-			fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionForm.getFecha()));
-			fiscalizacion.setRodal(ubicacionFachada.getRodal(fiscalizacionForm.getIdRodal()));
-			fiscalizacion.setUsuario(usuario);
-			fiscalizacion.setOficinaAlta(entidadFachada.getEntidad(fiscalizacionForm.getIdOficinaForestal()));
-			
-			for (Muestra muestra : fiscalizacionForm.getMuestras()) {
-
-				if (muestra.getLargo() > 0.0) {
-					muestra.setFiscalizacion(fiscalizacion);
-					fiscalizacion.getMuestra().add(muestra);
-				}
-			}
-
-			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
-			fiscalizacionFachada.actualizarFiscalizacion(fiscalizacion);*/
 
 			//Hay que hacer el alta de la Fiscalizacion, con la FiscalizacionDTO y la lista de MuestraDTO.
 			//Hay que cambiar el usuario que se guarda en el session por usuarioDTO.
