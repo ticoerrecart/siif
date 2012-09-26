@@ -54,10 +54,12 @@ function mostrarDetalle(){
 	var forward = $('#paramForward').val();
 	$('#divCargando').show();	
 	$('#divDetalle').html("");
+	$('#errores').html("");
 	
 	if(idProductor != "" && idProductor != "-1"){
 	//alert($('#paramUrlDetalle').val() + '&idProductor='+idProductor)
-		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&idRodal='+idRodal + '&forward=' + forward);
+		//$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&idRodal='+idRodal + '&forward=' + forward);
+		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
 		$('#divDetalle').hide();
 		$('#divDetalle').fadeIn(600);
 
@@ -76,8 +78,9 @@ function mostrarDetalle(){
 function cargarProductores(){
 
 	$('#divDetalle').html("");
-	deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
-	           				"idRodal" ]);
+	$('#errores').html("");
+	/*deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
+	           				"idRodal" ]);*/
 		
 	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 	if(idTipoDeEntidad != "-1"){
@@ -121,7 +124,7 @@ function actualizarProductoresVolverCallback(productores){
 	mostrarDetalle();		
 }
 
-function actualizarComboPMF() {
+/*function actualizarComboPMF() {
 	
 	$('#divDetalle').html("");
 	idPF = $('#selectProductores').val();
@@ -227,8 +230,7 @@ function deshabilitarLocalizacion(ids) {
 		dwr.util.addOptions(ids[i], data, "id", "nombre");
 		$('#' + ids[i]).attr('disabled', 'disabled');
 	}
-
-}
+}*/
 
 </script>
 
@@ -238,10 +240,10 @@ function deshabilitarLocalizacion(ids) {
 <input id="paramForward" type="hidden" value="${paramForward}">
 <tr>
 	<td>
-		<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2" cellspacing="0">
-			<tr>
+		<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2" cellspacing="0">
+			<!-- <tr>
 				<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.label.ProductorForestal'/></td>
-			</tr>		
+			</tr> -->		
 			<tr>
 				<td height="15" colspan="3"></td>
 			</tr>
@@ -274,9 +276,13 @@ function deshabilitarLocalizacion(ids) {
 			<tr>
 				<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 				<td class="botonerab">
-					<select id="selectProductores" class="botonerab" disabled="disabled" onchange="actualizarComboPMF()">
+					<!-- <select id="selectProductores" class="botonerab" disabled="disabled" onchange="actualizarComboPMF()">
 						<option value="">-Seleccione un Productor-</option>
-					</select>
+					</select>-->
+					<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarDetalle()">
+						<option value="">-Seleccione un Productor-</option>
+					</select>					
+					
 				</td>
 			</tr>				
 			 
@@ -290,6 +296,7 @@ function deshabilitarLocalizacion(ids) {
 
 
 		<!-- LOCALIZACION -->
+		<!-- 
 		<tr>
 			<td>
 				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2" cellspacing="0">
@@ -348,7 +355,7 @@ function deshabilitarLocalizacion(ids) {
 					</tr>				
 				</table>
 			</td>
-		</tr>
+		</tr> -->
 		
 		
 		

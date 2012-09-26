@@ -247,6 +247,45 @@ function cambiarAtributos(idBoleta,readonly){
 	</tr>
 </table>
 
+<!-- LOCALIZACION -->
+<table border="0" class="cuadrado" align="center" width="80%"
+	cellpadding="2">
+	<tr>
+		<td height="10" colspan="4"></td>
+	</tr>
+	<tr>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
+		<td width="30%" align="left">
+			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.rodal.marcacion.tranzon.pmf.expediente}" 
+					class="botonerab" type="text" size="40" readonly="readonly">
+		</td>
+		<td width="30%" class="botoneralNegritaRight">
+			<bean:message key='SIIF.label.Tranzon'/>
+		</td>
+		<td align="left">
+			<input value="${guiaForestal.rodal.marcacion.tranzon.numero} - ${guiaForestal.rodal.marcacion.tranzon.disposicion}" 
+					class="botonerab" type="text" size="40" readonly="readonly">
+		</td>
+	</tr>
+	<tr>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
+		<td width="30%" align="left">
+			<input value="${guiaForestal.rodal.marcacion.disposicion}" 
+					class="botonerab" type="text" size="40" readonly="readonly">
+		</td>
+		<td width="30%" class="botoneralNegritaRight">
+			<bean:message key='SIIF.label.Rodal'/>
+		</td>
+		<td align="left">
+			<input value="${guiaForestal.rodal.nombre}"
+				   class="botonerab" type="text" size="40" readonly="readonly">
+		</td>
+	</tr>		
+	<tr>
+		<td height="10" colspan="4"></td>
+	</tr>
+</table>
+
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
@@ -258,13 +297,13 @@ function cambiarAtributos(idBoleta,readonly){
 			<div id="e1" style="DISPLAY: ">
 				<label onclick="javascript:exp('1')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion">Productos Forestales</U><BR>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ProductosForestales'/></U><BR>
 				</label>
 			</div>
 			<div id="c1" style="DISPLAY: none">
 				<label onclick="javascript:col('1')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion">Productos Forestales</U><BR>
+					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ProductosForestales'/></U><BR>
 				</label>
 	
 				<table border="0" class="cuadradoSinBorde" align="center"
@@ -274,7 +313,7 @@ function cambiarAtributos(idBoleta,readonly){
 					</tr>
 					<tr>
 						<td align="left" colspan="4">
-							La presente Guía Forestal Básica certifica la propiedad de la siguiente partida de productos forestales:
+							<bean:message key='SIIF.label.CertificadoGuia'/>
 						</td>
 					</tr>
 					<tr>
@@ -285,77 +324,71 @@ function cambiarAtributos(idBoleta,readonly){
 							<table border="0" class="cuadrado" align="center" width="90%"
 								   cellpadding="2" cellspacing="0">
 								<tr>
-									<td class="azulAjustado">Tipo</td>
-									<td class="azulAjustado">Estado</td>
-									<td class="azulAjustado">Especie</td>
-									<td class="azulAjustado">M³</td>
-									<td class="azulAjustado">Unidad</td>
-									<td class="azulAjustado">Importe</td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.Tipo'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.Estado'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.Especie'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.M3'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.Unidad'/></td>
+									<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
 								</tr>
+
+								<c:forEach items="${guiaForestal.subImportes}" var="subImporte" varStatus="i">	
 								<tr>
 									<td>
-										<input class="botonerab" type="text" 
-											value="<c:out value='${guiaForestal.tipoProducto.nombre}'/>"
-											readonly="readonly">																							
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.tipoProducto.nombre}">														
 									</td>
 									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.estado}" readonly="readonly">							
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.estado}">														
+									</td> 
+									<td>
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.especie}">
 									</td>
 									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.especie}" readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.cantidadMts}">									
 									</td>
 									<td>
-										<input id="idCantidadMts" class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.cantidadMts}'/>"
-											readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.valorAforos}">													
 									</td>
 									<td>
-										<input class="botonerab" type="text"
-											value="<c:out value='${guiaForestal.cantidadUnidades}'/>"
-											readonly="readonly">
-									</td>
-									<td>
-										<input class="botonerab" type="text" value="${guiaForestal.importe}" readonly="readonly">
+										<input class="botonerab" type="text" readonly="readonly" value="${subImporte.importe}">
 									</td>
 								</tr>
-								<tr>
-									<td colspan="6">&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan="3">&nbsp;</td>
-									<td colspan="2">Derecho de Inspección y Fiscalización 20%</td>
-									<td><input value="${guiaForestal.inspFiscalizacion}" readonly="readonly"
-										class="botonerab" type="text"></td>
-								</tr>
-								<tr>
-									<td colspan="4"></td>
-									<td class="botoneralNegrita">TOTAL</td>
-									<td>
-										<input readonly="readonly" class="botonerab" type="text"
-										 	value="<%= guia.getImporteTotal()%>">
-											<!--guia.getImporte() + guia.getInspFiscalizacion() -->
-									</td>
-								</tr>
+								</c:forEach>	
 							</table>
+							<table border="0" class="cuadrado" align="center" width="90%"
+								cellpadding="2" cellspacing="0">				
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right"width="82%">
+										<bean:message key='SIIF.label.DerechoInspFisca'/>
+									</td>
+									<td width="18%">
+										<input value="${guiaForestal.inspFiscalizacion}" readonly="readonly" class="botonerab" type="text">
+									</td>
+								</tr> 
+								<tr>
+									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
+									<td>
+										<input readonly="readonly" value="${guiaForestal.importeTotal}" class="botonerab" type="text">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+							</table>							
 						</td>
 					</tr>
 					<tr>
 						<td height="15" colspan="4"></td>
 					</tr>
 					<tr>
-						<td width="12%" class="botoneralNegritaRight">Valor de Aforo</td>
-						<td width="55%" align="left">
-							<input value="${guiaForestal.valorAforos}" class="botonerab" type="text" 
-								size="70" readonly="readonly">
-						</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td width="12%" class="botoneralNegritaRight">Observaciones</td>
+						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
 						<td align="left" colspan="3">
-							<textarea class="botonerab" cols="130" rows="3" 
-									  readonly="readonly"><c:out value="${guiaForestal.observaciones}"></c:out></textarea>
+							<textarea class="botonerab" cols="130" rows="3">
+								<c:out value="${guiaForestal.observaciones}"></c:out>
+							</textarea>
 						</td>
 					</tr>
 					<tr>

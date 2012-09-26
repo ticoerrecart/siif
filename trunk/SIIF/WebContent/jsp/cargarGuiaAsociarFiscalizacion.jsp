@@ -85,8 +85,6 @@ function volverAltaGFB(){
 
 function agrElimFisc(indice,idFiscalizacion){
 
-	alert(indice);
-	alert(idFiscalizacion);
 	var i = indice+1;
 	if($('#idCheck'+i).is(':checked')){
 		$("#idFiscalizacion"+indice).val(idFiscalizacion);
@@ -462,7 +460,7 @@ function submitAsociarGuia(){
 						<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
 							<tr>
 								<td class="botonerab">
-									No existen Fiscalizaciones aptas para asociar
+									No existen Fiscalizaciones aptas para asociar a la Guía Forestal
 								</td>
 							</tr>
 						</table>													
@@ -477,18 +475,16 @@ function submitAsociarGuia(){
 </table>
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>    
-		<td height="10" colspan="4"></td>
+		<td height="10"></td>
 	</tr>
 	<tr>
-		<td height="20" width="49%" align="right">
+		<td height="20" align="center">
 			<input id="idBotonCrearGuia" class="botonerab" type="submit" value="Aceptar">
-			<input type="button" class="botonerab" value="Volver" onclick="javascript:volverConsultaGuia();">
-		</td>
-		<td height="20" colspan="2">
+			<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();">
 		</td>
 	</tr>
 	<tr>
-		<td height="10" colspan="4"></td>
+		<td height="10"></td>
 	</tr> 
 </table>
 </div>	 				  

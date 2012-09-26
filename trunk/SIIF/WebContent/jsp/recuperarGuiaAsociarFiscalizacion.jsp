@@ -25,6 +25,7 @@
 	}
 </script>
 
+<div id="exitoAsociacion" class="verdeExito">${exitoAsociacion}</div>
 <div id="errores" class="rojoAdvertencia">${error}</div>
 <br>
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
