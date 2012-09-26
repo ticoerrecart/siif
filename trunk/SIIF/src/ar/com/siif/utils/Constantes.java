@@ -49,6 +49,8 @@ public class Constantes {
 		
 		public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
 		
+		public static final String EXITO_ALTA_GUIA_FORESTAL = "La Guía Forestal se ha dado de alta con exito";		
+		
 		public static final String ERROR_RECUPERAR_GUIA_FORESTAL = "Ha ocurrido un error en la recuperación de la guía forestal";
 		
 		public static final String ERROR_RECUPERAR_GUIAS_FORESTALES = "Ha ocurrido un error en la recuperación de la guías forestales";

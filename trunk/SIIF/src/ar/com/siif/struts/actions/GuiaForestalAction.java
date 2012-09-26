@@ -24,6 +24,7 @@ import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
+import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.ILoginFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
@@ -58,7 +59,10 @@ public class GuiaForestalAction extends ValidadorAction {
 			
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
-					
+
+			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+					.getBean("localidadFachada");			
+			
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
 			
@@ -97,6 +101,7 @@ public class GuiaForestalAction extends ValidadorAction {
 				}	
 			}
 						
+			request.setAttribute("localidades",localidadFachada.getLocalidadesDTO());
 			request.setAttribute("tiposProductosForestales",tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal",productorForestal);
@@ -134,15 +139,17 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
 
 			guiaForestal.setUsuario(usr);
-			/*guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
+			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 													   guiaForm.getBoletasDeposito(),
 													   guiaForm.getRangos(), 
 													   Fecha.stringDDMMAAAAToUtilDate(guiaForm.getFechaVencimiento()),
 													   guiaForm.getListaFiscalizaciones(),
-												   	   guiaForm.getListaSubImportes());*/
+												   	   guiaForm.getListaSubImportes());
 
+			request.setAttribute("exitoModificacion", Constantes.EXITO_ALTA_GUIA_FORESTAL);			
+			
 		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+			request.setAttribute("errorModificacion", e.getMessage());
 			// strForward = "errorLogin";
 		}
 
