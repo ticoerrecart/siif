@@ -16,7 +16,10 @@
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/AforoFachada.js'/>"></script>	
-
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>		
+<script type="text/javascript"
+	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
 
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
@@ -390,44 +393,121 @@ function removerFila() {
 	</table>
 
 	<!-- LOCALIZACION -->
-	<table border="0" class="cuadrado" align="center" width="80%"
-		cellpadding="2">
-		<tr>
-			<td height="10" colspan="4"></td>
-		</tr>
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-			<td width="30%" align="left">
-				<input value="${rodal.marcacion.tranzon.pmf.nombre} - ${rodal.marcacion.tranzon.pmf.expediente}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-			<td width="30%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.Tranzon'/>
-			</td>
-			<td align="left">
-				<input value="${rodal.marcacion.tranzon.numero} - ${rodal.marcacion.tranzon.disposicion}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-		</tr>
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-			<td width="30%" align="left">
-				<input value="${rodal.marcacion.disposicion}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-			<td width="30%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.Rodal'/>
-			</td>
-			<td align="left">
-				<input id="idRodal" type="hidden" name="guiaForestal.rodal.id" value="${rodal.id}">
-				<input value="${rodal.nombre}"
-					   class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-		</tr>		
-		<tr>
-			<td height="10" colspan="4"></td>
-		</tr>
-	</table>
+	<c:choose>
+		<c:when test="${fn:length(fiscalizaciones)>0}">		
+			<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+				<tr>
+					<td height="10" colspan="4"></td>
+				</tr>
+				<tr>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
+					<td width="30%" align="left">
+						<input value="${rodal.marcacion.tranzon.pmf.nombre} - ${rodal.marcacion.tranzon.pmf.expediente}" 
+								class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+					<td width="30%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.Tranzon'/>
+					</td>
+					<td align="left">
+						<input value="${rodal.marcacion.tranzon.numero} - ${rodal.marcacion.tranzon.disposicion}" 
+								class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+				</tr>
+				<tr>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
+					<td width="30%" align="left">
+						<input value="${rodal.marcacion.disposicion}" 
+								class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+					<td width="30%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.Rodal'/>
+					</td>
+					<td align="left">
+						<input id="idRodal" type="hidden" name="guiaForestal.rodal.id" value="${rodal.id}">
+						<input value="${rodal.nombre}"
+							   class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+				</tr>		
+				<tr>
+					<td height="10" colspan="4"></td>
+				</tr>
+			</table>
+		</c:when>
+		<c:otherwise>
+			<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+				<tr>
+					<td height="10"></td>
+				</tr>
+				<tr>
+					<td>		
+						<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2" cellspacing="0">
+							<tr>
+								<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
+							</tr>
+							<tr>
+								<td colspan="3" height="10"></td>
+							</tr>				
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.PlanManejoForestal'/>
+								</td>
+								<td width="4%"></td>						
+								<td align="left">
+									<select id="idPMF" class="botonerab" onchange="actualizarComboTranzon();">
+										<option value="-1">- Seleccione -</option>
+										<c:forEach items="${pmfs}" var="pmf">
+											<option value="${pmf.id}">
+												<c:out value="${pmf.nombre} - ${pmf.expediente}"></c:out>
+											</option>
+										</c:forEach>
+									</select>					
+								</td>						
+							</tr>				
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Tranzon'/>
+								</td>
+								<td width="4%"></td>						
+								<td align="left">
+									<select id="idTranzon" class="botonerab" disabled="disabled" onchange="actualizarComboMarcacion();">
+										<option value="-1">- Seleccione -</option>
+									</select>					
+								</td>
+							</tr>
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Marcacion'/>
+								</td>
+								<td width="4%"></td>
+								<td align="left">
+									<select id="idMarcacion" class="botonerab" disabled="disabled" onchange="actualizarComboRodal();">
+										<option value="-1">- Seleccione -</option>
+									</select>					
+								</td>
+							</tr>
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.Rodal'/>
+								</td>
+								<td width="4%"></td>
+								<td align="left">
+									<select id="idRodal" class="botonerab" name="guiaForestal.rodal.id" disabled="disabled">
+										<option value="-1">- Seleccione -</option>						
+									</select>				
+								</td>
+							</tr>															
+							<tr>
+								<td colspan="3" height="10"></td>
+							</tr>				
+						</table>	
+					</td>
+				</tr>	
+				<tr>
+					<td height="10"></td>
+				</tr>									
+			</table>									
+		</c:otherwise>
+	</c:choose>
 
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
