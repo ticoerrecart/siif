@@ -15,27 +15,6 @@ import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.struts.utils.Validator;
 
 public class FiscalizacionForm extends ActionForm {
-
-	//private Fiscalizacion fiscalizacion;
-
-	//private long idProductorForestal;
-
-	//private long idTipoProductoForestal;
-
-	//private long idPlanManejoForestal;
-	
-	//private long idTranzon;
-	
-	//private long idMarcacion;
-	
-	//private long idRodal;
-
-	//private long idOficinaForestal;
-	
-	//private String fecha;
-
-	//private List<Muestra> muestras;
-
 	
 	//-------------//
 	private FiscalizacionDTO fiscalizacionDTO;

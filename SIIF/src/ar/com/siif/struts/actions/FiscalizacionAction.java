@@ -222,7 +222,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
 			request.setAttribute("oficinas", oficinas);
-			
+
 			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidadProductores();
 			request.setAttribute("tiposEntidad", tiposEntidad);
 			request.setAttribute("productores", productores);
@@ -240,11 +240,34 @@ public class FiscalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	/**
+	 * Modificación de Fiscalización.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
 	public ActionForward modificacionFiscalizacion(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoModificacionFiscalizacion";
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
+					.getBean("fiscalizacionFachada");
+			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
+			/*Fiscalizacion fiscalizacion = fiscalizacionFachada
+					.recuperarFiscalizacion(fiscalizacionForm.getFiscalizacionDTO().getId());
+			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion);*/
+			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacionForm.getFiscalizacionDTO(),
+					fiscalizacionForm.getMuestrasDTO());
+
+		} catch (Exception e) {
+			request.setAttribute("errorModificacion", e.getMessage());
+		}
 
 		/*try {
 			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
