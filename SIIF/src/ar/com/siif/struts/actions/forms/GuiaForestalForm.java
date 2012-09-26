@@ -132,6 +132,17 @@ public class GuiaForestalForm extends ActionForm {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
+	public void normalizarListaFiscalizaciones(){
+		
+		List<FiscalizacionDTO> listaEliminar =  new ArrayList<FiscalizacionDTO>();
+		for (FiscalizacionDTO fiscalizacion : listaFiscalizaciones) {
+			if(fiscalizacion != null && fiscalizacion.getId() == 0){
+				listaEliminar.add(fiscalizacion);
+			}
+		}
+		listaFiscalizaciones.removeAll(listaEliminar);
+	}
+	
 	public boolean validar(StringBuffer error) {
 		boolean ok = true;
 		boolean ok2 = true;
@@ -144,6 +155,7 @@ public class GuiaForestalForm extends ActionForm {
 		boolean ok9 = true;
 		boolean ok10 = true;
 		boolean ok11 = true;
+		boolean ok12 = true;
 
 		ok = Validator.validarEnteroMayorQue(0,
 				Integer.toString(this.getGuiaForestal().getNroGuia()),
@@ -151,33 +163,11 @@ public class GuiaForestalForm extends ActionForm {
 		ok2 = Validator.requerido(this.getGuiaForestal().getFechaVencimiento(),
 				"Valido Hasta", error);
 
-		FiscalizacionDTO fiscalizacion = listaFiscalizaciones.get(0);
-		if (fiscalizacion != null && fiscalizacion.getId() != null) {
-			/*
-			 * ok11 =
-			 * Validator.validarTipoProductoAltaGFB(this.getGuiaForestal()
-			 * .getTipoProducto().getId(),
-			 * fiscalizacion.getTipoProducto().getId(), error);
-			 */
-		}
-
-		/*
-		 * ok3 =
-		 * Validator.requerido(String.valueOf(this.getGuiaForestal().getImporte
-		 * ()), "Importe", error); if(ok3){ ok3 =
-		 * Validator.validarDoubleMayorQue
-		 * (0,String.valueOf(this.getGuiaForestal().getImporte()), "Importe",
-		 * error); }
-		 */
-
-		/*
-		 * ok4 = Validator.requerido(this.getGuiaForestal().getEstado(),
-		 * "Estado", error); ok5 =
-		 * Validator.requerido(this.getGuiaForestal().getEspecie(), "Especie",
-		 * error);
-		 */
+		ok12 = Validator.validarRodalRequerido(this.getGuiaForestal().getRodal().getId(),error);
+		
 		ok3 = Validator.validarSubImportes(this.getListaSubImportes(),this.getListaFiscalizaciones(),error);
-		ok4 = Validator.validarDoubleMayorQue(0, String.valueOf(this.getGuiaForestal().getImporteTotal()),"Importe Total", error);		
+		ok4 = Validator.validarDoubleMayorQue(0, String.valueOf(this.getGuiaForestal().getImporteTotal()),
+				"Importe Total", error);		
 		
 		double montoTotal = this.getGuiaForestal().getImporteTotal();
 		ok6 = Validator.validarBoletasDeposito(this.getBoletasDeposito(),
@@ -194,6 +184,6 @@ public class GuiaForestalForm extends ActionForm {
 		
 
 		return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9
-				&& ok10 && ok11;
+				&& ok10 && ok11 && ok12;
 	}
 }
