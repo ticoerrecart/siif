@@ -1038,8 +1038,16 @@ function removerFila() {
 		</tr>
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
-			<td width="30%" align="left">
-				<input name="guiaForestal.localidad" class="botonerab" type="text" size="40">
+			<td width="30%" align="left">				
+				<select id="idLocalidad" class="botonerab" name="guiaForestal.localidad">
+					<option value="">- Seleccione una Localidad -</option>
+					<c:forEach items="${localidades}" var="localidad">
+						<option value="${localidad.nombre}">
+							<c:out value="${localidad.nombre}"></c:out>
+						</option>
+					</c:forEach>
+				</select>				
+				
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td align="left">		
