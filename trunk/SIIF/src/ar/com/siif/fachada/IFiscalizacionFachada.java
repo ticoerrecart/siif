@@ -18,8 +18,7 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizaciones() throws NegocioException;
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor,
-			Long idRodal) throws NegocioException;
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor) throws NegocioException;
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
 			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException;

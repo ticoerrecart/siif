@@ -623,4 +623,13 @@ public abstract class Validator {
 		
 		return true;
 	}
+	
+	public static boolean validarRodalRequerido(Long idRodal , StringBuffer pError){
+		
+		if(idRodal == null || idRodal.longValue() <= 0){
+			addErrorXML(pError, "Rodal es un dato obligatorio");
+			return false;
+		}
+		return true;
+	}
 }

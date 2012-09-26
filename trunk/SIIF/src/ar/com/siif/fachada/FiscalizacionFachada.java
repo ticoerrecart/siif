@@ -54,13 +54,13 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor,
-			Long idRodal) throws NegocioException {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor) 
+																	throws NegocioException {
 
 		try {
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-					.recuperarFiscalizacionesParaAltaGFB(idProductor, idRodal);
+					.recuperarFiscalizacionesParaAltaGFB(idProductor);
 
 			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));

@@ -48,7 +48,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor, long idRodal) throws DataBaseException {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor) throws DataBaseException {
 		
 		try{
 			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
@@ -56,8 +56,8 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			
 			criteria.add(Restrictions.conjunction()
 					.add(Restrictions.isNull("guiaForestal"))
-					.add(Restrictions.eq("pf.id", idProductor))
-					.add(Restrictions.eq("rodal.id", idRodal)));
+					.add(Restrictions.eq("pf.id", idProductor)));
+					//.add(Restrictions.eq("rodal.id", idRodal)));
 			
 			criteria.addOrder(Order.asc("pf.nombre"));
 			criteria.addOrder(Order.asc("fecha"));		
