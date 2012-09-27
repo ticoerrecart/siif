@@ -20,7 +20,7 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volver(){	
+function volverRecuperarGuiaAsociarFiscalizacion(){	
 
 	parent.location = contextRoot() +  '/jsp.do?page=.recuperarGuiaAsociarFiscalizacion';		
 }
@@ -480,7 +480,8 @@ function submitAsociarGuia(){
 	<tr>
 		<td height="20" align="center">
 			<input id="idBotonCrearGuia" class="botonerab" type="submit" value="Aceptar">
-			<input type="button" class="botonerab" value="Volver" onclick="javascript:volver();">
+			<input type="button" class="botonerab" value="Volver" 
+				onclick="javascript:volverRecuperarGuiaAsociarFiscalizacion();">
 		</td>
 	</tr>
 	<tr>
