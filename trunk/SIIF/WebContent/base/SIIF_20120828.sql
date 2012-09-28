@@ -202,6 +202,31 @@ INSERT INTO `localidad` VALUES (1,'Rio Grande'),(2,'Tolhuin'),(3,'Ushuaia');
 /*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `periodo`
+--
+DROP TABLE IF EXISTS `periodo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `periodo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `periodo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `periodos`
+--
+
+LOCK TABLES `periodo` WRITE;
+/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
+INSERT INTO `periodo` VALUES (1,'2010-2011'),(2,'2011-2012'),(3,'2012-2013');
+/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 --
 -- Table structure for table `pmf`
 --
