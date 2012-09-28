@@ -7,6 +7,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+
 <script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
@@ -125,57 +127,70 @@
 	
 	function submitirRodalCallback(){
 		cancelarRodal();
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales';
+
+		var idProductor = $('#idProductor').val();
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
 		$('#exitoGrabado').html("Rodal Modificado/Borrado con Exito");
 	}
 
 	function submitirMarcacionCallback(){
 		cancelarMarcacion();
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales';
+
+		var idProductor = $('#idProductor').val();
+		
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones&idProductor='+ idProductor;
 		$('#bloqueMarcaciones').load(url);
 		$('#exitoGrabado').html("Marcacion Modificada/Borrada con Exito");
 	}
 
 	function submitirTranzonCallback(){
 		cancelarTranzon();
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales';
+
+		var idProductor = $('#idProductor').val();
+		
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones&idProductor='+ idProductor;
 		$('#bloqueMarcaciones').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones&idProductor='+ idProductor;
 		$('#bloqueTranzones').load(url);
 		$('#exitoGrabado').html("Tranzon Modificado/Borrado con Exito");
 	}
 
 	function submitirPMFCallback(){
 		cancelarPMF();
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales';
+
+		var idProductor = $('#idProductor').val();
+		
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones&idProductor='+ idProductor;
 		$('#bloqueMarcaciones').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones&idProductor='+ idProductor;
 		$('#bloqueTranzones').load(url);
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDePMFs';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDePMFs&idProductor='+ idProductor;
 		$('#bloquePMFs').load(url);
 		$('#exitoGrabado').html("PMF Modificado/Borrado con Exito");
 	}
 	
 	
 	$().ready(function() {
+
+		var idProductor = $('#idProductor').val();
 		
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
 
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeMarcaciones&idProductor='+ idProductor;
 		$('#bloqueMarcaciones').load(url);
 	
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeTranzones&idProductor='+ idProductor;
 		$('#bloqueTranzones').load(url);
 		
-		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDePMFs';
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDePMFs&idProductor='+ idProductor;
 		$('#bloquePMFs').load(url);
 		
 	})
@@ -193,7 +208,11 @@
 		toggle(idTabla);
 		$(divModificacion).hide();
 	}
-	
+
+	function volver(){
+		parent.location = contextRoot() +  "/ubicacion.do?metodo=recuperarProductoresParaModificacionPMF";
+	}
+
 </script>
 &nbsp;
 &nbsp;
@@ -205,7 +224,7 @@
 <div id="errores" class="rojoAdvertencia">
 	${error}
 </div>
-
+	<input id="idProductor" type="hidden" value="${idProductor}">
 	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="2" class="azulAjustado">
@@ -224,3 +243,14 @@
 	
 	<div id="bloquePMFs">
 	</div>
+	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+		<tr height="10">
+		</tr>
+		<tr>
+			<td>
+				 <input class="botonerab" type="button" value="Volver" onclick="volver()"> 
+			</td>
+		</tr>
+		<tr height="10">
+		</tr>		
+	</table>
