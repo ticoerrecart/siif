@@ -22,12 +22,14 @@ import ar.com.siif.utils.Constantes;
 public class UbicacionFachada implements IUbicacionFachada {
 
 	private UbicacionDAO ubicacionDAO;
-
+	private IEntidadFachada entidadFachada;
+	
 	public UbicacionFachada() {
 	}
 
-	public UbicacionFachada(UbicacionDAO ubicacionDAO) {
+	public UbicacionFachada(UbicacionDAO ubicacionDAO, IEntidadFachada pEntidadFachada) {
 		this.ubicacionDAO = ubicacionDAO;
+		this.entidadFachada = pEntidadFachada;
 	}
 
 	public List<PMF> recuperarPMFs() {
@@ -250,5 +252,66 @@ public class UbicacionFachada implements IUbicacionFachada {
 			listaPmfDTO.add(ProviderDTO.getPMFDTO(pmf));
 		}
 		return listaPmfDTO;		
+	}
+	
+	public List<PMFDTO> getPMFsDTOPorProductor(Long idProductor) throws NegocioException{
+		
+		Entidad entidad;
+		List<PMFDTO> listaPmfDTO = new ArrayList<PMFDTO>();
+		try {
+			entidad = entidadFachada.getEntidad(idProductor);			
+			
+			for (PMF pmf : entidad.getPmfs()) {
+				listaPmfDTO.add(ProviderDTO.getPMFDTO(pmf));
+			}
+		} catch (NegocioException e) {
+			throw e;
+		}
+		return listaPmfDTO;		
+	}	
+
+	public List<TranzonDTO> getTranzonesDTOPorProductor(Long idProductor) throws NegocioException{
+		
+		List<TranzonDTO> listaTranzonDTO = new ArrayList<TranzonDTO>();
+		try {
+			List<Tranzon> listaTranzon = ubicacionDAO.getTranzonesPorProductor(idProductor);			
+			
+			for (Tranzon tranzon : listaTranzon) {
+				listaTranzonDTO.add(ProviderDTO.getTranzonDTO(tranzon));
+			}
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		return listaTranzonDTO;		
+	}
+	
+	public List<MarcacionDTO> getMarcacionesDTOPorProductor(Long idProductor) throws NegocioException{
+		
+		List<MarcacionDTO> listaMarcacionDTO = new ArrayList<MarcacionDTO>();
+		try {
+			List<Marcacion> listaMarcacion = ubicacionDAO.getMarcacionesPorProductor(idProductor);			
+			
+			for (Marcacion marcacion : listaMarcacion) {
+				listaMarcacionDTO.add(ProviderDTO.getMarcacionDTO(marcacion));
+			}
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		return listaMarcacionDTO;		
+	}
+	
+	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor) throws NegocioException{
+		
+		List<RodalDTO> listaRodalDTO = new ArrayList<RodalDTO>();
+		try {
+			List<Rodal> listaRodal = ubicacionDAO.getRodalesPorProductor(idProductor);			
+			
+			for (Rodal rodal : listaRodal) {
+				listaRodalDTO.add(ProviderDTO.getRodalDTO(rodal));
+			}
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		return listaRodalDTO;		
 	}	
 }
