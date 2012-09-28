@@ -47,6 +47,8 @@ public class Constantes {
 		
 		public static final String NO_EXISTE_GUIA = "Guía Forestal no encontrada";
 		
+		public static final String NRO_GUIA_EXISTENTE = "El número de Guía Forestal ya existe, especifique otro";
+		
 		public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
 		
 		public static final String EXITO_ALTA_GUIA_FORESTAL = "La Guía Forestal se ha dado de alta con exito";		
@@ -189,6 +191,14 @@ public class Constantes {
 		public static final String ERROR_ALTA_MARCACION = "Ha ocurrido un error en el alta de la Marcación";
 		
 		public static final String ERROR_ALTA_RODAL = "Ha ocurrido un error en el alta del Rodal";
+		
+		public static final String ERROR_RECUPERACION_RODALES = "Ha ocurrido un error en la recuperación de los Rodales";
+		
+		public static final String ERROR_RECUPERACION_MARCACIONES = "Ha ocurrido un error en la recuperación de los Marcaciones";
+		
+		public static final String ERROR_RECUPERACION_TRANZONES = "Ha ocurrido un error en la recuperación de los Tranzones";
+		
+		public static final String ERROR_RECUPERACION_PMFS = "Ha ocurrido un error en la recuperación de los Planes de Manejo Forestal";
 		
 	//FIN UBICACION		
 		
