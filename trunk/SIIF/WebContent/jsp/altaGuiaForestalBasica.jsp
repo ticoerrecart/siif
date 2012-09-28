@@ -53,7 +53,7 @@ function volverAltaGuia(){
 
 function submitir(){
 
-	validarForm("guiaForestalForm","../guiaForestal","validarGuiaForestalBasicaForm","GuiaForestalForm");
+	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
 }
 
 function exp(sec) {
