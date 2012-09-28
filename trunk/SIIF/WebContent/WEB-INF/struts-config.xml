@@ -99,6 +99,7 @@
 		<action path="/ubicacion" type="ar.com.siif.struts.actions.UbicacionAction"
 			parameter="metodo" name="ubicacionForm" scope="session">
 			<forward name="exitoRecuperarUbicacionParaAlta" path=".exitoRecuperarUbicacionParaAlta" />
+			<forward name="exitoRecuperarProductoresParaModificacionPMF" path=".recuperarProductoresParaModificacionPMF" />
 			<forward name="exitoRecuperarUbicacionParaModificacion" path=".exitoRecuperarUbicacionParaModificacion" />				
 			<forward name="exitoRecuperarUbicacionParaModificacionDeRodales" path="/jsp/bloqueModificacionRodal.jsp" />
 			<forward name="exitoRecuperarUbicacionParaModificacionDeMarcaciones" path="/jsp/bloqueModificacionMarcacion.jsp" />
