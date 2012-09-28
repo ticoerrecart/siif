@@ -95,7 +95,7 @@ public class FiscalizacionForm extends ActionForm {
 		ok9 = Validator.validarDoubleMayorQue(0,
 				Double.toString(fiscalizacionDTO.getCantidadMts()), "Cantidad Mts3", error);
 
-		if (fiscalizacionDTO.getTipoProducto().getId().longValue() == Constantes.LENIA_ID) {
+		if (fiscalizacionDTO.getTipoProducto().getId().longValue() != Constantes.LENIA_ID) {
 			ok8 = Validator.validarEnteroMayorQue(0,
 					Integer.toString(fiscalizacionDTO.getCantidadUnidades()), "Cantidad Unidades",
 					error);
