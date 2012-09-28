@@ -30,6 +30,9 @@
 		<form-bean name="localidadForm"
 			type="ar.com.siif.struts.actions.forms.LocalidadForm">
 		</form-bean>
+		<form-bean name="periodoForm"
+			type="ar.com.siif.struts.actions.forms.PeriodoForm">
+		</form-bean>		
 		<form-bean name="usuarioForm"
 			type="ar.com.siif.struts.actions.forms.UsuarioForm">
 		</form-bean>
@@ -59,6 +62,7 @@
 			<forward name=".recuperarEntidades" path=".recuperarEntidades" />
 			<forward name=".recuperarLocalidades" path=".recuperarLocalidades" />
 			<forward name=".altaLocalidad" path=".altaLocalidad" />
+			<forward name=".altaPeriodo" path=".altaPeriodo" />			
 			<forward name=".altaUsuario" path=".altaUsuario" />
 			<forward name=".recuperarUsuarios" path=".recuperarUsuarios" />
 			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" 
@@ -231,6 +235,22 @@
 			<forward name="exitoRecuperarLocalidades" path=".recuperarLocalidades" />
 		</action>
 		<!-- FIN LOCALIDAD -->
+
+		<!-- PERIODO -->
+		<action path="/periodo" type="ar.com.siif.struts.actions.PeriodoAction"
+			parameter="metodo" name="periodoForm" scope="session">
+			<forward name="exitoAltaPeriodo"
+				path="/jsp.do?page=.altaPeriodo&amp;metodo=altaPeriodo" />
+			<forward name="exitoCargarPeriodoAModificar" path="/jsp/bloqueAltaPeriodo.jsp" />
+			<forward name="exitoModificacionPeriodo"
+				path="/cargarPeriodosAModificar.do?metodo=cargarPeriodosAModificar" />
+		</action>
+					  
+		<action path="/cargarPeriodosAModificar" type="ar.com.siif.struts.actions.PeriodoAction"
+			parameter="metodo">
+			<forward name="exitoRecuperarPeriodos" path=".recuperarPeriodos" />
+		</action>
+		<!-- FIN PERIODO -->
 
 		<!-- USUARIO -->
 		<action path="/usuario" type="ar.com.siif.struts.actions.UsuarioAction"

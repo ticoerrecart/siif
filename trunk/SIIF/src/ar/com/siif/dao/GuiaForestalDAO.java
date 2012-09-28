@@ -208,7 +208,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
 	
-			return fechaDevolucion;
+			return null;
 
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);

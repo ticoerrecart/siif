@@ -64,6 +64,8 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		parent="abstractRepository" />
 	<bean id="localidadDAO" class="ar.com.siif.dao.LocalidadDAO"
 		parent="abstractRepository" />
+	<bean id="periodoDAO" class="ar.com.siif.dao.PeriodoDAO"
+		parent="abstractRepository" />		
 	<bean id="rolDAO" class="ar.com.siif.dao.RolDAO" parent="abstractRepository" />
 	<bean id="usuarioDAO" class="ar.com.siif.dao.UsuarioDAO" parent="abstractRepository" />
 	<bean id="reportesDAO" class="ar.com.siif.dao.ReportesDAO" parent="abstractRepository" />
@@ -231,6 +233,29 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			</props>
 		</property>
 	</bean>
+
+	<!-- PERIODO --> 
+	<bean id="periodoFachadaImpl" class="ar.com.siif.fachada.PeriodoFachada">
+		<constructor-arg ref="periodoDAO" />
+	</bean>	
+
+	<bean id="periodoFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="periodoFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IPeriodoFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+		
 		
 	<!-- ENTIDAD --> 
 	<bean id="entidadFachadaImpl" class="ar.com.siif.fachada.EntidadFachada">

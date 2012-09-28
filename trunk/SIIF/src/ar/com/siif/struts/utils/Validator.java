@@ -16,12 +16,15 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.utils.DateUtils;
 
 /**
@@ -632,4 +635,39 @@ public abstract class Validator {
 		}
 		return true;
 	}
+	
+	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError){
+		try {
+			String[] strArray = periodo.split("-");
+			int n = Integer.parseInt(strArray[0]);
+			int n2 = Integer.parseInt(strArray[1]);
+			if (n+1 != n2) {
+				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
+				return false;
+			} 
+			return true;
+		} catch (Exception e) {
+			addErrorXML(pError, "El formato del periodo deben ser AAAA-AAAA. Ej 2011-2012");
+			return false;
+		}
+	}
+	
+	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales, double m3Fiscalizaciones, StringBuffer pError){
+		if (m3Vales > m3Fiscalizaciones){
+			addErrorXML(pError, "La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean validarFiscalizacionExistenteParaVale(List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError){
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)){
+				return true;
+			}
+		}
+		addErrorXML(pError, "Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
+		return false;
+	}
+	
 }

@@ -20,7 +20,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator-1.1.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dwr-2.0.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ehcache-1.2.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-3.2.6.ga.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-annotations-3.3.0.ga.jar"/>
@@ -52,9 +51,10 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.8.3.jar" sourcepath="C:/Desarrollo/EAR Y JARS/SOURCES/commons-beanutils-1.8.0-src.zip"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-4.5.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jfreechart-1.0.12.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dwr-3.0 RC2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
