@@ -26,6 +26,7 @@ import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.ILoginFachada;
+import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
@@ -62,6 +63,8 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
 					.getBean("localidadFachada");			
+			
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
 			
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
@@ -102,6 +105,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			}
 						
 			request.setAttribute("localidades",localidadFachada.getLocalidadesDTO());
+			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());
 			request.setAttribute("tiposProductosForestales",tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal",productorForestal);

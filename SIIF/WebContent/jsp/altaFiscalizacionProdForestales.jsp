@@ -136,8 +136,14 @@ $(function() {
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				 
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
-			<td>
-				<input name="fiscalizacionDTO.periodoForestal"	class="botonerab" type="text" size="27">
+			<td >
+				<select name="fiscalizacionDTO.periodoForestal" class="botonerab" style="width: 16em">
+					<c:forEach items="${periodos}" var="per">
+						<option value="${per.periodo}">
+							<c:out value="${per.periodo}"></c:out>
+						</option>
+					</c:forEach>
+				</select>	
 			</td>
 		</tr>
 		<tr>

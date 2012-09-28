@@ -14,6 +14,7 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PMFDTO;
+import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -31,6 +32,7 @@ import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.PMF;
+import ar.com.siif.negocio.Periodo;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.SubImporte;
@@ -141,6 +143,16 @@ public abstract class ProviderDTO {
 			return localidadDTO;
 		}
 		
+		public static PeriodoDTO getPeriodoDTO(Periodo periodo){
+			
+			PeriodoDTO periodoDTO = new PeriodoDTO();
+			
+			periodoDTO.setId(periodo.getId());
+			periodoDTO.setPeriodo(periodo.getPeriodo());
+			
+			return periodoDTO;
+		}
+				
 		public static AforoDTO getAforoDTO(Aforo aforo){
 			
 			AforoDTO aforoDTO = new AforoDTO();

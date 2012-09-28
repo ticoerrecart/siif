@@ -11,6 +11,7 @@ import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -30,6 +31,7 @@ import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.PPF;
+import ar.com.siif.negocio.Periodo;
 import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
@@ -157,6 +159,18 @@ public abstract class ProviderDominio {
 		return localidad;
 	}	
 	
+	
+	public static Periodo getPeriodo(PeriodoDTO periodoDTO){
+		
+		Periodo periodo = new Periodo();		
+		periodo.setPeriodo(periodoDTO.getPeriodo());
+		return periodo;
+	}
+
+	public static Periodo getPeriodo(Periodo periodo, PeriodoDTO periodoDTO){
+		periodo.setPeriodo(periodoDTO.getPeriodo());
+		return periodo;
+	}		
 	public static PMF getPMF(String expediente,String nombre, Entidad entidad){
 		
 		PMF pmf = new PMF();

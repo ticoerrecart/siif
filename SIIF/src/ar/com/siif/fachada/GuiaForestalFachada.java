@@ -17,10 +17,12 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
+import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.struts.utils.Validator;
 
 public class GuiaForestalFachada implements IGuiaForestalFachada {
 
@@ -161,10 +163,45 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			String fechaDevolucion) {
 
 		try {
-			return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
+			//Validar que en la devolución de Vales de Transporte, 
+			// los m3 del vale no sobrepasen lo que esta fiscalizado en la guía para el tipo de producto declarado en el vale, 
+			// ni tampoco que la suma de los m3 de los vales devueltos, 
+			// mas el del vale en cuestión, no sobrepase lo fiscalizado en la guía para ese tipo de producto.
+			StringBuffer pError = new StringBuffer(); 
+			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
+			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3), "Cantidad(m3)", pError);
+			
+			
+			
+			double totalMts = 0;
+			ValeTransporte vale = (ValeTransporte) this.guiaForestalDAO.getHibernateTemplate().get(ValeTransporte.class, idVale);
+			List<Fiscalizacion> fiscalizaciones = vale.getGuiaForestal().getFiscalizaciones();
+			
+			boolean ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,producto,pError);
+			
+			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+				if (fiscalizacion.getTipoProducto().getNombre().equals(producto))
+				totalMts = totalMts  + fiscalizacion.getCantidadMts();
+			}
+			
+			double totalMtsVales = cantM3;
+			List<ValeTransporte> vales = vale.getGuiaForestal().getValesTransporte();
+			for (ValeTransporte valeTransporte : vales) {
+				if (valeTransporte.getFechaDevolucion() != null && producto.equalsIgnoreCase(valeTransporte.getProducto())){
+					totalMtsVales  = totalMtsVales  + valeTransporte.getCantidadMts();
+				}
+			}
+			 
+			 
+			boolean ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,totalMts,pError);			
+			if (ok && ok2 && ok3 && ok4){
+				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 					destino, vehiculo, marca, dominio,
 					producto, nroPiezas, cantM3,especie,
 					fechaDevolucion);
+			} else {
+				return pError.toString();
+			}
 
 		} catch (DataBaseException e) {
 			return e.getMessage();

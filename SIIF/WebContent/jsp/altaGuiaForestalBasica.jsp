@@ -372,7 +372,13 @@ function removerFila() {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-				<input name="guiaForestal.periodoForestal" value="" class="botonerab" type="text" size="40">
+					<select name="guiaForestal.periodoForestal" class="botonerab" >
+						<c:forEach items="${periodos}" var="per">
+											<option value="${per.periodo}">
+												<c:out value="${per.periodo}"></c:out>
+											</option>
+						</c:forEach>
+					</select>	
 			</td>
 		</tr>
 		<tr>

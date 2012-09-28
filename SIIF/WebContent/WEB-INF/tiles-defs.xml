@@ -254,6 +254,18 @@
 	</definition>
 	<!-- FIN LOCALIDAD -->
 
+	<!-- PERIODO -->
+	<definition name=".altaPeriodo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaPeriodo.jsp" />
+	</definition>
+
+	<definition name=".recuperarPeriodos" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarPeriodos.jsp" />
+	</definition>
+	<!-- FIN PERIODO -->
+
 	<!-- USUARIO -->
 	<definition name=".altaUsuario" extends=".base">
 		<put name="title" value="SIIFs" />

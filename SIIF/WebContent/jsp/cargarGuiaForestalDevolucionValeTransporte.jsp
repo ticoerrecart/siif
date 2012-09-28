@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
 
+<script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 
 <script type="text/javascript">
 
@@ -76,15 +77,26 @@ function registrarDevolucion(vale){
 
 function registrarDevolucionCallback(valor){
 	
-	var idEstado = "#idEstadoVale"+idVale;
-	$(idEstado).html("DEVUELTA");	
-	$(idEstado).attr('class', "verdeExitoLeft");
-		
-	var idBotonDevolucion = "#idBotonDevolucion"+idVale;
-	$(idBotonDevolucion).toggle();
+	if (valor == null){
+		var idEstado = "#idEstadoVale"+idVale;
+		$(idEstado).html("DEVUELTA");	
+		$(idEstado).attr('class', "verdeExitoLeft");
+			
+		var idBotonDevolucion = "#idBotonDevolucion"+idVale;
+		$(idBotonDevolucion).toggle();
 
-	var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
-	$(idFechaDevolucion).attr('value', valor);		
+		var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
+		$(idFechaDevolucion).attr('value', valor);
+	} else {
+		var valor = valor.replace("<error>","");
+		var nodos = valor.split("</error>");
+		$('#errores').text("");
+		for ( var i = 0; i < nodos.length; i++) {
+			$("#errores").append("<p>"+nodos[i]+"</p>");
+		}
+		moverAErrores();
+	}
+			
 }
 
 function expValeNro(){
@@ -114,6 +126,18 @@ function actEspecie(indice){
 	$("#idProducto"+indice).val(prod);
 	$("#idEspecie"+indice).val(esp);
 	
+	if (prodEst.indexOf("Leña")==0){
+		$("#idCantM3"+indice).attr("readonly",false);
+		$("#idNroPiezas"+indice).val(0);
+		$("#idNroPiezas"+indice).attr("readonly",true);
+	} else {
+		$("#idCantM3"+indice).attr("readonly",true);
+		$("#idNroPiezas"+indice).attr("readonly",false);
+	}
+	
+	
+	
+	
 	if (piezas != null) {
 		$("#idCantM3"+indice).val(roundNumber(rel*piezas,2));	
 	}
@@ -134,6 +158,10 @@ function roundNumber(num, dec) {
 
 <input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
+
+<%-- errores de validaciones AJAX --%>
+<div id="errores" class="rojoAdvertencia">${error}</div>
+
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
@@ -551,7 +579,7 @@ function roundNumber(num, dec) {
 															<input id="idNroPiezas<c:out value='${valeTransporte.id}'/>"  class="botonerab" type="text" value="${valeTransporte.nroPiezas}" onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" >
 														</td>
 														<td>
-															<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" >
+															<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">
 														</td>
 														<td>
 															<input id="idEspecie<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.especie}" readonly="readonly">

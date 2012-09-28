@@ -17,6 +17,7 @@ import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
+import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
@@ -46,6 +47,8 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
+			
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
 
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
 					.getBean("tipoProductoForestalFachada");
@@ -58,6 +61,8 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
 
+			
+			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.setAttribute("tiposEntidad", tiposEntidad);
 			request.setAttribute("oficinas", oficinas);
