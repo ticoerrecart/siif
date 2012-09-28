@@ -260,7 +260,7 @@ function calcularVolumen() {
 	'5', 'Trineos'
  */
 	function actualizarMuestras() {
-		$('#cantidadMts').val('');
+		//$('#cantidadMts').val('');
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
 		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
@@ -272,6 +272,8 @@ function calcularVolumen() {
 				$('#calcularVolumen').hide();
 			}
 			$("#cantidadMts").attr("readonly",true);
+			$("#cantidadUnidades").attr("readonly",false);
+
 			$('#trMuestras').show();
 		}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
@@ -283,10 +285,15 @@ function calcularVolumen() {
 				$('#calcularVolumen').hide();
 			}
 			$("#cantidadMts").attr("readonly",true);
+			$("#cantidadUnidades").attr("readonly",false);
+
 			$('#trMuestras').show();
 		} else {
 				removerNMuestras($('[name="fiscalizacionDTO.tamanioMuestra"]').val()); 
 				$("#cantidadMts").attr("readonly",false);
+
+				$("#cantidadUnidades").val("");
+				$("#cantidadUnidades").attr("readonly",true);
 				$('#trMuestras').hide();
 		}
 

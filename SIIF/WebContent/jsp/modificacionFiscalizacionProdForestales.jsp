@@ -237,7 +237,7 @@ $(function() {
 			<td align="left"><input name="fiscalizacionDTO.cantidadUnidades"
 				class="botonerab" type="text" size="20"
 				value="<c:out value='${fiscalizacionDTO.cantidadUnidades}'></c:out>"
-				onkeypress="javascript:esNumerico(event);">
+				onkeypress="javascript:esNumerico(event);" id="cantidadUnidades">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.TipoProducto' />
@@ -277,7 +277,7 @@ $(function() {
 			<td align="left">
 				<html:select property="fiscalizacionDTO.oficinaAlta.id"
 					styleClass="botonerab" value="${fiscalizacionDTO.oficinaAlta.id}"
-					styleId="idOficinaAlta" onchange="actualizarMuestras();">
+					styleId="idOficinaAlta">
 					<html:option value="-1">- Seleccione una Oficina -</html:option>
 					<c:forEach items="${oficinas}" var="oficina">
 						<html:option value="${oficina.id}">

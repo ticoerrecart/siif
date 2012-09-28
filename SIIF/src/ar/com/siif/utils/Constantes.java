@@ -290,5 +290,6 @@ public class Constantes {
 		public static final String MODIFICACION_USUARIO_MENU = "Modificación de Usuario";
 	//FIN MENU
 
+		public static final Long LENIA_ID = 3L;
 
 }

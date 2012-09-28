@@ -144,7 +144,7 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CantUnd'/></td>
 			<td>
 				<input name="fiscalizacionDTO.cantidadUnidades" class="botonerab" type="text" size="27"
-					   onkeypress="javascript:esNumerico(event);">
+					   onkeypress="javascript:esNumerico(event);"  id="cantidadUnidades">
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
