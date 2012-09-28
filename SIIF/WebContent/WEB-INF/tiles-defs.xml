@@ -187,6 +187,11 @@
 		<put name="body" value="/jsp/altaPMF.jsp" />
 	</definition>
 
+	<definition name=".recuperarProductoresParaModificacionPMF" extends=".base">
+		<put name="title" value="Modificacion de Plan de Manejo Forestal" />
+		<put name="body" value="/jsp/recuperarProductoresParaModificacionPMF.jsp" />
+	</definition>
+
 	<definition name=".exitoRecuperarUbicacionParaModificacion" extends=".base">
 		<put name="title" value="Modificacion de Plan de Manejo Forestal" />
 		<put name="body" value="/jsp/modificacionPMF.jsp" />
