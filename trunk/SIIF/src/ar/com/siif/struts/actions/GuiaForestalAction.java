@@ -913,10 +913,65 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}	
 	
-	public boolean validarGuiaForestalBasicaForm(StringBuffer error, ActionForm form) {
+	public boolean validarAltaGuiaForestalBasicaForm(StringBuffer error, ActionForm form) {
 		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+		//return guiaForestalForm.validar(error);
+		
+		WebApplicationContext ctx = getWebApplicationContext();
+		IGuiaForestalFachada guiaFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");		
+		
+		boolean ok = true;
+		boolean ok1 = true;
+		boolean ok2 = true;
+		boolean ok3 = true;
+		boolean ok4 = true;
+		boolean ok5 = true;
+		boolean ok6 = true;
+		boolean ok7 = true;
+		boolean ok8 = true;
+		boolean ok9 = true;
+		boolean ok10 = true;
+		boolean ok11 = true;
+		boolean ok12 = true;
 
-		return guiaForestalForm.validar(error);
+		ok = Validator.validarEnteroMayorQue(0,
+				Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
+				"Nro de Guía", error);
+		
+		if (ok) {
+			ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm.getGuiaForestal().getNroGuia());
+
+			if (!ok1) {
+				Validator.addErrorXML(error, Constantes.NRO_GUIA_EXISTENTE);
+			}
+		}		
+		
+		ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFechaVencimiento(),
+				"Valido Hasta", error);
+
+		ok12 = Validator.validarRodalRequerido(guiaForestalForm.getGuiaForestal().getRodal().getId(),error);
+		
+		ok3 = Validator.validarSubImportes(guiaForestalForm.getListaSubImportes(),
+														guiaForestalForm.getListaFiscalizaciones(),error);
+		ok4 = Validator.validarDoubleMayorQue(0, String.valueOf(guiaForestalForm.getGuiaForestal().getImporteTotal()),
+				"Importe Total", error);		
+		
+		double montoTotal = guiaForestalForm.getGuiaForestal().getImporteTotal();
+		ok6 = Validator.validarBoletasDeposito(guiaForestalForm.getBoletasDeposito(),
+				montoTotal, error);
+		ok7 = Validator.validarRangos(guiaForestalForm.getRangos(), error);
+		ok9 = Validator.requerido(guiaForestalForm.getGuiaForestal().getLocalidad(),
+				"Localidad", error);
+		ok10 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFecha(), "Fecha",
+				error);
+		ok5 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
+				"Fecha de Vencimiento de Vales de Transporte", error);
+		ok11 = Validator.validarFechaValida(guiaForestalForm.getFechaVencimiento(),
+				"Fecha de Vencimiento de Vales de Transporte", error);
+		
+
+		return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9
+				&& ok10 && ok11 && ok12;		
 	}
 
 	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error, ActionForm form) {

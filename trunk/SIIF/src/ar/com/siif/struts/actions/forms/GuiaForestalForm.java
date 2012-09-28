@@ -143,7 +143,7 @@ public class GuiaForestalForm extends ActionForm {
 		listaFiscalizaciones.removeAll(listaEliminar);
 	}
 	
-	public boolean validar(StringBuffer error) {
+	/*public boolean validar(StringBuffer error) {
 		boolean ok = true;
 		boolean ok2 = true;
 		boolean ok3 = true;
@@ -185,5 +185,5 @@ public class GuiaForestalForm extends ActionForm {
 
 		return ok && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9
 				&& ok10 && ok11 && ok12;
-	}
+	}*/
 }

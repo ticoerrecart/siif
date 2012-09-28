@@ -233,6 +233,7 @@ public class RolFachada implements IRolFachada {
 			for (Rol rol : listaRoles) {
 				listaRolesDTO.add(ProviderDTO.getRolDTO(rol));			
 			}
+			
 			return listaRolesDTO;
 			
 		} catch (DataBaseException e) {

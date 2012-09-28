@@ -53,6 +53,29 @@ public class UbicacionAction extends ValidadorAction {
 		return ubicacionForm.validar(error);
 	}
 
+	public ActionForward recuperarProductoresParaModificacionPMF(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String strForward = "exitoRecuperarProductoresParaModificacionPMF";
+
+		try {
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+			//rolFachada.verificarMenu(Constantes.MODIFICACION_PMF_MENU,usuario.getRol());
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			
+		} catch (Exception e) {
+			strForward = "error";
+			request.setAttribute("error", e.getMessage());
+		}
+
+		return mapping.findForward(strForward);
+	}	
+	
 	public ActionForward recuperarUbicacionesParaModificacion(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -65,12 +88,24 @@ public class UbicacionAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.MODIFICACION_PMF_MENU,usuario.getRol());
 			
-			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+			request.setAttribute("idProductor", idProductor.toString());
+			
+			/*IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-			request.setAttribute("rodales", ubicacionFachada.getRodales());
+			
+			
+			request.setAttribute("rodales", ubicacionFachada.getRodalesDTOPorProductor(idProductor));
+			request.setAttribute("marcaciones", ubicacionFachada.getMarcacionesDTOPorProductor(idProductor));
+			request.setAttribute("tranzones", ubicacionFachada.getTranzonesDTOPorProductor(idProductor));
+			request.setAttribute("pmfs", ubicacionFachada.getPMFsDTOPorProductor(idProductor));*/			
+			
+			
+			/*request.setAttribute("rodales", ubicacionFachada.getRodales());
 			request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
 			request.setAttribute("tranzones", ubicacionFachada.getTranzones());
-			request.setAttribute("pmfs", ubicacionFachada.recuperarPMFs());
+			request.setAttribute("pmfs", ubicacionFachada.recuperarPMFs());*/
+			
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());
@@ -87,7 +122,12 @@ public class UbicacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-			request.setAttribute("rodales", ubicacionFachada.getRodales());
+			
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+			
+			request.setAttribute("rodales", ubicacionFachada.getRodalesDTOPorProductor(idProductor));
+			//request.setAttribute("rodales", ubicacionFachada.getRodales());
+			
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());
@@ -103,8 +143,14 @@ public class UbicacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-			request.setAttribute("rodales", ubicacionFachada.getRodales());
-			request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
+			
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+			request.setAttribute("rodales", ubicacionFachada.getRodalesDTOPorProductor(idProductor));
+			request.setAttribute("marcaciones", ubicacionFachada.getMarcacionesDTOPorProductor(idProductor));
+			
+			//request.setAttribute("rodales", ubicacionFachada.getRodales());
+			//request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
+			
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());
@@ -120,9 +166,16 @@ public class UbicacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
-			request.setAttribute("rodales", ubicacionFachada.getRodales());
-			request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
-			request.setAttribute("tranzones", ubicacionFachada.getTranzones());
+			
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+			request.setAttribute("rodales", ubicacionFachada.getRodalesDTOPorProductor(idProductor));
+			request.setAttribute("marcaciones", ubicacionFachada.getMarcacionesDTOPorProductor(idProductor));			
+			request.setAttribute("tranzones", ubicacionFachada.getTranzonesDTOPorProductor(idProductor));			
+			
+			//request.setAttribute("rodales", ubicacionFachada.getRodales());
+			//request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
+			//request.setAttribute("tranzones", ubicacionFachada.getTranzones());
+			
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());
@@ -138,10 +191,15 @@ public class UbicacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
+			
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+			request.setAttribute("pmfs", ubicacionFachada.getPMFsDTOPorProductor(idProductor));			
+			
 			//request.setAttribute("rodales", ubicacionFachada.getRodales());
 			//request.setAttribute("marcaciones", ubicacionFachada.getMarcaciones());
 			//request.setAttribute("tranzones", ubicacionFachada.getTranzones());
-			request.setAttribute("pmfs", ubicacionFachada.recuperarPMFsDTO());
+			//request.setAttribute("pmfs", ubicacionFachada.recuperarPMFsDTO());
+			
 		} catch (Exception e) {
 			strForward = "error";
 			request.setAttribute("error", e.getMessage());

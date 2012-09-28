@@ -171,5 +171,56 @@ public class UbicacionDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_ALTA_RODAL);
 		}			
-	}		
+	}	
+	
+	public List<Tranzon> getTranzonesPorProductor(Long idProductor) throws DataBaseException {
+		
+		try{
+			Criteria criteria = getSession().createCriteria(Tranzon.class);
+			criteria.createAlias("pmf", "prod");
+			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));			
+			return criteria.list();			
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
+		}			
+	}	
+	
+	public List<Marcacion> getMarcacionesPorProductor(Long idProductor) throws DataBaseException {
+		
+		try{
+			Criteria criteria = getSession().createCriteria(Marcacion.class);
+			criteria.createAlias("tranzon.pmf", "prod");
+			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));			
+			return criteria.list();			
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
+		}			
+	}
+	
+	public List<Rodal> getRodalesPorProductor(Long idProductor) throws DataBaseException {
+		
+		try{
+			Criteria criteria = getSession().createCriteria(Rodal.class);
+			criteria.createAlias("marcacion.tranzon.pmf", "prod");
+			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));
+			return criteria.list();			
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
+		}			
+	}	
 }

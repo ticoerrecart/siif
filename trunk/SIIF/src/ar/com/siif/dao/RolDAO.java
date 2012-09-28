@@ -1,5 +1,6 @@
 package ar.com.siif.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -21,6 +22,7 @@ public class RolDAO extends HibernateDaoSupport {
 
 	public List<Rol> getRoles() throws DataBaseException {
 		try{
+			
 			return getHibernateTemplate().loadAll(Rol.class);
 			
 		} catch (HibernateException he) {
@@ -198,4 +200,51 @@ public class RolDAO extends HibernateDaoSupport {
 			throw new DataBaseException();
 		}		
 	}
+	
+
+	public void eliminarRol() throws DataBaseException {
+		try{
+			/*for(int i=1;i<2;i++){
+				long j = i;
+				Rol rol = (Rol)getSession().get(Rol.class, j);
+				//getSession().delete(rol);
+				
+				rol.setMenues(null);
+				
+				this.getHibernateTemplate().delete(rol);
+				this.getHibernateTemplate().flush();
+				this.getHibernateTemplate().clear();
+			}*/
+			
+			/*Rol rol = (Rol)getSession().get(Rol.class, 2L);
+			
+			List<ItemMenu> listaMenues = new ArrayList<ItemMenu>();
+			
+			for (ItemMenu menu : rol.getMenues()) {
+				
+				if(menu.getId().longValue() == 43 ||
+				   menu.getId().longValue() == 44 ||
+				   menu.getId().longValue() == 45)
+				{
+					listaMenues.add(menu);
+				}
+			}
+			
+			for (ItemMenu itemMenu : listaMenues) {
+				
+				rol.getMenues().remove(itemMenu);
+			}
+			
+			this.getHibernateTemplate().saveOrUpdate(rol);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();*/			
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_ROLES);
+		}			
+	}	
 }
