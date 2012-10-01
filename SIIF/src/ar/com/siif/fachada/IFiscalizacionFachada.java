@@ -28,7 +28,6 @@ public interface IFiscalizacionFachada {
 
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws NegocioException;
 
-
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasNuevasDTO) throws NegocioException;
 
@@ -44,5 +43,11 @@ public interface IFiscalizacionFachada {
 
 	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
 			String idTipoProducto, String idRodal) throws NumberFormatException, DataBaseException,
+			NegocioException;
+
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor)
+			throws DataBaseException;
+
+	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
 			NegocioException;
 }
