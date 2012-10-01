@@ -13,9 +13,6 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/engine.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
-<script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
