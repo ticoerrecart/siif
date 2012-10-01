@@ -96,6 +96,7 @@
 			<forward name="exitoCargaAltaFiscalizacion" path=".altaFiscalizacionProdForestales" />
 			<forward name="exitoAltaFiscalizacion" path="/fiscalizacion.do?metodo=cargarAltaFiscalizacion" />
 			<forward name="exitoRecuperarFiscalizacionesAModificar" path="/jsp/bloqueFiscalizacionesAModificar.jsp" />			
+			<forward name="exitoRecuperarFiscalizacionesAAnular" path="/jsp/bloqueFiscalizacionesAAnular.jsp" />
 		</action>
 		<!-- FIN FISCALIZACION -->
 

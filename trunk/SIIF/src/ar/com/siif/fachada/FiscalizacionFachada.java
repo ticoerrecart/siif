@@ -123,7 +123,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
 		try {
 			fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
@@ -275,6 +274,21 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				//}//else tipoEntidad
 		}//hay GForestal
 
+	}
+
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor)
+			throws DataBaseException {
+		return fiscalizacionDAO.recuperarFiscalizacionesAAnularPorProductor(idProductor);
+	}
+
+	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
+			NegocioException {
+		if (idsFiscalizaciones == null) {
+			throw new NegocioException("Seleccione alguna Fiscalización");
+		}
+		for (Long idFiscalizacion : idsFiscalizaciones) {
+			fiscalizacionDAO.anularFiscalizacion(idFiscalizacion);
+		}
 	}
 
 }

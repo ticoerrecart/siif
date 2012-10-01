@@ -141,7 +141,6 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
 	}
 
-
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor)
 			throws DataBaseException {
 
@@ -198,5 +197,49 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
 		}
+	}
+
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor)
+			throws DataBaseException {
+
+		try {
+			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+
+			criteria.createAlias("productorForestal", "pf");
+			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.eq("productorForestal.id", idProductor))
+					.add(Restrictions.isNull("guiaForestal")));
+
+			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("fecha"));
+
+			List<Fiscalizacion> fiscalizaciones = criteria.list();
+			return fiscalizaciones;
+
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}
+	}
+
+	public void anularFiscalizacion(Long idFiscalizacion) throws DataBaseException {
+		Fiscalizacion fiscalizacion = this.recuperarFiscalizacion(idFiscalizacion);
+		fiscalizacion.setTipoProducto(null);
+		fiscalizacion.setGuiaForestal(null);
+		fiscalizacion.setOficinaAlta(null);
+		fiscalizacion.setProductorForestal(null);
+		fiscalizacion.setRodal(null);
+		fiscalizacion.setUsuario(null);
+		fiscalizacion.setTipoProducto(null);
+		//fiscalizacion.setMuestra(null);
+
+		for (Muestra muestra : fiscalizacion.getMuestra()) {
+			muestra.setFiscalizacion(null);
+			this.getHibernateTemplate().delete(muestra);
+		}
+		this.getHibernateTemplate().delete(fiscalizacion);
 	}
 }

@@ -318,4 +318,65 @@ public class FiscalizacionAction extends ValidadorAction {
 		FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 		return fiscalizacionForm.validar(error);
 	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarTiposDeEntidadParaFiscalizacionesAAnular(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String strForward = "exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar";
+
+		try {
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("urlDetalle",
+					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAAnular");
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarFiscalizacionesAAnular(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String strForward = "exitoRecuperarFiscalizacionesAAnular";
+
+		try {
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
+					.getBean("fiscalizacionFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada
+					.recuperarFiscalizacionesAAnularPorProductor(new Long(idProductor));
+
+			request.setAttribute("fiscalizaciones", fiscalizaciones);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
 }
