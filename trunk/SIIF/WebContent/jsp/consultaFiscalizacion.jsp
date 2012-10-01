@@ -8,8 +8,6 @@
 <script type="text/javascript" src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/engine.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 

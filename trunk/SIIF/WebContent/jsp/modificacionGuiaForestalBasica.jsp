@@ -16,10 +16,7 @@
 <!-- <script type="text/javascript"
 	src="<html:rewrite page='/js/guiaForestal.js'/>"></script> -->
 <script type="text/javascript"
-	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
-<script type="text/javascript"
-	src="<html:rewrite page='/dwr/engine.js'/>"></script>
-<script type="text/javascript" src="<html:rewrite page='/dwr/util.js'/>"></script>
+	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/AforoFachada.js'/>"></script>	
 
