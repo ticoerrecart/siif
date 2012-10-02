@@ -102,24 +102,15 @@ public class FiscalizacionForm extends ActionForm {
 			ok10 = Validator.validarEnteroMayorQue(0,
 					Integer.toString(fiscalizacionDTO.getTamanioMuestra()), "Tamaño de la Muestra",
 					error);
+			ok16 = Validator.validarMuestras(this.getMuestrasDTO(), fiscalizacionDTO
+					.getTipoProducto().getId(), error);			
 		}
 
 		ok11 = Validator.validarComboRequerido("-1",
 				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
 
-		//ok12 = Validator.validarComboRequerido("-1",Long.toString(idPlanManejoForestal), "Plan de Manejo Forestal", error);
-
-		//ok13 = Validator.validarComboRequerido("-1",Long.toString(idTranzon), "Tranzón", error);
-
-		//ok14 = Validator.validarComboRequerido("-1",Long.toString(idMarcacion), "Marcación", error);
-
 		ok15 = Validator.validarComboRequerido("-1",
 				Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
-
-		if (ok10) {
-			ok16 = Validator.validarMuestras(this.getMuestrasDTO(), fiscalizacionDTO
-					.getTipoProducto().getId(), error);
-		}
 
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13

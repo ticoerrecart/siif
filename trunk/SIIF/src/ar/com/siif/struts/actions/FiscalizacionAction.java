@@ -144,6 +144,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("urlDetalle",
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAModificar");
 
+			request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_FISCALIZACION);
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -205,6 +207,8 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
+			
 			long idFiscalizacion = new Long(request.getParameter("id"));
 			Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(idFiscalizacion);
@@ -236,6 +240,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("tranzones", tranzones);
 			request.setAttribute("marcaciones", marcaciones);
 			request.setAttribute("rodales", rodales);
+			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -344,6 +349,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("urlDetalle",
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAAnular");
 
+			request.setAttribute("titulo", Constantes.TITULO_ANULACION_FISCALIZACION);
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
