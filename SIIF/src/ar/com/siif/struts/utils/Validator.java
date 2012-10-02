@@ -491,7 +491,7 @@ public abstract class Validator {
 				return false;
 			}
 		}
-		if (montoSumaBoletas + 0.1 < montoTotal) {
+		if (montoSumaBoletas + 0.1 < montoTotal || montoSumaBoletas > montoTotal) {
 			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Monto Total");
 			return false;
