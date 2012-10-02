@@ -172,7 +172,7 @@ $(function() {
 	<html:hidden property="fiscalizacionDTO.rodal.id"
 		value="${fiscalizacionDTO.rodal.id}"/>	
 
-	<table border="0" class="cuadrado" align="center" width="60%"
+	<table border="0" class="cuadrado" align="center" width="70%"
 		cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado"><bean:message
@@ -222,9 +222,27 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.PeríodoForestal' />
 			</td>
-			<td align="left"><input name="fiscalizacionDTO.periodoForestal"
-				class="botonerab" type="text" size="20"
-				value="<c:out value='${fiscalizacionDTO.periodoForestal}'></c:out>">
+			<td align="left">
+				<!-- <input name="fiscalizacionDTO.periodoForestal" class="botonerab" type="text" size="20"
+					value="<c:out value='${fiscalizacionDTO.periodoForestal}'></c:out>">-->
+					
+				<select name="fiscalizacionDTO.periodoForestal" class="botonerab" style="width: 16em">
+					<c:forEach items="${periodos}" var="per">
+						<c:choose>
+							<c:when test="${fiscalizacionDTO.periodoForestal == per.periodo}">
+								<option value="${per.periodo}" selected="selected">
+									<c:out value="${per.periodo}"></c:out>
+								</option>
+							</c:when>	
+							<c:otherwise>
+								<option value="${per.periodo}">
+									<c:out value="${per.periodo}"></c:out>
+								</option>							
+							</c:otherwise>
+						</c:choose>	
+					</c:forEach>
+				</select>
+					
 			</td>
 		</tr>
 		<tr>
@@ -476,7 +494,7 @@ $(function() {
 
 	<div id="muestrasAux" style="display: none;"></div>
 
-	<table border="0" class="cuadrado" align="center" width="60%"
+	<table border="0" class="cuadrado" align="center" width="70%"
 		cellpadding="2">
 		<tr>
 			<td height="10" colspan="4"></td>

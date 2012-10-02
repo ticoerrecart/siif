@@ -19,6 +19,8 @@
 					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>					
 					<td class="azulAjustado"></td>
 				</tr>
 				<%String clase=""; %>
@@ -41,7 +43,13 @@
 									---
 								</c:otherwise>
 							</c:choose>																				
-						</td>						
+						</td>	
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
+						</td>
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
+						</td>											
 						<td class="botonerab">
 							<a href="../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion=<c:out value='${fiscalizacion.id}'></c:out>&paramForward=<c:out value='${paramForward}'></c:out>">
 								<bean:message key='SIIF.label.Ver'/>

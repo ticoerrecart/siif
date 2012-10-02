@@ -30,7 +30,7 @@ function volverConsultaGuia(){
 	window.open("../../mostrarReporte.do?metodo=pruebaJasper",especificaciones);*/		
 }
 
-function imprimir(){	
+function imprimirGuia(){	
 	
 	var idGuia = $('#idGuia').val();	
 	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
@@ -709,7 +709,7 @@ function volverAltaGFB(){
 		<td height="20" colspan="2">
 		</td>
 		<td height="20" width="49%" align="left">
-			<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimir();">
+			<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimirGuia();">
 		</td>
 	</tr>
 	<tr>

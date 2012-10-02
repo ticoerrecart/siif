@@ -9,19 +9,22 @@
 
 <script>
 	function anularFiscalizaciones(){
-		var fiscalizaciones = new Array();
-		$("input:checked").each(function(){
-	    	 var input = $(this); // This is the jquery object of the input, do what you will
-	    	 //alert(input.attr("name"))
-		     fiscalizaciones.push(input.attr("name"));
-		    
-	    });
-
-		FiscalizacionFachada.anularFiscalizaciones(fiscalizaciones, anularFiscalizacionesCbk());
+		if(confirm("Esta seguro que desea anular las fiscalizaciones seleccionadas?")){
+			var fiscalizaciones = new Array();
+			$("input:checked").each(function(){
+		    	 var input = $(this); // This is the jquery object of the input, do what you will
+		    	 //alert(input.attr("name"))
+			     fiscalizaciones.push(input.attr("name"));
+			    
+		    });
+	
+			FiscalizacionFachada.anularFiscalizaciones(fiscalizaciones, anularFiscalizacionesCbk);
+		}	
 	}
 	
 	function anularFiscalizacionesCbk(){
-		mostrarDetalle();
+
+	    mostrarDetalle();		    		
 	}
 
 	function mostrarFiscalizacion(idFiscalizacion){
@@ -45,52 +48,74 @@
 <div id="idGuia">
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
-			<table border="0" class="cuadrado" 
-				align="center" width="70%" cellpadding="2">
+			<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
 				<tr>
-					<td class="azulAjustado">&nbsp;</td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
-					<td class="azulAjustado">&nbsp;</td>
+					<td class="azulAjustado" rowspan="2"></td>
+					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Fecha'/></td>
+					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>					
+					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.TipoDeProducto'/></td>
+					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.CantMts3'/></td>					
+					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Ver'/></td>
+				</tr>
+				<tr>
+					<td class="azulAjustado"><bean:message key='SIIF.label.PMF'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.Tranzon'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.Marcacion'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.Rodal'/></td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
+					<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>
+					<html:hidden styleId="idRodal${i.count-1}" property="listaFiscalizaciones[${i.count-1}].rodal.id" value=""/>					
 					<%clase=(clase.equals("")?"par":""); %>
 					<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
 						onmouseover="javascript:mostrarDatos(<c:out value='${i.count}'></c:out>);">
 						<td class="botonerab">
 							<input type="checkbox" name="<c:out value='${fiscalizacion.id}'/>">
-						</td>
+						</td>						
 						<td class="botonerab">
 							<fmt:formatDate	value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.productorForestal.nombre}"></c:out>
+							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}"></c:out>-
+							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.guiaForestal.nroGuia}"></c:out>
+							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.numero}"></c:out>-
+							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.disposicion}"></c:out>
 						</td>
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.rodal.marcacion.disposicion}"></c:out>
+						</td>						
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.rodal.nombre}"></c:out>
+						</td>						
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
-						</td>
+						</td>	
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
-						</td>
+						</td>	
 						<td>
 							<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
 								<bean:message key='SIIF.label.Ver'/>
 							</a>
-						</td>
+						</td>						
 					</tr>
 				</c:forEach>
+			</table>
+			<table border="0" class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
+				<tr>
+					<td height="10"></td>
+				</tr>				
 				<tr>
 					<td class="botonerab" colspan="6">
-						<input type="button" value="Anular Fiscalizaciones" onclick="javascript:anularFiscalizaciones();">
+						<input type="button" class="botonerab" value="Anular Fiscalizaciones" onclick="javascript:anularFiscalizaciones();">
 					</td>
 				</tr>
+				<tr>
+					<td height="10"></td>
+				</tr>				
 			</table>
 		</c:when>	
 		<c:otherwise>
