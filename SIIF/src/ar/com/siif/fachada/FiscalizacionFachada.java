@@ -283,7 +283,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
 			NegocioException {
-		if (idsFiscalizaciones == null) {
+		if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
 			throw new NegocioException("Seleccione alguna Fiscalización");
 		}
 		for (Long idFiscalizacion : idsFiscalizaciones) {

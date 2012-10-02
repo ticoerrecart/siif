@@ -43,12 +43,16 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		try {
 			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
 			criteria.createAlias("productorForestal", "pf");
-
+			criteria.createAlias("rodal", "rod");			
+			criteria.createAlias("tipoProducto", "tp");
+			
 			criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
 					.add(Restrictions.eq("pf.id", idProductor)));
 			//.add(Restrictions.eq("rodal.id", idRodal)));
 
-			criteria.addOrder(Order.asc("pf.nombre"));
+			//criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("rod.id"));
+			criteria.addOrder(Order.asc("tp.id"));
 			criteria.addOrder(Order.asc("fecha"));
 
 			List<Fiscalizacion> fiscalizaciones = criteria.list();
@@ -206,11 +210,15 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
 
 			criteria.createAlias("productorForestal", "pf");
+			criteria.createAlias("rodal", "rod");			
+			criteria.createAlias("tipoProducto", "tp");
+			
 			criteria.add(Restrictions.conjunction()
 					.add(Restrictions.eq("productorForestal.id", idProductor))
 					.add(Restrictions.isNull("guiaForestal")));
 
-			criteria.addOrder(Order.asc("pf.nombre"));
+			criteria.addOrder(Order.asc("rod.id"));
+			criteria.addOrder(Order.asc("tp.id"));
 			criteria.addOrder(Order.asc("fecha"));
 
 			List<Fiscalizacion> fiscalizaciones = criteria.list();

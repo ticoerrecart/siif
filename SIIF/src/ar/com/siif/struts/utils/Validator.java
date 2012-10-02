@@ -491,7 +491,7 @@ public abstract class Validator {
 				return false;
 			}
 		}
-		if (montoSumaBoletas != montoTotal) {
+		if (montoSumaBoletas + 0.1 < montoTotal) {
 			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Monto Total");
 			return false;
@@ -653,7 +653,7 @@ public abstract class Validator {
 	}
 	
 	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales, double m3Fiscalizaciones, StringBuffer pError){
-		if (m3Vales > m3Fiscalizaciones){
+		if (m3Vales > m3Fiscalizaciones + 1){
 			addErrorXML(pError, "La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
 			return false;
 		}

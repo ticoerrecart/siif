@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -17,7 +18,12 @@ public class PeriodoDAO extends HibernateDaoSupport {
 
 	public List<Periodo> getPeriodos() throws DataBaseException {
 		try{
-			return getHibernateTemplate().loadAll(Periodo.class);
+			//return getHibernateTemplate().loadAll(Periodo.class);
+			
+			Criteria criteria = getSession().createCriteria(Periodo.class);
+			criteria.addOrder(Order.desc("periodo"));
+			
+			return (List<Periodo>)criteria.list();
 			
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PERIODOS);
