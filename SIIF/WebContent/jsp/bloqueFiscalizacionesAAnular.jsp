@@ -24,7 +24,25 @@
 		mostrarDetalle();
 	}
 
+	function mostrarFiscalizacion(idFiscalizacion){
+
+		$("#idGuia").hide();	
+		$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
+		$("#idDivFiscalizacion").show(); 
+		$("#errores").hide();
+	}
+
+	function volverAltaGFB(){
+
+		$("#idGuia").show();
+		$("#idDivFiscalizacion").hide();
+		//$("#idDivFiscalizacion").empty();
+		//$("#errores").show();
+	}
+
 </script>
+
+<div id="idGuia">
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadrado" 
@@ -36,6 +54,7 @@
 					<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
+					<td class="azulAjustado">&nbsp;</td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
@@ -60,6 +79,11 @@
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
 						</td>
+						<td>
+							<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
+								<bean:message key='SIIF.label.Ver'/>
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 				<tr>
@@ -73,3 +97,6 @@
 			<bean:message key='SIIF.error.NoExiFis'/>
 		</c:otherwise>
 	</c:choose>	
+</div>
+	
+<div id="idDivFiscalizacion" style="display: none;">	
