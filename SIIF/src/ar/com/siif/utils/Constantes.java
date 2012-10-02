@@ -21,6 +21,9 @@ public class Constantes {
 		
 		public static final String ERROR_RECUPERAR_FISCALIZACION = "Ha ocurrido un error en la recuperación de la fiscalización";
 		
+		public static final String TITULO_MODIFICACION_FISCALIZACION = "Modificación de Fiscalización de Productos Forestales ";		
+		
+		public static final String TITULO_ANULACION_FISCALIZACION = "Anulación de Fiscalización de Productos Forestales ";
 		
 	// FIN FISCALIZACION
 	

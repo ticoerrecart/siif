@@ -48,9 +48,9 @@
 				<tr>
 					<td class="azulAjustado" rowspan="2"></td>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Fecha'/></td>
+					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>					
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.TipoDeProducto'/></td>
-					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.CantMts3'/></td>
-					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>
+					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.CantMts3'/></td>					
 				</tr>
 				<tr>
 					<td class="azulAjustado"><bean:message key='SIIF.label.PMF'/></td>
@@ -75,13 +75,6 @@
 							<c:out value="${fiscalizacion.fecha}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
-						</td>	
-						<td class="botonerab">
-							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
-						</td>	
-
-						<td class="botonerab">
 							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}"></c:out>-
 							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre}"></c:out>
 						</td>
@@ -94,7 +87,14 @@
 						</td>						
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.rodal.nombre}"></c:out>
-						</td>											
+						</td>						
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
+						</td>	
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
+						</td>	
+											
 						<!--<td class="botonerab">
 							 <a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
 								<bean:message key='SIIF.label.Seleccionar'/>
