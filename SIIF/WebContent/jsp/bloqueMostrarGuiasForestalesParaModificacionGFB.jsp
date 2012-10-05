@@ -10,7 +10,7 @@
    response.setHeader("Cache-Control", "private");
    response.setDateHeader("Expires",0);
 %>
-<!-- <td colspan="2"> -->
+
 <br>
 <c:choose>
 	<c:when test="${fn:length(guiasForestales)>0}">
@@ -29,10 +29,10 @@
 					onmouseover="javascript:mostrarDatos(<c:out value='${i.count}'></c:out>);">
 					<td class="botonerab"><c:out value="${guia.nroGuia}" /></td>	   			
 					<td class="botonerab">
-						<fmt:formatDate value="${guia.fecha}" pattern="dd/MM/yyyy" />  
+						<c:out value="${guia.fecha}"></c:out>  
 					</td>
 					<td class="botonerab">
-						<fmt:formatDate value="${guia.fechaVencimiento}" pattern="dd/MM/yyyy" />					
+						<c:out value="${guia.fechaVencimiento}"></c:out>					
 					</td>										
 					<td>			
 						<a href="../../guiaForestal.do?metodo=cargarModificacionGuiaForestalBasica&idGuia=<c:out value='${guia.id}'></c:out>">
@@ -44,7 +44,7 @@
 		</table>
 	</c:when>
 	<c:otherwise>
-		<bean:message key='SIIF.error.NoExiGF'/>
+		<bean:message key='SIIF.error.NoExiGFParaPF'/>
 	</c:otherwise>	
 </c:choose>
-<!-- </td> -->
+

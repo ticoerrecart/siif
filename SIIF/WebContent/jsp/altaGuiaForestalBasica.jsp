@@ -992,11 +992,11 @@ function removerFila() {
 
 						<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
 							<tr>
-								<td height="5" colspan="4"></td>
+								<td height="10" colspan="4"></td>
 							</tr>
 							
 							<tr>
-								<td width="10%" class="botoneralNegritaRight">
+								<td width="25%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.Fecha_Venc'/>
 								</td>
 								<td width="40%" align="left">
@@ -1013,7 +1013,7 @@ function removerFila() {
 								</td>
 							</tr>	
 							<tr>
-								<td height="5" colspan="4"></td>
+								<td height="10" colspan="4"></td>
 							</tr>
 							
 							<tr>
