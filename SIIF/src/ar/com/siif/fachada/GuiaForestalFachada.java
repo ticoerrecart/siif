@@ -93,10 +93,17 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}				
 	}
 
-	public List<GuiaForestal> recuperarGuiasForestales() throws NegocioException {
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor) throws NegocioException {
 
 		try{
-			return guiaForestalDAO.recuperarGuiasForestales();
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = guiaForestalDAO.recuperarGuiasForestalesPorProductor(idProductor);
+			
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			
+			return listaGuiasForestalesDTO;
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());

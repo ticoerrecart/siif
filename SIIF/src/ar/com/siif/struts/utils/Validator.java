@@ -26,6 +26,7 @@ import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.utils.DateUtils;
+import ar.com.siif.utils.MathUtils;
 
 /**
  * @author rdiaz
@@ -491,7 +492,10 @@ public abstract class Validator {
 				return false;
 			}
 		}
-		if (montoSumaBoletas + 0.1 < montoTotal || montoSumaBoletas > montoTotal) {
+		
+		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
+		
+		if (montoSumaBoletas != montoTotal) {
 			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Monto Total");
 			return false;

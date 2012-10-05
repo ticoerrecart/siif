@@ -68,9 +68,11 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		parent="abstractRepository" />		
 	<bean id="rolDAO" class="ar.com.siif.dao.RolDAO" parent="abstractRepository" />
 	<bean id="usuarioDAO" class="ar.com.siif.dao.UsuarioDAO" parent="abstractRepository" />
-	<bean id="reportesDAO" class="ar.com.siif.dao.ReportesDAO" parent="abstractRepository" />
 	<bean id="consultasFiscalizacionDAO" class="ar.com.siif.dao.ConsultasFiscalizacionDAO"
-		parent="abstractRepository" />	
+		parent="abstractRepository" />
+	<bean id="reportesDAO" class="ar.com.siif.dao.ReportesDAO" parent="abstractRepository" />
+	<bean id="reportesPorProductorDAO" class="ar.com.siif.dao.ReportesPorProductorDAO" parent="abstractRepository" />
+	
 	
 	<!--  *******************-->
 	<!--     Fachadas   -->
@@ -343,6 +345,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="reportesFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- REPORTES POR PRODUCTOR --> 
+	<bean id="reportesPorProductorFachadaImpl" class="ar.com.siif.fachada.ReportesPorProductorFachada">
+		<constructor-arg ref="reportesPorProductorDAO" />
+	</bean>	
+
+	<bean id="reportesPorProductorFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesPorProductorFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesPorProductorFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>

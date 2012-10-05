@@ -20,7 +20,7 @@ public interface IGuiaForestalFachada {
 									   List<SubImporteDTO> listaSubImportesDTO)
 									   throws NegocioException;
 
-	public List<GuiaForestal> recuperarGuiasForestales()throws NegocioException;
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor)throws NegocioException;
 
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal)throws NegocioException;
 	

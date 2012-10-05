@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -51,14 +52,18 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public List<GuiaForestal> recuperarGuiasForestales() throws DataBaseException {
+	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor) throws DataBaseException {
 
 		try{
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
-			List<GuiaForestal> guiasForestales = criteria.list();
-	
-			return guiasForestales;
+			criteria.createAlias("productorForestal", "productor");
+			criteria.addOrder(Order.asc("nroGuia"));
 
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)));	
+			List<GuiaForestal> lista = criteria.list();
+	
+			return lista;			
+			
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
 		} catch (HibernateSystemException he) {
