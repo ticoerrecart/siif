@@ -249,6 +249,7 @@ function roundNumber(num, dec) {
 								<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
 								<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 								<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
+								<td class="azulAjustado"><bean:message key='SIIF.label.CantUnd'/></td>
 							</tr>							
 							<%String clase=""; %>
 							<c:forEach items="${guiaForestal.fiscalizaciones}" var="fiscalizacion" varStatus="i">
@@ -269,7 +270,10 @@ function roundNumber(num, dec) {
 									</td>	
 									<td class="botonerab">
 										<c:out value="${fiscalizacion.cantidadMts}"></c:out>
-									</td>															
+									</td>
+									<td class="botonerab">
+										<c:out value="${fiscalizacion.cantidadUnidades}"></c:out>
+									</td>																								
 								</tr>
 							</c:forEach>	
 						</table>
@@ -440,7 +444,19 @@ function roundNumber(num, dec) {
 									</td>
 								</tr>
 								<tr id="idTr<c:out value='${valeTransporte.numero}'/>" style="display: none" >
-									<td colspan="2" width="85%">														
+									<td colspan="2" width="85%">	
+									
+									
+										<c:choose>
+											<c:when test="${valeTransporte.fechaDevolucion ==null}">
+												<c:set var="readonly" scope="session" value=""/>
+											</c:when>
+											<c:otherwise>
+												<c:set var="readonly" scope="session" value="readonly='readonly'"/>
+											</c:otherwise>
+										</c:choose>									
+									
+																						
 										<table class="cuadrado" align="right" width="90%" cellpadding="2">
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
@@ -474,7 +490,8 @@ function roundNumber(num, dec) {
 												<td width="40%" align="left">
 													<input id="idDestino<c:out value='${valeTransporte.id}'/>"
 														   value="${valeTransporte.destino}" class="botonerab"
-														   type="text" size="25" >
+														   type="text" size="25" <c:out value="${readonly}"></c:out> >
+														   
 												</td>
 											</tr>
 											
@@ -485,7 +502,7 @@ function roundNumber(num, dec) {
 												<td width="40%" align="left">
 													<input id="idVehiculo<c:out value='${valeTransporte.id}'/>"
 														   value="${valeTransporte.vehiculo}" class="botonerab"
-														   type="text" size="25" >
+														   type="text" size="25" <c:out value="${readonly}"></c:out>>
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.Marca'/>
@@ -493,7 +510,7 @@ function roundNumber(num, dec) {
 												<td width="40%" align="left">
 													<input id="idMarca<c:out value='${valeTransporte.id}'/>"
 														   value="${valeTransporte.marca}" class="botonerab" type="text"
-														   size="25">
+														   size="25" <c:out value="${readonly}"></c:out>>
 												</td>
 											</tr>
 											
@@ -511,8 +528,9 @@ function roundNumber(num, dec) {
 													<bean:message key='SIIF.label.Dominio'/>
 												</td>											
 												<td width="40%" align="left">
-													<input   id="idDominio<c:out value='${valeTransporte.id}'></c:out>" value="${valeTransporte.dominio}" class="botonerab"
-														   type="text" size="7">																							
+													<input id="idDominio<c:out value='${valeTransporte.id}'></c:out>" 
+														   value="${valeTransporte.dominio}" class="botonerab"
+														   type="text" size="7" <c:out value="${readonly}"></c:out>>																							
 												</td>
 											</tr>											
 					
@@ -522,21 +540,21 @@ function roundNumber(num, dec) {
 												</td>
 												<td width="40%" align="left">
 													<input id="idFechaDevolucion<c:out value='${valeTransporte.id}'></c:out>"
-														   type="text"  class="botonerab"
-														   value="${valeTransporte.fechaDevolucion}"> 
+														   type="text"  class="botonerab" value="${valeTransporte.fechaDevolucion}"
+														   <c:out value="${readonly}"></c:out>> 
 													<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-														 align="top" width='17' height='21'>
-											<script>
-											$(function() {
-												$( "#idFechaDevolucion<c:out value='${valeTransporte.id}'/>" ).datepicker({ dateFormat: 'dd/mm/yy'});
-											});
-											</script>														 					
+														 align="top" width='17' height='21'>														 					
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													
 												</td>
 												<c:choose>
 													<c:when test="${valeTransporte.fechaDevolucion ==null}">
+														<script>
+														$(function() {
+															$( "#idFechaDevolucion<c:out value='${valeTransporte.id}'/>" ).datepicker({ dateFormat: 'dd/mm/yy'});
+														});
+														</script>													
 														<td width="40%" class="rojoAdvertenciaLeft"
 															id="idEstadoVale<c:out value='${valeTransporte.id}'></c:out>">
 															<bean:message key='SIIF.label.NODEVUELTA'/>
@@ -549,9 +567,7 @@ function roundNumber(num, dec) {
 													</c:otherwise>
 												</c:choose>																						
 											</tr>
-											
-											
-											
+
 											<tr>
 												<td height="5" colspan="4"></td>
 											</tr>
@@ -567,16 +583,25 @@ function roundNumber(num, dec) {
 													</tr>
 													<tr>
 														<td>
-															<select id="idProductoSel<c:out value='${valeTransporte.id}'/>" class="botonerab"  onchange="actEspecie(<c:out value='${valeTransporte.id}'/>)">
-																	<c:forEach items="${guiaForestal.productosEspeciesYRelacionMtsPorPieza}" var="prod">
-																		<option value="${prod.producto}-${prod.especie}-${prod.mts3xpieza}">${prod.producto}</option> 
-																	</c:forEach>
-															</select> 
+															<c:choose>
+																<c:when test="${valeTransporte.fechaDevolucion ==null}">
+																	<select id="idProductoSel<c:out value='${valeTransporte.id}'/>" class="botonerab"  onchange="actEspecie(<c:out value='${valeTransporte.id}'/>)">
+																			<c:forEach items="${guiaForestal.productosEspeciesYRelacionMtsPorPieza}" var="prod">
+																				<option value="${prod.producto}-${prod.especie}-${prod.mts3xpieza}">${prod.producto}</option> 
+																			</c:forEach>
+																	</select>
+																</c:when>
+																<c:otherwise>
+																	<input class="botonerab" type="text" value="${valeTransporte.producto}" readonly="readonly">
+																</c:otherwise>
+															</c:choose>															
+ 
 															
 															<input id="idProducto<c:out value='${valeTransporte.id}'/>"  type="hidden" value="" />
 														</td>
 														<td>
-															<input id="idNroPiezas<c:out value='${valeTransporte.id}'/>"  class="botonerab" type="text" value="${valeTransporte.nroPiezas}" onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" >
+															<input id="idNroPiezas<c:out value='${valeTransporte.id}'/>"  class="botonerab" type="text" value="${valeTransporte.nroPiezas}" 
+																	onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" <c:out value="${readonly}"></c:out>> 
 														</td>
 														<td>
 															<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">

@@ -160,12 +160,12 @@
 		</action>
 
 
-		<action path="/recuperarGuiasForestales" type="ar.com.siif.struts.actions.GuiaForestalAction"
+		<!-- <action path="/recuperarGuiasForestales" type="ar.com.siif.struts.actions.GuiaForestalAction"
 			parameter="metodo">
 			<forward name="exitoRecuperarGuiasForestalesPlanDePagos"
 				path=".recuperarGuiasForestales" />
 			<forward name="exitoCargarPlanPagoAModificar" path=".cargarPlanPagoAModificar" />
-		</action>
+		</action>-->
 		<!-- FIN GUIA FORESTAL -->
 
 		<!-- TIPO PRODUCTO FORESTAL -->
@@ -314,6 +314,13 @@
 			parameter="metodo">
 			<forward name="exitoMostrarReporte" path=".mostrarReporte" />
 			<forward name="exitoCargarReporteVolumenFiscalizadoProductorEntreFechas" path=".reporteVolumenFiscalizadoProductorEntreFechas" />			
+		</action>			
+		<!-- FIN REPORTES  -->
+
+		<!-- REPORTES  POR PRODUCTOR -->			
+		<action path="/reportesPorProductor" type="ar.com.siif.struts.actions.ReportesPorProductorAction"
+			parameter="metodo">
+			<forward name="exitoReportePorProductorVolumenFiscalizadoTotal" path=".reportePorProductorVolumenFiscalizadoTotal" />			
 		</action>			
 		<!-- FIN REPORTES  -->
 

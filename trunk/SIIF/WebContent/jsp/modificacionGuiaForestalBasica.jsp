@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import= "ar.com.siif.negocio.Fiscalizacion" %> 
-<%@ page import= "ar.com.siif.negocio.GuiaForestal" %> 
+<%@ page import= "ar.com.siif.dto.FiscalizacionDTO" %> 
+<%@ page import= "ar.com.siif.dto.GuiaForestalDTO" %> 
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript"
@@ -266,7 +266,7 @@ function calcularTotales(){
 </script>
 
 <%
-	GuiaForestal guia = (GuiaForestal)request.getAttribute("guiaForestal");
+	GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
 %>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
