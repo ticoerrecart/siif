@@ -321,7 +321,9 @@
 		<action path="/reportesPorProductor" type="ar.com.siif.struts.actions.ReportesPorProductorAction"
 			parameter="metodo">
 			<forward name="exitoReportePorProductorVolumenFiscalizadoTotal" path=".reportePorProductorVolumenFiscalizadoTotal" />			
-		</action>			
+			<forward name="exitoReportePorProductorVolumenFiscalizadoPorProductos" path=".reportePorProductorVolumenFiscalizadoPorProductos" />
+		</action>	
+					
 		<!-- FIN REPORTES  -->
 
 	</action-mappings>

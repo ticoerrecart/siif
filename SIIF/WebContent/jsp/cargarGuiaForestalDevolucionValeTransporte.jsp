@@ -149,6 +149,23 @@ function roundNumber(num, dec) {
 	return result;
 }
 
+var clase2;
+function pintarFila(idTr){
+
+	$('#tdVale'+idTr).attr("class", "verdeSubtitulo");	
+}
+
+function despintarFila(idTr){
+
+	/*if(!$('#idCheck'+idTr).is(':checked')){
+		if(idTr%2){
+			clase2 = "par";		
+		}else{
+			clase2 = "";
+		}*/	
+		$('#tdVale'+idTr).attr("class", "grisSubtitulo");
+	//}		
+}
 
 </script>
 
@@ -254,9 +271,7 @@ function roundNumber(num, dec) {
 							<%String clase=""; %>
 							<c:forEach items="${guiaForestal.fiscalizaciones}" var="fiscalizacion" varStatus="i">
 								<%clase=(clase.equals("")?"par":""); %>
-								<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
-									onmouseover="javascript:pintarFila(<c:out value='${i.count}'></c:out>);"
-									onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
+								<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>">
 									<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
 									<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>
 									<td class="botonerab">
@@ -438,8 +453,10 @@ function roundNumber(num, dec) {
 				</tr>
 
 							<c:forEach items="${guiaForestal.valesTransporte}" var="valeTransporte" varStatus="index">
-								<tr onclick="$('#idTr<c:out value='${valeTransporte.numero}'/>').toggle();">
-									<td colspan="4" class="grisSubtitulo" >
+								<tr onclick="$('#idTr<c:out value='${valeTransporte.numero}'/>').toggle();">								
+									<td colspan="4" class="grisSubtitulo" id="tdVale<c:out value='${index.count}'></c:out>" 									
+										onmouseover="javascript:pintarFila(<c:out value='${index.count}'></c:out>);"
+										onmouseout="javascript:despintarFila(<c:out value='${index.count}'></c:out>);">
 										<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out>
 									</td>
 								</tr>
