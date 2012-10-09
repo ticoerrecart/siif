@@ -25,4 +25,14 @@ public class ReportesPorProductorFachada implements
 			throw new NegocioException(e.getMessage());
 		}			
 	}	
+
+	public byte[] generarReporteVolumenFiscalizadoPorProductos(String path, String periodo, Long idProductor)throws NegocioException{
+
+		try{
+			return reportePorProductorDAO.generarReporteVolumenFiscalizadoPorProductos(path,periodo,idProductor);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}		
 }
