@@ -85,11 +85,13 @@ public class ReportesPorProductorAction extends ValidadorAction {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarReporteVolumenFiscalizadoPorProductos(ActionMapping mapping, ActionForm form,
+	//public ActionForward cargarReporteVolumenFiscalizadoPorProductos(ActionMapping mapping, ActionForm form,
+	public ActionForward cargarReportePorProductorGeneral(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{	
-		String strForward = "exitoReportePorProductorVolumenFiscalizadoPorProductos";
-
+		//String strForward = "exitoReportePorProductorVolumenFiscalizadoPorProductos";
+		String strForward = "exitoReportePorProductorGeneral";
+		
 		try {
 			//String paramForward = request.getParameter("paramForward");
 			//String paramValidator = request.getParameter("validator");
@@ -102,9 +104,12 @@ public class ReportesPorProductorAction extends ValidadorAction {
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			
 			List<PeriodoDTO> periodos = periodoFachada.getPeriodosDTO();			
-			
+			String paramForward = request.getParameter("paramForward");
+
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("periodos", periodos);
+			request.setAttribute("paramForward", paramForward);
+
 			//request.setAttribute("paramForward", paramForward);
 			//request.setAttribute("validator", paramValidator);
 			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
@@ -134,6 +139,108 @@ public class ReportesPorProductorAction extends ValidadorAction {
 			String productor = request.getParameter("productor");
 						
 			byte[] bytes = reportesPorProductorFachada.generarReporteVolumenFiscalizadoPorProductos(path,periodo,new Long(productor));		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteVolumenGFBMontosPagos(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesPorProductorFachada reportesPorProductorFachada = 
+								(IReportesPorProductorFachada) ctx.getBean("reportesPorProductorFachada");
+			
+			String periodo = request.getParameter("periodo");
+			String productor = request.getParameter("productor");
+						
+			byte[] bytes = reportesPorProductorFachada.generarReporteVolumenGFBMontosPagos(path,periodo,new Long(productor));		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteVolumenGFBMontosAdeudados(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesPorProductorFachada reportesPorProductorFachada = 
+								(IReportesPorProductorFachada) ctx.getBean("reportesPorProductorFachada");
+			
+			String periodo = request.getParameter("periodo");
+			String productor = request.getParameter("productor");
+						
+			byte[] bytes = reportesPorProductorFachada.generarReporteVolumenGFBMontosAdeudados(path,periodo,new Long(productor));		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}
+		
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteListaBoletasTotales(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesPorProductorFachada reportesPorProductorFachada = 
+								(IReportesPorProductorFachada) ctx.getBean("reportesPorProductorFachada");
+			
+			String periodo = request.getParameter("periodo");
+			String productor = request.getParameter("productor");
+						
+			byte[] bytes = reportesPorProductorFachada.generarReporteListaBoletasTotales(path,periodo,new Long(productor));		
 			
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");

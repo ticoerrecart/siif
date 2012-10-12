@@ -43,6 +43,7 @@ import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.utils.Fecha;
+import ar.com.siif.utils.MathUtils;
 
 public abstract class ProviderDTO {
 	
@@ -379,7 +380,8 @@ public abstract class ProviderDTO {
 			subImporteDTO.setEstado(subImporte.getEstado());
 			subImporteDTO.setGuiaForestal(guiaDTO);
 			subImporteDTO.setId(subImporte.getId());
-			subImporteDTO.setImporte(subImporte.getImporte());
+			//subImporteDTO.setImporte(subImporte.getImporte());
+			subImporteDTO.setImporte(MathUtils.round(subImporte.getImporte(), 2));
 			subImporteDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(subImporte.getTipoProducto()));
 			subImporteDTO.setValorAforos(subImporte.getValorAforos());
 

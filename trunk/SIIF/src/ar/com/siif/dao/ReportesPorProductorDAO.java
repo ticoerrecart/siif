@@ -79,4 +79,91 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 		}
 		return bytes;			
 	}
+	
+	public byte[] generarReporteVolumenGFBMontosPagos(String path, String periodo, Long idProductor)throws DataBaseException{
+
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "volumenGFBMontosPagos.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("periodo", periodo);
+			parameters.put("idProductor", idProductor);
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+			
+		} catch (FileNotFoundException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}	
+
+	public byte[] generarReporteVolumenGFBMontosAdeudados(String path, String periodo, Long idProductor)throws DataBaseException{
+
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "volumenGFBMontosAdeudados.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("periodo", periodo);
+			parameters.put("idProductor", idProductor);
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+			
+		} catch (FileNotFoundException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}	
+
+	public byte[] generarReporteListaBoletasTotales(String path, String periodo, Long idProductor)throws DataBaseException{
+
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "listadoBoletasDepositoTotales.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("periodo", periodo);
+			parameters.put("idProductor", idProductor);
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+			
+		} catch (FileNotFoundException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}		
 }
