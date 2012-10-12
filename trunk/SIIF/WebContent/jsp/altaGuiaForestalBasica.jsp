@@ -209,8 +209,12 @@ function actualizarImporteCallback(valor){
 function actualizarImporte(ind){
 	var cantidadMts = $('#idCantidadMts'+ind).val();
 	var valorAforo = $('#idValorAforo'+ind).val();
-	$('#idImporte'+ind).val(valorAforo*cantidadMts);
-
+	var result = Math.round(valorAforo*cantidadMts*100)/100;
+	
+	//$('#idImporte'+ind).val(valorAforo*cantidadMts);
+	
+	$('#idImporte'+ind).val(result);
+	
 	calcularTotales();	
 }
 
