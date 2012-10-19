@@ -328,10 +328,16 @@
 	<!-- <definition name=".reportePorProductorVolumenFiscalizadoPorProductos" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reportePorProductorVolumenFiscalizadoPorProductos.jsp" />
-	</definition>-->	
+	</definition>-->
+		
 	<definition name=".reportePorProductorGeneral" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reportePorProductorGeneral.jsp" />
+	</definition>		
+	
+	<definition name=".reportePorProductorVolumenPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductorVolumenPorUbicacion.jsp" />
 	</definition>		
 	
 	<!-- FIN REPORTE POR PRODUCTOR -->
