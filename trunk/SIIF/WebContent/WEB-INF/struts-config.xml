@@ -323,6 +323,7 @@
 			<forward name="exitoReportePorProductorVolumenFiscalizadoTotal" path=".reportePorProductorVolumenFiscalizadoTotal" />			
 			<!-- <forward name="exitoReportePorProductorVolumenFiscalizadoPorProductos" path=".reportePorProductorVolumenFiscalizadoPorProductos" />-->
 			<forward name="exitoReportePorProductorGeneral" path=".reportePorProductorGeneral" />
+			<forward name="exitoReportePorProductorVolumenPorUbicacion" path=".reportePorProductorVolumenPorUbicacion" />			
 		</action>	
 					
 		<!-- FIN REPORTES  -->
