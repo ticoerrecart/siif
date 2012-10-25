@@ -39,11 +39,10 @@ public class ReportesPorProductorAction extends ValidadorAction {
 
 			List<PeriodoDTO> periodos = periodoFachada.getPeriodosDTO();			
 			
-			request.setAttribute("periodos", periodos);
+			request.setAttribute("periodos", periodos);			
+			request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_TOTAL);			
 			//request.setAttribute("paramForward", paramForward);
-			//request.setAttribute("validator", paramValidator);
-			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
-
+			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -85,15 +84,12 @@ public class ReportesPorProductorAction extends ValidadorAction {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	//public ActionForward cargarReporteVolumenFiscalizadoPorProductos(ActionMapping mapping, ActionForm form,
 	public ActionForward cargarReportePorProductorGeneral(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{	
-		//String strForward = "exitoReportePorProductorVolumenFiscalizadoPorProductos";
 		String strForward = "exitoReportePorProductorGeneral";
 		
 		try {
-			//String paramForward = request.getParameter("paramForward");
 			//String paramValidator = request.getParameter("validator");
 			
 			//UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
@@ -109,10 +105,9 @@ public class ReportesPorProductorAction extends ValidadorAction {
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("periodos", periodos);
 			request.setAttribute("paramForward", paramForward);
-
-			//request.setAttribute("paramForward", paramForward);
-			//request.setAttribute("validator", paramValidator);
-			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
+			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);	
+			
+			//request.setAttribute("validator", paramValidator);	
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -428,7 +423,6 @@ public class ReportesPorProductorAction extends ValidadorAction {
 	}
 	
 	@SuppressWarnings("unchecked")
-	//public ActionForward cargarReporteVolumenFiscalizadoPorProductos(ActionMapping mapping, ActionForm form,
 	public ActionForward cargarReportePorProductorVolumenPorUbicacion(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{	
@@ -452,9 +446,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 			request.setAttribute("periodos", periodos);
 			request.setAttribute("paramForward", paramForward);
 
-			//request.setAttribute("paramForward", paramForward);
-			//request.setAttribute("validator", paramValidator);
-			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);			
+			//request.setAttribute("validator", paramValidator);					
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

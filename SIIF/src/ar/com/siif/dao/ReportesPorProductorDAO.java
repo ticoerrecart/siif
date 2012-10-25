@@ -40,14 +40,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -69,14 +74,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -98,14 +108,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -127,14 +142,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -156,14 +176,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -185,14 +210,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -214,14 +244,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -243,14 +278,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -275,14 +315,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -307,14 +352,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
@@ -341,14 +391,19 @@ public class ReportesPorProductorDAO extends HibernateDaoSupport {
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateSystemException he) {
+			he.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;			
