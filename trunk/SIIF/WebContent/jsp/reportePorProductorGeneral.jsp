@@ -97,7 +97,7 @@ function actualizarProductoresCallback(productores){
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
 						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarDetalle()">
-							<option value="">-Seleccione un Productor-</option>
+							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>
 				</tr>								
@@ -105,7 +105,6 @@ function actualizarProductoresCallback(productores){
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 					<td align="left" class="botonerab">
 						<select id="idPeriodo" class="botonerab">
-							<option value="">-Seleccione un Periodo-</option>
 							<c:forEach items="${periodos}" var="periodo" varStatus="i">
 								<option value="<c:out value='${periodo.periodo}'></c:out>">
 									<c:out value="${periodo.periodo}"></c:out>

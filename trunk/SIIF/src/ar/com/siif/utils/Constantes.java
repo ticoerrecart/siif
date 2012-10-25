@@ -1,5 +1,6 @@
 package ar.com.siif.utils;
 
+
 public class Constantes {
 
 	public static final int COLECCION_BOLETAS_DEPOSITO_MAX = 10;
@@ -101,7 +102,7 @@ public class Constantes {
 		public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperación de las localidades";
 	// FIN LOCALIDAD
 
-		// PERIODO
+	// PERIODO
 		public static final String EXISTE_PERIODO = "Ya existe un período con éste nombre";
 	
 		public static final String EXITO_ALTA_PERIODO = "El período se ha dado de alta con exito";
@@ -254,6 +255,8 @@ public class Constantes {
 		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS = "Volumen Fiscalizado Por Productor entre Fechas";
 		
 		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTO_FORESTAL_ENTRE_FECHAS = "Volumen Fiscalizado Por Producto Forestal entre Fechas";
+		
+		public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_TOTAL = "Volumen Fiscalizado Total";
 		
 		public static final String ERROR_GENERACION_REPORTE = "Ha ocurrido un error en la generación del reporte";
 	//FIN REPORTES	
