@@ -183,6 +183,32 @@ function cambiarAtributos(idBoleta,readonly){
 	$("#idReemplazar"+idBoleta).toggle();	
 }
 
+function expBoletaNro(){
+	var idBoletaExp = $('#expBoleta').val();
+	$('[id="idTr' + idBoletaExp +'"]').show();
+}
+
+function expBoletasPagas(){
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').show();
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').hide();
+}
+
+function expBoletasImpagas(){
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').show();
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').hide();	
+}
+
+function pintarFila(idTr){
+
+	$('#tdBoleta'+idTr).attr("class", "verdeSubtitulo");	
+}
+
+function despintarFila(idTr){
+
+	$('#tdBoleta'+idTr).attr("class", "grisSubtitulo");
+		
+}
+
 </script>
 
 <%
@@ -418,23 +444,33 @@ function cambiarAtributos(idBoleta,readonly){
 				<tr>
 					<td colspan="3" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
 				</tr>				
-				<tr>
-					<td height="10" colspan="3"></td>
-				</tr>
+
 				<c:choose>					
-					<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">					
-						<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">
-							<tr id="idTr<c:out value='${boletaDeposito.idBoleta}'></c:out>">
+					<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">	
+						<tr>
+							<td colspan="3"  class="azulAjustado">
+								<button class="botonerab" onclick="expBoletasImpagas();"> Expandir Boletas Impagas </button> 
+								<button class="botonerab" onclick="expBoletasPagas();"> Expandir Boletas Pagas </button>
+								<button class="botonerab" onclick="expBoletaNro();"> Expandir Boleta Nro </button> 
+								<input type="text" value="" id="expBoleta">
+							</td>
+						</tr>
+						<tr>
+							<td height="10" colspan="3"></td>
+						</tr>					
+									
+						<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">						
+							<tr onclick="$('#idTr<c:out value='${boletaDeposito.numero}'/>').toggle();">								
+								<td colspan="3" class="grisSubtitulo" id="tdBoleta<c:out value='${index.count}'></c:out>" 									
+									onmouseover="javascript:pintarFila(<c:out value='${index.count}'></c:out>);"
+									onmouseout="javascript:despintarFila(<c:out value='${index.count}'></c:out>);">
+									Boleta n° <c:out value="${boletaDeposito.numero}"></c:out>
+								</td>
+							</tr>						
+						
+							<tr id="idTr<c:out value='${boletaDeposito.numero}'></c:out>" style="display: none">
 								<td colspan="2" width="85%">			
 									<table border="0" class="cuadrado" align="right" width="80%" cellpadding="2">
-										<tr>
-											<td colspan="5" class="grisSubtitulo">
-												<bean:message key='SIIF.label.Cuota'/><c:out value="${index.index+1}"></c:out>
-											</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="5"></td>
-										</tr>
 										<tr>
 											<td width="10%" class="botoneralNegritaRight">
 												<bean:message key='SIIF.label.BoletaDeposito'/>
@@ -540,6 +576,9 @@ function cambiarAtributos(idBoleta,readonly){
 									</c:if>	
 								</td>
 							</tr>
+							<tr>
+								<td height="5" colspan="3"></td>
+							</tr>							
 						</c:forEach>	
 					</c:when>
 					<c:otherwise>

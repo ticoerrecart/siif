@@ -151,14 +151,15 @@ function reemplazarValeCallback(valor){
 		$("#idNroVale"+idValeTransporte).val(nroVale);
 		$("#idOrigen"+idValeTransporte).val(origen);
 		$("#idDestino"+idValeTransporte).val(destino);
-		$("#idVehiculo"+idValeTransporte).val(vehiculo);		
-		$("#idMarca"+idValeTransporte).val(marca);
-		$("#idDominio"+idValeTransporte).val(dominio);
-		$("#idProducto"+idValeTransporte).val(producto);
-		$("#idNroPiezas"+idValeTransporte).val(nroPiezas);
-		$("#idCantM3"+idValeTransporte).val(cantM3);
-		$("#idEspecie"+idValeTransporte).val(especie);
-		$("#idFechaVenc"+idValeTransporte).html(htmlInputFechaVenc);		
+		$("#idFechaVenc"+idValeTransporte).html(htmlInputFechaVenc);
+		
+		//$("#idVehiculo"+idValeTransporte).val(vehiculo);		
+		//$("#idMarca"+idValeTransporte).val(marca);
+		//$("#idDominio"+idValeTransporte).val(dominio);
+		//$("#idProducto"+idValeTransporte).val(producto);
+		//$("#idNroPiezas"+idValeTransporte).val(nroPiezas);
+		//$("#idCantM3"+idValeTransporte).val(cantM3);
+		//$("#idEspecie"+idValeTransporte).val(especie);			
 	}
 	else{
 		$("#error").html("");
@@ -170,34 +171,20 @@ function cancelarReemplazoVale(idVale){
 
 	if(confirm("¿Está seguro que desea cancelar?")){
 
-		/*$("#idNroVale"+idVale).attr('readonly', true);
-		$("#idOrigen"+idVale).attr('readonly', true);
-		$("#idDestino"+idVale).attr('readonly', true);
-		$("#idVehiculo"+idVale).attr('readonly', true);
-		$("#idMarca"+idVale).attr('readonly', true);
-		$("#idDominio"+idVale).attr('readonly', true);	
-		$("#idProducto"+idVale).attr('readonly', true);
-		$("#idNroPiezas"+idVale).attr('readonly', true);
-		$("#idCantM3"+idVale).attr('readonly', true);
-		$("#idEspecie"+idVale).attr('readonly', true);
-		
-		$("#idAceptar"+idVale).toggle();
-		$("#idCancelar"+idVale).toggle();
-		$("#idReemplazar"+idVale).toggle();*/
-
 		cambiarAtributos(idVale,true);
 
 		$("#idNroVale"+idVale).val(nroVale);
 		$("#idOrigen"+idVale).val(origen);
-		$("#idDestino"+idVale).val(destino);
-		$("#idVehiculo"+idVale).val(vehiculo);		
-		$("#idMarca"+idVale).val(marca);
-		$("#idDominio"+idVale).val(dominio);
-		$("#idProducto"+idVale).val(producto);
-		$("#idNroPiezas"+idVale).val(nroPiezas);
-		$("#idCantM3"+idVale).val(cantM3);
-		$("#idEspecie"+idVale).val(especie);
 		$("#idFechaVenc"+idVale).html(htmlInputFechaVenc);
+		
+		//$("#idDestino"+idVale).val(destino);
+		//$("#idVehiculo"+idVale).val(vehiculo);		
+		//$("#idMarca"+idVale).val(marca);
+		//$("#idDominio"+idVale).val(dominio);
+		//$("#idProducto"+idVale).val(producto);
+		//$("#idNroPiezas"+idVale).val(nroPiezas);
+		//$("#idCantM3"+idVale).val(cantM3);
+		//$("#idEspecie"+idVale).val(especie);		
 
 		document.getElementById("idInputFechaVenc"+idVale).value = fechaVencimiento;
 		
@@ -209,18 +196,45 @@ function cambiarAtributos(idVale,readonly){
 
 	$("#idNroVale"+idVale).attr('readonly', readonly);
 	$("#idOrigen"+idVale).attr('readonly', readonly);
-	$("#idDestino"+idVale).attr('readonly', readonly);
-	$("#idVehiculo"+idVale).attr('readonly', readonly);
-	$("#idMarca"+idVale).attr('readonly', readonly);
-	$("#idDominio"+idVale).attr('readonly', readonly);	
-	$("#idProducto"+idVale).attr('readonly', readonly);
-	$("#idNroPiezas"+idVale).attr('readonly', readonly);
-	$("#idCantM3"+idVale).attr('readonly', readonly);
-	$("#idEspecie"+idVale).attr('readonly', readonly);
+	
+	//$("#idDestino"+idVale).attr('readonly', readonly);
+	//$("#idVehiculo"+idVale).attr('readonly', readonly);
+	//$("#idMarca"+idVale).attr('readonly', readonly);
+	//$("#idDominio"+idVale).attr('readonly', readonly);	
+	//$("#idProducto"+idVale).attr('readonly', readonly);
+	//$("#idNroPiezas"+idVale).attr('readonly', readonly);
+	//$("#idCantM3"+idVale).attr('readonly', readonly);
+	//$("#idEspecie"+idVale).attr('readonly', readonly);
 	
 	$("#idAceptar"+idVale).toggle();
 	$("#idCancelar"+idVale).toggle();
 	$("#idReemplazar"+idVale).toggle();	
+}
+
+var clase2;
+function pintarFila(idTr){
+
+	$('#tdVale'+idTr).attr("class", "verdeSubtitulo");	
+}
+
+function despintarFila(idTr){
+	
+	$('#tdVale'+idTr).attr("class", "grisSubtitulo");		
+}
+
+function expValeNro(){
+	var idValeExp = $('#expVale').val();
+	$('[id="idTr' + idValeExp +'"]').show();
+}
+
+function expValesDevueltos(){
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').show();
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').hide();
+}
+
+function expValesNoDevueltos(){
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').show();
+	$('td.verdeExitoLeft').parents('[id^="idTr"]').hide();	
 }
 
 </script>
@@ -310,23 +324,31 @@ function cambiarAtributos(idVale,readonly){
 				<tr>
 					<td colspan="3" class="azulAjustado"><bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
 				</tr>				
-				<tr>
-					<td height="10" colspan="3"></td>
-				</tr>
 					<c:choose>					
 						<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
+						
+							<tr>
+								<td colspan="3"  class="azulAjustado">
+									<button class="botonerab" onclick="expValesNoDevueltos();"> Expandir Vales En Uso </button> 
+									<button class="botonerab" onclick="expValesDevueltos();"> Expandir Vales Devueltos </button>
+									<button class="botonerab" onclick="expValeNro();"> Expandir Vale Nro </button> <Input type="text" value="" id="expVale">
+								</td>
+							</tr>
+							<tr>
+								<td height="10" colspan="3"></td>
+							</tr>						
+						
 							<c:forEach items="${guiaForestal.valesTransporte}" var="valeTransporte" varStatus="index">
-								<tr id="idTr<c:out value='${valeTransporte.id}'></c:out>">
+								<tr onclick="$('#idTr<c:out value='${valeTransporte.numero}'/>').toggle();">								
+									<td colspan="3" class="grisSubtitulo" id="tdVale<c:out value='${index.count}'></c:out>" 									
+										onmouseover="javascript:pintarFila(<c:out value='${index.count}'></c:out>);"
+										onmouseout="javascript:despintarFila(<c:out value='${index.count}'></c:out>);">
+										<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out>
+									</td>
+								</tr>							
+								<tr id="idTr<c:out value='${valeTransporte.numero}'/>" style="display: none" >
 									<td colspan="2" width="85%">														
 										<table class="cuadrado" align="right" width="90%" cellpadding="2">
-											<tr>
-												<td colspan="4" class="grisSubtitulo">
-													<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${index.index+1}"></c:out>
-												</td>
-											</tr>
-											<tr>
-												<td height="5" colspan="4"></td>
-											</tr>
 											<tr>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.NumeroVale'/>
@@ -420,12 +442,12 @@ function cambiarAtributos(idVale,readonly){
 												<c:choose>
 													<c:when test="${valeTransporte.fechaDevolucion ==null}">
 														<td width="40%" class="rojoAdvertenciaLeft">
-															<bean:message key='SIIF.label.NODEVUELTA'/>
+															<bean:message key='SIIF.label.ENUSO'/>
 														</td>		
 													</c:when>
 													<c:otherwise>
 														<td width="40%" class="verdeExitoLeft">
-															<bean:message key='SIIF.label.DEVUELTA'/>
+															<bean:message key='SIIF.label.DEVUELTO'/>
 														</td>
 													</c:otherwise>
 												</c:choose>																						
@@ -435,7 +457,7 @@ function cambiarAtributos(idVale,readonly){
 											</tr>
 											<tr>
 												<td colspan="4">
-												<table class="cuadradoSinBorde" align="center" width="80%"
+												<table class="cuadrado" align="center" width="80%"
 													cellpadding="2">
 													<tr>
 														<td class="grisSubtitulo"><bean:message key='SIIF.label.Producto'/></td>
