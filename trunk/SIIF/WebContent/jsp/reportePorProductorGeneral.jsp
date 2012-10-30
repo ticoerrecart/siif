@@ -68,7 +68,7 @@ function actualizarProductoresCallback(productores){
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
-			Volumen Fiscalizado Por Productos
+			Reporte por Productor
 		</td>
 	</tr>
 	<tr>
