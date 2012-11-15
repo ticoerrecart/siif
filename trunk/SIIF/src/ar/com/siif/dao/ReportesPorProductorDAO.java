@@ -19,9 +19,8 @@ import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
-import ar.com.siif.utils.Fecha;
+
 
 public class ReportesPorProductorDAO extends HibernateDaoSupport {
 
