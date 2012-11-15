@@ -68,6 +68,7 @@
 			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" 
 						path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
 			<forward name=".recuperarGuiaAsociarFiscalizacion" path=".recuperarGuiaAsociarFiscalizacion" />
+			<forward name=".reportePorProductoVolumenPorAnioForestal" path=".reportePorProductoVolumenPorAnioForestal" />
 						    
 		</action>
 
@@ -324,8 +325,13 @@
 			<!-- <forward name="exitoReportePorProductorVolumenFiscalizadoPorProductos" path=".reportePorProductorVolumenFiscalizadoPorProductos" />-->
 			<forward name="exitoReportePorProductorGeneral" path=".reportePorProductorGeneral" />
 			<forward name="exitoReportePorProductorVolumenPorUbicacion" path=".reportePorProductorVolumenPorUbicacion" />			
-		</action>	
-					
+		</action>						
+		<!-- FIN REPORTES  -->
+
+		<!-- REPORTES  POR PRODUCTO -->			
+		<action path="/reportesPorProducto" type="ar.com.siif.struts.actions.ReportesPorProductoAction"
+			parameter="metodo">			
+		</action>						
 		<!-- FIN REPORTES  -->
 
 	</action-mappings>

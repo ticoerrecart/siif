@@ -342,6 +342,13 @@
 	
 	<!-- FIN REPORTE POR PRODUCTOR -->
 
+	<!-- REPORTE POR PRODUCTOR -->
+	<definition name=".reportePorProductoVolumenPorAnioForestal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductoVolumenPorAnioForestal.jsp" />
+	</definition>
+	<!-- FIN REPORTE POR PRODUCTOR -->
+
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIFs" />
 		<put name="body" value="/jsp/error.jsp" />
