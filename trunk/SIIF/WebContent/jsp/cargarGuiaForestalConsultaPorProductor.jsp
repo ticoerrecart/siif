@@ -636,12 +636,12 @@ function volverAltaGFB(){
 											<c:choose>
 												<c:when test="${valeTransporte.fechaDevolucion ==null}">
 													<td width="40%" class="rojoAdvertenciaLeft">
-														<bean:message key='SIIF.label.NODEVUELTA'/>
+														<bean:message key='SIIF.label.ENUSO'/>
 													</td>		
 												</c:when>
 												<c:otherwise>
 													<td width="40%" class="verdeExitoLeft">
-														<bean:message key='SIIF.label.DEVUELTA'/>
+														<bean:message key='SIIF.label.DEVUELTO'/>
 													</td>
 												</c:otherwise>
 											</c:choose>																						

@@ -7,7 +7,7 @@
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadrado" 
-				align="center" width="80%" cellpadding="2">
+				align="center" width="90%" cellpadding="2">
 				<tr>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Fecha'/></td>
 					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>
@@ -45,7 +45,12 @@
 							<c:out value="${fiscalizacion.rodal.nombre}"></c:out>
 						</td>	
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.guiaForestal.nroGuia}"></c:out>
+							<c:choose>						
+								<c:when test="${fiscalizacion.guiaForestal != null}">
+									<c:out value="${fiscalizacion.guiaForestal.nroGuia}"></c:out>
+								</c:when>
+								<c:otherwise>---</c:otherwise>	
+							</c:choose>								
 						</td>
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
