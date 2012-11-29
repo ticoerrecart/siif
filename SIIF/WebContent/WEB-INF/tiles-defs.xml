@@ -352,6 +352,12 @@
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteVolumenPorProductorEntreFechas.jsp" />
 	</definition>	
+
+	<definition name=".reporteVolumenPorProductoPorProductorPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenPorProductoPorProductorPorUbicacion.jsp" />
+	</definition>	
+	
 	<!-- FIN REPORTE POR PRODUCTOR -->
 
 	<definition name=".error" extends=".base">
