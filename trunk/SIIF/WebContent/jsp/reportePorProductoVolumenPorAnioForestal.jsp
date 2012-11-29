@@ -62,8 +62,9 @@ function generarReporte(){
 			window.open("../../reportesPorProducto.do?metodo=generarReporteVolumenPorAnioForestal&volumen="+volumen,"",especificaciones);
 		}
 	}
-
-	$("#error").html("* Seleccione un Volumen<br>");
+	else{
+		$("#error").html("* Seleccione un Volumen<br>");
+	}	
 }
 
 </script>
