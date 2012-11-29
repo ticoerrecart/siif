@@ -114,5 +114,73 @@ public class ReportesPorProductoAction extends ValidadorAction {
 		}
 
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarReporteVolumenPorProductoPorProductorPorUbicacion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception 
+	{	
+		String strForward = "exitoReporteVolumenPorProductoPorProductorPorUbicacion";
+		
+		try {
+			
+			//UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			//rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			
+			//String paramForward = request.getParameter("paramForward");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			//request.setAttribute("paramForward", paramForward);
+			//request.setAttribute("titulo", Constantes.TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_ENTRE_FECHAS);	
+			
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteVolumenPorProductoPorProductorPorUbicacion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesPorProductoFachada reportesPorProductoFachada = 
+								(IReportesPorProductoFachada) ctx.getBean("reportesPorProductoFachada");
+			
+			String volumen = request.getParameter("volumen");
+			String productor = request.getParameter("productor");
+			String periodo = request.getParameter("periodo");
+			String pmf = request.getParameter("pmf");
+			String tranzon = request.getParameter("tranzon");
+			String marcacion = request.getParameter("marcacion");			
+						
+			byte[] bytes = reportesPorProductoFachada.generarReporteVolumenPorProductoPorProductorPorUbicacion(
+																	path,volumen,productor,periodo,pmf,tranzon,marcacion);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
 	}	
 }
