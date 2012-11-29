@@ -36,4 +36,17 @@ public class ReportesPorProductoFachada implements IReportesPorProductoFachada {
 			throw new NegocioException(e.getMessage());
 		}		
 	}
+	
+	public byte[] generarReporteVolumenPorProductoPorProductorPorUbicacion(String path, String volumen, String productor, 
+																		   String periodo, String pmf, String tranzon, 
+																		   String marcacion)throws NegocioException{
+
+		try{
+			return reportePorProductoDAO.generarReporteVolumenPorProductoPorProductorPorUbicacion(path,volumen,
+																		productor,periodo,pmf,tranzon,marcacion);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}	
 }
