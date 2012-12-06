@@ -35,14 +35,23 @@ function generarReporte(){
 	var pmf = $("#idPMF").val();
 	var tranzon = $("#idTranzon").val();
 	var marcacion = $("#idMarcacion").val();
-	var metodo = $("#paramForward").val();
+	//var metodo = $("#paramForward").val();
 	
-	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
-	if(type == "IE"){
-		window.open("./reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);		
-	}else{
-		window.open("../../reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);				
-	}	
+	if(volumen != "-1" && productor != "-1" && pmf != "-1"){
+		$("#error").html("");	
+		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+		if(type == "IE"){
+			window.open("./reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);		
+		}else{
+			window.open("../../reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);				
+		}
+	}		
+	else{
+		var textoError1 = (volumen == "-1")?"* Seleccione un Volumen<br>":"";
+		var textoError2 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
+		var textoError3 = (pmf == "-1")?"* Seleccione un Plan de Manejo Forestal<br>":"";
+		$("#error").html(textoError1 + textoError2 + textoError3);		
+	}		
 }
 
 function cargarProductores(){
