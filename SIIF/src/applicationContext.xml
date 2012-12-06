@@ -73,6 +73,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="reportesDAO" class="ar.com.siif.dao.ReportesDAO" parent="abstractRepository" />
 	<bean id="reportesPorProductorDAO" class="ar.com.siif.dao.ReportesPorProductorDAO" parent="abstractRepository" />
 	<bean id="reportesPorProductoDAO" class="ar.com.siif.dao.ReportesPorProductoDAO" parent="abstractRepository" />
+	<bean id="reportesRecaudacionDAO" class="ar.com.siif.dao.ReportesRecaudacionDAO" parent="abstractRepository" />
 	
 	
 	<!--  *******************-->
@@ -390,6 +391,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="reportesPorProductoFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesPorProductoFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- REPORTES RECAUDACION --> 
+	<bean id="reportesRecaudacionFachadaImpl" class="ar.com.siif.fachada.ReportesRecaudacionFachada">
+		<constructor-arg ref="reportesRecaudacionDAO" />
+	</bean>	
+
+	<bean id="reportesRecaudacionFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesRecaudacionFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesRecaudacionFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
