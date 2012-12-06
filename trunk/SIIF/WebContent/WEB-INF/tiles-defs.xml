@@ -360,6 +360,18 @@
 	
 	<!-- FIN REPORTE POR PRODUCTOR -->
 
+	<!-- REPORTE RECAUDACION -->
+	<definition name=".reporteRecaudacionPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteRecaudacionPorProductorPorAnioForestal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorAnioForestal.jsp" />
+	</definition>						
+	<!-- FIN REPORTE RECAUDACION -->
+
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIFs" />
 		<put name="body" value="/jsp/error.jsp" />
