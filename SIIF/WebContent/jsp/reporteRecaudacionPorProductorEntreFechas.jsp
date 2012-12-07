@@ -35,6 +35,7 @@ function generarReporte(){
 	var fechaHasta = $("#idFechaHasta").val();
 
 	if(productor != "-1" && fechaDesde != "" && fechaHasta != ""){
+		$("#error").html("");
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
 			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorEntreFechas&productor="+productor+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
