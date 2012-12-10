@@ -130,7 +130,63 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 			request.setAttribute("error", e.getMessage());
 			// strForward = "errorLogin";
 		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarReporteRecaudacionPorProductorPorUbicacion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception 
+	{	
+		String strForward = "exitoReporteRecaudacionPorProductorPorUbicacion";
+		
+		try {
+			//UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			//rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());	
+			
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteRecaudacionPorProductorPorUbicacion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesRecaudacionFachada reportesRecaudacionFachada = 
+								(IReportesRecaudacionFachada) ctx.getBean("reportesRecaudacionFachada");
+			
+			String productor = request.getParameter("productor");
+			String pmf = request.getParameter("pmf");
+			String tranzon = request.getParameter("tranzon");
+			String marcacion = request.getParameter("marcacion");			
+						
+			byte[] bytes = reportesRecaudacionFachada.generarReporteRecaudacionPorProductorPorUbicacion(path,productor,pmf,tranzon,marcacion);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
 		return null;
 	}	
 }
