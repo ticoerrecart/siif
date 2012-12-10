@@ -340,7 +340,8 @@
 		<action path="/reportesRecaudacion" type="ar.com.siif.struts.actions.ReportesRecaudacionAction"
 			parameter="metodo">
 			<forward name="exitoCargarReporteRecaudacionPorProductorEntreFechas" path=".reporteRecaudacionPorProductorEntreFechas" />
-			<forward name="exitoCargarReporteRecaudacionPorProductorPorAnioForestal" path=".reporteRecaudacionPorProductorPorAnioForestal" />								
+			<forward name="exitoCargarReporteRecaudacionPorProductorPorAnioForestal" path=".reporteRecaudacionPorProductorPorAnioForestal" />
+			<forward name="exitoReporteRecaudacionPorProductorPorUbicacion" path=".reporteRecaudacionPorProductorPorUbicacion" />											
 		</action>						
 		<!-- FIN REPORTES  -->
 		

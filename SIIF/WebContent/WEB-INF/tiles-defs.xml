@@ -369,7 +369,12 @@
 	<definition name=".reporteRecaudacionPorProductorPorAnioForestal" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorAnioForestal.jsp" />
-	</definition>						
+	</definition>
+
+	<definition name=".reporteRecaudacionPorProductorPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorUbicacion.jsp" />
+	</definition>			
 	<!-- FIN REPORTE RECAUDACION -->
 
 	<definition name=".error" extends=".base">
