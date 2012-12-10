@@ -39,4 +39,14 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 		}		
 	}
 	
+	public byte[] generarReporteRecaudacionPorProductorPorUbicacion(String path, String productor, String pmf, 
+																	String tranzon, String marcacion)throws NegocioException
+	{
+		try{
+			return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorPorUbicacion(path,productor,pmf,tranzon,marcacion);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}
 }
