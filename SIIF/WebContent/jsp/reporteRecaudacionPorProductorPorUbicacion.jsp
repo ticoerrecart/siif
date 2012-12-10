@@ -7,18 +7,18 @@
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 
 <script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>	
+
+<script type="text/javascript"
+	src="<html:rewrite page='/js/fiscalizacion.js'/>"></script>
+
+<script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<script>
-	$(function() {
-		$( "#idFechaDesde" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#idFechaHasta" ).datepicker({ dateFormat: 'dd/mm/yy'});		
-	});
-</script>
 
 <script type="text/javascript"> 
 
@@ -27,59 +27,61 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-
 function generarReporte(){
 
-	var productor = $("#selectProductores").val();
-	var periodo = $("#periodo").val();
-
-	if(productor != "-1" && periodo != "-1"){
-		$("#error").html("");
+	var productor = $("#idProductor").val();
+	var pmf = $("#idPMF").val();
+	var tranzon = $("#idTranzon").val();
+	var marcacion = $("#idMarcacion").val();
+	
+	if(productor != "-1" && pmf != "-1"){
+		$("#error").html("");	
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorAnioForestal&productor="+productor+"&periodo="+periodo,"",especificaciones);
+			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
 		}else{
-			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorAnioForestal&productor="+productor+"&periodo="+periodo,"",especificaciones);
+			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
 		}
-	}
+	}		
 	else{
 		var textoError1 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
-		var textoError2 = (periodo == "-1")?"* Seleccione un Periodo Forestal<br>":"";
+		var textoError2 = (pmf == "-1")?"* Seleccione un Plan de Manejo Forestal<br>":"";
 		$("#error").html(textoError1 + textoError2);		
-	}
+	}		
 }
 
 function cargarProductores(){
 
 	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 	if(idTipoDeEntidad != "-1"){
-		$('#selectProductores').attr('disabled',false);
+		$('#idProductor').attr('disabled',false);
 		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
 	}else{
-		dwr.util.removeAllOptions("selectProductores");
+		dwr.util.removeAllOptions("idProductor");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-		dwr.util.addOptions("selectProductores", data, "id", "nombre");		
-		$('#selectProductores').attr('disabled','disabled');
+		dwr.util.addOptions("idProductor", data, "id", "nombre");		
+		$('#idProductor').attr('disabled','disabled');
 	}		
 	$('#divDetalle').hide(600);
 	$('#divDetalle').html("");
 }
 
 function actualizarProductoresCallback(productores){
-	dwr.util.removeAllOptions("selectProductores");
+	dwr.util.removeAllOptions("idProductor");
 	var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-	dwr.util.addOptions("selectProductores", data, "id", "nombre");	
-	dwr.util.addOptions("selectProductores", productores,"id","nombre");	
+	dwr.util.addOptions("idProductor", data, "id", "nombre");	
+	dwr.util.addOptions("idProductor", productores,"id","nombre");	
 }
 
 </script>
-   
+<input id="paramForward" type="hidden" value="${paramForward}">
+<!-- <input id="validator" type="hidden" value="<c:out value="${validator}" />"> -->   
 <div id="error" class="rojoAdvertencia"></div>
 
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
-			Recaudación Por Producto - Productor - Período Forestal
+			Recaudación por Productor y Ubicación
 		</td>
 	</tr>
 	<tr>
@@ -90,7 +92,7 @@ function actualizarProductoresCallback(productores){
 			<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 				<tr>
 					<td height="10" colspan="2"></td>
-				</tr>	
+				</tr>				
 				<tr>
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 					<td align="left" class="botonerab">
@@ -107,27 +109,46 @@ function actualizarProductoresCallback(productores){
 				<tr>
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
-						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarDetalle()">
+						<select id="idProductor" class="botonerab" disabled="disabled" onchange="actualizarComboPMF();">
 							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>
-				</tr>	
+				</tr>
+				
 				<tr>
-					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
-					<td align="left" class="botonerab">
-						<select id="periodo" class="botonerab" style="width: 16em">
-							<option value="-1">-Seleccione un Período Forestal-</option>						
-							<c:forEach items="${periodos}" var="per">
-								<option value="${per.periodo}">
-									<c:out value="${per.periodo}"></c:out>
-								</option>
-							</c:forEach>
-						</select>					
+					<td width="40%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.PlanManejoForestal'/>
 					</td>
-				</tr>						
+					<td align="left" class="botonerab">
+						<select id="idPMF" class="botonerab" disabled="disabled" onchange="actualizarComboTranzon();">
+							<option value="-1">- Seleccione -</option>						
+						</select>
+					</td>
+				</tr>				
+				<tr>
+					<td width="40%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.Tranzon'/>
+					</td>
+					<td align="left" class="botonerab">
+						<select id="idTranzon" class="botonerab" disabled="disabled" onchange="actualizarComboMarcacion();">
+							<option value="-1">- Seleccione -</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td width="40%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.Marcacion'/>
+					</td>
+					<td align="left" class="botonerab">
+						<select id="idMarcacion" class="botonerab" disabled="disabled" onchange="actualizarComboRodal();">
+							<option value="-1">- Seleccione -</option>
+						</select>
+					</td>
+				</tr>				
 				<tr>
 					<td height="10" colspan="2"></td>
-				</tr>								
+				</tr>
+				 								
 			</table>
 		</td>
 	</tr>
