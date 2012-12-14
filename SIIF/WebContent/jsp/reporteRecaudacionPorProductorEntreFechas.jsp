@@ -81,7 +81,7 @@ function actualizarProductoresCallback(productores){
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
-			Volumen Por Producto y Productor Entre Fechas
+			Recaudación por Productor Entre Fechas
 		</td>
 	</tr>
 	<tr>
