@@ -13,12 +13,6 @@
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-<script>
-	$(function() {
-		$( "#idFechaDesde" ).datepicker({ dateFormat: 'dd/mm/yy'});
-		$( "#idFechaHasta" ).datepicker({ dateFormat: 'dd/mm/yy'});		
-	});
-</script>
 
 <script type="text/javascript"> 
 
@@ -31,21 +25,19 @@ if (!document.all && document.getElementById) type="MO";
 function generarReporte(){
 
 	var productor = $("#selectProductores").val();
-	var periodo = $("#periodo").val();
 
-	if(productor != "-1" && periodo != "-1"){
+	if(productor != "-1"){
 		$("#error").html("");
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorAnioForestal&productor="+productor+"&periodo="+periodo,"",especificaciones);
+			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorAnioForestalPorProductor&productor="+productor,"",especificaciones);
 		}else{
-			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorAnioForestal&productor="+productor+"&periodo="+periodo,"",especificaciones);
+			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorAnioForestalPorProductor&productor="+productor,"",especificaciones);
 		}
 	}
 	else{
 		var textoError1 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
-		var textoError2 = (periodo == "-1")?"* Seleccione un Periodo Forestal<br>":"";
-		$("#error").html(textoError1 + textoError2);		
+		$("#error").html(textoError1);		
 	}
 }
 
@@ -79,7 +71,7 @@ function actualizarProductoresCallback(productores){
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
-			Recaudación Por Productor y Período Forestal
+			Recaudación por Período Forestal y Productor
 		</td>
 	</tr>
 	<tr>
@@ -111,20 +103,7 @@ function actualizarProductoresCallback(productores){
 							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>
-				</tr>	
-				<tr>
-					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
-					<td align="left" class="botonerab">
-						<select id="periodo" class="botonerab" style="width: 16em">
-							<option value="-1">-Seleccione un Período Forestal-</option>						
-							<c:forEach items="${periodos}" var="per">
-								<option value="${per.periodo}">
-									<c:out value="${per.periodo}"></c:out>
-								</option>
-							</c:forEach>
-						</select>					
-					</td>
-				</tr>						
+				</tr>							
 				<tr>
 					<td height="10" colspan="2"></td>
 				</tr>								
