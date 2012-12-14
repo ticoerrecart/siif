@@ -130,4 +130,104 @@ public class ReportesRecaudacionDAO extends HibernateDaoSupport {
 		}
 		return bytes;			
 	}	
+	
+	public byte[] generarReporteRecaudacionTotalProductoresEntreFechas(String path, String fechaDesde,String fechaHasta)
+																   							throws DataBaseException
+	{
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "reporteRecaudacionTotalProductoresEntreFechas.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}
+	
+	public byte[] generarReporteRecaudacionPorAnioForestalPorProductor(String path, String productor)throws DataBaseException
+	{
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "reporteRecaudacionPorAnioForestalPorProductor.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProductor", new Long(productor));
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}
+	
+	public byte[] generarReporteRecaudacionPorAnioForestalTotalProductores(String path)throws DataBaseException
+	{
+		byte[] bytes = null;
+		try{
+			InputStream input = new FileInputStream(path + File.separatorChar + "reporteRecaudacionPorAnioForestalTotalProductores.jasper");
+			String fileImagen = path + File.separatorChar + "logo.GIF";
+			
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			
+			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
+		
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (HibernateSystemException he) {
+			he.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		}
+		return bytes;			
+	}	
 }
