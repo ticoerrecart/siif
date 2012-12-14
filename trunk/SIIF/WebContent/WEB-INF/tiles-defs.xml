@@ -375,6 +375,21 @@
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorUbicacion.jsp" />
 	</definition>			
+
+	<definition name=".reporteRecaudacionTotalProductoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionTotalProductoresEntreFechas.jsp" />
+	</definition>		
+
+	<definition name=".reporteRecaudacionPorAnioForestalPorProductor" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorAnioForestalPorProductor.jsp" />
+	</definition>		
+
+	<definition name=".reporteRecaudacionPorAnioForestalTotalProductores" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorAnioForestalTotalProductores.jsp" />
+	</definition>		
 	<!-- FIN REPORTE RECAUDACION -->
 
 	<definition name=".error" extends=".base">

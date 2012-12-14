@@ -69,7 +69,8 @@
 						path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
 			<forward name=".recuperarGuiaAsociarFiscalizacion" path=".recuperarGuiaAsociarFiscalizacion" />
 			<forward name=".reportePorProductoVolumenPorAnioForestal" path=".reportePorProductoVolumenPorAnioForestal" />
-						    
+			<forward name=".reporteRecaudacionTotalProductoresEntreFechas" path=".reporteRecaudacionTotalProductoresEntreFechas" />
+			<forward name=".reporteRecaudacionPorAnioForestalTotalProductores" path=".reporteRecaudacionPorAnioForestalTotalProductores" />														   
 		</action>
 
 		<action path="/menu" type="ar.com.siif.struts.actions.MenuAction"
@@ -341,7 +342,8 @@
 			parameter="metodo">
 			<forward name="exitoCargarReporteRecaudacionPorProductorEntreFechas" path=".reporteRecaudacionPorProductorEntreFechas" />
 			<forward name="exitoCargarReporteRecaudacionPorProductorPorAnioForestal" path=".reporteRecaudacionPorProductorPorAnioForestal" />
-			<forward name="exitoReporteRecaudacionPorProductorPorUbicacion" path=".reporteRecaudacionPorProductorPorUbicacion" />											
+			<forward name="exitoReporteRecaudacionPorProductorPorUbicacion" path=".reporteRecaudacionPorProductorPorUbicacion" />
+			<forward name="exitoReporteRecaudacionPorAnioForestalPorProductor" path=".reporteRecaudacionPorAnioForestalPorProductor" />											
 		</action>						
 		<!-- FIN REPORTES  -->
 		
