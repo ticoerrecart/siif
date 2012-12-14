@@ -49,4 +49,35 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 			throw new NegocioException(e.getMessage());
 		}		
 	}
+	
+	public byte[] generarReporteRecaudacionTotalProductoresEntreFechas(String path, String fechaDesde, String fechaHasta)
+																   							throws NegocioException 
+	{
+		try{
+		return reportesRecaudacionDAO.generarReporteRecaudacionTotalProductoresEntreFechas(path,fechaDesde,fechaHasta);
+		
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}
+	
+	public byte[] generarReporteRecaudacionPorAnioForestalPorProductor(String path, String productor)throws NegocioException
+	{
+		try{
+			return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalPorProductor(path,productor);
+		
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}
+	
+	public byte[] generarReporteRecaudacionPorAnioForestalTotalProductores(String path)throws NegocioException
+	{
+		try{
+			return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalTotalProductores(path);
+		
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}	
 }

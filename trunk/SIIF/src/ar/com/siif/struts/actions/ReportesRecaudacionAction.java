@@ -189,4 +189,122 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		}
 		return null;
 	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteRecaudacionTotalProductoresEntreFechas(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesRecaudacionFachada reportesRecaudacionFachada = 
+								(IReportesRecaudacionFachada) ctx.getBean("reportesRecaudacionFachada");
+			
+			String fechaDesde = request.getParameter("fechaDesde");
+			String fechaHasta = request.getParameter("fechaHasta");
+						
+			byte[] bytes = reportesRecaudacionFachada.generarReporteRecaudacionTotalProductoresEntreFechas(path,fechaDesde,fechaHasta);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarReporteRecaudacionPorAnioForestalPorProductor(ActionMapping mapping, ActionForm form,
+											HttpServletRequest request, HttpServletResponse response) throws Exception 
+	{	
+		String strForward = "exitoReporteRecaudacionPorAnioForestalPorProductor";
+		
+		try {
+			//UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
+			//rolFachada.verificarMenu(Constantes.REPORTE_VOL_FISC_PROD_FECHAS_MENU,usuario.getRol());
+			
+			WebApplicationContext ctx = getWebApplicationContext();			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());	
+			
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteRecaudacionPorAnioForestalPorProductor(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesRecaudacionFachada reportesRecaudacionFachada = 
+								(IReportesRecaudacionFachada) ctx.getBean("reportesRecaudacionFachada");
+			
+			String productor = request.getParameter("productor");
+						
+			byte[] bytes = reportesRecaudacionFachada.generarReporteRecaudacionPorAnioForestalPorProductor(path,productor);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteRecaudacionPorAnioForestalTotalProductores(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		UsuarioDTO u = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);		
+		
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+	
+			WebApplicationContext ctx = getWebApplicationContext();			
+			
+			IReportesRecaudacionFachada reportesRecaudacionFachada = 
+								(IReportesRecaudacionFachada) ctx.getBean("reportesRecaudacionFachada");
+
+			byte[] bytes = reportesRecaudacionFachada.generarReporteRecaudacionPorAnioForestalTotalProductores(path);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+		return null;
+	}	
 }
