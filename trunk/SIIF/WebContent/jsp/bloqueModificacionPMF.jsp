@@ -53,7 +53,7 @@ function seleccionarPMF(idTr){
 				
 					<tr>
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Productor'/></td>
-						<td class="azulAjustado" colspan="2" width="20%">
+						<td class="azulAjustado" colspan="3" width="20%">
 							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td class="azulAjustado" width="10%"></td>
@@ -62,6 +62,7 @@ function seleccionarPMF(idTr){
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Nombre'/></td>
 						<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.Nombre'/></td>
 						<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.Exepdiente'/></td>
+						<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.TipoTerreno'/></td>
 						<td class="azulAjustado" width="10%"></td>
 					</tr>
 					
@@ -70,8 +71,9 @@ function seleccionarPMF(idTr){
 							<td class="botonerab"> ${pmf.productorForestal.nombre}</td>
 							<td class="botonerab"> ${pmf.nombre}</td>
 							<td class="botonerab"> ${pmf.expediente}</td>
+							<td class="botonerab"> ${pmf.tipoTerreno}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombre}', '${pmf.expediente}')">
+								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombre}', '${pmf.expediente}', '${pmf.tipoTerreno}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>
@@ -104,6 +106,11 @@ function seleccionarPMF(idTr){
 							<td width="33%"align="left"><input id="expedientePMF" type="text" class="botonerab" > </td>
 							<td width="33%"></td>
 						</tr>
+						<tr>
+							<td width="33%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.TipoTerreno'/></td>
+							<td width="33%"align="left"><input id="tipoTerrenoPMF" type="text" class="botonerab" readonly="readonly"> </td>
+							<td width="33%"></td>
+						</tr>						
 						<tr>
 							<td> <input type="button" class="botonerab" value="Grabar" onclick="modificarPMF()"></td>
 							<td> <input type="button" class="botonerab" value="Borrar" onclick="deletePMF()"></td>
