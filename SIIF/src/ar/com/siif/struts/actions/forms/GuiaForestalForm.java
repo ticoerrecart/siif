@@ -31,7 +31,7 @@ public class GuiaForestalForm extends ActionForm {
 
 	private String fechaVencimiento;
 
-	
+	private String tipoTerreno;
 
 	public GuiaForestalForm() {
 
@@ -130,6 +130,14 @@ public class GuiaForestalForm extends ActionForm {
 
 	public void setFechaVencimiento(String fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public String getTipoTerreno() {
+		return tipoTerreno;
+	}
+
+	public void setTipoTerreno(String tipoTerreno) {
+		this.tipoTerreno = tipoTerreno;
 	}
 
 	public void normalizarListaFiscalizaciones(){

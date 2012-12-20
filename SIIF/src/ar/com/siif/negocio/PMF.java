@@ -35,6 +35,8 @@ public class PMF {
 
 	private String nombre;
 
+	private String tipoTerreno;
+	
 	@OneToMany(mappedBy = "pmf")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<Tranzon> tranzones;
@@ -88,4 +90,13 @@ public class PMF {
 		
 		return this.getNombre()+" - "+this.getExpediente();
 	}
+
+	public String getTipoTerreno() {
+		return tipoTerreno;
+	}
+
+	public void setTipoTerreno(String tipoTerreno) {
+		this.tipoTerreno = tipoTerreno;
+	}
+
 }

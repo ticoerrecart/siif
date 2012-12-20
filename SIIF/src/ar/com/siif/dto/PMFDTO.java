@@ -8,6 +8,8 @@ public class PMFDTO {
 
 	private String nombre;
 
+	private String tipoTerreno;	
+	
 	private EntidadDTO productorForestal;
 	
 	public Long getId() {
@@ -45,5 +47,13 @@ public class PMFDTO {
 	public String getNombreExpediente(){
 		
 		return this.getNombre()+" - "+this.getExpediente();
+	}
+
+	public String getTipoTerreno() {
+		return tipoTerreno;
+	}
+
+	public void setTipoTerreno(String tipoTerreno) {
+		this.tipoTerreno = tipoTerreno;
 	}
 }

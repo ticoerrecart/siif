@@ -127,7 +127,7 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}	
 	}
 
-	public void altaPMF(String expediente, String nombre, Long idEntidad) throws NegocioException {
+	public void altaPMF(String expediente, String nombre, String tipoTerreno, Long idEntidad) throws NegocioException {
 		
 		try{
 			if (ubicacionDAO.getPMFsPorNombreParaPF(nombre, idEntidad).size() > 0 ){
@@ -135,7 +135,7 @@ public class UbicacionFachada implements IUbicacionFachada {
 			}
 			Entidad entidad = ubicacionDAO.getEntidad(idEntidad);
 			//entidad.getPmfs().add(new PMF(expediente, nombre, e));
-			ubicacionDAO.altaPMF(ProviderDominio.getPMF(expediente,nombre,entidad));
+			ubicacionDAO.altaPMF(ProviderDominio.getPMF(expediente,nombre,tipoTerreno,entidad));
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -314,4 +314,10 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}
 		return listaRodalDTO;		
 	}	
+	
+	public String getTipoTerrenoPMF(Long idPMF){
+		
+		PMF pmf = ubicacionDAO.getPMF(idPMF);
+		return pmf.getTipoTerreno();
+	}
 }
