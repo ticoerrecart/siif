@@ -109,7 +109,7 @@
 
 		<definition name=".cargarModificacionGFB" extends=".base">
 			<put name="title" value="SIIFs" />
-			<put name="body" value="/jsp/modificacionGuiaForestalBasica2.jsp" />
+			<put name="body" value="/jsp/modificacionGuiaForestalBasica.jsp" />
 		</definition>
 
 		<definition name=".recuperarGuiaAsociarFiscalizacion" extends=".base">
