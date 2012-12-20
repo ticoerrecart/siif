@@ -46,13 +46,14 @@
 		$('#disposicionTranzon').val(disposicionTranzon); 	
 	}
 
-	function mostrarDatosPMF(idFila,idPMF, nombrePMF, expedientePMF){
+	function mostrarDatosPMF(idFila,idPMF, nombrePMF, expedientePMF, tipoTerrenoPMF){
 		$("#tablaPmfs tr").removeClass("seleccionado");
 		$("#P" + idFila).addClass("seleccionado"); 
 		$('#divModificacionPMF').fadeIn(600);
 		$('#idPMF').val(idPMF);
 		$('#nombrePMF').val(nombrePMF);		
-		$('#expedientePMF').val(expedientePMF); 	
+		$('#expedientePMF').val(expedientePMF);
+		$('#tipoTerrenoPMF').val(tipoTerrenoPMF); 	
 	}
 	
 	function modificarRodal(){
@@ -77,7 +78,7 @@
 	function modificarPMF(){
 		idPMF = $('#idPMF').val();
 		nombrePMF = $('#nombrePMF').val();
-		expedientePMF = $('#expedientePMF').val() 
+		expedientePMF = $('#expedientePMF').val();
 		UbicacionFachada.modificarPMF(idPMF,nombrePMF,expedientePMF,submitirPMFCallback );
 	}
 	

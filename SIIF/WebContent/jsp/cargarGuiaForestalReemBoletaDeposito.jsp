@@ -278,6 +278,14 @@ function despintarFila(idTr){
 		<td height="10" colspan="4"></td>
 	</tr>
 	<tr>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+		<td width="30%" align="left"> 
+			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.tipoTerreno}" class="botonerab" type="text" 
+				size="40" readonly="readonly">
+		</td> 
+		<td colspan="2"></td>
+	</tr>	
+	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 		<td width="30%" align="left">
 			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.rodal.marcacion.tranzon.pmf.expediente}" 

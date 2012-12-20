@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import= "ar.com.siif.dto.FiscalizacionDTO" %>
-<%@ page import= "ar.com.siif.dto.GuiaForestalDTO" %> 
+<%@ page import= "ar.com.siif.dto.GuiaForestalDTO" %>
+<%@ page import= "ar.com.siif.dto.FilaTablaVolFiscAsociarDTO" %>  
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
@@ -171,6 +172,14 @@ function submitAsociarGuia(){
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
+	<tr>
+		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+		<td width="30%" align="left"> 
+			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.tipoTerreno}" class="botonerab" type="text" 
+				size="40" readonly="readonly">
+		</td> 
+		<td colspan="2"></td>
+	</tr>	
 	<tr>
 		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 		<td width="30%" align="left">
@@ -452,11 +461,12 @@ function submitAsociarGuia(){
 									</td>																
 								</tr>
 							</c:forEach>	
-						</table>
-						<br>				
+						</table>							
 					</c:when>
 										
 					<c:otherwise>
+						<br>
+						<br>
 						<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
 							<tr>
 								<td class="botonerab">
@@ -464,8 +474,38 @@ function submitAsociarGuia(){
 								</td>
 							</tr>
 						</table>													
-					</c:otherwise>
+					</c:otherwise>					
 				</c:choose>	
+				<br>
+				<br>
+				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+					<tr>
+						<td class="azulAjustado">Tipo de Producto</td>
+						<td class="azulAjustado">Vol Total en Guía</td>
+						<td class="azulAjustado">Vol en Fiscalización</td>
+						<td class="azulAjustado">Vol Faltante para Asociar</td>
+					</tr>							
+					
+					<%String clase=""; %>
+					<c:forEach items="${tablaVolFiscAsociar}" var="fila" varStatus="i">
+						<%clase=(clase.equals("")?"par":""); %>							
+						<tr class="<%=clase%>">									
+							<td class="botonerab">
+								<c:out value="${fila.nombreProducto}"></c:out>
+							</td>									
+							<td class="botonerab">
+								<c:out value="${fila.volumenTotalEnGuia}"></c:out>
+							</td>
+							<td class="botonerab">
+								<c:out value="${fila.volumenEnFiscalizaciones}"></c:out>
+							</td>
+							<td class="botonerab">
+								<c:out value="${fila.volumenFaltante}"></c:out>
+							</td>																	
+						</tr>
+					</c:forEach>								
+
+				</table>				
 			</div>	
 		</td>
 	</tr>

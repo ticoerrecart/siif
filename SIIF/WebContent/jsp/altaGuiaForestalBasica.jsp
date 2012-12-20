@@ -206,40 +206,60 @@ function actualizarImporteCallback(valor){
 	actualizarImporte(idRenglon);
 }
 
-function actualizarImporte(ind){
+function calcularSubImporteRenglon(ind){
+	
 	var cantidadMts = $('#idCantidadMts'+ind).val();
 	var valorAforo = $('#idValorAforo'+ind).val();
 	var result = Math.round(valorAforo*cantidadMts*100)/100;
-	
-	//$('#idImporte'+ind).val(valorAforo*cantidadMts);
-	
-	$('#idImporte'+ind).val(result);
-	
+		
+	$('#idImporte'+ind).val(result);	
+}
+
+function actualizarImporte(ind){
+
+	calcularSubImporteRenglon(ind);
 	calcularTotales();	
 }
 
 function calcularTotales(){
 
+	var tipoTerreno = $('#tipoTerrenoPMF').val();
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 	var sumaImportes = 0;
-	for ( var i = 0; i <= j; i++) {
-		if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null && $('#idImporte'+i).val() != ""){
-			sumaImportes += parseFloat($('#idImporte'+i).val());  
-		}	 
-	}
-			
-	if(sumaImportes == 0){
-		$('#idPorcentaje').val(0);
-		$('#idTotal').val(0);
-	}
-	else{
-		//var importeFloat = parseFloat(importe);
-		//var sumaImportes = new Number(importe0) + new Number(importe1) + new Number(importe2) + new Number(importe3) + new Number(importe4);
+	
+	if(tipoTerreno == "Privado"){
+
+		for ( var i = 0; i <= j; i++) {
+			if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null && $('#idImporte'+i).val() != ""){
+				calcularSubImporteRenglon(i);
+				sumaImportes += parseFloat($('#idImporte'+i).val());
+				$('#idImporte'+i).val(0); 
+			}	 
+		}		
 		var porcentaje = parseFloat(sumaImportes*0.2);
-		
-		document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);
-		document.getElementById("idTotal").value = new Number(parseFloat(sumaImportes * 1.2)).toFixed(2);
-	}	
+		document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);		
+		document.getElementById("idTotal").value = new Number(parseFloat($('#idPorcentaje').val())).toFixed(2);		
+	}
+	else{	
+		for ( var i = 0; i <= j; i++) {
+			if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null && $('#idImporte'+i).val() != ""){
+				sumaImportes += parseFloat($('#idImporte'+i).val());  
+			}	 
+		}
+				
+		if(sumaImportes == 0){
+			$('#idPorcentaje').val(0);
+			$('#idTotal').val(0);
+		}
+		else{
+			//var importeFloat = parseFloat(importe);
+			//var sumaImportes = new Number(importe0) + new Number(importe1) + new Number(importe2) + new Number(importe3) + new Number(importe4);
+			var porcentaje = parseFloat(sumaImportes*0.2);
+			
+			document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);
+			document.getElementById("idTotal").value = new Number(parseFloat(sumaImportes * 1.2)).toFixed(2);
+		}	
+	}
 }
 
 var clase2;
@@ -327,6 +347,31 @@ function removerFila() {
 	}
 }
 
+function actualizarTipoTerrenoPMF(){
+
+	idPMF = $('#idPMF').val();
+	if (idPMF > 0) {
+		UbicacionFachada.getTipoTerrenoPMF(idPMF,
+				actualizarTipoTerrenoPMFCallback);
+	}
+	$('#tipoTerrenoPMF').val("");		
+}
+
+function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
+
+	$('#tipoTerrenoPMF').val(tipoTerrenoPMF);
+
+	//Vuelvo a poner los valores en los subImportes por si cambio a un PMF con terreno Fiscal.
+	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+	for ( var i = 0; i <= j; i++) {
+		if($('#idImporte'+i) != null && $('#idImporte'+i).val() != null && $('#idImporte'+i).val() != ""){
+			calcularSubImporteRenglon(i);
+		}	 
+	}
+		
+	calcularTotales();
+}
+
 //-----------------------------------------------------//
 
 </script>
@@ -410,6 +455,16 @@ function removerFila() {
 					<td height="10" colspan="4"></td>
 				</tr>
 				<tr>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+					<td width="30%" align="left">
+						<input value="${rodal.marcacion.tranzon.pmf.tipoTerreno}" id="tipoTerrenoPMF" name="tipoTerreno"
+								class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+					<td colspan="2">
+					
+					</td>
+				</tr>				
+				<tr>
 					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 					<td width="30%" align="left">
 						<input value="${rodal.marcacion.tranzon.pmf.nombre} - ${rodal.marcacion.tranzon.pmf.expediente}" 
@@ -459,11 +514,21 @@ function removerFila() {
 							</tr>				
 							<tr>
 								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.TipoTerreno'/>
+								</td>
+								<td width="4%"></td>
+								<td align="left">
+									<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
+										class="botonerab" type="text" size="15">
+								</td>
+							</tr>							
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.PlanManejoForestal'/>
 								</td>
 								<td width="4%"></td>						
-								<td align="left">
-									<select id="idPMF" class="botonerab" onchange="actualizarComboTranzon();">
+								<td align="left">									
+									<select id="idPMF" class="botonerab" onchange="actualizarTipoTerrenoPMF();actualizarComboTranzon();">
 										<option value="-1">- Seleccione -</option>
 										<c:forEach items="${pmfs}" var="pmf">
 											<option value="${pmf.id}">
@@ -505,7 +570,7 @@ function removerFila() {
 										<option value="-1">- Seleccione -</option>						
 									</select>				
 								</td>
-							</tr>															
+							</tr>
 							<tr>
 								<td colspan="3" height="10"></td>
 							</tr>				

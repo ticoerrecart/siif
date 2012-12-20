@@ -179,6 +179,18 @@
 			<td width="2%"></td>
 			<td align="left"> <input id="nombrePMF" type="text" class="botonerab" ></td>
 		</tr>
+
+		<tr>
+			<td width="47%" class="botoneralNegritaRight" >Tipo de Terreno</td>
+			<td width="2%"></td>
+			<td align="left">
+				<select id="tipoTerrenoPMF" class="botonerab">
+					<option value="Fiscal">Fiscal</option>
+					<option value="Privado">Privado</option>
+				</select> 
+			</td>
+		</tr>
+		
 		<tr>
 			<td height="5" colspan="3"></td>
 		</tr>		
