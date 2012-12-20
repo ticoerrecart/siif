@@ -497,7 +497,7 @@ public abstract class Validator {
 		
 		if (montoSumaBoletas != montoTotal) {
 			addErrorXML(pError,
-					"La suma de los montos de las Boletas de Deposito debe ser igual al Monto Total");
+					"La suma de los montos de las Boletas de Deposito debe ser igual al Importe Total");
 			return false;
 		}
 		return true;
@@ -569,7 +569,7 @@ public abstract class Validator {
 	}		
 	
 	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes, List<FiscalizacionDTO> listaFiscalizaciones,
-													StringBuffer pError)
+													String tipoTerreno,StringBuffer pError)
 	{
 		/*Double volumen  = null;
 		HashMap<Long,Double> hashProductosFiscalizados = new HashMap<Long, Double>();
@@ -611,7 +611,7 @@ public abstract class Validator {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
-			if(subImporteDTO.getImporte() <= 0.0){
+			if(!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0){
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}			

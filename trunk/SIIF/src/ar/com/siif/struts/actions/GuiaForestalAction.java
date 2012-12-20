@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
+import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.PMFDTO;
@@ -30,11 +31,17 @@ import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
+import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
+
+//En el altaGuiaForestal.jsp en la function calcularTotales() preguntar antes de todo si 
+//el tipoTerreno == Privado, si es asi hacer el calculo q se hace en esa function pero sin poner 
+//los subImportes, sino seguir calculando como esta.
+
 
 public class GuiaForestalAction extends ValidadorAction {
 
@@ -831,6 +838,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = guiaForestal.getProductorForestal().getId().toString();
 			String idRodal = guiaForestal.getRodal().getId().toString();
 
+			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
+			
 			//La lista de fiscalizaciones a asociar debe contener solo las fiscalizaciones que tengan 
 			//tipos de productos que esten en los subimportes de la guia.			
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
@@ -839,6 +848,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			
 			request.setAttribute("fiscalizaciones", fiscalizaciones);			
 			request.setAttribute("guiaForestal", guiaForestal);
+			request.setAttribute("tablaVolFiscAsociar", tablaVolFiscAsociar);
 	
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -846,6 +856,40 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 		
 		return mapping.findForward(strForward);
+	}
+	
+	private List<FilaTablaVolFiscAsociarDTO> armarTablaVolumenesFiscalizacionesAAsociar(GuiaForestalDTO guiaForestal){
+		
+		HashMap<Long, Double> mapVol = new HashMap<Long,Double>();
+		List<FilaTablaVolFiscAsociarDTO> tabla = new ArrayList<FilaTablaVolFiscAsociarDTO>();
+		List<FiscalizacionDTO> listaFiscalizaciones = guiaForestal.getFiscalizaciones();
+		List<SubImporteDTO> listaSubImportes = guiaForestal.getSubImportes();
+		
+		for (FiscalizacionDTO fiscalizacion : listaFiscalizaciones) {
+			
+			double volFisc = fiscalizacion.getCantidadMts();
+			Double vol = mapVol.get(fiscalizacion.getTipoProducto().getId());
+			if(vol != null){
+				volFisc = volFisc + vol.doubleValue();
+			}
+			mapVol.put(fiscalizacion.getTipoProducto().getId(), volFisc);
+		}
+		
+		for (SubImporteDTO subImporteDTO : listaSubImportes) {
+			
+			FilaTablaVolFiscAsociarDTO fila =  new FilaTablaVolFiscAsociarDTO();
+			fila.setNombreProducto(subImporteDTO.getTipoProducto().getNombre());
+			fila.setVolumenTotalEnGuia(subImporteDTO.getCantidadMts());
+			
+			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto().getId());			
+			fila.setVolumenEnFiscalizaciones((volEnFisc == null)?0.0:volEnFisc);
+			
+			fila.setVolumenFaltante(fila.getVolumenTotalEnGuia() - fila.getVolumenEnFiscalizaciones());
+			
+			tabla.add(fila);
+		}
+		
+		return tabla;
 	}
 	
 	public ActionForward asociarFiscalizacionesConGuiasForestales(ActionMapping mapping, ActionForm form,
@@ -912,7 +956,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		ok12 = Validator.validarRodalRequerido(guiaForestalForm.getGuiaForestal().getRodal().getId(),error);
 		
 		ok3 = Validator.validarSubImportes(guiaForestalForm.getListaSubImportes(),
-														guiaForestalForm.getListaFiscalizaciones(),error);
+										   guiaForestalForm.getListaFiscalizaciones(),
+										   guiaForestalForm.getTipoTerreno(),error);
+		
 		ok4 = Validator.validarDoubleMayorQue(0, String.valueOf(guiaForestalForm.getGuiaForestal().getImporteTotal()),
 				"Importe Total", error);		
 		

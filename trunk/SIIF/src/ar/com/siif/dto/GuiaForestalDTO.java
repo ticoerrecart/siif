@@ -21,22 +21,6 @@ public class GuiaForestalDTO {
 
 	private int distanciaAforoMovil;
 
-	/*private String estado;
-
-	private String especie;
-
-	private int cantidad;
-
-	private int cantidadUnidades;
-
-	private double cantidadMts;		
-
-	private double aforo;
-
-	private String valorAforos;
-	
-	private TipoProductoDTO tipoProducto;*/	
-	
 	private double importeTotal;	
 	
 	private double inspFiscalizacion;
@@ -93,54 +77,6 @@ public class GuiaForestalDTO {
 	public void setDistanciaAforoMovil(int distanciaAforoMovil) {
 		this.distanciaAforoMovil = distanciaAforoMovil;
 	}
-
-	/*public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(String especie) {
-		this.especie = especie;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	public double getImporte() {
-		return importe;
-	}
-
-	public void setImporte(double importe) {
-		this.importe = importe;
-	}
-
-	public double getAforo() {
-		return aforo;
-	}
-
-	public void setAforo(double aforo) {
-		this.aforo = aforo;
-	}
-
-	public String getValorAforos() {
-		return valorAforos;
-	}
-
-	public void setValorAforos(String valorAforos) {
-		this.valorAforos = valorAforos;
-	}*/
 
 	public double getInspFiscalizacion() {
 		return inspFiscalizacion;
@@ -206,22 +142,6 @@ public class GuiaForestalDTO {
 		this.id = id;
 	}
 
-	/*public int getCantidadUnidades() {
-		return cantidadUnidades;
-	}
-
-	public void setCantidadUnidades(int cantidadUnidades) {
-		this.cantidadUnidades = cantidadUnidades;
-	}
-
-	public double getCantidadMts() {
-		return cantidadMts;
-	}
-
-	public void setCantidadMts(double cantidadMts) {
-		this.cantidadMts = cantidadMts;
-	}*/
-
 	public EntidadDTO getProductorForestal() {
 		return productorForestal;
 	}
@@ -237,14 +157,6 @@ public class GuiaForestalDTO {
 	public void setPeriodoForestal(String periodoForestal) {
 		this.periodoForestal = periodoForestal;
 	}
-
-	/*public TipoProductoDTO getTipoProducto() {
-		return tipoProducto;
-	}
-
-	public void setTipoProducto(TipoProductoDTO tipoProducto) {
-		this.tipoProducto = tipoProducto;
-	}*/
 
 	public List<FiscalizacionDTO> getFiscalizaciones() {
 		return fiscalizaciones;

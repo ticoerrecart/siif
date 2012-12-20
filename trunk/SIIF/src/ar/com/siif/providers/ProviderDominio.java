@@ -171,11 +171,12 @@ public abstract class ProviderDominio {
 		periodo.setPeriodo(periodoDTO.getPeriodo());
 		return periodo;
 	}		
-	public static PMF getPMF(String expediente,String nombre, Entidad entidad){
+	public static PMF getPMF(String expediente,String nombre, String tipoTerreno, Entidad entidad){
 		
 		PMF pmf = new PMF();
 		pmf.setExpediente(expediente);
 		pmf.setNombre(nombre);
+		pmf.setTipoTerreno(tipoTerreno);
 		pmf.setProductorForestal(entidad);
 		pmf.setTranzones(null);
 		

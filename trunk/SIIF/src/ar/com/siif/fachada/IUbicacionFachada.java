@@ -38,7 +38,7 @@ public interface IUbicacionFachada {
 
 	public void altaTranzon(String numero, String disposicionTranzon, Long idPMF) throws NegocioException;
 
-	public void altaPMF(String expediente, String nombre, Long idEntidad) throws NegocioException;
+	public void altaPMF(String expediente, String nombre, String tipoTerreno, Long idEntidad) throws NegocioException;
 
 	public void deleteRodal(Long idRodal);
 
@@ -77,4 +77,6 @@ public interface IUbicacionFachada {
 	public List<MarcacionDTO> getMarcacionesDTOPorProductor(Long idProductor) throws NegocioException;
 	
 	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor) throws NegocioException;	
+	
+	public String getTipoTerrenoPMF(Long idPMF);
 }
