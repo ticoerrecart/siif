@@ -211,8 +211,9 @@
 	function submitirPMF(){
 		expedientePMF =  $('#expedientePMF').val();
 		nombrePMF = $('#nombrePMF').val();
+		tipoTerrenoPMF = $('#tipoTerrenoPMF').val();
 		idPF = $('#idProductorForestal').val();
-		UbicacionFachada.altaPMF(expedientePMF, nombrePMF, idPF,submitirPMFCallback );
+		UbicacionFachada.altaPMF(expedientePMF, nombrePMF, tipoTerrenoPMF, idPF,submitirPMFCallback );
 		
 	}
 	function submitirPMFCallback(){
