@@ -16,8 +16,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
-
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
@@ -25,6 +23,7 @@ import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.DateUtils;
 import ar.com.siif.utils.MathUtils;
 
@@ -422,6 +421,118 @@ public abstract class Validator {
 		return validarLetras(valor, 0, label, pError);
 	}
 
+	private static String mensajeErrorDiametroLargo(String valorIngresado, String valorMin,
+			String valorMax, String msje) {
+		return "El valor " + valorIngresado + " ingresado en el " + msje
+				+ " no es un valor dentro del rango [" + valorMin + "," + valorMax + "]";
+	}
+
+	private static boolean validarDiametro(StringBuffer pError, Double diametro, Integer min,
+			Integer max, String label) {
+		if (diametro < min || diametro > max) {
+			addErrorXML(
+					pError,
+					mensajeErrorDiametroLargo(diametro.toString(), min.toString(), max.toString(),
+							label));
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean validarLargo(StringBuffer pError, Double diametro, Double min,
+			Double max, String label) {
+		if (diametro < min || diametro > max) {
+			addErrorXML(
+					pError,
+					mensajeErrorDiametroLargo(diametro.toString(), min.toString(), max.toString(),
+							label));
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean validarRangoMuestras(List<MuestraDTO> muestras, Long idTipoProducto,
+			StringBuffer pError) {
+		boolean ok = true;
+		for (MuestraDTO muestra : muestras) {
+			if (muestra != null) {
+				String tipoProd = "";
+				if (idTipoProducto == 1) {
+					tipoProd = "ROLLIZO";
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro1(),
+									Constantes.minDiametroRollizo, Constantes.maxDiametroRollizo,
+									"Diámetro 1 del " + tipoProd);
+
+					ok = ok
+							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoRollizo,
+									Constantes.maxLargoRollizo, "Largo del " + tipoProd);
+
+				}
+				if (idTipoProducto == 2) {
+					tipoProd = "FUSTE";
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro1(),
+									Constantes.minDiametroFuste, Constantes.maxDiametroFuste,
+									"Diámetro 1 del " + tipoProd);
+
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro2(),
+									Constantes.minDiametroFuste, Constantes.maxDiametroFuste,
+									"Diámetro 2 del " + tipoProd);
+
+					ok = ok
+							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoRollizo,
+									Constantes.maxLargoRollizo, "Largo del " + tipoProd);
+
+				}
+				if (idTipoProducto == 4) {
+					tipoProd = "POSTE";
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro1(),
+									Constantes.minDiametroPoste, Constantes.maxDiametroPoste,
+									"Diámetro 1 del " + tipoProd);
+
+					ok = ok
+							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoPoste,
+									Constantes.maxLargoPoste, "Largo del " + tipoProd);
+
+				}
+				if (idTipoProducto == 5) {
+					tipoProd = "TRINEO";
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro1(),
+									Constantes.minDiametroTrineo, Constantes.maxDiametroTrineo,
+									"Diámetro 1 del " + tipoProd);
+
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro2(),
+									Constantes.minDiametroTrineo, Constantes.maxDiametroTrineo,
+									"Diámetro 2 del " + tipoProd);
+
+					ok = ok
+							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoTrineo,
+									Constantes.maxLargoTrineo, "Largo del " + tipoProd);
+
+				}
+
+			}
+		}
+
+		return ok;
+	}
+
+	/*
+	 * 
+		<option value="1">Rollizos</option>
+		<option value="2">Fustes</option>
+		<option value="3">Leña</option>
+		<option value="4">Postes</option>
+		<option value="5">Trineos</option>
+		a. ROLLIZOS: LARGO: 2 a m7 y diámetro: 10 a 160cm
+		b. Fustes: Largo 5 a 18m y diámetro : 10 a 160cm
+		c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm		
+	 */
 	public static boolean validarMuestras(List<MuestraDTO> muestras, Long idTipoProducto,
 			StringBuffer pError) {
 
@@ -452,27 +563,7 @@ public abstract class Validator {
 			}
 		}
 
-		/*for (Muestra muestra : muestras) {
-			
-			if(muestra != null){
-				if(muestra.getLargo() == 0.0 && muestra.getDiametro1() == 0.0 && muestra.getDiametro2() == 0.0){
-					cantNulos++;
-				}else{							
-					if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0 || muestra.getDiametro2() == 0.0)
-					{
-						addErrorXML(pError, "Faltan datos de Largo y/o Diametro en las Muestras");
-						return false;
-					}		
-				}
-			}else{
-				cantNulos++;
-			}	
-		}
-		if(cantNulos == muestras.size()){
-			addErrorXML(pError, "Cantidad de Muestras debe ser un numero mayor a 0");
-			return false;			
-		}*/
-		return true;
+		return validarRangoMuestras(muestras, idTipoProducto, pError);
 	}
 
 	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas,
@@ -492,9 +583,9 @@ public abstract class Validator {
 				return false;
 			}
 		}
-		
+
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
-		
+
 		if (montoSumaBoletas != montoTotal) {
 			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Importe Total");
@@ -566,8 +657,8 @@ public abstract class Validator {
 			}
 		}
 		return true;
-	}		
-	
+	}
+
 	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes, List<FiscalizacionDTO> listaFiscalizaciones,
 													String tipoTerreno,StringBuffer pError)
 	{
@@ -583,95 +674,95 @@ public abstract class Validator {
 			}
 			hashProductosFiscalizados.put(fiscalizacionDTO.getTipoProducto().getId(), volumen);
 		}*/
-		
-		HashMap<Long,SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
+
+		HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
 		Set<SubImporteDTO> listaIdTipoProducto = new TreeSet<SubImporteDTO>();
-		
+
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
-			
+
 			hashProductosFiscalizados.put(subImporteDTO.getTipoProducto().getId(), subImporteDTO);
-			
-			if(listaIdTipoProducto.contains(subImporteDTO)){
+
+			if (listaIdTipoProducto.contains(subImporteDTO)) {
 				addErrorXML(pError, "Debe especificar un solo subImporte por cada Tipo de Producto");
 				return false;
 			}
-			if(subImporteDTO.getEstado()== null || subImporteDTO.getEstado().equals("")){
+			if (subImporteDTO.getEstado() == null || subImporteDTO.getEstado().equals("")) {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
-			if(subImporteDTO.getEspecie()== null || subImporteDTO.getEspecie().trim().equals("")){
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
-				return false;
-			}	
-			if(subImporteDTO.getCantidadMts() <= 0.0){
+			if (subImporteDTO.getEspecie() == null || subImporteDTO.getEspecie().trim().equals("")) {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
-			if(subImporteDTO.getValorAforos() <= 0.0){
+			if (subImporteDTO.getCantidadMts() <= 0.0) {
+				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				return false;
+			}
+			if (subImporteDTO.getValorAforos() <= 0.0) {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
 			if(!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0){
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
-			}			
+			}
 			listaIdTipoProducto.add(subImporteDTO);
 		}
-		
+
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-			if(fiscalizacionDTO.getId() != null){
+			if (fiscalizacionDTO.getId() != null) {
 				SubImporteDTO subImporte = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
-				if(subImporte == null){
+				if (subImporte == null) {
 					addErrorXML(pError, "Debe agregar todas las fiscalizaciones al calculo del importe");
-					return false;				
-				}				
-			}	
-		}		
-		
+					return false;
+				}
+			}
+		}
+
 		return true;
 	}
-	
-	public static boolean validarRodalRequerido(Long idRodal , StringBuffer pError){
-		
-		if(idRodal == null || idRodal.longValue() <= 0){
+
+	public static boolean validarRodalRequerido(Long idRodal, StringBuffer pError) {
+
+		if (idRodal == null || idRodal.longValue() <= 0) {
 			addErrorXML(pError, "Rodal es un dato obligatorio");
 			return false;
 		}
 		return true;
 	}
-	
-	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError){
+
+	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError) {
 		try {
 			String[] strArray = periodo.split("-");
 			int n = Integer.parseInt(strArray[0]);
 			int n2 = Integer.parseInt(strArray[1]);
-			if (n+1 != n2) {
+			if (n + 1 != n2) {
 				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
 				return false;
-			} 
+			}
 			return true;
 		} catch (Exception e) {
 			addErrorXML(pError, "El formato del periodo deben ser AAAA-AAAA. Ej 2011-2012");
 			return false;
 		}
 	}
-	
+
 	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales, double m3Fiscalizaciones, StringBuffer pError){
-		if (m3Vales > m3Fiscalizaciones + 1){
+		if (m3Vales > m3Fiscalizaciones + 1) {
 			addErrorXML(pError, "La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
 			return false;
 		}
 		return true;
 	}
-	
+
 	public static boolean validarFiscalizacionExistenteParaVale(List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError){
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)){
+			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)) {
 				return true;
 			}
 		}
 		addErrorXML(pError, "Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
 		return false;
 	}
-	
+
 }

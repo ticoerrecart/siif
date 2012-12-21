@@ -141,37 +141,52 @@
 
 	}
 //----------------------------------------------------------------------------------------------------------------------------
-function calcularVolumen() {
-
+	//tener en cuenta que el largo está en mts y los diámetros en cm!!!!
+	function calcularVolumen() {
+		var ok = true;
 		var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
 		var vol = 0;
 		if(cantidadDeFilas > 0){
-			for ( var i = 0; i < cantidadDeFilas; i++) {
-				var largo = $('#tablaMuestras [id=fila' + i + '] [name*=largo]')
-						.val().replace("," , ".");
-
-				var r = $('#tablaMuestras [id=fila' + i + '] [name*=diametro1]')
-						.val().replace("," , ".") / 2;
-
-				if (! $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').is(":visible")){
-					$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
-							.val(r * 2);
+			if($('[name="fiscalizacionDTO.cantidadUnidades"]').val()!=""){
+				for ( var i = 0; i < cantidadDeFilas; i++) {
+					var largo = $('#tablaMuestras [id=fila' + i + '] [name*=largo]')
+							.val().replace("," , ".");
+	
+					var r = $('#tablaMuestras [id=fila' + i + '] [name*=diametro1]')
+							.val().replace("," , ".") / (2*100);
+	
+					if (! $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').is(":visible")){
+						$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
+								.val(r * (2*100));
+					}
+					var r2 = $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
+							.val().replace(",",".") / (2*100);
+	
+					var v = volumenTroncoDelCono(r, r2, largo);
+					vol = vol + v;
 				}
-				var r2 = $('#tablaMuestras [id=fila' + i + '] [name*=diametro2]')
-						.val().replace(",",".") / 2;
-
-				var v = volumenTroncoDelCono(r, r2, largo);
-				vol = vol + v;
+				var prom = vol / cantidadDeFilas;
+				
+				$('#cantidadMts').val(prom * $('[name="fiscalizacionDTO.cantidadUnidades"]').val());
+	
+				
+				var num1 = new Number($('#cantidadMts').val());			
+				$('#cantidadMts').val(num1.toFixed(2)); // 3.14
+			}else{
+				alert("Debe ingresar la Cantidad(Unidades)");
+				ok=false;
+				$('[name="fiscalizacionDTO.cantidadUnidades"]').focus();
 			}
-			var prom = vol / cantidadDeFilas;
-			
-			$('#cantidadMts').val(prom * $('[name="fiscalizacionDTO.cantidadUnidades"]').val());
-
-			
-			var num1 = new Number($('#cantidadMts').val());			
-			$('#cantidadMts').val(num1.toFixed(2)); // 3.14
+		}else{
+			var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+			if(idTipoProductoForestal!=3){//si no es Leña
+				alert("Debe Agregar alguna muestra");
+				$("#idCantMuestras").focus();
+				ok=false;
+			}
 		}	
 
+		return ok;
 	}
 
 	/*R, r radios; h Altura */
@@ -190,6 +205,11 @@ function calcularVolumen() {
 
 	function agregarMuestras(){
 		var cantMuestras = $("#idCantMuestras").val();
+		
+		if(cantMuestras==""){
+			alert("Ingrese la cantidad de muestras");
+			$("#idCantMuestras").focus();
+		}
 		for ( var i = 0; i < cantMuestras; i++) {
 			agregarFila();
 		}	
@@ -200,11 +220,31 @@ function calcularVolumen() {
 
 	var primeraFila = '<tr id="fila0">' +
 							'   <td class="botoneralNegritaRight ind">1</td> ' +
-							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].largo" onblur="this.value = reemplazarComa(this.value)"></td>' +
-							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].diametro1" onblur="this.value = reemplazarComa(this.value)"></td>' +
-							'   <td class="diam2"><input class="botonerab" type="text" name="muestrasDTO[0].diametro2" onblur="this.value = reemplazarComa(this.value)"></td>' +
+							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].diametro1" onkeypress="javascript:esNumerico(event);" onkeydown="tabOnEnter(event,this);"></td>' +
+							'   <td class="diam2"><input class="botonerab" type="text" name="muestrasDTO[0].diametro2" onkeypress="javascript:esNumerico(event);" onkeydown="tabOnEnter(event,this);"></td>' +
+							'   <td><input class="botonerab" type="text" name="muestrasDTO[0].largo" onblur="this.value = reemplazarComa(this.value);" onkeypress="javascript:esNumericoConDecimal(event);" onkeyup="javascript: twoDigits(this);" onkeydown="tabOnEnter(event,this);"></td>' +
 							'</tr>';
 
+	/*
+	<option value="1">Rollizos</option>
+<option value="2">Fustes</option>
+<option value="3">Leña</option>
+<option value="4">Postes</option>
+<option value="5">Trineos</option>		
+*/
+	function headerTabla(){
+		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+		if (idTipoProductoForestal == 1){
+			return headerTablaRollizos;
+		}  else if (idTipoProductoForestal == 2){
+			return headerTablaFustes;
+		}  else if (idTipoProductoForestal == 4){
+			return headerTablaPostes;
+		}  else if (idTipoProductoForestal == 5){
+			return headerTablaTrineos;
+		}
+		
+	}
 	function agregarFila() {
 
 		if ($('#tablaMuestras tr').size() == 0) {
@@ -302,3 +342,58 @@ function calcularVolumen() {
 	function reemplazarComa(valor){
 		return valor.replace(",",".");
 	}
+	
+	function twoDigits(elem){
+		if(elem.value.indexOf('.')!=-1){
+			var unPunto = false;
+			for(var i=0;i<elem.value.length;i++){
+				var c = elem.value[i];
+				if(c=="."){
+					if(!unPunto){
+						unPunto=true;
+					}else{
+						elem.value = elem.value.substring(0,elem.value.length-1);
+						break;
+					}
+				}
+			}
+		    if(elem.value.split(".")[1].length > 2){
+		        if( isNaN( parseFloat( elem.value ) ) ) return;
+		        elem.value = parseFloat(elem.value).toFixed(2);
+		    }
+		 }
+		 return this; //for chaining
+	}
+
+	function tabOnEnter(event, elem) {
+	    var n = $('#tablaMuestras :input').length;
+	    var key;
+		if (type=="IE") { 
+			key = event.keyCode;
+		}
+
+		if (type=="MO" || type=="OP") {
+			key = event.which;		  
+		}
+
+	    if (key == 13){ //Enter key
+	      //event.preventDefault(); //Skip default behavior of the enter key
+
+	      var nextIndex = $('#tablaMuestras :input').index(elem);
+
+	      do{
+	    	 nextIndex++;
+	    	 if(nextIndex < n){
+	    	 	sig = $('#tablaMuestras :input')[nextIndex];
+	    	 }
+			//alert(nextIndex  + "/" + n);
+	      }while(nextIndex < n && sig.parentElement.style.display=="none");
+
+	      if(nextIndex < n){
+	      	$('#tablaMuestras :input')[nextIndex].focus();
+	      }
+	    
+	    }
+	}
+
+	
