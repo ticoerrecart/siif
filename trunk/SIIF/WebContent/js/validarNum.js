@@ -41,7 +41,7 @@ function esNumericoConDecimal(event) {
 	 if (type=="MO" || type=="OP") {
 		key = event.which;		  
 	 }
-	 
+
 	 if ((key != 46) && ((key >8 && key < 48) || key > 57)) {
 	 	stop(event);
 	 }

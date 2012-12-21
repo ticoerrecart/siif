@@ -28,25 +28,26 @@
 
 function submitir(){
 	
-	calcularVolumen();
-	
-	var prodEnabled = $('#idProductor').attr('disabled');
-	var pmfEnabled = $('#idPMF').attr('disabled');
-	var tranEnabled = $('#idTranzon').attr('disabled');
-	var marcEnabled = $('#idMarcacion').attr('disabled');
-	var rodEnabled = $('#idRodal').attr('disabled');
-	
-	$('#idProductor').attr('disabled',false);
-	$('#idPMF').attr('disabled',false);
-	$('#idTranzon').attr('disabled',false);
-	$('#idMarcacion').attr('disabled',false);
-	$('#idRodal').attr('disabled',false);
-	validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
-	$('#idProductor').attr('disabled',prodEnabled);
-	$('#idPMF').attr('disabled',pmfEnabled);
-	$('#idTranzon').attr('disabled',tranEnabled);
-	$('#idMarcacion').attr('disabled',marcEnabled);
-	$('#idRodal').attr('disabled',rodEnabled);	
+	var ok = calcularVolumen();
+	if(ok){
+		var prodEnabled = $('#idProductor').attr('disabled');
+		var pmfEnabled = $('#idPMF').attr('disabled');
+		var tranEnabled = $('#idTranzon').attr('disabled');
+		var marcEnabled = $('#idMarcacion').attr('disabled');
+		var rodEnabled = $('#idRodal').attr('disabled');
+		
+		$('#idProductor').attr('disabled',false);
+		$('#idPMF').attr('disabled',false);
+		$('#idTranzon').attr('disabled',false);
+		$('#idMarcacion').attr('disabled',false);
+		$('#idRodal').attr('disabled',false);
+		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
+		$('#idProductor').attr('disabled',prodEnabled);
+		$('#idPMF').attr('disabled',pmfEnabled);
+		$('#idTranzon').attr('disabled',tranEnabled);
+		$('#idMarcacion').attr('disabled',marcEnabled);
+		$('#idRodal').attr('disabled',rodEnabled);	
+	}
 }
 
 var type;
@@ -77,17 +78,49 @@ function col(sec) {
    }
 }
 
-var headerTabla = '<tr id="headerT">' +
+/*
+	<option value="1">Rollizos</option>
+<option value="2">Fustes</option>
+<option value="3">Leña</option>
+<option value="4">Postes</option>
+<option value="5">Trineos</option>
+a. ROLLIZOS: LARGO: 2 a m7 y diámetro: 10 a 160cm
+b. Fustes: Largo 5 a 18m y diámetro : 10 a 160cm
+c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm		
+*/
+
+var headerTablaRollizos = '<tr id="headerT">' +
 '   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/></td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (2-7mts)</td>' +
 '</tr>';
 
+var headerTablaFustes = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (5-18mts)</td>' +
+'</tr>';
+
+var headerTablaPostes = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'</tr>';
+
+var headerTablaTrineos = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'</tr>';
 
 $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 });
+
 </script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
