@@ -10,9 +10,9 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/siif" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="url" value="jdbc:mysql://localhost:3306/x071vm20_siif" />
+		<property name="username" value="x071vm20" />
+		<property name="password" value="jUTRDpsv42mnu" />
 	</bean>
 
 	<!-- Hibernate SessionFactory -->
