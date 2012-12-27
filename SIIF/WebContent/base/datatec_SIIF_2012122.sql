@@ -249,6 +249,7 @@ CREATE TABLE `PMF` (
   `expediente` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `entidad_fk` bigint(20) DEFAULT NULL,
+  `tipoTerreno` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK135E9799681AF` (`entidad_fk`),
   CONSTRAINT `FK135E9799681AF` FOREIGN KEY (`entidad_fk`) REFERENCES `Entidad` (`id`)
@@ -261,7 +262,7 @@ CREATE TABLE `PMF` (
 
 LOCK TABLES `PMF` WRITE;
 /*!40000 ALTER TABLE `PMF` DISABLE KEYS */;
-INSERT INTO `PMF` VALUES (1,'555','PMF1',2),(2,'555/555','PMF2',3),(5,'987','PMF1',4);
+INSERT INTO `PMF` VALUES (1,'555','PMF1',2,'Fiscal'),(2,'555/555','PMF2',3,'Fiscal'),(5,'987','PMF1',4,'Fiscal');
 /*!40000 ALTER TABLE `PMF` ENABLE KEYS */;
 UNLOCK TABLES;
 
