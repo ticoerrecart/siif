@@ -10,9 +10,9 @@ public interface IReportesFachada {
 	
 	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path)throws NegocioException;
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(
+	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(
 									String path,String fechaDesde,String fechaHasta)throws NegocioException;
 	
 	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd,
-									String fechaDesde,String fechaHasta,String path)throws NegocioException;
+									String fechaDesde,String fechaHasta,String path)throws NegocioException;*/
 }

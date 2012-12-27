@@ -45,7 +45,7 @@ public class ReportesFachada implements IReportesFachada {
 		}			
 	}	
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
+	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
 												String fechaDesde,String fechaHasta)throws NegocioException{
 		
 		try{
@@ -65,5 +65,5 @@ public class ReportesFachada implements IReportesFachada {
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}			
-	}	
+	}*/	
 }

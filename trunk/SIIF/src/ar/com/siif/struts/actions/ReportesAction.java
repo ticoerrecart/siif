@@ -130,7 +130,7 @@ public class ReportesAction extends ValidadorAction {
 		return null;
 	}	
 		
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public ActionForward cargarReporteVolumenFiscalizadoEntreFechas(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{	
@@ -160,19 +160,6 @@ public class ReportesAction extends ValidadorAction {
 			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
 				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
 			}
-			/*else{
-				if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)){
-					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
-				}
-				else{
-					if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)){
-						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
-					}
-					else{
-						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE);
-					}
-				}
-			}*/	
 
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
@@ -256,5 +243,5 @@ public class ReportesAction extends ValidadorAction {
 		Validator.validarFechaMenorA(fechaDesde, fechaHasta, "Fecha Desde", "Fecha Hasta", pError);
 	
 		return pError.toString();
-	}	
+	}	*/
 }

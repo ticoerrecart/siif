@@ -77,7 +77,7 @@ public class ReportesDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
+		}	
 		return bytes;		
 	}	
 	
@@ -109,7 +109,7 @@ public class ReportesDAO extends HibernateDaoSupport {
 		return bytes;	
 	}	
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
+	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
 									String fechaDesde,String fechaHasta) throws DataBaseException{
 		
 		byte[] bytes = null;
@@ -168,5 +168,5 @@ public class ReportesDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
 		return bytes;		
-	}	
+	}	*/
 }
