@@ -30,92 +30,6 @@
 
 <script type="text/javascript">
 
-/*function submitir(){
-	var muestras = new Array();
-    
-	if($("#idTipoProductoForestal").val()!= 3 && $("#idTipoProductoForestal").val()!=4){
-	   	 var largo; 
-	   	 var diametro1; 
-	   	 var diametro2;
-	   	 var listoParaAgregar = false;
-	    $("input[name^='muestras']").each(function(){
-	    	 var input = $(this); // This is the jquery object of the input, do what you will
-	    	 //alert(input.attr("name"))
-	    	 var desde = input.attr("name").lastIndexOf(".") + 1;
-	    	 //alert(input.attr("name").substring(desde));
-	    	 //alert(input.val())
-	    	 if(input.attr("name").substring(desde) == "largo"){
-	    		 largo = input.val();
-	    	 }
-			 if(input.attr("name").substring(desde) == "diametro1"){
-	    		 diametro1 = input.val();
-	    	 }
-			 if(input.attr("name").substring(desde) == "diametro2"){
-				 diametro2 = input.val();
-			 }
-			
-			 if ($("#idTipoProductoForestal").val() == 2 || $("#idTipoProductoForestal").val() == 5){
-				//alert("listo para agregar " + parseFloat(diametro2)>0)
-				 if(parseFloat(diametro2)>0){
-					listoParaAgregar = true;						
-				}
-			}  
-			if ($("#idTipoProductoForestal").val() == 1 ){
-				//alert("listo para agregar " + parseFloat(diametro1)>0)
-				
-				if(parseFloat(diametro1)>0){
-					listoParaAgregar = true;
-					diametro2 = 0;
-				}
-			}
-			 
-			 if(listoParaAgregar){
-		    	 var muestra = {
-		    		   id:0,
-					   largo:largo,
-					   diametro1:diametro1,
-					   diametro2:diametro2};
-
-		    	 muestras.push(muestra);
-		    	 largo = null;
-		    	 diametro1 = null;
-		    	 diametro2 = null;
-		    	 listoParaAgregar = false;
-	    	}
-	    });
-	}
-	FiscalizacionFachada.validarFiscalizacionDTO($("#idFiscalizacion").val(), $("#selectTiposDeEntidad").val(),$("#idProductor").val(),$("#idTipoProductoForestal").val(),$("#idPMF").val(), $("#idTranzon").val(), $("#idMarcacion").val(),
-			$("#idRodal").val(), muestras, validarFiscalizacionDTOCbk);
-}
-*/
-
-/* 
- * Acá entra solo si no hubo errores en el llamado DWR a FiscalizacionFachada.validarFiscalizacionDTO 
-*/
-/*function validarFiscalizacionDTOCbk(){
-	calcularVolumen();
-	validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
-}*/
-
-/*
- * Acá entra solo si hubo errores en el llamado DWR a FiscalizacionFachada.validarFiscalizacionDTO
- */
-/*dwr.engine.setErrorHandler(errh);
-function errh(msg, exc) {
-	  //alert("Error message is: " + msg + " - Error Details: " + dwr.util.toDescriptiveString(exc, 2));
-	  $("#dialog").text(msg);
-	  $("#dialog").dialog({ resizable: false ,modal: true,buttons: [
-														{
-														    text: "Si",
-														    click: function() { validarFiscalizacionDTOCbk();$(this).dialog("close"); }
-														},
-	                                                    {
-	                                                        text: "No",
-	                                                        click: function() { $(this).dialog("close"); }
-	                                                    }
-	                                                ]});
-}
-*/
 
 function submitir(){
 	calcularVolumen();
@@ -130,18 +44,13 @@ function volver(){
 	'&idProductor=' + productor;
 }
 
-var headerTabla = '<tr id="headerT">' +
-'   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/></td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/></td>' +
-'</tr>';
-
 $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 });
 
 </script>
+
+<%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
 
 <div id="dialog" style="display: none;"></div>
 
@@ -162,13 +71,7 @@ $(function() {
 	<html:hidden property="fiscalizacionDTO.productorForestal.id"
 		value="${fiscalizacionDTO.productorForestal.id}"/>
 	<html:hidden property="fiscalizacionDTO.tipoProducto.id"
-		value="${fiscalizacionDTO.tipoProducto.id}"/>	
-	<%--html:hidden property="fiscalizacionDTO.rodal.marcacion.tranzon.pmf.id"
-		value="${fiscalizacionDTO.rodal.marcacion.tranzon.pmf.id}"/>	
-	<html:hidden property="fiscalizacionDTO.rodal.marcacion.tranzon.id"
-		value="${fiscalizacionDTO.rodal.marcacion.tranzon.id}"/>	
-	<html:hidden property="fiscalizacionDTO.rodal.marcacion.id"
-		value="${fiscalizacionDTO.rodal.marcacion.id}"/--%>	
+		value="${fiscalizacionDTO.tipoProducto.id}"/>		
 	<html:hidden property="fiscalizacionDTO.rodal.id"
 		value="${fiscalizacionDTO.rodal.id}"/>	
 
@@ -223,8 +126,6 @@ $(function() {
 					key='SIIF.label.PeríodoForestal' />
 			</td>
 			<td align="left">
-				<!-- <input name="fiscalizacionDTO.periodoForestal" class="botonerab" type="text" size="20"
-					value="<c:out value='${fiscalizacionDTO.periodoForestal}'></c:out>">-->
 					
 				<select name="fiscalizacionDTO.periodoForestal" class="botonerab" style="width: 16em">
 					<c:forEach items="${periodos}" var="per">
@@ -400,87 +301,91 @@ $(function() {
 		</tr>
 
 		<!-- MUESTRAS -->
-		<tr id="trMuestras">
-			<td colspan="4" align="left">
-				<table border="0" class="cuadrado" align="center" width="80%"
-					cellpadding="2" cellspacing="0">
-					<tr>
-						<td colspan="3" class="grisSubtitulo"><bean:message
-								key='SIIF.subTitulo.Muestras' />
-						</td>
-					</tr>
-					<tr>
-						<td height="20" colspan="3"></td>
-					</tr>
-					<tr>
-						<td width="35%" class="botoneralNegritaRight"><bean:message
-								key='SIIF.label.CantidadMuestras' /></td>
-						<td><input id="idCantMuestras" class="botonerab" type="text"
-							onkeypress="javascript:esNumerico(event);"></td>
-						<td width="35%" align="left"><input class="botonerab"
-							type="button" value="Agregar" onclick="agregarMuestras();">
-							<input class="botonerab" type="button" value="Remover"
-							onclick="removerMuestras();"></td>
-					</tr>
-					<tr>
-						<td height="10" colspan="3"></td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<table id="tablaMuestras" border="0" class="cuadrado"
-								align="center" width="70%" cellpadding="2" cellspacing="0"
-								style="display: ">
-								<tr id="headerT">
-									<td class="azulAjustado" width="3%"></td>
-									<td class="azulAjustado" width="33%"><bean:message
-											key='SIIF.label.Largo' />
-									</td>
-									<td class="azulAjustado" width="32%"><bean:message
-											key='SIIF.label.Diametro1' />
-									</td>
-									<td class="azulAjustado diam2" width="32%"><bean:message
-											key='SIIF.label.Diametro2' />
-									</td>
-								</tr>
-								<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
-									<c:forEach items="${fiscalizacionDTO.muestra}" varStatus="i"
-										var="muestra">
-										<tr id="fila${i.index}">
-											<td class="botoneralNegritaRight ind">${i.index+1}</td>
-											<td><input class="botonerab" type="text"
-												name="muestrasDTO[${i.index}].largo" value="${muestra.largo}" onblur="this.value = reemplazarComa(this.value)">
-											</td>
-											<td><input class="botonerab" type="text"
-												name="muestrasDTO[${i.index}].diametro1"
-												value="${muestra.diametro1}" onblur="this.value = reemplazarComa(this.value)"></td>
-											<td><input class="botonerab diam2" type="text"
-												name="muestrasDTO[${i.index}].diametro2"
-												value="${muestra.diametro2}" onblur="this.value = reemplazarComa(this.value)"></td>
-										</tr>
-
-									</c:forEach>
-
+		<c:if test="${fiscalizacionDTO.tipoProducto.id!=LENIA}">
+			<tr id="trMuestras">
+				<td colspan="4" align="left">
+					<table border="0" class="cuadrado" align="center" width="80%"
+						cellpadding="2" cellspacing="0">
+						<tr>
+							<td colspan="3" class="grisSubtitulo"><bean:message
+									key='SIIF.subTitulo.Muestras' />
+							</td>
+						</tr>
+						<tr>
+							<td height="20" colspan="3"></td>
+						</tr>
+						<tr>
+							<td width="35%" class="botoneralNegritaRight"><bean:message
+									key='SIIF.label.CantidadMuestras' /></td>
+							<td><input id="idCantMuestras" class="botonerab" type="text"
+								onkeypress="javascript:esNumerico(event);"></td>
+							<td width="35%" align="left"><input class="botonerab"
+								type="button" value="Agregar" onclick="agregarMuestras();">
+								<input class="botonerab" type="button" value="Remover"
+								onclick="removerMuestras();"></td>
+						</tr>
+						<tr>
+							<td height="10" colspan="3"></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table id="tablaMuestras" border="0" class="cuadrado"
+									align="center" width="70%" cellpadding="2" cellspacing="0"
+									style="display: ">
+									<tr id="headerT">
+										<td class="azulAjustado" width="3%"></td>
+										<td class="azulAjustado" width="32%"><bean:message
+												key='SIIF.label.Diametro1' />
+										</td>
+										<td class="azulAjustado diam2" width="32%"><bean:message
+												key='SIIF.label.Diametro2' />
+										</td>
+										<td class="azulAjustado" width="33%"><bean:message
+												key='SIIF.label.Largo' />
+										</td>
+									</tr>
+									<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
+										<c:forEach items="${fiscalizacionDTO.muestra}" varStatus="i"
+											var="muestra">
+											<tr id="fila${i.index}">
+												<td class="botoneralNegritaRight ind">${i.index+1}</td>
+												<td><input class="botonerab" type="text"
+													name="muestrasDTO[${i.index}].diametro1"
+													value="${muestra.diametro1}" onblur="this.value = reemplazarComa(this.value)" onkeypress="javascript:esNumerico(event);" onkeydown="tabOnEnter(event,this);"></td>
+												<td class="diam2"><input class="botonerab" type="text"
+													name="muestrasDTO[${i.index}].diametro2"
+													value="${muestra.diametro2}" onblur="this.value = reemplazarComa(this.value)" onkeypress="javascript:esNumerico(event);" onkeydown="tabOnEnter(event,this);"></td>
+												<td><input class="botonerab" type="text"
+													name="muestrasDTO[${i.index}].largo" value="${muestra.largo}" onblur="this.value = reemplazarComa(this.value)" onkeypress="javascript:esNumericoConDecimal(event);" onkeyup="javascript: twoDigits(this);" onkeydown="tabOnEnter(event,this);">
+												</td>
+											</tr>
+	
+										</c:forEach>
+	
+										
+										<script type="text/javascript">
+											cantTotales = '<c:out value="${fn:length(fiscalizacionDTO.muestra)}"/>';
+											actualizarMuestras();
+											calcularVolumen();
+										</script>
+									</c:if>
 									
-									<script type="text/javascript">
-										cantTotales = <c:out value="${fn:length(fiscalizacionDTO.muestra)}"/>;
-										actualizarMuestras();
-										calcularVolumen();
-									</script>
-								</c:if>
+								</table>
 								
-							</table>
-							
-							
-						</td>
-					</tr>
-					
-					<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">	
-							<tr id="calcularVolumen">
-								<td height="10" colspan="4"><input class="botonerab"
-									type="button" value="Calcular Volumen"
-									onclick="calcularVolumen();"></td>
-							</tr>
+								
+							</td>
+						</tr>
+						
+						<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">	
+								<tr id="calcularVolumen">
+									<td height="10" colspan="4"><input class="botonerab"
+										type="button" value="Calcular Volumen"
+										onclick="calcularVolumen();"></td>
+								</tr>
+						</c:if>
+
 					</c:if>
+
 					<tr>
 						<td height="10" colspan="3"></td>
 					</tr>

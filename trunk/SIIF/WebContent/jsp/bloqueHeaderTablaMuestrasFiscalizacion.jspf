@@ -1,0 +1,41 @@
+<script>
+/*
+	<option value="1">Rollizos</option>
+<option value="2">Fustes</option>
+<option value="3">Leña</option>
+<option value="4">Postes</option>
+<option value="5">Trineos</option>
+a. ROLLIZOS: LARGO: 2 a m7 y diámetro: 10 a 160cm
+b. Fustes: Largo 5 a 18m y diámetro : 10 a 160cm
+c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm		
+*/
+
+var headerTablaRollizos = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (2-7mts)</td>' +
+'</tr>';
+
+var headerTablaFustes = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (5-18mts)</td>' +
+'</tr>';
+
+var headerTablaPostes = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'</tr>';
+
+var headerTablaTrineos = '<tr id="headerT">' +
+'   <td class="azulAjustado" width="3%"></td>' +
+'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'</tr>';
+
+</script>
