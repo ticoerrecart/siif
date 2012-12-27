@@ -47,8 +47,8 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
-			
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
+
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
 
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
 					.getBean("tipoProductoForestalFachada");
@@ -61,8 +61,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
 
-			
-			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.setAttribute("tiposEntidad", tiposEntidad);
 			request.setAttribute("oficinas", oficinas);
@@ -145,7 +144,7 @@ public class FiscalizacionAction extends ValidadorAction {
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAModificar");
 
 			request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_FISCALIZACION);
-			
+
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -207,8 +206,8 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");			
-			
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+
 			long idFiscalizacion = new Long(request.getParameter("id"));
 			Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(idFiscalizacion);
@@ -240,8 +239,9 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("tranzones", tranzones);
 			request.setAttribute("marcaciones", marcaciones);
 			request.setAttribute("rodales", rodales);
-			request.setAttribute("periodos",periodoFachada.getPeriodosDTO());
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 
+			request.setAttribute("LENIA", Constantes.LENIA_ID);
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
@@ -278,7 +278,6 @@ public class FiscalizacionAction extends ValidadorAction {
 		} catch (Exception e) {
 			request.setAttribute("errorModificacion", e.getMessage());
 		}
-
 
 		return mapping.findForward(strForward);
 	}
@@ -350,7 +349,7 @@ public class FiscalizacionAction extends ValidadorAction {
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAAnular");
 
 			request.setAttribute("titulo", Constantes.TITULO_ANULACION_FISCALIZACION);
-			
+
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
