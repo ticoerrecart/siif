@@ -11,31 +11,34 @@ public interface IEntidadFachada {
 
 	public void altaEntidad(EntidadDTO entidadDTO) throws NegocioException;
 
-	public List<Entidad> getEntidades()throws NegocioException;
+	public List<Entidad> getEntidades() throws NegocioException;
 
-	public Entidad getEntidad(Long id)throws NegocioException;
+	public Entidad getEntidad(Long id) throws NegocioException;
 
 	public boolean existeEntidad(String nombre, Long id);
 
-	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad)throws NegocioException;
+	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad) throws NegocioException;
 
-	public List<TipoDeEntidad> getTiposDeEntidad()throws NegocioException;
+	public List<TipoDeEntidad> getTiposDeEntidad() throws NegocioException;
 
-	public List<TipoDeEntidad> getTiposDeEntidadProductores()throws NegocioException;
-	
-	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad)throws NegocioException;
-	
-	public List<Entidad> getOficinasForestales()throws NegocioException;
-	
-	public List<EntidadDTO> getOficinasForestalesDTO()throws NegocioException;
-	
-	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad)throws NegocioException;
+	public List<TipoDeEntidad> getTiposDeEntidadProductores() throws NegocioException;
 
-	public List<EntidadDTO> getEntidadesDTO()throws NegocioException;
-	
-	public EntidadDTO getEntidadDTO(Long id)throws NegocioException;	
-	
-	public void modificacionEntidad(EntidadDTO entidad)throws NegocioException ;
-	
+	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad) throws NegocioException;
+
+	public List<Entidad> getOficinasForestales() throws NegocioException;
+
+	public List<EntidadDTO> getOficinasForestalesDTO() throws NegocioException;
+
+	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad)
+			throws NegocioException;
+
+	public List<EntidadDTO> getEntidadesDTO() throws NegocioException;
+
+	public EntidadDTO getEntidadDTO(Long id) throws NegocioException;
+
+	public void modificacionEntidad(EntidadDTO entidad) throws NegocioException;
+
 	public List<EntidadDTO> getProductoresDTO() throws NegocioException;
+
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id);
 }

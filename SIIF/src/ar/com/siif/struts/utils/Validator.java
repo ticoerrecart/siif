@@ -659,9 +659,8 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes, List<FiscalizacionDTO> listaFiscalizaciones,
-													String tipoTerreno,StringBuffer pError)
-	{
+	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes,
+			List<FiscalizacionDTO> listaFiscalizaciones, String tipoTerreno, StringBuffer pError) {
 		/*Double volumen  = null;
 		HashMap<Long,Double> hashProductosFiscalizados = new HashMap<Long, Double>();
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
@@ -702,7 +701,7 @@ public abstract class Validator {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
-			if(!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0){
+			if (!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0) {
 				addErrorXML(pError, "Faltan especificar datos en los subImportes");
 				return false;
 			}
@@ -711,9 +710,11 @@ public abstract class Validator {
 
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
 			if (fiscalizacionDTO.getId() != null) {
-				SubImporteDTO subImporte = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
+				SubImporteDTO subImporte = hashProductosFiscalizados.get(fiscalizacionDTO
+						.getTipoProducto().getId());
 				if (subImporte == null) {
-					addErrorXML(pError, "Debe agregar todas las fiscalizaciones al calculo del importe");
+					addErrorXML(pError,
+							"Debe agregar todas las fiscalizaciones al calculo del importe");
 					return false;
 				}
 			}
@@ -747,22 +748,75 @@ public abstract class Validator {
 		}
 	}
 
-	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales, double m3Fiscalizaciones, StringBuffer pError){
+	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales,
+			double m3Fiscalizaciones, StringBuffer pError) {
 		if (m3Vales > m3Fiscalizaciones + 1) {
-			addErrorXML(pError, "La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
+			addErrorXML(
+					pError,
+					"La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en las fiscalizaciones");
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean validarFiscalizacionExistenteParaVale(List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError){
+	public static boolean validarFiscalizacionExistenteParaVale(
+			List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError) {
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
 			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)) {
 				return true;
 			}
 		}
-		addErrorXML(pError, "Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
+		addErrorXML(pError,
+				"Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
 		return false;
+	}
+
+	public static boolean validarCuit(String strCuit, StringBuffer pError) {
+		String strPrefijo;
+		String strNumero;
+		int valDigCuit;
+		int valDigConstant;
+		String strConstant = "54327654321";
+		int valResult = 0;
+
+		if (!strCuit.equals("")) {
+			try {
+				if (strCuit.length() != 11) {
+					addErrorXML(pError, "La Cuit tiene una longitud inválida");
+					return false;
+				}
+
+				strPrefijo = strCuit.substring(0, 2).trim();
+				strNumero = strCuit.substring(2, 10).trim();
+				// Que no sea 0 el cuerpo
+				if (Integer.parseInt(strNumero) == 0) {
+					addErrorXML(pError, "Nro de Cuit inválido");
+					return false;
+				}
+				// Validacion prefijo
+				if (!(strPrefijo.equals("20")) & !(strPrefijo.equals("23"))
+						& !(strPrefijo.equals("24")) & !(strPrefijo.equals("27"))
+						& !(strPrefijo.equals("30")) & !(strPrefijo.equals("33"))
+						& !(strPrefijo.equals("34"))) {
+					addErrorXML(pError, "Prefijo de Cuit inválido");
+					return false;
+				}
+				// Validacion digito verificador
+				for (int valPos = 0; valPos < 11; valPos++) {
+					valDigCuit = Integer.parseInt(strCuit.substring(valPos, valPos + 1));
+					valDigConstant = Integer.parseInt(strConstant.substring(valPos, valPos + 1));
+					valResult = valResult + (valDigCuit * valDigConstant);
+				}
+				if ((valResult % 11) != 0) {
+					addErrorXML(pError, "Dígito verificador de Cuit inválido");
+					return false;
+				}
+			} catch (Exception e) {
+				addErrorXML(pError, "Cuit inválido");
+				return false;
+			}
+		} // if generico
+		return true;
 	}
 
 }

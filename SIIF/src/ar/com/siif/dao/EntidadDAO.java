@@ -210,5 +210,18 @@ public class EntidadDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_PRODUCTORES);
 		}			
-	}	
+	}
+	
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){
+		Criteria criteria = getSession().createCriteria(Entidad.class);
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("nroMatricula", nroMatricula));
+		if (id != null) {
+			conj.add(Restrictions.ne("id", id));
+		}
+		criteria.add(conj);
+
+		List<Entidad> entidades = criteria.list();
+		return (entidades.size() > 0);
+	}
 }

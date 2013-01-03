@@ -17,6 +17,12 @@ public class EntidadDTO {
 	private String telefono;
 
 	private String email;
+
+	private Long nroMatricula;
+
+	private String cuit;
+
+	private Integer codigoPostal;
 	
 	private LocalidadDTO localidad;
 
@@ -90,6 +96,30 @@ public class EntidadDTO {
 
 	public void setTipoEntidadDesc(String tipoEntidadDesc) {
 		this.tipoEntidadDesc = tipoEntidadDesc;
+	}
+
+	public Long getNroMatricula() {
+		return nroMatricula;
+	}
+
+	public void setNroMatricula(Long nroMatricula) {
+		this.nroMatricula = nroMatricula;
+	}
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public Integer getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	public void setCodigoPostal(Integer codigoPostal) {
+		this.codigoPostal = codigoPostal;
 	}
 	
 }
