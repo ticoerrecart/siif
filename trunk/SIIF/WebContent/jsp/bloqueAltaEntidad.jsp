@@ -6,9 +6,15 @@
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript">
 	function submitir(){
 		validarForm("entidadFormId","../entidad","validarEntidadForm","EntidadForm");
+	}
+
+	function cambioCuit(){
+		$("#cuit").val($("#prefijoCuit").val() + $("#nroCuit").val() + $("#sufijoCuit").val());
 	}
 </script>
 
@@ -85,6 +91,28 @@
 			<td align="left"><html:text property="confirmacionEmail" size="30"
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>
+		
+		<tr>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.NroMatricula'/></td>
+			<td align="left"><html:text property="entidadDTO.nroMatricula" size="30"
+				styleClass="botonerab" value="${entidad.nroMatricula}" onkeypress="javascript:esNumerico(event);"/></td>
+		</tr>
+		<tr>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Cuit'/></td>
+			<td align="left">
+				<html:hidden property="entidadDTO.cuit" value="${entidad.cuit}" styleId="cuit"/>
+				<input type="text" class="botonerab" size="2" id="prefijoCuit" value="${prefijoCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+				<input type="text" class="botonerab" size="9" maxlength="8" id="nroCuit" value="${nroCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+				<input type="text" class="botonerab" size="2" id="sufijoCuit" value="${sufijoCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
+			</td>
+		</tr>
+		<tr>
+			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CodigoPostal'/></td>
+			<td align="left"><html:text property="entidadDTO.codigoPostal" size="5"
+				styleClass="botonerab" value="${entidad.codigoPostal}" onkeypress="javascript:esNumerico(event);"/></td>
+		</tr>
+		
+		
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>

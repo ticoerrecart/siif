@@ -74,6 +74,8 @@ public class Constantes {
 	public static final String EXITO_ALTA_ENTIDAD = "La Entidad se ha dado de alta con exito";
 
 	public static final String EXISTE_ENTIDAD = "Ya existe una Entidad con éste nombre";
+	
+	public static final String EXISTE_ENTIDAD_CON_MATRICULA = "Ya existe una Entidad con éste nro de matrícula";
 
 	public static final String ENTIDAD_RN = "RN";
 

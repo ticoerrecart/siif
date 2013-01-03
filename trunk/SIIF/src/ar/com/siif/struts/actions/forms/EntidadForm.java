@@ -17,7 +17,7 @@ public class EntidadForm extends ActionForm {
 	private String confirmacionEmail;
 
 	private EntidadDTO entidadDTO;
-	
+
 	public EntidadForm() {
 		this.entidad = new Entidad();
 		this.entidadDTO = new EntidadDTO();
@@ -31,13 +31,19 @@ public class EntidadForm extends ActionForm {
 	 */
 	public boolean validar(StringBuffer error) {
 		boolean mailsOk = true;
-		boolean ok1 = Validator.requerido(this.getEntidadDTO().getNombre(), "Nombre", error)
+		boolean ok1 = Validator.validarComboRequerido("-1", this.getEntidadDTO().getTipoEntidad(),
+				"Tipo de Entidad", error)
+				&& Validator.requerido(this.getEntidadDTO().getNombre(), "Nombre", error)
 				&& Validator.validarEmail(this.getEntidadDTO().getEmail(), "E-Mail", error)
 				&& Validator.validarEmail(this.getConfirmacionEmail(), "Confirmación de E-Mail",
 						error);
 		if (ok1 && !this.getEntidadDTO().getEmail().equalsIgnoreCase(this.getConfirmacionEmail())) {
 			Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");
 			mailsOk = false;
+		}
+
+		if (ok1 && mailsOk) {
+			ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(), error);
 		}
 
 		return ok1 && mailsOk;
@@ -82,5 +88,5 @@ public class EntidadForm extends ActionForm {
 	public void setEntidadDTO(EntidadDTO entidadDTO) {
 		this.entidadDTO = entidadDTO;
 	}
-	
+
 }

@@ -23,7 +23,7 @@ import org.hibernate.annotations.CascadeType;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipoEntidad", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("ENTIDAD")
-public class Entidad implements Comparable<Entidad>{
+public class Entidad implements Comparable<Entidad> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +42,12 @@ public class Entidad implements Comparable<Entidad>{
 	private String telefono;
 
 	private String email;
+
+	private Long nroMatricula;
+
+	private String cuit;
+
+	private Integer codigoPostal;
 
 	@OneToMany(mappedBy = "productorForestal")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
@@ -122,8 +128,32 @@ public class Entidad implements Comparable<Entidad>{
 	}
 
 	public int compareTo(Entidad o) {
-		
+
 		return this.getNombre().compareTo(o.getNombre());
+	}
+
+	public Long getNroMatricula() {
+		return nroMatricula;
+	}
+
+	public void setNroMatricula(Long nroMatricula) {
+		this.nroMatricula = nroMatricula;
+	}
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+
+	public Integer getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	public void setCodigoPostal(Integer codigoPostal) {
+		this.codigoPostal = codigoPostal;
 	}
 
 }

@@ -188,4 +188,8 @@ public class EntidadFachada implements IEntidadFachada {
 			throw new NegocioException(e.getMessage());
 		}
 	}
+	
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){
+		return entidadDAO.existeEntidadConMatricula(nroMatricula, id);
+	}
 }
