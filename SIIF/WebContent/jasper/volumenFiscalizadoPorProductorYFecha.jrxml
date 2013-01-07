@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="volumenFiscalizadoPorProductorYFecha" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="47" bottomMargin="20" uuid="05ded469-0d51-4a2c-a242-a707973bde59">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="PATH_SUB_REPORTES" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idProd" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[new Long(2)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaDesde" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date(110,9,05)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaHasta" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date(111,1,22)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(f.cantidadMts)as cant, tp.nombre nombreProducto, e.nombre as nombreEntidad
+from fiscalizacion f, tipoproducto tp, entidad e
+where f.tipoProducto_fk = tp.id && f.entidad_fk = e.id && e.id = $P{idProd}
+      && f.fecha > $P{fechaDesde} && f.fecha < $P{fechaHasta}
+group by f.tipoProducto_fk]]>
+	</queryString>
+	<field name="cant" class="java.lang.Double"/>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="nombreEntidad" class="java.lang.String"/>
+	<variable name="cantTotalM3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cant}]]></variableExpression>
+	</variable>
+	<variable name="cantTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{cantTotalM3}]]></variableExpression>
+	</variable>
+	<group name="group1">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band height="50" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{nombreProducto} == null)]]></printWhenExpression>
+				<staticText>
+					<reportElement uuid="c7bec332-2604-4f02-a5d8-205ebff95968" key="staticText-28" mode="Transparent" x="0" y="10" width="535" height="25" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[new Boolean($F{nombreProducto} == null)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" size="15" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[No hay datos para procesar]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="133" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{nombreProducto} != null)]]></printWhenExpression>
+				<staticText>
+					<reportElement uuid="3c94e532-c1c1-4bcd-80e0-87ff262ea75c" key="staticText-26" mode="Opaque" x="127" y="0" width="112" height="15" forecolor="#000000" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Cantidad Total de m³]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="ecdc7406-73e9-4e16-8028-19012abba6e9" key="textField-18" mode="Transparent" x="239" y="0" width="150" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cantTotalM3}]]></textFieldExpression>
+				</textField>
+				<subreport isUsingCache="true">
+					<reportElement uuid="82f3431f-7f36-42d5-b1ee-eda02c4fc013" key="subreport-2" positionType="Float" mode="Opaque" x="67" y="70" width="358" height="25" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#FFFFFF"/>
+					<subreportParameter name="idProd">
+						<subreportParameterExpression><![CDATA[$P{idProd}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fechaDesde">
+						<subreportParameterExpression><![CDATA[$P{fechaDesde}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fechaHasta">
+						<subreportParameterExpression><![CDATA[$P{fechaHasta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cantTotalM3">
+						<subreportParameterExpression><![CDATA[$V{cantTotalM3}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{PATH_SUB_REPORTES}+"\\subRepVolumenFiscalizadoPorProductorYFechaGrafico.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="group2">
+		<groupExpression><![CDATA[null]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="50" splitType="Stretch">
+				<printWhenExpression><![CDATA[new Boolean($F{nombreProducto} != null)]]></printWhenExpression>
+				<subreport isUsingCache="true">
+					<reportElement uuid="ee9ae161-ba13-40f4-a30a-c2cbbb4ea47f" key="subreport-1" positionType="Float" mode="Opaque" x="67" y="13" width="358" height="25" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#FFFFFF"/>
+					<subreportParameter name="idProd">
+						<subreportParameterExpression><![CDATA[$P{idProd}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fechaDesde">
+						<subreportParameterExpression><![CDATA[$P{fechaDesde}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fechaHasta">
+						<subreportParameterExpression><![CDATA[$P{fechaHasta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cantTotalM3">
+						<subreportParameterExpression><![CDATA[$V{cantTotalM3}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{PATH_SUB_REPORTES}+"\\subRepVolumenFiscalizadoPorProductorYFecha.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3883801b-600f-4f73-898c-42f26e813056" key="staticText-23" mode="Transparent" x="25" y="50" width="124" height="34" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="Arial" size="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Provincia de Tierra del Fuego, Antártida
+e Islas del Atlántico Sur
+República Argentina
+Secretaria de Desarrollo Sustentable y Ambiente
+Dirección General de Bosques
+]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="false">
+				<reportElement uuid="9f27c7af-b717-4447-ba3c-679a2068d9a9" key="image-1" mode="Opaque" x="55" y="0" width="67" height="47" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<graphicElement fill="Solid">
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+				<imageExpression><![CDATA[$P{PATH_SUB_REPORTES}+System.getProperty("file.separator")+"logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="2bca008b-34fe-4144-97e9-532cc9d30b79" key="staticText-27" mode="Transparent" x="0" y="96" width="535" height="25" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[new Boolean($F{nombreProducto} != null)]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Arial" size="15" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Volumen Fiscalizado Por Productor y Fechas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
