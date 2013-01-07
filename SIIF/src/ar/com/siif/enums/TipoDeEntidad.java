@@ -1,7 +1,7 @@
 package ar.com.siif.enums;
 
 public enum TipoDeEntidad {
-	OBR("Obrajero"), PPF("Pequeño Productor Forestal"), RN("Recursos Naturales");
+	OBR("Obrajero"), PPF("PequeÃ±o Productor Forestal"), RN("Recursos Naturales");
 
 	private String descripcion;
 
