@@ -26,11 +26,11 @@ public class UsuarioForm extends ActionForm {
 	public boolean validar(StringBuffer error) {
 		boolean requeridos = Validator.requerido(this.getUsuarioDTO().getNombreUsuario(), "Nombre",
 				error)
-				&& Validator.requerido(this.getUsuarioDTO().getPassword(), "Contraseña", error)
-				&& Validator.requerido(this.getContrasenia(), "Confirmar Contraseña", error);
+				&& Validator.requerido(this.getUsuarioDTO().getPassword(), "ContraseÃ±a", error)
+				&& Validator.requerido(this.getContrasenia(), "Confirmar ContraseÃ±a", error);
 		boolean passValido = true;
 		if (requeridos && !this.getUsuarioDTO().getPassword().equalsIgnoreCase(this.getContrasenia())) {
-			Validator.addErrorXML(error, "La contraseña no coincide.  Verifique.");
+			Validator.addErrorXML(error, "La contraseÃ±a no coincide.  Verifique.");
 			passValido = false;
 		}
 

@@ -26,7 +26,7 @@ function agregarCuota() {
 	
     myTr.id= myTrId + cuotaIndex;
     
-    //busco el último TR y le agrego el nuevo.
+    //busco el Ãºltimo TR y le agrego el nuevo.
     var tabla = document.getElementById("idTablaCuotas");
 
 	//Creo el 1er TD
@@ -37,7 +37,7 @@ function agregarCuota() {
 	a1.value = "botoneralNegritaRight";
 	myTd1.setAttributeNode(a);       		
 	myTd1.setAttributeNode(a1);		
-	myTd1.innerHTML = "Cuota n°"+cuotaIndex+" - Número de Cuota:";
+	myTd1.innerHTML = "Cuota nÃºmero "+cuotaIndex+" - NÃºmero de Cuota:";
 	
 	//Creo el 2do TD
 	var myTd2 = document.createElement('TD');

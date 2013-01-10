@@ -141,7 +141,7 @@
 
 	}
 //----------------------------------------------------------------------------------------------------------------------------
-	//tener en cuenta que el largo est· en mts y los di·metros en cm!!!!
+	//tener en cuenta que el largo est√° en mts y los di√°metros en cm!!!!
 	function calcularVolumen() {
 		var ok = true;
 		var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
@@ -179,7 +179,7 @@
 			}
 		}else{
 			var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-			if(idTipoProductoForestal!=3){//si no es LeÒa
+			if(idTipoProductoForestal!=3){//si no es Le√±a
 				alert("Debe Agregar alguna muestra");
 				$("#idCantMuestras").focus();
 				ok=false;
@@ -228,7 +228,7 @@
 	/*
 	<option value="1">Rollizos</option>
 <option value="2">Fustes</option>
-<option value="3">LeÒa</option>
+<option value="3">Le√±a</option>
 <option value="4">Postes</option>
 <option value="5">Trineos</option>		
 */
@@ -245,8 +245,15 @@
 		}
 		
 	}
-	function agregarFila() {
+	
+	//se usa en la edici√≥n de Fiscalizaci√≥n
+	function agregarHeader(){
+		if ($('#tablaMuestras tr').size() == 0) {
+			$("#tablaMuestras").append(headerTabla);
+		}
+	}
 
+	function agregarFila() {
 		if ($('#tablaMuestras tr').size() == 0) {
 			$("#tablaMuestras").append(headerTabla);
 			$("#tablaMuestras").append(primeraFila);
@@ -295,7 +302,7 @@
 /*
 	'1', 'Rollizos'
 	'2', 'Fustes'
-	'3', 'LeÒa'
+	'3', 'Le√±a'
 	'4', 'Postes'
 	'5', 'Trineos'
  */

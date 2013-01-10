@@ -643,7 +643,7 @@ public class GuiaForestalAction extends ValidadorAction {
 						
 			if(paramForward.equals(Constantes.METODO_CARGAR_GUIA_DEVOLUCION_VALE)){
 				//rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());				
-				request.setAttribute("titulo", "Devolución de Vale de Transporte");				
+				request.setAttribute("titulo", "DevoluciÃ³n de Vale de Transporte");				
 			}
 			else{
 				//rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());				
@@ -940,7 +940,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 		ok = Validator.validarEnteroMayorQue(0,
 				Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
-				"Nro de Guía", error);
+				"Nro de GuÃ­a", error);
 		
 		if (ok) {
 			ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm.getGuiaForestal().getNroGuia());
@@ -1019,7 +1019,7 @@ public class GuiaForestalAction extends ValidadorAction {
 		IGuiaForestalFachada guiaFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");
 
 		boolean valido = Validator.validarEnteroMayorQue(0,
-					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()), "Nro de Guía", error);		
+					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()), "Nro de GuÃ­a", error);		
 
 		boolean existe = valido;
 

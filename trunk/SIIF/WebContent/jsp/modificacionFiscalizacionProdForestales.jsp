@@ -50,6 +50,7 @@ $(function() {
 
 </script>
 
+<%--ACA ESTAN LOS HEADERS DE CADA TIPO DE MUESTRA --%>
 <%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
 
 <div id="dialog" style="display: none;"></div>
@@ -332,19 +333,11 @@ $(function() {
 								<table id="tablaMuestras" border="0" class="cuadrado"
 									align="center" width="70%" cellpadding="2" cellspacing="0"
 									style="display: ">
-									<tr id="headerT">
-										<td class="azulAjustado" width="3%"></td>
-										<td class="azulAjustado" width="32%"><bean:message
-												key='SIIF.label.Diametro1' />
-										</td>
-										<td class="azulAjustado diam2" width="32%"><bean:message
-												key='SIIF.label.Diametro2' />
-										</td>
-										<td class="azulAjustado" width="33%"><bean:message
-												key='SIIF.label.Largo' />
-										</td>
-									</tr>
+
 									<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
+										<script>
+											agregarHeader();
+										</script>
 										<c:forEach items="${fiscalizacionDTO.muestra}" varStatus="i"
 											var="muestra">
 											<tr id="fila${i.index}">

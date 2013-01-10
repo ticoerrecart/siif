@@ -58,7 +58,7 @@ public class Calendario extends TagSupport {
 
 		out.print(salida);
 
-		salida = "<img align='middle' src='../../imagenes/calendar/_calprevyr.gif' border=0 width=17 height=17 title='Año anterior'></a></span>";
+		salida = "<img align='middle' src='../../imagenes/calendar/_calprevyr.gif' border=0 width=17 height=17 title='AÃ±o anterior'></a></span>";
 		salida = salida + "<span id='" + getName()
 				+ "_HdrPrevMM'><a href='javascript:DotJ_doPrev(c_" + getName() + ",\"m\");'>";
 		salida = salida
@@ -73,7 +73,7 @@ public class Calendario extends TagSupport {
 		salida = salida + "<span id='" + getName()
 				+ "_HdrNextYY'><a href='javascript:DotJ_doNext(c_" + getName() + ",\"y\");'>";
 		salida = salida
-				+ "<img align='middle' src='../../imagenes/calendar/_calnextyr.gif' border=0 width=17 height=17 title='Año siguiente'></a></span>";
+				+ "<img align='middle' src='../../imagenes/calendar/_calnextyr.gif' border=0 width=17 height=17 title='AÃ±o siguiente'></a></span>";
 		salida = salida + "</td></tr></table></td></tr>";
 
 		out.print(salida);

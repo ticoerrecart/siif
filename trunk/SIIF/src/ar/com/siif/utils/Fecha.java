@@ -24,7 +24,7 @@ public class Fecha {
 		Calendar cal = Calendar.getInstance();
 		cal.set(intYear, intMonth - 1, intDay);
 
-		/* Día Juliano -> rellena a izquierda con 0 hasta completar 3 posiciones */
+		/* DÃ­a Juliano -> rellena a izquierda con 0 hasta completar 3 posiciones */
 		String strJulianDay = Integer.toString(cal.get(Calendar.DAY_OF_YEAR));
 		int i;
 		int intLength = strJulianDay.length();
@@ -32,7 +32,7 @@ public class Fecha {
 		for (i = 0; i < (3 - intLength); i++)
 			strJulianDay = String.valueOf('0') + strJulianDay;
 
-		/* Año Juliano -> Toma las ultimas 3 posiciones de la suma del año + 100 */
+		/* AÃ±o Juliano -> Toma las ultimas 3 posiciones de la suma del aÃ±o + 100 */
 		String strJulianYear = Integer.toString(cal.get(Calendar.YEAR) + 100);
 		strJulianYear = strJulianYear.substring(1, 4);
 
@@ -40,7 +40,7 @@ public class Fecha {
 	}
 
 	/**
-	 * Devuelve el ultimo dia del mes de un año.
+	 * Devuelve el ultimo dia del mes de un aÃ±o.
 	 * el mes recibido es ENERO = 1, DICIEMBRE = 12 
 	 */
 	public static byte getUltimoDiaMes(short anio, byte mes) {
@@ -53,7 +53,7 @@ public class Fecha {
 	}
 
 	/**
-	 * Verifica si un año es bisiesto.
+	 * Verifica si un aÃ±o es bisiesto.
 	 */
 	public static boolean bisiesto(short intYear) {
 		if ((((intYear % 4) == 0) && ((intYear % 100) != 0)) || ((intYear % 400) == 0)) {
@@ -92,7 +92,7 @@ public class Fecha {
 	}
 
 	/**
-	 * Convierte una fecha en una cadena de caracteres, con la hora incluída
+	 * Convierte una fecha en una cadena de caracteres, con la hora incluÃ­da
 	 */
 	public static String dateTimeToString(Date pFecha) {
 		String strDate;
@@ -201,8 +201,8 @@ public class Fecha {
 	}
 
 	/**
-	 * Metodo que devuelve próxima fecha hábil
-	 * @author Natalia Spañol
+	 * Metodo que devuelve prÃ³xima fecha hÃ¡bil
+	 * @author Natalia SpaÃ±ol
 	 * @param pFecha Date
 	 * @return Date
 	 */

@@ -47,7 +47,7 @@
 			$("#enviar").removeAttr('disabled'); 
 		}
 
-		//muevo el cursor hasta donde est·n definidos los errores
+		//muevo el cursor hasta donde est√°n definidos los errores
 		moverAErrores();
 	}
 

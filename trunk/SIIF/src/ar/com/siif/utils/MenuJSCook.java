@@ -14,8 +14,8 @@ import ar.com.siif.negocio.ItemMenu;
 public class MenuJSCook {
 
 	public static String getJs(List<ItemMenu> menu)
-	// recibe la collection del menú ordenada según la propiedad rol (que se usa como clave de menú)
-	// y devuelve la estructura del menú para su uso en JSCookMenu
+	// recibe la collection del menÃº ordenada segÃºn la propiedad rol (que se usa como clave de menÃº)
+	// y devuelve la estructura del menÃº para su uso en JSCookMenu
 	{
 		return "[" + agregarOpciones(menu, true) + " ];";
 	}
@@ -32,7 +32,7 @@ public class MenuJSCook {
 					" ,\"" + url + "\"" + //" ,'"+url+"'" +//url  
 					" ,null,'" + item.getItem() + "', \r\n" + //target frame y descripcion 
 					agregarOpciones(item.getHijos(), false) + "]";
-		} else { // es una opción 
+		} else { // es una opciÃ³n 
 			retorno = "\r\n[ " + determinarIcono(item) + " ,'" + item.getItem() + "'" + //etiqueta
 					" ,\"" + url + "\"" + //" ,'"+url+ "'"+//url  
 					" ,null,'" + item.getItem() + "']"; //target frame y descripcion
@@ -43,7 +43,7 @@ public class MenuJSCook {
 							" ,\"" + url + "\"" + //" ,'"+url+"'" +//url  
 							" ,null,'" + item.getItem() + "', " + //target frame y descripcion 
 							agregarOpciones(item.getHijos(), false) + "]";
-				} else { // es una opción 
+				} else { // es una opciÃ³n 
 					retorno = "[ " + determinarIcono(item) + " ,'" + item.getItem() + "'" + //etiqueta
 							" ,\"" + url + "\"" + //" ,'"+url+ "'"+//url  
 							" ,null,'" + item.getItem() + "']"; //target frame y descripcion
@@ -52,7 +52,7 @@ public class MenuJSCook {
 	}
 
 	private static String agregarOpciones(List<ItemMenu> menu, boolean soloRaices) {
-		// este método se llama desde el método de servicio principal y recursivamente desde agregarOpcion
+		// este mÃ©todo se llama desde el mÃ©todo de servicio principal y recursivamente desde agregarOpcion
 		List<String> opciones = new ArrayList<String>();
 		for (ItemMenu item : menu) {
 			if (!soloRaices || item.esRaiz()) {

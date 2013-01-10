@@ -1,9 +1,3 @@
-/*
- * Creado el 05/12/2006
- *
- * Para cambiar la plantilla para este archivo generado vaya a
- * Ventana&gt;Preferencias&gt;Java&gt;GeneraciÛn de cÛdigo&gt;CÛdigo y comentarios
- */
 package ar.com.siif.struts.utils;
 
 import java.util.ArrayList;
@@ -126,11 +120,11 @@ public abstract class Validator {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un n˙mero mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un n√∫mero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, label + " debe ser un n˙mero entero");
+			addErrorXML(pError, label + " debe ser un n√∫mero entero");
 			return false;
 		}
 		return true;
@@ -148,11 +142,11 @@ public abstract class Validator {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt >= numeroMaximo) {
 				addErrorXML(pError,
-						label + " debe ser un n˙mero menor a " + Integer.toString(numeroMaximo));
+						label + " debe ser un n√∫mero menor a " + Integer.toString(numeroMaximo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, label + " debe ser un n˙mero entero");
+			addErrorXML(pError, label + " debe ser un n√∫mero entero");
 			return false;
 		}
 		return true;
@@ -167,11 +161,11 @@ public abstract class Validator {
 			long entradaLong = Long.parseLong(entrada);
 			if (entradaLong <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un n˙mero mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un n√∫mero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, " debe ser un n˙mero entero");
+			addErrorXML(pError, " debe ser un n√∫mero entero");
 			return false;
 		}
 
@@ -187,11 +181,11 @@ public abstract class Validator {
 			double entradaDouble = Double.parseDouble(entrada);
 			if (entradaDouble <= numeroMinimo) {
 				addErrorXML(pError,
-						label + " debe ser un n˙mero mayor a " + Integer.toString(numeroMinimo));
+						label + " debe ser un n√∫mero mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError, " debe ser un n˙mero entero con decimales v·lido");
+			addErrorXML(pError, " debe ser un n√∫mero entero con decimales v√°lido");
 			return false;
 		}
 
@@ -199,7 +193,7 @@ public abstract class Validator {
 	}
 
 	/*
-	 * Si la entrada es nula entonces se considera valido chequea que el aÒo se
+	 * Si la entrada es nula entonces se considera valido chequea que el a√±o se
 	 * mayor que 1900 y menor que 2100
 	 */
 	public static boolean validarFechaValida(String pEntrada, String label, StringBuffer pError) {
@@ -228,7 +222,7 @@ public abstract class Validator {
 				return false;
 			} else if (anioInt > 2100 || anioInt < 1900) {
 				addErrorXML(pError, label
-						+ " invalida, el aÒo debe ser menor igual que 2100 y mayor que 1900");
+						+ " invalida, el a√±o debe ser menor igual que 2100 y mayor que 1900");
 				return false;
 			}
 
@@ -243,7 +237,7 @@ public abstract class Validator {
 	}
 
 	/**
-	 * Verifica que la fecha sea v‡lida y anterior a fecha actual. si es nula o
+	 * Verifica que la fecha sea v√°lida y anterior a fecha actual. si es nula o
 	 * blanco devuelve true
 	 * 
 	 * @param pEntrada
@@ -272,7 +266,7 @@ public abstract class Validator {
 	}
 
 	/**
-	 * Verifica que la fecha sea v‡lida y anterior a fecha actual. si es nula o
+	 * Verifica que la fecha sea v√°lida y anterior a fecha actual. si es nula o
 	 * blanco devuelve true
 	 * 
 	 * @param pEntrada
@@ -346,7 +340,7 @@ public abstract class Validator {
 			return true;
 		}
 
-		addErrorXML(pError, label + " no es un e-mail v·lido");
+		addErrorXML(pError, label + " no es un e-mail v√°lido");
 		return false;
 
 	}
@@ -360,7 +354,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un AlfaNumÈrico v·lido");
+		addErrorXML(pError, label + " no es un AlfaNum√©rico v√°lido");
 		return false;
 	}
 
@@ -373,7 +367,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un NumÈrico v·lido");
+		addErrorXML(pError, label + " no es un Num√©rico v√°lido");
 		return false;
 	}
 
@@ -386,7 +380,7 @@ public abstract class Validator {
 		if (m.matches()) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es un Caracter v·lido");
+		addErrorXML(pError, label + " no es un Caracter v√°lido");
 		return false;
 	}
 
@@ -395,12 +389,12 @@ public abstract class Validator {
 		if ((valor == null) || valor.length() <= longitud) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es v·lido, se permite hasta " + longitud + " posiciones");
+		addErrorXML(pError, label + " no es v√°lido, se permite hasta " + longitud + " posiciones");
 		return false;
 	}
 
 	/**
-	 * true si es null , string vacÌo o letras, si el valor longitudMaxima es 0,
+	 * true si es null , string vac√≠o o letras, si el valor longitudMaxima es 0,
 	 * no toma cuenta el largo del string.
 	 */
 	public static boolean validarLetras(String valor, int longitudMaxima, String label,
@@ -412,7 +406,7 @@ public abstract class Validator {
 				&& (longitudMaxima == 0 || valor.length() <= longitudMaxima)) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es v·lido, solo letras"
+		addErrorXML(pError, label + " no es v√°lido, solo letras"
 				+ (longitudMaxima != 0 ? " hasta " + longitudMaxima + " posiciones" : ""));
 		return false;
 	}
@@ -462,7 +456,7 @@ public abstract class Validator {
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro1(),
 									Constantes.minDiametroRollizo, Constantes.maxDiametroRollizo,
-									"Di·metro 1 del " + tipoProd);
+									"Di√°metro 1 del " + tipoProd);
 
 					ok = ok
 							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoRollizo,
@@ -474,12 +468,12 @@ public abstract class Validator {
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro1(),
 									Constantes.minDiametroFuste, Constantes.maxDiametroFuste,
-									"Di·metro 1 del " + tipoProd);
+									"Di√°metro 1 del " + tipoProd);
 
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro2(),
 									Constantes.minDiametroFuste, Constantes.maxDiametroFuste,
-									"Di·metro 2 del " + tipoProd);
+									"Di√°metro 2 del " + tipoProd);
 
 					ok = ok
 							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoRollizo,
@@ -491,7 +485,7 @@ public abstract class Validator {
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro1(),
 									Constantes.minDiametroPoste, Constantes.maxDiametroPoste,
-									"Di·metro 1 del " + tipoProd);
+									"Di√°metro 1 del " + tipoProd);
 
 					ok = ok
 							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoPoste,
@@ -503,12 +497,12 @@ public abstract class Validator {
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro1(),
 									Constantes.minDiametroTrineo, Constantes.maxDiametroTrineo,
-									"Di·metro 1 del " + tipoProd);
+									"Di√°metro 1 del " + tipoProd);
 
 					ok = ok
 							&& validarDiametro(pError, muestra.getDiametro2(),
 									Constantes.minDiametroTrineo, Constantes.maxDiametroTrineo,
-									"Di·metro 2 del " + tipoProd);
+									"Di√°metro 2 del " + tipoProd);
 
 					ok = ok
 							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoTrineo,
@@ -526,11 +520,11 @@ public abstract class Validator {
 	 * 
 		<option value="1">Rollizos</option>
 		<option value="2">Fustes</option>
-		<option value="3">LeÒa</option>
+		<option value="3">Le√±a</option>
 		<option value="4">Postes</option>
 		<option value="5">Trineos</option>
-		a. ROLLIZOS: LARGO: 2 a m7 y di·metro: 10 a 160cm
-		b. Fustes: Largo 5 a 18m y di·metro : 10 a 160cm
+		a. ROLLIZOS: LARGO: 2 a m7 y di√°metro: 10 a 160cm
+		b. Fustes: Largo 5 a 18m y di√°metro : 10 a 160cm
 		c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm		
 	 */
 	public static boolean validarMuestras(List<MuestraDTO> muestras, Long idTipoProducto,
@@ -738,7 +732,7 @@ public abstract class Validator {
 			int n = Integer.parseInt(strArray[0]);
 			int n2 = Integer.parseInt(strArray[1]);
 			if (n + 1 != n2) {
-				addErrorXML(pError, "Los AÒos del periodo deben ser consecutivos");
+				addErrorXML(pError, "Los A√±os del periodo deben ser consecutivos");
 				return false;
 			}
 			return true;
@@ -782,7 +776,7 @@ public abstract class Validator {
 		if (!strCuit.equals("")) {
 			try {
 				if (strCuit.length() != 11) {
-					addErrorXML(pError, "La Cuit tiene una longitud inv·lida");
+					addErrorXML(pError, "La Cuit tiene una longitud inv√°lida");
 					return false;
 				}
 
@@ -790,7 +784,7 @@ public abstract class Validator {
 				strNumero = strCuit.substring(2, 10).trim();
 				// Que no sea 0 el cuerpo
 				if (Integer.parseInt(strNumero) == 0) {
-					addErrorXML(pError, "Nro de Cuit inv·lido");
+					addErrorXML(pError, "Nro de Cuit inv√°lido");
 					return false;
 				}
 				// Validacion prefijo
@@ -798,7 +792,7 @@ public abstract class Validator {
 						& !(strPrefijo.equals("24")) & !(strPrefijo.equals("27"))
 						& !(strPrefijo.equals("30")) & !(strPrefijo.equals("33"))
 						& !(strPrefijo.equals("34"))) {
-					addErrorXML(pError, "Prefijo de Cuit inv·lido");
+					addErrorXML(pError, "Prefijo de Cuit inv√°lido");
 					return false;
 				}
 				// Validacion digito verificador
@@ -808,11 +802,11 @@ public abstract class Validator {
 					valResult = valResult + (valDigCuit * valDigConstant);
 				}
 				if ((valResult % 11) != 0) {
-					addErrorXML(pError, "DÌgito verificador de Cuit inv·lido");
+					addErrorXML(pError, "D√≠gito verificador de Cuit inv√°lido");
 					return false;
 				}
 			} catch (Exception e) {
-				addErrorXML(pError, "Cuit inv·lido");
+				addErrorXML(pError, "Cuit inv√°lido");
 				return false;
 			}
 		} // if generico

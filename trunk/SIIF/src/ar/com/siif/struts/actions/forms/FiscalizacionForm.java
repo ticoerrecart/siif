@@ -100,7 +100,7 @@ public class FiscalizacionForm extends ActionForm {
 					Integer.toString(fiscalizacionDTO.getCantidadUnidades()), "Cantidad Unidades",
 					error);
 			ok10 = Validator.validarEnteroMayorQue(0,
-					Integer.toString(fiscalizacionDTO.getTamanioMuestra()), "Tamaño de la Muestra",
+					Integer.toString(fiscalizacionDTO.getTamanioMuestra()), "TamaÃ±o de la Muestra",
 					error);
 			ok16 = Validator.validarMuestras(this.getMuestrasDTO(), fiscalizacionDTO
 					.getTipoProducto().getId(), error);			
