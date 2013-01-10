@@ -1,4 +1,4 @@
-//Función que permite que sólo se ingresen números si el campo es de tipo numerico
+//FunciÃ³n que permite que sÃ³lo se ingresen nÃºmeros si el campo es de tipo numerico
 var type;
 if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
 if (document.all) type="IE"; 
@@ -55,7 +55,7 @@ function esDouble(ob) {
 	
 		var valor = parseFloat(ob.value);	
 		if (isNaN(valor)) { 
-			alert("No es un valor válido");
+			alert("No es un valor vÃ¡lido");
 			ob.focus();
 		} else ob.value = valor;
 	}

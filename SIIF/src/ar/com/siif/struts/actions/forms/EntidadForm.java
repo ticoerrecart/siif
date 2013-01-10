@@ -35,7 +35,7 @@ public class EntidadForm extends ActionForm {
 				"Tipo de Entidad", error)
 				&& Validator.requerido(this.getEntidadDTO().getNombre(), "Nombre", error)
 				&& Validator.validarEmail(this.getEntidadDTO().getEmail(), "E-Mail", error)
-				&& Validator.validarEmail(this.getConfirmacionEmail(), "Confirmación de E-Mail",
+				&& Validator.validarEmail(this.getConfirmacionEmail(), "ConfirmaciÃ³n de E-Mail",
 						error);
 		if (ok1 && !this.getEntidadDTO().getEmail().equalsIgnoreCase(this.getConfirmacionEmail())) {
 			Validator.addErrorXML(error, "Los e-mails no coinciden.  Verifique.");

@@ -54,7 +54,7 @@ public class Entidad implements Comparable<Entidad> {
 	private List<PMF> pmfs;
 
 	/**
-	 * Cada subclase debe implementar éste método.
+	 * Cada subclase debe implementar Ã©ste mÃ©todo.
 	 * 
 	 * @return
 	 */
@@ -63,7 +63,7 @@ public class Entidad implements Comparable<Entidad> {
 	}
 
 	/**
-	 * Cada subclase debe implementar éste método.
+	 * Cada subclase debe implementar Ã©ste mÃ©todo.
 	 * 
 	 * @return
 	 */

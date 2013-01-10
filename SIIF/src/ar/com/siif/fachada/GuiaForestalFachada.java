@@ -170,12 +170,12 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			String fechaDevolucion) {
 
 		try {
-			//Validar que en la devolución de Vales de Transporte, 
-			// los m3 del vale no sobrepasen lo que esta fiscalizado en la guía para el tipo de producto declarado en el vale, 
+			//Validar que en la devoluciÃ³n de Vales de Transporte, 
+			// los m3 del vale no sobrepasen lo que esta fiscalizado en la guÃ­a para el tipo de producto declarado en el vale, 
 			// ni tampoco que la suma de los m3 de los vales devueltos, 
-			// mas el del vale en cuestión, no sobrepase lo fiscalizado en la guía para ese tipo de producto.
+			// mas el del vale en cuestiÃ³n, no sobrepase lo fiscalizado en la guÃ­a para ese tipo de producto.
 			StringBuffer pError = new StringBuffer(); 
-			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
+			boolean ok = Validator.requerido(fechaDevolucion, "Fecha DevoluciÃ³n", pError);
 			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3), "Cantidad(m3)", pError);
 			
 			

@@ -95,7 +95,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	/**
-	 * ModificaciÛn de FiscalizaciÛn.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
+	 * Modificaci√≥n de Fiscalizaci√≥n.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
 	 * @param fiscalizacionDTO
 	 * @param muestrasNuevasDTO
 	 * @throws NegocioException 
@@ -226,9 +226,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(Long
 				.parseLong(idFiscalizacion));
 		if (fiscalizacion.getGuiaForestal() != null) {
-			String msjPrefijo = "La FiscalizaciÛn tiene asociada la GuÌa Forestal Nro. "
-					+ fiscalizacion.getGuiaForestal().getNroGuia() + " y se est·/n cambiando ";
-			String msjDesvincular = " Desea desvincularla de la GuÌa Forestal y guardarla de todas formas?";
+			String msjPrefijo = "La Fiscalizaci√≥n tiene asociada la Gu√≠a Forestal Nro. "
+					+ fiscalizacion.getGuiaForestal().getNroGuia() + " y se est√°/n cambiando ";
+			String msjDesvincular = " Desea desvincularla de la Gu√≠a Forestal y guardarla de todas formas?";
 			/*if (!fiscalizacion.getProductorForestal().getIdTipoEntidad()
 					.equalsIgnoreCase(tipoEntidad)) {
 				throw new NegocioException(msjPrefijo + "el Tipo De Entidad." + msjDesvincular);
@@ -246,12 +246,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 					} else {
 						if (fiscalizacion.getRodal().getMarcacion().getTranzon().getId() != Long
 								.parseLong(idTranzon)) {
-							throw new NegocioException(msjPrefijo + "el TranzÛn."
+							throw new NegocioException(msjPrefijo + "el Tranz√≥n."
 									+ msjDesvincular);
 						} else {
 							if (fiscalizacion.getRodal().getMarcacion().getId() != Long
 									.parseLong(idMarcacion)) {
-								throw new NegocioException(msjPrefijo + "la MarcaciÛn."
+								throw new NegocioException(msjPrefijo + "la Marcaci√≥n."
 										+ msjDesvincular);
 							} else {*/
 					if (fiscalizacion.getRodal().getId() != Long.parseLong(idRodal)) {
@@ -284,7 +284,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
 			NegocioException {
 		if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
-			throw new NegocioException("Seleccione alguna FiscalizaciÛn");
+			throw new NegocioException("Seleccione alguna Fiscalizaci√≥n");
 		}
 		for (Long idFiscalizacion : idsFiscalizaciones) {
 			fiscalizacionDAO.anularFiscalizacion(idFiscalizacion);

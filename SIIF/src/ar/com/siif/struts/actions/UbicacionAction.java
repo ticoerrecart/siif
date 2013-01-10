@@ -216,14 +216,14 @@ public class UbicacionAction extends ValidadorAction {
 	
 	public String validarTranzon(String numeroTranzon, String disposicionTranzon, Long idPMF){
 		StringBuffer pError = new StringBuffer();
-		Validator.requerido(numeroTranzon, "Número", pError);
-		Validator.requerido(disposicionTranzon, "Disposición", pError);
+		Validator.requerido(numeroTranzon, "NÃºmero", pError);
+		Validator.requerido(disposicionTranzon, "DisposiciÃ³n", pError);
 		return pError.toString();
 	}
 
 	public String validarMarcacion(String disposicionMarcacion, Long idTranzon){
 		StringBuffer pError = new StringBuffer();
-		Validator.requerido(disposicionMarcacion, "Disposición", pError);
+		Validator.requerido(disposicionMarcacion, "DisposiciÃ³n", pError);
 		return pError.toString();
 	}
 

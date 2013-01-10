@@ -251,7 +251,7 @@ public class FiscalizacionAction extends ValidadorAction {
 	}
 
 	/**
-	 * Modificación de Fiscalización.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
+	 * ModificaciÃ³n de FiscalizaciÃ³n.  Se puede modificar: Fecha, Periodo Forestal, Cantidad de Unidades, Oficina y las muestas.
 	 * @param mapping
 	 * @param form
 	 * @param request

@@ -266,7 +266,7 @@ public abstract class ProviderDTO {
 		return muestraDTO;
 	}
 
-	//Genera una GuiaForestalDTO sin los datos de la Fiscalización.
+	//Genera una GuiaForestalDTO sin los datos de la FiscalizaciÃ³n.
 	private static GuiaForestalDTO getGuiaForestalDTODatosGenerales(GuiaForestal guiaForestal) {
 
 		GuiaForestalDTO guiaForestalDTO = new GuiaForestalDTO();

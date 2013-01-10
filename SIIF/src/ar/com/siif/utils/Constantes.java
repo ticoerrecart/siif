@@ -11,19 +11,19 @@ public class Constantes {
 	public static final Long ID_ROL_ADMINISTRADOR = 2L;
 
 	// FISCALIZACION
-	public static final String EXITO_ALTA_FISCALIZACION = "La Fiscalización se ha dado de alta con exito";
+	public static final String EXITO_ALTA_FISCALIZACION = "La FiscalizaciÃ³n se ha dado de alta con exito";
 
-	public static final String EXITO_MODIFICACION_FISCALIZACION = "La Fiscalización se ha modificado con exito";
+	public static final String EXITO_MODIFICACION_FISCALIZACION = "La FiscalizaciÃ³n se ha modificado con exito";
 
-	public static final String ERROR_ALTA_FISCALIZACION = "Ha ocurrido un error en el alta de la fiscalización";
+	public static final String ERROR_ALTA_FISCALIZACION = "Ha ocurrido un error en el alta de la fiscalizaciÃ³n";
 
-	public static final String ERROR_MODIFICACION_FISCALIZACION = "Ha ocurrido un error en la modificación de la fiscalización";
+	public static final String ERROR_MODIFICACION_FISCALIZACION = "Ha ocurrido un error en la modificaciÃ³n de la fiscalizaciÃ³n";
 
-	public static final String ERROR_RECUPERAR_FISCALIZACION = "Ha ocurrido un error en la recuperación de la fiscalización";
+	public static final String ERROR_RECUPERAR_FISCALIZACION = "Ha ocurrido un error en la recuperaciÃ³n de la fiscalizaciÃ³n";
 
-	public static final String TITULO_MODIFICACION_FISCALIZACION = "Modificación de Fiscalización de Productos Forestales ";
+	public static final String TITULO_MODIFICACION_FISCALIZACION = "ModificaciÃ³n de FiscalizaciÃ³n de Productos Forestales ";
 
-	public static final String TITULO_ANULACION_FISCALIZACION = "Anulación de Fiscalización de Productos Forestales ";
+	public static final String TITULO_ANULACION_FISCALIZACION = "AnulaciÃ³n de FiscalizaciÃ³n de Productos Forestales ";
 
 	// FIN FISCALIZACION
 
@@ -34,65 +34,65 @@ public class Constantes {
 
 	public static final String METODO_REGISTRAR_PAGO_BOLETA_DEPOSITO = "registrarPagoBoletaDeposito";
 
-	public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO = "Ha ocurrido un error en el reemplazo de la boleta de depósito";
+	public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO = "Ha ocurrido un error en el reemplazo de la boleta de depÃ³sito";
 
-	public static final String ERROR_PAGO_BOLETA_DEPOSITO = "Ha ocurrido un error en el pago de la boleta de depósito";
+	public static final String ERROR_PAGO_BOLETA_DEPOSITO = "Ha ocurrido un error en el pago de la boleta de depÃ³sito";
 
-	public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO_NRO_EXISTENTE = "El número de boleta de deposito ya existe, por favor especifique otro";
+	public static final String ERROR_REEMPLAZAR_BOLETA_DEPOSITO_NRO_EXISTENTE = "El nÃºmero de boleta de deposito ya existe, por favor especifique otro";
 
 	public static final String ERROR_REEMPLAZAR_VALE_TRANSPORTE = "Ha ocurrido un error en el reemplazo del vale de transporte";
 
-	public static final String ERROR_REEMPLAZAR_VALE_TRANSPORTE_NRO_EXISTENTE = "El número de vale de transporte ya existe, por favor especifique otro";
+	public static final String ERROR_REEMPLAZAR_VALE_TRANSPORTE_NRO_EXISTENTE = "El nÃºmero de vale de transporte ya existe, por favor especifique otro";
 
-	public static final String ERROR_DEVOLUCION_VALE_TRANSPORTE = "Ha ocurrido un error en la devolución del vale de transporte";
+	public static final String ERROR_DEVOLUCION_VALE_TRANSPORTE = "Ha ocurrido un error en la devoluciÃ³n del vale de transporte";
 
 	public static final String METODO_CARGAR_GUIA_DEVOLUCION_VALE = "cargarGuiaForestalDevolucionValeTransporte";
 
-	public static final String NO_EXISTE_GUIA = "Guía Forestal no encontrada";
+	public static final String NO_EXISTE_GUIA = "GuÃ­a Forestal no encontrada";
 
-	public static final String NRO_GUIA_EXISTENTE = "El número de Guía Forestal ya existe, especifique otro";
+	public static final String NRO_GUIA_EXISTENTE = "El nÃºmero de GuÃ­a Forestal ya existe, especifique otro";
 
-	public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
+	public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La GuÃ­a Forestal se ha modificado con exito";
 
-	public static final String EXITO_ALTA_GUIA_FORESTAL = "La Guía Forestal se ha dado de alta con exito";
+	public static final String EXITO_ALTA_GUIA_FORESTAL = "La GuÃ­a Forestal se ha dado de alta con exito";
 
-	public static final String ERROR_RECUPERAR_GUIA_FORESTAL = "Ha ocurrido un error en la recuperación de la guía forestal";
+	public static final String ERROR_RECUPERAR_GUIA_FORESTAL = "Ha ocurrido un error en la recuperaciÃ³n de la guÃ­a forestal";
 
-	public static final String ERROR_RECUPERAR_GUIAS_FORESTALES = "Ha ocurrido un error en la recuperación de la guías forestales";
+	public static final String ERROR_RECUPERAR_GUIAS_FORESTALES = "Ha ocurrido un error en la recuperaciÃ³n de la guÃ­as forestales";
 
-	public static final String ERROR_ALTA_GUIA_FORESTAL = "Ha ocurrido un error en el alta de la guía forestal";
+	public static final String ERROR_ALTA_GUIA_FORESTAL = "Ha ocurrido un error en el alta de la guÃ­a forestal";
 
 	// FIN GUIA FORESTAL
 
 	// ENTIDAD
 	public static final String TITULO_ALTA_ENTIDAD = "Alta de Entidad";
 
-	public static final String TITULO_MODIFICACION_ENTIDAD = "Modificación de Entidad";
+	public static final String TITULO_MODIFICACION_ENTIDAD = "ModificaciÃ³n de Entidad";
 
 	public static final String EXITO_MODIFICACION_ENTIDAD = "La Entidad se ha modificado con exito";
 
 	public static final String EXITO_ALTA_ENTIDAD = "La Entidad se ha dado de alta con exito";
 
-	public static final String EXISTE_ENTIDAD = "Ya existe una Entidad con éste nombre";
+	public static final String EXISTE_ENTIDAD = "Ya existe una Entidad con Ã©ste nombre";
 	
-	public static final String EXISTE_ENTIDAD_CON_MATRICULA = "Ya existe una Entidad con éste nro de matrícula";
+	public static final String EXISTE_ENTIDAD_CON_MATRICULA = "Ya existe una Entidad con Ã©ste nro de matrÃ­cula";
 
 	public static final String ENTIDAD_RN = "RN";
 
-	public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperación de las oficinas forestales";
+	public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperaciÃ³n de las oficinas forestales";
 
-	public static final String ERROR_MODIFICACION_ENTIDAD = "Ha ocurrido un error en la modificación de la entidad";
+	public static final String ERROR_MODIFICACION_ENTIDAD = "Ha ocurrido un error en la modificaciÃ³n de la entidad";
 
-	public static final String ERROR_RECUPERACION_ENTIDAD = "Ha ocurrido un error en la recuperación de la entidad";
+	public static final String ERROR_RECUPERACION_ENTIDAD = "Ha ocurrido un error en la recuperaciÃ³n de la entidad";
 
 	public static final String ERROR_ALTA_ENTIDAD = "Ha ocurrido un error en el alta de la entidad";
 
-	public static final String ERROR_RECUPERAR_PRODUCTORES = "Ha ocurrido un error en la recuperación de los productores";
+	public static final String ERROR_RECUPERAR_PRODUCTORES = "Ha ocurrido un error en la recuperaciÃ³n de los productores";
 
 	// FIN ENTIDAD
 
 	// LOCALIDAD
-	public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con éste nombre";
+	public static final String EXISTE_LOCALIDAD = "Ya existe una Localidad con Ã©ste nombre";
 
 	public static final String EXITO_ALTA_LOCALIDAD = "La Localidad se ha dado de alta con exito";
 
@@ -100,35 +100,35 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_LOCALIDAD = "Ha ocurrido un error en el alta de la localidad";
 
-	public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperación de la localidad";
+	public static final String ERROR_RECUPERACION_LOCALIDAD = "Ha ocurrido un error en la recuperaciÃ³n de la localidad";
 
-	public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperación de las localidades";
+	public static final String ERROR_RECUPERACION_LOCALIDADES = "Ha ocurrido un error en la recuperaciÃ³n de las localidades";
 
 	// FIN LOCALIDAD
 
 	// PERIODO
-	public static final String EXISTE_PERIODO = "Ya existe un período con éste nombre";
+	public static final String EXISTE_PERIODO = "Ya existe un perÃ­odo con Ã©ste nombre";
 
-	public static final String EXITO_ALTA_PERIODO = "El período se ha dado de alta con exito";
+	public static final String EXITO_ALTA_PERIODO = "El perÃ­odo se ha dado de alta con exito";
 
-	public static final String EXITO_MODIFICACION_PERIODO = "El período se ha modificado con exito";
+	public static final String EXITO_MODIFICACION_PERIODO = "El perÃ­odo se ha modificado con exito";
 
-	public static final String ERROR_ALTA_PERIODO = "Ha ocurrido un error en el alta del período";
+	public static final String ERROR_ALTA_PERIODO = "Ha ocurrido un error en el alta del perÃ­odo";
 
-	public static final String ERROR_RECUPERACION_PERIODO = "Ha ocurrido un error en la recuperación del período";
+	public static final String ERROR_RECUPERACION_PERIODO = "Ha ocurrido un error en la recuperaciÃ³n del perÃ­odo";
 
-	public static final String ERROR_RECUPERACION_PERIODOS = "Ha ocurrido un error en la recuperación de los períodos";
+	public static final String ERROR_RECUPERACION_PERIODOS = "Ha ocurrido un error en la recuperaciÃ³n de los perÃ­odos";
 
 	// FIN PERIODO		
 
 	// USUARIO
 	public static final String TITULO_ALTA_USUARIO = "Alta de Usuario";
 
-	public static final String TITULO_MODIFICACION_USUARIO = "Modificación de Usuario";//solo para cuando no es Administrador
+	public static final String TITULO_MODIFICACION_USUARIO = "ModificaciÃ³n de Usuario";//solo para cuando no es Administrador
 
-	public static final String EXISTE_USUARIO = "Ya existe un Usuario con éste nombre";
+	public static final String EXISTE_USUARIO = "Ya existe un Usuario con Ã©ste nombre";
 
-	public static final String USUARIO_INVALIDO = "Usuario y/o Contraseña invalido";
+	public static final String USUARIO_INVALIDO = "Usuario y/o ContraseÃ±a invalido";
 
 	public static final String EXITO_ALTA_USUARIO = "El Usuario se ha dado de alta con exito";
 
@@ -136,11 +136,11 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_USUARIO = "Ha ocurrido un error en el alta del usuario";
 
-	public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificación del usuario";
+	public static final String ERROR_MODIFICACION_USUARIO = "Ha ocurrido un error en la modificaciÃ³n del usuario";
 
-	public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperación de los usuarios";
+	public static final String ERROR_RECUPERACION_USUARIOS = "Ha ocurrido un error en la recuperaciÃ³n de los usuarios";
 
-	public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperación del usuario";
+	public static final String ERROR_RECUPERACION_USUARIO = "Ha ocurrido un error en la recuperaciÃ³n del usuario";
 
 	public static final String ERROR_LOGIN_USUARIO = "Ha ocurrido un error en el login del usuario";
 
@@ -155,7 +155,7 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_TIPO_PRODUCTO = "Ha ocurrido un error en el alta del tipo de producto";
 
-	public static final String ERROR_MODIFICACION_TIPO_PRODUCTO = "Ha ocurrido un error en la modificación del tipo de producto";
+	public static final String ERROR_MODIFICACION_TIPO_PRODUCTO = "Ha ocurrido un error en la modificaciÃ³n del tipo de producto";
 
 	public static final String ERROR_RECUPERACION_TIPOS_PRODUCTOS = "Ha ocurrido un error en la recuperacion del los tipos de producto";
 
@@ -172,9 +172,9 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_AFORO = "Ha ocurrido un error en el alta del Aforo";
 
-	public static final String ERROR_RECUPERACION_AFORO = "Ha ocurrido un error en la recuperación del Aforo";
+	public static final String ERROR_RECUPERACION_AFORO = "Ha ocurrido un error en la recuperaciÃ³n del Aforo";
 
-	public static final String ERROR_MODIFICACION_AFORO = "Ha ocurrido un error en la modificación del Aforo";
+	public static final String ERROR_MODIFICACION_AFORO = "Ha ocurrido un error en la modificaciÃ³n del Aforo";
 
 	// FIN AFORO
 
@@ -189,15 +189,15 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_ROL = "Ha ocurrido un error en el alta del rol";
 
-	public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificación del rol";
+	public static final String ERROR_MODIFICACION_ROL = "Ha ocurrido un error en la modificaciÃ³n del rol";
 
-	public static final String ERROR_RECUPERACION_ROLES = "Ha ocurrido un error en la recuperación de los roles";
+	public static final String ERROR_RECUPERACION_ROLES = "Ha ocurrido un error en la recuperaciÃ³n de los roles";
 
-	public static final String ERROR_RECUPERACION_ROL = "Ha ocurrido un error en la recuperación del rol";
+	public static final String ERROR_RECUPERACION_ROL = "Ha ocurrido un error en la recuperaciÃ³n del rol";
 
-	public static final String ERROR_RECUPERACION_MENUES = "Ha ocurrido un error en la recuperación de los menues";
+	public static final String ERROR_RECUPERACION_MENUES = "Ha ocurrido un error en la recuperaciÃ³n de los menues";
 
-	public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperación del menú";
+	public static final String ERROR_RECUPERACION_MENU = "Ha ocurrido un error en la recuperaciÃ³n del menÃº";
 
 	// FIN ROL	
 
@@ -205,38 +205,38 @@ public class Constantes {
 
 	public static final String ERROR_EXISTE_PMF = "Ya Existe un Plan de Manejo Forestal con el nombre: ";
 
-	public static final String ERROR_EXISTE_TRANZON = "Ya Existe un Tranzon con el número: ";
+	public static final String ERROR_EXISTE_TRANZON = "Ya Existe un Tranzon con el nÃºmero: ";
 
-	public static final String ERROR_EXISTE_MARCACION = "Ya Existe una Marcación con la disposición: ";
+	public static final String ERROR_EXISTE_MARCACION = "Ya Existe una MarcaciÃ³n con la disposiciÃ³n: ";
 
 	public static final String ERROR_EXISTE_RODAL = "Ya Existe un Rodal con el nombre: ";
 
 	public static final String ERROR_ALTA_PMF = "Ha ocurrido un error en el alta del Plan de Manejo Forestal";
 
-	public static final String ERROR_ALTA_TRANZON = "Ha ocurrido un error en el alta del Tranzón";
+	public static final String ERROR_ALTA_TRANZON = "Ha ocurrido un error en el alta del TranzÃ³n";
 
-	public static final String ERROR_ALTA_MARCACION = "Ha ocurrido un error en el alta de la Marcación";
+	public static final String ERROR_ALTA_MARCACION = "Ha ocurrido un error en el alta de la MarcaciÃ³n";
 
 	public static final String ERROR_ALTA_RODAL = "Ha ocurrido un error en el alta del Rodal";
 
-	public static final String ERROR_RECUPERACION_RODALES = "Ha ocurrido un error en la recuperación de los Rodales";
+	public static final String ERROR_RECUPERACION_RODALES = "Ha ocurrido un error en la recuperaciÃ³n de los Rodales";
 
-	public static final String ERROR_RECUPERACION_MARCACIONES = "Ha ocurrido un error en la recuperación de los Marcaciones";
+	public static final String ERROR_RECUPERACION_MARCACIONES = "Ha ocurrido un error en la recuperaciÃ³n de los Marcaciones";
 
-	public static final String ERROR_RECUPERACION_TRANZONES = "Ha ocurrido un error en la recuperación de los Tranzones";
+	public static final String ERROR_RECUPERACION_TRANZONES = "Ha ocurrido un error en la recuperaciÃ³n de los Tranzones";
 
-	public static final String ERROR_RECUPERACION_PMFS = "Ha ocurrido un error en la recuperación de los Planes de Manejo Forestal";
+	public static final String ERROR_RECUPERACION_PMFS = "Ha ocurrido un error en la recuperaciÃ³n de los Planes de Manejo Forestal";
 
 	//FIN UBICACION		
 
 	//CONSULTAS GUIA FORESTAL (POR PRODUCTOR)
-	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES = "Consulta de Guías Forestales Vigentes";
+	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES = "Consulta de GuÃ­as Forestales Vigentes";
 
-	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES = "Consulta de Guías Forestales No Vigentes";
+	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES = "Consulta de GuÃ­as Forestales No Vigentes";
 
-	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO = "Consulta de Guías Forestales Con Deuda de Aforo";
+	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO = "Consulta de GuÃ­as Forestales Con Deuda de Aforo";
 
-	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE = "Consulta de Guías Forestales Con Deuda de Vale de Transporte";
+	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE = "Consulta de GuÃ­as Forestales Con Deuda de Vale de Transporte";
 
 	public static final String METODO_RECUPERAR_GUIAS_VIGENTES = "recuperarGuiasForestalesVigentes";
 
@@ -257,7 +257,7 @@ public class Constantes {
 
 	public static final String TITULO_CONSULTA_FISCALIZACIONES_SIN_GUIA_FORESTAL = "Consulta de Fiscalizaciones sin Guia Forestal";
 
-	public static final String ERROR_RECUPERAR_FISCALIZACIONES = "Ha ocurrido un error en la recuperación de las fiscalizaciones";
+	public static final String ERROR_RECUPERAR_FISCALIZACIONES = "Ha ocurrido un error en la recuperaciÃ³n de las fiscalizaciones";
 
 	//FIN CONSULTAS FISCALIZACIONES
 
@@ -268,24 +268,24 @@ public class Constantes {
 
 	public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_TOTAL = "Volumen Fiscalizado Total";
 
-	public static final String ERROR_GENERACION_REPORTE = "Ha ocurrido un error en la generación del reporte";
+	public static final String ERROR_GENERACION_REPORTE = "Ha ocurrido un error en la generaciÃ³n del reporte";
 
 	//FIN REPORTES	
 
 	//MENU
-	public static final String ALTA_FISCALIZACION_MENU = "Alta de Fiscalización de Productos Forestales";
+	public static final String ALTA_FISCALIZACION_MENU = "Alta de FiscalizaciÃ³n de Productos Forestales";
 
-	public static final String MODIFICACION_FISCALIZACION_MENU = "Modificación de Fiscalización de Productos Forestales";
+	public static final String MODIFICACION_FISCALIZACION_MENU = "ModificaciÃ³n de FiscalizaciÃ³n de Productos Forestales";
 
-	public static final String ALTA_GUIA_FORESTAL_MENU = "Alta de Guía Forestal Básica";
+	public static final String ALTA_GUIA_FORESTAL_MENU = "Alta de GuÃ­a Forestal BÃ¡sica";
 
-	public static final String MODIFICACION_GUIA_FORESTAL_MENU = "Modificación de Guía Forestal Básica";
+	public static final String MODIFICACION_GUIA_FORESTAL_MENU = "ModificaciÃ³n de GuÃ­a Forestal BÃ¡sica";
 
 	public static final String REGISTRAR_PAGO_BOLETA_MENU = "Registrar Pago Boleta de Deposito";
 
 	public static final String REEMPLAZAR_BOLETA_MENU = "Reemplazar Boleta de Deposito";
 
-	public static final String DEVOLUCION_VALE_MENU = "Devolución Vale de Transporte";
+	public static final String DEVOLUCION_VALE_MENU = "DevoluciÃ³n Vale de Transporte";
 
 	public static final String REEMPLAZAR_VALE_MENU = "Reemplazar Vale de Transporte";
 
@@ -293,9 +293,9 @@ public class Constantes {
 
 	public static final String CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU = "Fiscalizacion de Productos Forestales sin Guia";
 
-	public static final String CONSULTA_GUIA_VIGENTE_MENU = "Guías Forestales Vigentes";
+	public static final String CONSULTA_GUIA_VIGENTE_MENU = "GuÃ­as Forestales Vigentes";
 
-	public static final String CONSULTA_GUIA_NO_VIGENTE_MENU = "Guías Forestales No Vigentes";
+	public static final String CONSULTA_GUIA_NO_VIGENTE_MENU = "GuÃ­as Forestales No Vigentes";
 
 	public static final String CONSULTA_DEUDA_AFORO_MENU = "Deudas de Aforo";
 
@@ -309,27 +309,27 @@ public class Constantes {
 
 	public static final String ALTA_ENTIDAD_MENU = "Alta de Entidad";
 
-	public static final String MODIFICACION_ENTIDAD_MENU = "Modificación de Entidad";
+	public static final String MODIFICACION_ENTIDAD_MENU = "ModificaciÃ³n de Entidad";
 
 	public static final String ALTA_AFORO_MENU = "Alta de Aforo";
 
-	public static final String MODIFICACION_AFORO_MENU = "Modificación de Aforo";
+	public static final String MODIFICACION_AFORO_MENU = "ModificaciÃ³n de Aforo";
 
 	public static final String ALTA_PMF_MENU = "Alta Plan de Manejo Forestal";
 
-	public static final String MODIFICACION_PMF_MENU = "Modificación Plan de Manejo Forestal";
+	public static final String MODIFICACION_PMF_MENU = "ModificaciÃ³n Plan de Manejo Forestal";
 
 	public static final String ALTA_LOCALIDAD_MENU = "Alta de Localidad";
 
-	public static final String MODIFICACION_LOCALIDAD_MENU = "Modificación de Localidad";
+	public static final String MODIFICACION_LOCALIDAD_MENU = "ModificaciÃ³n de Localidad";
 
 	public static final String ALTA_ROL_MENU = "Alta de Rol";
 
-	public static final String MODIFICACION_ROL_MENU = "Modificación de Rol";
+	public static final String MODIFICACION_ROL_MENU = "ModificaciÃ³n de Rol";
 
 	public static final String ALTA_USUARIO_MENU = "Alta de Usuario";
 
-	public static final String MODIFICACION_USUARIO_MENU = "Modificación de Usuario";
+	public static final String MODIFICACION_USUARIO_MENU = "ModificaciÃ³n de Usuario";
 
 	//FIN MENU
 

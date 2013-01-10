@@ -167,7 +167,7 @@ public class GuiaForestalForm extends ActionForm {
 
 		ok = Validator.validarEnteroMayorQue(0,
 				Integer.toString(this.getGuiaForestal().getNroGuia()),
-				"Nro de Guía", error);
+				"Nro de GuÃ­a", error);
 		ok2 = Validator.requerido(this.getGuiaForestal().getFechaVencimiento(),
 				"Valido Hasta", error);
 

@@ -85,6 +85,7 @@ $(function() {
 
 </script>
 
+<%--ACA ESTAN LOS HEADERS DE CADA TIPO DE MUESTRA --%>
 <%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>

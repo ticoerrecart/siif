@@ -1,4 +1,4 @@
-//Función que permite que sólo se ingresen letras si el campo es de tipo caracter
+//FunciÃ³n que permite que sÃ³lo se ingresen letras si el campo es de tipo caracter
 var type;
 if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
 if (document.all) type="IE"; 

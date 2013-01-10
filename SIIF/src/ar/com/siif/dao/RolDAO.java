@@ -177,7 +177,7 @@ public class RolDAO extends HibernateDaoSupport {
 			}
 		}
 		
-		throw new AccesoDenegadoException("El rol "+pRol.getRol()+" no puede ejecutar la acción: "+pNombreMenu); 
+		throw new AccesoDenegadoException("El rol "+pRol.getRol()+" no puede ejecutar la acciÃ³n: "+pNombreMenu); 
 	}
 	
 	public Rol getRolAdministrador()throws DataBaseException {
