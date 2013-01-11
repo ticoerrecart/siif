@@ -249,7 +249,7 @@
 	//se usa en la edición de Fiscalización
 	function agregarHeader(){
 		if ($('#tablaMuestras tr').size() == 0) {
-			$("#tablaMuestras").append(headerTabla);
+			$("#tablaMuestras").prepend(headerTabla);
 		}
 	}
 
@@ -257,6 +257,7 @@
 		if ($('#tablaMuestras tr').size() == 0) {
 			$("#tablaMuestras").append(headerTabla);
 			$("#tablaMuestras").append(primeraFila);
+			
 		} else {
 			var j = $('#tablaMuestras tr:last .ind').text();
 			$("#tablaMuestras tr:last").clone().find("input").each(function() {
