@@ -335,9 +335,6 @@ $(function() {
 									style="display: ">
 
 									<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
-										<script>
-											agregarHeader();
-										</script>
 										<c:forEach items="${fiscalizacionDTO.muestra}" varStatus="i"
 											var="muestra">
 											<tr id="fila${i.index}">
@@ -356,16 +353,18 @@ $(function() {
 										</c:forEach>
 	
 										
-										<script type="text/javascript">
-											cantTotales = '<c:out value="${fn:length(fiscalizacionDTO.muestra)}"/>';
-											actualizarMuestras();
-											calcularVolumen();
-										</script>
+										
 									</c:if>
 									
 								</table>
-								
-								
+								<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
+									<script type="text/javascript">
+										$("#tablaMuestras").prepend(headerTabla);
+										cantTotales = '<c:out value="${fn:length(fiscalizacionDTO.muestra)}"/>';
+										actualizarMuestras();
+										calcularVolumen();
+									</script>
+								</c:if>
 							</td>
 						</tr>
 						
