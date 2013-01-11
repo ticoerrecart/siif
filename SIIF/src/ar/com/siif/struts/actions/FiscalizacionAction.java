@@ -145,6 +145,11 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_FISCALIZACION);
 
+			String exitoModificacion = request.getParameter("modificacionRealizada");
+			if (exitoModificacion != null) {
+				request.setAttribute("exitoModificacion",
+						Constantes.EXITO_MODIFICACION_FISCALIZACION);
+			}
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			strForward = "error";
