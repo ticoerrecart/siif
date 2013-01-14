@@ -269,7 +269,51 @@ public class Constantes {
 	public static final String TITULO_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_TOTAL = "Volumen Fiscalizado Total";
 
 	public static final String ERROR_GENERACION_REPORTE = "Ha ocurrido un error en la generación del reporte";
+	
+	public static final String REPORTE_FISCALIZACION = "fiscalizacion";
+	
+	public static final String REPORTE_GUIA_FORESTAL = "guiaForestal";
+	
+	public static final String REPORTE_VOLUMEN_FISCALIZADO_POR_PRODUCTOR_POR_PRODUCTO = "volumenFiscalizadoPorProductorPorProductos";
+	
+	public static final String REPORTE_VOLUMEN_FISCALIZADO_TOTAL_POR_PRODUCTOR = "volumenFiscalizadoTotalPorProductor";
+	
+	public static final String REPORTE_VOLUMEN_GFB_MONTOS_PAGOS = "volumenGFBMontosPagos";
+	
+	public static final String REPORTE_VOLUMEN_GFB_MONTOS_ADEUDADOS = "volumenGFBMontosAdeudados";
 
+	public static final String REPORTE_LISTADO_BOLETAS_DEPOSITO_TOTALES = "listadoBoletasDepositoTotales";
+	
+	public static final String REPORTE_LISTADO_BOLETAS_DEPOSITO_PAGAS = "listadoBoletasDepositoPagas";
+	
+	public static final String REPORTE_LISTADO_BOLETAS_DEPOSITO_IMPAGAS = "listadoBoletasDepositoImpagas";
+	
+	public static final String REPORTE_LISTADO_VALES_TRANSPORTE_DEVUELTOS = "listadoValesTransporteDevueltos";
+	
+	public static final String REPORTE_LISTADO_VALES_TRANSPORTE_EN_USO = "listadoValesTransporteEnUso";
+	
+	public static final String REPORTE_LISTADO_VALES_TRANSPORTE_TOTALES = "listadoValesTransporteTotales";
+	
+	public static final String VOLUMEN_POR_PRODUCTOR_POR_UBICACION = "volumenPorProductorPorUbicacion";
+	
+	public static final String VOLUMEN_FISCALIZADO_POR_PRODUCTO_POR_ANIO_FORESTAL = "volumenFiscalizadoPorProductoPorAnioForestal";
+	
+	public static final String VOLUMEN_POR_PRODUCTO_POR_PRODUCTOR_ENTRE_FECHAS = "volumenPorProductoPorProductorEntreFechas";
+	
+	public static final String VOLUMEN_POR_PRODUCTO_POR_PRODUCTOR_POR_UBICACION = "volumenPorProductoPorProductorPorUbicacion";
+	
+	public static final String REPORTE_RECAUDACION_POR_ANIO_FORESTAL_POR_PRODUCTOR = "reporteRecaudacionPorAnioForestalPorProductor";
+	
+	public static final String REPORTE_RECAUDACION_POR_ANIO_FORESTAL_TOTAL_PRODUCTORES = "reporteRecaudacionPorAnioForestalTotalProductores";
+	
+	public static final String REPORTE_RECAUDACION_POR_PRODUCTOR_ENTRE_FECHAS = "reporteRecaudacionPorProductorEntreFechas";
+	
+	public static final String REPORTE_RECAUDACION_POR_PRODUCTOR_POR_ANIO_FORESTAL = "reporteRecaudacionPorProductorPorAnioForestal";
+	
+	public static final String REPORTE_RECAUDACION_POR_PRODUCTOR_POR_UBICACION = "reporteRecaudacionPorProductorPorUbicacion";
+	
+	public static final String REPORTE_RECAUDACION_TOTAL_PRODUCTORES_ENTRE_FECHAS = "reporteRecaudacionTotalProductoresEntreFechas";
+	
 	//FIN REPORTES	
 
 	//MENU
