@@ -2,6 +2,7 @@ package ar.com.siif.dto;
 
 public class FilaTablaVolFiscAsociarDTO {
 	
+	private Long idTipoProducto;
 	private String nombreProducto;
 	private double volumenTotalEnGuia;
 	private double volumenEnFiscalizaciones;
@@ -9,9 +10,10 @@ public class FilaTablaVolFiscAsociarDTO {
 	
 	public FilaTablaVolFiscAsociarDTO(){}
 	
-	public FilaTablaVolFiscAsociarDTO(String pNombreProducto, double pVolumenTotalEnGuia,
+	public FilaTablaVolFiscAsociarDTO(Long pIdTipoProducto, String pNombreProducto, double pVolumenTotalEnGuia,
 										double pVolumenEnFiscalizaciones, double pVolumenFaltante)
 	{
+		this.setIdTipoProducto(pIdTipoProducto);
 		this.setNombreProducto(pNombreProducto);
 		this.setVolumenTotalEnGuia(pVolumenTotalEnGuia);
 		this.setVolumenEnFiscalizaciones(pVolumenEnFiscalizaciones);
@@ -42,7 +44,10 @@ public class FilaTablaVolFiscAsociarDTO {
 	public void setVolumenFaltante(double volumenFaltante) {
 		this.volumenFaltante = volumenFaltante;
 	}
-	
-	
-
+	public Long getIdTipoProducto() {
+		return idTipoProducto;
+	}
+	public void setIdTipoProducto(Long idTipoProducto) {
+		this.idTipoProducto = idTipoProducto;
+	}
 }
