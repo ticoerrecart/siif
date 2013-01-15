@@ -50,4 +50,7 @@ public interface IGuiaForestalFachada {
 	
 	public void asociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
 											throws NegocioException;
+
+	public void desasociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
+																								throws NegocioException;	
 }

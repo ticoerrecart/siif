@@ -235,10 +235,12 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public void asociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
 														throws NegocioException
 	{
-		try {
-			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);
+		try {	
+			GuiaForestal guiaForestal;
 			Fiscalizacion fiscalizacion;
 			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
+			
+				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);	
 				
 				fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());				
 				guiaForestal.getFiscalizaciones().add(fiscalizacion);
@@ -247,11 +249,34 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
 			}
 			
-			guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+			//guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
 	
+	public void desasociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
+															throws NegocioException
+	{
+		try {
+			GuiaForestal guiaForestal;
+			Fiscalizacion fiscalizacion;
+			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
+			
+				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);				
+				
+				fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());				
+				guiaForestal.getFiscalizaciones().remove(fiscalizacion);
+				fiscalizacion.setGuiaForestal(null);
+				
+				fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
+			}
+			
+			//guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}
 }

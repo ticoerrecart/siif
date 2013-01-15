@@ -2,6 +2,7 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 
+import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -21,7 +22,8 @@ public interface IFiscalizacionFachada {
 			throws NegocioException;
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException;
+			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
+			throws NegocioException;
 
 	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor)
 			throws NegocioException;
