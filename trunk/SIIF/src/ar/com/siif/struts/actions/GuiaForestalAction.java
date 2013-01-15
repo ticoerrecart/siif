@@ -37,6 +37,7 @@ import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
+import ar.com.siif.utils.MathUtils;
 
 //En el altaGuiaForestal.jsp en la function calcularTotales() preguntar antes de todo si 
 //el tipoTerreno == Privado, si es asi hacer el calculo q se hace en esa function pero sin poner 
@@ -844,7 +845,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			//tipos de productos que esten en los subimportes de la guia.			
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
 					.recuperarFiscalizacionesDTOParaAsociarAGuia(new Long(idProductor),new Long(idRodal),
-																 guiaForestal.getSubImportes());
+																 guiaForestal.getSubImportes(),tablaVolFiscAsociar);
 			
 			request.setAttribute("fiscalizaciones", fiscalizaciones);			
 			request.setAttribute("guiaForestal", guiaForestal);
@@ -872,26 +873,29 @@ public class GuiaForestalAction extends ValidadorAction {
 			if(vol != null){
 				volFisc = volFisc + vol.doubleValue();
 			}
-			mapVol.put(fiscalizacion.getTipoProducto().getId(), volFisc);
+			mapVol.put(fiscalizacion.getTipoProducto().getId(), MathUtils.round(volFisc, 2));
 		}
 		
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
 			
 			FilaTablaVolFiscAsociarDTO fila =  new FilaTablaVolFiscAsociarDTO();
+			fila.setIdTipoProducto(subImporteDTO.getTipoProducto().getId());
 			fila.setNombreProducto(subImporteDTO.getTipoProducto().getNombre());
 			fila.setVolumenTotalEnGuia(subImporteDTO.getCantidadMts());
 			
 			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto().getId());			
 			fila.setVolumenEnFiscalizaciones((volEnFisc == null)?0.0:volEnFisc);
 			
-			fila.setVolumenFaltante(fila.getVolumenTotalEnGuia() - fila.getVolumenEnFiscalizaciones());
+			double volumenFaltante = fila.getVolumenTotalEnGuia() - fila.getVolumenEnFiscalizaciones();					
+				
+			fila.setVolumenFaltante(MathUtils.round(volumenFaltante, 2));
 			
 			tabla.add(fila);
 		}
 		
 		return tabla;
 	}
-	
+		
 	public ActionForward asociarFiscalizacionesConGuiasForestales(ActionMapping mapping, ActionForm form,
 												HttpServletRequest request, HttpServletResponse response) 
 												throws Exception
@@ -914,6 +918,53 @@ public class GuiaForestalAction extends ValidadorAction {
 			strForward = "bloqueError";
 		}
 		
+		return mapping.findForward(strForward);
+	}	
+	
+	public ActionForward recuperarGuiaDesasociarFiscalizacion(ActionMapping mapping, ActionForm form,
+			 			 HttpServletRequest request, HttpServletResponse response)throws Exception
+	{
+		String strForward = "exitoRecuperarGuiaDesasociarFiscalizacion";
+		try{
+			WebApplicationContext ctx = getWebApplicationContext();
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");
+			
+			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
+			
+			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+			
+			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
+			
+			request.setAttribute("guiaForestal", guiaForestal);
+			request.setAttribute("tablaVolFiscAsociar", tablaVolFiscAsociar);
+		
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
+		
+		return mapping.findForward(strForward);
+	}	
+
+	public ActionForward desasociarFiscalizacionesConGuiasForestales(ActionMapping mapping, ActionForm form,
+			 			 HttpServletRequest request, HttpServletResponse response)throws Exception
+	{
+		String strForward = "exitoDesasociarFiscalizacionesConGuiasForestales";
+		try{	
+			WebApplicationContext ctx = getWebApplicationContext();
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");	
+			
+			GuiaForestalForm guiaForm = (GuiaForestalForm) form;		
+			guiaForm.normalizarListaFiscalizaciones();
+			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(guiaForm.getGuiaForestal().getId(),
+																		 guiaForm.getListaFiscalizaciones());
+			
+			request.setAttribute("exitoAsociacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+		
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}		
 		return mapping.findForward(strForward);
 	}	
 	
