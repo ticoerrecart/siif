@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dao.FiscalizacionDAO;
+import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -202,12 +203,14 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws NegocioException {
+			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
+			throws NegocioException 
+	{
 		try {
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
 					.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal,
-							listaSubImportesDTO);
+							listaSubImportesDTO, tablaVolFiscAsociar);
 
 			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
