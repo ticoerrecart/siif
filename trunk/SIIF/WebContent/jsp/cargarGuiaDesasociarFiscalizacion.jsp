@@ -21,9 +21,9 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volverRecuperarGuiaAsociarFiscalizacion(){	
+function volverRecuperarGuiaDesasociarFiscalizacion(){	
 
-	parent.location = contextRoot() +  '/jsp.do?page=.recuperarGuiaAsociarFiscalizacion';		
+	parent.location = contextRoot() +  '/jsp.do?page=.recuperarGuiaDesasociarFiscalizacion';		
 }
 
 function exp(sec) {
@@ -76,14 +76,6 @@ function mostrarFiscalizacion(idFiscalizacion){
 	$("#errores").hide();
 }
 
-function volverAltaGFB(){
-
-	$("#idGuiaForestal").show();
-	$("#idDivFiscalizacion").hide();
-	$("#idDivFiscalizacion").empty();
-	$("#errores").show();
-}
-
 function agrElimFisc(indice,idFiscalizacion){
 
 	var i = indice+1;
@@ -101,19 +93,13 @@ function submitAsociarGuia(){
 } 
 </script>
 
-<%
-	//GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
-%>
-
 <input id="idParamForward" type="hidden" value="${paramForward}">
-<!-- <input id="idParamProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
-<input id="idParamIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}"> -->
 
 <div id="idGuiaForestal">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
-			<bean:message key='SIIF.titulo.AsociarGuiaAFiscalizacion'/>			
+			<bean:message key='SIIF.titulo.DesasociarGuiaAFiscalizacion'/>			
 		</td>
 	</tr>
 	<tr>
@@ -213,7 +199,7 @@ function submitAsociarGuia(){
 		</tr>
 	</table>
 <html:form action="guiaForestal" styleId="guiaForestalForm">
-<html:hidden property="metodo" value="asociarFiscalizacionesConGuiasForestales" />
+<html:hidden property="metodo" value="desasociarFiscalizacionesConGuiasForestales" />
 <input id="idGuia" type="hidden" name="guiaForestal.id" value="${guiaForestal.id}">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
@@ -245,6 +231,7 @@ function submitAsociarGuia(){
 						<br>
 						<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 							<tr>
+								<td class="azulAjustado"></td>
 								<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 								<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
 								<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
@@ -253,10 +240,16 @@ function submitAsociarGuia(){
 							</tr>							
 							<%String clase=""; %>
 							<c:forEach items="${guiaForestal.fiscalizaciones}" var="fiscalizacion" varStatus="i">
+								<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>								
 								<%clase=(clase.equals("")?"par":""); %>
 								<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
 									onmouseover="javascript:pintarFila('tr<c:out value='${i.count}'></c:out>');"
 									onmouseout="javascript:despintarFila('tr',<c:out value='${i.count}'></c:out>);">
+																										
+									<td class="botonerab">
+										<input type="checkbox" id="idCheck<c:out value='${i.count}'></c:out>"
+											onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>);">
+									</td>									
 									
 									<td class="botonerab">
 										<c:out value="${fiscalizacion.fecha}"></c:out>
@@ -290,10 +283,42 @@ function submitAsociarGuia(){
 						</table>													
 					</c:otherwise>
 				</c:choose>	
+				<br>
+				<br>
+				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+					<tr>
+						<td class="azulAjustado">Tipo de Producto</td>
+						<td class="azulAjustado">Vol Total en Guía</td>
+						<td class="azulAjustado">Vol en Fiscalización</td>
+						<td class="azulAjustado">Vol Faltante para Asociar</td>
+					</tr>							
+					
+					<%String clase=""; %>
+					<c:forEach items="${tablaVolFiscAsociar}" var="fila" varStatus="i">
+						<%clase=(clase.equals("")?"par":""); %>							
+						<tr class="<%=clase%>">									
+							<td class="botonerab">
+								<c:out value="${fila.nombreProducto}"></c:out>
+							</td>									
+							<td class="botonerab">
+								<c:out value="${fila.volumenTotalEnGuia}"></c:out>
+							</td>
+							<td class="botonerab">
+								<c:out value="${fila.volumenEnFiscalizaciones}"></c:out>
+							</td>
+							<td class="botonerab">
+								<c:out value="${fila.volumenFaltante}"></c:out>
+							</td>																	
+						</tr>
+					</c:forEach>								
+				</table>				
+				<br>
+				<br>
 			</div>	
 		</td>
 	</tr>
 
+	
 	<!-- PRODUCTOS FORESTALES -->
 	<tr>
 		<td colspan="4" align="left">
@@ -391,124 +416,12 @@ function submitAsociarGuia(){
 		</td>
 	</tr>
 
-	<!-- FISCALIZACIONES A ASOCIAR -->
 
-	<tr>
-		<td colspan="4" align="left">
-			<div id="e2" style="DISPLAY: ">
-				<label onclick="javascript:exp('2')"> 
-					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion">
-						<!--<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>-->
-						Fiscalizaciones aptas para asociar a la Guía Forestal_
-					</U>
-					<BR>
-				</label>
-			</div>
-			<div id="c2" style="DISPLAY: none">
-				<label onclick="javascript:col('2')"> 
-					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion">
-						<!--<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>-->
-						Fiscalizaciones aptas para asociar a la Guía Forestal_
-					</U>
-					<BR>
-				</label>
-				<c:choose>
-					<c:when test="${fn:length(fiscalizaciones)>0}">		
-						<br>
-						<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
-							<tr>
-								<td class="azulAjustado"></td>
-								<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
-								<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
-								<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
-								<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>
-								<td class="azulAjustado"></td>
-							</tr>							
-							<%String clase=""; %>
-							<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
-								<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>
-								<%clase=(clase.equals("")?"par":""); %>
-								
-								<tr id="trAptas<c:out value='${i.count}'></c:out>" class="<%=clase%>"
-									onmouseover="javascript:pintarFila('trAptas<c:out value='${i.count}'></c:out>');"
-									onmouseout="javascript:despintarFila('trAptas',<c:out value='${i.count}'></c:out>);">
-									
-									<!--<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
-									<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>-->
-									
-									<td class="botonerab">
-										<input type="checkbox" id="idCheck<c:out value='${i.count}'></c:out>"
-											onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>);">
-									</td>									
-									<td class="botonerab">
-										<c:out value="${fiscalizacion.fecha}"></c:out>
-									</td>
-									<td class="botonerab">
-										<c:out value="${fiscalizacion.productorForestal.nombre}"></c:out>
-									</td>
-									<td class="botonerab">
-										<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
-									</td>	
-									<td class="botonerab">
-										<c:out value="${fiscalizacion.cantidadMts}"></c:out>
-									</td>
-									<td class="botonerab">
-										<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
-											<bean:message key='SIIF.label.Ver'/>	
-										</a>									
-									</td>																
-								</tr>
-							</c:forEach>	
-						</table>							
-					</c:when>
-										
-					<c:otherwise>
-						<br>
-						<br>
-						<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
-							<tr>
-								<td class="botonerab">
-									No existen Fiscalizaciones aptas para asociar a la Guía Forestal
-								</td>
-							</tr>
-						</table>													
-					</c:otherwise>					
-				</c:choose>	
-				<br>
-				<br>
-				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
-					<tr>
-						<td class="azulAjustado">Tipo de Producto</td>
-						<td class="azulAjustado">Vol Total en Guía</td>
-						<td class="azulAjustado">Vol en Fiscalización</td>
-						<td class="azulAjustado">Vol Faltante para Asociar</td>
-					</tr>							
-					
-					<%String clase=""; %>
-					<c:forEach items="${tablaVolFiscAsociar}" var="fila" varStatus="i">
-						<%clase=(clase.equals("")?"par":""); %>							
-						<tr class="<%=clase%>">									
-							<td class="botonerab">
-								<c:out value="${fila.nombreProducto}"></c:out>
-							</td>									
-							<td class="botonerab">
-								<c:out value="${fila.volumenTotalEnGuia}"></c:out>
-							</td>
-							<td class="botonerab">
-								<c:out value="${fila.volumenEnFiscalizaciones}"></c:out>
-							</td>
-							<td class="botonerab">
-								<c:out value="${fila.volumenFaltante}"></c:out>
-							</td>																	
-						</tr>
-					</c:forEach>								
 
-				</table>				
-			</div>	
-		</td>
-	</tr>
+
+
+
+
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
@@ -521,7 +434,7 @@ function submitAsociarGuia(){
 		<td height="20" align="center">
 			<input id="idBotonCrearGuia" class="botonerab" type="submit" value="Aceptar">
 			<input type="button" class="botonerab" value="Volver" 
-				onclick="javascript:volverRecuperarGuiaAsociarFiscalizacion();">
+				onclick="javascript:volverRecuperarGuiaDesasociarFiscalizacion();">
 		</td>
 	</tr>
 	<tr>

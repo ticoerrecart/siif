@@ -30,7 +30,7 @@
 
 	<tr>
 		<td class="azulAjustado">
-			<bean:message key='SIIF.titulo.AsociarGuiaAFiscalizacion'/>		
+			<bean:message key='SIIF.titulo.DesasociarGuiaAFiscalizacion'/>		
 		</td>
 	</tr>
 	<tr>
@@ -39,7 +39,7 @@
 	<tr>
 		<td>	
 			<html:form action="guiaForestal" styleId="guiaForestalForm">
-				<html:hidden property="metodo" value="recuperarGuiaAsociarFiscalizacion"/>		
+				<html:hidden property="metodo" value="recuperarGuiaDesasociarFiscalizacion"/>		
 				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 					<tr>
 						<td height="20"></td>
