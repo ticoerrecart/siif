@@ -68,6 +68,7 @@
 			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" 
 						path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
 			<forward name=".recuperarGuiaAsociarFiscalizacion" path=".recuperarGuiaAsociarFiscalizacion" />
+			<forward name=".recuperarGuiaDesasociarFiscalizacion" path=".recuperarGuiaDesasociarFiscalizacion" />
 			<forward name=".reportePorProductoVolumenPorAnioForestal" path=".reportePorProductoVolumenPorAnioForestal" />
 			<forward name=".reporteRecaudacionTotalProductoresEntreFechas" path=".reporteRecaudacionTotalProductoresEntreFechas" />
 			<forward name=".reporteRecaudacionPorAnioForestalTotalProductores" path=".reporteRecaudacionPorAnioForestalTotalProductores" />														   
@@ -141,6 +142,10 @@
 				<!-- Asociar Fiscalizacion a Guia -->
 				<forward name="exitoRecuperarGuiaAsociarFiscalizacion" path=".cargarGuiaAsociarFiscalizacion" />
 				<forward name="exitoAsociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaAsociarFiscalizacion" />
+
+				<!-- Desasociar Fiscalizacion a Guia -->
+				<forward name="exitoRecuperarGuiaDesasociarFiscalizacion" path=".cargarGuiaDesasociarFiscalizacion" />
+				<forward name="exitoDesasociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaDesasociarFiscalizacion" />				
 			
 			<!-- Boleta de Deposito  -->			
 			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
