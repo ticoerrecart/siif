@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
@@ -171,27 +172,38 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO) throws DataBaseException {
-
+			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar) 
+			throws DataBaseException 
+	{
 		try {
 			List<Long> listaIdsTipoProducto = new ArrayList<Long>();
-
-			for (SubImporteDTO subImporte : listaSubImportesDTO) {
+			List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
+			
+			/*for (SubImporteDTO subImporte : listaSubImportesDTO) {	
 				listaIdsTipoProducto.add(subImporte.getTipoProducto().getId());
+			}							
+			}*/
+
+			for (FilaTablaVolFiscAsociarDTO fila : tablaVolFiscAsociar) {
+				if (fila.getVolumenFaltante() > 0.0){			
+					listaIdsTipoProducto.add(fila.getIdTipoProducto());
+				}
+			}			
+			if(!listaIdsTipoProducto.isEmpty()){//Esto lo tengo que hacer pq si esta vacia me da un error el query
+				
+				Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
+				criteria.createAlias("productorForestal", "pf");
+	
+				criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
+						.add(Restrictions.eq("pf.id", idProductor))
+						.add(Restrictions.eq("rodal.id", idRodal))
+						.add(Restrictions.in("tipoProducto.id", listaIdsTipoProducto)));
+	
+				criteria.addOrder(Order.asc("pf.nombre"));
+				criteria.addOrder(Order.asc("fecha"));
+	
+				fiscalizaciones = criteria.list();
 			}
-
-			Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-			criteria.createAlias("productorForestal", "pf");
-
-			criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
-					.add(Restrictions.eq("pf.id", idProductor))
-					.add(Restrictions.eq("rodal.id", idRodal))
-					.add(Restrictions.in("tipoProducto.id", listaIdsTipoProducto)));
-
-			criteria.addOrder(Order.asc("pf.nombre"));
-			criteria.addOrder(Order.asc("fecha"));
-
-			List<Fiscalizacion> fiscalizaciones = criteria.list();
 			return fiscalizaciones;
 
 		} catch (HibernateException he) {
