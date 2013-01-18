@@ -62,6 +62,8 @@ public class Constantes {
 
 	public static final String ERROR_ALTA_GUIA_FORESTAL = "Ha ocurrido un error en el alta de la guía forestal";
 
+	public static final String ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS = "Ha ocurrido un error al verificar las boletas de deposito vencidas e impagas";
+	
 	// FIN GUIA FORESTAL
 
 	// ENTIDAD

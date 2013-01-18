@@ -262,6 +262,23 @@
 	border: 0px solid #CCCCCC;
 }
 
+.grisLeft {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: bold;
+	color: #BFBBBB;
+	text-align: left;
+	vertical-align: middle;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 8px;
+	font-variant: normal;
+	text-transform: none;
+	border: 0px solid #CCCCCC;
+}
+
 .par {
 	background-color: #BDD3E8;
 }
