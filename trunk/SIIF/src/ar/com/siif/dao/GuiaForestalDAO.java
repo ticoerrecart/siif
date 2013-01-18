@@ -5,19 +5,16 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.BoletaDeposito;
-import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.GuiaForestal;
-import ar.com.siif.negocio.Obrajero;
-import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 
@@ -283,5 +280,33 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		List<GuiaForestal> guias = criteria.list();
 		
 		return (guias.size() > 0);
+	}
+	
+	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws DataBaseException 
+	{	
+		try{
+			Date fechaActual = new Date();
+			
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
+								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+			criteria.createAlias("productorForestal", "productor");
+			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
+						
+			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
+								.add(Restrictions.isNull("listaBoletasDeposito.fechaPago"))
+								.add(Restrictions.lt("listaBoletasDeposito.fechaVencimiento", fechaActual)));
+			
+			List<GuiaForestal> lista = criteria.list();			
+			
+			return lista.size() > 0;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+		}			
 	}	
 }

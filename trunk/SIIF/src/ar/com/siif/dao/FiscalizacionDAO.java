@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
@@ -261,5 +262,31 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			this.getHibernateTemplate().delete(muestra);
 		}
 		this.getHibernateTemplate().delete(fiscalizacion);
+	}
+	
+	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
+																				    Long idPMF)throws DataBaseException
+	{	
+		try {
+			String q = "from Fiscalizacion where productorForestal.id = :idPf and periodoForestal = :periodo "+
+												  "and rodal.marcacion.tranzon.pmf.id = :idPmf and "+
+												  "tipoProducto.id != :idLenia order by fecha";
+			Query query = getSession().createQuery(q);
+			query.setParameter("idPf", idProductor);
+			query.setParameter("periodo", periodo);
+			query.setParameter("idPmf", idPMF);
+			query.setParameter("idLenia", 3L);
+			
+			List<Fiscalizacion> fiscalizaciones = query.list();
+			
+			return fiscalizaciones;
+
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_FISCALIZACIONES);
+		}		
 	}
 }
