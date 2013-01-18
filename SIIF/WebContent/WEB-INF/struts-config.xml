@@ -21,9 +21,6 @@
 		<form-bean name="ubicacionForm"
 			type="ar.com.siif.struts.actions.forms.UbicacionForm">
 		</form-bean>
-		<!-- <form-bean name="planPagosForm" -->
-		<!-- type="ar.com.siif.struts.actions.forms.PlanPagosForm"> -->
-		<!-- </form-bean> -->
 		<form-bean name="entidadForm"
 			type="ar.com.siif.struts.actions.forms.EntidadForm">
 		</form-bean>
@@ -38,6 +35,8 @@
 		</form-bean>
 		<form-bean name="rolForm" type="ar.com.siif.struts.actions.forms.RolForm">
 		</form-bean>
+		<form-bean name="certificadoOrigenForm" type="ar.com.siif.struts.actions.forms.CertificadoOrigenForm">
+		</form-bean>		
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -165,14 +164,6 @@
 			<forward name="exitoCargarGuiaForestalDevolucionValeTransporte" path=".cargarGuiaForestalDevolucionValeTransporte" />
 			<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />				
 		</action>
-
-
-		<!-- <action path="/recuperarGuiasForestales" type="ar.com.siif.struts.actions.GuiaForestalAction"
-			parameter="metodo">
-			<forward name="exitoRecuperarGuiasForestalesPlanDePagos"
-				path=".recuperarGuiasForestales" />
-			<forward name="exitoCargarPlanPagoAModificar" path=".cargarPlanPagoAModificar" />
-		</action>-->
 		<!-- FIN GUIA FORESTAL -->
 
 		<!-- TIPO PRODUCTO FORESTAL -->
@@ -351,6 +342,14 @@
 			<forward name="exitoReporteRecaudacionPorAnioForestalPorProductor" path=".reporteRecaudacionPorAnioForestalPorProductor" />											
 		</action>						
 		<!-- FIN REPORTES  -->
+		
+		<!-- CERTIFICADO ORIGEN -->
+		<action path="/certificadoOrigen" type="ar.com.siif.struts.actions.CertificadoDeOrigenAction"
+			parameter="metodo" name="certificadoOrigenForm" scope="session">
+			<forward name="exitoInicializarAltaCertificadoOrigen" path=".altaCertificadoOrigen" />
+			<forward name="exitoRecuperarDatosParaAltaCertificadoOrigen" path="/jsp/bloqueMostrarDatosParaAltaCertificadoOrigen.jsp" />			
+		</action>
+		<!-- FIN CERTIFICADO ORIGEN -->		
 		
 	</action-mappings>
 

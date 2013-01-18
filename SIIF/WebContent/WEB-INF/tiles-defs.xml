@@ -402,6 +402,13 @@
 	</definition>		
 	<!-- FIN REPORTE RECAUDACION -->
 
+	<!-- CERTIFICADO ORIGEN -->
+	<definition name=".altaCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaCertificadoOrigen.jsp" />
+	</definition>
+	<!-- FIN CERTIFICADO ORIGEN -->
+
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIFs" />
 		<put name="body" value="/jsp/error.jsp" />
