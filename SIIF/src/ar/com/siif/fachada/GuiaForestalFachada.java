@@ -279,4 +279,15 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			throw new NegocioException(e.getMessage());
 		}		
 	}
+	
+	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws NegocioException{
+		
+		try{
+			
+			return guiaForestalDAO.verificarBoletasDepositoVencidasImpagas(idProductor);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}	
 }

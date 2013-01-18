@@ -53,4 +53,6 @@ public interface IGuiaForestalFachada {
 
 	public void desasociarFiscalizacionesConGuiasForestales(long id, List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
 																								throws NegocioException;	
+	
+	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws NegocioException;
 }

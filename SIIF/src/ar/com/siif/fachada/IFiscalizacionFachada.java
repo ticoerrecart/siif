@@ -52,4 +52,7 @@ public interface IFiscalizacionFachada {
 
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
 			NegocioException;
+	
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
+																					 Long idPMF)throws NegocioException;		
 }

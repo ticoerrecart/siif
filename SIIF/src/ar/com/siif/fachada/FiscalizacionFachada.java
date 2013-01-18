@@ -294,4 +294,22 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
+																					 Long idPMF)throws NegocioException
+	{	
+		try{
+			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+			List<Fiscalizacion> fiscalizaciones = fiscalizacionDAO.
+											recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(idProductor,periodo,idPMF);
+			
+			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+			}
+
+			return listaFiscalizacionesDTO;			
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
 }
