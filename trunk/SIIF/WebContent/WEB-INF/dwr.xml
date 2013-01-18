@@ -29,10 +29,10 @@
 			<param name="include" value="id, nombre" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.negocio.Entidad">
-			<param name="include" value="id, nombre" />
+			<param name="include" value="id, nombre, nroMatricula, cuit" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.EntidadDTO">
-			<param name="include" value="id, nombre" />
+			<param name="include" value="id, nombre, nroMatricula, cuit" />
 		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Rol">
 			<param name="include" value="id, rol" />
