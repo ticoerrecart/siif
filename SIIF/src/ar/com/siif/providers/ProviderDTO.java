@@ -10,10 +10,12 @@ import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ItemMenuDTO;
 import ar.com.siif.dto.LocalidadDTO;
+import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.PeriodoDTO;
+import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -28,10 +30,12 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Periodo;
+import ar.com.siif.negocio.ProvinciaDestino;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.SubImporte;
@@ -401,6 +405,27 @@ public abstract class ProviderDTO {
 		return subImporteDTO;
 	}
 
+	public static ProvinciaDestinoDTO getProvinciaDestinoDTO(ProvinciaDestino provincia) {
+
+		ProvinciaDestinoDTO provinciaDTO = new ProvinciaDestinoDTO();
+
+		provinciaDTO.setId(provincia.getId());
+		provinciaDTO.setNombre(provincia.getNombre());
+
+		return provinciaDTO;
+	}	
+	
+	public static LocalidadDestinoDTO getLocalidadDestinoDTO(LocalidadDestino localidad) {
+
+		LocalidadDestinoDTO localidadDTO = new LocalidadDestinoDTO();
+
+		localidadDTO.setId(localidad.getId());
+		localidadDTO.setNombre(localidad.getNombre());
+		localidadDTO.setProvinciaDestinoDTO(ProviderDTO.getProvinciaDestinoDTO(localidad.getProvinciaDestino()));
+		
+		return localidadDTO;
+	}	
+	
 	/*	
 		public static ActaMartilladoDTO getActaMartilladoDTO(FiscalizacionForm form){
 			

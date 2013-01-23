@@ -3,6 +3,8 @@ package ar.com.siif.fachada;
 import java.util.List;
 
 import ar.com.siif.dto.LocalidadDTO;
+import ar.com.siif.dto.LocalidadDestinoDTO;
+import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -13,6 +15,7 @@ public interface ILocalidadFachada {
 	public Localidad getLocalidadPorId(Long id)throws NegocioException;
 
 	public boolean existeLocalidad(LocalidadDTO localidad);
+	
 	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException;
 	
 	public List<LocalidadDTO> getLocalidadesDTO()throws NegocioException;
@@ -20,4 +23,24 @@ public interface ILocalidadFachada {
 	public LocalidadDTO getLocalidadDTOPorId(Long id)throws NegocioException;
 	
 	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException;
+	
+	public boolean existeProvincia(ProvinciaDestinoDTO provincia);
+	
+	public void altaProvincia(ProvinciaDestinoDTO provinciaDTO) throws NegocioException;
+	
+	public List<ProvinciaDestinoDTO> getProvinciasDTO()throws NegocioException;
+	
+	public ProvinciaDestinoDTO getProvinciaDestinoDTOPorId(Long id)throws NegocioException;
+	
+	public void modificacionProvinciaDestino(ProvinciaDestinoDTO provinciaDTO) throws NegocioException;
+	
+	public boolean existeLocalidadDestino(LocalidadDestinoDTO localidad);
+	
+	public void altaLocalidadDestino(LocalidadDestinoDTO localidadDTO) throws NegocioException;
+	
+	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia)throws NegocioException;
+	
+	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id)throws NegocioException;
+	
+	public void modificacionLocalidadDestino(LocalidadDestinoDTO localidadDTO) throws NegocioException;
 }

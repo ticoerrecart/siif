@@ -43,6 +43,8 @@
 		<mapping class='ar.com.siif.negocio.Localidad' />
 		<mapping class='ar.com.siif.negocio.Periodo' />
 		<mapping class='ar.com.siif.negocio.Reporte' />
+		<mapping class='ar.com.siif.negocio.ProvinciaDestino' />
+		<mapping class='ar.com.siif.negocio.LocalidadDestino' />
 
 	</session-factory>
 </hibernate-configuration>
