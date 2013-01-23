@@ -188,8 +188,13 @@
 				<tr>
 					<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProvinciaDestino'/></td>
 					<td width="30%">
-						<select id="idProvincia" class="botonerab" onchange="">
+						<select id="idProvincia" class="botonerab" onchange="mostrarLocalidades();">
 							<option value="-1">-Seleccione una Provincia-</option>
+							<c:forEach items="${provincias}" var="provincia" varStatus="i">
+								<option value="${provincia.id}">
+									<c:out value="${provincia.nombre}"></c:out>
+								</option>						
+							</c:forEach>							
 						</select>
 					</td>
 					

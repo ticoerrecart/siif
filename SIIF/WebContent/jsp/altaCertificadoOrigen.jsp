@@ -15,7 +15,9 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript"
-	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>		
+	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/LocalidadFachada.js'/>"></script>			
 <script type="text/javascript"
 	src="<html:rewrite page='/js/certificadoOrigen.js'/>"></script>
 <script type="text/javascript"
@@ -26,10 +28,10 @@
 	
 
 <script>
-	/*$(function() {
+	$(function() {
 
 		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});		
-	});*/
+	});
 </script>
 
 <script type="text/javascript">
@@ -311,24 +313,29 @@ function volverAltaGFB(){
 		</tr>		
 										
 	</table>									
-
-	<!-- 
+ 
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
-			<td height="10" colspan="2"></td>
+			<td height="10" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
-			<td align="left">		
+			<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
+			<td align="left" width="35">		
 				<input id="datepickerFecha" type="text" name="guiaForestal.fecha" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				
 			</td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Usuario'/></td>
+			<td align="left" width="35">			
+				<input id="idUsuarioAlta" type="hidden" name="" readonly="readonly" class="botonerab" 
+						value="<c:out value="${usuarioAlta.id}"></c:out>">		
+				<input type="text" name="" readonly="readonly" class="botonerab" 
+						value="<c:out value="${usuarioAlta.nombreUsuario}"></c:out>">							
+			</td>			
 		</tr>
 		<tr>
-			<td height="10" colspan="2"></td>
+			<td height="10" colspan="4"></td>
 		</tr>
 	</table>
-	 -->
 	
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">

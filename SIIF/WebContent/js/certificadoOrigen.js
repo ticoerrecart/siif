@@ -179,3 +179,31 @@
 		}
 	}
 	
+	function mostrarLocalidades(){
+
+		var idProvinciaSelect = $('#idProvincia').val();
+		if(idProvinciaSelect != "-1"){
+			
+			$('#idLocalidad').attr('disabled',false);
+			LocalidadFachada.getLocalidadesDetinoDTODeProvincia(idProvinciaSelect,actualizarLocalidadesCallback );
+			
+		}else{
+			
+			dwr.util.removeAllOptions("idLocalidad");
+			var data = [ { nombre:"-Seleccione una Localidad-", id:-1 }];
+			dwr.util.addOptions("idLocalidad", data, "id", "nombre");		
+			$('#idLocalidad').attr('disabled',true);			
+		}			
+	}
+
+	function actualizarLocalidadesCallback(localidades) {
+
+		dwr.util.removeAllOptions("idLocalidad");
+		var data = [ {
+			nombre : "-Seleccione una Localidad-",
+			id : -1
+		} ];
+		dwr.util.addOptions("idLocalidad", data, "id", "nombre");
+		dwr.util.addOptions("idLocalidad", localidades, "id", "nombre");
+	}	
+	
