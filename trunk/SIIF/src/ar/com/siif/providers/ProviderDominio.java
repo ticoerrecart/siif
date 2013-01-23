@@ -10,8 +10,10 @@ import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.LocalidadDTO;
+import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PeriodoDTO;
+import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
@@ -26,12 +28,14 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.Periodo;
+import ar.com.siif.negocio.ProvinciaDestino;
 import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
@@ -369,6 +373,38 @@ public abstract class ProviderDominio {
 		return subImporte;
 	}
 
+	public static ProvinciaDestino getProvincia(ProvinciaDestinoDTO provinciaDTO) {
+
+		ProvinciaDestino provincia = new ProvinciaDestino();
+		provincia.setNombre(provinciaDTO.getNombre());
+		return provincia;
+	}	
+	
+	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia, ProvinciaDestinoDTO provinciaDTO) {
+
+		provincia.setNombre(provinciaDTO.getNombre());
+		return provincia;
+	}	
+
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
+
+		LocalidadDestino localidad = new LocalidadDestino();
+		localidad.setNombre(localidadDTO.getNombre());
+		localidad.setProvinciaDestino(provincia);
+
+		return localidad;
+	}	
+	
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad, ProvinciaDestino provincia) {
+
+		localidad.setNombre(localidadDTO.getNombre());
+		localidad.setProvinciaDestino(provincia);
+
+		return localidad;
+	}	
+	
+	
+	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
 
 		Fiscalizacion acta = form.getFiscalizacion();
