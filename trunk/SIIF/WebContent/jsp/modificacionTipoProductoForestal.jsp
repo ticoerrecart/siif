@@ -40,8 +40,11 @@ function mostrarDatos(idTipoProducto,idTr){
 
 	$('#divCargando').show();	
 	$('#divModificacion').html("");
+
+	var metodo = $('#idMetodo').val();
 	
-	$('#divModificacion').load('../../recuperarTipoProductoForestal.do?metodo=recuperarTipoProductoForestal&id='+idTipoProducto);
+	//$('#divModificacion').load('../../recuperarTipoProductoForestal.do?metodo=recuperarTipoProductoForestal&id='+idTipoProducto);
+	$('#divModificacion').load('../../recuperarTipoProductoForestal.do?metodo='+metodo+'&id='+idTipoProducto);
 	$('#divModificacion').hide();
 	$('#divModificacion').fadeIn(600);
 
@@ -51,9 +54,11 @@ function mostrarDatos(idTipoProducto,idTr){
 	});	
 }
 
-function submitir(){
+function submitir(metodoValidacion){
 
-	validarForm("tipoProductoForestalForm","../tipoProductoForestal","validarTipoProductoForestalForm","TipoProductoForestalForm");
+	$('#exitoGrabado').val("");
+	//validarForm("tipoProductoForestalForm","../tipoProductoForestal","validarTipoProductoForestalForm","TipoProductoForestalForm");
+	validarForm("tipoProductoForestalForm","../tipoProductoForestal",metodoValidacion,"TipoProductoForestalForm");
 }
 
 </script>
@@ -63,12 +68,22 @@ function submitir(){
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
+<<html:hidden property="metodo" value="${metodo}" styleId="idMetodo"/>
 
-
-<table border="0" class="cuadrado" align="center" width="60%"
-	cellpadding="2">
+<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 	<tr>
-		<td class="azulAjustado"><bean:message key='SIIF.titulo.ModificacionTipoProducto'/></td>
+		<td class="azulAjustado">
+			<c:choose>
+				<c:when test="${metodo == 'altaTipoProductoForestal'}">
+					<bean:message key='SIIF.titulo.ModificacionTipoProducto'/>
+					<c:set var="metodoValidacion" value="${'validarTipoProductoForestalForm'}" />
+				</c:when>
+				<c:otherwise>
+					<bean:message key='SIIF.titulo.ModificacionTipoProductoExportacion'/>
+					<c:set var="metodoValidacion" value="${'validarTipoProductoExportacionForm'}" />
+				</c:otherwise>
+			</c:choose>		
+		</td>
 	</tr>
 	<tr>
 		<td height="20"></td>
@@ -78,7 +93,7 @@ function submitir(){
 		<table id="idTipoProducto" border="0" class="cuadrado" align="center"
 			width="60%" cellpadding="2">
 			<tr>
-				<td class="azulAjustado"><bean:message key='SIIF.label.TipoProducto'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 
