@@ -1,5 +1,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
    response.setHeader("Cache-Control","no-cache"); 
    response.setHeader("Cache-Control","no-store"); //HTTP 1.1
@@ -9,7 +10,7 @@
 %>
 <html:form action="tipoProductoForestal"
 	styleId="tipoProductoForestalForm">
-	<html:hidden property="metodo" value="modificacionTipoProductoForestal" />
+	<html:hidden property="metodo" value="${metodo}" />
 	<html:hidden property="productoForestalDTO.id" value="${tipoProducto.id}" />
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
@@ -18,7 +19,7 @@
 		</tr>
 		<tr>
 			<td width="35%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.TipoProducto'/>
+				<bean:message key='SIIF.label.TipoDeProducto'/>
 			</td>
 			<td><input name="productoForestalDTO.nombre" class="botonerab"
 				type="text" size="30"
@@ -30,7 +31,7 @@
 		</tr>
 		<tr>
 			<td colspan="3"><input type="button" class="botonerab"
-				value="Modificar" id="enviar" onclick="javascript:submitir();">
+				value="Modificar" id="enviar" onclick="javascript:submitir('<c:out value="${metodoValidacion}"></c:out>');">
 			</td>
 		</tr>
 		<tr>

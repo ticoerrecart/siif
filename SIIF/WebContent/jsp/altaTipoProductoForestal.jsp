@@ -13,9 +13,10 @@
 
 <script type="text/javascript">
 
-function submitir(){
+function submitir(metodoValidacion){
 
-	validarForm("tipoProductoForestalForm","../tipoProductoForestal","validarTipoProductoForestalForm","TipoProductoForestalForm");
+	$('#exitoGrabado').val("");
+	validarForm("tipoProductoForestalForm","../tipoProductoForestal",metodoValidacion,"TipoProductoForestalForm");
 }
 
 </script>
@@ -27,19 +28,37 @@ function submitir(){
 
 <html:form action="tipoProductoForestal"
 	styleId="tipoProductoForestalForm">
-	<html:hidden property="metodo" value="altaTipoProductoForestal" />
+	<html:hidden property="metodo" value="${metodo}" />
 	<table border="0" class="cuadrado" align="center" width="60%"
 		cellpadding="2">
 		<tr>
 			<td colspan="2" class="azulAjustado">
-				<bean:message key='SIIF.titulo.AltaTipoProducto'/>
+				<c:choose>
+					<c:when test="${metodo == 'altaTipoProductoForestal'}">
+						<bean:message key='SIIF.titulo.AltaTipoProducto'/>
+						<c:set var="metodoValidacion" value="${'validarTipoProductoForestalForm'}" />
+					</c:when>
+					<c:otherwise>
+						<bean:message key='SIIF.titulo.AltaTipoProductoExportacion'/>
+						<c:set var="metodoValidacion" value="${'validarTipoProductoExportacionForm'}" />
+					</c:otherwise>
+				</c:choose>																		
 			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
+			<td class="botoneralNegritaRight">
+				<c:choose>
+					<c:when test="${metodo == 'altaTipoProductoForestal'}">
+						<bean:message key='SIIF.label.TipoProducto'/>
+					</c:when>
+					<c:otherwise>
+						<bean:message key='SIIF.label.TipoProductoExportacion'/>
+					</c:otherwise>
+				</c:choose>										
+			</td>
 			<td align="left"><input name="productoForestalDTO.nombre"
 				class="botonerab" type="text" size="30"></td>
 		</tr>
@@ -47,11 +66,11 @@ function submitir(){
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td height="20" colspan="2"><input type="button"
-				class="botonerab" value="Aceptar" id="enviar"
-				onclick="javascript:submitir();"> <input type="button"
-				class="botonerab" value="Cancelar"
-				onclick="javascript:parent.location= contextRoot() +  '/jsp.do?page=.index'">
+			<td height="20" colspan="2">
+				<input type="button" class="botonerab" value="Aceptar" id="enviar" 
+						onclick="javascript:submitir('<c:out value="${metodoValidacion}"></c:out>');"> 
+				<input type="button" class="botonerab" value="Cancelar" 
+						onclick="javascript:parent.location= contextRoot() +  '/jsp.do?page=.index'">
 			</td>
 		</tr>
 		<tr>

@@ -175,17 +175,20 @@
 		<action path="/tipoProductoForestal"
 			type="ar.com.siif.struts.actions.TipoProductoForestalAction"
 			parameter="metodo" name="tipoProductoForestalForm" scope="session">
-			<forward name="exitoAltaTipoProductoForestal" path=".altaTipoProductoForestal" />
+			<forward name="exitoAltaTipoProductoForestal" path="/jsp.do?page=.altaTipoProductoForestal&amp;metodo=altaTipoProductoForestal"/>
 			<forward name="exitoModificacionTipoProductoForestal"
 				path="/recuperarTipoProductoForestal.do?metodo=cargarModificacionTipoProductoForestal" />
+			<forward name="exitoAltaTipoProductoExportacion" path="/jsp.do?page=.altaTipoProductoForestal&amp;metodo=altaTipoProductoExportacion" />
+			<forward name="exitoModificacionTipoProductoExportacion"
+				path="/recuperarTipoProductoForestal.do?metodo=cargarModificacionTipoProductoExportacion" />							
 		</action>
 
 		<action path="/recuperarTipoProductoForestal"
 			type="ar.com.siif.struts.actions.TipoProductoForestalAction"
 			parameter="metodo">
-			<forward name="exitoCargarModificacionTipoProductoForestal"
+			<forward name="exitoCargarModificacionTipoProducto"
 				path=".modificacionTipoProductoForestal" />
-			<forward name="exitoRecuperarTipoProductoForestal"
+			<forward name="exitoRecuperarTipoProducto"
 				path="/jsp/bloqueModificacionTipoProductoForestal.jsp" />
 		</action>
 		<!-- FIN TIPO PRODUCTO FORESTAL -->

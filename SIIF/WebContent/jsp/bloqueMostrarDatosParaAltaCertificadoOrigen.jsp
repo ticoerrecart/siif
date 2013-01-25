@@ -4,6 +4,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<script type="text/javascript">
+
+function calcularVolumenTiposProductos(){
+	
+	var size = ${fn:length(tiposProductoExportacion)};
+	var volumentTotal = 0;
+	var volumen = 0;
+	
+	for (var i=1;i<=size;i++){
+		
+		volumen = ($('#idTipoProd'+i).val() == "")?0:new Number($('#idTipoProd'+i).val());
+		
+		volumentTotal = volumentTotal + volumen;
+	}
+
+	volumentTotal = new Number(volumentTotal).toFixed(2);		
+	
+	$('#idVolumentTotalTiposProductos').val(volumentTotal);
+}
+
+</script>
+
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 		<!-- FISCALIZACIONES -->
@@ -16,10 +38,10 @@
 			</table>			
 			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">
 				<tr>
-					<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.CantMts3'/></td>					
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.Fecha'/></td>
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.NroDeGuia'/></td>
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.TipoDeProducto'/></td>
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.CantMts3'/></td>					
 				</tr>
 				
 				<%String clase=""; %>
@@ -79,9 +101,9 @@
 			</table>			
 			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">
 				<tr>
-					<td class="azulAjustado"><bean:message key='SIIF.label.NroDeGuia'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.FechaVenc'/></td>
-					<td class="azulAjustado"><bean:message key='SIIF.label.Volumen'/></td>					
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.NroDeGuia'/></td>
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.FechaVenc'/></td>
+					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.Volumen'/></td>					
 				</tr>
 				<tr class="par">				
 					<td class="botonerab">-</td>
@@ -210,6 +232,132 @@
 					<td colspan="4" height="15"></td>
 				</tr>				
 			</table>			
+			<br>
+			<br>
+			
+		<!-- TIPOS DE PRODUCTOS -->			
+			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
+				<tr>
+					<td class="grisSubtitulo">
+						<bean:message key='SIIF.subTitulo.TiposDeProductos'/>
+					</td>
+				</tr>
+				<tr>
+					<td height="15"></td>
+				</tr>						
+
+				<tr>
+					<td>
+						<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">
+							<tr>
+								<td class="verdeTituloTablaChico" width="60%">
+									<bean:message key='SIIF.label.TipoDeProducto'/>
+								</td>
+								<td class="verdeTituloTablaChico" width="40%">
+									<bean:message key='SIIF.label.VolumenM3'/>
+								</td>					
+							</tr>			
+											
+							<%clase="par"; %>
+							<c:forEach items="${tiposProductoExportacion}" var="tipoProducto" varStatus="i">
+								<%clase=(clase.equals("")?"par":""); %>
+								<tr class="<%=clase%>">
+									<td class="botoneralNegritaMediana">
+										<c:out value="${tipoProducto.nombre}"></c:out>
+									</td>
+									<td align="center">
+										<input class="botonerab" id="idTipoProd<c:out value='${i.count}'></c:out>" 
+												type="text" value="" size="12" onkeypress="javascript:esNumericoConDecimal(event);"
+												onblur="javascript:calcularVolumenTiposProductos();"
+												onkeyup="javascript: twoDigits(this);"> 
+									</td>											
+								</tr>
+							</c:forEach>											
+						</table>
+						<br>
+						<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
+							<tr>
+								<td class="grisClaroSubtituloCenter" width="60%">
+									<bean:message key='SIIF.label.VolumenTotalM3'/>
+								</td>
+								<td class="grisClaroSubtituloCenter" width="40%">
+									<input class="botonerab" type="text" size="12" id="idVolumentTotalTiposProductos" 
+											readonly="readonly" value="0">
+								</td>					
+							</tr>
+						</table>					
+					</td>
+				</tr>	
+														
+				<tr>
+					<td height="15"></td>
+				</tr>				
+			</table>			
+			<br>
+			<br>
+			
+		<!-- VOLUMEN HABILITADO PARA EXPORTAR -->			
+			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
+				<tr>
+					<td class="grisSubtitulo">
+						<bean:message key='SIIF.subTitulo.VolumenHabilitadoParaExportar'/>
+					</td>
+				</tr>
+				<tr>
+					<td height="15"></td>
+				</tr>						
+
+				<tr>
+					<td>
+						<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">			
+							<tr>
+								<td class="grisClaroSubtituloLeft" width="60%">
+									Volumen habilitado para cosecha
+								</td>
+								<td class="grisClaroSubtituloCenter" width="40%">
+									<input class="botonerab" id="idVolHabParaCosecha" type="text" 
+											value="<c:out value="${volFiscalizadoTotal}"></c:out>" 
+											size="12" readonly="readonly"> 
+								</td>											
+							</tr>
+							<tr>
+								<td class="grisClaroSubtituloLeft">
+									Volumen habilitado procesado para exportar
+								</td>
+								<td class="grisClaroSubtituloCenter">
+									<input class="botonerab" id="idVolHabProc" type="text" 
+											value="<c:out value="${volFiscalizadoTotal*0.3}"></c:out>" 
+											size="12" readonly="readonly"> 
+								</td>											
+							</tr>
+							<tr>
+								<td class="grisClaroSubtituloLeft">
+									Volumen exportado
+								</td>
+								<td class="grisClaroSubtituloCenter">
+									<input class="botonerab" id="idVolExp" type="text" 
+											value="" 
+											size="12" readonly="readonly"> 
+								</td>											
+							</tr>
+							<tr>
+								<td class="grisClaroSubtituloLeft">
+									Volumen por exportar
+								</td>
+								<td class="grisClaroSubtituloCenter">
+									<input class="botonerab" id="idVolPorExp" type="text" 
+											value="" 
+											size="12" readonly="readonly"> 
+								</td>											
+							</tr>																								
+						</table>					
+					</td>
+				</tr>	
+														
+				<tr>
+					<td height="15"></td>
+				</tr>				
+			</table>				
 			
 		</c:when>	
 		<c:otherwise>
@@ -220,4 +368,8 @@
 	var volTotalFiscalizado = $("#idVolumentTotalFiscalizado").val();
 	volTotalFiscalizado = roundNumber(volTotalFiscalizado,2);
 	$("#idVolumentTotalFiscalizado").val(volTotalFiscalizado);
+
+	var volHabProcesado = $("#idVolHabProc").val();
+	volHabProcesado = roundNumber(volHabProcesado,2);
+	$("#idVolHabProc").val(volHabProcesado);	
 </script>

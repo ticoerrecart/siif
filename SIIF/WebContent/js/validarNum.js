@@ -61,6 +61,27 @@ function esDouble(ob) {
 	}
  }
 
+function twoDigits(elem){
+	if(elem.value.indexOf('.')!=-1){
+		var unPunto = false;
+		for(var i=0;i<elem.value.length;i++){
+			var c = elem.value[i];
+			if(c=="."){
+				if(!unPunto){
+					unPunto=true;
+				}else{
+					elem.value = elem.value.substring(0,elem.value.length-1);
+					break;
+				}
+			}
+		}
+	    if(elem.value.split(".")[1].length > 2){
+	        if( isNaN( parseFloat( elem.value ) ) ) return;
+	        elem.value = parseFloat(elem.value).toFixed(2);
+	    }
+	 }
+	 return this; //for chaining
+}
 
 function leftPad(item ,cPad, cant) {
 	newItem = new String(item);
