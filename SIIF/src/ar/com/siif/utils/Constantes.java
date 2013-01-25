@@ -164,12 +164,18 @@ public class Constantes {
 
 	//TIPO PRODUCTO FORESTAL
 	public static final String EXISTE_TIPO_PRODUCTO = "Ya existe un Tipo de Producto Forestal con ese nombre";
+	
+	public static final String EXISTE_TIPO_PRODUCTO_EXPORTACION = "Ya existe un Tipo de Producto de Exportación con ese nombre";
 
 	public static final String EXITO_ALTA_TIPO_PRODUCTO = "El Tipo de Producto Forestal se ha dado de alta con exito";
+	
+	public static final String EXITO_ALTA_TIPO_PRODUCTO_EXPORTACION = "El Tipo de Producto de Exportación se ha dado de alta con exito";
 
-	public static final String EXITO_MODIFICACION_TIPO_PRODUCTO = "El Tipo de Producto Forestal se ha modificado con exito";
+	public static final String EXITO_MODIFICACION_TIPO_PRODUCTO = "El Tipo de Producto se ha modificado con exito";	
 
 	public static final String ERROR_ALTA_TIPO_PRODUCTO = "Ha ocurrido un error en el alta del tipo de producto";
+	
+	public static final String ERROR_ALTA_TIPO_PRODUCTO_EXPORTACION = "Ha ocurrido un error en el alta del Tipo de Producto de Exportación";
 
 	public static final String ERROR_MODIFICACION_TIPO_PRODUCTO = "Ha ocurrido un error en la modificación del tipo de producto";
 

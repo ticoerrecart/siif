@@ -11,6 +11,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoExportacion;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
@@ -20,13 +22,8 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 	public void altaTipoProductoForestal(TipoProducto tipoProductoForestal) throws DataBaseException {
 
 		try{
-			Criteria criteria = getSession().createCriteria(TipoProducto.class);
-			criteria.add(Restrictions.disjunction()
-					.add(Restrictions.eq("nombre", tipoProductoForestal.getNombre())));
 	
-			List<TipoProducto> tiposProducto = criteria.list();
-	
-			if (tiposProducto.size() > 0) {
+			if (existeTipoProductoForestal(tipoProductoForestal.getNombre(),tipoProductoForestal.getId())) {
 				throw new DataBaseException(Constantes.EXISTE_TIPO_PRODUCTO);
 			}
 	
@@ -45,11 +42,11 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public List<TipoProducto> recuperarTiposProducto()throws DataBaseException {
+	public List<TipoProductoForestal> recuperarTiposProducto()throws DataBaseException {
 
 		try{
-			Criteria criteria = getSession().createCriteria(TipoProducto.class);
-			List<TipoProducto> tiposProducto = criteria.list();
+			Criteria criteria = getSession().createCriteria(TipoProductoForestal.class);
+			List<TipoProductoForestal> tiposProducto = criteria.list();
 	
 			return tiposProducto;
 			
@@ -62,10 +59,10 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public TipoProducto recuperarTipoProductoForestal(long id)throws DataBaseException {
+	public TipoProductoForestal recuperarTipoProductoForestal(long id)throws DataBaseException {
 
 		try{
-			return (TipoProducto) getSession().get(TipoProducto.class, id);
+			return (TipoProductoForestal) getSession().get(TipoProductoForestal.class, id);
 			
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPO_PRODUCTO);
@@ -76,17 +73,10 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public void modificacionTipoProductoForestal(TipoProducto tipoProducto) throws DataBaseException {
+	public void modificacionTipoProductoForestal(TipoProductoForestal tipoProducto) throws DataBaseException {
 
 		try{
-			Criteria criteria = getSession().createCriteria(TipoProducto.class);
-			criteria.add(Restrictions.conjunction()
-					.add(Restrictions.eq("nombre", tipoProducto.getNombre()))
-					.add(Restrictions.ne("id", tipoProducto.getId())));
-	
-			List<TipoProducto> tiposProducto = criteria.list();
-	
-			if (tiposProducto.size() > 0) {
+			if (existeTipoProductoForestal(tipoProducto.getNombre(),tipoProducto.getId())) {
 				throw new DataBaseException(Constantes.EXISTE_TIPO_PRODUCTO);
 			}
 	
@@ -105,7 +95,114 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		}			
 	}
 
-	public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO) {
+	public void altaTipoProductoExportacion(TipoProducto tipoProductoExportacion) throws DataBaseException {
+
+		try{
+	
+			if (existeTipoProductoExportacion(tipoProductoExportacion.getNombre(),tipoProductoExportacion.getId())) {
+				throw new DataBaseException(Constantes.EXISTE_TIPO_PRODUCTO_EXPORTACION);
+			}
+	
+			this.getHibernateTemplate().save(tipoProductoExportacion);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (DataBaseException he) {
+			throw he;			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_TIPO_PRODUCTO_EXPORTACION);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_TIPO_PRODUCTO_EXPORTACION);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_ALTA_TIPO_PRODUCTO_EXPORTACION);
+		}			
+	}	
+
+	public boolean existeTipoProductoExportacion(String nombre, Long id) {
+
+		Criteria criteria = getSession().createCriteria(TipoProductoExportacion.class);
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("nombre", nombre));
+		if (id != null) {
+			conj.add(Restrictions.ne("id", id));
+		}
+		criteria.add(conj);
+
+		List<TipoProductoExportacion> tiposProducto = criteria.list();
+		return (tiposProducto.size() > 0);
+		
+	}	
+	
+	public boolean existeTipoProductoForestal(String nombre, Long id) {
+
+		Criteria criteria = getSession().createCriteria(TipoProductoForestal.class);
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("nombre", nombre));
+		if (id != null) {
+			conj.add(Restrictions.ne("id", id));
+		}
+		criteria.add(conj);
+
+		List<TipoProductoForestal> tiposProducto = criteria.list();
+		return (tiposProducto.size() > 0);
+		
+	}	
+	
+	public List<TipoProductoExportacion> recuperarTiposProductoExportacion()throws DataBaseException {
+
+		try{
+			Criteria criteria = getSession().createCriteria(TipoProductoExportacion.class);
+			List<TipoProductoExportacion> tiposProducto = criteria.list();
+	
+			return tiposProducto;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPOS_PRODUCTOS);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPOS_PRODUCTOS);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPOS_PRODUCTOS);
+		}			
+	}	
+	
+	public TipoProductoExportacion recuperarTipoProductoExportacion(long id)throws DataBaseException {
+
+		try{
+			return (TipoProductoExportacion) getSession().get(TipoProductoExportacion.class, id);
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPO_PRODUCTO);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPO_PRODUCTO);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TIPO_PRODUCTO);
+		}			
+	}	
+	
+	public void modificacionTipoProductoExportacion(TipoProductoExportacion tipoProducto) throws DataBaseException {
+
+		try{
+			if (existeTipoProductoExportacion(tipoProducto.getNombre(),tipoProducto.getId())) {
+				throw new DataBaseException(Constantes.EXISTE_TIPO_PRODUCTO_EXPORTACION);
+			}
+	
+			this.getHibernateTemplate().saveOrUpdate(tipoProducto);
+			this.getHibernateTemplate().flush();
+			this.getHibernateTemplate().clear();
+			
+		} catch (DataBaseException he) {
+			throw he;			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_TIPO_PRODUCTO);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_TIPO_PRODUCTO);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_MODIFICACION_TIPO_PRODUCTO);
+		}			
+	}	
+	
+	
+	/*public boolean existeTipoProductoForestal(TipoProductoDTO tipoProdructoDTO) {
 
 		Criteria criteria = getSession().createCriteria(TipoProducto.class);
 		Conjunction conj = Restrictions.conjunction();
@@ -118,5 +215,5 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		List<TipoProducto> tiposProducto = criteria.list();
 		return (tiposProducto.size() > 0);
 		
-	}
+	}*/
 }

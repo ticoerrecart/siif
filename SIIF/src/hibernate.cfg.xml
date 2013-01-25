@@ -36,6 +36,8 @@
 		<mapping class='ar.com.siif.negocio.Aforo' />
 		<mapping class='ar.com.siif.negocio.Muestra' />
 		<mapping class='ar.com.siif.negocio.TipoProducto' />
+		<mapping class='ar.com.siif.negocio.TipoProductoForestal' />
+		<mapping class='ar.com.siif.negocio.TipoProductoExportacion' />
 		<mapping class='ar.com.siif.negocio.PMF' />
 		<mapping class='ar.com.siif.negocio.Tranzon' />
 		<mapping class='ar.com.siif.negocio.Marcacion' />
@@ -45,6 +47,6 @@
 		<mapping class='ar.com.siif.negocio.Reporte' />
 		<mapping class='ar.com.siif.negocio.ProvinciaDestino' />
 		<mapping class='ar.com.siif.negocio.LocalidadDestino' />
-
+		
 	</session-factory>
 </hibernate-configuration>

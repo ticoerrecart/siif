@@ -41,6 +41,8 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoExportacion;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
@@ -89,12 +91,20 @@ public abstract class ProviderDominio {
 
 	public static TipoProducto getTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO) {
 
-		TipoProducto tipoProducto = new TipoProducto();
+		TipoProductoForestal tipoProducto = new TipoProductoForestal();
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
 
 		return tipoProducto;
 	}
 
+	public static TipoProducto getTipoProductoExportacion(TipoProductoDTO tipoProductoForestalDTO) {
+
+		TipoProductoExportacion tipoProducto = new TipoProductoExportacion();
+		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
+
+		return tipoProducto;
+	}	
+	
 	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad) {
 
 		Entidad entidad = null;
