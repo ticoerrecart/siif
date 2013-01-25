@@ -18,6 +18,7 @@ import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IPeriodoFachada;
+import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.utils.Constantes;
 
 public class CertificadoDeOrigenAction extends ValidadorAction {
@@ -60,6 +61,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");			
 			
+			ITipoProductoForestalFachada tipoProductoForestalFachada = 
+										(ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");			
+			
 			String idProductor = request.getParameter("idProductor");
 			String periodo = request.getParameter("periodo");
 			String idPMF = request.getParameter("idPMF");
@@ -75,6 +79,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("deuda", deuda);
 			request.setAttribute("provincias", provincias);
+			request.setAttribute("tiposProductoExportacion", tipoProductoForestalFachada.recuperarTiposProductoExportacionDTO());
 			//request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
 
 		} catch (Exception e) {
