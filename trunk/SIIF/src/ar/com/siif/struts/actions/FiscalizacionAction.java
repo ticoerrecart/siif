@@ -220,8 +220,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion
 					.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal()
 					.getLocalidad().getId());
-			List<TipoProducto> tiposProducto = tipoProductoForestalFachada
-					.recuperarTiposProductoForestal();
+			List<TipoProductoDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
+
 			List<PMF> pmf = ubicacionFachada.getPMFs(fiscalizacion.getProductorForestal().getId());
 			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal()
 					.getMarcacion().getTranzon().getPmf().getId());
