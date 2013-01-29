@@ -625,6 +625,30 @@ CREATE TABLE `Reporte` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `ProvinciaDestino`
+--
+
+DROP TABLE IF EXISTS `ProvinciaDestino`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ProvinciaDestino` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ProvinciaDestino`
+--
+
+LOCK TABLES `ProvinciaDestino` WRITE;
+/*!40000 ALTER TABLE `ProvinciaDestino` DISABLE KEYS */;
+INSERT INTO `ProvinciaDestino` VALUES (1,'Buenos Aires'),(2,'Santa Cruz');
+/*!40000 ALTER TABLE `ProvinciaDestino` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `LocalidadDestino`
 --
 
@@ -728,26 +752,3 @@ LOCK TABLES `TipoProductoEnCertificado` WRITE;
 /*!40000 ALTER TABLE `TipoProductoEnCertificado` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `ProvinciaDestino`
---
-
-DROP TABLE IF EXISTS `ProvinciaDestino`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ProvinciaDestino` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ProvinciaDestino`
---
-
-LOCK TABLES `ProvinciaDestino` WRITE;
-/*!40000 ALTER TABLE `ProvinciaDestino` DISABLE KEYS */;
-INSERT INTO `ProvinciaDestino` VALUES (1,'Buenos Aires'),(2,'Santa Cruz');
-/*!40000 ALTER TABLE `ProvinciaDestino` ENABLE KEYS */;
-UNLOCK TABLES;
