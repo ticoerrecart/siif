@@ -33,6 +33,20 @@ function imprimir(){
 	}		
 }
 
+function headerTabla(){
+	var idTipoProductoForestal = '${fiscalizacion.tipoProducto.id}';
+	if (idTipoProductoForestal == 1){
+		return headerTablaRollizos;
+	}  else if (idTipoProductoForestal == 2){
+		return headerTablaFustes;
+	}  else if (idTipoProductoForestal == 4){
+		return headerTablaPostes;
+	}  else if (idTipoProductoForestal == 5){
+		return headerTablaTrineos;
+	}
+	
+}
+
 </script>
 
 <input id="idFiscalizacion" type="hidden" value="${fiscalizacion.id}">
@@ -178,6 +192,9 @@ function imprimir(){
 		</tr>			
 		
 
+		<%--ACA ESTAN LOS HEADERS DE CADA TIPO DE MUESTRA --%>
+		<%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
+
 		<!-- MUESTRAS -->
 		<tr>
 			<td colspan="4" align="left">
@@ -192,17 +209,16 @@ function imprimir(){
 						<td colspan="3">
 							<table id="tablaMuestras" border="0" class="cuadrado" align="center"
 								   width="70%" cellpadding="2" cellspacing="0" style="display: ">
-								<tr>
+								<%--tr>
 									<td class="azulAjustado" width="3%"></td>
 									<td class="azulAjustado" width="33%"><bean:message key='SIIF.label.Largo'/></td>
 									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro1'/></td>
 									<td class="azulAjustado" width="32%"><bean:message key='SIIF.label.Diametro2'/></td>
-								</tr>
+								</tr--%>
 								<tr>
 									<td colspan="4">
 										<c:if test="${fn:length(fiscalizacion.muestra) > 0}">
-											<table id="tablaMuestras" border="0" class="cuadradoSinBorde" align="center"
-												width="70%" cellpadding="2" cellspacing="0">																						
+																																	
 
 												<c:forEach items="${fiscalizacion.muestra}" varStatus="i" var="muestra">
 											
@@ -212,10 +228,6 @@ function imprimir(){
 													<tr>
 														<td class="botoneralNegritaRight">${i.index+1}</td>
 														<td>
-															<input class="botonerab" type="text" readonly="readonly" 
-																   value="${muestra.largo}">
-														</td>
-														<td>
 															<input class="botonerab" type="text" readonly="readonly"
 																value="${muestra.diametro1}">
 														</td>
@@ -223,13 +235,18 @@ function imprimir(){
 															<input class="botonerab" type="text" readonly="readonly"
 																value="${muestra.diametro2}">
 														</td>
+														<td>
+															<input class="botonerab" type="text" readonly="readonly" 
+																   value="${muestra.largo}">
+														</td>
 													</tr>
 												
 													<tr>
 														<td height="5" colspan="4"></td>
 													</tr>												
 												</c:forEach>
-											</table>																														
+											
+											
 										</c:if>																																																	
 									</td>
 								</tr>													
@@ -247,7 +264,13 @@ function imprimir(){
 			<td height="10" colspan="4"></td>
 		</tr>
 	</table>
-			
+	
+	<c:if test="${fn:length(fiscalizacion.muestra) > 0}">
+		<script>
+			$("#tablaMuestras").prepend(headerTabla);
+		</script>																														
+	</c:if>
+
 	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td height="10" colspan="3"></td>
