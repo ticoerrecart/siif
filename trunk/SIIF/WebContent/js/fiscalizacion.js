@@ -310,11 +310,14 @@
 	function actualizarMuestras() {
 		//$('#cantidadMts').val('');
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+
 		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
 				$('.diam2').show();
+				$('[name="diametros"]').filter('[value="2"]').attr('checked', true);
+				$('#diametros').show();
 			}else{
 				$('#tablaMuestras').hide();
 				$('#calcularVolumen').hide();
@@ -328,6 +331,8 @@
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
 				$('.diam2').hide();
+				$('[name="diametros"]').filter('[value="1"]').attr('checked', true);
+				$('#diametros').show();
 			}else{
 				$('#tablaMuestras').hide();
 				$('#calcularVolumen').hide();
@@ -343,6 +348,26 @@
 				$("#cantidadUnidades").val("");
 				$("#cantidadUnidades").attr("readonly",true);
 				$('#trMuestras').hide();
+		}
+
+	}
+	
+	function cambiarDiametro(){
+		var val = $('input:radio[name=diametros]:checked').val();
+		if(val==1){
+			$('.diam2').hide();
+			var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
+			if(cantidadDeFilas > 0){
+				for ( var i = 0; i < cantidadDeFilas; i++) {
+					$('#tablaMuestras [id=fila' + i + '] [name*=diametro2]').val('');
+				}
+				$('#tablaMuestras [id=fila0] [name*=diametro1]').focus();
+			}
+		}else{
+			if(val==2){
+				$('.diam2').show();
+				$('#tablaMuestras [id=fila0] [name*=diametro2]').focus();
+			}
 		}
 
 	}
