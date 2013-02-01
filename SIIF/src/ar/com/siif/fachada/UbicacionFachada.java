@@ -320,4 +320,9 @@ public class UbicacionFachada implements IUbicacionFachada {
 		PMF pmf = ubicacionDAO.getPMF(idPMF);
 		return pmf.getTipoTerreno();
 	}
+	
+	public PMF getPMF(Long idPMF){
+		
+		return ubicacionDAO.getPMF(idPMF);			
+	}	
 }

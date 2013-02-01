@@ -55,4 +55,6 @@ public interface IGuiaForestalFachada {
 																								throws NegocioException;	
 	
 	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws NegocioException;
+	
+	//public List<GuiaForestalDTO> recuperarGuiasParaCertificado(long idProductor, String periodo, long idPMF)throws NegocioException;
 }

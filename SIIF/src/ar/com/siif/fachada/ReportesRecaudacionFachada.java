@@ -1,18 +1,25 @@
 package ar.com.siif.fachada;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import ar.com.siif.dao.ReportesDAO;
 import ar.com.siif.dao.ReportesRecaudacionDAO;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.Fecha;
 
 public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 
+	private ReportesDAO reportesDAO;
 	private ReportesRecaudacionDAO reportesRecaudacionDAO;
 	
 	public ReportesRecaudacionFachada(){}
 	
-	public ReportesRecaudacionFachada(ReportesRecaudacionDAO pReportesRecaudacionDAO){
+	public ReportesRecaudacionFachada(ReportesDAO pReportesDAO){
 		
-		reportesRecaudacionDAO = pReportesRecaudacionDAO;
+		reportesDAO = pReportesDAO;
 	}
 	
 	public byte[] generarReporteRecaudacionPorProductorEntreFechas(String path,String productor, 
@@ -20,8 +27,15 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 																   throws NegocioException 
 	{
 		try{
-			return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorEntreFechas(path,productor,
-																					fechaDesde,fechaHasta);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProductor", new Long(productor));
+			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_POR_PRODUCTOR_ENTRE_FECHAS, parameters);
+			/*return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorEntreFechas(path,productor,
+																					fechaDesde,fechaHasta);*/
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -32,7 +46,13 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 																	   String periodo)throws NegocioException
 	{
 		try{
-			return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorPorAnioForestal(path,productor,periodo);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProductor", new Long(productor));
+			parameters.put("periodoForestal", periodo);			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_POR_PRODUCTOR_POR_ANIO_FORESTAL, parameters);			
+			//return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorPorAnioForestal(path,productor,periodo);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -43,7 +63,15 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 																	String tranzon, String marcacion)throws NegocioException
 	{
 		try{
-			return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorPorUbicacion(path,productor,pmf,tranzon,marcacion);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProductor", new Long(productor));
+			parameters.put("idPMF", new Long(pmf));
+			parameters.put("idTranzon", new Long(tranzon));
+			parameters.put("idMarcacion", new Long(marcacion));			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_POR_PRODUCTOR_POR_UBICACION, parameters);
+			//return reportesRecaudacionDAO.generarReporteRecaudacionPorProductorPorUbicacion(path,productor,pmf,tranzon,marcacion);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -54,7 +82,13 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 																   							throws NegocioException 
 	{
 		try{
-		return reportesRecaudacionDAO.generarReporteRecaudacionTotalProductoresEntreFechas(path,fechaDesde,fechaHasta);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_TOTAL_PRODUCTORES_ENTRE_FECHAS, parameters);
+			//return reportesRecaudacionDAO.generarReporteRecaudacionTotalProductoresEntreFechas(path,fechaDesde,fechaHasta);
 		
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -64,7 +98,12 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 	public byte[] generarReporteRecaudacionPorAnioForestalPorProductor(String path, String productor)throws NegocioException
 	{
 		try{
-			return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalPorProductor(path,productor);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("idProductor", new Long(productor));			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_POR_ANIO_FORESTAL_POR_PRODUCTOR, parameters);
+			//return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalPorProductor(path,productor);
 		
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -74,7 +113,11 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 	public byte[] generarReporteRecaudacionPorAnioForestalTotalProductores(String path)throws NegocioException
 	{
 		try{
-			return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalTotalProductores(path);
+			Map parameters = new HashMap();
+			parameters.put("PATH_SUB_REPORTES", path);			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_RECAUDACION_POR_ANIO_FORESTAL_TOTAL_PRODUCTORES, parameters);
+			//return reportesRecaudacionDAO.generarReporteRecaudacionPorAnioForestalTotalProductores(path);
 		
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());

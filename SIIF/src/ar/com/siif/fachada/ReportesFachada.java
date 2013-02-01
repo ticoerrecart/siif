@@ -1,8 +1,12 @@
 package ar.com.siif.fachada;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ar.com.siif.dao.ReportesDAO;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.utils.Constantes;
 
 public class ReportesFachada implements IReportesFachada {
 
@@ -28,7 +32,12 @@ public class ReportesFachada implements IReportesFachada {
 	public byte[] generarReporteGuiaForestal(long idGuiaForestal,String path)throws NegocioException{
 	
 		try{
-			return reportesDAO.generarReporteGuiaForestal(idGuiaForestal,path);
+			Map parameters = new HashMap();
+			parameters.put("idGuiaForestal", idGuiaForestal);	
+			parameters.put("PATH_SUB_REPORTES", path);			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_GUIA_FORESTAL, parameters);
+			//return reportesDAO.generarReporteGuiaForestal(idGuiaForestal,path);
 
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
@@ -38,7 +47,11 @@ public class ReportesFachada implements IReportesFachada {
 	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path)throws NegocioException{
 		
 		try{
-			return reportesDAO.generarReporteFiscalizacion(idFiscalizacion,path);
+			Map parameters = new HashMap();
+			parameters.put("idFiscalizacion", idFiscalizacion);	
+			parameters.put("PATH_SUB_REPORTES", path);
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_FISCALIZACION, parameters);
 			
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());

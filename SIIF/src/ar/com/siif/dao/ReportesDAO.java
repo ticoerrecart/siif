@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
@@ -12,14 +14,15 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.jfree.chart.plot.PlotOrientation;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.negocio.Reporte;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.utils.Constantes;
-import ar.com.siif.utils.Fecha;
 
 public class ReportesDAO extends HibernateDaoSupport {
 
@@ -81,22 +84,27 @@ public class ReportesDAO extends HibernateDaoSupport {
 		return bytes;		
 	}	
 	
-	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path) throws DataBaseException{
+	public byte[] generarReporteFiscalizacion(String nombreReporte, Map parameters) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "fiscalizacion.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
+			InputStream input = obtenerReporte(nombreReporte);
+			
+			//InputStream input = new FileInputStream(path + File.separatorChar + "fiscalizacion.jasper");
+			//String fileImagen = path + File.separatorChar + "logo.GIF";
 			
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
+			/*Map parameters = new HashMap();
 			parameters.put("idFiscalizacion", idFiscalizacion);	
 			parameters.put("PATH_SUB_REPORTES", path);
+			parameters.put("subRepMuestrasFiscalizaciones", obtenerReporte("subRepMuestrasFiscalizaciones"));*/
+			
+			cargarSubReportes(nombreReporte, parameters);
 			
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
 			
-		} catch (FileNotFoundException e) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+		//} catch (FileNotFoundException e) {
+		//	throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (JRException e) {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
@@ -109,55 +117,39 @@ public class ReportesDAO extends HibernateDaoSupport {
 		return bytes;	
 	}	
 	
-	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
-									String fechaDesde,String fechaHasta) throws DataBaseException{
+	private InputStream obtenerReporte(String nombreReporte) throws SQLException{
 		
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoPorProductoForestalYFechas.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
+		Criteria criteria = getSession().createCriteria(Reporte.class);
+		criteria.add(Restrictions.eq("nombreReporte", nombreReporte));
 			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
-			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));			
+		List<Reporte> lista = criteria.list();
+		Reporte r = lista.get(0);
 			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;
+		return r.getArchivoReporte().getBinaryStream();				
 	}
 	
-	public byte[] generarReporteVolumenFiscalizadoPorProductorYFecha(long idProd, 
-						String fechaDesde, String fechaHasta, String path) throws DataBaseException{
+	private void cargarSubReportes(String nombrePadre, Map parameters) throws SQLException{
+		
+		Criteria criteria = getSession().createCriteria(Reporte.class);
+		criteria.add(Restrictions.eq("nombreReportePadre", nombrePadre));
+			
+		List<Reporte> lista = criteria.list();		
+		for (Reporte reporte : lista) {
+			
+			parameters.put(reporte.getNombreReporte(), reporte.getArchivoReporte().getBinaryStream());			
+		}
+	}
+	
+	public byte[] generarReporte(String nombreReporte, Map parameters) throws DataBaseException{
 		
 		byte[] bytes = null;
 		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoPorProductorYFecha.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("idProd", idProd);
-			parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
-			parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+			InputStream input = obtenerReporte(nombreReporte);
+			this.cargarSubReportes(nombreReporte, parameters);
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);					
 			
 			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
+
 		} catch (JRException e) {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		} catch (HibernateException he) {
@@ -167,6 +159,6 @@ public class ReportesDAO extends HibernateDaoSupport {
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
 		}
-		return bytes;		
-	}	*/
+		return bytes;	
+	}	
 }

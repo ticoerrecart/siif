@@ -164,5 +164,16 @@ public class TipoProductoForestalFachada implements ITipoProductoForestalFachada
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}		
+	}
+	
+	public TipoProductoExportacion recuperarTipoProductoExportacion(long id)throws NegocioException{
+		
+		try{
+			return datosSistemaDAO.recuperarTipoProductoExportacion(id);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
 	}	
+	
 }

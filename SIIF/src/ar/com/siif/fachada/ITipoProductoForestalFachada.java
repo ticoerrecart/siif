@@ -6,6 +6,7 @@ import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoExportacionDTO;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -36,5 +37,7 @@ public interface ITipoProductoForestalFachada {
 	public TipoProductoDTO recuperarTipoProductoExportacionDTO(long id)throws NegocioException;	
 	
 	public void modificacionTipoProductoExportacion(TipoProductoDTO tipoProductoDTO) throws NegocioException;
+	
+	public TipoProductoExportacion recuperarTipoProductoExportacion(long id)throws NegocioException;	
 	
 }

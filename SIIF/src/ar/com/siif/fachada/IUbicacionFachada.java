@@ -79,4 +79,6 @@ public interface IUbicacionFachada {
 	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor) throws NegocioException;	
 	
 	public String getTipoTerrenoPMF(Long idPMF);
+	
+	public PMF getPMF(Long idPF);
 }

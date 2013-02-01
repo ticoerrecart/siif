@@ -210,4 +210,13 @@ public class LocalidadFachada implements ILocalidadFachada {
 			throw new NegocioException(e.getMessage());
 		}			
 	}	
+	
+	public LocalidadDestino getLocalidadDestinoPorId(Long id)throws NegocioException{
+		try{
+			return localidadDAO.getLocalidadDestinoPorId(id);
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}	
 }

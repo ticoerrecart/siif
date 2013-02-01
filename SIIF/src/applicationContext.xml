@@ -74,6 +74,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="reportesPorProductorDAO" class="ar.com.siif.dao.ReportesPorProductorDAO" parent="abstractRepository" />
 	<bean id="reportesPorProductoDAO" class="ar.com.siif.dao.ReportesPorProductoDAO" parent="abstractRepository" />
 	<bean id="reportesRecaudacionDAO" class="ar.com.siif.dao.ReportesRecaudacionDAO" parent="abstractRepository" />
+	<bean id="certificadoDeOrigenDAO" class="ar.com.siif.dao.CertificadoDeOrigenDAO" parent="abstractRepository" />
 	
 	
 	<!--  *******************-->
@@ -356,7 +357,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<!-- REPORTES POR PRODUCTOR --> 
 	<bean id="reportesPorProductorFachadaImpl" class="ar.com.siif.fachada.ReportesPorProductorFachada">
-		<constructor-arg ref="reportesPorProductorDAO" />
+		<constructor-arg ref="reportesDAO" />
 	</bean>	
 
 	<bean id="reportesPorProductorFachada"
@@ -378,7 +379,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<!-- REPORTES POR PRODUCTO --> 
 	<bean id="reportesPorProductoFachadaImpl" class="ar.com.siif.fachada.ReportesPorProductoFachada">
-		<constructor-arg ref="reportesPorProductoDAO" />
+		<constructor-arg ref="reportesDAO" />
 	</bean>	
 
 	<bean id="reportesPorProductoFachada"
@@ -400,7 +401,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 
 	<!-- REPORTES RECAUDACION --> 
 	<bean id="reportesRecaudacionFachadaImpl" class="ar.com.siif.fachada.ReportesRecaudacionFachada">
-		<constructor-arg ref="reportesRecaudacionDAO" />
+		<constructor-arg ref="reportesDAO" />
 	</bean>	
 
 	<bean id="reportesRecaudacionFachada"
@@ -490,6 +491,34 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="guiaForestalFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.IGuiaForestalFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
+
+	<!-- CERTIFICADO ORIGEN --> 
+	<bean id="certificadoDeOrigenFachadaImpl" class="ar.com.siif.fachada.CertificadoDeOrigenFachada">
+		<constructor-arg ref="certificadoDeOrigenDAO" />
+		<constructor-arg ref="usuarioFachada" />
+		<constructor-arg ref="entidadFachada" />
+		<constructor-arg ref="tipoProductoForestalFachada" />
+		<constructor-arg ref="ubicacionFachada" />
+		<constructor-arg ref="localidadFachada" />
+		
+	</bean>	
+
+	<bean id="certificadoDeOrigenFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="certificadoDeOrigenFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.ICertificadoDeOrigenFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>

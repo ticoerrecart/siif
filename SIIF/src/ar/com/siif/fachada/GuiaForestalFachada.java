@@ -290,4 +290,44 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			throw new NegocioException(e.getMessage());
 		}			
 	}	
+	
+	/*
+	public List<GuiaForestalDTO> recuperarGuiasParaCertificado(long idProductor, String periodo, long idPMF)throws NegocioException
+	{
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = guiaForestalDAO.recuperarGuiasPorProductorPeriodoPMF(idProductor,periodo,idPMF);
+			
+			GuiaForestalDTO guiaDTO;
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				guiaDTO = ProviderDTO.getGuiaForestalDTO(guiaForestal);
+				//listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+				
+				this.armarGuiaParaCertificado(guiaDTO);
+			}		
+				
+			return listaGuiasForestalesDTO;
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}
+	
+	private void armarGuiaParaCertificado(GuiaForestalDTO guiaDTO){
+		
+		double montoPagado = 0;
+		for (BoletaDepositoDTO boletaDTO : guiaDTO.getBoletasDeposito()) {
+			
+			if(boletaDTO.getFechaPago() != null){
+				montoPagado = montoPagado + boletaDTO.getMonto();
+			}
+		}
+		
+		double importeLenia = 0;
+		for (SubImporteDTO subImporteDTO : guiaDTO.getSubImportes()) {
+			if(subImporteDTO.getTipoProducto().getId() == 3L){
+				importeLenia = subImporteDTO.getImporte()*1.2;//Lo multiplico por 1.2 para agregarle el impuesto a la fiscalizacion			
+			}			
+		}
+	}*/
 }

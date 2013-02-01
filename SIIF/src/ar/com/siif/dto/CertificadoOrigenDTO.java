@@ -34,7 +34,7 @@ public class CertificadoOrigenDTO {
 
 	private LocalidadDestinoDTO localidadDestino;
 	
-	private List<TipoProductoExportacionDTO> tiposProductoExportacion;
+	private List<TipoProductoEnCertificadoDTO> tiposProductoEnCertificado;
 	
 	private double volumenTotalTipoProductos;
 	
@@ -48,7 +48,7 @@ public class CertificadoOrigenDTO {
 		productor = new EntidadDTO();
 		pmf = new PMFDTO();
 		localidadDestino = new LocalidadDestinoDTO();
-		tiposProductoExportacion = new ArrayList<TipoProductoExportacionDTO>();
+		tiposProductoEnCertificado = new ArrayList<TipoProductoEnCertificadoDTO>();
 		usuarioAlta = new UsuarioDTO();
 	}
 	
@@ -140,15 +140,6 @@ public class CertificadoOrigenDTO {
 		this.localidadDestino = localidadDestino;
 	}
 
-	public List<TipoProductoExportacionDTO> getTiposProductoExportacion() {
-		return tiposProductoExportacion;
-	}
-
-	public void setTiposProductoExportacion(
-			List<TipoProductoExportacionDTO> tiposProductoExportacion) {
-		this.tiposProductoExportacion = tiposProductoExportacion;
-	}
-
 	public double getVolumenTotalTipoProductos() {
 		return volumenTotalTipoProductos;
 	}
@@ -171,6 +162,23 @@ public class CertificadoOrigenDTO {
 
 	public void setUsuarioAlta(UsuarioDTO usuarioAlta) {
 		this.usuarioAlta = usuarioAlta;
+	}
+
+	public Long getNroCertificado() {
+		return nroCertificado;
+	}
+
+	public void setNroCertificado(Long nroCertificado) {
+		this.nroCertificado = nroCertificado;
+	}
+
+	public List<TipoProductoEnCertificadoDTO> getTiposProductoEnCertificado() {
+		return tiposProductoEnCertificado;
+	}
+
+	public void setTiposProductoEnCertificado(
+			List<TipoProductoEnCertificadoDTO> tiposProductoEnCertificado) {
+		this.tiposProductoEnCertificado = tiposProductoEnCertificado;
 	}	
 	
 	
