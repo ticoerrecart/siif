@@ -41,18 +41,26 @@ if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="O
 if (document.all) type="IE"; 
 if (!document.all && document.getElementById) type="MO";
 
-function volverAltaGuia(){	
-	
-	var entidad = $('#paramIdTipoDeEntidad').val();
-	var productor = $('#paramProductor').val();
-	var rodal = $('#idRodal').val();
-	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idRodal=' + rodal;		
-}
-
 function submitir(){
 
-	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
+
+	var exportadorEnabled = $('#idExportador').attr('disabled');
+	var productorEnabled = $('#idProductor').attr('disabled');
+	var pmfEnabled = $('#idPMF').attr('disabled');
+	var localidadEnabled = $('#idLocalidad').attr('disabled');	
+	
+	$('#idExportador').attr('disabled',false);
+	$('#idProductor').attr('disabled',false);
+	$('#idPMF').attr('disabled',false);
+	$('#idLocalidad').attr('disabled',false);
+
+	validarForm("certificadoOrigenForm","../certificadoOrigen","validarCertificadoOrigenForm","CertificadoOrigenForm");
+
+	$('#idExportador').attr('disabled',exportadorEnabled);
+	$('#idProductor').attr('disabled',productorEnabled);
+	$('#idPMF').attr('disabled',pmfEnabled);
+	$('#idLocalidad').attr('disabled',localidadEnabled);
+	
 }
 
 function exp(sec) {
@@ -96,39 +104,6 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 }
 
 
-var clase2;
-function pintarFila(idTr){
-
-	$('#tr'+idTr).attr("class", "seleccionado");	
-}
-
-function despintarFila(idTr){
-
-	if(!$('#idCheck'+idTr).is(':checked')){
-		if(idTr%2){
-			clase2 = "par";		
-		}else{
-			clase2 = "";
-		}	
-		$('#tr'+idTr).attr("class", clase2);
-	}		
-}
-
-function mostrarFiscalizacion(idFiscalizacion){
-
-	$("#idGuia").hide();	
-	$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
-	$("#idDivFiscalizacion").show(); 
-	$("#errores").hide();
-}
-
-function volverAltaGFB(){
-
-	$("#idGuia").show();
-	$("#idDivFiscalizacion").hide();
-	$("#idDivFiscalizacion").empty();
-	$("#errores").show();
-}
 
 
 
@@ -142,7 +117,7 @@ function volverAltaGFB(){
 <div id="errores" class="rojoAdvertencia">${warning}</div>
 
 <div id="idGuia">
-<html:form action="certificadoOrigen" styleId="CertificadoOrigenForm">
+<html:form action="certificadoOrigen" styleId="certificadoOrigenForm">
 	<html:hidden property="metodo" value="altaCertificadoOrigen" />
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
@@ -231,7 +206,7 @@ function volverAltaGFB(){
 						
 						<td width="21%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 						<td width="32%" align="center">
-							<select id="idProductor" class="botonerab" style="width: 16em" name="fiscalizacionDTO.productorForestal.id" 
+							<select id="idProductor" class="botonerab" style="width: 16em" name="certificadoOrigenDTO.productor.id"
 									onchange="actualizarComboPMF();" disabled="disabled">
 								<option value="-1">-Seleccione un Productor-</option>
 							</select>
@@ -243,7 +218,8 @@ function volverAltaGFB(){
 							<bean:message key='SIIF.label.PeríodoForestal'/>							
 						</td>						
 						<td width="30%" align="center">
-							<select id="periodo" class="botonerab" style="width: 16em" onchange="mostrarFiscalizaciones();">
+							<select id="periodo" class="botonerab" style="width: 16em" onchange="mostrarFiscalizaciones();"
+									name="certificadoOrigenDTO.periodoForestal">
 								<c:forEach items="${periodos}" var="per">
 									<option value="${per.periodo}">
 										<c:out value="${per.periodo}"></c:out>
@@ -256,7 +232,8 @@ function volverAltaGFB(){
 							<bean:message key='SIIF.label.PlanManejoForestal'/>						
 						</td>
 						<td width="32%" align="center">
-							<select id="idPMF" class="botonerab" disabled="disabled" style="width: 16em" onchange="mostrarFiscalizaciones();">
+							<select id="idPMF" class="botonerab" disabled="disabled" style="width: 16em" onchange="mostrarFiscalizaciones();"
+									name="certificadoOrigenDTO.pmf.id">
 								<option value="-1">- Seleccione -</option>						
 							</select>	
 						</td>																
@@ -267,7 +244,7 @@ function volverAltaGFB(){
 							<bean:message key='SIIF.label.ReservaForestal'/>
 						</td>						
 						<td width="30%" align="center">
-							<input class="botonerab" type="text" size="27" id="idReservaForestal">					
+							<input class="botonerab" type="text" size="27" id="idReservaForestal" name="certificadoOrigenDTO.reservaForestal">					
 						</td>	
 						
 						<td colspan="2"></td>
@@ -279,14 +256,15 @@ function volverAltaGFB(){
 							<bean:message key='SIIF.label.NroFactura'/>
 						</td>						
 						<td width="30%" align="center">
-							<input class="botonerab" type="text" size="27" id="idNroFactura" onkeypress="javascript:esNumerico(event);">					
+							<input class="botonerab" type="text" size="27" id="idNroFactura" onkeypress="javascript:esNumerico(event);"
+									name="certificadoOrigenDTO.nroFactura">					
 						</td>	
 						<td width="21%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.VolumenTransferido'/>						
 						</td>
 						<td width="32%" align="center">
-							<input class="botonerab" type="text" size="27" id="idVolumenTransferido" 
-									onkeypress="javascript:esNumericoConDecimal(event);">
+							<input class="botonerab" type="text" id="idVolumenTransferido" name="certificadoOrigenDTO.volumenTransferido"
+									size="27" onkeypress="javascript:esNumericoConDecimal(event);">
 						</td>																
 					</tr>					
 					
@@ -321,15 +299,17 @@ function volverAltaGFB(){
 		<tr>
 			<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha'/></td>
 			<td align="left" width="35">		
-				<input id="datepickerFecha" type="text" name="guiaForestal.fecha" readonly="readonly" class="botonerab">
+				<input id="datepickerFecha" type="text" name="certificadoOrigenDTO.fecha" readonly="readonly" class="botonerab">
 				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>				
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Usuario'/></td>
-			<td align="left" width="35">			
-				<input id="idUsuarioAlta" type="hidden" name="" readonly="readonly" class="botonerab" 
-						value="<c:out value="${usuarioAlta.id}"></c:out>">		
+			<td align="left" width="35">
+						
+				<input id="idUsuarioAlta" type="hidden" readonly="readonly" class="botonerab" 
+						name="certificadoOrigenDTO.usuarioAlta.id" value="<c:out value='${usuarioAlta.id}'></c:out>">
+								
 				<input type="text" name="" readonly="readonly" class="botonerab" 
-						value="<c:out value="${usuarioAlta.nombreUsuario}"></c:out>">							
+						value="<c:out value='${usuarioAlta.nombreUsuario}'></c:out>">							
 			</td>			
 		</tr>
 		<tr>

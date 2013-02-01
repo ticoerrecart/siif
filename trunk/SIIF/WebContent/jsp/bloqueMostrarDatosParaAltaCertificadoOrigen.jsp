@@ -83,7 +83,7 @@ function calcularVolumenTiposProductos(){
 					<td class="botoneralNegritaRight">Volumen Total Fiscalizado</td>
 					<td>
 						<input class="botonerab" type="text" size="27" id="idVolumentTotalFiscalizado" readonly="readonly"
-						value="<c:out value="${volFiscalizadoTotal}"></c:out>">
+						value="<c:out value='${volFiscalizadoTotal}'></c:out>">
 					</td>					
 				</tr>				
 				
@@ -91,7 +91,7 @@ function calcularVolumenTiposProductos(){
 			<br>
 			<br>
 			
-		<!-- GUIAS FORESTALES -->				
+		<!-- GUIAS FORESTALES 				
 			<table border="0" class="cuadradoSinBorde" align="center" width="75%" cellpadding="2">
 				<tr>
 					<td class="botoneralNegritaLeftGrande">
@@ -122,7 +122,7 @@ function calcularVolumenTiposProductos(){
 				</tr>													
 			</table>			
 			<br>
-			<br>
+			<br>-->
 						
 		<!-- ESTADO DE DEUDA DEL PRODUCTOR -->	
 			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
@@ -135,7 +135,8 @@ function calcularVolumenTiposProductos(){
 				<tr>
 					<td width="5%"></td>				
 					<td width="55%" class="botoneralNegritaLeft" id="idSubtituloDeuda">
-						<bean:message key='SIIF.label.DeudaConDGB'/>						
+						<bean:message key='SIIF.label.DeudaConDGB'/>
+						<input type="hidden" name="tieneDeuda" value="<c:out value='${deuda}'></c:out>">						
 					</td>
 					<c:choose>
 						<c:when test="${deuda}">
@@ -151,7 +152,8 @@ function calcularVolumenTiposProductos(){
 					</c:choose>																	
 				</tr>	
 				<tr>
-					<td width="5%"></td>	
+					<td width="5%">						
+					</td>	
 					
 					<c:choose>
 						<c:when test="${deuda}">
@@ -159,10 +161,10 @@ function calcularVolumenTiposProductos(){
 								<bean:message key='SIIF.label.ActaReconocimientoDeuda'/>						
 							</td>
 							<td width="40%" class="botonerab" align="left">
-								<input type="hidden" value="N" id="idRadioDeuda">
-								<input type="radio" class="botonerab" name="radioDeuda" onclick="cambiarRadio('S');">SI
+								<input type="hidden" value="N" id="idRadioDeuda" name="radioDeuda">
+								<input type="radio" class="botonerab" name="radio" onclick="cambiarRadio('S');">SI
 								/
-								<input type="radio" class="botonerab" checked="checked" name="radioDeuda" onclick="cambiarRadio('N');">NO
+								<input type="radio" class="botonerab" checked="checked" name="radio" onclick="cambiarRadio('N');">NO
 							</td>
 						</c:when>
 						<c:otherwise>
@@ -198,12 +200,14 @@ function calcularVolumenTiposProductos(){
 				<tr>
 					<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.OrigenMateriaPrima'/></td>
 					<td width="30%">
-						<input class="botonerab" type="text" size="27" id="idOrigenMateriaPrima" value="Tierra del Fuego">
+						<input class="botonerab" type="text" size="27" id="idOrigenMateriaPrima" value="Tierra del Fuego"
+								name="certificadoOrigenDTO.origenMateriaPrima">
 					</td>
 					
 					<td width="21%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroRemito'/></td>
 					<td width="32%" align="center">
-						<input class="botonerab" type="text" size="27" id="idNroRemito" onkeypress="javascript:esNumerico(event);">
+						<input class="botonerab" type="text" size="27" id="idNroRemito" onkeypress="javascript:esNumerico(event);"
+								name="certificadoOrigenDTO.nroRemito">
 					</td>																
 				</tr>	
 				
@@ -222,7 +226,8 @@ function calcularVolumenTiposProductos(){
 					
 					<td width="21%" class="botoneralNegritaRight"><bean:message key='SIIF.label.LocalidadDestino'/></td>
 					<td width="32%" align="center">
-						<select id="idLocalidad" class="botonerab" onchange="" disabled="disabled">
+						<select id="idLocalidad" class="botonerab" onchange="" disabled="disabled" 
+								name="certificadoOrigenDTO.localidadDestino.id">
 							<option value="-1">-Seleccione una Localidad-</option>
 						</select>																
 					</td>	
@@ -266,10 +271,14 @@ function calcularVolumenTiposProductos(){
 										<c:out value="${tipoProducto.nombre}"></c:out>
 									</td>
 									<td align="center">
+										<input type="hidden" value="<c:out value="${tipoProducto.id}"></c:out>" 
+												name="tiposProductoEnCertificado[<c:out value='${i.count-1}'></c:out>].tipoProductoExportacion.id">
+									
 										<input class="botonerab" id="idTipoProd<c:out value='${i.count}'></c:out>" 
 												type="text" value="" size="12" onkeypress="javascript:esNumericoConDecimal(event);"
 												onblur="javascript:calcularVolumenTiposProductos();"
-												onkeyup="javascript: twoDigits(this);"> 
+												onkeyup="javascript: twoDigits(this);" 
+												name="tiposProductoEnCertificado[<c:out value='${i.count-1}'></c:out>].volumenTipoProducto"> 
 									</td>											
 								</tr>
 							</c:forEach>											
@@ -282,7 +291,7 @@ function calcularVolumenTiposProductos(){
 								</td>
 								<td class="grisClaroSubtituloCenter" width="40%">
 									<input class="botonerab" type="text" size="12" id="idVolumentTotalTiposProductos" 
-											readonly="readonly" value="0">
+											readonly="readonly" value="0" name="certificadoOrigenDTO.volumenTotalTipoProductos">
 								</td>					
 							</tr>
 						</table>					
@@ -312,7 +321,7 @@ function calcularVolumenTiposProductos(){
 						<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">			
 							<tr>
 								<td class="grisClaroSubtituloLeft" width="60%">
-									Volumen habilitado para cosecha
+									Volúmen habilitado para cosecha
 								</td>
 								<td class="grisClaroSubtituloCenter" width="40%">
 									<input class="botonerab" id="idVolHabParaCosecha" type="text" 
@@ -322,7 +331,7 @@ function calcularVolumenTiposProductos(){
 							</tr>
 							<tr>
 								<td class="grisClaroSubtituloLeft">
-									Volumen habilitado procesado para exportar
+									Volúmen habilitado procesado para exportar
 								</td>
 								<td class="grisClaroSubtituloCenter">
 									<input class="botonerab" id="idVolHabProc" type="text" 
@@ -332,21 +341,21 @@ function calcularVolumenTiposProductos(){
 							</tr>
 							<tr>
 								<td class="grisClaroSubtituloLeft">
-									Volumen exportado
+									Volúmen exportado
 								</td>
 								<td class="grisClaroSubtituloCenter">
 									<input class="botonerab" id="idVolExp" type="text" 
-											value="" 
+											value="<c:out value="${volumenExportado}"></c:out>" 
 											size="12" readonly="readonly"> 
 								</td>											
 							</tr>
 							<tr>
 								<td class="grisClaroSubtituloLeft">
-									Volumen por exportar
+									Volúmen máximo permitido por exportar
 								</td>
 								<td class="grisClaroSubtituloCenter">
 									<input class="botonerab" id="idVolPorExp" type="text" 
-											value="" 
+											value=""  name="volumenMaximoParaExportar"
 											size="12" readonly="readonly"> 
 								</td>											
 							</tr>																								
@@ -372,4 +381,9 @@ function calcularVolumenTiposProductos(){
 	var volHabProcesado = $("#idVolHabProc").val();
 	volHabProcesado = roundNumber(volHabProcesado,2);
 	$("#idVolHabProc").val(volHabProcesado);	
+
+	var volExp = $("#idVolExp").val();
+	var volMaxExp = volHabProcesado - volExp;
+
+	$("#idVolPorExp").val(roundNumber(volMaxExp,2));
 </script>
