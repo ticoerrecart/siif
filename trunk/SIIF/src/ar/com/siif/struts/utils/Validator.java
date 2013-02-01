@@ -89,7 +89,7 @@ public abstract class Validator {
 		}
 		return true;
 	}
-
+		
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
@@ -813,4 +813,23 @@ public abstract class Validator {
 		return true;
 	}
 
+	public static boolean validarVolumenExportacionCertificadoOrigen(double volumenTotalTipoProducto, 
+																	 double volumenMaximoPermitido, 
+																	 StringBuffer pError)
+	{	
+		if(volumenTotalTipoProducto > volumenMaximoPermitido){
+			addErrorXML(pError, "El volúmen total debe ser menor al volúmen máximo permitido para exportar");
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validarDeudaCertificadoOrigen(boolean tieneDeuda, String radioDeuda, StringBuffer pError)
+	{	
+		if(tieneDeuda && radioDeuda.equals("N")){
+			addErrorXML(pError, "El Productor tiene deudas con la Dirección General de Bosques en concepto de aforo");
+			return false;
+		}
+		return true;
+	}		
 }

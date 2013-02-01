@@ -6,6 +6,7 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.negocio.Localidad;
+import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.exception.NegocioException;
 
 public interface ILocalidadFachada {
@@ -43,4 +44,6 @@ public interface ILocalidadFachada {
 	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id)throws NegocioException;
 	
 	public void modificacionLocalidadDestino(LocalidadDestinoDTO localidadDTO) throws NegocioException;
+	
+	public LocalidadDestino getLocalidadDestinoPorId(Long id)throws NegocioException;	
 }

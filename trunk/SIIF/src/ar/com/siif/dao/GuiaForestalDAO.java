@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -309,4 +310,29 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
 		}			
 	}	
+	
+	/*
+	public List<GuiaForestal> recuperarGuiasPorProductorPeriodoPMF(long idProductor, String periodo, long idPMF)throws DataBaseException 
+	{
+		try{
+			String q = "from GuiaForestal where productorForestal.id = :idPf and periodoForestal = :periodo "+
+						  "and rodal.marcacion.tranzon.pmf.id = :idPmf "+
+						  "order by nroGuia";
+			Query query = getSession().createQuery(q);
+			query.setParameter("idPf", idProductor);
+			query.setParameter("periodo", periodo);
+			query.setParameter("idPmf", idPMF);
+						
+			List<GuiaForestal> lista = query.list();
+	
+			return lista;			
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}				
+	}*/
 }

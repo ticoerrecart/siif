@@ -434,4 +434,11 @@ public class Constantes {
 	public static final Double minLargoTrineo = 1.5;
 
 	public static final Double maxLargoTrineo = 3.0;
+	
+	//CERTIFICADO ORIGEN
+	public static final String EXITO_ALTA_CERTIFICADO_ORIGEN = "El Certificado de Orígen se ha dado de alta con exito";
+	
+	public static final String ERROR_ALTA_CERTIFICADO_ORIGEN = "Ha ocurrido un error en el alta del Certificado de Orígen";
+	
+	public static final String ERROR_OBTENER_VOLUMEN_EXPORTADO = "Ha ocurrido un error en la obtención del volumen exportado";
 }

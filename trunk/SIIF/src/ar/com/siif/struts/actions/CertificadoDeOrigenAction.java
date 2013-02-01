@@ -5,21 +5,30 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jsx3.chart.CartesianChart;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dao.CertificadoDeOrigenDAO;
+import ar.com.siif.dto.CertificadoOrigenDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.fachada.ICertificadoDeOrigenFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
+import ar.com.siif.struts.actions.forms.CertificadoOrigenForm;
+import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.Fecha;
 
 public class CertificadoDeOrigenAction extends ValidadorAction {
 
@@ -64,6 +73,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			ITipoProductoForestalFachada tipoProductoForestalFachada = 
 										(ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");			
 			
+			ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
+																			.getBean("certificadoDeOrigenFachada");			
+			
 			String idProductor = request.getParameter("idProductor");
 			String periodo = request.getParameter("periodo");
 			String idPMF = request.getParameter("idPMF");
@@ -74,12 +86,20 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 			boolean deuda = guiaForestalFachada.verificarBoletasDepositoVencidasImpagas(Long.parseLong(idProductor));
 			
+			/*List<GuiaForestalDTO> listaGuiasForestales = 
+												guiaForestalFachada.recuperarGuiasParaCertificado(Long.parseLong(idProductor),periodo,
+																								  Long.parseLong(idPMF));
+			*/
+			double volumenExportado = certificadoOrigenFachada.obtenerVolumenExportado(Long.parseLong(idProductor),periodo,
+																					   Long.parseLong(idPMF));
+			
 			List<ProvinciaDestinoDTO> provincias = localidadFachada.getProvinciasDTO();
 			
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("deuda", deuda);
 			request.setAttribute("provincias", provincias);
 			request.setAttribute("tiposProductoExportacion", tipoProductoForestalFachada.recuperarTiposProductoExportacionDTO());
+			request.setAttribute("volumenExportado", volumenExportado);
 			//request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
 
 		} catch (Exception e) {
@@ -88,5 +108,109 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		}
 
 		return mapping.findForward(strForward);
-	}			
+	}
+	
+	@SuppressWarnings("unchecked")						 
+	public ActionForward altaCertificadoOrigen(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String strForward = "exitoAltaCertificadoOrigen";
+
+		try {
+			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			WebApplicationContext ctx = getWebApplicationContext();
+			ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
+																	.getBean("certificadoDeOrigenFachada");			
+			
+			CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm)form;
+			certificadoOrigenForm.normalizarListaTiposProducto();
+			
+			CertificadoOrigenDTO certificadoOrigen = certificadoOrigenForm.getCertificadoOrigenDTO();
+			certificadoOrigen.setUsuarioAlta(usuario);
+			
+			certificadoOrigenFachada.altaCertificadoOrigen(certificadoOrigen,
+														   certificadoOrigenForm.getTiposProductoEnCertificado());
+			
+			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_CERTIFICADO_ORIGEN);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+	
+	
+	public boolean validarCertificadoOrigenForm(StringBuffer error, ActionForm form) {
+		
+		CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm)form;
+		CertificadoOrigenDTO certificadoDTO = certificadoOrigenForm.getCertificadoOrigenDTO();
+		
+		boolean ok = true;
+		boolean ok1 = true;
+		boolean ok2 = true;
+		boolean ok3 = true;
+		boolean ok4 = true;
+		boolean ok5 = true;
+		boolean ok6 = true;
+		boolean ok7 = true;
+		boolean ok8 = true;
+		boolean ok9 = true;
+		boolean ok10 = true;
+		boolean ok11 = true;
+		boolean ok12 = true;
+		
+		ok = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getExportador().getId()), 
+											 "Exportador",error);		
+
+		ok1 = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getProductor().getId()), 
+				 							 "Productor Forestal",error);
+		
+		ok2 = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getPmf().getId()), 
+				 							 "Plan de Manejo Forestal",error);
+		
+		ok3 = Validator.requerido(certificadoDTO.getReservaForestal(), "Reserva Forestal", error);
+		
+		ok4 = Validator.requerido(certificadoDTO.getNroFactura(), "Nro Factura", error);
+		
+		if(ok4){
+			ok4 = Validator.validarDoubleMayorQue(0, certificadoDTO.getNroFactura(),"Nro Factura", error);
+		}		
+		
+		ok5 = Validator.requerido(Double.toString(certificadoDTO.getVolumenTransferido()), "Volúmen Transferido", error);
+		
+		if(ok5){
+			ok5 = Validator.validarDoubleMayorQue(0, Double.toString(certificadoDTO.getVolumenTransferido()),
+												 "Volúmen Transferido", error);
+		}
+		
+		ok6 = Validator.requerido(certificadoDTO.getOrigenMateriaPrima(), "Origen Materia Prima", error);
+		
+		ok7 = Validator.requerido(certificadoDTO.getNroRemito(), "Nro Remito", error);
+		
+		if(ok7){
+			ok7 = Validator.validarDoubleMayorQue(0, certificadoDTO.getNroRemito(),"Nro Remito", error);
+		}
+		
+		certificadoDTO.getLocalidadDestino().setId((certificadoDTO.getLocalidadDestino().getId() == null)
+																	?-1:certificadoDTO.getLocalidadDestino().getId());
+		
+		ok8 = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getLocalidadDestino().getId()), 
+				 							  "Localdiad Destino",error);		
+		
+		ok9 = Validator.validarDoubleMayorQue(0, Double.toString(certificadoDTO.getVolumenTotalTipoProductos()),
+				 							   "Volúmen Total", error);
+		
+		ok10 = Validator.requerido(certificadoDTO.getFecha(), "Fecha",error);		
+		
+		ok11 = Validator.validarVolumenExportacionCertificadoOrigen(certificadoDTO.getVolumenTotalTipoProductos(),
+																	certificadoOrigenForm.getVolumenMaximoParaExportar(),
+																	error); 
+		
+		ok12 = Validator.validarDeudaCertificadoOrigen(certificadoOrigenForm.isTieneDeuda(),certificadoOrigenForm.getRadioDeuda(),error);
+		
+		return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12;				
+	}
+
 }

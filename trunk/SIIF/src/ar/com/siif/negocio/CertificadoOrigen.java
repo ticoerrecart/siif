@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -60,7 +61,9 @@ public class CertificadoOrigen {
 	@JoinColumn(name = "localidadDestino_fk")
 	private LocalidadDestino localidadDestino;
 	
-	private List<TipoProductoExportacion> tiposProductoExportacion = new ArrayList<TipoProductoExportacion>();
+	@OneToMany(mappedBy = "certificadoOrigen")
+	@Cascade(value = CascadeType.SAVE_UPDATE)	
+	private List<TipoProductoEnCertificado> tiposProductoEnCertificado= new ArrayList<TipoProductoEnCertificado>();
 	
 	private double volumenTotalTipoProductos;
 	
@@ -167,15 +170,6 @@ public class CertificadoOrigen {
 		this.localidadDestino = localidadDestino;
 	}
 
-	public List<TipoProductoExportacion> getTiposProductoExportacion() {
-		return tiposProductoExportacion;
-	}
-
-	public void setTiposProductoExportacion(
-			List<TipoProductoExportacion> tiposProductoExportacion) {
-		this.tiposProductoExportacion = tiposProductoExportacion;
-	}
-
 	public double getVolumenTotalTipoProductos() {
 		return volumenTotalTipoProductos;
 	}
@@ -199,4 +193,15 @@ public class CertificadoOrigen {
 	public void setUsuarioAlta(Usuario usuarioAlta) {
 		this.usuarioAlta = usuarioAlta;
 	}
+
+	public List<TipoProductoEnCertificado> getTiposProductoEnCertificado() {
+		return tiposProductoEnCertificado;
+	}
+
+	public void setTiposProductoEnCertificado(
+			List<TipoProductoEnCertificado> tiposProductoEnCertificado) {
+		this.tiposProductoEnCertificado = tiposProductoEnCertificado;
+	}
+	
+	
 }

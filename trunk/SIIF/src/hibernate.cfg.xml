@@ -47,6 +47,8 @@
 		<mapping class='ar.com.siif.negocio.Reporte' />
 		<mapping class='ar.com.siif.negocio.ProvinciaDestino' />
 		<mapping class='ar.com.siif.negocio.LocalidadDestino' />
+		<mapping class='ar.com.siif.negocio.CertificadoOrigen' />
+		<mapping class='ar.com.siif.negocio.TipoProductoEnCertificado' />
 		
 	</session-factory>
 </hibernate-configuration>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
+import ar.com.siif.dto.CertificadoOrigenDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
@@ -18,11 +19,13 @@ import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TipoProductoEnCertificadoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.BoletaDeposito;
+import ar.com.siif.negocio.CertificadoOrigen;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -41,6 +44,7 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoEnCertificado;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Tranzon;
@@ -304,7 +308,7 @@ public abstract class ProviderDominio {
 
 		return guia;
 	}
-
+	
 	public static BoletaDeposito getBoletaDeposito(GuiaForestal guia, BoletaDepositoDTO boletaDTO) {
 
 		BoletaDeposito boleta = new BoletaDeposito();
@@ -413,7 +417,46 @@ public abstract class ProviderDominio {
 		return localidad;
 	}	
 	
+	public static TipoProductoEnCertificado getTipoProductoEnCertificado(CertificadoOrigen certificadoOrigen,
+																  TipoProductoExportacion tipoProductoExportacion,
+																  TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO)
+	{	
+		TipoProductoEnCertificado tipoProdEnCertif = new TipoProductoEnCertificado();
+		
+		tipoProdEnCertif.setCertificadoOrigen(certificadoOrigen);
+		tipoProdEnCertif.setTipoProductoExportacion(tipoProductoExportacion);
+		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO.getVolumenTipoProducto());
+		
+		return tipoProdEnCertif;
+	}
 	
+	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO, Usuario usuario, Entidad productor,
+														 Entidad exportador, LocalidadDestino localidadDestino, PMF pmf, Date fecha,
+														 List<TipoProductoEnCertificado> listaTipoProdEnCert)
+	{
+		CertificadoOrigen certificado = new CertificadoOrigen();
+		
+		certificado.setExportador(exportador);
+		certificado.setFecha(fecha);
+		certificado.setLocalidadDestino(localidadDestino);
+		certificado.setNroFactura(certificadoDTO.getNroFactura());
+		certificado.setNroRemito(certificadoDTO.getNroRemito());
+		certificado.setOrigenMateriaPrima(certificadoDTO.getOrigenMateriaPrima());
+		certificado.setPeriodoForestal(certificadoDTO.getPeriodoForestal());
+		certificado.setPmf(pmf);
+		certificado.setProductor(productor);
+		certificado.setReservaForestal(certificadoDTO.getReservaForestal());		
+		certificado.setUsuarioAlta(usuario);
+		certificado.setVolumenTotalTipoProductos(certificadoDTO.getVolumenTotalTipoProductos());
+		certificado.setVolumenTransferido(certificadoDTO.getVolumenTransferido());
+		
+		for (TipoProductoEnCertificado tipoProductoEnCertificado : listaTipoProdEnCert) {
+			tipoProductoEnCertificado.setCertificadoOrigen(certificado);
+		}
+		certificado.setTiposProductoEnCertificado(listaTipoProdEnCert);
+		
+		return certificado;
+	}	
 	
 	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
 
