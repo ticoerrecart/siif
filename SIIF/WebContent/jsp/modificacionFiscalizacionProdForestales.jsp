@@ -328,6 +328,20 @@ $(function() {
 						<tr>
 							<td height="10" colspan="3"></td>
 						</tr>
+						<tr id="diametros" style="display:none">
+							<td width="35%" class="botoneralNegritaRight" align="right">
+								1 Diámetro <input type="radio" name="diametros" value="1" onchange="cambiarDiametro();"/>
+							</td>
+							<td class="botoneralNegritaLeft" align="left">
+								2 Diámetros <input type="radio" name="diametros" value="2" onchange="cambiarDiametro();"/>
+							</td>
+							<td width="35%" align="left">
+								&nbsp;
+							</td>
+						<tr>
+						<tr>
+							<td height="10" colspan="3"></td>
+						</tr>
 						<tr>
 							<td colspan="3">
 								<table id="tablaMuestras" border="0" class="cuadrado"
