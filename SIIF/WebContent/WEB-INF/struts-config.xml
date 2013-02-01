@@ -374,7 +374,8 @@
 		<action path="/certificadoOrigen" type="ar.com.siif.struts.actions.CertificadoDeOrigenAction"
 			parameter="metodo" name="certificadoOrigenForm" scope="session">
 			<forward name="exitoInicializarAltaCertificadoOrigen" path=".altaCertificadoOrigen" />
-			<forward name="exitoRecuperarDatosParaAltaCertificadoOrigen" path="/jsp/bloqueMostrarDatosParaAltaCertificadoOrigen.jsp" />			
+			<forward name="exitoRecuperarDatosParaAltaCertificadoOrigen" path="/jsp/bloqueMostrarDatosParaAltaCertificadoOrigen.jsp" />
+			<forward name="exitoAltaCertificadoOrigen" path="/certificadoOrigen.do?metodo=inicializarAltaCertificadoOrigen" />					
 		</action>
 		<!-- FIN CERTIFICADO ORIGEN -->		
 		
