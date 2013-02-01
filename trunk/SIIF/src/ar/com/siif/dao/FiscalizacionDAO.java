@@ -231,7 +231,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 					.add(Restrictions.isNull("guiaForestal")));
 
 			criteria.addOrder(Order.asc("rod.id"));
-			criteria.addOrder(Order.asc("tp.id"));
+			/*criteria.addOrder(Order.asc("tp.id"));*/
 			criteria.addOrder(Order.asc("fecha"));
 
 			List<Fiscalizacion> fiscalizaciones = criteria.list();
