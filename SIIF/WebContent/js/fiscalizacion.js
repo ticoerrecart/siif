@@ -295,7 +295,10 @@
 					break;
 				}
 			}
-			$('[name="fiscalizacionDTO.tamanioMuestra"]').val(cantTotales);
+			
+			if(cantTotales>=0){
+				$('[name="fiscalizacionDTO.tamanioMuestra"]').val(cantTotales);
+			}
 		//}
 
 	}
@@ -310,6 +313,11 @@
 	function actualizarMuestras() {
 		//$('#cantidadMts').val('');
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+		
+		if ($('#tablaMuestras tr').size() > 0) {
+			$("#headerT").remove();
+			$("#tablaMuestras").prepend(headerTabla);
+		}
 
 		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
