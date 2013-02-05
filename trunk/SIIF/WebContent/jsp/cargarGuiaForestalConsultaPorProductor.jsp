@@ -91,29 +91,44 @@ function mostrarFiscalizacion(idFiscalizacion){
 	$("#errores").hide();
 }
 
+function expBoletaNro(){
+	var idBoletaExp = $('#expBoleta').val();
+	$('[id="idTrBoleta' + idBoletaExp +'"]').show();
+}
+
+function expBoletasPagas(){
+	$('td.verdeExitoLeft').parents('[id^="idTrBoleta"]').show();
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTrBoleta"]').hide();
+}
+
+function expBoletasImpagas(){
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTrBoleta"]').show();
+	$('td.verdeExitoLeft').parents('[id^="idTrBoleta"]').hide();	
+}
+
 function expValeNro(){
 	var idValeExp = $('#expVale').val();
-	$('[id="idTr' + idValeExp +'"]').show();
+	$('[id="idTrVale' + idValeExp +'"]').show();
 }
 
 function expValesDevueltos(){
-	$('td.verdeExitoLeft').parents('[id^="idTr"]').show();
-	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').hide();
+	$('td.verdeExitoLeft').parents('[id^="idTrVale"]').show();
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTrVale"]').hide();
 }
 
 function expValesNoDevueltos(){
-	$('td.rojoAdvertenciaLeft').parents('[id^="idTr"]').show();
-	$('td.verdeExitoLeft').parents('[id^="idTr"]').hide();	
+	$('td.rojoAdvertenciaLeft').parents('[id^="idTrVale"]').show();
+	$('td.verdeExitoLeft').parents('[id^="idTrVale"]').hide();	
 }
 
-function pintarFilaVale(idTr){
+function pintarFilaVale(idTd){
 
-	$('#tdVale'+idTr).attr("class", "verdeSubtitulo");	
+	$('#'+idTd).attr("class", "verdeSubtitulo");	
 }
 
-function despintarFilaVale(idTr){
+function despintarFilaVale(idTd){
 	
-	$('#tdVale'+idTr).attr("class", "grisSubtitulo");		
+	$('#'+idTd).attr("class", "grisSubtitulo");		
 }
 
 function volverAltaGFB(){
@@ -446,102 +461,118 @@ function volverAltaGFB(){
 				<tr>
 					<td colspan="4" class="azulAjustado"><bean:message key='SIIF.label.BoletasDeposito'/></td>
 				</tr>				
-
 				<tr>
-					<td height="10" colspan="4"></td>
+					<td colspan="4"  class="azulAjustado">
+								<button class="botonerab" onclick="expBoletasImpagas();"> Expandir Boletas Impagas </button> 
+								<button class="botonerab" onclick="expBoletasPagas();"> Expandir Boletas Pagas </button>
+								<button class="botonerab" onclick="expBoletaNro();"> Expandir Boleta Nro </button> 
+								<Input type="text" value="" id="expBoleta">
+					</td>
 				</tr>
 				
 				<tr>
 					<td colspan="4">
 						<c:choose>					
-							<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">					
+							<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">	
+			
 								<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">
-									<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-										<tr>
-											<td colspan="5" class="grisSubtitulo">
-												<bean:message key='SIIF.label.CuotaNro'/><c:out value="${index.index+1}"></c:out>
-											</td>
-										</tr>
-										<tr>
-											<td height="5" colspan="5"></td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.BoletaDeposito'/>
-											</td>
-											<td width="35%" align="left">
-												<input value="${boletaDeposito.numero}" class="botonerab" type="text"
-													   size="20" readonly="readonly">
-											</td>
-											<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Productor'/></td>
-											<td width="40%" align="left" colspan="2">
-												<input value="${boletaDeposito.guiaForestal.productorForestal.nombre}"
-													   class="botonerab" type="text" size="40" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
-											<td colspan="4" align="left">
-												<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
-												 	   readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
-											<td colspan="4" align="left">
-												<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
-													   readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.EfecticoCheque'/></td>
-											<td width="35%" align="left">
-												<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
-													   type="text" size="20" readonly="readonly">
-											</td>
-											<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto$'/></td>
-											<td width="40%" align="left" colspan="2">
-												<input value="${boletaDeposito.monto}" class="botonerab" type="text"
-													   size="20" readonly="readonly">
-											</td>
-										</tr>
-										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.Fecha_Venc'/>
-											</td>
-											<td width="35%" align="left">
-												<input type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<c:out value='${boletaDeposito.fechaVencimiento}'/>">
-												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-													 align="top" width='17' height='21'>		
-											</td>
-											<td width="15%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.FechaPago'/>
-											</td>
-											<td width="23%" align="left">
-												<input type="text" readonly="readonly" class="botonerab" size="17"
-													   value="<c:out value='${boletaDeposito.fechaPago}'/>">
-												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-													 align="top" width='17' height='21'>																						
-											</td>										
-											<c:choose>
-												<c:when test="${boletaDeposito.fechaPago ==null}">
-													<td width="17%" class="rojoAdvertenciaLeft">
-														<bean:message key='SIIF.label.NOPAGADA'/>
-													</td>		
-												</c:when>
-												<c:otherwise>
-													<td width="17%" class="verdeExitoLeft">
-														<bean:message key='SIIF.label.PAGADA'/>
+								
+									<tr onclick="$('#idTrBoleta<c:out value='${boletaDeposito.numero}'/>').toggle();">								
+										<td colspan="4" class="grisSubtitulo" id="tdBoleta<c:out value='${index.count}'></c:out>" 									
+											onmouseover="javascript:pintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');"
+											onmouseout="javascript:despintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');">
+											Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
+										</td>
+									</tr>						
+								
+									<tr id="idTrBoleta<c:out value='${boletaDeposito.numero}'></c:out>" style="display: none">
+										<td colspan="4">								
+										
+											<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+												<tr>
+													<td height="5" colspan="5"></td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.BoletaDeposito'/>
 													</td>
-												</c:otherwise>
-											</c:choose>																						
-										</tr>
-										<tr>
-											<td height="5" colspan="5"></td>
-										</tr>
-									</table>
-									<br>
+													<td width="35%" align="left">
+														<input value="${boletaDeposito.numero}" class="botonerab" type="text"
+															   size="20" readonly="readonly">
+													</td>
+													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Productor'/></td>
+													<td width="40%" align="left" colspan="2">
+														<input value="${boletaDeposito.guiaForestal.productorForestal.nombre}"
+															   class="botonerab" type="text" size="40" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
+													<td colspan="4" align="left">
+														<input value="${boletaDeposito.concepto}" class="botonerab" type="text" size="94"
+														 	   readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
+													<td colspan="4" align="left">
+														<input value="${boletaDeposito.area}" class="botonerab" type="text" size="94"
+															   readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.EfecticoCheque'/></td>
+													<td width="35%" align="left">
+														<input value="${boletaDeposito.efectivoCheque}" class="botonerab"
+															   type="text" size="20" readonly="readonly">
+													</td>
+													<td width="15%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto$'/></td>
+													<td width="40%" align="left" colspan="2">
+														<input value="${boletaDeposito.monto}" class="botonerab" type="text"
+															   size="20" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<td width="10%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.Fecha_Venc'/>
+													</td>
+													<td width="35%" align="left">
+														<input type="text" readonly="readonly" class="botonerab" size="17"
+															   value="<c:out value='${boletaDeposito.fechaVencimiento}'/>">
+														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+															 align="top" width='17' height='21'>		
+													</td>
+													<td width="15%" class="botoneralNegritaRight">
+														<bean:message key='SIIF.label.FechaPago'/>
+													</td>
+													<td width="23%" align="left">
+														<input type="text" readonly="readonly" class="botonerab" size="17"
+															   value="<c:out value='${boletaDeposito.fechaPago}'/>">
+														<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+															 align="top" width='17' height='21'>																						
+													</td>										
+													<c:choose>
+														<c:when test="${boletaDeposito.fechaPago ==null}">
+															<td width="17%" class="rojoAdvertenciaLeft">
+																<bean:message key='SIIF.label.NOPAGADA'/>
+															</td>		
+														</c:when>
+														<c:otherwise>
+															<td width="17%" class="verdeExitoLeft">
+																<bean:message key='SIIF.label.PAGADA'/>
+															</td>
+														</c:otherwise>
+													</c:choose>																						
+												</tr>
+												<tr>
+													<td height="5" colspan="5"></td>
+												</tr>
+											</table>
+										</td>	
+									</tr>
+									<tr>
+										<td height="5" colspan="4"></td>
+									</tr>										
 								</c:forEach>	
 							</c:when>
 							<c:otherwise>
@@ -590,14 +621,14 @@ function volverAltaGFB(){
 						</tr>							
 						<c:forEach items="${guiaForestal.valesTransporte}" var="valeTransporte" varStatus="index">
 						
-							<tr onclick="$('#idTr<c:out value='${valeTransporte.numero}'/>').toggle();">								
+							<tr onclick="$('#idTrVale<c:out value='${valeTransporte.numero}'/>').toggle();">								
 								<td colspan="4" class="grisSubtitulo" id="tdVale<c:out value='${index.count}'></c:out>" 									
-									onmouseover="javascript:pintarFilaVale(<c:out value='${index.count}'></c:out>);"
-									onmouseout="javascript:despintarFilaVale(<c:out value='${index.count}'></c:out>);">
+									onmouseover="javascript:pintarFilaVale('tdVale<c:out value='${index.count}'></c:out>');"
+									onmouseout="javascript:despintarFilaVale('tdVale<c:out value='${index.count}'></c:out>');">
 									<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out>
 								</td>
 							</tr>						
-							<tr id="idTr<c:out value='${valeTransporte.numero}'/>" style="display: none" >
+							<tr id="idTrVale<c:out value='${valeTransporte.numero}'/>" style="display: none" >
 								<td colspan="4" width="90%">
 									<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">																												
 										<tr>

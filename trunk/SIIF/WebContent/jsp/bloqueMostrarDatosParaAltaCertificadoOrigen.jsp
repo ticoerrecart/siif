@@ -378,6 +378,10 @@ function calcularVolumenTiposProductos(){
 	volTotalFiscalizado = roundNumber(volTotalFiscalizado,2);
 	$("#idVolumentTotalFiscalizado").val(volTotalFiscalizado);
 
+	var volHabParaCosecha = $("#idVolHabParaCosecha").val();
+	volHabParaCosecha = roundNumber(volHabParaCosecha,2);
+	$("#idVolHabParaCosecha").val(volHabParaCosecha);
+	
 	var volHabProcesado = $("#idVolHabProc").val();
 	volHabProcesado = roundNumber(volHabProcesado,2);
 	$("#idVolHabProc").val(volHabProcesado);	
