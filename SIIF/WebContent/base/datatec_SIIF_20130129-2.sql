@@ -319,10 +319,10 @@ CREATE TABLE `Aforo` (
 -- Dumping data for table `Aforo`
 --
 
-LOCK TABLES `aforo` WRITE;
-/*!40000 ALTER TABLE `aforo` DISABLE KEYS */;
-INSERT INTO `aforo` VALUES (3,'Verde','PPF',7,3),(4,'Verde','OBR',20,4),(6,'Verde','PPF',8,1),(10,'Verde','OBR',20,2),(11,'Verde','PPF',8,2),(12,'Verde','PPF',8,4),(13,'Verde','OBR',20,1),(14,'Verde','OBR',8,3);
-/*!40000 ALTER TABLE `aforo` ENABLE KEYS */;
+LOCK TABLES `Aforo` WRITE;
+/*!40000 ALTER TABLE `Aforo` DISABLE KEYS */;
+INSERT INTO `Aforo` VALUES (3,'Verde','PPF',7,3),(4,'Verde','OBR',20,4),(6,'Verde','PPF',8,1),(10,'Verde','OBR',20,2),(11,'Verde','PPF',8,2),(12,'Verde','PPF',8,4),(13,'Verde','OBR',20,1),(14,'Verde','OBR',8,3);
+/*!40000 ALTER TABLE `Aforo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
