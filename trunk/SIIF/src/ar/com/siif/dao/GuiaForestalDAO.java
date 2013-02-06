@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -36,86 +35,91 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 	public void altaGuiaForestalBasica(GuiaForestal guia) throws DataBaseException {
 
-		try{
+		try {
 			this.getHibernateTemplate().saveOrUpdate(guia);
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
-			
+
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_ALTA_GUIA_FORESTAL);
 		} catch (HibernateSystemException he) {
 			throw new DataBaseException(Constantes.ERROR_ALTA_GUIA_FORESTAL);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_ALTA_GUIA_FORESTAL);
-		}			
+		}
 	}
 
-	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor) throws DataBaseException {
+	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor)
+			throws DataBaseException {
 
-		try{
+		try {
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 			criteria.createAlias("productorForestal", "productor");
 			criteria.addOrder(Order.asc("nroGuia"));
 
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)));	
+			criteria.add(Restrictions.conjunction().add(
+					Restrictions.eq("productor.id", idProductor)));
 			List<GuiaForestal> lista = criteria.list();
-	
-			return lista;			
-			
+
+			return lista;
+
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
 		} catch (HibernateSystemException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
-		}			
+		}
 	}
 
 	public GuiaForestal recuperarGuiaForestal(long idGuiaForestal) throws DataBaseException {
-		
-		try{
+
+		try {
 			return (GuiaForestal) getSession().get(GuiaForestal.class, idGuiaForestal);
-			
+
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
 		} catch (HibernateSystemException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
-		}			
+		}
 	}
 
-	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal) throws DataBaseException{
-		
-		try{
+	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)
+			throws DataBaseException {
+
+		try {
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 			criteria.add(Restrictions.eq("nroGuia", nroGuiaForestal));
-			
+
 			List<GuiaForestal> guias = criteria.list();
-			
+
 			return (guias.get(0));
-			
+
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
 		} catch (HibernateSystemException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
-		}			
-	}	
-	
+		}
+	}
+
 	public String registrarPagoBoletaDeposito(long idBoleta) throws DataBaseException {
 
-		try{
-			BoletaDeposito boletaDeposito = (BoletaDeposito)getSession().get(BoletaDeposito.class,idBoleta);
-			
+		try {
+			BoletaDeposito boletaDeposito = (BoletaDeposito) getSession().get(BoletaDeposito.class,
+					idBoleta);
+
 			boletaDeposito.setFechaPago(new Date());
-			
+
 			this.getHibernateTemplate().saveOrUpdate(boletaDeposito);
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
-	
-			return Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(boletaDeposito.getFechaPago()));
+
+			return Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(boletaDeposito
+					.getFechaPago()));
 
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_PAGO_BOLETA_DEPOSITO);
@@ -123,40 +127,41 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_PAGO_BOLETA_DEPOSITO);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_PAGO_BOLETA_DEPOSITO);
-		}			
+		}
 	}
-	
+
 	public String reemplazarBoletaDeDeposito(long idBoleta, int numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) throws DataBaseException {
 
-		try{
-			BoletaDeposito boletaDeposito = (BoletaDeposito)getSession().get(BoletaDeposito.class,idBoleta);
-			
+		try {
+			BoletaDeposito boletaDeposito = (BoletaDeposito) getSession().get(BoletaDeposito.class,
+					idBoleta);
+
 			Criteria criteria = getSession().createCriteria(BoletaDeposito.class);
 			criteria.createAlias("guiaForestal", "guia");
-			criteria.add(Restrictions.eq("numero", numero))
-					.add(Restrictions.eq("guia.id", boletaDeposito.getGuiaForestal().getId())); 
-			
-			List<BoletaDeposito> lista = criteria.list();			
-					
-			if(numero == boletaDeposito.getNumero() || lista.size() == 0){//Si no hay boletas que tengan el mismo nro de boleta
-							
+			criteria.add(Restrictions.eq("numero", numero)).add(
+					Restrictions.eq("guia.id", boletaDeposito.getGuiaForestal().getId()));
+
+			List<BoletaDeposito> lista = criteria.list();
+
+			if (numero == boletaDeposito.getNumero() || lista.size() == 0) {//Si no hay boletas que tengan el mismo nro de boleta
+
 				boletaDeposito.setNumero(numero);
 				boletaDeposito.setConcepto(concepto);
 				boletaDeposito.setArea(area);
 				boletaDeposito.setEfectivoCheque(efectivoCheque);
 				boletaDeposito.setFechaVencimiento(Fecha.stringDDMMAAAAToDate(fechaVencimiento));
-				
+
 				this.getHibernateTemplate().saveOrUpdate(boletaDeposito);
 				this.getHibernateTemplate().flush();
 				this.getHibernateTemplate().clear();
+			} else {
+				throw new DataBaseException(
+						Constantes.ERROR_REEMPLAZAR_BOLETA_DEPOSITO_NRO_EXISTENTE);
 			}
-			else{
-				throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_BOLETA_DEPOSITO_NRO_EXISTENTE);
-			}
-			
+
 		} catch (DataBaseException dbe) {
-			throw dbe;			
+			throw dbe;
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_BOLETA_DEPOSITO);
 		} catch (HibernateSystemException he) {
@@ -165,21 +170,22 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_BOLETA_DEPOSITO);
 		}
 
-		return null;		
-	}	
-	
-	public String registrarDevolucionValeTransporte(long idVale) throws DataBaseException{
-		
-		try{
-			ValeTransporte vale = (ValeTransporte)getSession().get(ValeTransporte.class,idVale);
-			
+		return null;
+	}
+
+	public String registrarDevolucionValeTransporte(long idVale) throws DataBaseException {
+
+		try {
+			ValeTransporte vale = (ValeTransporte) getSession().get(ValeTransporte.class, idVale);
+
 			vale.setFechaDevolucion(new Date());
-			
+
 			this.getHibernateTemplate().saveOrUpdate(vale);
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
-	
-			return Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(vale.getFechaDevolucion()));
+
+			return Fecha
+					.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(vale.getFechaDevolucion()));
 
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
@@ -187,16 +193,15 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
-		}			
+		}
 	}
 
-	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
-			String destino, String vehiculo, String marca, String dominio,
-			String producto, int nroPiezas, double cantM3, String especie,
-			String fechaDevolucion) throws DataBaseException{
-		
-		try{
-			ValeTransporte vale = (ValeTransporte)getSession().get(ValeTransporte.class,idVale);
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale, String destino,
+			String vehiculo, String marca, String dominio, String producto, int nroPiezas,
+			double cantM3, String especie, String fechaDevolucion) throws DataBaseException {
+
+		try {
+			ValeTransporte vale = (ValeTransporte) getSession().get(ValeTransporte.class, idVale);
 			vale.setDestino(destino);
 			vale.setVehiculo(vehiculo);
 			vale.setMarca(marca);
@@ -206,11 +211,11 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			vale.setCantidadMts(cantM3);
 			vale.setEspecie(especie);
 			vale.setFechaDevolucion(Fecha.stringDDMMAAAAToDate(fechaDevolucion));
-			
+
 			this.getHibernateTemplate().saveOrUpdate(vale);
 			this.getHibernateTemplate().flush();
 			this.getHibernateTemplate().clear();
-	
+
 			return null;
 
 		} catch (HibernateException he) {
@@ -219,27 +224,26 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_DEVOLUCION_VALE_TRANSPORTE);
-		}			
+		}
 	}
-	
-	
-	
+
 	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
-			int nroPiezas, double cantM3, String especie, String fechaVencimiento) throws DataBaseException {
+			int nroPiezas, double cantM3, String especie, String fechaVencimiento)
+			throws DataBaseException {
 
-		try{
-			ValeTransporte vale = (ValeTransporte)getSession().get(ValeTransporte.class, idVale);
-			
+		try {
+			ValeTransporte vale = (ValeTransporte) getSession().get(ValeTransporte.class, idVale);
+
 			Criteria criteria = getSession().createCriteria(ValeTransporte.class);
 			criteria.createAlias("guiaForestal", "guia");
-			criteria.add(Restrictions.eq("numero", numeroVale))
-					.add(Restrictions.eq("guia.id", vale.getGuiaForestal().getId())); 
-			
-			List<ValeTransporte> lista = criteria.list();			
-			
-			if(numeroVale == vale.getNumero() || lista.size() == 0){//Si no hay vales que tengan el mismo nro de vale 
-								
+			criteria.add(Restrictions.eq("numero", numeroVale)).add(
+					Restrictions.eq("guia.id", vale.getGuiaForestal().getId()));
+
+			List<ValeTransporte> lista = criteria.list();
+
+			if (numeroVale == vale.getNumero() || lista.size() == 0) {//Si no hay vales que tengan el mismo nro de vale 
+
 				vale.setNumero(numeroVale);
 				vale.setOrigen(origen);
 				vale.setDestino(destino);
@@ -251,25 +255,25 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 				vale.setCantidadMts(cantM3);
 				vale.setEspecie(especie);
 				vale.setFechaVencimiento(Fecha.stringDDMMAAAAToDate(fechaVencimiento));
-				
+
 				this.getHibernateTemplate().saveOrUpdate(vale);
 				this.getHibernateTemplate().flush();
-				this.getHibernateTemplate().clear();		
-				
-			}
-			else{
-				throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_VALE_TRANSPORTE_NRO_EXISTENTE);
+				this.getHibernateTemplate().clear();
+
+			} else {
+				throw new DataBaseException(
+						Constantes.ERROR_REEMPLAZAR_VALE_TRANSPORTE_NRO_EXISTENTE);
 			}
 
 		} catch (DataBaseException dbe) {
-			throw dbe;			
+			throw dbe;
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_VALE_TRANSPORTE);
 		} catch (HibernateSystemException he) {
 			throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_VALE_TRANSPORTE);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_REEMPLAZAR_VALE_TRANSPORTE);
-		}		
+		}
 		return null;
 	}
 
@@ -277,40 +281,55 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuia));
-		
+
 		List<GuiaForestal> guias = criteria.list();
-		
+
 		return (guias.size() > 0);
 	}
-	
-	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws DataBaseException 
-	{	
-		try{
+
+	public boolean existeGuiaForestal(long idGuia, int nroGuia) {
+
+		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
+		criteria.add(Restrictions.eq("nroGuia", nroGuia));
+		criteria.add(Restrictions.ne("id", idGuia));
+
+		List<GuiaForestal> guias = criteria.list();
+
+		return (guias.size() > 0);
+	}
+
+	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)
+			throws DataBaseException {
+		try {
 			Date fechaActual = new Date();
-			
+
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class)
-								.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+					.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 
 			criteria.createAlias("productorForestal", "productor");
 			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
-						
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
-								.add(Restrictions.isNull("listaBoletasDeposito.fechaPago"))
-								.add(Restrictions.lt("listaBoletasDeposito.fechaVencimiento", fechaActual)));
-			
-			List<GuiaForestal> lista = criteria.list();			
-			
+
+			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.eq("productor.id", idProductor))
+					.add(Restrictions.isNull("listaBoletasDeposito.fechaPago"))
+					.add(Restrictions.lt("listaBoletasDeposito.fechaVencimiento", fechaActual)));
+
+			List<GuiaForestal> lista = criteria.list();
+
 			return lista.size() > 0;
-			
+
 		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+			throw new DataBaseException(
+					Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
 		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+			throw new DataBaseException(
+					Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
 		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
-		}			
-	}	
-	
+			throw new DataBaseException(
+					Constantes.ERROR_VERIFICAR_BOLETAS_DEPOSITO_VENCIDAS_IMPAGAS);
+		}
+	}
+
 	/*
 	public List<GuiaForestal> recuperarGuiasPorProductorPeriodoPMF(long idProductor, String periodo, long idPMF)throws DataBaseException 
 	{

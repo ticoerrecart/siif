@@ -53,7 +53,8 @@ function volverModificacionGuia(){
 
 function submitir(){
 
-	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
+	//validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
+	validarForm("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
 }
 
 function exp(sec) {
@@ -334,10 +335,10 @@ function removerFila() {
 <input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
 
-
 <div id="idGuia">
 <html:form action="guiaForestal" styleId="guiaForestalForm">
-	<html:hidden property="metodo" value="altaGuiaForestalBasica" />
+	<html:hidden property="metodo" value="modificacionGuiaForestalBasica" />
+	<input name="guiaForestal.id" type="hidden" value="${guiaForestal.id}">
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
@@ -351,7 +352,7 @@ function removerFila() {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroDeGuia'/></td>
 			<td width="30%" align="left">
-				<input value="${guiaForestal.nroGuia}" class="botonerab" size="40">
+				<input value="${guiaForestal.nroGuia}" name="guiaForestal.nroGuia" class="botonerab" size="40" onkeypress="javascript:esNumerico(event);">
 			</td>
 	
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
@@ -360,15 +361,11 @@ function removerFila() {
 					   class="botonerab" type="text" size="40" readonly="readonly">			
 			</td>
 		</tr>
-	
 		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.FechaAlta'/></td>
 			<td width="30%" align="left">
 				
-				<input id="datepicker" type="text" value="<c:out value='${guiaForestal.fechaVencimiento}'/>" 
-					readonly="readonly" class="botonerab">
-				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-					align="top" width='17' height='21'>
+				<input type="text" readonly="readonly" value="<c:out value='${guiaForestal.fecha}'/>" class="botonerab">
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
@@ -377,17 +374,27 @@ function removerFila() {
 			</td>
 		</tr>
 		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValidoHasta'/></td>
 			<td width="30%" align="left">
-				<input value="${guiaForestal.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
+				
+				<input id="datepicker" type="text" value="<c:out value='${guiaForestal.fechaVencimiento}'/>" name="guiaForestal.fechaVencimiento" class="botonerab">
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+					align="top" width='17' height='21'>
 			</td>
+			
 			<td width="30%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.DistanciaEstablecida'/>
 			</td>
 			<td align="left">
-				<input value="${guiaForestal.distanciaAforoMovil}" class="botonerab" type="text" size="10">
+				<input value="${guiaForestal.distanciaAforoMovil}" name="guiaForestal.distanciaAforoMovil" class="botonerab" type="text" size="10" onkeypress="javascript:esNumerico(event);">
 				<bean:message key='SIIF.label.km'/>
-			</td>				
+			</td>
+		</tr>
+		<tr>
+			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
+			<td width="30%" align="left">
+				<input value="${guiaForestal.productorForestal.localidad.nombre}" readonly="readonly" class="botonerab" size="40">
+			</td>
 		</tr>
 		<tr>
 			<td height="10" colspan="4"></td>
