@@ -49,6 +49,9 @@ public class GuiaForestal {
 	
 	private double aforo;*/	
 
+	@Column(nullable = false)
+	private boolean anulado;
+	
 	private double importeTotal;
 
 	private double inspFiscalizacion;
@@ -311,5 +314,12 @@ public class GuiaForestal {
 		this.importeTotal = importeTotal;
 	}
 
-	
+	public boolean isAnulado() {
+		return anulado;
+	}
+
+	public void setAnulado(boolean anulado) {
+		this.anulado = anulado;
+	}
+
 }

@@ -51,6 +51,9 @@ public class ValeTransporte {
 
 	private String especie;
 	
+	@Column(nullable = false)
+	private boolean anulado;	
+	
 	@Transient
 	private String fechaVencimientoTransient;
 
@@ -201,4 +204,13 @@ public class ValeTransporte {
 			this.setFechaVencimiento(Fecha.stringDDMMAAAAToDate(this.fechaVencimientoTransient));
 		}				
 	}
+
+	public boolean isAnulado() {
+		return anulado;
+	}
+
+	public void setAnulado(boolean anulado) {
+		this.anulado = anulado;
+	}
+
 }

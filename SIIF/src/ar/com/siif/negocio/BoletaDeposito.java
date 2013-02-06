@@ -40,6 +40,9 @@ public class BoletaDeposito {
 	@Column(nullable = false)
 	private Date fechaVencimiento;
 
+	@Column(nullable = false)
+	private boolean anulado;	
+	
 	@Transient
 	private String fechaPagoTransient;
 
@@ -159,6 +162,14 @@ public class BoletaDeposito {
 		if (fechaVencimientoTransient != null && fechaVencimientoTransient != "") {
 			this.setFechaVencimiento(Fecha.stringDDMMAAAAToDate(fechaVencimientoTransient));
 		}
+	}
+
+	public boolean isAnulado() {
+		return anulado;
+	}
+
+	public void setAnulado(boolean anulado) {
+		this.anulado = anulado;
 	}
 
 }
