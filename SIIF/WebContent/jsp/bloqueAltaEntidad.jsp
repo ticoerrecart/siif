@@ -16,6 +16,20 @@
 	function cambioCuit(){
 		$("#cuit").val($("#prefijoCuit").val() + $("#nroCuit").val() + $("#sufijoCuit").val());
 	}
+	
+	function cambioTipoEntidad(){
+		if($("#selectTiposDeEntidad").val() == "RN"){
+			$(".matriculaCuitCP").hide();
+			$(".matriculaCuitCP input").each(
+					function(i){
+						$(this).val("");
+					}
+			);
+		}else{
+			$(".matriculaCuitCP").show();
+		}
+
+	}
 </script>
 
 <%-- errores de validaciones AJAX --%>
@@ -36,7 +50,7 @@
 			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
 			<td align="left"><c:choose>
 				<c:when test="${metodo=='altaEntidad'}">
-					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad">
+					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad" onchange="cambioTipoEntidad();">
 						<option value="-1">-Seleccione un Tipo de Entidad-</option>
 						<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
 							<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
@@ -49,7 +63,10 @@
 					<!-- AL MODIFICAR NO PUEDO CAMBIAR EL TIPO DE ENTIDAD -->
 					<input type="text" readonly="readonly" class="botonerab" name="entidadDTO.tipoEntidadDesc" 
 							value="${entidad.tipoEntidadDesc}" size="30">
-					<input type="hidden"" name="entidadDTO.tipoEntidad" value="${entidad.tipoEntidad}">
+					<input type="hidden" id="selectTiposDeEntidad" name="entidadDTO.tipoEntidad" value="${entidad.tipoEntidad}">
+					<script>
+						cambioTipoEntidad();
+					</script>
 				</c:otherwise>
 			</c:choose></td>
 		</tr>
@@ -92,12 +109,12 @@
 				styleClass="botonerab" value="${entidad.email}" /></td>
 		</tr>
 		
-		<tr>
+		<tr class="matriculaCuitCP">
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.NroMatricula'/></td>
 			<td align="left"><html:text property="entidadDTO.nroMatricula" size="30"
 				styleClass="botonerab" value="${entidad.nroMatricula}" onkeypress="javascript:esNumerico(event);"/></td>
 		</tr>
-		<tr>
+		<tr class="matriculaCuitCP">
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Cuit'/></td>
 			<td align="left">
 				<html:hidden property="entidadDTO.cuit" value="${entidad.cuit}" styleId="cuit"/>
@@ -106,7 +123,7 @@
 				<input type="text" class="botonerab" size="2" id="sufijoCuit" value="${sufijoCuit}" onkeypress="javascript:esNumerico(event);" onblur="cambioCuit();">
 			</td>
 		</tr>
-		<tr>
+		<tr class="matriculaCuitCP">
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.CodigoPostal'/></td>
 			<td align="left"><html:text property="entidadDTO.codigoPostal" size="5"
 				styleClass="botonerab" value="${entidad.codigoPostal}" onkeypress="javascript:esNumerico(event);"/></td>

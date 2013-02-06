@@ -43,7 +43,18 @@ public class EntidadForm extends ActionForm {
 		}
 
 		if (ok1 && mailsOk) {
-			ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(), error);
+			if (!"RN".equalsIgnoreCase(this.getEntidadDTO().getTipoEntidad())) {
+				ok1 = ok1
+						&& Validator.validarLongMayorQue(0,this.getEntidadDTO().getNroMatricula().toString(),
+								"Nro Matrícula", error);
+				if (ok1) {
+					ok1 = ok1 && Validator.requerido(this.getEntidadDTO().getCuit(), "Cuit", error);
+					if (ok1) {
+						ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(), error);
+					}
+				}
+
+			}
 		}
 
 		return ok1 && mailsOk;
