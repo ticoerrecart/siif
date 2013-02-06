@@ -11,31 +11,31 @@ c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm
 */
 
 var headerTablaRollizos = '<tr id="headerT">' +
-'   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (2-7mts)</td>' +
+'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+'   <td class="verdeTituloTablaChico" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="verdeTituloTablaChico diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="verdeTituloTablaChico" width="33%"><bean:message key="SIIF.label.Largo"/> (2-7mts)</td>' +
 '</tr>';
 
 var headerTablaFustes = '<tr id="headerT">' +
-'   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (5-18mts)</td>' +
+'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+'   <td class="verdeTituloTablaChico" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-160cm)</td>' +
+'   <td class="verdeTituloTablaChico diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-160cm)</td>' +
+'   <td class="verdeTituloTablaChico" width="33%"><bean:message key="SIIF.label.Largo"/> (5-18mts)</td>' +
 '</tr>';
 
 var headerTablaPostes = '<tr id="headerT">' +
-'   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+'   <td class="verdeTituloTablaChico" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="verdeTituloTablaChico diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="verdeTituloTablaChico" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
 '</tr>';
 
 var headerTablaTrineos = '<tr id="headerT">' +
-'   <td class="azulAjustado" width="3%"></td>' +
-'   <td class="azulAjustado" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
-'   <td class="azulAjustado diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
-'   <td class="azulAjustado" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
+'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+'   <td class="verdeTituloTablaChico" width="32%"><bean:message key="SIIF.label.Diametro1"/> (10-40cm)</td>' +
+'   <td class="verdeTituloTablaChico diam2" width="32%"><bean:message key="SIIF.label.Diametro2"/> (10-40cm)</td>' +
+'   <td class="verdeTituloTablaChico" width="33%"><bean:message key="SIIF.label.Largo"/> (1.5-3mts)</td>' +
 '</tr>';
 
 </script>
