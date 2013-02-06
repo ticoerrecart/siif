@@ -77,20 +77,26 @@ public class EntidadAction extends ValidadorAction {
 
 	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
 		EntidadForm entidadForm = (EntidadForm) form;
-		WebApplicationContext ctx = getWebApplicationContext();
-		IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-		boolean existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
-				entidadForm.getEntidadDTO().getId());
-		if (existe) {
-			Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
-		} else {
-			existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
-					.getNroMatricula(), entidadForm.getEntidadDTO().getId());
+		boolean ok = entidadForm.validar(error);
+		boolean existe = false;
+		if (ok) {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+					entidadForm.getEntidadDTO().getId());
 			if (existe) {
-				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
+				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
+			} else {
+				if (!"RN".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) {
+					existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
+							.getNroMatricula(), entidadForm.getEntidadDTO().getId());
+					if (existe) {
+						Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
+					}
+				}
 			}
 		}
-		return !existe && entidadForm.validar(error);
+		return ok && !existe;
 	}
 
 	@SuppressWarnings("unchecked")
