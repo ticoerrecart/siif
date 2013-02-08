@@ -443,6 +443,21 @@
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/altaCertificadoOrigen.jsp" />
 	</definition>
+
+	<definition name=".cargarProductoresParaConsultaCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarProductoresParaConsultaCertificadoOrigen.jsp" />
+	</definition>	
+
+	<definition name=".cargarCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarCertificadoOrigen.jsp" />
+	</definition>	
+
+	<definition name=".mostrarAltaNroCertificado" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarAltaNroCertificado.jsp" />
+	</definition>			
 	<!-- FIN CERTIFICADO ORIGEN -->
 
 	<definition name=".error" extends=".base">
