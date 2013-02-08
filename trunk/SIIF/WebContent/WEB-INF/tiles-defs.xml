@@ -172,6 +172,22 @@
 			</definition>									
 		<!--  -->		
 
+		<!-- Anulacion  -->
+			<definition name=".cargarProductoresParaAnulacioDeGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />
+			</definition>
+			
+			<definition name=".cargarGuiaForestalParaAnulacioDeGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/anularGuiaForestal.jsp" />
+			</definition>
+
+						
+		<!--  -->	
+
 	<!-- FIN GUIA FORESTAL -->
 
 

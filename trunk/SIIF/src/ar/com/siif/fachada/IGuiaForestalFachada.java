@@ -21,10 +21,14 @@ public interface IGuiaForestalFachada {
 									   throws NegocioException;
 
 	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor)throws NegocioException;
+	
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, boolean sinAnulados)throws NegocioException;
 
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal)throws NegocioException;
 	
 	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)throws NegocioException;
+	
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados) throws NegocioException;
 	
 	public String registrarPagoBoletaDeposito(long idBoleta);	
 	
@@ -57,7 +61,10 @@ public interface IGuiaForestalFachada {
 	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)throws NegocioException;
 	
 	//public List<GuiaForestalDTO> recuperarGuiasParaCertificado(long idProductor, String periodo, long idPMF)throws NegocioException;
-	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia) throws NegocioException;
 	
+	public void anularGuiaForestal(GuiaForestalDTO guiaForestalDTO) throws NegocioException;
+
+	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia) throws NegocioException;
+
 	public boolean existeGuiaForestal(long idGuia, int nroGuia);
 }

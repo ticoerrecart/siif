@@ -167,7 +167,16 @@
 			<forward name="exitoRecuperarGuiasForestalesParaValeTransporte" 
 							path="/jsp/bloqueMostrarGuiasForestalesParaValeTransporte.jsp" />	
 			<forward name="exitoCargarGuiaForestalDevolucionValeTransporte" path=".cargarGuiaForestalDevolucionValeTransporte" />
-			<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />				
+			<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />
+			
+			<!-- Anulacion de Guia -->
+			<forward name="exitoRecuperarProductoresParaAnulacionDeGuia" path=".cargarProductoresParaAnulacioDeGuia" />
+			<forward name="exitoRecuperarGuiasForestalesParaAnulacionDeGuia" 
+							path="/jsp/bloqueMostrarGuiasForestalesParaAnulacion.jsp" />	
+			<forward name="exitoCargarGuiaForestalBasicaParaAnulacion" path=".cargarGuiaForestalParaAnulacioDeGuia" />
+			<forward name="exitoAnularGuiaForestal" path="/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&amp;forward=cargarGuiaForestalParaAnulacionDeGuia&amp;forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia" />
+
+							
 		</action>
 		<!-- FIN GUIA FORESTAL -->
 

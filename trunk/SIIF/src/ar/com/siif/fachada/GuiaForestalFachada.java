@@ -10,6 +10,7 @@ import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
+import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -42,9 +43,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public GuiaForestalFachada() {
 	}
 
-	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada,
-			IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
-			ITipoProductoForestalFachada pTipoProductoForestalFachada,
+	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada, 
+								IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
+								ITipoProductoForestalFachada pTipoProductoForestalFachada, 
 			IUbicacionFachada pUbicacionFachada) {
 
 		this.guiaForestalDAO = guiaForestalDAO;
@@ -61,7 +62,6 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			List<SubImporteDTO> listaSubImportesDTO) throws NegocioException {
 
 		try {
-
 			//Fiscalizacion fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(guia.getFiscalizacion().getId());
 
 			List<Fiscalizacion> listaFiscalizaciones = new ArrayList<Fiscalizacion>();
@@ -83,11 +83,11 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			Entidad productorForestal = entidadFachada.getEntidad(guia.getProductorForestal()
 					.getId());
 			Rodal rodal = ubicacionFachada.getRodal(guia.getRodal().getId());
-
+			
 			GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia,
 					listaBoletaDepositoDTO, listaRangosDTO, fechaVencimiento, listaFiscalizaciones,
-					listaSubImporte, productorForestal, rodal, usuario);
-
+																		listaSubImporte,productorForestal,rodal,usuario);
+			
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 
 			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
@@ -105,9 +105,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 		try {
 			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-			List<GuiaForestal> listaGuiasForestales = guiaForestalDAO
-					.recuperarGuiasForestalesPorProductor(idProductor);
-
+			List<GuiaForestal> listaGuiasForestales = guiaForestalDAO.recuperarGuiasForestalesPorProductor(idProductor, true);
+			
 			for (GuiaForestal guiaForestal : listaGuiasForestales) {
 				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
 			}
@@ -119,11 +118,26 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal) throws NegocioException {
+	
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, boolean sinAnulados) throws NegocioException {
 
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = guiaForestalDAO.recuperarGuiasForestalesPorProductor(idProductor,sinAnulados);
+			
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			return listaGuiasForestalesDTO;
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}
+
+	
+	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal) throws NegocioException {
 		try {
 			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
-
 			return ProviderDTO.getGuiaForestalDTO(guiaForestal);
 
 		} catch (DataBaseException e) {
@@ -133,18 +147,29 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)
 			throws NegocioException {
-
-		try {
-			GuiaForestal guiaForestal = guiaForestalDAO
-					.recuperarGuiaForestalPorNroGuia(nroGuiaForestal);
-
-			return ProviderDTO.getGuiaForestalDTO(guiaForestal);
-
+		try{
+			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestalPorNroGuia(nroGuiaForestal, true);
+			if (guiaForestal!= null){
+				return ProviderDTO.getGuiaForestalDTO(guiaForestal);	
+			} 
+			return null;
 		} catch (DataBaseException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
 
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados) throws NegocioException{
+		try{
+			GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestalPorNroGuia(nroGuiaForestal,sinAnulados);
+			if (guiaForestal!= null){
+				return ProviderDTO.getGuiaForestalDTO(guiaForestal);	
+			} 
+			return null;
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}			
+	}
+	
 	public String registrarPagoBoletaDeposito(long idBoleta) {
 		try {
 			return guiaForestalDAO.registrarPagoBoletaDeposito(idBoleta);
@@ -156,8 +181,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	public String reemplazarBoletaDeDeposito(long idBoleta, int numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) {
-
-		try {
+		try{
 			return guiaForestalDAO.reemplazarBoletaDeDeposito(idBoleta, numero, concepto, area,
 					efectivoCheque, fechaVencimiento);
 		} catch (DataBaseException e) {
@@ -188,15 +212,17 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
 			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
 					"Cantidad(m3)", pError);
-
+			
+			
+			
 			double totalMts = 0;
 			ValeTransporte vale = (ValeTransporte) this.guiaForestalDAO.getHibernateTemplate().get(
 					ValeTransporte.class, idVale);
 			List<Fiscalizacion> fiscalizaciones = vale.getGuiaForestal().getFiscalizaciones();
-
+			
 			boolean ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
 					producto, pError);
-
+			
 			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
 				if (fiscalizacion.getTipoProducto().getNombre().equals(producto))
 					totalMts = totalMts + fiscalizacion.getCantidadMts();
@@ -207,16 +233,16 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			for (ValeTransporte valeTransporte : vales) {
 				if (valeTransporte.getFechaDevolucion() != null
 						&& producto.equalsIgnoreCase(valeTransporte.getProducto())) {
-					totalMtsVales = totalMtsVales + valeTransporte.getCantidadMts();
+					totalMtsVales  = totalMtsVales  + valeTransporte.getCantidadMts();
 				}
 			}
-
+			 
 			boolean ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
 					totalMts, pError);
-			if (ok && ok2 && ok3 && ok4) {
+			if (ok && ok2 && ok3 && ok4){
 				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 						destino, vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
-						fechaDevolucion);
+					fechaDevolucion);
 			} else {
 				return pError.toString();
 			}
@@ -229,8 +255,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento) {
-
-		try {
+			
+		try{
 			return guiaForestalDAO.reemplazarValeTransporte(idVale, numeroVale, origen, destino,
 					vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
 					fechaVencimiento);
@@ -249,13 +275,13 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	public void asociarFiscalizacionesConGuiasForestales(long id,
 			List<FiscalizacionDTO> listaFiscalizacionesAAsociar) throws NegocioException {
-		try {
+		try {	
 			GuiaForestal guiaForestal;
 			Fiscalizacion fiscalizacion;
 			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
-
-				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);
-
+			
+				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);	
+				
 				fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO
 						.getId());
 				guiaForestal.getFiscalizaciones().add(fiscalizacion);
@@ -270,16 +296,16 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
+	
 	public void desasociarFiscalizacionesConGuiasForestales(long id,
 			List<FiscalizacionDTO> listaFiscalizacionesAAsociar) throws NegocioException {
 		try {
 			GuiaForestal guiaForestal;
 			Fiscalizacion fiscalizacion;
 			for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
-
-				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);
-
+			
+				guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);				
+				
 				fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO
 						.getId());
 				guiaForestal.getFiscalizaciones().remove(fiscalizacion);
@@ -294,12 +320,12 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
+	
 	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor)
 			throws NegocioException {
-
-		try {
-
+		
+		try{
+			
 			return guiaForestalDAO.verificarBoletasDepositoVencidasImpagas(idProductor);
 
 		} catch (DataBaseException e) {
@@ -346,6 +372,30 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			}			
 		}
 	}*/
+	
+	
+	public void anularGuiaForestal(GuiaForestalDTO guiaForestalDTO)
+			throws NegocioException {
+		try {
+			this.desasociarFiscalizacionesConGuiasForestales(
+					guiaForestalDTO.getId(),
+					guiaForestalDTO.getFiscalizaciones());
+			GuiaForestal guiaForestal = guiaForestalDAO
+					.recuperarGuiaForestal(guiaForestalDTO.getId());
+			for (BoletaDeposito boleta : guiaForestal.getBoletasDeposito()) {
+				boleta.setAnulado(true);
+			}
+
+			for (ValeTransporte vale : guiaForestal.getValesTransporte()) {
+				vale.setAnulado(true);	
+			}
+			guiaForestal.setAnulado(true);
+			
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
+	
 
 	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia) throws NegocioException {
 
