@@ -313,6 +313,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
 
 			criteria.add(Restrictions.conjunction()
+					.add(Restrictions.eq("anulado", false))					
 					.add(Restrictions.eq("productor.id", idProductor))
 					.add(Restrictions.isNull("listaBoletasDeposito.fechaPago"))
 					.add(Restrictions.lt("listaBoletasDeposito.fechaVencimiento", fechaActual)));

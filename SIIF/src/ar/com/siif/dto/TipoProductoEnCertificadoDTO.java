@@ -5,12 +5,13 @@ public class TipoProductoEnCertificadoDTO {
 	private Long id;
 	private double volumenTipoProducto;
 	private CertificadoOrigenDTO certificadoOrigen;
-	private TipoProductoExportacionDTO tipoProductoExportacion;
+	//private TipoProductoExportacionDTO tipoProductoExportacion;
+	private TipoProductoDTO tipoProductoExportacion;
 	
 	public TipoProductoEnCertificadoDTO(){
 		
 		certificadoOrigen = new CertificadoOrigenDTO();
-		tipoProductoExportacion = new TipoProductoExportacionDTO();
+		tipoProductoExportacion = new TipoProductoDTO();
 	}
 
 	public Long getId() {
@@ -37,12 +38,12 @@ public class TipoProductoEnCertificadoDTO {
 		this.certificadoOrigen = certificadoOrigen;
 	}
 
-	public TipoProductoExportacionDTO getTipoProductoExportacion() {
+	public TipoProductoDTO getTipoProductoExportacion() {
 		return tipoProductoExportacion;
 	}
 
 	public void setTipoProductoExportacion(
-			TipoProductoExportacionDTO tipoProductoExportacion) {
+			TipoProductoDTO tipoProductoExportacion) {
 		this.tipoProductoExportacion = tipoProductoExportacion;
 	}
 	
