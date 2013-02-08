@@ -446,7 +446,11 @@ public class Constantes {
 	
 	public static final String ERROR_OBTENER_VOLUMEN_EXPORTADO = "Ha ocurrido un error en la obtención del volumen exportado";
 	
+	public static final String ERROR_INTERNO = "Error Interno";	
 	
-	public static final String ERROR_INTERNO = "Error Interno";
+	public static final String ERROR_OBTENER_CERTIFICADOS_ORIGEN = "Ha ocurrido un error en la recuperación de los Certificados de Orígen";
 	
+	public static final String ERROR_OBTENER_CERTIFICADO_ORIGEN = "Ha ocurrido un error en la recuperación del Certificado de Orígen";
+	
+	public static final String NO_EXISTE_CERTIFICADO = "Certificado de Orígen no encontrado";
 }
