@@ -8,8 +8,16 @@ import ar.com.siif.negocio.exception.NegocioException;
 
 public interface ICertificadoDeOrigenFachada {
 
-	public void altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen, 
+	public long altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen, 
 			List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado)throws NegocioException;	
 	
 	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF)throws NegocioException;
+	
+	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF)throws NegocioException;
+	
+	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado)throws NegocioException;
+	
+	public CertificadoOrigenDTO recuperarCertificadoOrigenPorNroCertificado(long nroCertificado)throws NegocioException;
+	
+	public boolean existeCertificado(long nroCertificado);
 }
