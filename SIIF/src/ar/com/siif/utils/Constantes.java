@@ -49,11 +49,15 @@ public class Constantes {
 	public static final String METODO_CARGAR_GUIA_DEVOLUCION_VALE = "cargarGuiaForestalDevolucionValeTransporte";
 
 	public static final String NO_EXISTE_GUIA = "Guía Forestal no encontrada";
+	
+	public static final String GUIA_ANULADA = "Guía Forestal Anulada";
 
 	public static final String NRO_GUIA_EXISTENTE = "El número de Guía Forestal ya existe, especifique otro";
 
 	public static final String EXITO_MODIFICACION_GUIA_FORESTAL = "La Guía Forestal se ha modificado con exito";
 
+	public static final String EXITO_ANULACION_GUIA_FORESTAL = "La Guía Forestal se ha anulado con exito";
+	
 	public static final String EXITO_ALTA_GUIA_FORESTAL = "La Guía Forestal se ha dado de alta con exito";
 
 	public static final String ERROR_RECUPERAR_GUIA_FORESTAL = "Ha ocurrido un error en la recuperación de la guía forestal";
@@ -441,4 +445,8 @@ public class Constantes {
 	public static final String ERROR_ALTA_CERTIFICADO_ORIGEN = "Ha ocurrido un error en el alta del Certificado de Orígen";
 	
 	public static final String ERROR_OBTENER_VOLUMEN_EXPORTADO = "Ha ocurrido un error en la obtención del volumen exportado";
+	
+	
+	public static final String ERROR_INTERNO = "Error Interno";
+	
 }

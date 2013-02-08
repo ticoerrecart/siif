@@ -49,8 +49,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		}
 	}
 
-	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor)
-			throws DataBaseException {
+	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor, boolean sinAnulados) throws DataBaseException {
 
 		try {
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
@@ -59,6 +58,10 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 			criteria.add(Restrictions.conjunction().add(
 					Restrictions.eq("productor.id", idProductor)));
+			if (sinAnulados){
+				criteria.add(Restrictions.eq("anulado", false));	
+			}
+			
 			List<GuiaForestal> lista = criteria.list();
 
 			return lista;
@@ -86,16 +89,15 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		}
 	}
 
-	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal)
-			throws DataBaseException {
-
-		try {
+	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados) throws DataBaseException{
+		try{
 			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 			criteria.add(Restrictions.eq("nroGuia", nroGuiaForestal));
+			if (sinAnulados){
+				criteria.add(Restrictions.eq("anulado", false));	
+			}
 
-			List<GuiaForestal> guias = criteria.list();
-
-			return (guias.get(0));
+			return (GuiaForestal) criteria.uniqueResult();
 
 		} catch (HibernateException he) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
@@ -103,7 +105,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
 		} catch (Exception e) {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIA_FORESTAL);
-		}
+		}			
 	}
 
 	public String registrarPagoBoletaDeposito(long idBoleta) throws DataBaseException {
@@ -281,6 +283,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuia));
+		criteria.add(Restrictions.eq("anulado", false));
 
 		List<GuiaForestal> guias = criteria.list();
 

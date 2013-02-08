@@ -321,6 +321,8 @@ public abstract class ProviderDTO {
 		}
 		guiaForestalDTO.setSubImportes(listaSubImportesDTO);
 
+		guiaForestalDTO.setAnulado(guiaForestal.isAnulado());
+		
 		return guiaForestalDTO;
 	}
 

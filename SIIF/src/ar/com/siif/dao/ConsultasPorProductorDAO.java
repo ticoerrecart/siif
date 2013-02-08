@@ -41,7 +41,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		criteria.addOrder(Order.asc("nroGuia"));
 		
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)));
-
+		criteria.add(Restrictions.eq("anulado", false));
 		List<GuiaForestal> lista = criteria.list();
 
 		return lista;
@@ -61,7 +61,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			
 			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
 					.add(Restrictions.ge("fechaVencimiento", fechaActual)));
-	
+			criteria.add(Restrictions.eq("anulado", false));
 			List<GuiaForestal> lista = criteria.list();
 	
 			return lista;
@@ -88,7 +88,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			
 			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
 					.add(Restrictions.lt("fechaVencimiento", fechaActual)));
-	
+			criteria.add(Restrictions.eq("anulado", false));
 			List<GuiaForestal> lista = criteria.list();
 	
 			return lista;
@@ -110,12 +110,12 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 	
 			criteria.createAlias("productorForestal", "productor");
 			criteria.createAlias("boletasDeposito", "listaBoletasDeposito");
-	
+			
 			criteria.addOrder(Order.asc("nroGuia"));
 			
 			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
 					.add(Restrictions.isNull("listaBoletasDeposito.fechaPago")));
-	
+			criteria.add(Restrictions.eq("anulado", false));
 			List<GuiaForestal> lista = criteria.list();
 	
 			return lista;
@@ -128,6 +128,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
 		}			
 	}	
+	
 	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor) throws DataBaseException{
 		
@@ -145,7 +146,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 			criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor)) 
 					//.add(Restrictions.ge("fechaVencimiento", fechaActual))				
 					.add(Restrictions.isNull("listaValesTransporte.fechaDevolucion")));
-			
+			criteria.add(Restrictions.eq("anulado", false));
 			List<GuiaForestal> lista = criteria.list();
 			
 			return lista;	

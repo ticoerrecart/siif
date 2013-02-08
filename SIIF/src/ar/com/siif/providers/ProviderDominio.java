@@ -305,7 +305,7 @@ public abstract class ProviderDominio {
 			subImporte.setGuiaForestal(guia);
 		}
 		guia.setSubImportes(listaSubImportes);
-
+		guia.setAnulado(guiaDTO.isAnulado());
 		return guia;
 	}
 	

@@ -43,6 +43,8 @@ public class GuiaForestalDTO {
 	
 	private List<SubImporteDTO> subImportes;
 	
+	private boolean anulado;
+	
 	public GuiaForestalDTO() {
 
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
@@ -190,6 +192,15 @@ public class GuiaForestalDTO {
 		this.subImportes = subImportes;
 	}
 
+	public boolean isAnulado() {
+		return anulado;
+	}
+
+	public void setAnulado(boolean anulado) {
+		this.anulado = anulado;
+	}
+
+	
 	/**
 	 * me fijo en los subimportes para ver los productos que tiene la guia
 	 * Los estados tambien los saco de Ahi
@@ -218,5 +229,6 @@ public class GuiaForestalDTO {
 		}
 		return prods;
 	}
+	
 	
 }
