@@ -5,6 +5,8 @@
 		$('#nroCuit').val("");
 		$('#sufijoCuit').val("");		
 		
+		$('#idTrFacturaVolTrans').hide();
+		
 		var idTipoDeEntidad = $('#selectTiposDeEntidadExportador').val();
 		if(idTipoDeEntidad != "-1"){
 			$('#idExportador').attr('disabled',false);
@@ -36,6 +38,8 @@
 		$('#nroCuit').val("");
 		$('#sufijoCuit').val("");
 
+		verificarExportadorProductor();		
+		
 		if(idExp != "-1"){
 		
 			EntidadFachada.getEntidadDTO(idExp,actualizarDatosExportadorCallback );	
@@ -50,14 +54,15 @@
 
 		dwr.util.setValue("prefijoCuit", cuit.substring(0,2));
 		dwr.util.setValue("nroCuit", cuit.substring(2,cuit.length-1));
-		dwr.util.setValue("sufijoCuit", cuit.substring(cuit.length-1));
-
+		dwr.util.setValue("sufijoCuit", cuit.substring(cuit.length-1));			
 	}	
 	
 	function actualizarComboProductores() {
 
 		deshabilitarLocalizacion([ "idPMF"]);
 
+		$('#idTrFacturaVolTrans').hide();
+		
 		var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 		if(idTipoDeEntidad != "-1"){
 			$('#idProductor').attr('disabled',false);
@@ -93,7 +98,9 @@
 			UbicacionFachada.getPMFs(idPF, actualizarComboPMFCallback);
 		}
 		
-		$('#divFiscalizaciones').html("");		
+		$('#divFiscalizaciones').html("");	
+		
+		verificarExportadorProductor();		
 	}
 
 	function actualizarComboPMFCallback(pmfs) {
@@ -120,6 +127,20 @@
 		}
 	}
 
+	function verificarExportadorProductor(){
+		
+		idExp = $('#idExportador').val();
+		idProd = $('#idProductor').val();
+						
+		if(idExp != idProd && idExp != -1 && idProd != -1){
+			
+			$('#idTrFacturaVolTrans').show();
+		}
+		else{
+			$('#idTrFacturaVolTrans').hide();
+		}
+	}
+	
 	function mostrarFiscalizaciones(){
 
 		var idProductor = $('#idProductor').val();

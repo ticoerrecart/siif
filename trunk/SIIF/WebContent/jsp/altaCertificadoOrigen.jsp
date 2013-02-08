@@ -251,7 +251,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 																
 					</tr>					
 					
-					<tr>
+					<tr id="idTrFacturaVolTrans" style="display: none">
 						<td width="17%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.NroFactura'/>
 						</td>						
