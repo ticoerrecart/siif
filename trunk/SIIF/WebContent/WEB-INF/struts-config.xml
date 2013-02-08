@@ -384,7 +384,10 @@
 			parameter="metodo" name="certificadoOrigenForm" scope="session">
 			<forward name="exitoInicializarAltaCertificadoOrigen" path=".altaCertificadoOrigen" />
 			<forward name="exitoRecuperarDatosParaAltaCertificadoOrigen" path="/jsp/bloqueMostrarDatosParaAltaCertificadoOrigen.jsp" />
-			<forward name="exitoAltaCertificadoOrigen" path="/certificadoOrigen.do?metodo=inicializarAltaCertificadoOrigen" />					
+			<forward name="exitoAltaCertificadoOrigen" path=".mostrarAltaNroCertificado" />
+			<forward name="exitoCargarProductoresParaConsultaCertificadoOrigen" path=".cargarProductoresParaConsultaCertificadoOrigen" />
+			<forward name="exitoRecuperarCertificadosOrigenParaConsulta" path="/jsp/bloqueMostrarCertificadosParaConsulta.jsp" />
+			<forward name="exitoCargarCertificadoOrigen" path=".cargarCertificadoOrigen" />											
 		</action>
 		<!-- FIN CERTIFICADO ORIGEN -->		
 		
