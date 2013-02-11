@@ -14,6 +14,8 @@ public interface IConsultasPorProductorFachada {
 	
 	public List<GuiaForestalDTO> recuperarGuiasForestalesNoVigentes(long idProductor)throws NegocioException;
 	
+	public List<GuiaForestalDTO> recuperarGuiasForestalesAnuladas(long idProductor) throws NegocioException; 
+	
 	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor)throws NegocioException;
 	
 	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasVales(long idProductor)throws NegocioException;

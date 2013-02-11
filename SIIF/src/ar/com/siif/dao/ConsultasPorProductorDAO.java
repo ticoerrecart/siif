@@ -102,6 +102,30 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		}			
 	}	
 	
+	public List<GuiaForestal> recuperarGuiasForestalesAnuladas(long idProductor) throws DataBaseException {
+
+		try{
+			Criteria criteria = getSession().createCriteria(GuiaForestal.class);
+	
+			criteria.createAlias("productorForestal", "productor");
+	
+			criteria.add(Restrictions.eq("productor.id", idProductor)).add(Restrictions.eq("anulado", true));
+
+			criteria.addOrder(Order.asc("nroGuia"));
+			
+			List<GuiaForestal> lista = criteria.list();
+	
+			return lista;
+			
+		} catch (HibernateException he) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (HibernateSystemException hse) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		} catch (Exception e) {
+			throw new DataBaseException(Constantes.ERROR_RECUPERAR_GUIAS_FORESTALES);
+		}			
+	}
+	
 	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor) throws DataBaseException{
 		
 		try{

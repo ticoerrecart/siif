@@ -61,6 +61,19 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		}			
 	}
 	
+	public List<GuiaForestalDTO> recuperarGuiasForestalesAnuladas(long idProductor) throws NegocioException {
+		try{
+			List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
+			List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesAnuladas(idProductor);
+			for (GuiaForestal guiaForestal : listaGuiasForestales) {
+				listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
+			}
+			return listaGuiasForestalesDTO;
+			
+		}catch(DataBaseException dbe){
+			throw new NegocioException(dbe.getMessage());
+		}			
+	}
 	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor) throws NegocioException{
 
 		try{

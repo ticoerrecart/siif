@@ -2,8 +2,10 @@ package ar.com.siif.struts.actions;
 
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -16,45 +18,51 @@ import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.IRolFachada;
-import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.utils.Constantes;
 
 public class ConsultasPorProductorAction extends ValidadorAction {
 
-	@SuppressWarnings("unchecked")
 	public ActionForward cargarConsultaPorProductores(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarConsultaPorProductor";
 
 		try {
 			String paramForward = request.getParameter("forward");
-
-			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);						
 			WebApplicationContext ctx = getWebApplicationContext();			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-			
-			if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
-				//rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
-				request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
-			}
-			else{
-				if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)){
-					//rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_NO_VIGENTE_MENU,usuario.getRol());
-					request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
-				}
-				else{
-					if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)){
-						//rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_AFORO_MENU,usuario.getRol());
-						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
-					}
-					else{
-						//rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
-						request.setAttribute("titulo", Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE);
-					}
-				}
-			}			
-			
 
+			if (paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)) {
+				// rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
+				request.setAttribute("titulo",
+						Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_VIGENTES);
+			} else {
+				if (paramForward
+						.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)) {
+					// rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_NO_VIGENTE_MENU,usuario.getRol());
+					request.setAttribute(
+							"titulo",
+							Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES);
+				} else {
+					if (paramForward
+							.equals(Constantes.METODO_RECUPERAR_GUIAS_ANULADAS)) {
+						request.setAttribute(
+								"titulo",
+								Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_ANULADAS);
+					} else {
+						if (paramForward
+								.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)) {
+							// rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_AFORO_MENU,usuario.getRol());
+							request.setAttribute(
+									"titulo",
+									Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO);
+						} else {
+							// rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
+							request.setAttribute(
+									"titulo",
+									Constantes.TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE);
+						}
+					}
+				}
+			}
 			
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
@@ -163,6 +171,31 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 		return mapping.findForward(strForward);
 	}	
+	
+	public ActionForward recuperarGuiasForestalesAnuladas(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String strForward = "exitoRecuperarGuiasForestalesConsultaPorProductor";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
+					.getBean("consultasPorProductorFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			List<GuiaForestalDTO> guiasForestalesAnuladas = consultasPorProductorFachada
+					.recuperarGuiasForestalesAnuladas(Long.parseLong(idProductor));
+
+			request.setAttribute("guiasForestales", guiasForestalesAnuladas);
+			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_ANULADAS);
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ActionForward recuperarGuiasForestalesConDeudasAforo(ActionMapping mapping, ActionForm form,
