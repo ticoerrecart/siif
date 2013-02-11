@@ -260,6 +260,8 @@ public class Constantes {
 
 	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_NO_VIGENTES = "Consulta de Guías Forestales No Vigentes";
 
+	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_ANULADAS = "Consulta de Guías Forestales Anuladas";
+	
 	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_AFORO = "Consulta de Guías Forestales Con Deuda de Aforo";
 
 	public static final String TITULO_CONSULTA_GUIAS_FORESTALES_CON_DEUDA_VALE_TRANSPORTE = "Consulta de Guías Forestales Con Deuda de Vale de Transporte";
@@ -267,6 +269,8 @@ public class Constantes {
 	public static final String METODO_RECUPERAR_GUIAS_VIGENTES = "recuperarGuiasForestalesVigentes";
 
 	public static final String METODO_RECUPERAR_GUIAS_NO_VIGENTES = "recuperarGuiasForestalesNoVigentes";
+	
+	public static final String METODO_RECUPERAR_GUIAS_ANULADAS = "recuperarGuiasForestalesAnuladas";
 
 	public static final String METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO = "recuperarGuiasForestalesConDeudasAforo";
 
