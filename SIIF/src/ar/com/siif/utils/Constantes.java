@@ -344,6 +344,8 @@ public class Constantes {
 	
 	public static final String REPORTE_RECAUDACION_TOTAL_PRODUCTORES_ENTRE_FECHAS = "reporteRecaudacionTotalProductoresEntreFechas";
 	
+	public static final String REPORTE_CERTIFICADO_ORIGEN = "reporteCertificadoOrigen";
+	
 	//FIN REPORTES	
 
 	//MENU

@@ -225,12 +225,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 			String idCertificado = request.getParameter("idCertificado");
 
-			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
-																		.getBean("tipoProductoForestalFachada");			
 			ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
 																		.getBean("certificadoDeOrigenFachada");	
 
-			request.setAttribute("tiposProductoExportacion", tipoProductoForestalFachada.recuperarTiposProductoExportacionDTO());			
 			request.setAttribute("certificado", certificadoOrigenFachada.recuperarCertificadoOrigen(Long.valueOf(idCertificado)));
 			
 		} catch (Exception e) {
