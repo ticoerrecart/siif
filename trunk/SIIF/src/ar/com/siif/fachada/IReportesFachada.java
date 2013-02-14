@@ -10,6 +10,8 @@ public interface IReportesFachada {
 	
 	public byte[] generarReporteFiscalizacion(long idFiscalizacion,String path)throws NegocioException;
 	
+	public byte[] generarReporteCertificadoOrigen(long idCertificado,String path)throws NegocioException;	
+	
 	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(
 									String path,String fechaDesde,String fechaHasta)throws NegocioException;
 	

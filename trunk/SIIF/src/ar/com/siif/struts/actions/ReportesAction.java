@@ -130,6 +130,39 @@ public class ReportesAction extends ValidadorAction {
 		return null;
 	}	
 		
+	@SuppressWarnings("unchecked")
+	public ActionForward generarReporteCertificadoOrigen(ActionMapping mapping, 
+														 ActionForm form,
+														 HttpServletRequest request, 
+														 HttpServletResponse response) 
+														throws Exception 
+	{
+		String path = request.getSession().getServletContext().getRealPath("jasper");
+		try {
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IReportesFachada reportesFachada = (IReportesFachada) ctx.getBean("reportesFachada");
+			
+			String idCertificado = request.getParameter("idCertificado");			
+			long idCertificadoOrigen = Long.valueOf(idCertificado).intValue();
+
+			byte[] bytes = reportesFachada.generarReporteCertificadoOrigen(idCertificadoOrigen,path);		
+			
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			//response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();				
+
+		} catch (Exception e) {
+			request.setAttribute("error", e.getMessage());
+			// strForward = "errorLogin";
+		}
+
+		return null;
+	}	
+	
 	/*@SuppressWarnings("unchecked")
 	public ActionForward cargarReporteVolumenFiscalizadoEntreFechas(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception 

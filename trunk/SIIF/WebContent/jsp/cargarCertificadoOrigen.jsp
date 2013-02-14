@@ -44,6 +44,17 @@ function volverConsultaCertificado(){
 	parent.location = contextRoot() +  '/certificadoOrigen.do?metodo=cargarProductoresParaConsultaCertificadoOrigen'	
 }
 
+function imprimirCertificado(){	
+	
+	var idCertificado = $('#idCertificado').val();	
+	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+	if(type == "IE"){
+		window.open("./reporte.do?metodo=generarReporteCertificadoOrigen&idCertificado="+idCertificado,"",especificaciones);
+	}else{
+		window.open("../../reporte.do?metodo=generarReporteCertificadoOrigen&idCertificado="+idCertificado,"",especificaciones);
+	}			
+}
+
 function mostrarCuit() {
 	
 	var cuit = $('#cuit').val();
@@ -52,19 +63,35 @@ function mostrarCuit() {
 	$('#nroCuit').val(cuit.substring(2,cuit.length-1));
 	$('#sufijoCuit').val(cuit.substring(cuit.length-1));
 }
-
-function mostrarVolumenesTiposProductos(){}
 			
 
 
 //-----------------------------------------------------//
 
 </script>
-
+	<input id="idCertificado" type="hidden" value="<c:out value="${certificado.id}"></c:out>">
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td class="azulAjustado">
 				<bean:message key='SIIF.titulo.CertificadoOrigen'/>
+			</td>
+		</tr>
+		<tr>
+			<td height="20"></td>
+		</tr>
+		<tr>
+			<td>		
+				<table border="0" class="cuadrado" align="center" width="35%" cellpadding="10" cellspacing="2">						
+					<tr>
+						<td width="60%" class="botoneralNegritaGrande grisSubtitulo">
+							<bean:message key='SIIF.label.NroDeCertificado'/>
+						</td>					
+						<td width="40%" class="botoneralNegritaGrande">
+							<c:out value="${certificado.nroCertificado}"></c:out>
+						</td>
+														
+					</tr>					
+				</table>		
 			</td>
 		</tr>
 		<tr>
@@ -176,22 +203,25 @@ function mostrarVolumenesTiposProductos(){}
 																
 					</tr>					
 					
-					<tr id="idTrFacturaVolTrans" style="display: ">
-						<td width="17%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.NroFactura'/>
-						</td>						
-						<td width="30%" align="center">
-							<input class="botonerab" type="text" size="27" readonly="readonly" 
-									value='<c:out value="${certificado.nroFactura}"></c:out>'>					
-						</td>	
-						<td width="21%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.VolumenTransferido'/>						
-						</td>
-						<td width="32%" align="center">
-							<input class="botonerab" type="text" size="27" readonly="readonly" 
-									value='<c:out value="${certificado.volumenTransferido}"></c:out>'>	
-						</td>																
-					</tr>					
+					<c:if test="${certificado.exportador.id != certificado.productor.id}">
+					
+						<tr id="idTrFacturaVolTrans" style="display: ">
+							<td width="17%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.NroFactura'/>
+							</td>						
+							<td width="30%" align="center">
+								<input class="botonerab" type="text" size="27" readonly="readonly" 
+										value='<c:out value="${certificado.nroFactura}"></c:out>'>					
+							</td>	
+							<td width="21%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.VolumenTransferido'/>						
+							</td>
+							<td width="32%" align="center">
+								<input class="botonerab" type="text" size="27" readonly="readonly" 
+										value='<c:out value="${certificado.volumenTransferido}"></c:out>'>	
+							</td>																
+						</tr>					
+					</c:if>
 					
 					<tr>
 						<td colspan="4" height="15"></td>
@@ -279,25 +309,20 @@ function mostrarVolumenesTiposProductos(){}
 								</tr>			
 												
 								<%String clase="par"; %>
-								<c:forEach items="${tiposProductoExportacion}" var="tipoProducto" varStatus="i">
+								<c:forEach items="${certificado.tiposProductoEnCertificado}" var="tipoProdEnCert" varStatus="i">
 									<%clase=(clase.equals("")?"par":""); %>
 									<tr class="<%=clase%>">
 										<td class="botoneralNegritaMediana">
-											<c:out value="${tipoProducto.nombre}"></c:out>
+											<c:out value="${tipoProdEnCert.tipoProductoExportacion.nombre}"></c:out>
 										</td>
 										<td align="center">										
-											<input class="botonerab" type="text" size="12"
-													id="idProd<c:out value="${tipoProducto.id}"></c:out>"> 
+											<input class="botonerab" type="text" size="12" readonly="readonly"
+													value="<c:out value="${tipoProdEnCert.volumenTipoProducto}"></c:out>"> 
 										</td>											
 									</tr>
 								</c:forEach>											
-							</table>
-							
-							<c:forEach items="${certificado.tiposProductoEnCertificado}" var="tipoProdEnCert" varStatus="i">
-								<input type="hidden" id="idProdEnCert<c:out value="${tipoProdEnCert.tipoProductoExportacion.id}"></c:out>"
-										value="<c:out value="${tipoProdEnCert.volumenTipoProducto}"></c:out>">
-							</c:forEach>							
-							
+							</table>		
+																
 							<br>
 							<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
 								<tr>
@@ -353,10 +378,16 @@ function mostrarVolumenesTiposProductos(){}
 			<td height="10" colspan="4"></td>
 		</tr>
 		<tr>
-			<td height="20" colspan="4"> 
+			<td height="20" width="49%" align="right"> 
 				<input class="botonerab" type="button" value="Volver" 
 						onclick="javascript:volverConsultaCertificado();">
 			</td>
+			<td height="20" colspan="2">
+			</td>
+			<td height="20" width="49%" align="left">
+				<input type="button" class="botonerab" value="Imprimir" onclick="javascript:imprimirCertificado();">
+			</td>			
+			
 		</tr>
 		<tr>
 			<td height="10" colspan="4"></td> 
@@ -365,5 +396,4 @@ function mostrarVolumenesTiposProductos(){}
 
 <script type="text/javascript">
 	mostrarCuit();
-	mostrarVolumenesTiposProductos();
 </script>	

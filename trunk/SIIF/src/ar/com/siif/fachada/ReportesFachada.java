@@ -58,6 +58,20 @@ public class ReportesFachada implements IReportesFachada {
 		}			
 	}	
 	
+	public byte[] generarReporteCertificadoOrigen(long idCertificado,String path)throws NegocioException{
+		
+		try{
+			Map parameters = new HashMap();
+			parameters.put("idCertificado", idCertificado);	
+			parameters.put("PATH_SUB_REPORTES", path);			
+			
+			return reportesDAO.generarReporte(Constantes.REPORTE_CERTIFICADO_ORIGEN, parameters);
+
+		} catch (DataBaseException e) {
+			throw new NegocioException(e.getMessage());
+		}		
+	}
+	
 	/*public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
 												String fechaDesde,String fechaHasta)throws NegocioException{
 		
