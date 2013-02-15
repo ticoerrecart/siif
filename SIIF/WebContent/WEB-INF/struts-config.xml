@@ -391,6 +391,12 @@
 		</action>
 		<!-- FIN CERTIFICADO ORIGEN -->		
 		
+		<!-- LOGS -->
+		<action path="/log" type="ar.com.siif.struts.actions.LogAction"
+			parameter="metodo">
+		</action>
+		<!-- FIN LOGS -->		
+
 	</action-mappings>
 
 	<message-resources parameter="ar.com.siif.struts.resources.application" />
