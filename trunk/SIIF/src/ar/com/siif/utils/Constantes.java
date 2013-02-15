@@ -412,6 +412,11 @@ public class Constantes {
 	public static final Long LENIA_ID = 3L;
 
 	//diametro
+	/*a. Rollizos: Largo: 2 a m7 y diámetro: 10 a 160cm
+	b. Fustes: Largo 5 a 18m y diámetro : 10 a 160cm
+	c. Postes: Largo 1.5 a 3m y diamtetro: 10 a 40cm
+	d. Trineos: Largo 1.5 a 3m y diamtetro: 10 a 40cm*/
+
 	public static final Integer minDiametroRollizo = 10;
 
 	public static final Integer maxDiametroRollizo = 160;
@@ -426,7 +431,7 @@ public class Constantes {
 
 	public static final Integer minDiametroTrineo = 10;
 
-	public static final Integer maxDiametroTrineo = 160;
+	public static final Integer maxDiametroTrineo = 40;
 
 	//largo
 	public static final Double minLargoRollizo = 2.0;
