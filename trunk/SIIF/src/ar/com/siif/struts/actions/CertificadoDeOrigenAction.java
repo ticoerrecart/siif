@@ -154,8 +154,17 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
 
+			String idTipoDeEntidad = request.getParameter("entidad");
+			String idProductor = request.getParameter("productor");			
+			String idPMF = request.getParameter("pmf");
+			String periodoForestal = request.getParameter("periodoForestal");
+			
 			request.setAttribute("tiposEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idPMF", idPMF);
+			request.setAttribute("periodoForestal", periodoForestal);			
 			
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
