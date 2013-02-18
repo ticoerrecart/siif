@@ -125,8 +125,53 @@
 		clase = $('#tr'+tr).attr("class");
 		$('#tr'+tr).attr("class", "seleccionado");	
 	}
+
+	function cargarProductoresVolver(){
+		$('#selectTiposDeEntidad').val($('#paramIdTipoDeEntidad').val());
+		var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
+
+		$('#selectProductores').attr('disabled',false);
+		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresVolverCallback );		
+
+		$('#divDetalle').hide(600);
+		$('#divDetalle').html("");
+	}
+
+	function actualizarProductoresVolverCallback(productores){
+		dwr.util.removeAllOptions("selectProductores");
+		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
+		dwr.util.addOptions("selectProductores", data, "id", "nombre");	
+		dwr.util.addOptions("selectProductores", productores,"id","nombre");
+
+		$('#selectProductores').val($('#paramProductor').val());
+		idPF = $('#selectProductores').val();
+		
+		UbicacionFachada.getPMFs(idPF, actualizarComboPMFVolverCallback);
+	}
+
+	function actualizarComboPMFVolverCallback(pmfs) {
+		
+		dwr.util.removeAllOptions("selectPmf");
+		var data = [ {
+			nombre : "- Seleccione -",
+			id : -1
+		} ];
+		dwr.util.addOptions("selectPmf", data, "id", "nombre");
+		dwr.util.addOptions("selectPmf", pmfs, "id", "nombreExpediente");
+		$('#selectPmf').removeAttr('disabled');
+
+		$('#selectPmf').val($('#idPMF').val());
+		$('#selectPeriodo').val($('#periodoForestal').val());
+		
+		mostrarListaCertificadosOrigen();
+	}
 	
 </script>
+
+<input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
+<input id="paramProductor" type="hidden" value="${idProductor}">
+<input id="idPMF" type="hidden" value="${idPMF}">
+<input id="periodoForestal" type="hidden" value="${periodoForestal}">
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
 <br>
@@ -247,3 +292,10 @@
 		<td height="20"></td>
 	</tr>	
 </table>
+
+<script type="text/javascript">	
+	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
+	if(idTipoDeEntidad != null && idTipoDeEntidad != ""){
+		cargarProductoresVolver();
+	}	
+</script>

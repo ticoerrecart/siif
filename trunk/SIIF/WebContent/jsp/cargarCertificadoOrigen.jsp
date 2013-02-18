@@ -40,8 +40,10 @@ function volverConsultaCertificado(){
 
 	var productor = $('#idParamProductor').val();
 	var entidad = $('#idParamIdTipoDeEntidad').val();
+	var pmf = $('#idPMF').val();
+	var periodoForestal = $('#periodoForestal').val();
 	
-	parent.location = contextRoot() +  '/certificadoOrigen.do?metodo=cargarProductoresParaConsultaCertificadoOrigen'	
+	parent.location = contextRoot() +  '/certificadoOrigen.do?metodo=cargarProductoresParaConsultaCertificadoOrigen&entidad='+entidad+"&productor="+productor+"&pmf="+pmf+"&periodoForestal="+periodoForestal;	
 }
 
 function imprimirCertificado(){	
@@ -64,12 +66,17 @@ function mostrarCuit() {
 	$('#sufijoCuit').val(cuit.substring(cuit.length-1));
 }
 			
-
-
 //-----------------------------------------------------//
 
 </script>
+
+	<input id="idParamProductor" type="hidden" value="${certificado.productor.id}">
+	<input id="idParamIdTipoDeEntidad" type="hidden" value="${certificado.productor.tipoEntidad}">
+	<input id="idPMF" type="hidden" value="${certificado.pmf.id}">
+	<input id="periodoForestal" type="hidden" value="${certificado.periodoForestal}">
+	
 	<input id="idCertificado" type="hidden" value="<c:out value="${certificado.id}"></c:out>">
+	
 	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 		<tr>
 			<td class="azulAjustado">
@@ -395,5 +402,6 @@ function mostrarCuit() {
 	</table>
 
 <script type="text/javascript">
-	mostrarCuit();
+	mostrarCuit();	
 </script>	
+
