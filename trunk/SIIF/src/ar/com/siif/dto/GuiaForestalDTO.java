@@ -1,33 +1,29 @@
 package ar.com.siif.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.negocio.Usuario;
 
 public class GuiaForestalDTO {
 
 	private Long id;
-	
+
 	private int nroGuia;
 
 	private EntidadDTO productorForestal;
-	
-	private String periodoForestal;	
-		
+
+	private String periodoForestal;
+
 	private String fechaVencimiento;
 
 	private int distanciaAforoMovil;
 
-	private double importeTotal;	
-	
+	private double importeTotal;
+
 	private double inspFiscalizacion;
 
 	private String observaciones;
 
-	private String localidad;
+	private LocalidadDTO localidad;
 
 	private String fecha;
 
@@ -38,13 +34,13 @@ public class GuiaForestalDTO {
 	private UsuarioDTO usuario;
 
 	private RodalDTO rodal;
-	
-	private List<FiscalizacionDTO> fiscalizaciones;	
-	
+
+	private List<FiscalizacionDTO> fiscalizaciones;
+
 	private List<SubImporteDTO> subImportes;
-	
+
 	private boolean anulado;
-	
+
 	public GuiaForestalDTO() {
 
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
@@ -54,6 +50,7 @@ public class GuiaForestalDTO {
 		productorForestal = new EntidadDTO();
 		rodal = new RodalDTO();
 		subImportes = new ArrayList<SubImporteDTO>();
+		localidad = new LocalidadDTO();
 	}
 
 	public int getNroGuia() {
@@ -96,11 +93,11 @@ public class GuiaForestalDTO {
 		this.observaciones = observaciones;
 	}
 
-	public String getLocalidad() {
+	public LocalidadDTO getLocalidad() {
 		return localidad;
 	}
 
-	public void setLocalidad(String localidad) {
+	public void setLocalidad(LocalidadDTO localidad) {
 		this.localidad = localidad;
 	}
 
@@ -200,35 +197,33 @@ public class GuiaForestalDTO {
 		this.anulado = anulado;
 	}
 
-	
 	/**
 	 * me fijo en los subimportes para ver los productos que tiene la guia
 	 * Los estados tambien los saco de Ahi
 	 * y la relacion la saco de las fiscalizaciones... si no hay devuelvo 0
 	 * 
 	 */
-	public List<ProductoEspecieYRelacionMtsPorPiezaDTO> getProductosEspeciesYRelacionMtsPorPieza(){
-		 
+	public List<ProductoEspecieYRelacionMtsPorPiezaDTO> getProductosEspeciesYRelacionMtsPorPieza() {
+
 		List<ProductoEspecieYRelacionMtsPorPiezaDTO> prods = new ArrayList<ProductoEspecieYRelacionMtsPorPiezaDTO>();
-		for (SubImporteDTO subImporteDTO : this.getSubImportes() ) {
+		for (SubImporteDTO subImporteDTO : this.getSubImportes()) {
 			ProductoEspecieYRelacionMtsPorPiezaDTO prod = new ProductoEspecieYRelacionMtsPorPiezaDTO();
 			prod.setProducto(subImporteDTO.getTipoProducto().getNombre());
 			prod.setEspecie(subImporteDTO.getEspecie());
 			double mts3 = 0;
 			double piezas = 0;
-			for ( FiscalizacionDTO fisc : this.getFiscalizaciones()){
-				if (fisc.getTipoProducto().getNombre().equalsIgnoreCase(prod.getProducto())){
+			for (FiscalizacionDTO fisc : this.getFiscalizaciones()) {
+				if (fisc.getTipoProducto().getNombre().equalsIgnoreCase(prod.getProducto())) {
 					mts3 = mts3 + fisc.getCantidadMts();
 					piezas = piezas + fisc.getCantidadUnidades();
 				}
 			}
 			if (mts3 > 0) {
-				prod.setMts3xpieza(mts3/piezas);
+				prod.setMts3xpieza(mts3 / piezas);
 			}
 			prods.add(prod);
 		}
 		return prods;
 	}
-	
-	
+
 }

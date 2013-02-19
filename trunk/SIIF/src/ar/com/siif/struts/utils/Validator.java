@@ -89,7 +89,7 @@ public abstract class Validator {
 		}
 		return true;
 	}
-		
+
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
@@ -570,12 +570,26 @@ public abstract class Validator {
 		double montoSumaBoletas = 0;
 		for (BoletaDepositoDTO boleta : boletas) {
 			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
-			if (boleta.getNumero() <= 0 || boleta.getConcepto() == null
-					|| boleta.getConcepto().equals("") || boleta.getArea() == null
-					|| boleta.getArea().equals("") || boleta.getMonto() <= 0.0) {
-				addErrorXML(pError, "Faltan datos en las Boletas de Deposito");
+			if (boleta.getNumero() <= 0) {
+				addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
 				return false;
 			}
+
+			if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
+				addErrorXML(pError, "Faltan datos en el Concepto de la Boleta de Deposito");
+				return false;
+			}
+
+			if (boleta.getArea() == null || boleta.getArea().equals("")) {
+				addErrorXML(pError, "Faltan datos en el Area de la Boleta de Deposito");
+				return false;
+			}
+
+			if (boleta.getMonto() <= 0.0) {
+				addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
+				return false;
+			}
+
 		}
 
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
@@ -622,17 +636,20 @@ public abstract class Validator {
 	}
 
 	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError) {
+		String titulo = "en los Vales de Transporte";
 		if (rangos.size() == 0) {
-			addErrorXML(pError, "La Cantidad de Rangos debe ser un numero mayor a 0");
+			addErrorXML(pError, "La Cantidad de Rangos " + titulo + " debe ser un numero mayor a 0");
 			return false;
 		}
 		for (RangoDTO rango : rangos) {
 			if (rango.getDesde() <= 0 || rango.getHasta() <= 0) {
-				addErrorXML(pError, "Los valores Desde y Hasta deben ser enteros positivos");
+				addErrorXML(pError, "Los valores Desde y Hasta " + titulo
+						+ " deben ser enteros positivos");
 				return false;
 			}
 			if (rango.getDesde() > rango.getHasta()) {
-				addErrorXML(pError, "El valor Desde no puede ser mayor que el valor Hasta");
+				addErrorXML(pError, "El valor Desde " + titulo
+						+ " no puede ser mayor que el valor Hasta");
 				return false;
 			}
 		}
@@ -644,7 +661,7 @@ public abstract class Validator {
 		Integer i = new Integer(-1);
 		for (Integer integer : lista) {
 			if (i > integer) {
-				addErrorXML(pError, "Los valores de los rangos estan superpuestos");
+				addErrorXML(pError, "Los valores de los rangos " + titulo + " estan superpuestos");
 				return false;
 			} else {
 				i = integer;
@@ -655,18 +672,6 @@ public abstract class Validator {
 
 	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes,
 			List<FiscalizacionDTO> listaFiscalizaciones, String tipoTerreno, StringBuffer pError) {
-		/*Double volumen  = null;
-		HashMap<Long,Double> hashProductosFiscalizados = new HashMap<Long, Double>();
-		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-			
-			volumen = hashProductosFiscalizados.get(fiscalizacionDTO.getTipoProducto().getId());
-			if(volumen != null){
-				volumen = volumen.doubleValue() + fiscalizacionDTO.getCantidadMts();
-			}else{
-				volumen = fiscalizacionDTO.getCantidadMts();
-			}
-			hashProductosFiscalizados.put(fiscalizacionDTO.getTipoProducto().getId(), volumen);
-		}*/
 
 		HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
 		Set<SubImporteDTO> listaIdTipoProducto = new TreeSet<SubImporteDTO>();
@@ -680,23 +685,25 @@ public abstract class Validator {
 				return false;
 			}
 			if (subImporteDTO.getEstado() == null || subImporteDTO.getEstado().equals("")) {
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				addErrorXML(pError, "Faltan especificar datos en el Estado del Producto Forestal");
 				return false;
 			}
 			if (subImporteDTO.getEspecie() == null || subImporteDTO.getEspecie().trim().equals("")) {
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				addErrorXML(pError, "Faltan especificar datos en la Especie del Producto Forestal");
 				return false;
 			}
 			if (subImporteDTO.getCantidadMts() <= 0.0) {
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				addErrorXML(pError,
+						"Faltan especificar datos en la cantidad de Metros del Producto Forestal");
 				return false;
 			}
 			if (subImporteDTO.getValorAforos() <= 0.0) {
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				addErrorXML(pError,
+						"Faltan especificar datos en el Valor del Aforo del Producto Forestal");
 				return false;
 			}
 			if (!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0) {
-				addErrorXML(pError, "Faltan especificar datos en los subImportes");
+				addErrorXML(pError, "Faltan especificar datos en el Importe del Producto Forestal");
 				return false;
 			}
 			listaIdTipoProducto.add(subImporteDTO);
@@ -813,23 +820,23 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarVolumenExportacionCertificadoOrigen(double volumenTotalTipoProducto, 
-																	 double volumenMaximoPermitido, 
-																	 StringBuffer pError)
-	{	
-		if(volumenTotalTipoProducto > volumenMaximoPermitido){
-			addErrorXML(pError, "El volúmen total debe ser menor al volúmen máximo permitido para exportar");
+	public static boolean validarVolumenExportacionCertificadoOrigen(
+			double volumenTotalTipoProducto, double volumenMaximoPermitido, StringBuffer pError) {
+		if (volumenTotalTipoProducto > volumenMaximoPermitido) {
+			addErrorXML(pError,
+					"El volúmen total debe ser menor al volúmen máximo permitido para exportar");
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean validarDeudaCertificadoOrigen(boolean tieneDeuda, String radioDeuda, StringBuffer pError)
-	{	
-		if(tieneDeuda && radioDeuda.equals("N")){
-			addErrorXML(pError, "El Productor tiene deudas con la Dirección General de Bosques en concepto de aforo");
+	public static boolean validarDeudaCertificadoOrigen(boolean tieneDeuda, String radioDeuda,
+			StringBuffer pError) {
+		if (tieneDeuda && radioDeuda.equals("N")) {
+			addErrorXML(pError,
+					"El Productor tiene deudas con la Dirección General de Bosques en concepto de aforo");
 			return false;
 		}
 		return true;
-	}		
+	}
 }
