@@ -1,6 +1,8 @@
 package ar.com.siif.utils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ResourceBundle;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -44,10 +46,22 @@ public abstract class MyLogger {
 		}
 	}
 
-	public static void logError(String mensaje) {
+	public static void logError(Throwable t) {
 		// the following statement is used to log any messages
 		if (LOGGEAR) {
-			logger.log(Level.SEVERE, mensaje);
+			logger.log(Level.SEVERE, stackToString(t));
 		}
 	}
+	
+	public static String stackToString(Throwable t) {
+		// recibe una excepción y devuelve un string con el stackTrace
+		try {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			t.printStackTrace(pw);
+			return "------\r\n" + sw.toString() + "------\r\n";
+		} catch (Exception exc) {
+			return "No se pudo recuperar el StackTrace debido a: " + exc.getMessage();
+		}
+	}	
 }

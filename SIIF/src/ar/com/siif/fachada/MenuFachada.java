@@ -4,8 +4,6 @@ import java.util.List;
 
 import ar.com.siif.dao.MenuDAO;
 import ar.com.siif.negocio.ItemMenu;
-import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.negocio.exception.NegocioException;
 
 public class MenuFachada implements IMenuFachada {
 
@@ -22,14 +20,9 @@ public class MenuFachada implements IMenuFachada {
 		this.menuDAO = menuDAO;
 	}
 
-	public List<ItemMenu> getItemsMenu(String pRol) throws NegocioException {
+	public List<ItemMenu> getItemsMenu(String pRol) {
+		return menuDAO.getItemsMenu(pRol);
 
-		try{
-			return menuDAO.getItemsMenu(pRol);
-		
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
 	}
 
 }

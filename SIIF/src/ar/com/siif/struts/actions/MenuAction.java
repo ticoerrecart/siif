@@ -18,9 +18,9 @@ import org.springframework.web.struts.DispatchActionSupport;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IMenuFachada;
 import ar.com.siif.negocio.ItemMenu;
-import ar.com.siif.negocio.Usuario;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.MenuJSCook;
+import ar.com.siif.utils.MyLogger;
 
 public class MenuAction extends DispatchActionSupport {
 
@@ -60,9 +60,8 @@ public class MenuAction extends DispatchActionSupport {
 			request.getSession().setAttribute("username", username);
 			request.getSession().setAttribute("roles", rolesStr);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			mapping.findForward("error");
+		} catch (Throwable e) {
+			MyLogger.logError(e);
 		}
 		return null;
 	}
