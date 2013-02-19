@@ -35,20 +35,25 @@
 
 
 	function armarMenu(datos){
-		var strings = datos.split('@');
-		$('#usuario').html(strings[1]);
-		$('#roles').html(strings[2]);
-		$('#version').html(strings[3]);
-
-		var prop = cmClone (cmThemeSIC);
-		prop.effect = new CMSlidingEffect(6);
-		//prop.effect = new CMFadingEffect (50, 30);
 		
-		//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeOffice2003);		
-		//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeGray);		
-		//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeSIC);
-		cmDraw('toolbar', eval(strings[0]) , 'hbr', prop);
-	
+		var strings = datos.split('@');
+		if (strings.length > 1){
+			$('#usuario').html(strings[1]);
+			$('#roles').html(strings[2]);
+			$('#version').html(strings[3]);
+
+			var prop = cmClone (cmThemeSIC);
+			prop.effect = new CMSlidingEffect(6);
+			//prop.effect = new CMFadingEffect (50, 30);
+			
+			//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeOffice2003);		
+			//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeGray);		
+			//cmDraw('toolbar', eval(strings[0]) , 'hbr', cmThemeSIC);
+			cmDraw('toolbar', eval(strings[0]) , 'hbr', prop);
+		} else {
+			$('.header').html('<td>Error Inesperado</td>');
+		}
+			
 	}
 
 	function irA(url) {
