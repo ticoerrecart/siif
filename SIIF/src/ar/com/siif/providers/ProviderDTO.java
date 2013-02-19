@@ -290,7 +290,7 @@ public abstract class ProviderDTO {
 				.dateToStringDDMMAAAA(guiaForestal.getFechaVencimiento())));
 		guiaForestalDTO.setImporteTotal(guiaForestal.getImporteTotal());
 		guiaForestalDTO.setInspFiscalizacion(guiaForestal.getInspFiscalizacion());
-		guiaForestalDTO.setLocalidad(guiaForestal.getLocalidad());
+		guiaForestalDTO.setLocalidad(ProviderDTO.getLocalidadDTO(guiaForestal.getLocalidad()));
 		guiaForestalDTO.setNroGuia(guiaForestal.getNroGuia());
 		guiaForestalDTO.setObservaciones(guiaForestal.getObservaciones());
 
@@ -326,7 +326,7 @@ public abstract class ProviderDTO {
 		guiaForestalDTO.setSubImportes(listaSubImportesDTO);
 
 		guiaForestalDTO.setAnulado(guiaForestal.isAnulado());
-		
+
 		return guiaForestalDTO;
 	}
 
@@ -419,41 +419,44 @@ public abstract class ProviderDTO {
 		provinciaDTO.setNombre(provincia.getNombre());
 
 		return provinciaDTO;
-	}	
-	
+	}
+
 	public static LocalidadDestinoDTO getLocalidadDestinoDTO(LocalidadDestino localidad) {
 
 		LocalidadDestinoDTO localidadDTO = new LocalidadDestinoDTO();
 
 		localidadDTO.setId(localidad.getId());
 		localidadDTO.setNombre(localidad.getNombre());
-		localidadDTO.setProvinciaDestinoDTO(ProviderDTO.getProvinciaDestinoDTO(localidad.getProvinciaDestino()));
-		
+		localidadDTO.setProvinciaDestinoDTO(ProviderDTO.getProvinciaDestinoDTO(localidad
+				.getProvinciaDestino()));
+
 		return localidadDTO;
-	}	
-	
-	public static TipoProductoEnCertificadoDTO getTipoProductoEnCertificadoDTO(TipoProductoEnCertificado tipoProducto, 
-																		CertificadoOrigenDTO certificadoDTO){
-		
+	}
+
+	public static TipoProductoEnCertificadoDTO getTipoProductoEnCertificadoDTO(
+			TipoProductoEnCertificado tipoProducto, CertificadoOrigenDTO certificadoDTO) {
+
 		TipoProductoEnCertificadoDTO tipoProductoDTO = new TipoProductoEnCertificadoDTO();
-		
+
 		tipoProductoDTO.setCertificadoOrigen(certificadoDTO);
 		tipoProductoDTO.setId(tipoProducto.getId());
-		tipoProductoDTO.setTipoProductoExportacion(ProviderDTO.getTipoProductoDTO(tipoProducto.getTipoProductoExportacion()));
+		tipoProductoDTO.setTipoProductoExportacion(ProviderDTO.getTipoProductoDTO(tipoProducto
+				.getTipoProductoExportacion()));
 		tipoProductoDTO.setVolumenTipoProducto(tipoProducto.getVolumenTipoProducto());
-				
+
 		return tipoProductoDTO;
 	}
-	
-	public static CertificadoOrigenDTO getCertificadoOrigenDTO(CertificadoOrigen certificado){
-		
+
+	public static CertificadoOrigenDTO getCertificadoOrigenDTO(CertificadoOrigen certificado) {
+
 		CertificadoOrigenDTO certificadoDTO = new CertificadoOrigenDTO();
-		
+
 		certificadoDTO.setExportador(ProviderDTO.getEntidadDTO(certificado.getExportador()));
-		certificadoDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha
-				.dateToStringDDMMAAAA(certificado.getFecha())));
+		certificadoDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha.dateToStringDDMMAAAA(certificado
+				.getFecha())));
 		certificadoDTO.setId(certificado.getId());
-		certificadoDTO.setLocalidadDestino(ProviderDTO.getLocalidadDestinoDTO(certificado.getLocalidadDestino()));
+		certificadoDTO.setLocalidadDestino(ProviderDTO.getLocalidadDestinoDTO(certificado
+				.getLocalidadDestino()));
 		certificadoDTO.setNroCertificado(certificado.getNroCertificado());
 		certificadoDTO.setNroFactura(certificado.getNroFactura());
 		certificadoDTO.setNroRemito(certificado.getNroRemito());
@@ -465,17 +468,18 @@ public abstract class ProviderDTO {
 		certificadoDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(certificado.getUsuarioAlta()));
 		certificadoDTO.setVolumenTotalTipoProductos(certificado.getVolumenTotalTipoProductos());
 		certificadoDTO.setVolumenTransferido(certificado.getVolumenTransferido());
-		
+
 		List<TipoProductoEnCertificadoDTO> listaTipoProdDTO = new ArrayList<TipoProductoEnCertificadoDTO>();
 		for (TipoProductoEnCertificado tipoProd : certificado.getTiposProductoEnCertificado()) {
-			listaTipoProdDTO.add(ProviderDTO.getTipoProductoEnCertificadoDTO(tipoProd,certificadoDTO));
+			listaTipoProdDTO.add(ProviderDTO.getTipoProductoEnCertificadoDTO(tipoProd,
+					certificadoDTO));
 		}
-		
+
 		certificadoDTO.setTiposProductoEnCertificado(listaTipoProdDTO);
-		
+
 		return certificadoDTO;
 	}
-	
+
 	/*	
 		public static ActaMartilladoDTO getActaMartilladoDTO(FiscalizacionForm form){
 			

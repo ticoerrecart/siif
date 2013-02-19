@@ -455,16 +455,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 					<td height="10" colspan="4"></td>
 				</tr>
 				<tr>
-					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
-					<td width="30%" align="left">
-						<input value="${rodal.marcacion.tranzon.pmf.tipoTerreno}" id="tipoTerrenoPMF" name="tipoTerreno"
-								class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-					<td colspan="2">
-					
-					</td>
-				</tr>				
-				<tr>
 					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
 					<td width="30%" align="left">
 						<input value="${rodal.marcacion.tranzon.pmf.nombre} - ${rodal.marcacion.tranzon.pmf.expediente}" 
@@ -492,6 +482,16 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 						<input value="${rodal.nombre}"
 							   class="botonerab" type="text" size="40" readonly="readonly">
 					</td>
+				</tr>
+				<tr>
+					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+					<td width="30%" align="left">
+						<input value="${rodal.marcacion.tranzon.pmf.tipoTerreno}" id="tipoTerrenoPMF" name="tipoTerreno"
+								class="botonerab" type="text" size="40" readonly="readonly">
+					</td>
+					<td colspan="2">
+					
+					</td>
 				</tr>		
 				<tr>
 					<td height="10" colspan="4"></td>
@@ -512,16 +512,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 							<tr>
 								<td colspan="3" height="10"></td>
 							</tr>				
-							<tr>
-								<td width="47%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.TipoTerreno'/>
-								</td>
-								<td width="4%"></td>
-								<td align="left">
-									<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
-										class="botonerab" type="text" size="15">
-								</td>
-							</tr>							
 							<tr>
 								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.PlanManejoForestal'/>
@@ -569,6 +559,16 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 									<select id="idRodal" class="botonerab" name="guiaForestal.rodal.id" disabled="disabled">
 										<option value="-1">- Seleccione -</option>						
 									</select>				
+								</td>
+							</tr>
+							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.TipoTerreno'/>
+								</td>
+								<td width="4%"></td>
+								<td align="left">
+									<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
+										class="botonerab" type="text" size="15">
 								</td>
 							</tr>
 							<tr>
@@ -1114,10 +1114,10 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Localidad'/></td>
 			<td width="30%" align="left">				
-				<select id="idLocalidad" class="botonerab" name="guiaForestal.localidad">
+				<select id="idLocalidad" class="botonerab" name="guiaForestal.localidad.id">
 					<option value="">- Seleccione una Localidad -</option>
 					<c:forEach items="${localidades}" var="localidad">
-						<option value="${localidad.nombre}">
+						<option value="${localidad.id}">
 							<c:out value="${localidad.nombre}"></c:out>
 						</option>
 					</c:forEach>
