@@ -2,409 +2,214 @@ package ar.com.siif.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-import org.hibernate.HibernateException;
-import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.utils.Constantes;
-
-
+@SuppressWarnings("deprecation")
 public class ReportesPorProductorDAO extends HibernateDaoSupport {
 
-	public byte[] generarReporteVolumenFiscalizadoTotal(String path, String periodo)throws DataBaseException{
+	public byte[] generarReporteVolumenFiscalizadoTotal(String path,
+			String periodo) throws Exception {
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoTotalPorProductor.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
-	
-	public byte[] generarReporteVolumenFiscalizadoPorProductos(String path, String periodo, Long idProductor)throws DataBaseException{
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "volumenFiscalizadoTotalPorProductor.jasper");
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenFiscalizadoPorProductorPorProductos.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}
-	
-	public byte[] generarReporteVolumenGFBMontosPagos(String path, String periodo, Long idProductor)throws DataBaseException{
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenGFBMontosPagos.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
 
-	public byte[] generarReporteVolumenGFBMontosAdeudados(String path, String periodo, Long idProductor)throws DataBaseException{
-
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenGFBMontosAdeudados.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
-
-	public byte[] generarReporteListaBoletasTotales(String path, String periodo, Long idProductor)throws DataBaseException{
-
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoBoletasDepositoTotales.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
 	}
 
-	public byte[] generarReporteListaBoletasPagas(String path, String periodo, Long idProductor)throws DataBaseException{
+	public byte[] generarReporteVolumenFiscalizadoPorProductos(String path,
+			String periodo, Long idProductor) throws Exception {
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoBoletasDepositoPagas.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "volumenFiscalizadoPorProductorPorProductos.jasper");
 
-	public byte[] generarReporteListaBoletasImpagas(String path, String periodo, Long idProductor)throws DataBaseException{
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoBoletasDepositoImpagas.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
 
-	public byte[] generarReporteListaValesDevueltos(String path, String periodo, Long idProductor)throws DataBaseException{
+	}
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoValesTransporteDevueltos.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
+	public byte[] generarReporteVolumenGFBMontosPagos(String path,
+			String periodo, Long idProductor) throws Exception {
 
-	public byte[] generarReporteListaValesEnUso(String path, String periodo, Long idProductor)throws DataBaseException{
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "volumenGFBMontosPagos.jasper");
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoValesTransporteEnUso.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			Timestamp ts = new Timestamp(new Date().getTime());
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			parameters.put("fechaHoy", ts);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
-	
-	public byte[] generarReporteListaValesTotales(String path, String periodo, Long idProductor)throws DataBaseException{
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "listadoValesTransporteTotales.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-			
-			Timestamp ts = new Timestamp(new Date().getTime());
-			
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			parameters.put("fechaHoy", ts);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}	
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
 
-	public byte[] generarReporteVolumenPorUbicacion(String path, String periodo, Long idProductor,
-			 				Long idPMF, Long idTranzon, Long idMarcacion)throws DataBaseException
-	{
+	}
 
-		byte[] bytes = null;
-		try{
-			InputStream input = new FileInputStream(path + File.separatorChar + "volumenPorProductorPorUbicacion.jasper");
-			String fileImagen = path + File.separatorChar + "logo.GIF";
-						
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);		
-			Map parameters = new HashMap();
-			parameters.put("PATH_SUB_REPORTES", path);
-			parameters.put("periodo", periodo);
-			parameters.put("idProductor", idProductor);
-			parameters.put("idPMF", idPMF);
-			parameters.put("idTranzon", idTranzon);
-			parameters.put("idMarcacion", idMarcacion);
-			
-			bytes = JasperRunManager.runReportToPdf(jasperReport, parameters, getSession().connection());		
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (JRException e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (HibernateSystemException he) {
-			he.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataBaseException(Constantes.ERROR_GENERACION_REPORTE);
-		}
-		return bytes;			
-	}		
+	public byte[] generarReporteVolumenGFBMontosAdeudados(String path,
+			String periodo, Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "volumenGFBMontosAdeudados.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaBoletasTotales(String path,
+			String periodo, Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoBoletasDepositoTotales.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaBoletasPagas(String path, String periodo,
+			Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoBoletasDepositoPagas.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaBoletasImpagas(String path,
+			String periodo, Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoBoletasDepositoImpagas.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaValesDevueltos(String path,
+			String periodo, Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoValesTransporteDevueltos.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaValesEnUso(String path, String periodo,
+			Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoValesTransporteEnUso.jasper");
+
+		Timestamp ts = new Timestamp(new Date().getTime());
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+		parameters.put("fechaHoy", ts);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteListaValesTotales(String path, String periodo,
+			Long idProductor) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "listadoValesTransporteTotales.jasper");
+
+		Timestamp ts = new Timestamp(new Date().getTime());
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+		parameters.put("fechaHoy", ts);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
+
+	public byte[] generarReporteVolumenPorUbicacion(String path,
+			String periodo, Long idProductor, Long idPMF, Long idTranzon,
+			Long idMarcacion) throws Exception {
+
+		InputStream input = new FileInputStream(path + File.separatorChar
+				+ "volumenPorProductorPorUbicacion.jasper");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(input);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("periodo", periodo);
+		parameters.put("idProductor", idProductor);
+		parameters.put("idPMF", idPMF);
+		parameters.put("idTranzon", idTranzon);
+		parameters.put("idMarcacion", idMarcacion);
+
+		return JasperRunManager.runReportToPdf(jasperReport, parameters,
+				getSession().connection());
+
+	}
 }
