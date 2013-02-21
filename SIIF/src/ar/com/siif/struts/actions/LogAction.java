@@ -41,28 +41,32 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		try {
 
 			ServletOutputStream out = response.getOutputStream();
-			String fileName = "/usr/local/tomcat-7.0.6/logs/catalina.out";
-			File file = new File(fileName);
-			if (!file.exists()) {
-				String s = "El archivo '" + fileName + "' no existe.";
-				out.write(s.getBytes());
+			String fileName = request.getParameter("file");//"/usr/local/tomcat-7.0.6/logs/catalina.out";
+			if (fileName == null || "".equals(fileName)) {
+				out.write("Ningún archivo seleccionado para ver.".getBytes());
 			} else {
-				if (file.length() == 0) {
-					String s = "El archivo '" + fileName + "' tiene 0 bytes.";
+				File file = new File(fileName);
+				if (!file.exists()) {
+					String s = "El archivo '" + fileName + "' no existe.";
 					out.write(s.getBytes());
 				} else {
-					byte[] bytes = getByteArrayFromFile(file);
+					if (file.length() == 0) {
+						String s = "El archivo '" + fileName + "' tiene 0 bytes.";
+						out.write(s.getBytes());
+					} else {
+						byte[] bytes = getByteArrayFromFile(file);
 
-					// Lo muestro en la salida del response
-					response.setContentType("text/plain");
-					// response.setContentLength(baos.size());
-					out.write(bytes, 0, bytes.length);
+						// Lo muestro en la salida del response
+						response.setContentType("text/plain");
+						// response.setContentLength(baos.size());
+						out.write(bytes, 0, bytes.length);
+					}
 				}
 			}
 			out.flush();
@@ -73,5 +77,21 @@ public class LogAction extends DispatchAction {
 		}
 
 		return null;
+	}
+
+	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String success = "logSuccess";
+		String fileName = "/usr/local/tomcat-7.0.6/logs/";
+		File file = new File(fileName);
+		if (file.exists() && file.isDirectory()) {
+			request.setAttribute("files", file.listFiles());
+		} else {
+			request.setAttribute("error", "El directorio '" + fileName
+					+ "' no existe o no es un directorio.");
+		}
+
+		return mapping.findForward(success);
 	}
 }
