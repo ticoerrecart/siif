@@ -394,6 +394,7 @@
 		<!-- LOGS -->
 		<action path="/log" type="ar.com.siif.struts.actions.LogAction"
 			parameter="metodo">
+			<forward name="logSuccess" path="/jsp/logs.jsp"/>
 		</action>
 		<!-- FIN LOGS -->		
 
