@@ -14,6 +14,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import ar.com.siif.utils.MyLogger;
+
 public class LogAction extends DispatchAction {
 
 	private byte[] getByteArrayFromFile(File file) throws IOException {
@@ -28,7 +30,7 @@ public class LogAction extends DispatchAction {
 			bos.write(buf, 0, readNum); // no doubt here is 0
 			// Writes len bytes from the specified byte array starting at
 			// offset off to this byte array output stream.
-			//System.out.println("read " + readNum + " bytes,");
+			// System.out.println("read " + readNum + " bytes,");
 		}
 
 		return bos.toByteArray();
@@ -41,13 +43,14 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward verLog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		try {
 
 			ServletOutputStream out = response.getOutputStream();
-			String fileName = request.getParameter("file");//"/usr/local/tomcat-7.0.6/logs/catalina.out";
+			String fileName = request.getParameter("file");// "/usr/local/tomcat-7.0.6/logs/catalina.out";
 			if (fileName == null || "".equals(fileName)) {
 				out.write("Ningún archivo seleccionado para ver.".getBytes());
 			} else {
@@ -57,7 +60,8 @@ public class LogAction extends DispatchAction {
 					out.write(s.getBytes());
 				} else {
 					if (file.length() == 0) {
-						String s = "El archivo '" + fileName + "' tiene 0 bytes.";
+						String s = "El archivo '" + fileName
+								+ "' tiene 0 bytes.";
 						out.write(s.getBytes());
 					} else {
 						byte[] bytes = getByteArrayFromFile(file);
@@ -79,14 +83,18 @@ public class LogAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward log(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		String success = "logSuccess";
 		String fileName = "/usr/local/tomcat-7.0.6/logs/";
 		File file = new File(fileName);
 		if (file.exists() && file.isDirectory()) {
-			request.setAttribute("files", file.listFiles());
+			File[] listFiles = file.listFiles();
+			request.setAttribute("files", listFiles);
+			MyLogger.log("se encontraron " + file.listFiles().length
+					+ " archivos.");
 		} else {
 			request.setAttribute("error", "El directorio '" + fileName
 					+ "' no existe o no es un directorio.");
