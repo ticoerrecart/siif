@@ -19,6 +19,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.EntidadForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class EntidadAction extends ValidadorAction {
 
@@ -44,8 +45,9 @@ public class EntidadAction extends ValidadorAction {
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
 			request.setAttribute("metodo", "altaEntidad");
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -67,36 +69,45 @@ public class EntidadAction extends ValidadorAction {
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_ENTIDAD);
 		} catch (NegocioException ne) {
-			strForward = "errorAltaEntidad";
 			request.setAttribute("error", ne.getMessage());
-		} catch (Exception e) {
-			request.setAttribute("error", e.toString());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
 
 	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
-		EntidadForm entidadForm = (EntidadForm) form;
-		boolean ok = entidadForm.validar(error);
-		boolean existe = false;
-		if (ok) {
-			WebApplicationContext ctx = getWebApplicationContext();
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-			existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
-					entidadForm.getEntidadDTO().getId());
-			if (existe) {
-				Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
-			} else {
-				if (!"RN".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) {
-					existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
-							.getNroMatricula(), entidadForm.getEntidadDTO().getId());
-					if (existe) {
-						Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
+		
+		try{
+			EntidadForm entidadForm = (EntidadForm) form;
+			boolean ok = entidadForm.validar(error);
+			boolean existe = false;
+			if (ok) {
+				WebApplicationContext ctx = getWebApplicationContext();
+				IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+				existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+						entidadForm.getEntidadDTO().getId());
+				if (existe) {
+					Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
+				} else {
+					if (!"RN".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) {
+						existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
+								.getNroMatricula(), entidadForm.getEntidadDTO().getId());
+						if (existe) {
+							Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
+						}
 					}
 				}
 			}
-		}
-		return ok && !existe;
+			return ok && !existe;
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}			
 	}
 
 	@SuppressWarnings("unchecked")
@@ -116,8 +127,9 @@ public class EntidadAction extends ValidadorAction {
 			List<EntidadDTO> entidades = entidadFachada.getEntidadesDTO();
 			request.setAttribute("entidades", entidades);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -159,8 +171,9 @@ public class EntidadAction extends ValidadorAction {
 				}
 			}
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 		return mapping.findForward(strForward);
@@ -181,11 +194,11 @@ public class EntidadAction extends ValidadorAction {
 			entidadFachada.modificacionEntidad(entidad);
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_ENTIDAD);
-		} catch (NegocioException ne) {
-			strForward = "errorAltaEntidad";
-			request.setAttribute("error", ne.getMessage());
-		} catch (Exception e) {
-			request.setAttribute("error", e.toString());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}

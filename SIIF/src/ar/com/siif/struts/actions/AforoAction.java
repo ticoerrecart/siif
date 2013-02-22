@@ -26,6 +26,7 @@ import ar.com.siif.struts.actions.forms.AforoForm;
 import ar.com.siif.struts.actions.forms.TipoProductoForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class AforoAction extends ValidadorAction {
 
@@ -42,7 +43,6 @@ public class AforoAction extends ValidadorAction {
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.ALTA_AFORO_MENU,usuario.getRol());
 			
-			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 			ITipoProductoForestalFachada tipoProductoFachada = 
 					(ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
@@ -54,10 +54,11 @@ public class AforoAction extends ValidadorAction {
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("exitoGrabado", request.getAttribute("exitoGrabado"));
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
-		}
+		}			
 
 		return mapping.findForward(strForward);
 	}
@@ -80,9 +81,10 @@ public class AforoAction extends ValidadorAction {
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -105,8 +107,9 @@ public class AforoAction extends ValidadorAction {
 			List<AforoDTO> aforos = aforoFachada.recuperarAforosDTO();
 			request.setAttribute("aforos", aforos);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
@@ -139,11 +142,12 @@ public class AforoAction extends ValidadorAction {
 			request.setAttribute("estadosProducto", tipoProductoFachada.getEstadosProductos());
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.getSession().setAttribute("aforoParam", aforo);
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
-		}
+		}			
 
 		return mapping.findForward(strForward);
 	}
@@ -159,7 +163,7 @@ public class AforoAction extends ValidadorAction {
 			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 
 			AforoForm aforoForm = (AforoForm) form;
-
+			
 			aforoFachada.modificacionAforo(aforoForm.getAforoDTO());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_AFORO);
@@ -167,26 +171,34 @@ public class AforoAction extends ValidadorAction {
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
 	}
 
 	public boolean validarAforoForm(StringBuffer error, ActionForm form) {
-		AforoForm aforoForm = (AforoForm) form;
-		WebApplicationContext ctx = getWebApplicationContext();
-		IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
+		try{
+			AforoForm aforoForm = (AforoForm) form;
+			WebApplicationContext ctx = getWebApplicationContext();
+			IAforoFachada aforoFachada = (IAforoFachada) ctx.getBean("aforoFachada");
 
-		boolean existe = aforoFachada.existeAforo(aforoForm.getAforoDTO(),
-				new Long(aforoForm.getAforoDTO().getTipoProducto().getId()));
-
-		if (existe) {
-			Validator.addErrorXML(error, Constantes.EXISTE_AFORO);
-		}
-
-		return !existe && aforoForm.validar(error);
+			boolean existe = aforoFachada.existeAforo(aforoForm.getAforoDTO(),
+					new Long(aforoForm.getAforoDTO().getTipoProducto().getId()));
+	
+			if (existe) {
+				Validator.addErrorXML(error, Constantes.EXISTE_AFORO);
+			}
+	
+			return !existe && aforoForm.validar(error);
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}		
 	}
 }

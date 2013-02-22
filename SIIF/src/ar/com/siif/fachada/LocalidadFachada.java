@@ -29,75 +29,47 @@ public class LocalidadFachada implements ILocalidadFachada {
 		this.localidadDAO = laLocalidaDAO;
 	}
 
-	public List<Localidad> getLocalidades() throws NegocioException {
-		try{
-			return localidadDAO.getLocalidades();
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Localidad> getLocalidades(){
+
+		return localidadDAO.getLocalidades();			
 	}
 
-	public Localidad getLocalidadPorId(Long id) throws NegocioException {
-		try{
-			return localidadDAO.getLocalidadPorId(id);
+	public Localidad getLocalidadPorId(Long id) {
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		return localidadDAO.getLocalidadPorId(id);			
 	}
 
 	public boolean existeLocalidad(LocalidadDTO localidad) {
 		return localidadDAO.existeLocalidad(localidad.getNombre(),localidad.getId());
 	}
 
-	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException {
-		try{
-			localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidadDTO));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public void altaLocalidad(LocalidadDTO localidadDTO) throws NegocioException{
+
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidadDTO));			
 	}
 	
-	public List<LocalidadDTO> getLocalidadesDTO() throws NegocioException{
+	public List<LocalidadDTO> getLocalidadesDTO(){
+
+		List<LocalidadDTO> localidadesDTO = new ArrayList<LocalidadDTO>();
+		List<Localidad> localidades = localidadDAO.getLocalidades();
 		
-		try{
-			List<LocalidadDTO> localidadesDTO = new ArrayList<LocalidadDTO>();
-			List<Localidad> localidades = localidadDAO.getLocalidades();
-			
-			for (Localidad localidad : localidades) {
-				localidadesDTO.add(ProviderDTO.getLocalidadDTO(localidad));
-			}
-			
-			return localidadesDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		for (Localidad localidad : localidades) {
+			localidadesDTO.add(ProviderDTO.getLocalidadDTO(localidad));
+		}
+		
+		return localidadesDTO;		
 	}	
 	
-	public LocalidadDTO getLocalidadDTOPorId(Long id) throws NegocioException{
-		
-		try{
-			Localidad localidad = localidadDAO.getLocalidadPorId(id);
-			
-			return ProviderDTO.getLocalidadDTO(localidad);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public LocalidadDTO getLocalidadDTOPorId(Long id){
+
+		Localidad localidad = localidadDAO.getLocalidadPorId(id);
+		return ProviderDTO.getLocalidadDTO(localidad);			
 	}
 	
 	public void modificacionLocalidad(LocalidadDTO localidadDTO) throws NegocioException{
-		
-		try{
-			Localidad localidad = localidadDAO.getLocalidadPorId(localidadDTO.getId());	
-			localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidad,localidadDTO));
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		Localidad localidad = localidadDAO.getLocalidadPorId(localidadDTO.getId());	
+		localidadDAO.alta_modficacion_Localidad(ProviderDominio.getLocalidad(localidad,localidadDTO));		
 	}
 	
 	public boolean existeProvincia(ProvinciaDestinoDTO provincia){
@@ -106,53 +78,32 @@ public class LocalidadFachada implements ILocalidadFachada {
 	}	
 	
 	public void altaProvincia(ProvinciaDestinoDTO provinciaDTO) throws NegocioException{
-		
-		try{
-			localidadDAO.alta_modficacion_Provincia(ProviderDominio.getProvincia(provinciaDTO));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+
+		localidadDAO.alta_modficacion_Provincia(ProviderDominio.getProvincia(provinciaDTO));	
 	}
 	
-	public List<ProvinciaDestinoDTO> getProvinciasDTO()throws NegocioException{
+	public List<ProvinciaDestinoDTO> getProvinciasDTO(){
+
+		List<ProvinciaDestinoDTO> provinciasDTO = new ArrayList<ProvinciaDestinoDTO>();
+		List<ProvinciaDestino> provincias = localidadDAO.getProvincias();
 		
-		try{
-			List<ProvinciaDestinoDTO> provinciasDTO = new ArrayList<ProvinciaDestinoDTO>();
-			List<ProvinciaDestino> provincias = localidadDAO.getProvincias();
-			
-			for (ProvinciaDestino provincia : provincias) {
-				provinciasDTO.add(ProviderDTO.getProvinciaDestinoDTO(provincia));
-			}
-			
-			return provinciasDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+		for (ProvinciaDestino provincia : provincias) {
+			provinciasDTO.add(ProviderDTO.getProvinciaDestinoDTO(provincia));
+		}
+		
+		return provinciasDTO;
 	}	
 	
-	public ProvinciaDestinoDTO getProvinciaDestinoDTOPorId(Long id)throws NegocioException{
-		
-		try{
-			ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(id);
-			
-			return ProviderDTO.getProvinciaDestinoDTO(provincia);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+	public ProvinciaDestinoDTO getProvinciaDestinoDTOPorId(Long id){
+
+		ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(id);
+		return ProviderDTO.getProvinciaDestinoDTO(provincia);
 	}
 	
 	public void modificacionProvinciaDestino(ProvinciaDestinoDTO provinciaDTO) throws NegocioException{
-		
-		try{
-			ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(provinciaDTO.getId());	
-			localidadDAO.alta_modficacion_Provincia(ProviderDominio.getProvincia(provincia,provinciaDTO));
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+		ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(provinciaDTO.getId());	
+		localidadDAO.alta_modficacion_Provincia(ProviderDominio.getProvincia(provincia,provinciaDTO));		
 	}
 	
 	public boolean existeLocalidadDestino(LocalidadDestinoDTO localidad){
@@ -161,62 +112,37 @@ public class LocalidadFachada implements ILocalidadFachada {
 	}	
 	
 	public void altaLocalidadDestino(LocalidadDestinoDTO localidadDTO) throws NegocioException{
-		
-		try{
-			ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(localidadDTO.getProvinciaDestinoDTO().getId());
-			
-			localidadDAO.alta_modficacion_LocalidadDestino(ProviderDominio.getLocalidadDestino(localidadDTO,provincia));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+
+		ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(localidadDTO.getProvinciaDestinoDTO().getId());
+		localidadDAO.alta_modficacion_LocalidadDestino(ProviderDominio.getLocalidadDestino(localidadDTO,provincia));		
 	}
 	
-	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia)throws NegocioException
-	{
-		try{
-			List<LocalidadDestinoDTO> localidadesDTO = new ArrayList<LocalidadDestinoDTO>();
-			List<LocalidadDestino> localidades = localidadDAO.getLocalidadesDeProvincia(idProvincia);
-				
-			for (LocalidadDestino localidad : localidades) {
-				localidadesDTO.add(ProviderDTO.getLocalidadDestinoDTO(localidad));
-			}
-			return localidadesDTO;			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
+	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia){
+
+		List<LocalidadDestinoDTO> localidadesDTO = new ArrayList<LocalidadDestinoDTO>();
+		List<LocalidadDestino> localidades = localidadDAO.getLocalidadesDeProvincia(idProvincia);
+			
+		for (LocalidadDestino localidad : localidades) {
+			localidadesDTO.add(ProviderDTO.getLocalidadDestinoDTO(localidad));
 		}
+		return localidadesDTO;			
 	}
 	
-	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id)throws NegocioException{
-		
-		try{
-			LocalidadDestino localidad = localidadDAO.getLocalidadDestinoPorId(id);
-			
-			return ProviderDTO.getLocalidadDestinoDTO(localidad);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id){
+
+		LocalidadDestino localidad = localidadDAO.getLocalidadDestinoPorId(id);
+		return ProviderDTO.getLocalidadDestinoDTO(localidad);		
 	}
 	
 	public void modificacionLocalidadDestino(LocalidadDestinoDTO localidadDTO) throws NegocioException{
-		
-		try{
-			LocalidadDestino localidad = localidadDAO.getLocalidadDestinoPorId(localidadDTO.getId());
-			ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(localidadDTO.getProvinciaDestinoDTO().getId());
-			localidadDAO.alta_modficacion_LocalidadDestino(ProviderDominio.getLocalidadDestino(localidadDTO,localidad,provincia));
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+		LocalidadDestino localidad = localidadDAO.getLocalidadDestinoPorId(localidadDTO.getId());
+		ProvinciaDestino provincia = localidadDAO.getProvinciaDestinoPorId(localidadDTO.getProvinciaDestinoDTO().getId());
+		localidadDAO.alta_modficacion_LocalidadDestino(ProviderDominio.getLocalidadDestino(localidadDTO,localidad,provincia));			
 	}	
 	
-	public LocalidadDestino getLocalidadDestinoPorId(Long id)throws NegocioException{
-		try{
-			return localidadDAO.getLocalidadDestinoPorId(id);
+	public LocalidadDestino getLocalidadDestinoPorId(Long id){
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}		
+		return localidadDAO.getLocalidadDestinoPorId(id);		
 	}	
 }

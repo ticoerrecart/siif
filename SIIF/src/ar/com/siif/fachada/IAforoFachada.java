@@ -11,15 +11,17 @@ public interface IAforoFachada {
 
 	public void altaAforo(AforoDTO aforo) throws NegocioException;
 
-	public List<Aforo> recuperarAforos()throws NegocioException;
+	public List<Aforo> recuperarAforos();
 
-	public Aforo recuperarAforo(Long id)throws NegocioException;
+	public Aforo recuperarAforo(Long id);
 
 	public void modificacionAforo(AforoDTO aforoDTO) throws NegocioException;
 
 	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto);
 	
-	public List<AforoDTO> recuperarAforosDTO()throws NegocioException;
+	public List<AforoDTO> recuperarAforosDTO();
 	
-	public AforoDTO recuperarAforoDTO(Long id)throws NegocioException;
+	public AforoDTO recuperarAforoDTO(Long id);
+	
+	public String getValor(String estado, Long idTipoProducto, Long idProdForestal)throws NegocioException;
 }

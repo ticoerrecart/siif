@@ -12,6 +12,7 @@ import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.utils.MyLogger;
 
 public class EntidadFachada implements IEntidadFachada {
 
@@ -27,45 +28,29 @@ public class EntidadFachada implements IEntidadFachada {
 		this.localidadFachada = pLocalidadFachada;
 	}
 
-	public void altaEntidad(EntidadDTO entidadDTO) throws NegocioException {
-		try{
-			Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
-			entidadDAO.altaEntidad(ProviderDominio.getEntidad(entidadDTO,localidad));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public void altaEntidad(EntidadDTO entidadDTO)throws NegocioException {
+
+		Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+		entidadDAO.altaEntidad(ProviderDominio.getEntidad(entidadDTO,localidad));	
 	}
 
-	public List<Entidad> getEntidades() throws NegocioException {
-		try{
-			return entidadDAO.getEntidades();
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+	public List<Entidad> getEntidades(){
+
+		return entidadDAO.getEntidades();
 	}
 
-	public Entidad getEntidad(Long id) throws NegocioException {
-		try{
-			return entidadDAO.getEntidad(id);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public Entidad getEntidad(Long id){
+
+		return entidadDAO.getEntidad(id);	
 	}
 
 	public boolean existeEntidad(String nombre, Long id) {
 		return entidadDAO.existeEntidad(nombre, id);
 	}
 
-	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad) throws NegocioException {
-		try{
-			return entidadDAO.getEntidades(idLocalidad);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad){
+
+		return entidadDAO.getEntidades(idLocalidad);
 	}
 
 	public List<TipoDeEntidad> getTiposDeEntidad() {
@@ -81,112 +66,87 @@ public class EntidadFachada implements IEntidadFachada {
 		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
 		tiposDeEntidad.add(TipoDeEntidad.OBR);
 		tiposDeEntidad.add(TipoDeEntidad.PPF);
-
+		
 		return tiposDeEntidad;
 	}
 	
-	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad) throws NegocioException {
-		try{
-			return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Entidad> getEntidadesPorTipoDeEntidad(String tipoDeEntidad){
+
+		return entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));			
 	}
 
-	public List<Entidad> getOficinasForestales()throws NegocioException{
-		try{
-			return entidadDAO.getOficinasForestales();
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		} catch (Exception e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	public List<Entidad> getOficinasForestales(){
+
+		return entidadDAO.getOficinasForestales();
+			
 	}	
 	
-	public List<EntidadDTO> getOficinasForestalesDTO()throws NegocioException{
+	public List<EntidadDTO> getOficinasForestalesDTO(){
+
+		List<EntidadDTO> oficianasDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> oficinas = entidadDAO.getOficinasForestales();
 		
-		try{
-			List<EntidadDTO> oficianasDTO = new ArrayList<EntidadDTO>();
-			List<Entidad> oficinas = entidadDAO.getOficinasForestales();
+		for (Entidad entidad : oficinas) {
+			oficianasDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		return oficianasDTO;
 			
-			for (Entidad entidad : oficinas) {
-				oficianasDTO.add(ProviderDTO.getEntidadDTO(entidad));
-			}
-			return oficianasDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		} catch (Exception e) {
-			throw new NegocioException(e.getMessage());
-		}			
 	}	
 	
 	public List<EntidadDTO> getEntidadesPorTipoDeEntidadDTO(String tipoDeEntidad) throws NegocioException{
+
+		List<EntidadDTO> entidadesDTO = null;
 		try{
-			List<EntidadDTO> entidadesDTO = new ArrayList<EntidadDTO>();
+			
+			entidadesDTO = new ArrayList<EntidadDTO>();
 			List<Entidad> entidades = entidadDAO.getEntidades(TipoDeEntidad.valueOf(tipoDeEntidad));
 				
 			for (Entidad entidad : entidades) {
 				entidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
-			}
-			return entidadesDTO;			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+			}			
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}	
+		return entidadesDTO;	
 	}	
 	
-	public List<EntidadDTO> getEntidadesDTO() throws NegocioException{
-		try{
-			List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
-			List<Entidad> listaEntidades = entidadDAO.getEntidades();
-			
-			for (Entidad entidad : listaEntidades) {
-				listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
-			}
-			
-			return listaEntidadesDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
-	}	
-	
-	public EntidadDTO getEntidadDTO(Long id) throws NegocioException{
-		try{
-			return ProviderDTO.getEntidadDTO(entidadDAO.getEntidad(id));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
-	}	
-	
-	public void modificacionEntidad(EntidadDTO entidadDTO) throws NegocioException {
+	public List<EntidadDTO> getEntidadesDTO(){
+
+		List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> listaEntidades = entidadDAO.getEntidades();
 		
-		try{
-			Entidad entidad = entidadDAO.getEntidad(entidadDTO.getId());
-			Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+		for (Entidad entidad : listaEntidades) {
+			listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
+		}
+		
+		return listaEntidadesDTO;		
+	}	
+	
+	public EntidadDTO getEntidadDTO(Long id){
+
+		return ProviderDTO.getEntidadDTO(entidadDAO.getEntidad(id));
 			
-			entidadDAO.modificacionEntidad(ProviderDominio.getEntidad(entidad, entidadDTO, localidad));
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+	}	
+	
+	public void modificacionEntidad(EntidadDTO entidadDTO){
+
+		Entidad entidad = entidadDAO.getEntidad(entidadDTO.getId());
+		Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+		
+		entidadDAO.modificacionEntidad(ProviderDominio.getEntidad(entidad, entidadDTO, localidad));	
 	}
 	
-	public List<EntidadDTO> getProductoresDTO() throws NegocioException{
-		try{
-			List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
-			List<Entidad> listaEntidades = entidadDAO.getProductores();
-			
-			for (Entidad entidad : listaEntidades) {
-				listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
-			}
-			return listaEntidadesDTO;
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
+	public List<EntidadDTO> getProductoresDTO(){
+
+		List<EntidadDTO> listaEntidadesDTO = new ArrayList<EntidadDTO>();
+		List<Entidad> listaEntidades = entidadDAO.getProductores();
+		
+		for (Entidad entidad : listaEntidades) {
+			listaEntidadesDTO.add(ProviderDTO.getEntidadDTO(entidad));
 		}
+		return listaEntidadesDTO;
 	}
 	
 	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){

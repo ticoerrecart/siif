@@ -13,7 +13,6 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Usuario;
-import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
@@ -46,53 +45,32 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		this.usuarioFachada = pUsuarioFachada;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizaciones() throws NegocioException {
-		try {
-			return fiscalizacionDAO.recuperarFiscalizaciones();
+	public List<Fiscalizacion> recuperarFiscalizaciones(){
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+		return fiscalizacionDAO.recuperarFiscalizaciones();
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor)
-			throws NegocioException {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor){
 
-		try {
-			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-					.recuperarFiscalizacionesParaAltaGFB(idProductor);
+		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
+				.recuperarFiscalizacionesParaAltaGFB(idProductor);
 
-			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
-			}
-
-			return listaFiscalizacionesDTO;
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
+		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
 		}
+
+		return listaFiscalizacionesDTO;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor)
-			throws NegocioException {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor){
 
-		try {
-			return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+		return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
 	}
 
-	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) throws NegocioException {
+	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion){
 
-		try {
-			return fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion);
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+		return fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion);
 	}
 
 	/**
@@ -101,35 +79,27 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * @param muestrasNuevasDTO
 	 * @throws NegocioException 
 	 */
-	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasNuevasDTO) throws NegocioException {
-		try {
-			Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(fiscalizacionDTO
-					.getId());
+	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasNuevasDTO){
 
-			fiscalizacion.setFecha((Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha())));
-			fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
-			fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
-			fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
-			Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
-					.getId());
-			fiscalizacion.setOficinaAlta(oficinaAlta);
-			fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
+		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(fiscalizacionDTO
+				.getId());
 
-			fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion, muestrasNuevasDTO);
-			//fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion);
+		fiscalizacion.setFecha((Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha())));
+		fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
+		fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
+		fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
+		Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
+				.getId());
+		fiscalizacion.setOficinaAlta(oficinaAlta);
+		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion, muestrasNuevasDTO);
 	}
 
-	public void altaFiscalizacion(Fiscalizacion fiscalizacion) throws NegocioException {
-		try {
-			fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+	public void altaFiscalizacion(Fiscalizacion fiscalizacion){
+
+		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
+
 	}
 
 	/*public Entidad getProductorForestal(long idProductorForestal) {
@@ -145,87 +115,53 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}*/
 
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor)
-			throws NegocioException {
-		try {
-			return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+	{
+		return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
 	}
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO)
-			throws NegocioException {
-		try {
-			Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getRodal().getId());
-			Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO
-					.getProductorForestal().getId());
-			Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
-					.getId());
-			TipoProducto tipoProducto = tipoProductoForestalFachada
-					.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
-			Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
+	{
+		Rodal rodal = ubicacionFachada.getRodal(fiscalizacionDTO.getRodal().getId());
+		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO
+				.getProductorForestal().getId());
+		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
+				.getId());
+		TipoProducto tipoProducto = tipoProductoForestalFachada
+				.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
+		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
 
-			Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,
-					muestrasDTO, rodal, productorForestal, oficinaForestal, tipoProducto, usuario);
-			fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO,
+				muestrasDTO, rodal, productorForestal, oficinaForestal, tipoProducto, usuario);
+		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 
-	/*public List<EntidadDTO> recuperarProductoresDTO() throws NegocioException{
-		try{
-			List<EntidadDTO> listaProductoresDTO = new ArrayList<EntidadDTO>();
-			List<Entidad> listaProductores = fiscalizacionDAO.recuperarProductores();
-			
-			for (Entidad entidad : listaProductores) {
-				listaProductoresDTO.add(ProviderDTO.getEntidadDTO(entidad));
-			}
-			
-			return listaProductoresDTO;
+	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion){
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
-	}*/
-
-	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion) throws NegocioException {
-
-		try {
 			return ProviderDTO.getFiscalizacionDTO(fiscalizacionDAO
 					.recuperarFiscalizacion(idFiscalizacion));
 
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
 			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
-			throws NegocioException 
+			  
 	{
-		try {
-			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-			List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-					.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal,
-							listaSubImportesDTO, tablaVolFiscAsociar);
+		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
+				.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal,
+						listaSubImportesDTO, tablaVolFiscAsociar);
 
-			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
-			}
-
-			return listaFiscalizacionesDTO;
-
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
+		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
 		}
+
+		return listaFiscalizacionesDTO;
 	}
 
 	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
-			String idTipoProducto, String idRodal) throws NumberFormatException, DataBaseException,
-			NegocioException {
+			String idTipoProducto, String idRodal) throws NumberFormatException,
+			NegocioException 
+	{
 		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(Long
 				.parseLong(idFiscalizacion));
 		if (fiscalizacion.getGuiaForestal() != null) {
@@ -280,12 +216,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor)
-			throws DataBaseException {
+	{
 		return fiscalizacionDAO.recuperarFiscalizacionesAAnularPorProductor(idProductor);
 	}
 
-	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws DataBaseException,
-			NegocioException {
+	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws NegocioException
+	{
 		if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
 			throw new NegocioException("Seleccione alguna Fiscalización");
 		}
@@ -295,21 +231,16 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
-																					 Long idPMF)throws NegocioException
+																					 Long idPMF) 
 	{	
-		try{
-			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-			List<Fiscalizacion> fiscalizaciones = fiscalizacionDAO.
-											recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(idProductor,periodo,idPMF);
-			
-			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
-			}
-
-			return listaFiscalizacionesDTO;			
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
+		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+		List<Fiscalizacion> fiscalizaciones = fiscalizacionDAO.
+										recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(idProductor,periodo,idPMF);
+		
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
 		}
+
+		return listaFiscalizacionesDTO;			
 	}
 }

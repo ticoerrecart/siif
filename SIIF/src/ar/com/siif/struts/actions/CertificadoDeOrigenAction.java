@@ -28,6 +28,7 @@ import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.struts.actions.forms.CertificadoOrigenForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class CertificadoDeOrigenAction extends ValidadorAction {
 
@@ -36,6 +37,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoInicializarAltaCertificadoOrigen";
 		try {
+			
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -46,8 +48,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("usuarioAlta", usuario);
 			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -60,6 +63,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		String strForward = "exitoRecuperarDatosParaAltaCertificadoOrigen";
 
 		try {
+			
 			WebApplicationContext ctx = getWebApplicationContext();
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 													.getBean("fiscalizacionFachada");
@@ -101,8 +105,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("volumenExportado", volumenExportado);
 			//request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -116,6 +121,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		String strForward = "exitoAltaCertificadoOrigen";
 
 		try {
+			
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 			ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
@@ -135,9 +141,10 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("volumenExportado", certificadoOrigenForm.getCertificadoOrigenDTO()
 																		  .getVolumenTotalTipoProductos());
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "bloqueError";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -148,6 +155,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoCargarProductoresParaConsultaCertificadoOrigen";
 		try {
+
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -166,8 +174,9 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("idPMF", idPMF);
 			request.setAttribute("periodoForestal", periodoForestal);			
 			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -178,6 +187,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoRecuperarCertificadosOrigenParaConsulta";
 		try {
+
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -191,10 +201,12 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("certificados", certificadoOrigenFachada.getCertificadosOrigen(Long.valueOf(idProductor),
 																								periodo,Long.valueOf(idPmf)));
 			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
-		}
+		}			
+
 		return mapping.findForward(strForward);
 	}	
 
@@ -203,6 +215,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoCargarCertificadoOrigen";
 		try {
+
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -217,9 +230,10 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("certificado", certificadoOrigenFachada.recuperarCertificadoOrigenPorNroCertificado(
 															certificadoOrigenForm.getCertificadoOrigenDTO().getNroCertificado()));
 			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "bloqueError";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}		
@@ -229,6 +243,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoCargarCertificadoOrigen";
 		try {
+
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -239,9 +254,10 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 			request.setAttribute("certificado", certificadoOrigenFachada.recuperarCertificadoOrigen(Long.valueOf(idCertificado)));
 			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "bloqueError";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}	
@@ -323,26 +339,33 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 	public boolean validarNroCertificadoForm(StringBuffer error, ActionForm form) {
 
-		CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm) form;
-		WebApplicationContext ctx = getWebApplicationContext();
-		ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
-																	.getBean("certificadoDeOrigenFachada");
-
-		boolean valido = Validator.validarEnteroMayorQue(0,
-				Long.toString(certificadoOrigenForm.getCertificadoOrigenDTO().getNroCertificado()), "Nro de Certificado",
-				error);
-
-		boolean existe = valido;
-
-		if (valido) {
-			existe = certificadoOrigenFachada.existeCertificado(
-												certificadoOrigenForm.getCertificadoOrigenDTO().getNroCertificado());
-
-			if (!existe) {
-				Validator.addErrorXML(error, Constantes.NO_EXISTE_CERTIFICADO);
+		try{
+			CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm) form;
+			WebApplicationContext ctx = getWebApplicationContext();
+			ICertificadoDeOrigenFachada certificadoOrigenFachada = (ICertificadoDeOrigenFachada) ctx
+																		.getBean("certificadoDeOrigenFachada");
+	
+			boolean valido = Validator.validarEnteroMayorQue(0,
+					Long.toString(certificadoOrigenForm.getCertificadoOrigenDTO().getNroCertificado()), "Nro de Certificado",
+					error);
+	
+			boolean existe = valido;
+	
+			if (valido) {
+				existe = certificadoOrigenFachada.existeCertificado(
+													certificadoOrigenForm.getCertificadoOrigenDTO().getNroCertificado());
+	
+				if (!existe) {
+					Validator.addErrorXML(error, Constantes.NO_EXISTE_CERTIFICADO);
+				}
 			}
-		}
+	
+			return existe;
 
-		return existe;
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}			
 	}	
 }

@@ -19,6 +19,7 @@ import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class ConsultasPorProductorAction extends ValidadorAction {
 
@@ -27,6 +28,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoCargarConsultaPorProductor";
 
 		try {
+
 			String paramForward = request.getParameter("forward");
 			WebApplicationContext ctx = getWebApplicationContext();			
 
@@ -74,9 +76,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					"../../consultasPorProductor.do?metodo=" + paramForward);
 			//request.setAttribute("paramForward", paramForward);
 	
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -88,6 +90,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoCargarProductoresGuiasConsultaPorProductor";
 
 		try {
+
 			String paramForward = request.getParameter("forward");
 			String paramProd = request.getParameter("idProd");
 
@@ -113,9 +116,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 				}
 			}	
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
@@ -126,6 +130,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesConsultaPorProductor";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -138,8 +143,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("guiasForestales", guiasForestalesVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_VIGENTES);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -152,6 +158,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesConsultaPorProductor";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -164,8 +171,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("guiasForestales", guiasForestalesNoVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -177,6 +185,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesConsultaPorProductor";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -189,8 +198,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("guiasForestales", guiasForestalesAnuladas);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_ANULADAS);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -203,6 +213,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesConDeudasAforo";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -215,8 +226,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("guiasForestales", guiasForestalesDeudaAforo);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -229,6 +241,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesConDeudasValeTransporte";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -241,8 +254,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("guiasForestales", guiasForestalesDeudaVale);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_VALE_TRANSPORTE);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -255,6 +269,7 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 		String strForward = "exitoCargarGuiaForestal";
 
 		try {
+
 			String paramForward = request.getParameter("paramForward");	
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
@@ -288,8 +303,9 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			request.setAttribute("paramForward", paramForward);
 			request.setAttribute("guiaForestal", guiaForestalVigente);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
