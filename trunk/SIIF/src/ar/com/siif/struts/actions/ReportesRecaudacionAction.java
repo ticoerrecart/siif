@@ -67,6 +67,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -128,6 +129,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 
 		}
 
@@ -188,7 +190,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -224,7 +226,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -281,7 +283,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -313,7 +315,7 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;

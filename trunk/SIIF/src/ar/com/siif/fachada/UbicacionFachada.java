@@ -86,7 +86,7 @@ public class UbicacionFachada implements IUbicacionFachada {
 	 */
 	public void altaRodal(String nombre, Long idMarcacion) throws NegocioException {
 		
-		try{
+		
 			if (ubicacionDAO.getRodalesPorNombreParaMarcacion(nombre, idMarcacion).size() > 0 ){
 				throw new NegocioException(Constantes.ERROR_EXISTE_RODAL + nombre);
 			}
@@ -94,14 +94,12 @@ public class UbicacionFachada implements IUbicacionFachada {
 			//marcacion.getRodales().add(new Rodal(nombre, marcacion));
 			ubicacionDAO.altaRodal(ProviderDominio.getRodal(nombre,marcacion));
 			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+				
 	}
 
-	public void altaMarcacion(String disposicionMarcacion, Long idTranzon) throws NegocioException {
+	public void altaMarcacion(String disposicionMarcacion, Long idTranzon)  {
 		
-		try{
+	
 			if (ubicacionDAO.getMarcacionesPorDisposicionParaTranzon(disposicionMarcacion, idTranzon).size() > 0 ){
 				throw new NegocioException(Constantes.ERROR_EXISTE_MARCACION + disposicionMarcacion);
 			}
@@ -109,9 +107,7 @@ public class UbicacionFachada implements IUbicacionFachada {
 			//tranzon.getMarcaciones().add(new Marcacion(disposicionMarcacion, tranzon));
 			ubicacionDAO.altaMarcacion(ProviderDominio.getMarcacion(disposicionMarcacion,tranzon));
 			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}			
+				
 	}
 
 	public void altaTranzon(String numero, String disposicionTranzon, Long idPMF) throws NegocioException {

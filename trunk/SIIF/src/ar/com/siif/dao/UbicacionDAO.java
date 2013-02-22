@@ -3,9 +3,7 @@ package ar.com.siif.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.HibernateSystemException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.Entidad;
@@ -13,9 +11,6 @@ import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Tranzon;
-import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.negocio.exception.NegocioException;
-import ar.com.siif.utils.Constantes;
 
 public class UbicacionDAO extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
@@ -24,11 +19,13 @@ public class UbicacionDAO extends HibernateDaoSupport {
 	}
 
 	public Tranzon getTranzon(Long idTranzon) {
-		return (Tranzon) this.getHibernateTemplate().get(Tranzon.class, idTranzon);
+		return (Tranzon) this.getHibernateTemplate().get(Tranzon.class,
+				idTranzon);
 	}
 
 	public Marcacion getMarcacion(Long idMarcacion) {
-		return (Marcacion) this.getHibernateTemplate().get(Marcacion.class, idMarcacion);
+		return (Marcacion) this.getHibernateTemplate().get(Marcacion.class,
+				idMarcacion);
 	}
 
 	public Rodal getRodal(Long idRodal) {
@@ -55,7 +52,8 @@ public class UbicacionDAO extends HibernateDaoSupport {
 	}
 
 	public Entidad getEntidad(Long idEntidad) {
-		return (Entidad) this.getHibernateTemplate().get(Entidad.class, idEntidad);
+		return (Entidad) this.getHibernateTemplate().get(Entidad.class,
+				idEntidad);
 	}
 
 	public void deleteRodal(Long idRodal) {
@@ -79,7 +77,8 @@ public class UbicacionDAO extends HibernateDaoSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Rodal> getRodalesPorNombreParaMarcacion(String nombre, Long marcacionId) {
+	public List<Rodal> getRodalesPorNombreParaMarcacion(String nombre,
+			Long marcacionId) {
 		Criteria criteria = getSession().createCriteria(Rodal.class);
 		criteria.add(Restrictions.eq("nombre", nombre));
 		criteria.add(Restrictions.eq("marcacion.id", marcacionId));
@@ -87,7 +86,8 @@ public class UbicacionDAO extends HibernateDaoSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Rodal> getMarcacionesPorDisposicionParaTranzon(String disposicion, Long tranzonId) {
+	public List<Rodal> getMarcacionesPorDisposicionParaTranzon(
+			String disposicion, Long tranzonId) {
 		Criteria criteria = getSession().createCriteria(Marcacion.class);
 		criteria.add(Restrictions.eq("disposicion", disposicion));
 		criteria.add(Restrictions.eq("tranzon.id", tranzonId));
@@ -110,117 +110,56 @@ public class UbicacionDAO extends HibernateDaoSupport {
 		return criteria.list();
 	}
 
-	public void altaPMF(PMF pmf) throws DataBaseException {
-		
-		try{
-			this.getHibernateTemplate().saveOrUpdate(pmf);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PMF);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PMF);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PMF);
-		}			
+	public void altaPMF(PMF pmf) {
+
+		this.getHibernateTemplate().saveOrUpdate(pmf);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
 	}
-	
-	public void altaTranzon(Tranzon tranzon) throws DataBaseException {
-		
-		try{
-			this.getHibernateTemplate().saveOrUpdate(tranzon);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_TRANZON);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_TRANZON);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_TRANZON);
-		}			
-	}	
-	
-	public void altaMarcacion(Marcacion marcacion) throws DataBaseException {
-		
-		try{
-			this.getHibernateTemplate().saveOrUpdate(marcacion);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_MARCACION);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_MARCACION);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_MARCACION);
-		}			
+
+	public void altaTranzon(Tranzon tranzon) {
+		this.getHibernateTemplate().saveOrUpdate(tranzon);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
 	}
-	
-	public void altaRodal(Rodal rodal) throws DataBaseException {
-		
-		try{
-			this.getHibernateTemplate().saveOrUpdate(rodal);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_RODAL);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_RODAL);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_RODAL);
-		}			
-	}	
-	
-	public List<Tranzon> getTranzonesPorProductor(Long idProductor) throws DataBaseException {
-		
-		try{
-			Criteria criteria = getSession().createCriteria(Tranzon.class);
-			criteria.createAlias("pmf", "prod");
-			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));			
-			return criteria.list();			
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_TRANZONES);
-		}			
-	}	
-	
-	public List<Marcacion> getMarcacionesPorProductor(Long idProductor) throws DataBaseException {
-		
-		try{
-			Criteria criteria = getSession().createCriteria(Marcacion.class);
-			criteria.createAlias("tranzon.pmf", "prod");
-			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));			
-			return criteria.list();			
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_MARCACIONES);
-		}			
+
+	public void altaMarcacion(Marcacion marcacion) {
+		this.getHibernateTemplate().saveOrUpdate(marcacion);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
 	}
-	
-	public List<Rodal> getRodalesPorProductor(Long idProductor) throws DataBaseException {
-		
-		try{
-			Criteria criteria = getSession().createCriteria(Rodal.class);
-			criteria.createAlias("marcacion.tranzon.pmf", "prod");
-			criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));
-			return criteria.list();			
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_RODALES);
-		}			
-	}	
+
+	public void altaRodal(Rodal rodal) {
+		this.getHibernateTemplate().saveOrUpdate(rodal);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+
+	}
+
+	public List<Tranzon> getTranzonesPorProductor(Long idProductor) {
+		Criteria criteria = getSession().createCriteria(Tranzon.class);
+		criteria.createAlias("pmf", "prod");
+		criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));
+		return criteria.list();
+
+	}
+
+	public List<Marcacion> getMarcacionesPorProductor(Long idProductor) {
+		Criteria criteria = getSession().createCriteria(Marcacion.class);
+		criteria.createAlias("tranzon.pmf", "prod");
+		criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));
+		return criteria.list();
+
+	}
+
+	public List<Rodal> getRodalesPorProductor(Long idProductor) {
+		Criteria criteria = getSession().createCriteria(Rodal.class);
+		criteria.createAlias("marcacion.tranzon.pmf", "prod");
+		criteria.add(Restrictions.eq("prod.productorForestal.id", idProductor));
+		return criteria.list();
+
+	}
 }
