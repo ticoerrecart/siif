@@ -82,7 +82,7 @@
 			parameter="metodo" />
 
 		<action path="/login" type="ar.com.siif.struts.actions.LoginAction"
-			parameter="metodo" name="loginForm" scope="session">
+			parameter="metodo" name="loginForm" scope="request">
 			<forward name="exitoLogin" path=".index" />
 			<forward name="errorLogin" path="/jsp/login.jsp" />
 			<forward name="exitoLogout" path="/jsp/login.jsp" />
@@ -90,7 +90,7 @@
 
 		<!-- FISCALIZACION -->
 		<action path="/fiscalizacion" type="ar.com.siif.struts.actions.FiscalizacionAction"
-			parameter="metodo" name="fiscalizacionForm" scope="session">
+			parameter="metodo" name="fiscalizacionForm" scope="request">
 			<forward name="exitoRecuperarLocalidadesParaFiscalizacionesAModificar" 
 				path=".recuperarFiscalizacionesAModificar" />
 			<forward name="exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar" 
@@ -109,7 +109,7 @@
 
 		<!-- UBICACION -->
 		<action path="/ubicacion" type="ar.com.siif.struts.actions.UbicacionAction"
-			parameter="metodo" name="ubicacionForm" scope="session">
+			parameter="metodo" name="ubicacionForm" scope="request">
 			<forward name="exitoRecuperarUbicacionParaAlta" path=".exitoRecuperarUbicacionParaAlta" />
 			<forward name="exitoRecuperarProductoresParaModificacionPMF" path=".recuperarProductoresParaModificacionPMF" />
 			<forward name="exitoRecuperarUbicacionParaModificacion" path=".exitoRecuperarUbicacionParaModificacion" />				
@@ -124,7 +124,7 @@
 
 		<!-- GUIA FORESTAL -->
 		<action path="/guiaForestal" type="ar.com.siif.struts.actions.GuiaForestalAction"
-			parameter="metodo" name="guiaForestalForm" scope="session">
+			parameter="metodo" name="guiaForestalForm" scope="request">
 			
 			<!-- Guia Forestal  -->
 				<!-- Alta -->
@@ -183,7 +183,7 @@
 		<!-- TIPO PRODUCTO FORESTAL -->
 		<action path="/tipoProductoForestal"
 			type="ar.com.siif.struts.actions.TipoProductoForestalAction"
-			parameter="metodo" name="tipoProductoForestalForm" scope="session">
+			parameter="metodo" name="tipoProductoForestalForm" scope="request">
 			<forward name="exitoAltaTipoProductoForestal" path="/jsp.do?page=.altaTipoProductoForestal&amp;metodo=altaTipoProductoForestal"/>
 			<forward name="exitoModificacionTipoProductoForestal"
 				path="/recuperarTipoProductoForestal.do?metodo=cargarModificacionTipoProductoForestal" />
@@ -204,7 +204,7 @@
 
 		<!-- AFORO -->
 		<action path="/aforo" type="ar.com.siif.struts.actions.AforoAction"
-			parameter="metodo" name="aforoForm" scope="session">
+			parameter="metodo" name="aforoForm" scope="request">
 			<forward name="exitoAltaAforo" path="/recuperarAforo.do?metodo=cargarAltaAforo" />
 			<forward name="exitoModificacionAforo"
 				path="/recuperarAforo.do?metodo=cargarModificacionAforos" />
@@ -220,7 +220,7 @@
 
 		<!-- ENTIDAD -->
 		<action path="/entidad" type="ar.com.siif.struts.actions.EntidadAction"
-			parameter="metodo" name="entidadForm" scope="session">
+			parameter="metodo" name="entidadForm" scope="request">
 			<forward name="cargarAltaEntidad" path=".altaEntidad" />
 			<forward name="exitoAltaEntidad" path="/entidad.do?metodo=cargarAltaEntidad" />
 			<forward name="exitoCargarEntidadAModificar" path="/jsp/bloqueAltaEntidad.jsp" />
@@ -237,7 +237,7 @@
 
 		<!-- LOCALIDAD -->
 		<action path="/localidad" type="ar.com.siif.struts.actions.LocalidadAction"
-			parameter="metodo" name="localidadForm" scope="session">
+			parameter="metodo" name="localidadForm" scope="request">
 			<forward name="exitoAltaLocalidad"
 				path="/jsp.do?page=.altaLocalidad&amp;metodo=altaLocalidad" />
 			<forward name="exitoCargarLocalidadAModificar" path="/jsp/bloqueAltaLocalidad.jsp" />
@@ -252,7 +252,7 @@
 		</action>
 
 		<action path="/provinciaDestino" type="ar.com.siif.struts.actions.LocalidadAction"
-				parameter="metodo" name="provinciaForm" scope="session">
+				parameter="metodo" name="provinciaForm" scope="request">
 			<forward name="exitoAltaProvinciaDestino" path="/jsp.do?page=.altaProvincia&amp;metodo=altaProvinciaDestino" />
 			<forward name="exitoRecuperarProvinciasDestino" path=".recuperarProvinciasDestino" />
 			<forward name="exitoCargarProvinciaDestinoAModificar" path="/jsp/bloqueAltaProvincia.jsp" />
@@ -261,7 +261,7 @@
 		</action>
 		
 		<action path="/localidadDestino" type="ar.com.siif.struts.actions.LocalidadAction"
-				parameter="metodo" name="localidadDestinoForm" scope="session">		
+				parameter="metodo" name="localidadDestinoForm" scope="request">		
 			<forward name="exitoCargarAltaLocalidadDestino" path=".altaLocalidadDestino" />
 			<forward name="exitoAltaLocalidadDestino" path="/localidadDestino.do?metodo=cargarAltaLocalidadDestino" />
 			<forward name="exitoCargarModificacionLocalidadDestino" path=".modificacionLocalidadDestino" />
@@ -273,7 +273,7 @@
 
 		<!-- PERIODO -->
 		<action path="/periodo" type="ar.com.siif.struts.actions.PeriodoAction"
-			parameter="metodo" name="periodoForm" scope="session">
+			parameter="metodo" name="periodoForm" scope="request">
 			<forward name="exitoAltaPeriodo"
 				path="/jsp.do?page=.altaPeriodo&amp;metodo=altaPeriodo" />
 			<forward name="exitoCargarPeriodoAModificar" path="/jsp/bloqueAltaPeriodo.jsp" />
@@ -289,7 +289,7 @@
 
 		<!-- USUARIO -->
 		<action path="/usuario" type="ar.com.siif.struts.actions.UsuarioAction"
-			parameter="metodo" name="usuarioForm" scope="session">
+			parameter="metodo" name="usuarioForm" scope="request">
 			<forward name="cargarAltaUsuario" path=".altaUsuario" />
 			<forward name="exitoAltaUsuario" path="/usuario.do?metodo=cargarAltaUsuario" />
 			<forward name="exitoCargarUsuarioAModificar" path="/jsp/bloqueAltaUsuario.jsp" />
@@ -307,7 +307,7 @@
 
 		<!-- ROL -->
 		<action path="/rol" type="ar.com.siif.struts.actions.RolAction"
-			parameter="metodo" name="rolForm" scope="session">
+			parameter="metodo" name="rolForm" scope="request">
 			<forward name="exitoAltaRol" path="/recuperarRol.do?metodo=cargarAltaRol" />
 			<forward name="exitoModificacionRol" path="/recuperarRol.do?metodo=cargarModificacionRol" />
 		</action>
@@ -381,7 +381,7 @@
 		
 		<!-- CERTIFICADO ORIGEN -->
 		<action path="/certificadoOrigen" type="ar.com.siif.struts.actions.CertificadoDeOrigenAction"
-			parameter="metodo" name="certificadoOrigenForm" scope="session">
+			parameter="metodo" name="certificadoOrigenForm" scope="request">
 			<forward name="exitoInicializarAltaCertificadoOrigen" path=".altaCertificadoOrigen" />
 			<forward name="exitoRecuperarDatosParaAltaCertificadoOrigen" path="/jsp/bloqueMostrarDatosParaAltaCertificadoOrigen.jsp" />
 			<forward name="exitoAltaCertificadoOrigen" path=".mostrarAltaNroCertificado" />
