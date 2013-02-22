@@ -11,42 +11,36 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.PeriodoDTO;
-import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IPeriodoFachada;
-import ar.com.siif.fachada.IRolFachada;
+import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.PeriodoForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class PeriodoAction extends ValidadorAction {
 
-	@SuppressWarnings("unchecked")
 	public ActionForward cargarPeriodosAModificar(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoRecuperarPeriodos";
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
-					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
 					.getBean("periodoFachada");
 			List<PeriodoDTO> periodos = periodoFachada.getPeriodosDTO();
 			request.setAttribute("periodos", periodos);
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
+			MyLogger.logError(e);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
-			request.setAttribute("error", e.getMessage());
 		}
-
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward altaPeriodo(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -54,43 +48,32 @@ public class PeriodoAction extends ValidadorAction {
 		String strForward = "exitoAltaPeriodo";
 		try {
 			PeriodoForm periodoForm = (PeriodoForm) form;
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
-					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			// rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());
 
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
 					.getBean("periodoFachada");
 			periodoFachada.altaPeriodo(periodoForm.getPeriodoDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_PERIODO);
 
-			/*
-			 * } catch (AccesoDenegadoException ade) {
-			 * request.setAttribute("error", ade.getMessage()); strForward =
-			 * "error";
-			 */
-		} catch (Exception e) {
+		} catch (NegocioException n){
+			MyLogger.log(n.getMessage());
+			request.setAttribute("error", n.getMessage());
+			
+		} catch (Throwable e) {
+			MyLogger.logError(e);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
-			request.setAttribute("error", e.getMessage());
 		}
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward cargarPeriodoAModificar(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoCargarPeriodoAModificar";
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
-					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			// rolFachada.verificarMenu(Constantes.MODIFICACION_LOCALIDAD_MENU,usuario.getRol());
 
 			String id = request.getParameter("id");
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
@@ -99,14 +82,14 @@ public class PeriodoAction extends ValidadorAction {
 					periodoFachada.getPeriodoDTOPorId(Long.valueOf(id)));
 			request.setAttribute("metodo", "modificacionPeriodo");
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
+			MyLogger.logError(e);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
-			request.setAttribute("error", e.getMessage());
 		}
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward modificacionPeriodo(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -120,23 +103,38 @@ public class PeriodoAction extends ValidadorAction {
 			periodoFachada.modificacionPeriodo(periodoForm.getPeriodoDTO());
 			request.setAttribute("exitoGrabado",
 					Constantes.EXITO_MODIFICACION_PERIODO);
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (NegocioException n){
+			MyLogger.log(n.getMessage());
+			request.setAttribute("error", n.getMessage());
+			strForward = "bloqueError";
+		} catch (Throwable e) {
+			MyLogger.logError(e);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "bloqueError";
 		}
+
 		return mapping.findForward(strForward);
 	}
 
 	public boolean validarPeriodoForm(StringBuffer error, ActionForm form) {
-		PeriodoForm periodoForm = (PeriodoForm) form;
-		WebApplicationContext ctx = getWebApplicationContext();
-		IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
-				.getBean("periodoFachada");
-		boolean existe = periodoFachada.existePeriodo(periodoForm
-				.getPeriodoDTO());
-		if (existe) {
-			Validator.addErrorXML(error, Constantes.EXISTE_PERIODO);
+		try {
+			PeriodoForm periodoForm = (PeriodoForm) form;
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
+			boolean existe = periodoFachada.existePeriodo(periodoForm
+					.getPeriodoDTO());
+			if (existe) {
+				Validator.addErrorXML(error, Constantes.EXISTE_PERIODO);
+			}
+			return !existe && periodoForm.validar(error);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
 		}
-		return !existe && periodoForm.validar(error);
+
 	}
 }
