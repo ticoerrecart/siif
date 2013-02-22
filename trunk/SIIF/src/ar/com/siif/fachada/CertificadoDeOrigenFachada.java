@@ -19,6 +19,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.Fecha;
+import ar.com.siif.utils.MyLogger;
 
 public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 
@@ -44,93 +45,68 @@ public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 	}
 	
 	public long altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen, 
-									  List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado)
-									  throws NegocioException
+									  List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado)									  
 	{
-		try{
-			Usuario usuario = usuarioFachada.getUsuario(certificadoOrigen.getUsuarioAlta().getId());
-			Entidad productor = entidadFachada.getEntidad(certificadoOrigen.getProductor().getId());
-			Entidad exportador = entidadFachada.getEntidad(certificadoOrigen.getExportador().getId());
-			LocalidadDestino localidadDestino = localidadFachada.getLocalidadDestinoPorId(certificadoOrigen.getLocalidadDestino().getId());
-			PMF pmf = ubicacionFachada.getPMF(certificadoOrigen.getPmf().getId());
-			
-			Date fecha = Fecha.stringDDMMAAAAToUtilDate(certificadoOrigen.getFecha());
-			
-			TipoProductoExportacion tipoProductoExportacion;
-			List<TipoProductoEnCertificado> listaTipoProdEnCert = new ArrayList<TipoProductoEnCertificado>();
-			for (TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO : listaTipoProductoEnCertificado) {
-				
-				tipoProductoExportacion = tipoProductoForestalFachada.recuperarTipoProductoExportacion(
-																tipoProductoEnCertificadoDTO.getTipoProductoExportacion().getId());
-				
-				listaTipoProdEnCert.add(ProviderDominio.getTipoProductoEnCertificado(
-															null,tipoProductoExportacion,tipoProductoEnCertificadoDTO));
-			}
-			
-			return this.certificadoDeOrigenDAO.altaCertificadoOrigen(
-											ProviderDominio.getCertificadoOrigen(certificadoOrigen, usuario, productor, 
-																				 exportador, localidadDestino, pmf, fecha, 
-																				 listaTipoProdEnCert));
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
-		}
-	}
-	
-	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF)throws NegocioException{
-		
-		try{
-		
-			return certificadoDeOrigenDAO.obtenerVolumenExportado(idProductor,periodo,idPMF);
-			
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
-		}		
-	}	
-	
-	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF)throws NegocioException{
-		
-		try{
-			List<CertificadoOrigenDTO> listaCertificadosDTO = new ArrayList<CertificadoOrigenDTO>();
-			List<CertificadoOrigen> listaCertificados = certificadoDeOrigenDAO.getCertificadosOrigen(idProductor,periodo,idPMF);
-			
-			for (CertificadoOrigen certificadoOrigen : listaCertificados) {
-				
-				listaCertificadosDTO.add(ProviderDTO.getCertificadoOrigenDTO(certificadoOrigen));
-			}
-			
-			return listaCertificadosDTO;
 
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
-		}			
-	}	
-	
-	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado)throws NegocioException{
+		Usuario usuario = usuarioFachada.getUsuario(certificadoOrigen.getUsuarioAlta().getId());
+		Entidad productor = entidadFachada.getEntidad(certificadoOrigen.getProductor().getId());
+		Entidad exportador = entidadFachada.getEntidad(certificadoOrigen.getExportador().getId());
+		LocalidadDestino localidadDestino = localidadFachada.getLocalidadDestinoPorId(certificadoOrigen.getLocalidadDestino().getId());
+		PMF pmf = ubicacionFachada.getPMF(certificadoOrigen.getPmf().getId());
 		
-		try{
-			CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigen(idCertificado);
+		Date fecha = Fecha.stringDDMMAAAAToUtilDate(certificadoOrigen.getFecha());
+		
+		TipoProductoExportacion tipoProductoExportacion;
+		List<TipoProductoEnCertificado> listaTipoProdEnCert = new ArrayList<TipoProductoEnCertificado>();
+		for (TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO : listaTipoProductoEnCertificado) {
 			
-			return ProviderDTO.getCertificadoOrigenDTO(certificado);
+			tipoProductoExportacion = tipoProductoForestalFachada.recuperarTipoProductoExportacion(
+															tipoProductoEnCertificadoDTO.getTipoProductoExportacion().getId());
 			
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
+			listaTipoProdEnCert.add(ProviderDominio.getTipoProductoEnCertificado(
+														null,tipoProductoExportacion,tipoProductoEnCertificadoDTO));
 		}
+		
+		return this.certificadoDeOrigenDAO.altaCertificadoOrigen(
+										ProviderDominio.getCertificadoOrigen(certificadoOrigen, usuario, productor, 
+																			 exportador, localidadDestino, pmf, fecha, 
+																			 listaTipoProdEnCert));
+
 	}
 	
-	public CertificadoOrigenDTO recuperarCertificadoOrigenPorNroCertificado(long nroCertificado)throws NegocioException{
+	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF){
+
+		return certificadoDeOrigenDAO.obtenerVolumenExportado(idProductor,periodo,idPMF);		
+	}	
+	
+	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF){
+
+		List<CertificadoOrigenDTO> listaCertificadosDTO = new ArrayList<CertificadoOrigenDTO>();
+		List<CertificadoOrigen> listaCertificados = certificadoDeOrigenDAO.getCertificadosOrigen(idProductor,periodo,idPMF);
 		
-		try{
-			CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigenPorNroCertificado(nroCertificado);
+		for (CertificadoOrigen certificadoOrigen : listaCertificados) {
 			
-			return ProviderDTO.getCertificadoOrigenDTO(certificado);
-			
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
+			listaCertificadosDTO.add(ProviderDTO.getCertificadoOrigenDTO(certificadoOrigen));
 		}
+		
+		return listaCertificadosDTO;			
+	}	
+	
+	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado){
+
+		CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigen(idCertificado);
+			
+		return ProviderDTO.getCertificadoOrigenDTO(certificado);
+	}
+	
+	public CertificadoOrigenDTO recuperarCertificadoOrigenPorNroCertificado(long nroCertificado){
+
+		CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigenPorNroCertificado(nroCertificado);
+		return ProviderDTO.getCertificadoOrigenDTO(certificado);
 	}
 	
 	public boolean existeCertificado(long nroCertificado){
-		
-		return certificadoDeOrigenDAO.existeCertificado(nroCertificado);
+
+		return certificadoDeOrigenDAO.existeCertificado(nroCertificado);	
 	}
 }

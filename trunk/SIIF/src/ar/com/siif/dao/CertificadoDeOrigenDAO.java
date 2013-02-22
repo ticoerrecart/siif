@@ -15,124 +15,77 @@ import ar.com.siif.utils.MathUtils;
 
 public class CertificadoDeOrigenDAO extends HibernateDaoSupport {
 
-	public long altaCertificadoOrigen(CertificadoOrigen certificadoOrigen) throws DataBaseException {
+	public long altaCertificadoOrigen(CertificadoOrigen certificadoOrigen){
 
-		try{
-			Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);			
-			criteria.addOrder(Order.desc("nroCertificado"));
-			
-			long nroCertificado = 1000L;
-			
-			List<CertificadoOrigen> lista = criteria.list();
-			Iterator<CertificadoOrigen> iterador = lista.iterator();
-			if(iterador.hasNext()){
-				CertificadoOrigen certificado = iterador.next();
-				nroCertificado = certificado.getNroCertificado()+1;
-			}
-			
-			certificadoOrigen.setNroCertificado(nroCertificado);
-			
-			this.getHibernateTemplate().saveOrUpdate(certificadoOrigen);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-			return nroCertificado;
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_CERTIFICADO_ORIGEN);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_CERTIFICADO_ORIGEN);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_CERTIFICADO_ORIGEN);
-		}			
+		Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);			
+		criteria.addOrder(Order.desc("nroCertificado"));
+		
+		long nroCertificado = 1000L;
+		
+		List<CertificadoOrigen> lista = criteria.list();
+		Iterator<CertificadoOrigen> iterador = lista.iterator();
+		if(iterador.hasNext()){
+			CertificadoOrigen certificado = iterador.next();
+			nroCertificado = certificado.getNroCertificado()+1;
+		}
+		
+		certificadoOrigen.setNroCertificado(nroCertificado);
+		
+		this.getHibernateTemplate().saveOrUpdate(certificadoOrigen);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+		
+		return nroCertificado;		
 	}	
 	
-	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF)throws DataBaseException {
-		
-		try{
-			double volumen = 0;
-			Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
-			criteria.createAlias("productor", "prod");
-			criteria.createAlias("pmf", "planManejo");
+	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF){
 
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("prod.id", idProductor)));
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("planManejo.id", idPMF)));
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("periodoForestal", periodo)));
+		double volumen = 0;
+		Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
+		criteria.createAlias("productor", "prod");
+		criteria.createAlias("pmf", "planManejo");
+
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("prod.id", idProductor)));
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("planManejo.id", idPMF)));
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("periodoForestal", periodo)));
+		
+		List<CertificadoOrigen> lista = criteria.list();
+		for (CertificadoOrigen certificadoOrigen : lista) {
 			
-			List<CertificadoOrigen> lista = criteria.list();
-			for (CertificadoOrigen certificadoOrigen : lista) {
-				
-				volumen = volumen + certificadoOrigen.getVolumenTotalTipoProductos();
-			}		
-			
-			return MathUtils.round(volumen, 2);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_VOLUMEN_EXPORTADO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_VOLUMEN_EXPORTADO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_VOLUMEN_EXPORTADO);
-		}				
+			volumen = volumen + certificadoOrigen.getVolumenTotalTipoProductos();
+		}		
+		
+		return MathUtils.round(volumen, 2);				
 	}	
 	
-	public List<CertificadoOrigen> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF)throws DataBaseException {
-		
-		try{
-			Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
-			criteria.createAlias("productor", "prod");
-			criteria.createAlias("pmf", "planManejo");
+	public List<CertificadoOrigen> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF){
 
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("prod.id", idProductor)));
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("planManejo.id", idPMF)));
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("periodoForestal", periodo)));
-			
-			List<CertificadoOrigen> listaCertificados = criteria.list();
-			
-			return listaCertificados;
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADOS_ORIGEN);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADOS_ORIGEN);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADOS_ORIGEN);
-		}
-	}
+		Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
+		criteria.createAlias("productor", "prod");
+		criteria.createAlias("pmf", "planManejo");
+
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("prod.id", idProductor)));
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("planManejo.id", idPMF)));
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("periodoForestal", periodo)));
+		
+		List<CertificadoOrigen> listaCertificados = criteria.list();
+		
+		return listaCertificados;
+}
 	
-	public CertificadoOrigen recuperarCertificadoOrigen(long idCertificado)throws DataBaseException{
-		
-		try{
+	public CertificadoOrigen recuperarCertificadoOrigen(long idCertificado){
 
-			return (CertificadoOrigen) getSession().get(CertificadoOrigen.class, idCertificado);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		}
+		return (CertificadoOrigen) getSession().get(CertificadoOrigen.class, idCertificado);
 	}
 
-	public CertificadoOrigen recuperarCertificadoOrigenPorNroCertificado(long nroCertificado)throws DataBaseException{
-		
-		try{
+	public CertificadoOrigen recuperarCertificadoOrigenPorNroCertificado(long nroCertificado){
 
-			Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
-			criteria.add(Restrictions.eq("nroCertificado", nroCertificado));
+		Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
+		criteria.add(Restrictions.eq("nroCertificado", nroCertificado));
 			
-			List<CertificadoOrigen> listaCertificados = criteria.list();
+		List<CertificadoOrigen> listaCertificados = criteria.list();
 			
-			return listaCertificados.get(0);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_OBTENER_CERTIFICADO_ORIGEN);
-		}
+		return listaCertificados.get(0);
 	}	
 	
 	public boolean existeCertificado(long nroCertificado){

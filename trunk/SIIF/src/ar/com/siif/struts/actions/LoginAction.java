@@ -12,8 +12,10 @@ import org.springframework.web.struts.DispatchActionSupport;
 
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.ILoginFachada;
+import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.LoginForm;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class LoginAction extends DispatchActionSupport {
 
@@ -37,9 +39,13 @@ public class LoginAction extends DispatchActionSupport {
 
 			request.getSession().setAttribute(Constantes.USER_LABEL_SESSION, usrDTO);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "errorLogin";
+		} catch (NegocioException ne) {
+			request.setAttribute("error", ne.getMessage());	
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -57,9 +63,10 @@ public class LoginAction extends DispatchActionSupport {
 			session.setAttribute(Constantes.USER_LABEL_SESSION, null);
 			session.invalidate();
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "errorLogin";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);

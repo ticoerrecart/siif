@@ -21,55 +21,37 @@ public class ConsultasFiscalizacionFachada implements IConsultasFiscalizacionFac
 		this.consultasFiscalizacionDAO = pConsultasFiscalizacionDAO;
 	}
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor) throws NegocioException{
-		try{
-			return consultasFiscalizacionDAO.recuperarFiscalizacionesConGuiaForestal(idProductor);
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
-		}			
+	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor){
+
+		return consultasFiscalizacionDAO.recuperarFiscalizacionesConGuiaForestal(idProductor);	
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesConGuiaForestalDTO(long idProductor) throws NegocioException{
+	public List<FiscalizacionDTO> recuperarFiscalizacionesConGuiaForestalDTO(long idProductor){
+
+		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+		List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
+													recuperarFiscalizacionesConGuiaForestal(idProductor);
 		
-		try{
-			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-			List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
-														recuperarFiscalizacionesConGuiaForestal(idProductor);
-			
-			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
-			}
-			return listaFiscalizacionesDTO;
-			
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
-		}			
+		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+		}
+		return listaFiscalizacionesDTO;	
 	}	
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesSinGuiaForestalDTO(long idProductor) throws NegocioException{
+	public List<FiscalizacionDTO> recuperarFiscalizacionesSinGuiaForestalDTO(long idProductor){
+
+		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
+		List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
+													recuperarFiscalizacionesSinGuiaForestal(idProductor);
 		
-		try{
-			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-			List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
-														recuperarFiscalizacionesSinGuiaForestal(idProductor);
-			
-			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-				listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
-			}
-			return listaFiscalizacionesDTO;
-		
-		}catch(DataBaseException dbe){
-			throw new NegocioException(dbe.getMessage());
+		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
 		}
+		return listaFiscalizacionesDTO;
 	}	
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor) throws NegocioException{
-		
-		try{
-			return consultasFiscalizacionDAO.recuperarFiscalizacionesSinGuiaForestal(idProductor);
-			
-		} catch (DataBaseException e) {
-			throw new NegocioException(e.getMessage());
-		}
+	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor){
+
+		return consultasFiscalizacionDAO.recuperarFiscalizacionesSinGuiaForestal(idProductor);
 	}	
 }

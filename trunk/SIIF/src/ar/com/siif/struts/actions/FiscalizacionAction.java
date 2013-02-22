@@ -26,11 +26,11 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
-import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class FiscalizacionAction extends ValidadorAction {
 
@@ -68,8 +68,9 @@ public class FiscalizacionAction extends ValidadorAction {
 			//request.getSession().setAttribute("fiscalizacion", null);//Por si quedo alguna Fiscalizacion en el session
 			request.getSession().setAttribute("fiscalizacionDTO", null);//Por si quedo alguna Fiscalizacion en el session
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
@@ -150,8 +151,9 @@ public class FiscalizacionAction extends ValidadorAction {
 				request.setAttribute("exitoModificacion",
 						Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			}
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
@@ -178,8 +180,9 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -247,8 +250,10 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 
 			request.setAttribute("LENIA", Constantes.LENIA_ID);
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
@@ -279,9 +284,11 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion);*/
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacionForm.getFiscalizacionDTO(),
 					fiscalizacionForm.getMuestrasDTO());
-
-		} catch (Exception e) {
-			request.setAttribute("errorModificacion", e.getMessage());
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -315,9 +322,10 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_FISCALIZACION);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 
 		return mapping.findForward(strForward);
@@ -355,8 +363,9 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("titulo", Constantes.TITULO_ANULACION_FISCALIZACION);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
@@ -382,8 +391,9 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 

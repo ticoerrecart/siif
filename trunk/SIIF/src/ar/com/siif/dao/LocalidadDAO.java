@@ -19,33 +19,18 @@ import ar.com.siif.utils.Constantes;
 
 public class LocalidadDAO extends HibernateDaoSupport {
 
-	public List<Localidad> getLocalidades() throws DataBaseException {
-		try{
-			return getHibernateTemplate().loadAll(Localidad.class);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		}			
+	public List<Localidad> getLocalidades(){
+
+		return getHibernateTemplate().loadAll(Localidad.class);	
 	}
 
-	public Localidad getLocalidadPorId(Long id) throws DataBaseException {
-		try{
-			return (Localidad) getHibernateTemplate().get(Localidad.class, id);
-						
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		}			
+	public Localidad getLocalidadPorId(Long id){
+
+		return (Localidad) getHibernateTemplate().get(Localidad.class, id);			
 	}
 
 	public boolean existeLocalidad(String nombre, Long id) {
+		
 		Criteria criteria = getSession().createCriteria(Localidad.class);
 		Conjunction conj = Restrictions.conjunction();
 		conj.add(Restrictions.eq("nombre", nombre));
@@ -58,42 +43,24 @@ public class LocalidadDAO extends HibernateDaoSupport {
 		return (localidades.size() > 0);
 	}
 
-	public void alta_modficacion_Localidad(Localidad localidad) throws DataBaseException {
+	public void alta_modficacion_Localidad(Localidad localidad) throws NegocioException {
 
-		try{
-			if (existeLocalidad(localidad.getNombre(), localidad.getId())) {
-				throw new DataBaseException(Constantes.EXISTE_LOCALIDAD);
-			}
-			this.getHibernateTemplate().saveOrUpdate(localidad);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		}			
+		if (existeLocalidad(localidad.getNombre(), localidad.getId())) {
+			throw new NegocioException(Constantes.EXISTE_LOCALIDAD);
+		}
+		this.getHibernateTemplate().saveOrUpdate(localidad);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();	
 	}
 
-	public void alta_modficacion_Provincia(ProvinciaDestino provincia) throws DataBaseException {
+	public void alta_modficacion_Provincia(ProvinciaDestino provincia) throws NegocioException {
 
-		try{
-			if (existeProvincia(provincia.getNombre(), provincia.getId())) {
-				throw new DataBaseException(Constantes.EXISTE_PROVINCIA);
-			}
-			this.getHibernateTemplate().saveOrUpdate(provincia);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PROVINCIA);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PROVINCIA);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_PROVINCIA);
-		}			
+		if (existeProvincia(provincia.getNombre(), provincia.getId())) {
+			throw new NegocioException(Constantes.EXISTE_PROVINCIA);
+		}
+		this.getHibernateTemplate().saveOrUpdate(provincia);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();		
 	}	
 	
 	public boolean existeProvincia(String nombre, Long id) {
@@ -109,30 +76,14 @@ public class LocalidadDAO extends HibernateDaoSupport {
 		return (provincias.size() > 0);
 	}	
 	
-	public List<ProvinciaDestino> getProvincias() throws DataBaseException {
-		try{
-			return getHibernateTemplate().loadAll(ProvinciaDestino.class);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIAS);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIAS);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIAS);
-		}			
+	public List<ProvinciaDestino> getProvincias(){
+
+		return getHibernateTemplate().loadAll(ProvinciaDestino.class);	
 	}	
 	
-	public ProvinciaDestino getProvinciaDestinoPorId(Long id) throws DataBaseException {
-		try{
-			return (ProvinciaDestino) getHibernateTemplate().get(ProvinciaDestino.class, id);
-						
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIA);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIA);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_PROVINCIA);
-		}			
+	public ProvinciaDestino getProvinciaDestinoPorId(Long id){
+
+		return (ProvinciaDestino) getHibernateTemplate().get(ProvinciaDestino.class, id);			
 	}	
 	
 	public boolean existeLocalidadDestino(String nombre, Long id, Long idProvincia) {
@@ -151,57 +102,31 @@ public class LocalidadDAO extends HibernateDaoSupport {
 		return (localidades.size() > 0);
 	}
 	
-	public void alta_modficacion_LocalidadDestino(LocalidadDestino localidad) throws DataBaseException {
+	public void alta_modficacion_LocalidadDestino(LocalidadDestino localidad) throws NegocioException {
 
-		try{
-			if (existeLocalidadDestino(localidad.getNombre(), localidad.getId(),localidad.getProvinciaDestino().getId())) {
-				throw new DataBaseException(Constantes.EXISTE_LOCALIDAD_DESTINO);
-			}
-			this.getHibernateTemplate().saveOrUpdate(localidad);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_LOCALIDAD);
-		}			
+		if (existeLocalidadDestino(localidad.getNombre(), localidad.getId(),localidad.getProvinciaDestino().getId())) {
+			throw new NegocioException(Constantes.EXISTE_LOCALIDAD_DESTINO);
+		}
+		this.getHibernateTemplate().saveOrUpdate(localidad);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();			
 	}
 	
-	public List<LocalidadDestino> getLocalidadesDeProvincia(Long idProvincia)throws DataBaseException {
+	public List<LocalidadDestino> getLocalidadesDeProvincia(Long idProvincia){
+
+		Criteria criteria = getSession().createCriteria(LocalidadDestino.class);
+		criteria.createAlias("provinciaDestino", "pd");
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("pd.id", idProvincia));
+		criteria.add(conj);
 		
-		try{
-			Criteria criteria = getSession().createCriteria(LocalidadDestino.class);
-			criteria.createAlias("provinciaDestino", "pd");
-			Conjunction conj = Restrictions.conjunction();
-			conj.add(Restrictions.eq("pd.id", idProvincia));
-			criteria.add(conj);
-			
-			List<LocalidadDestino> localidades = criteria.list();
-			return localidades;
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDADES);
-		}		
+		List<LocalidadDestino> localidades = criteria.list();
+		return localidades;		
 	}
 	
-	public LocalidadDestino getLocalidadDestinoPorId(Long id) throws DataBaseException {
-		try{
-			return (LocalidadDestino) getHibernateTemplate().get(LocalidadDestino.class, id);
-						
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_LOCALIDAD);
-		}			
+	public LocalidadDestino getLocalidadDestinoPorId(Long id){
+
+		return (LocalidadDestino) getHibernateTemplate().get(LocalidadDestino.class, id);			
 	}
 	
 }

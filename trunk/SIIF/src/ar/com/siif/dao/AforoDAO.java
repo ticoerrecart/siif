@@ -29,99 +29,62 @@ public class AforoDAO extends HibernateDaoSupport {
 		return tiposProducto;
 	}*/
 
-	public void altaAforo(Aforo aforo) throws DataBaseException {
+	public void altaAforo(Aforo aforo) throws NegocioException {
 
-		try{
-			Criteria criteria = getSession().createCriteria(Aforo.class);
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("estado", aforo.getEstado()))
-					.add(Restrictions.eq("tipoProductor", aforo.getTipoProductor()))
-					.add(Restrictions.eq("tipoProducto.id", aforo.getTipoProducto().getId())));
-	
-			List<Aforo> aforos = criteria.list();
-	
-			if (aforos.size() > 0) {
-				throw new DataBaseException(Constantes.EXISTE_AFORO);
-			}
-	
-			this.getHibernateTemplate().saveOrUpdate(aforo);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
+		Criteria criteria = getSession().createCriteria(Aforo.class);
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("estado", aforo.getEstado()))
+				.add(Restrictions.eq("tipoProductor", aforo.getTipoProductor()))
+				.add(Restrictions.eq("tipoProducto.id", aforo.getTipoProducto().getId())));
+
+		List<Aforo> aforos = criteria.list();
+
+		if (aforos.size() > 0) {
+			throw new NegocioException(Constantes.EXISTE_AFORO);
+		}
+
+		this.getHibernateTemplate().saveOrUpdate(aforo);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_AFORO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_AFORO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_ALTA_AFORO);
-		}			
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Aforo> recuperarAforos() throws DataBaseException {
+	public List<Aforo> recuperarAforos(){
 
-		try{
-			Criteria criteria = getSession().createCriteria(Aforo.class);
-	
-			criteria.createAlias("tipoProducto", "tipoP");
-	
-			criteria.addOrder(Order.asc("tipoProductor"));
-			criteria.addOrder(Order.asc("tipoP.nombre"));
-			criteria.addOrder(Order.asc("estado"));
-	
-			return criteria.list();
+		Criteria criteria = getSession().createCriteria(Aforo.class);
 
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		}			
-			
-		//return getHibernateTemplate().loadAll(Aforo.class);			
+		criteria.createAlias("tipoProducto", "tipoP");
+
+		criteria.addOrder(Order.asc("tipoProductor"));
+		criteria.addOrder(Order.asc("tipoP.nombre"));
+		criteria.addOrder(Order.asc("estado"));
+
+		return criteria.list();		
 	}
 
 	@SuppressWarnings("unchecked")
-	public Aforo recuperarAforo(Long id) throws DataBaseException {
+	public Aforo recuperarAforo(Long id){
 
-		try{
-			return (Aforo) getSession().get(Aforo.class, id);
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		}			
+		return (Aforo) getSession().get(Aforo.class, id);		
 	}
 
-	public void modificacionAforo(Aforo aforo) throws NegocioException, DataBaseException {
+	public void modificacionAforo(Aforo aforo) throws NegocioException{
 
-		try{
-			Criteria criteria = getSession().createCriteria(Aforo.class);
-			criteria.add(Restrictions.conjunction().add(Restrictions.eq("estado", aforo.getEstado()))
-					.add(Restrictions.eq("tipoProductor", aforo.getTipoProductor()))
-					.add(Restrictions.eq("tipoProducto.id", aforo.getTipoProducto().getId()))
-					.add(Restrictions.ne("id", aforo.getId())));
-	
-			List<Aforo> aforos = criteria.list();
-	
-			if (aforos.size() > 0) {
-				throw new NegocioException(Constantes.EXISTE_AFORO);
-			}
-	
-			this.getHibernateTemplate().saveOrUpdate(aforo);
-			this.getHibernateTemplate().flush();
-			this.getHibernateTemplate().clear();
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_MODIFICACION_AFORO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		}			
+		Criteria criteria = getSession().createCriteria(Aforo.class);
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("estado", aforo.getEstado()))
+				.add(Restrictions.eq("tipoProductor", aforo.getTipoProductor()))
+				.add(Restrictions.eq("tipoProducto.id", aforo.getTipoProducto().getId()))
+				.add(Restrictions.ne("id", aforo.getId())));
+
+		List<Aforo> aforos = criteria.list();
+
+		if (aforos.size() > 0) {
+			throw new NegocioException(Constantes.EXISTE_AFORO);
+		}
+
+		this.getHibernateTemplate().saveOrUpdate(aforo);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();			
 	}
 
 	public boolean existeAforo(AforoDTO aforo, Long idTipoProducto){
@@ -141,33 +104,24 @@ public class AforoDAO extends HibernateDaoSupport {
 	}
 	
 	@SuppressWarnings("finally")
-	public Aforo getAforo(String estado, Long idTipoProducto, Long idProdForestal)throws DataBaseException{
+	public Aforo getAforo(String estado, Long idTipoProducto, Long idProdForestal){
+
+		Entidad productor = (Entidad)this.getHibernateTemplate().get(Entidad.class, idProdForestal);
 		
-		try{
-			Entidad productor = (Entidad)this.getHibernateTemplate().get(Entidad.class, idProdForestal);
-			
-			Criteria criteria = getSession().createCriteria(Aforo.class);
-			Conjunction conj = Restrictions.conjunction();
-			conj.add(Restrictions.eq("estado", estado));
-			conj.add(Restrictions.eq("tipoProductor", productor.getIdTipoEntidad()));
-			conj.add(Restrictions.eq("tipoProducto.id", idTipoProducto));
-			
-			criteria.add(conj);
-	
-			List<Aforo> aforos = criteria.list();
-			
-			if((aforos.size() > 0)){
-				return aforos.get(0);	
-			}
-			return null;			
-			
-		} catch (HibernateException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (HibernateSystemException he) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
-		} catch (Exception e) {
-			throw new DataBaseException(Constantes.ERROR_RECUPERACION_AFORO);
+		Criteria criteria = getSession().createCriteria(Aforo.class);
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("estado", estado));
+		conj.add(Restrictions.eq("tipoProductor", productor.getIdTipoEntidad()));
+		conj.add(Restrictions.eq("tipoProducto.id", idTipoProducto));
+		
+		criteria.add(conj);
+
+		List<Aforo> aforos = criteria.list();
+		
+		if((aforos.size() > 0)){
+			return aforos.get(0);	
 		}
+		return null;			
 	}
 	
 }

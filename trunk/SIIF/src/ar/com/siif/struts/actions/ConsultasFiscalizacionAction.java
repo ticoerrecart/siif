@@ -23,6 +23,7 @@ import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class ConsultasFiscalizacionAction extends ValidadorAction {
 
@@ -74,6 +75,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarTiposDeEntidadConsultaFiscalizacion";
 
 		try {
+
 			String paramForward = request.getParameter("forward");	
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
@@ -100,10 +102,10 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("urlDetalle",
 					"../../consultasFiscalizacion.do?metodo=" + paramForward);
 			//request.setAttribute("paramForward", paramForward);
-			
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
@@ -116,6 +118,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarFiscalizacionesConGuiaForestal";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasFiscalizacionFachada consultasFiscalizacionFachada = (IConsultasFiscalizacionFachada) ctx
 					.getBean("consultasFiscalizacionFachada");
@@ -128,10 +131,11 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", fiscalizacionesConGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
-		}
+		}						
 
 		return mapping.findForward(strForward);
 	}	
@@ -142,6 +146,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarFiscalizacionesSinGuiaForestal";
 
 		try {
+
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasFiscalizacionFachada consultasFiscalizacionFachada = (IConsultasFiscalizacionFachada) ctx
 					.getBean("consultasFiscalizacionFachada");
@@ -154,8 +159,9 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", fiscalizacionesSinGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 
@@ -168,6 +174,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacion";
 
 		try {
+
 			String paramForward = request.getParameter("paramForward");			
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
 			
@@ -199,8 +206,9 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 			request.setAttribute("fiscalizacion", fiscalizacion);
 			request.setAttribute("paramForward", paramForward);
 
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 
