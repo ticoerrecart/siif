@@ -71,6 +71,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -139,6 +140,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -173,6 +175,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 		return null;
 	}
@@ -205,6 +208,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 		return null;
 	}
@@ -239,6 +243,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -274,6 +279,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 		return null;
 	}
@@ -308,6 +314,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -343,6 +350,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -378,6 +386,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -413,6 +422,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;
@@ -481,7 +491,7 @@ public class ReportesPorProductorAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-			return mapping.findForward("error");
+			return mapping.findForward("errorSinMenu");
 		}
 
 		return null;

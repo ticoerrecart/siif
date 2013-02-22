@@ -16,7 +16,7 @@
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
-<html:form action="periodo" styleId="periodoFormId">
+<html:form action="periodo" styleId="periodoFormId" onsubmit="javascript:submitir();">
 	<c:choose>
 		<c:when test="${empty metodo}">
 			<html:hidden property="metodo" value="${param.metodo}" />
