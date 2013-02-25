@@ -19,6 +19,13 @@
 		<put name="body" value="doc.portal.body" />
 	</definition>
 
+	<definition name=".baseSinMenu" path="/jsp/tiles/layout.jsp">
+		<put name="title" value="Main Layout" />
+		<put name="header" value="/jsp/tiles/header.jsp" />
+		<put name="menu" value="" />
+		<put name="footer" value="/jsp/tiles/footer.jsp" />
+		<put name="body" value="doc.portal.body" />
+	</definition>
 	<!-- ========== PAGES ========== -->
 
 	<definition name=".indizarPlano" extends=".base">
@@ -465,4 +472,8 @@
 		<put name="body" value="/jsp/error.jsp" />
 	</definition>
 
+	<definition name=".errorSinMenu" extends=".baseSinMenu">
+		<put name="title" value="Error en SIIFs" />
+		<put name="body" value="/jsp/errorSinMenu.jsp" />
+	</definition>
 </tiles-definitions>

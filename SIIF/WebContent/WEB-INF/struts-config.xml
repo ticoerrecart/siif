@@ -47,6 +47,7 @@
 
 	<global-forwards>
 		<forward name="error" path=".error"></forward>
+		<forward name="errorSinMenu" path=".errorSinMenu"></forward>
 		<forward name="bloqueError" path="/jsp/error.jsp"></forward>
 	</global-forwards>
 
