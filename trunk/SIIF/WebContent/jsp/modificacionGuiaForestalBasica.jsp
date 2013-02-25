@@ -27,7 +27,6 @@
 
 <script>
 	$(function() {
-
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 	});
@@ -409,8 +408,24 @@ function despintarFilaVale(idTd){
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-				<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
-					   size="40" readonly="readonly">
+				<select name="guiaForestal.periodoForestal" class="botonerab" >
+						<c:forEach items="${periodos}" var="per">
+							<c:choose>
+								<c:when test="${guiaForestal.periodoForestal==per.periodo}">
+									<option value="${per.periodo}" selected="selected">
+										<c:out value="${per.periodo}"></c:out>
+									</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${per.periodo}">
+										<c:out value="${per.periodo}"></c:out>
+									</option>
+								</c:otherwise>
+							</c:choose>
+							
+							
+						</c:forEach>
+					</select>	
 			</td>
 		</tr>
 		<tr>
