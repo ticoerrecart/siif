@@ -472,10 +472,10 @@ function volverAnulacionGuia(){
 				</tr>				
 				<tr>
 					<td colspan="4"  class="azulAjustado">
-								<button class="botonerab" onclick="expBoletasImpagas();"> Expandir Boletas Impagas </button> 
-								<button class="botonerab" onclick="expBoletasPagas();"> Expandir Boletas Pagas </button>
-								<button class="botonerab" onclick="expBoletaNro();"> Expandir Boleta Nro </button> 
-								<Input type="text" value="" id="expBoleta">
+								<input type="button" class="botonerab" onclick="expBoletasImpagas();" value="Expandir Boletas Impagas">
+								<input type="button" class="botonerab" onclick="expBoletasPagas();" value="Expandir Boletas Pagas">
+								<input type="button" class="botonerab" onclick="expBoletaNro();" value="Expandir Boleta Nro">
+								<input type="text" value="" id="expBoleta">
 					</td>
 				</tr>
 				
@@ -620,9 +620,10 @@ function volverAnulacionGuia(){
 					<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
 						<tr>
 							<td colspan="4"  class="azulAjustado">
-								<button class="botonerab" onclick="expValesNoDevueltos();"> Expandir Vales En Uso </button> 
-								<button class="botonerab" onclick="expValesDevueltos();"> Expandir Vales Devueltos </button>
-								<button class="botonerab" onclick="expValeNro();"> Expandir Vale Nro </button> <Input type="text" value="" id="expVale">
+								<input type="button" class="botonerab" onclick="expValesNoDevueltos();" value="Expandir Vales En Uso">
+								<input type="button" class="botonerab" onclick="expValesDevueltos();" value="Expandir Vales Devueltos">
+								<input type="button" class="botonerab" onclick="expValeNro();" value="Expandir Vale Nro">
+								<input type="text" value="" id="expVale">
 							</td>
 						</tr>
 						<tr>

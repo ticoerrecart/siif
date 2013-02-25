@@ -105,7 +105,7 @@ $(function() {
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 			<td width="30%">
 				<select id="selectTiposDeEntidad" class="botonerab" onchange="actualizarComboProductores();">
 					<option value="-1">-Seleccione una Entidad-</option>
