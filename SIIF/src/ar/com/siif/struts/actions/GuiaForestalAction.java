@@ -1018,7 +1018,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestal(guiaForm.getGuiaForestal().getId());
 			guiaForestalFachada.anularGuiaForestal(guiaForestal);
 
 			request.getSession().setAttribute("exito", Constantes.EXITO_ANULACION_GUIA_FORESTAL);
@@ -1026,7 +1026,7 @@ public class GuiaForestalAction extends ValidadorAction {
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
-			strForward = "bloqueError";
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
