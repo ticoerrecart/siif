@@ -149,6 +149,8 @@ function volverAnulacionGuia(){
 
 <html:hidden property="metodo" value="anularGuiaForestal" />
 
+
+<input type="hidden" name="guiaForestal.id" value="${guiaForestal.id}" />
 <input id="idGuia" type="hidden" value="${guiaForestal.id}">
 <input id="idParamForward" type="hidden" value="${paramForward}">
 <input id="idParamProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
