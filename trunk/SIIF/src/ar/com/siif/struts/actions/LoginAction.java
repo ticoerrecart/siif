@@ -41,7 +41,7 @@ public class LoginAction extends DispatchActionSupport {
 
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());	
-			
+			strForward = "errorLogin";
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
