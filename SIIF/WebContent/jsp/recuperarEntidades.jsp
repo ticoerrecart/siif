@@ -61,7 +61,7 @@
 				<td class="azulAjustado"><bean:message key='SIIF.label.Localidad'/></td>
 				<td class="azulAjustado"><bean:message key='SIIF.label.Telefono'/></td>
 				<td class="azulAjustado"><bean:message key='SIIF.label.EMail'/></td>
-				<td class="azulAjustado"><bean:message key='SIIF.label.TipoEntidad'/></td>
+				<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 				<td class="azulAjustado"></td>
 			</tr>
 			<%String clase=""; %>

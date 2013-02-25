@@ -66,7 +66,7 @@ function headerTabla(){
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 			<td align="left" width="30%">
 				<input class="botonerab" type="text" size="29" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.productorForestal.tipoEntidadDesc}'></c:out>">			

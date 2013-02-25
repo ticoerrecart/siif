@@ -116,7 +116,7 @@ function mostrarCuit() {
 						<td colspan="4" height="15"></td>
 					</tr>						
 					<tr>
-						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 						<td width="30%">
 							<input class="botonerab" type="text" size="27" readonly="readonly" 
 									value='<c:out value="${certificado.exportador.tipoEntidadDesc}"></c:out>'>
@@ -166,7 +166,7 @@ function mostrarCuit() {
 						<td colspan="4" height="15"></td>
 					</tr>						
 					<tr>
-						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 						<td width="30%">
 							<input class="botonerab" type="text" size="27" readonly="readonly" 
 									value='<c:out value="${certificado.productor.tipoEntidadDesc}"></c:out>'>

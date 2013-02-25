@@ -47,7 +47,7 @@
 			<td height="20" colspan="2"></td>
 		</tr>
 		<tr>
-			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+			<td width="45%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 			<td align="left"><c:choose>
 				<c:when test="${metodo=='altaEntidad'}">
 					<select id="selectTiposDeEntidad" class="botonerab" name="entidadDTO.tipoEntidad" onchange="cambioTipoEntidad();">

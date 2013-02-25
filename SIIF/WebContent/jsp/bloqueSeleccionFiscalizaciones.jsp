@@ -248,7 +248,7 @@ function deshabilitarLocalizacion(ids) {
 				<td height="15" colspan="3"></td>
 			</tr>
 			<tr>
-				<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoEntidad'/></td>
+				<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 				<td class="botonerab">
 					<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
 						<option value="-1">-Seleccione un Tipo de Entidad-</option>

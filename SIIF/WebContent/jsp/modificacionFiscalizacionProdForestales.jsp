@@ -86,8 +86,8 @@ $(function() {
 			<td height="20" colspan="4"></td>
 		</tr>
 		<tr>
-			<td width="20%" class="botoneralNegritaRight"><bean:message
-					key='SIIF.label.TipoEntidad' />
+			<td width="20%" class="botoneralNegritaRight"><bean:message 
+				key='SIIF.label.TipoDeProductor' />
 			</td>
 			<td width="30%" align="left"><html:select styleId="selectTiposDeEntidad"
 					property="selectTiposDeEntidad" styleClass="botonerab disabled"

@@ -108,7 +108,7 @@ function actualizarProductoresCallback(productores){
 					</td>
 				</tr>				
 				<tr>
-					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 					<td align="left" class="botonerab">
 						<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
 							<option value="-1">-Seleccione un Tipo de Entidad-</option>					

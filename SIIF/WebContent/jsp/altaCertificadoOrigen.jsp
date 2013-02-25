@@ -138,7 +138,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td colspan="4" height="15"></td>
 					</tr>						
 					<tr>
-						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 						<td width="30%">
 							<select id="selectTiposDeEntidadExportador" class="botonerab" onchange="actualizarComboExportador();">
 								<option value="-1">-Seleccione una Entidad-</option>
@@ -192,7 +192,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td colspan="4" height="15"></td>
 					</tr>						
 					<tr>
-						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoEntidad'/></td>
+						<td width="17%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 						<td width="30%">
 							<select id="selectTiposDeEntidad" style="width: 16em" class="botonerab" onchange="actualizarComboProductores();">
 								<option value="-1">-Seleccione una Entidad-</option>
