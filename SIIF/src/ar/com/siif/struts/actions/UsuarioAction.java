@@ -14,44 +14,38 @@ import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.IUsuarioFachada;
-import ar.com.siif.negocio.Entidad;
-import ar.com.siif.negocio.Rol;
-import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.struts.actions.forms.UsuarioForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class UsuarioAction extends ValidadorAction {
 
-	@SuppressWarnings("unchecked")
-	public ActionForward cargarAltaUsuario(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward cargarAltaUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String strForward = "cargarAltaUsuario";
 		try {
-			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
-			WebApplicationContext ctx = getWebApplicationContext();			
-			
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.ALTA_USUARIO_MENU,usuario.getRol());
-			
+			// rolFachada.verificarMenu(Constantes.ALTA_USUARIO_MENU,usuario.getRol());
+
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-	
+
 			request.setAttribute("entidades", entidadFachada.getOficinasForestalesDTO());
 			request.setAttribute("roles", rolFachada.getRolesDTO());
-	
+
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_USUARIO);
 			request.setAttribute("metodo", "altaUsuario");
 			request.setAttribute("idRolAdministrador", rolFachada.getRolAdministrador().getId());
 
-		} catch (NegocioException e) {
-			request.setAttribute("error", e.getMessage());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
-			
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "error";
-		}			
+		}
 		return mapping.findForward(strForward);
 	}
 
@@ -59,17 +53,15 @@ public class UsuarioAction extends ValidadorAction {
 		UsuarioForm usuarioForm = (UsuarioForm) form;
 		WebApplicationContext ctx = getWebApplicationContext();
 		IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
-		boolean existe = usuarioFachada.existeUsuario(usuarioForm.getUsuarioDTO().getNombreUsuario(),
-				usuarioForm.getUsuarioDTO().getId());
+		boolean existe = usuarioFachada.existeUsuario(usuarioForm.getUsuarioDTO().getNombreUsuario(), usuarioForm.getUsuarioDTO().getId());
 		if (existe) {
 			Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
 		}
 		return !existe && usuarioForm.validar(error);
 	}
 
-	@SuppressWarnings("unchecked")
-	public ActionForward altaUsuario(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward altaUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String strForward = "exitoAltaUsuario";
 		try {
 			UsuarioForm usuarioForm = (UsuarioForm) form;
@@ -81,17 +73,19 @@ public class UsuarioAction extends ValidadorAction {
 			usuarioFachada.altaUsuario(usuarioForm.getUsuarioDTO());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_USUARIO);
-			
+
 		} catch (NegocioException ne) {
 			strForward = "errorAltaUsuario";
 			request.setAttribute("error", ne.getMessage());
-		} catch (Exception e) {
-			request.setAttribute("error", e.toString());
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
 
-	private void cargarUsuarioAModificar(HttpServletRequest request) throws NegocioException {
+	private void cargarUsuarioAModificar(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		if (id == null) {
 			id = String.valueOf(((UsuarioDTO) request.getSession().getAttribute("usuario")).getId());
@@ -110,40 +104,35 @@ public class UsuarioAction extends ValidadorAction {
 		request.setAttribute("idRolAdministrador", rolFachada.getRolAdministrador().getId());
 	}
 
-	@SuppressWarnings("unchecked")
-	public ActionForward cargarUsuarioAModificar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward cargarUsuarioAModificar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String strForward = "exitoCargarUsuarioAModificar";
-		try{
+		try {
 			cargarUsuarioAModificar(request);
-			
-		} catch (NegocioException e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "error";
-					
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "bloqueError";
 		}
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
-	public ActionForward cargarUsuariosAModificar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-			
+	public ActionForward cargarUsuariosAModificar(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
 		String strForward = "exitoRecuperarUsuarios";
 		try {
-			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
-			WebApplicationContext ctx = getWebApplicationContext();			
-			
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
+			WebApplicationContext ctx = getWebApplicationContext();
+
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_USUARIO_MENU,usuario.getRol());		
-						
+			// rolFachada.verificarMenu(Constantes.MODIFICACION_USUARIO_MENU,usuario.getRol());
+
 			long idAdministrador = rolFachada.getRolAdministrador().getId();
-			
+
 			if (usuario != null && idAdministrador == usuario.getRol().getId().longValue()) {
-				
+
 				IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
 				List<UsuarioDTO> usuarios = usuarioFachada.getUsuariosDTO();
 				request.setAttribute("usuarios", usuarios);
@@ -152,35 +141,33 @@ public class UsuarioAction extends ValidadorAction {
 				request.setAttribute("titulo", Constantes.TITULO_MODIFICACION_USUARIO);
 				strForward = "exitoCargarUsuarioAModificar";
 			}
-			
-		} catch (NegocioException e) {
-			request.setAttribute("error", e.getMessage());
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
-					
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			strForward = "error";
-		}			
+		}
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
-	public ActionForward modificacionUsuario(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward modificacionUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String strForward = "exitoModificacionUsuario";
-		try{
+		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IUsuarioFachada usuarioFachada = (IUsuarioFachada) ctx.getBean("usuarioFachada");
 			UsuarioForm usuarioForm = (UsuarioForm) form;
-			
-			usuarioFachada.modificacionUsuario(usuarioForm.getUsuarioDTO());	
+
+			usuarioFachada.modificacionUsuario(usuarioForm.getUsuarioDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_USUARIO);
-			
+
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());
-		} catch (Exception e) {
-			request.setAttribute("error", e.toString());
-		}	
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
 		return mapping.findForward(strForward);
 	}
 }

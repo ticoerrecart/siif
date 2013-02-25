@@ -12,15 +12,15 @@ public interface IUsuarioFachada {
 
 	public boolean existeUsuario(String nombre, Long id);
 
-	public List<Usuario> getUsuarios()throws NegocioException;
-	
-	public List<UsuarioDTO> getUsuariosDTO()throws NegocioException;
+	public List<Usuario> getUsuarios();
 
-	public Usuario getUsuario(Long id)throws NegocioException;
+	public List<UsuarioDTO> getUsuariosDTO();
 
-	public UsuarioDTO getUsuarioDTO(Long id)throws NegocioException;	
-	
+	public Usuario getUsuario(Long id);
+
+	public UsuarioDTO getUsuarioDTO(Long id);
+
 	public void altaUsuario(UsuarioDTO usuario) throws NegocioException;
-	
+
 	public void modificacionUsuario(UsuarioDTO usuario) throws NegocioException;
 }

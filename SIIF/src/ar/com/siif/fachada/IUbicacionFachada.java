@@ -70,13 +70,13 @@ public interface IUbicacionFachada {
 	
 	public List<PMFDTO> recuperarPMFsDTO();
 	
-	public List<PMFDTO> getPMFsDTOPorProductor(Long idProductor) throws NegocioException;	
+	public List<PMFDTO> getPMFsDTOPorProductor(Long idProductor);	
 	
-	public List<TranzonDTO> getTranzonesDTOPorProductor(Long idProductor) throws NegocioException;
+	public List<TranzonDTO> getTranzonesDTOPorProductor(Long idProductor);
 	
-	public List<MarcacionDTO> getMarcacionesDTOPorProductor(Long idProductor) throws NegocioException;
+	public List<MarcacionDTO> getMarcacionesDTOPorProductor(Long idProductor);
 	
-	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor) throws NegocioException;	
+	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor);	
 	
 	public String getTipoTerrenoPMF(Long idPMF);
 	

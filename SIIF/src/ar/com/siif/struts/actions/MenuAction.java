@@ -24,7 +24,6 @@ import ar.com.siif.utils.MyLogger;
 
 public class MenuAction extends DispatchActionSupport {
 
-	@SuppressWarnings("unchecked")
 	public ActionForward getMenu(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
