@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +45,8 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward verLog(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		try {
 
@@ -60,8 +61,7 @@ public class LogAction extends DispatchAction {
 					out.write(s.getBytes());
 				} else {
 					if (file.length() == 0) {
-						String s = "El archivo '" + fileName
-								+ "' tiene 0 bytes.";
+						String s = "El archivo '" + fileName + "' tiene 0 bytes.";
 						out.write(s.getBytes());
 					} else {
 						byte[] bytes = getByteArrayFromFile(file);
@@ -83,18 +83,28 @@ public class LogAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward log(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String success = "logSuccess";
-		String fileName = "/usr/local/tomcat-7.0.6/logs/";
+		String path = MyLogger.getResourceBundle().getString("logger.path");
+		int lastIndex = path.lastIndexOf(File.separator);
+		String fileName = path.substring(0, lastIndex + 1);//"/usr/local/tomcat-7.0.6/logs/";
+
 		File file = new File(fileName);
 		if (file.exists() && file.isDirectory()) {
-			File[] listFiles = file.listFiles();
+			List<File> listFiles = new ArrayList<File>();
+			for (File file2 : file.listFiles()) {
+				if ("catalina.out".equalsIgnoreCase(file2.getName())
+						|| "siif.log".equalsIgnoreCase(file2.getName())) {
+					listFiles.add(0, file2);
+				} else {
+					listFiles.add(file2);
+				}
+			}
+
 			request.setAttribute("files", listFiles);
-			MyLogger.log("se encontraron " + file.listFiles().length
-					+ " archivos.");
+			MyLogger.log("Se encontraron " + file.listFiles().length + " archivos.");
 		} else {
 			request.setAttribute("error", "El directorio '" + fileName
 					+ "' no existe o no es un directorio.");

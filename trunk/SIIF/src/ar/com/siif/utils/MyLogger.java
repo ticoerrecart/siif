@@ -12,9 +12,10 @@ import java.util.logging.SimpleFormatter;
 public abstract class MyLogger {
 
 	private static Logger logger = Logger.getLogger("MyLog");
+
 	private static Boolean LOGGEAR = true;
 
-	protected static ResourceBundle resourceBundle;
+	private static ResourceBundle resourceBundle;
 
 	static {
 		resourceBundle = ResourceBundle.getBundle("config");
@@ -24,14 +25,14 @@ public abstract class MyLogger {
 		}
 		String path = resourceBundle.getString("logger.path");
 		try {
-		// This block configure the logger with handler and formatter
-		FileHandler fh = new FileHandler(path, true);
-		logger.addHandler(fh);
-		logger.setUseParentHandlers(false);
-		logger.setLevel(Level.ALL);
-		SimpleFormatter formatter = new SimpleFormatter();
-		fh.setFormatter(formatter);
-	
+			// This block configure the logger with handler and formatter
+			FileHandler fh = new FileHandler(path, true);
+			logger.addHandler(fh);
+			logger.setUseParentHandlers(false);
+			logger.setLevel(Level.ALL);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fh.setFormatter(formatter);
+
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -52,7 +53,7 @@ public abstract class MyLogger {
 			logger.log(Level.SEVERE, stackToString(t));
 		}
 	}
-	
+
 	public static String stackToString(Throwable t) {
 		// recibe una excepción y devuelve un string con el stackTrace
 		try {
@@ -63,5 +64,10 @@ public abstract class MyLogger {
 		} catch (Exception exc) {
 			return "No se pudo recuperar el StackTrace debido a: " + exc.getMessage();
 		}
-	}	
+	}
+
+	public static ResourceBundle getResourceBundle() {
+		return resourceBundle;
+	}
+
 }
