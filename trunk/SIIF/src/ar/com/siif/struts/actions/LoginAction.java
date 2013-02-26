@@ -39,6 +39,8 @@ public class LoginAction extends DispatchActionSupport {
 
 			request.getSession().setAttribute(Constantes.USER_LABEL_SESSION, usrDTO);
 
+			MyLogger.log("Se logueo el usuario: " + usrDTO.getNombreUsuario());
+			
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());	
 			strForward = "errorLogin";
@@ -60,9 +62,12 @@ public class LoginAction extends DispatchActionSupport {
 		try {
 
 			HttpSession session = request.getSession();
+			UsuarioDTO usrDTO = (UsuarioDTO)session.getAttribute(Constantes.USER_LABEL_SESSION); 
 			session.setAttribute(Constantes.USER_LABEL_SESSION, null);
 			session.invalidate();
 
+			MyLogger.log("Se deslogueo el usuario: " + usrDTO.getNombreUsuario());
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
