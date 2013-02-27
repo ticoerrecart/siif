@@ -369,4 +369,21 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
+	public String confirmarGuias(Long[] idsGuias)throws NegocioException{			
+		
+		if (idsGuias == null || idsGuias.length == 0) {
+			throw new NegocioException("Seleccione alguna Guía Forestal");
+		}	
+		
+		String mensaje = (idsGuias.length > 1)?"Las Guías Forestales fueron confirmadas con exito":
+											   "La Guía Forestal fue confirmada con exito";
+		
+		for (Long idGuia : idsGuias) {
+			
+			guiaForestalDAO.confirmarGuia(idGuia);			
+		}
+		
+		return mensaje;
+	}
+	
 }

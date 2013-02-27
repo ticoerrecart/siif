@@ -302,6 +302,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 
 			request.setAttribute("paramForward", paramForward);
 			request.setAttribute("guiaForestal", guiaForestalVigente);
+			
+			//Uso esta marca para reutilizar la pagina cargarGuiaForestalConsultaPorProductor.jsp
+			//Indico a donde tiene que llamar el boton 'Volver'
+			request.setAttribute("botonVolver", "javascript:volverConsultaGuia();");			
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

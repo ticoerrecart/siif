@@ -234,4 +234,19 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 		return lista.size() > 0;
 	}
+	
+	public void confirmarGuia(Long idGuia){
+		
+		GuiaForestal guia = this.recuperarGuiaForestal(idGuia);
+		guia.setAnulado(false);
+		
+		for (BoletaDeposito boleta : guia.getBoletasDeposito()) {			
+			boleta.setAnulado(false);
+		}
+		for(ValeTransporte vale : guia.getValesTransporte()){
+			vale.setAnulado(false);
+		}
+		
+		this.getHibernateTemplate().saveOrUpdate(guia);
+	}
 }
