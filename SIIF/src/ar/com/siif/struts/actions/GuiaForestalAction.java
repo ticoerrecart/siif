@@ -1064,7 +1064,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("urlDetalle",
 					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaAnulacionDeGuia");
 			request.setAttribute("paramForward", paramForward);
-
+			request.setAttribute("mostrarBusquedaNroGuia", true);
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -1083,13 +1084,12 @@ public class GuiaForestalAction extends ValidadorAction {
 		try {
 			String paramForward = request.getParameter("forward");
 			WebApplicationContext ctx = getWebApplicationContext();
-			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
-					.getBean("consultasPorProductorFachada");
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx.getBean("guiaForestalFachada");
 
 			String idProductor = request.getParameter("idProductor");
 
-			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
+			List<GuiaForestalDTO> guiasForestales = guiaForestalFachada
+												.recuperarGuiasForestalesPorProductor(Long.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -1136,6 +1136,102 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	public ActionForward recuperarProductoresParaConfirmacionDeGuia(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String strForward = "exitoRecuperarProductoresParaConfirmacionDeGuia";
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();		
+			
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+
+			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
+
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+
+			request.setAttribute("productores", productores);
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
+			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("urlDetalle",
+					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaConfirmacionDeGuia");
+			request.setAttribute("mostrarBusquedaNroGuia", false);
+			request.setAttribute("titulo", "Confirmación de Guia Forestal Básica");
+			
+			//Para cuando se confirma una o unas guias se muestra el mensaje de exito
+			String mensaje = request.getParameter("mensaje");
+			request.setAttribute("exito", mensaje);
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarGuiasForestalesParaConfirmacionDeGuia(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String strForward = "exitoRecuperarGuiasForestalesParaConfirmacionDeGuia";
+
+		try {
+			String paramForward = request.getParameter("forward");
+			WebApplicationContext ctx = getWebApplicationContext();
+			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
+					.getBean("consultasPorProductorFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
+					.recuperarGuiasForestalesAnuladas(Long.parseLong(idProductor));
+
+			request.setAttribute("guiasForestales", guiasForestales);
+			request.setAttribute("paramForward", paramForward);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}	
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward cargarGuiaForestalParaConfirmacion(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String strForward = "exitoCargarGuiaForestalBasicaParaConfirmacion";
+
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+					.getBean("guiaForestalFachada");
+
+			String idGuia = request.getParameter("idGuia");
+
+			GuiaForestalDTO guiaForestal = null;
+			guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+
+			//Uso esta marca para reutilizar la pagina cargarGuiaForestalConsultaPorProductor.jsp
+			//Indico a donde tiene que llamar el boton 'Volver'
+			request.setAttribute("botonVolver", "javascript:volverConfirmacionGuia();");
+			
+			request.setAttribute("guiaForestal", guiaForestal);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}		
+	
 	public boolean validarAltaGuiaForestalBasicaForm(StringBuffer error, ActionForm form) {
 
 		try{
