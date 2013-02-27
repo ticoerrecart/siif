@@ -124,7 +124,9 @@ function volverAltaGFB(){
 
 
 function submitir(){
-	validarForm("guiaForestalForm","../guiaForestal","validarAnulacionGuiaForestalForm","GuiaForestalForm");
+	if(confirm("Esta seguro que desea anular la Guía Forestal?")){
+		validarForm("guiaForestalForm","../guiaForestal","validarAnulacionGuiaForestalForm","GuiaForestalForm");
+	}	
 }
 
 function volverAnulacionGuia(){	

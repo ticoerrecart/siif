@@ -176,8 +176,14 @@
 							path="/jsp/bloqueMostrarGuiasForestalesParaAnulacion.jsp" />	
 			<forward name="exitoCargarGuiaForestalBasicaParaAnulacion" path=".cargarGuiaForestalParaAnulacioDeGuia" />
 			<forward name="exitoAnularGuiaForestal" path="/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&amp;forward=cargarGuiaForestalParaAnulacionDeGuia&amp;forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia" />
-
-							
+			
+			<!-- Confirmacion de Guia -->
+			<forward name="exitoRecuperarProductoresParaConfirmacionDeGuia" path=".cargarProductoresParaConfirmacionDeGuia" />
+			<forward name="exitoRecuperarGuiasForestalesParaConfirmacionDeGuia" 
+							path="/jsp/bloqueMostrarGuiasForestalesParaConfirmacion.jsp" />		
+			<forward name="exitoCargarGuiaForestalBasicaParaConfirmacion" path=".cargarGuiaForestalConsultaPorProductor" />				
+			
+												
 		</action>
 		<!-- FIN GUIA FORESTAL -->
 

@@ -30,6 +30,13 @@ function volverConsultaGuia(){
 	window.open("../../mostrarReporte.do?metodo=pruebaJasper",especificaciones);*/		
 }
 
+function volverConfirmacionGuia(){
+
+	var productor = $('#idParamProductor').val();
+	var entidad = $('#idParamIdTipoDeEntidad').val();
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaConfirmacionDeGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
+}
+
 function imprimirGuia(){	
 	
 	var idGuia = $('#idGuia').val();	
@@ -803,7 +810,7 @@ function volverAltaGFB(){
 	</tr>
 	<tr>
 		<td height="20" width="49%" align="right">
-			<input type="button" class="botonerab" value="Volver" onclick="javascript:volverConsultaGuia();">
+			<input type="button" class="botonerab" value="Volver" onclick="<c:out value='${botonVolver}'/>">
 		</td>
 		<td height="20" colspan="2">
 		</td>
