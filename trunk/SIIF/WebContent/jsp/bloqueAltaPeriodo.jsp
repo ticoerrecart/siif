@@ -44,7 +44,8 @@
 		<tr>
 			<td width="40%" class="botoneralNegritaRight">Periodo</td>
 			<td align="left">
-				<html:text styleClass="botonerab" property="periodoDTO.periodo" value="${periodo.periodo}" />
+				<html:text styleClass="botonerab" property="periodoDTO.periodo" value="${periodo.periodo}" 
+							onkeypress="return evitarAutoSubmit(event)"/>
 			</td>
 		</tr>
 		<tr>

@@ -164,7 +164,7 @@ function volverAnulacionGuia(){
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
-			<bean:message key='SIIF.titulo.GuiaForestal'/>
+			Anular Guía Forestal Básica
 		</td>
 	</tr>
 	<tr>

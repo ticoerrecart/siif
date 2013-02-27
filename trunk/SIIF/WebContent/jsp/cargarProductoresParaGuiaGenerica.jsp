@@ -56,7 +56,8 @@
 								
 							</td>						
 							<td align="left">
-								<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
+								<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" 
+										onkeypress="return evitarAutoSubmit(event)">
 								<input class="botonerab" type="button" value="Buscar" onclick="javascript:submitir();">
 							</td>	
 						</tr>				

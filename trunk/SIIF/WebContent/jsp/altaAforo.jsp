@@ -38,7 +38,8 @@ function submitir(){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo$'/></td>
 			<td align="left">
-				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30">
+				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30" 
+						onkeypress="return evitarAutoSubmit(event)">
 			</td>
 		</tr>
 		<tr>

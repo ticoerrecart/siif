@@ -21,9 +21,11 @@
 			<td width="35%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TipoDeProducto'/>
 			</td>
-			<td><input name="productoForestalDTO.nombre" class="botonerab"
-				type="text" size="30"
-				value="<c:out value='${tipoProducto.nombre}'></c:out>"></td>
+			<td>
+				<input name="productoForestalDTO.nombre" class="botonerab" type="text" size="30"
+						value="<c:out value='${tipoProducto.nombre}'></c:out>" 
+						onkeypress="return evitarAutoSubmit(event)">
+			</td>
 			<td width="10%"></td>
 		</tr>
 		<tr>

@@ -22,7 +22,8 @@
 			</td>
 			<td>
 				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30" 
-						value="<c:out value='${aforoParam.valorAforo}'></c:out>">
+						value="<c:out value='${aforoParam.valorAforo}'></c:out>" 
+						onkeypress="return evitarAutoSubmit(event)">
 			</td>
 		</tr>
 		<tr>
