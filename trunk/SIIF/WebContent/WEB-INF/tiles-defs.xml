@@ -190,10 +190,16 @@
 				extends=".base">
 				<put name="title" value="SIIFs" />
 				<put name="body" value="/jsp/anularGuiaForestal.jsp" />
-			</definition>
-
-						
+			</definition>		
 		<!--  -->	
+
+		<!-- Confirmacion -->
+			<definition name=".cargarProductoresParaConfirmacionDeGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />
+			</definition>		
+		<!--  -->				
 
 	<!-- FIN GUIA FORESTAL -->
 
