@@ -140,23 +140,35 @@ function removerCuota(){
 	}																			
 }
 
-
+var fila0Vales ='<tr id="filaVales0">'+
+				'<td width="2%" class="botoneralNegrita grisSubtitulo ind"> 1 </td>'+
+				'<td width="10%" class="botoneralNegritaRight"> Desde </td>'+
+				'<td width="40%" align="left"> <input name="rangos[0].desde" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>'+
+				'<td width="10%" class="botoneralNegritaRight"> Hasta</td>'+
+				'<td width="40%" align="left"> <input name="rangos[0].hasta" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>'+
+				'</tr>';
 								 
 function agregarVale(){
-	var j = $('#tablaVales tr:last .ind').text().trim();
-	$("#tablaVales tr:last").clone().find("input").each(function() {
-		$(this).attr({
-			'name' : function(_, name) {
-				return name.replace([j-1], [j]);
-			},
-			'value' : ''
-		});
-	}).end().appendTo("#tablaVales");
-	$('#tablaVales tr:last .ind').text(1 + parseInt(j));
-	var newId = $("#tablaVales tr:last").attr('id')
-			.replace(j - 1, j);
-	$("#tablaVales tr:last").attr('id', newId);
-	$("#idBotonRemoverVale").attr("disabled",false);
+	if($('#filaVales0').length==0){
+		$("#tablaVales").append(fila0Vales);
+		$("#fechaVencimientoVales").show();
+		$("#idBotonRemoverVale").attr("disabled",false);
+	}else{
+		var j = $('#tablaVales tr:last .ind').text().trim();
+		$("#tablaVales tr:last").clone().find("input").each(function() {
+			$(this).attr({
+				'name' : function(_, name) {
+					return name.replace([j-1], [j]);
+				},
+				'value' : ''
+			});
+		}).end().appendTo("#tablaVales");
+		$('#tablaVales tr:last .ind').text(1 + parseInt(j));
+		var newId = $("#tablaVales tr:last").attr('id')
+				.replace(j - 1, j);
+		$("#tablaVales tr:last").attr('id', newId);
+		$("#idBotonRemoverVale").attr("disabled",false);
+	}
 }
 
 function removerVale(){
@@ -164,9 +176,10 @@ function removerVale(){
 	
 	$('#tablaVales tr:last').remove();
 
-	if(j <= 2){
+	if(j <= 1){
 		$("#idBotonRemoverVale").attr("disabled",true);
-	}																			
+		$("#fechaVencimientoVales").hide();
+	}
 }
 
 var idRenglon;
@@ -1048,13 +1061,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 						<td colspan="4">
 						<table border="0" class="cuadrado" align="center"  width="80%" cellpadding="2" id="tablaVales">
 							
-							<tr id="filaVales0">
-								<td width="2%" class="botoneralNegrita grisSubtitulo ind"> 1 </td>
-								<td width="10%" class="botoneralNegritaRight"> Desde </td>
-								<td width="40%" align="left"> <input name="rangos[0].desde" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>
-								<td width="10%" class="botoneralNegritaRight"> Hasta</td>
-								<td width="40%" align="left"> <input name="rangos[0].hasta" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>
-							</tr>
+
 						</table>
 
 
@@ -1064,7 +1071,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								<td height="10" colspan="4"></td>
 							</tr>
 							
-							<tr>
+							<tr id="fechaVencimientoVales" style="display: none;">
 								<td width="25%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.Fecha_Venc'/>
 								</td>
