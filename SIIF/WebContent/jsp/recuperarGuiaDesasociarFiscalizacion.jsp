@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
+	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+<script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validarLetras.js'/>"></script>
@@ -52,7 +54,8 @@
 							
 						</td>						
 						<td align="left">
-							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
+							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" 
+									onkeypress="return evitarAutoSubmit(event)">
 							<input class="botonerab" type="button" value="Buscar" onclick="javascript:submitir();">
 						</td>	
 									

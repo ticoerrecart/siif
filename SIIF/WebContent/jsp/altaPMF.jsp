@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+<script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarLetras.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/validarNum.js'/>"></script>
@@ -89,7 +90,9 @@
 		<tr>
 			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Nombre'/></td>
 			<td width="2%"></td>
-			<td align="left"><input id="nombreRodal" type="text" class="botonerab" ></td>
+			<td align="left">
+				<input id="nombreRodal" type="text" class="botonerab" onkeypress="return evitarAutoSubmit(event)">
+			</td>
 		</tr>
 		<tr>
 			<td height="5" colspan="3"></td>
@@ -114,7 +117,10 @@
 		<tr>
 			<td width="47%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Disposicion'/></td>
 			<td width="2%"></td>
-			<td align="left"> <input id="disposicionMarcacion" type="text" class="botonerab" ></td>
+			<td align="left"> 
+				<input id="disposicionMarcacion" type="text" class="botonerab" 
+						onkeypress="return evitarAutoSubmit(event)">
+			</td>
 		</tr>
 		<tr>
 			<td height="5" colspan="3"></td>

@@ -12,6 +12,8 @@
 	src="<html:rewrite page='/js/JQuery/jquery-1.3.2.min.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 
 <script type="text/javascript">
 

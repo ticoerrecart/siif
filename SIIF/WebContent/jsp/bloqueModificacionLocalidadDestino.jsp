@@ -34,7 +34,7 @@
 			<td align="left">
 				<html:hidden property="localidadDestinoDTO.id" value="${localidadDTO.id}" />			
 				<html:text styleClass="botonerab" property="localidadDestinoDTO.nombre" 
-							value="${localidadDTO.nombre}"/>
+							value="${localidadDTO.nombre}" onkeypress="return evitarAutoSubmit(event)" />
 			</td>
 		</tr>
 		<tr>

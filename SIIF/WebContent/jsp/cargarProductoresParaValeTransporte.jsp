@@ -13,6 +13,8 @@
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
@@ -49,7 +51,8 @@
 							
 						</td>						
 						<td align="left">
-							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" >
+							<input id="idNroGuia" class="botonerab" type="text" size="20" name="guiaForestal.nroGuia" 
+									onkeypress="return evitarAutoSubmit(event)">
 							<input class="botonerab" type="button" value="Buscar" onclick="javascript:submitir();">
 						</td>	
 					</tr>				

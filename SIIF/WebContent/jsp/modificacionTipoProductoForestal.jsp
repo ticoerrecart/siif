@@ -7,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript"
+	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+<script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/jquery-1.3.2.min.js'/>"></script>

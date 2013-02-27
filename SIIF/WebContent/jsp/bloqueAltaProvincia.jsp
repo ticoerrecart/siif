@@ -44,7 +44,8 @@
 		<tr>
 			<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Nombre'/></td>
 			<td align="left">
-				<html:text styleClass="botonerab" property="provinciaDTO.nombre" value="${provincia.nombre}" />
+				<html:text styleClass="botonerab" property="provinciaDTO.nombre" value="${provincia.nombre}" 
+							onkeypress="return evitarAutoSubmit(event)"/>
 			</td>
 		</tr>
 		<tr>

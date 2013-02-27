@@ -59,8 +59,10 @@ function submitir(metodoValidacion){
 					</c:otherwise>
 				</c:choose>										
 			</td>
-			<td align="left"><input name="productoForestalDTO.nombre"
-				class="botonerab" type="text" size="30"></td>
+			<td align="left">
+				<input name="productoForestalDTO.nombre" class="botonerab" type="text" size="30" 
+						onkeypress="return evitarAutoSubmit(event)">
+			</td>
 		</tr>
 		<tr>
 			<td height="20" colspan="2"></td>
