@@ -637,10 +637,10 @@ public abstract class Validator {
 
 	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError) {
 		String titulo = "en los Vales de Transporte";
-		if (rangos.size() == 0) {
+		/*if (rangos.size() == 0) {
 			addErrorXML(pError, "La Cantidad de Rangos " + titulo + " debe ser un numero mayor a 0");
 			return false;
-		}
+		}*/
 		for (RangoDTO rango : rangos) {
 			if (rango.getDesde() <= 0 || rango.getHasta() <= 0) {
 				addErrorXML(pError, "Los valores Desde y Hasta " + titulo
