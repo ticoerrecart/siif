@@ -17,6 +17,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.Fecha;
+import ar.com.siif.utils.MyLogger;
 
 public class FiscalizacionFachada implements IFiscalizacionFachada {
 
@@ -222,12 +223,19 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws NegocioException
 	{
-		if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
-			throw new NegocioException("Seleccione alguna Fiscalización");
-		}
-		for (Long idFiscalizacion : idsFiscalizaciones) {
-			fiscalizacionDAO.anularFiscalizacion(idFiscalizacion);
-		}
+		try{		
+			if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
+				throw new NegocioException("Seleccione alguna Fiscalización");
+			}
+			for (Long idFiscalizacion : idsFiscalizaciones) {
+				fiscalizacionDAO.anularFiscalizacion(idFiscalizacion);
+			}
+		} catch (NegocioException ne) {
+			throw ne;
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}			
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,

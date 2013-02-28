@@ -48,9 +48,14 @@ public class EntidadFachada implements IEntidadFachada {
 		return entidadDAO.existeEntidad(nombre, id);
 	}
 
-	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad){
-
-		return entidadDAO.getEntidades(idLocalidad);
+	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad) throws NegocioException{
+		try{
+			return entidadDAO.getEntidades(idLocalidad);
+		
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}			
 	}
 
 	public List<TipoDeEntidad> getTiposDeEntidad() {
@@ -124,10 +129,14 @@ public class EntidadFachada implements IEntidadFachada {
 		return listaEntidadesDTO;		
 	}	
 	
-	public EntidadDTO getEntidadDTO(Long id){
-
-		return ProviderDTO.getEntidadDTO(entidadDAO.getEntidad(id));
-			
+	public EntidadDTO getEntidadDTO(Long id) throws NegocioException{
+		try{
+			return ProviderDTO.getEntidadDTO(entidadDAO.getEntidad(id));
+	
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}			
 	}	
 	
 	public void modificacionEntidad(EntidadDTO entidadDTO){

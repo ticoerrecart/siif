@@ -39,7 +39,7 @@ public interface ILocalidadFachada {
 	
 	public void altaLocalidadDestino(LocalidadDestinoDTO localidadDTO)throws NegocioException;
 	
-	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia);
+	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia)throws NegocioException;
 	
 	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id);
 	

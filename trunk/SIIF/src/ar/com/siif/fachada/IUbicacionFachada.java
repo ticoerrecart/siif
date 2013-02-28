@@ -16,15 +16,15 @@ public interface IUbicacionFachada {
 
 	public List<PMF> recuperarPMFs();
 
-	public List<PMF> getPMFs(Long idPF);
+	public List<PMF> getPMFs(Long idPF)throws NegocioException;
 
-	public List<Tranzon> getTranzonesById(Long idPMF);
+	public List<Tranzon> getTranzonesById(Long idPMF) throws NegocioException;
 
 	public List<Rodal> getRodales();
 	
-	public List<Rodal> getRodalesById(Long idMarcacion);	
+	public List<Rodal> getRodalesById(Long idMarcacion) throws NegocioException;	
 
-	public List<Marcacion> getMarcacionesById(Long idTranzon);
+	public List<Marcacion> getMarcacionesById(Long idTranzon) throws NegocioException;
 	
 	public List<Marcacion> getMarcaciones();
 
@@ -40,33 +40,33 @@ public interface IUbicacionFachada {
 
 	public void altaPMF(String expediente, String nombre, String tipoTerreno, Long idEntidad) throws NegocioException;
 
-	public void deleteRodal(Long idRodal);
+	public void deleteRodal(Long idRodal) throws NegocioException;
 
-	public void modificarRodal(Long idRodal, String nombre);
+	public void modificarRodal(Long idRodal, String nombre)throws NegocioException;
 
-	public void deleteMarcacion(Long idMarcacion);
+	public void deleteMarcacion(Long idMarcacion) throws NegocioException;
 
-	public void modificarMarcacion(Long idMarcacion, String disposicion);
+	public void modificarMarcacion(Long idMarcacion, String disposicion) throws NegocioException;
 
-	public void deleteTranzon(Long idTranzon);
+	public void deleteTranzon(Long idTranzon) throws NegocioException;
 
-	public void modificarTranzon(Long idTranzon, String numero, String disposicion);
+	public void modificarTranzon(Long idTranzon, String numero, String disposicion) throws NegocioException;
 
 	public void deletePMF(Long idPMF);
 
-	public void modificarPMF(Long idPMF, String nombre, String expediente);
+	public void modificarPMF(Long idPMF, String nombre, String expediente) throws NegocioException;
 	
 	public Rodal getRodal(Long idRodal);
 	
 	public RodalDTO getRodalDTO(Long idRodal);
 	
-	public List<PMFDTO> getPMFsDTO(Long idPF);
+	public List<PMFDTO> getPMFsDTO(Long idPF) throws NegocioException;
 	
-	public List<TranzonDTO> getTranzonesDTOById(Long idPMF);
+	public List<TranzonDTO> getTranzonesDTOById(Long idPMF) throws NegocioException;
 	
-	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon);
+	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon) throws NegocioException;
 
-	public List<RodalDTO> getRodalesDTOById(Long idMarcacion);
+	public List<RodalDTO> getRodalesDTOById(Long idMarcacion) throws NegocioException;
 	
 	public List<PMFDTO> recuperarPMFsDTO();
 	
@@ -78,7 +78,7 @@ public interface IUbicacionFachada {
 	
 	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor);	
 	
-	public String getTipoTerrenoPMF(Long idPMF);
+	public String getTipoTerrenoPMF(Long idPMF)throws NegocioException;
 	
 	public PMF getPMF(Long idPF);
 }

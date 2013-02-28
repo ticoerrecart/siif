@@ -17,7 +17,7 @@ public interface IEntidadFachada {
 
 	public boolean existeEntidad(String nombre, Long id);
 
-	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad);
+	public List<Entidad> getEntidadesPorLocalidad(Long idLocalidad) throws NegocioException;
 
 	public List<TipoDeEntidad> getTiposDeEntidad();
 
@@ -33,7 +33,7 @@ public interface IEntidadFachada {
 
 	public List<EntidadDTO> getEntidadesDTO();
 
-	public EntidadDTO getEntidadDTO(Long id);
+	public EntidadDTO getEntidadDTO(Long id) throws NegocioException;
 
 	public void modificacionEntidad(EntidadDTO entidad);
 
