@@ -235,7 +235,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return lista.size() > 0;
 	}
 	
-	public void confirmarGuia(Long idGuia){
+	public void restablecerGuias(Long idGuia){
 		
 		GuiaForestal guia = this.recuperarGuiaForestal(idGuia);
 		guia.setAnulado(false);

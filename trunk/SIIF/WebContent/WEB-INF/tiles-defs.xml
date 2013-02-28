@@ -194,7 +194,7 @@
 		<!--  -->	
 
 		<!-- Confirmacion -->
-			<definition name=".cargarProductoresParaConfirmacionDeGuia"
+			<definition name=".cargarProductoresParaRestablecerGuia"
 				extends=".base">
 				<put name="title" value="SIIFs" />
 				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />

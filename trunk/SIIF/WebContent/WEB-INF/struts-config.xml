@@ -177,11 +177,11 @@
 			<forward name="exitoCargarGuiaForestalBasicaParaAnulacion" path=".cargarGuiaForestalParaAnulacioDeGuia" />
 			<forward name="exitoAnularGuiaForestal" path="/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&amp;forward=cargarGuiaForestalParaAnulacionDeGuia&amp;forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia" />
 			
-			<!-- Confirmacion de Guia -->
-			<forward name="exitoRecuperarProductoresParaConfirmacionDeGuia" path=".cargarProductoresParaConfirmacionDeGuia" />
-			<forward name="exitoRecuperarGuiasForestalesParaConfirmacionDeGuia" 
-							path="/jsp/bloqueMostrarGuiasForestalesParaConfirmacion.jsp" />		
-			<forward name="exitoCargarGuiaForestalBasicaParaConfirmacion" path=".cargarGuiaForestalConsultaPorProductor" />				
+			<!-- Restablecer Guia -->
+			<forward name="exitoRecuperarProductoresParaRestablecerGuia" path=".cargarProductoresParaRestablecerGuia" />
+			<forward name="exitoRecuperarGuiasForestalesParaRestablecerGuia" 
+							path="/jsp/bloqueMostrarGuiasForestalesParaRestablecer.jsp" />		
+			<forward name="exitoCargarGuiaForestalBasicaParaRestablecer" path=".cargarGuiaForestalConsultaPorProductor" />				
 			
 												
 		</action>
