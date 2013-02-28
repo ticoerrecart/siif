@@ -9,7 +9,8 @@
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 <script type="text/javascript"
 		src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
-
+<script type="text/javascript"
+	src="<html:rewrite page='/js/validarNum.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/dwr/interface/GuiaForestalFachada.js'/>"></script>	
 
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
@@ -195,7 +196,7 @@ function cancelarReemplazoVale(idVale){
 function cambiarAtributos(idVale,readonly){
 
 	$("#idNroVale"+idVale).attr('readonly', readonly);
-	$("#idOrigen"+idVale).attr('readonly', readonly);
+	//$("#idOrigen"+idVale).attr('readonly', readonly);
 	
 	//$("#idDestino"+idVale).attr('readonly', readonly);
 	//$("#idVehiculo"+idVale).attr('readonly', readonly);
@@ -356,7 +357,7 @@ function expValesNoDevueltos(){
 												<td width="40%" align="left">
 													<input id="idNroVale<c:out value='${valeTransporte.id}'></c:out>"
 														   value="${valeTransporte.numero}" class="botonerab" type="text"
-														   size="25" readonly="readonly">
+														   size="25" readonly="readonly" onkeypress="javascript:esNumerico(event);">
 												</td>
 												<td width="10%" class="botoneralNegritaRight">
 													<bean:message key='SIIF.label.TransportadosPor'/>
