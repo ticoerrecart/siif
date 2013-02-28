@@ -30,11 +30,11 @@ function volverConsultaGuia(){
 	window.open("../../mostrarReporte.do?metodo=pruebaJasper",especificaciones);*/		
 }
 
-function volverConfirmacionGuia(){
+function volverRestablecerGuia(){
 
 	var productor = $('#idParamProductor').val();
 	var entidad = $('#idParamIdTipoDeEntidad').val();
-	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaConfirmacionDeGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaRestablecerGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
 }
 
 function imprimirGuia(){	

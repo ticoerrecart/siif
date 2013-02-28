@@ -16,8 +16,8 @@
 %>
 
 <script>
-	function confirmarGuias(){
-		if(confirm("Esta seguro que desea confirmar las Guías Forestales seleccionadas?")){
+	function restablecerGuias(){
+		if(confirm("Esta seguro que desea restablecer las Guías Forestales seleccionadas?")){
 			var guias = new Array();
 			$("input:checked").each(function(){
 		    	 var input = $(this); // This is the jquery object of the input, do what you will
@@ -26,14 +26,14 @@
 			    
 		    });
 	
-			GuiaForestalFachada.confirmarGuias(guias, confirmarGuiasCbk);
+			GuiaForestalFachada.restablecerGuias(guias, restablecerGuiasCbk);
 			//confirmarGuiasCbk();
 		}	
 	}
 	
-	function confirmarGuiasCbk(mensaje){
+	function restablecerGuiasCbk(mensaje){
 
-		parent.location = contextRoot() + '/guiaForestal.do?metodo=recuperarProductoresParaConfirmacionDeGuia&mensaje='+mensaje;		    		
+		parent.location = contextRoot() + '/guiaForestal.do?metodo=recuperarProductoresParaRestablecerGuia&mensaje='+mensaje;		    		
 	}
 	
 </script>
@@ -65,7 +65,7 @@
 						<c:out value="${guia.fechaVencimiento}"></c:out>					
 					</td>										
 					<td>			
-						<a href="../../guiaForestal.do?metodo=cargarGuiaForestalParaConfirmacion&idGuia=<c:out value='${guia.id}'></c:out>">
+						<a href="../../guiaForestal.do?metodo=cargarGuiaForestalParaRestablecer&idGuia=<c:out value='${guia.id}'></c:out>">
 							<bean:message key='SIIF.label.Ver'/>
 						</a>
 					</td>
@@ -78,7 +78,7 @@
 			</tr>				
 			<tr>
 				<td class="botonerab" colspan="6">
-					<input type="button" class="botonerab" value="Confirmar Guias" onclick="javascript:confirmarGuias();">
+					<input type="button" class="botonerab" value="Confirmar Guias" onclick="javascript:restablecerGuias();">
 				</td>
 			</tr>
 			<tr>

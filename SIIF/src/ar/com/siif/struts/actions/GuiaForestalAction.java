@@ -1141,10 +1141,10 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarProductoresParaConfirmacionDeGuia(ActionMapping mapping,
+	public ActionForward recuperarProductoresParaRestablecerGuia(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String strForward = "exitoRecuperarProductoresParaConfirmacionDeGuia";
+		String strForward = "exitoRecuperarProductoresParaRestablecerGuia";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 
@@ -1160,11 +1160,11 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
-					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaConfirmacionDeGuia");
+					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaRestablecerGuia");
 			request.setAttribute("mostrarBusquedaNroGuia", false);
-			request.setAttribute("titulo", "Confirmación de Guia Forestal Básica");
+			request.setAttribute("titulo", "Restablecer Guia Forestal Básica");
 
-			//Para cuando se confirma una o unas guias se muestra el mensaje de exito
+			//Para cuando se restablece una o unas guias se muestra el mensaje de exito
 			String mensaje = request.getParameter("mensaje");
 			request.setAttribute("exito", mensaje);
 
@@ -1178,10 +1178,10 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaConfirmacionDeGuia(ActionMapping mapping,
+	public ActionForward recuperarGuiasForestalesParaRestablecerGuia(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String strForward = "exitoRecuperarGuiasForestalesParaConfirmacionDeGuia";
+		String strForward = "exitoRecuperarGuiasForestalesParaRestablecerGuia";
 
 		try {
 			String paramForward = request.getParameter("forward");
@@ -1207,9 +1207,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalParaConfirmacion(ActionMapping mapping, ActionForm form,
+	public ActionForward cargarGuiaForestalParaRestablecer(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String strForward = "exitoCargarGuiaForestalBasicaParaConfirmacion";
+		String strForward = "exitoCargarGuiaForestalBasicaParaRestablecer";
 
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -1223,7 +1223,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			//Uso esta marca para reutilizar la pagina cargarGuiaForestalConsultaPorProductor.jsp
 			//Indico a donde tiene que llamar el boton 'Volver'
-			request.setAttribute("botonVolver", "javascript:volverConfirmacionGuia();");
+			request.setAttribute("botonVolver", "javascript:volverRestablecerGuia();");
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
