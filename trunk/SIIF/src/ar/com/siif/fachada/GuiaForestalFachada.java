@@ -356,7 +356,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	}
 
-	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia) {
+	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<RangoDTO> listaRangosDTO,
+			Date fechaVencimiento) {
 
 		if (!guiaForestalDAO.existeGuiaForestal(guia.getId(), guia.getNroGuia())) {
 			GuiaForestal guiaForestal = this.guiaForestalDAO.recuperarGuiaForestal(guia.getId());
@@ -365,6 +366,11 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					.getFechaVencimiento()));
 			guiaForestal.setDistanciaAforoMovil(guia.getDistanciaAforoMovil());
 			guiaForestal.setPeriodoForestal(guia.getPeriodoForestal());
+			for (RangoDTO rangoDTO : listaRangosDTO) {
+				guiaForestal.getValesTransporte().addAll(
+						ProviderDominio.getValesTransportes(guiaForestal, rangoDTO,
+								fechaVencimiento));
+			}
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 		}
 	}

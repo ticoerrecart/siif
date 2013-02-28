@@ -635,6 +635,37 @@ public abstract class Validator {
 		return true;
 	}
 
+	public static boolean validarRangos(List<RangoDTO> rangos,
+			List<ValeTransporteDTO> valesDeTransporte, StringBuffer pError) {
+		boolean ok = validarRangos(rangos, pError);
+		boolean okExisteVale = true;
+		if (ok) {
+			for (RangoDTO rango : rangos) {
+				for (ValeTransporteDTO valeTransporteDTO : valesDeTransporte) {
+					okExisteVale = valeTransporteDTO.getNumero() < rango.getDesde()
+							|| valeTransporteDTO.getNumero() > rango.getHasta();
+					if (!okExisteVale) {
+						Validator
+								.addErrorXML(
+										pError,
+										"El rango ["
+												+ rango.getDesde()
+												+ ","
+												+ rango.getHasta()
+												+ "] que está intentando ingresar se superpone con el Vale de Transporte nro. "
+												+ valeTransporteDTO.getNumero());
+						break;
+					}
+				}
+				if (!okExisteVale) {
+					break;
+				}
+			}
+		}
+
+		return ok && okExisteVale;
+	}
+
 	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError) {
 		String titulo = "en los Vales de Transporte";
 		/*if (rangos.size() == 0) {

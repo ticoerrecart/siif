@@ -142,31 +142,50 @@ function removerCuota(){
 
 
 								 
+var fila0Vales ='<tr id="filaVales0">'+
+	'<td width="2%" class="botoneralNegrita grisSubtitulo ind"> 1 </td>'+
+	'<td width="10%" class="botoneralNegritaRight"> Desde </td>'+
+	'<td width="40%" align="left"> <input name="rangos[0].desde" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>'+
+	'<td width="10%" class="botoneralNegritaRight"> Hasta</td>'+
+	'<td width="40%" align="left"> <input name="rangos[0].hasta" class="botonerab" type="text" size="25" onkeypress="javascript:esNumerico(event);"> </td>'+
+	'</tr>';
+				 
 function agregarVale(){
-	var j = $('#tablaVales tr:last .ind').text().trim();
-	$("#tablaVales tr:last").clone().find("input").each(function() {
+	if($('#filaVales0').length==0){
+		$("#tablaVales").append(fila0Vales);
+		$("#fechaVencimientoVales").show();
+		$("#idBotonRemoverVale").attr("disabled",false);
+		
+		if($('#fechaVencimientoPrimerVale').length>0){
+			$("#datepickerVale0").val($("#fechaVencimientoPrimerVale").val());
+		}
+	}else{
+		var j = $('#tablaVales tr:last .ind').text().trim();
+		$("#tablaVales tr:last").clone().find("input").each(function() {
 		$(this).attr({
 			'name' : function(_, name) {
 				return name.replace([j-1], [j]);
 			},
 			'value' : ''
-		});
-	}).end().appendTo("#tablaVales");
-	$('#tablaVales tr:last .ind').text(1 + parseInt(j));
-	var newId = $("#tablaVales tr:last").attr('id')
-			.replace(j - 1, j);
-	$("#tablaVales tr:last").attr('id', newId);
-	$("#idBotonRemoverVale").attr("disabled",false);
+			});
+			}).end().appendTo("#tablaVales");
+		
+		$('#tablaVales tr:last .ind').text(1 + parseInt(j));
+		var newId = $("#tablaVales tr:last").attr('id').replace(j - 1, j);
+		$("#tablaVales tr:last").attr('id', newId);
+		$("#idBotonRemoverVale").attr("disabled",false);
+	}
 }
 
 function removerVale(){
 	var j = $('#tablaVales tr:last .ind').text().trim();
 	
 	$('#tablaVales tr:last').remove();
-
-	if(j <= 2){
+	
+	if(j <= 1){
 		$("#idBotonRemoverVale").attr("disabled",true);
-	}																			
+		$("#fechaVencimientoVales").hide();
+	}
 }
 
 var idRenglon;
@@ -559,12 +578,7 @@ function despintarFilaVale(idTd){
 										</td>	
 										<td class="botonerab">
 											<c:out value="${fiscalizacion.cantidadMts}"></c:out>
-										</td>
-										<!-- <td class="botonerab">
-											<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
-												<bean:message key='SIIF.label.Ver'/>	
-											</a>									
-										</td>-->																
+										</td>														
 									</tr>
 								</c:forEach>	
 							</table>
@@ -867,6 +881,7 @@ function despintarFilaVale(idTd){
 								<input type="button" class="botonerab" onclick="expValesDevueltos();" value="Expandir Vales Devueltos">
 								<input type="button" class="botonerab" onclick="expValeNro();" value="Expandir Vale Nro"> 
 								<input type="text" value="" id="expVale">
+								<input type="hidden" id="fechaVencimientoPrimerVale" value="${guiaForestal.valesTransporte[0].fechaVencimiento}">
 							</td>
 						</tr>
 						<tr>
@@ -1020,9 +1035,81 @@ function despintarFilaVale(idTd){
 					</c:otherwise>													
 				</c:choose>	
 			</table>
+		
+			<!-- AGREGAR VALES DE TRANSPORTE -->
+			<table class="cuadrado" align="center" width="90%" cellpadding="2">
+				<tr>
+					<td colspan="4" align="left">
+						<table class="cuadrado" align="center" width="90%" cellpadding="2">
+							<tr>
+								<td colspan="4" class="azulAjustado">Agregar <bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
+							</tr>				
+							<tr>
+								<td height="10" colspan="4"></td>
+							</tr>
+							<tr>
+								<td colspan="4">
+								<table border="0" class="cuadrado" align="center"  width="80%" cellpadding="2" id="tablaVales">
+									
+		
+								</table>
+		
+		
+		
+								<table  class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
+									<tr>
+										<td height="10" colspan="4"></td>
+									</tr>
+									
+									<tr id="fechaVencimientoVales" style="display: none;">
+										<td width="25%" class="botoneralNegritaRight">
+											<bean:message key='SIIF.label.Fecha_Venc'/>
+										</td>
+										<td width="40%" align="left">
+											<input id="datepickerVale0" type="text" readonly="readonly" class="botonerab" 
+													name='fechaVencimiento'>
+											<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
+												align="top" width='17' height='21'>		
+																																												
+											<script>
+												$(function() {
+													$( "#datepickerVale0" ).datepicker({ dateFormat: 'dd/mm/yy'});
+												});
+											</script>
+										</td>
+									</tr>	
+									<tr>
+										<td height="10" colspan="4"></td>
+									</tr>
+									
+									<tr>
+										<td colspan="4">
+											<input id="idBotonAgregarVale" type="button" value="+" 
+												onclick="javascript:agregarVale();">
+											<input id="idBotonRemoverVale" disabled="disabled" type="button"
+												value="-" onclick="javascript:removerVale();"></td>
+									</tr>
+									<tr>
+										<td height="5" colspan="4"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+		
+					</td>
+				</tr>
+			</table>		
+		
+		
+		
+		
+		
+		
 		</div>
 		</td>
 	</tr>
+	
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>
