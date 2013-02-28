@@ -414,7 +414,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 		<tr>
 			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.NroDeGuia'/></td>
 			<td width="30%" align="left">
-				<input name="guiaForestal.nroGuia" class="botonerab" type="text" size="40">
+				<input name="guiaForestal.nroGuia" class="botonerab" type="text" size="40" 
+						onkeypress="javascript:esNumerico(event);">
 			</td>
 			<!--<html:hidden styleId="idFiscalizacion" property="guiaForestal.fiscalizacion.id" value="${fiscalizacion.id}" />-->
 
