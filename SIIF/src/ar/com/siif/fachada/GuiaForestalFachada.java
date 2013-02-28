@@ -164,6 +164,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			return guiaForestalDAO.reemplazarBoletaDeDeposito(idBoleta, numero, concepto, area,
 					efectivoCheque, fechaVencimiento);
 
+		} catch (NegocioException ne) {
+			throw ne;
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
@@ -243,6 +246,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
 					fechaVencimiento);
 
+		} catch (NegocioException ne) {
+			throw ne;
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
@@ -376,20 +382,27 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	}
 
 	public String restablecerGuias(Long[] idsGuias)throws NegocioException{			
-		
-		if (idsGuias == null || idsGuias.length == 0) {
-			throw new NegocioException("Seleccione alguna Guía Forestal");
-		}	
-		
-		String mensaje = (idsGuias.length > 1)?"Las Guías Forestales fueron restablecidas con exito":
-											   "La Guía Forestal fue restablecida con exito";
-		
-		for (Long idGuia : idsGuias) {
+		try{
+			if (idsGuias == null || idsGuias.length == 0) {
+				throw new NegocioException("Seleccione alguna Guía Forestal");
+			}	
 			
-			guiaForestalDAO.restablecerGuias(idGuia);			
-		}
-		
-		return mensaje;
+			String mensaje = (idsGuias.length > 1)?"Las Guías Forestales fueron restablecidas con exito":
+												   "La Guía Forestal fue restablecida con exito";
+			
+			for (Long idGuia : idsGuias) {
+				
+				guiaForestalDAO.restablecerGuias(idGuia);			
+			}
+			
+			return mensaje;
+			
+		} catch (NegocioException ne) {	
+			throw ne;
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}			
 	}
 	
 }

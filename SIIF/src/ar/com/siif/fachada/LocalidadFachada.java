@@ -17,6 +17,7 @@ import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.utils.MyLogger;
 
 public class LocalidadFachada implements ILocalidadFachada {
 
@@ -117,15 +118,20 @@ public class LocalidadFachada implements ILocalidadFachada {
 		localidadDAO.alta_modficacion_LocalidadDestino(ProviderDominio.getLocalidadDestino(localidadDTO,provincia));		
 	}
 	
-	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia){
-
-		List<LocalidadDestinoDTO> localidadesDTO = new ArrayList<LocalidadDestinoDTO>();
-		List<LocalidadDestino> localidades = localidadDAO.getLocalidadesDeProvincia(idProvincia);
+	public List<LocalidadDestinoDTO> getLocalidadesDetinoDTODeProvincia(Long idProvincia)throws NegocioException{
+		try{
+			List<LocalidadDestinoDTO> localidadesDTO = new ArrayList<LocalidadDestinoDTO>();
+			List<LocalidadDestino> localidades = localidadDAO.getLocalidadesDeProvincia(idProvincia);
+				
+			for (LocalidadDestino localidad : localidades) {
+				localidadesDTO.add(ProviderDTO.getLocalidadDestinoDTO(localidad));
+			}
+			return localidadesDTO;
 			
-		for (LocalidadDestino localidad : localidades) {
-			localidadesDTO.add(ProviderDTO.getLocalidadDestinoDTO(localidad));
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
 		}
-		return localidadesDTO;			
 	}
 	
 	public LocalidadDestinoDTO getLocalidadDestinoDTOPorId(Long id){

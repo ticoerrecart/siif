@@ -39,5 +39,5 @@ public interface IRolFachada {
 	public RolDTO getRolAdministrador();
 
 	public List<RolDTO> cargarRolesSegunEntidad(Long idEntidad,
-			Long idUsuarioLogueado);
+			Long idUsuarioLogueado)throws NegocioException;
 }

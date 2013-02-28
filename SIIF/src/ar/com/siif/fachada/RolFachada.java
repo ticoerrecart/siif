@@ -18,6 +18,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.MyLogger;
 
 public class RolFachada implements IRolFachada {
 
@@ -100,45 +101,50 @@ public class RolFachada implements IRolFachada {
 	}
 
 	public List<RolDTO> cargarRolesSegunEntidad(Long idEntidad,
-			Long idUsuarioLogueado) {
-
-		Entidad entidad = entidadDAO.getEntidad(idEntidad);
-		Usuario usuario = null;// usuarioDAO.getUsuario(idUsuario);
-		if (idUsuarioLogueado != null) {
-			usuario = usuarioDAO.getUsuario(idUsuarioLogueado);
-		}
-		List<Rol> roles = null;
-		List<RolDTO> rolesDTO = new ArrayList<RolDTO>();
-		if (Constantes.ID_ROL_ADMINISTRADOR == usuario.getRol().getId()
-				.longValue()) {
-			if (Constantes.ENTIDAD_RN.equalsIgnoreCase(entidad
-					.getIdTipoEntidad())) {
-				// si la Entidad es RN y es un Administrador, deben estar todos
-				// los roles
-				roles = rolDAO.getRoles();
-			} else {
-				// si la Entidad NO es RN y es un Administrador, no debe estar
-				// el rol Administrador
-				roles = new ArrayList<Rol>();
-				for (Rol rol : rolDAO.getRoles()) {
-					if (Constantes.ID_ROL_ADMINISTRADOR != rol.getId()
-							.longValue()) {
-						roles.add(rol);
+			Long idUsuarioLogueado)throws NegocioException {
+		
+		try{
+			Entidad entidad = entidadDAO.getEntidad(idEntidad);
+			Usuario usuario = null;// usuarioDAO.getUsuario(idUsuario);
+			if (idUsuarioLogueado != null) {
+				usuario = usuarioDAO.getUsuario(idUsuarioLogueado);
+			}
+			List<Rol> roles = null;
+			List<RolDTO> rolesDTO = new ArrayList<RolDTO>();
+			if (Constantes.ID_ROL_ADMINISTRADOR == usuario.getRol().getId()
+					.longValue()) {
+				if (Constantes.ENTIDAD_RN.equalsIgnoreCase(entidad
+						.getIdTipoEntidad())) {
+					// si la Entidad es RN y es un Administrador, deben estar todos
+					// los roles
+					roles = rolDAO.getRoles();
+				} else {
+					// si la Entidad NO es RN y es un Administrador, no debe estar
+					// el rol Administrador
+					roles = new ArrayList<Rol>();
+					for (Rol rol : rolDAO.getRoles()) {
+						if (Constantes.ID_ROL_ADMINISTRADOR != rol.getId()
+								.longValue()) {
+							roles.add(rol);
+						}
 					}
 				}
+			} else {
+				// si NO es un Administrador, entonces debe estar solo su rol
+				roles = new ArrayList<Rol>();
+				roles.add(usuario.getRol());
 			}
-		} else {
-			// si NO es un Administrador, entonces debe estar solo su rol
-			roles = new ArrayList<Rol>();
-			roles.add(usuario.getRol());
-		}
-
-		for (Rol rol : roles) {
-			rolesDTO.add(ProviderDTO.getRolDTO(rol));
-		}
-
-		return rolesDTO;
-
+	
+			for (Rol rol : roles) {
+				rolesDTO.add(ProviderDTO.getRolDTO(rol));
+			}
+	
+			return rolesDTO;
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}		
 	}
 
 	private void getItemsMenues(Rol rol, List<ItemMenuDTO> menues) {
