@@ -330,7 +330,7 @@ public abstract class ProviderDominio {
 		return boleta;
 	}
 
-	private static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO,
+	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO,
 			Date fechaVencimiento) {
 		List<ValeTransporte> vales = new ArrayList<ValeTransporte>();
 		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {

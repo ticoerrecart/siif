@@ -21,6 +21,7 @@ import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
@@ -461,7 +462,9 @@ public class GuiaForestalAction extends ValidadorAction {
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();
 			guiaForestal.setUsuario(usr);
-			guiaForestalFachada.modificacionGuiaForestalBasica(guiaForestal);
+			guiaForestalFachada.modificacionGuiaForestalBasica(guiaForestal,
+					guiaForestalForm.getRangos(),
+					Fecha.stringDDMMAAAAToDate(guiaForestalForm.getFechaVencimiento()));
 
 			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
 
@@ -1249,6 +1252,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok2 = true;
 			boolean ok3 = true;
 			boolean ok4 = true;
+			boolean ok5 = true;
 			boolean ok6 = true;
 			boolean ok7 = true;
 			boolean ok8 = true;
@@ -1298,13 +1302,15 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			ok10 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFecha(), "Fecha",
 					error);
-			/*ok5 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
-					"Fecha de Vencimiento de Vales de Transporte", error);*/
+			if (guiaForestalForm.getRangos().size() > 0) {
+				ok5 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
+						"Fecha de Vencimiento de Vales de Transporte", error);
+			}
 			ok11 = Validator.validarFechaValida(guiaForestalForm.getFechaVencimiento(),
 					"Fecha de Vencimiento de Vales de Transporte", error);
 
-			return ok && ok1 && ok2 && ok3 && ok4 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11
-					&& ok12;
+			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10
+					&& ok11 && ok12;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -1407,6 +1413,12 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok = true;
 			boolean ok1 = true;
 			boolean ok2 = true;
+			boolean ok3 = true;
+			boolean ok4 = true;
+			boolean ok5 = true;
+			boolean ok6 = true;
+			GuiaForestalDTO guiaForestal = guiaFachada.recuperarGuiaForestal(guiaForestalForm
+					.getGuiaForestal().getId());
 
 			ok = Validator.validarEnteroMayorQue(0,
 					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
@@ -1424,7 +1436,34 @@ public class GuiaForestalAction extends ValidadorAction {
 			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFechaVencimiento(),
 					"Valido Hasta", error);
 
-			return ok && ok1 && ok2;
+			if (guiaForestalForm.getRangos().size() > 0) {
+				ok6 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
+						"Fecha de Vencimiento de Vales de Transporte", error);
+				if (ok6) {
+					if (guiaForestal.getValesTransporte().size() > 0) {
+						ValeTransporteDTO primerVale = guiaForestal.getValesTransporte().get(0);
+
+						if (!primerVale.getFechaVencimiento().equalsIgnoreCase(
+								guiaForestalForm.getFechaVencimiento())) {
+							Validator
+									.addErrorXML(
+											error,
+											"La fecha de vencimiento de los vales de transporte que está ingresando "
+													+ guiaForestalForm.getFechaVencimiento()
+													+ " no coincide con la fecha de los vales de transporte ya ingresados ("
+													+ primerVale.getFechaVencimiento() + ")");
+						}
+					}
+				}
+			}
+
+			ok4 = Validator.validarFechaValida(guiaForestalForm.getFechaVencimiento(),
+					"Fecha de Vencimiento de Vales de Transporte", error);
+
+			ok5 = Validator.validarRangos(guiaForestalForm.getRangos(),
+					guiaForestal.getValesTransporte(), error);
+
+			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
