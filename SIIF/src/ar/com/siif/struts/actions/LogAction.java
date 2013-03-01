@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +48,9 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward verLog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		try {
 
@@ -61,15 +65,22 @@ public class LogAction extends DispatchAction {
 					out.write(s.getBytes());
 				} else {
 					if (file.length() == 0) {
-						String s = "El archivo '" + fileName + "' tiene 0 bytes.";
+						String s = "El archivo '" + fileName
+								+ "' tiene 0 bytes.";
 						out.write(s.getBytes());
 					} else {
-						byte[] bytes = getByteArrayFromFile(file);
+						if (file.isDirectory()) {
+							String s = "El archivo '" + fileName
+									+ "' es un directorio.";
+							out.write(s.getBytes());
+						} else {
+							byte[] bytes = getByteArrayFromFile(file);
 
-						// Lo muestro en la salida del response
-						response.setContentType("text/plain");
-						// response.setContentLength(baos.size());
-						out.write(bytes, 0, bytes.length);
+							// Lo muestro en la salida del response
+							response.setContentType("text/plain");
+							// response.setContentLength(baos.size());
+							out.write(bytes, 0, bytes.length);
+						}
 					}
 				}
 			}
@@ -83,17 +94,23 @@ public class LogAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward log(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		String success = "logSuccess";
 		String path = MyLogger.getResourceBundle().getString("logger.path");
 		int lastIndex = path.lastIndexOf(File.separator);
-		String fileName = path.substring(0, lastIndex + 1);//"/usr/local/tomcat-7.0.6/logs/";
+		String fileName = path.substring(0, lastIndex + 1);// "/usr/local/tomcat-7.0.6/logs/";
 
 		File file = new File(fileName);
+
 		if (file.exists() && file.isDirectory()) {
 			List<File> listFiles = new ArrayList<File>();
+			Map<String, String> listFileSize = new HashMap<String, String>();
+			Map<String, String> listFileModified = new HashMap<String, String>();
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
 			for (File file2 : file.listFiles()) {
 				if ("catalina.out".equalsIgnoreCase(file2.getName())
 						|| "siif.log".equalsIgnoreCase(file2.getName())) {
@@ -101,10 +118,24 @@ public class LogAction extends DispatchAction {
 				} else {
 					listFiles.add(file2);
 				}
+
+				if (file2.isDirectory()) {
+					listFileSize.put(file2.getName(), "DIR");
+				} else {
+					listFileSize.put(file2.getName(),
+							String.valueOf(file2.length()) + " bytes");
+				}
+
+				listFileModified.put(file2.getName(),
+						sdf.format((file2.lastModified())));
+
 			}
 
 			request.setAttribute("files", listFiles);
-			MyLogger.log("Se encontraron " + file.listFiles().length + " archivos.");
+			request.setAttribute("filesSize", listFileSize);
+			request.setAttribute("filesModified", listFileModified);
+			MyLogger.log("Se encontraron " + file.listFiles().length
+					+ " archivos.");
 		} else {
 			request.setAttribute("error", "El directorio '" + fileName
 					+ "' no existe o no es un directorio.");

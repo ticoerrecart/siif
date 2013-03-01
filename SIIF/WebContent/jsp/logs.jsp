@@ -15,7 +15,13 @@
 				<c:forEach items="${files}" var="file">
 					<tr>
 						<td align="left">
-							<a href='/SIIF/log.do?metodo=verLog&file=${file}'>${file.name}</a>
+							<a href='/SIIF/log.do?metodo=verLog&file=${file}'>${file.name}</a> 
+						</td>
+						<td>
+							${filesSize[file.name]}
+						</td>
+						<td>
+							${filesModified[file.name]}
 						</td>
 					</tr>
 				</c:forEach>
