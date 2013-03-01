@@ -72,7 +72,7 @@ function seleccionarTranzon(idTr){
 							<td class="botonerab"> ${tranzon.numero}</td>
 							<td class="botonerab"> ${tranzon.disposicion}</td>
 							<td class="botonerab">
-							<a href="javascript:mostrarDatosTranzon(${tranzonSt.index}, ${tranzon.id}, ${tranzon.numero}, '${tranzon.disposicion}')">
+							<a href="javascript:mostrarDatosTranzon(${tranzonSt.index}, ${tranzon.id}, '${tranzon.numero}', '${tranzon.disposicion}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>
@@ -96,7 +96,8 @@ function seleccionarTranzon(idTr){
 						<tr>
 							<td width="33%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Numero'/></td>
 							<td width="33%"align="left">
-								<input id="numeroTranzon" type="text" class="botonerab" /> 
+								<input id="numeroTranzon" type="text" onblur="javascript:pasarAMayuscula('numeroTranzon')" 
+										class="botonerab" onkeypress="javascript:validarNumeroRomano(event)"/> 
 								<input type="hidden" id="idTranzon"/> 
 							</td>
 							<td width="33%"></td>

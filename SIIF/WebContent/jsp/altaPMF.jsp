@@ -12,7 +12,6 @@
 <script type="text/javascript" src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" src="<html:rewrite page='/js/altaUbicacion.js'/>"></script>
 
-
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
 
 <%-- errores de validaciones AJAX --%>
@@ -146,7 +145,10 @@
 		<tr>
 			<td width="47%" class="botoneralNegritaRight" ><bean:message key='SIIF.label.Numero'/></td>
 			<td width="2%"></td>
-			<td align="left"> <input id="numeroTranzon" type="text" class="botonerab" ></td>
+			<td align="left">
+				<input id="numeroTranzon" type="text" class="botonerab" onkeypress="javascript:validarNumeroRomano(event)"
+						onblur="javascript:pasarAMayuscula('numeroTranzon')">
+			</td>
 		</tr>
 
 		<tr>

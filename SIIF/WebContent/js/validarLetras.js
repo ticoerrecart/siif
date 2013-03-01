@@ -182,3 +182,37 @@ function esNumericoConSNoSlashEspacios(event) {
 	}
 }
 
+function validarNumeroRomano(event){
+
+	//      Min  May
+	// I	105	 73
+	// V	118	 86
+	// X	120	 88
+	// L	108	 76
+	// C	99	 67
+	// D	100	 68
+	// M	109	 77
+
+ 	var key;
+	if (type=="IE") { 
+		key = event.keyCode;
+	}
+	if (type=="MO" || type=="OP") {
+		key = event.which;		  
+	}
+	
+	if ((key == 105) || (key == 73) || (key == 118) || (key == 86) || (key == 120) || (key == 88) || (key == 108) ||
+		(key == 76) || (key == 99) || (key == 67) || (key == 100) || (key == 68) || (key == 109) || (key == 77) ||
+		(key == 0) || (key == 8))
+	{
+		event.returnValue = true;	 	
+	}
+	else{
+		stop(event);
+	}
+}
+
+function pasarAMayuscula(id){
+	var num = $('#'+id).val();
+	$('#'+id).val(num.toUpperCase());
+}

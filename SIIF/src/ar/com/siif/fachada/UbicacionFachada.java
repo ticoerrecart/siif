@@ -208,6 +208,8 @@ public class UbicacionFachada implements IUbicacionFachada {
 			Rodal r = this.ubicacionDAO.getRodal(idRodal);
 			r.setNombre(nombre);
 			
+			this.ubicacionDAO.altaRodal(r);
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
@@ -230,6 +232,8 @@ public class UbicacionFachada implements IUbicacionFachada {
 		try{
 			Marcacion m = this.ubicacionDAO.getMarcacion(idMarcacion);
 			m.setDisposicion(disposicion);
+			
+			this.ubicacionDAO.altaMarcacion(m);
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -255,6 +259,8 @@ public class UbicacionFachada implements IUbicacionFachada {
 			t.setDisposicion(disposicion);
 			t.setNumero(numero);
 			
+			this.ubicacionDAO.altaTranzon(t);
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
@@ -270,6 +276,8 @@ public class UbicacionFachada implements IUbicacionFachada {
 			PMF pmf = this.ubicacionDAO.getPMF(idPMF);
 			pmf.setExpediente(expediente);
 			pmf.setNombre(nombre);
+			
+			this.ubicacionDAO.altaPMF(pmf);
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
