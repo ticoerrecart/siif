@@ -34,10 +34,7 @@ public class LoginFilter implements Filter {
 
 		try {
 			if (session.getAttribute(Constantes.USER_LABEL_SESSION) != null
-					|| (metodo != null && metodo.equals("login"))
-					|| (metodo != null
-							&& ("log".equalsIgnoreCase(metodo) || "verLog".equalsIgnoreCase(metodo)) && "/log.do"
-							.equalsIgnoreCase(req.getServletPath()))) {
+					|| (metodo != null && metodo.equals("login"))) {
 
 				chain.doFilter(request, response);
 
