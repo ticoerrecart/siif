@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +50,8 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward verLog(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		try {
 
@@ -64,14 +65,12 @@ public class LogAction extends DispatchAction {
 					String s = "El archivo '" + fileName + "' no existe.";
 					out.write(s.getBytes());
 				} else {
-					if (file.length() == 0) {
-						String s = "El archivo '" + fileName
-								+ "' tiene 0 bytes.";
+					if (file.isDirectory()) {
+						String s = "El archivo '" + fileName + "' es un directorio.";
 						out.write(s.getBytes());
 					} else {
-						if (file.isDirectory()) {
-							String s = "El archivo '" + fileName
-									+ "' es un directorio.";
+						if (file.length() == 0) {
+							String s = "El archivo '" + fileName + "' tiene 0 bytes.";
 							out.write(s.getBytes());
 						} else {
 							byte[] bytes = getByteArrayFromFile(file);
@@ -80,12 +79,13 @@ public class LogAction extends DispatchAction {
 							response.setContentType("text/plain");
 							// response.setContentLength(baos.size());
 							out.write(bytes, 0, bytes.length);
+
 						}
 					}
 				}
 			}
 			out.flush();
-
+			out.close();
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 			// strForward = "errorLogin";
@@ -94,9 +94,8 @@ public class LogAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward log(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String success = "logSuccess";
 		String path = MyLogger.getResourceBundle().getString("logger.path");
@@ -109,7 +108,7 @@ public class LogAction extends DispatchAction {
 			List<File> listFiles = new ArrayList<File>();
 			Map<String, String> listFileSize = new HashMap<String, String>();
 			Map<String, String> listFileModified = new HashMap<String, String>();
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 			for (File file2 : file.listFiles()) {
 				if ("catalina.out".equalsIgnoreCase(file2.getName())
@@ -119,23 +118,37 @@ public class LogAction extends DispatchAction {
 					listFiles.add(file2);
 				}
 
+				//cargo el fileSize
 				if (file2.isDirectory()) {
 					listFileSize.put(file2.getName(), "DIR");
 				} else {
-					listFileSize.put(file2.getName(),
-							String.valueOf(file2.length()) + " bytes");
+					listFileSize.put(file2.getName(), String.valueOf(file2.length()) + " bytes");
 				}
 
-				listFileModified.put(file2.getName(),
-						sdf.format((file2.lastModified())));
+				//cargo la fecha de modificación
+				listFileModified.put(file2.getName(), sdf.format((file2.lastModified())));
 
 			}
 
+			Collections.sort(listFiles, new Comparator<File>() {
+				public int compare(File f1, File f2) {
+					//return o2.getScores().get(0).compareTo(o1.getScores().get(0));
+					long d1 = f1.lastModified();
+					long d2 = f2.lastModified();
+					if (d1 == d2) {
+						return 0;
+					} else {
+						if (d1 < d2) {
+							return 1;
+						}
+						return -1;
+					}
+				}
+			});
 			request.setAttribute("files", listFiles);
 			request.setAttribute("filesSize", listFileSize);
 			request.setAttribute("filesModified", listFileModified);
-			MyLogger.log("Se encontraron " + file.listFiles().length
-					+ " archivos.");
+			MyLogger.log("Se encontraron " + file.listFiles().length + " archivos.");
 		} else {
 			request.setAttribute("error", "El directorio '" + fileName
 					+ "' no existe o no es un directorio.");
