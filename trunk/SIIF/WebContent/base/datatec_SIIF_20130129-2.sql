@@ -559,8 +559,8 @@ DROP TABLE IF EXISTS `Tranzon`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tranzon` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `disposicion` int(11) DEFAULT NULL,
-  `numero` int(11) DEFAULT NULL,
+  `disposicion` varchar(255) DEFAULT NULL,
+  `numero` varchar(255) DEFAULT NULL,
   `pmf_fk` bigint(20) DEFAULT NULL,
   `numeroDisposicion` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
