@@ -46,22 +46,24 @@ import ar.com.siif.utils.MyLogger;
 public class GuiaForestalAction extends ValidadorAction {
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarAltaGuiaForestalBasica(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward cargarAltaGuiaForestalBasica(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoCargaAltaGuiaForestalBasica";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 			ITipoProductoForestalFachada tipoProdFachada = (ITipoProductoForestalFachada) ctx
 					.getBean("tipoProductoForestalFachada");
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
@@ -72,38 +74,42 @@ public class GuiaForestalAction extends ValidadorAction {
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
 					.getBean("localidadFachada");
 
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
 
-			EntidadDTO productorForestal = entidadFachada.getEntidadDTO(guiaForm.getGuiaForestal()
-					.getProductorForestal().getId());
+			EntidadDTO productorForestal = entidadFachada
+					.getEntidadDTO(guiaForm.getGuiaForestal()
+							.getProductorForestal().getId());
 
 			RodalDTO rodal = null;
 			List<PMFDTO> listaPMFs = new ArrayList<PMFDTO>();
 
 			if (!guiaForm.getListaFiscalizaciones().isEmpty()) {
 				FiscalizacionDTO fiscalizacion = fiscalizacionFachada
-						.recuperarFiscalizacionDTO(guiaForm.getListaFiscalizaciones().get(0)
-								.getId());
-				rodal = ubicacionFachada.getRodalDTO(fiscalizacion.getRodal().getId());
+						.recuperarFiscalizacionDTO(guiaForm
+								.getListaFiscalizaciones().get(0).getId());
+				rodal = ubicacionFachada.getRodalDTO(fiscalizacion.getRodal()
+						.getId());
 			} else {
-				listaPMFs = ubicacionFachada.getPMFsDTO(guiaForm.getGuiaForestal()
-						.getProductorForestal().getId());
+				listaPMFs = ubicacionFachada.getPMFsDTO(guiaForm
+						.getGuiaForestal().getProductorForestal().getId());
 			}
 
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
-			for (FiscalizacionDTO fiscalizacionDTO : guiaForm.getListaFiscalizaciones()) {
+			for (FiscalizacionDTO fiscalizacionDTO : guiaForm
+					.getListaFiscalizaciones()) {
 				if (fiscalizacionDTO.getId() != 0) {
 					FiscalizacionDTO fis = fiscalizacionFachada
 							.recuperarFiscalizacionDTO(fiscalizacionDTO.getId());
 					listaFiscalizacionesDTO.add(fis);
 
-					//Esto es para mostrar los subImportes
-					SubImporteDTO subImporte = hashProductosFiscalizados.get(fis.getTipoProducto()
-							.getId());
+					// Esto es para mostrar los subImportes
+					SubImporteDTO subImporte = hashProductosFiscalizados
+							.get(fis.getTipoProducto().getId());
 					if (subImporte != null) {
 						subImporte.setCantidadMts(subImporte.getCantidadMts()
 								+ fis.getCantidadMts());
@@ -112,20 +118,24 @@ public class GuiaForestalAction extends ValidadorAction {
 						subImporte.setCantidadMts(fis.getCantidadMts());
 						subImporte.setTipoProducto(fis.getTipoProducto());
 					}
-					hashProductosFiscalizados.put(subImporte.getTipoProducto().getId(), subImporte);
+					hashProductosFiscalizados.put(subImporte.getTipoProducto()
+							.getId(), subImporte);
 				}
 			}
 
-			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
+			request.setAttribute("localidades",
+					localidadFachada.getLocalidadesDTO());
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("tiposProductosForestales",
 					tipoProdFachada.recuperarTiposProductoForestalDTO());
-			request.setAttribute("estadosProductoForestal", tipoProdFachada.getEstadosProductos());
+			request.setAttribute("estadosProductoForestal",
+					tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal", productorForestal);
 			request.setAttribute("rodal", rodal);
 			request.setAttribute("pmfs", listaPMFs);
 			request.setAttribute("fiscalizaciones", listaFiscalizacionesDTO);
-			request.setAttribute("subImportes", hashProductosFiscalizados.values());
+			request.setAttribute("subImportes",
+					hashProductosFiscalizados.values());
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -137,8 +147,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward altaGuiaForestalBasica(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward altaGuiaForestalBasica(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoAltaGuiaForestalBasica";
 
@@ -147,7 +158,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 
-			ILoginFachada loginFachada = (ILoginFachada) ctx.getBean("loginFachada");
+			ILoginFachada loginFachada = (ILoginFachada) ctx
+					.getBean("loginFachada");
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
@@ -162,11 +174,13 @@ public class GuiaForestalAction extends ValidadorAction {
 			if (fecha != null && !"".equals(fecha)) {
 				dFecha = Fecha.stringDDMMAAAAToUtilDate(fecha);
 			}
-			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal, guiaForm.getBoletasDeposito(),
-					guiaForm.getRangos(), dFecha, guiaForm.getListaFiscalizaciones(),
+			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
+					guiaForm.getBoletasDeposito(), guiaForm.getRangos(),
+					dFecha, guiaForm.getListaFiscalizaciones(),
 					guiaForm.getListaSubImportes());
 
-			request.setAttribute("exitoModificacion", Constantes.EXITO_ALTA_GUIA_FORESTAL);
+			request.setAttribute("exitoModificacion",
+					Constantes.EXITO_ALTA_GUIA_FORESTAL);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -177,124 +191,127 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	/*@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesPlanDePagos(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	/*
+	 * @SuppressWarnings("unchecked") public ActionForward
+	 * recuperarGuiasForestalesPlanDePagos(ActionMapping mapping, ActionForm
+	 * form, HttpServletRequest request, HttpServletResponse response) throws
+	 * Exception {
+	 * 
+	 * String strForward = "exitoRecuperarGuiasForestalesPlanDePagos";
+	 * 
+	 * try {
+	 * 
+	 * WebApplicationContext ctx = getWebApplicationContext();
+	 * IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+	 * .getBean("guiaForestalFachada");
+	 * 
+	 * List<GuiaForestalDTO> guias = new
+	 * ArrayList<GuiaForestalDTO>();//guiaForestalFachada
+	 * .recuperarGuiasForestales();
+	 * 
+	 * // BORRAR // guias.add(guias.get(0)); // guias.add(guias.get(0)); //
+	 * guias.add(guias.get(0)); // guias.add(guias.get(0));
+	 * 
+	 * 
+	 * request.setAttribute("guias", guias); request.setAttribute("metodo",
+	 * "cargarPlanPagoAModificar"); request.setAttribute("titulo",
+	 * "Plan de Pagos de Guias Forestales"); request.setAttribute("label",
+	 * "Editar Plan de Pagos");
+	 * 
+	 * } catch (Exception e) { request.setAttribute("error", e.getMessage()); //
+	 * strForward = "errorLogin"; }
+	 * 
+	 * return mapping.findForward(strForward); }
+	 */
 
-		String strForward = "exitoRecuperarGuiasForestalesPlanDePagos";
+	/*
+	 * @SuppressWarnings("unchecked") public ActionForward
+	 * cargarPlanPagoAModificar(ActionMapping mapping, ActionForm form,
+	 * HttpServletRequest request, HttpServletResponse response) throws
+	 * Exception {
+	 * 
+	 * String strForward = "exitoCargarPlanPagoAModificar";
+	 * 
+	 * try {
+	 * 
+	 * WebApplicationContext ctx = getWebApplicationContext();
+	 * IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+	 * .getBean("guiaForestalFachada");
+	 * 
+	 * long idGuiaForestal = new Long(request.getParameter("id"));
+	 * GuiaForestalDTO guia =
+	 * guiaForestalFachada.recuperarGuiaForestal(idGuiaForestal);
+	 * 
+	 * request.setAttribute("guia", guia);
+	 * 
+	 * } catch (Exception e) { request.setAttribute("error", e.getMessage()); //
+	 * strForward = "errorLogin"; }
+	 * 
+	 * return mapping.findForward(strForward); }
+	 */
 
-		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
-			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
-					.getBean("guiaForestalFachada");
-
-			List<GuiaForestalDTO> guias = new ArrayList<GuiaForestalDTO>();//guiaForestalFachada.recuperarGuiasForestales();
-
-	//			BORRAR
-	//			guias.add(guias.get(0));
-	//			guias.add(guias.get(0));
-	//			guias.add(guias.get(0));
-	//			guias.add(guias.get(0));
-			
-
-			request.setAttribute("guias", guias);
-			request.setAttribute("metodo", "cargarPlanPagoAModificar");
-			request.setAttribute("titulo", "Plan de Pagos de Guias Forestales");
-			request.setAttribute("label", "Editar Plan de Pagos");
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
-		}
-
-		return mapping.findForward(strForward);
-	}*/
-
-	/*@SuppressWarnings("unchecked")
-	public ActionForward cargarPlanPagoAModificar(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		String strForward = "exitoCargarPlanPagoAModificar";
-
-		try {
-
-			WebApplicationContext ctx = getWebApplicationContext();
-			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
-					.getBean("guiaForestalFachada");
-
-			long idGuiaForestal = new Long(request.getParameter("id"));
-			GuiaForestalDTO guia = guiaForestalFachada.recuperarGuiaForestal(idGuiaForestal);
-
-			request.setAttribute("guia", guia);
-
-		} catch (Exception e) {
-			request.setAttribute("error", e.getMessage());
-			// strForward = "errorLogin";
-		}
-
-		return mapping.findForward(strForward);
-	}*/
-
-	/*	@SuppressWarnings("unchecked")
-		public ActionForward recuperarLocalidadesParaAltaGFB(
-										ActionMapping mapping, ActionForm form,
-										HttpServletRequest request, HttpServletResponse response) 
-										throws Exception {
-
-			String strForward = "exitoRecuperarLocalidadesParaAltaGFB";
-
-			try {
-				Usuario usuario = (Usuario)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);
-				WebApplicationContext ctx = getWebApplicationContext();
-				
-				IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
-				rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
-				
-				ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
-						.getBean("localidadFachada");			
-				
-				String paramLocalidad = request.getParameter("idLocalidad");
-				String idProductor = request.getParameter("idProductor");
-				
-				//List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada.recuperarFiscalizaciones();
-				List<Localidad> localidades = localidadFachada.getLocalidades();
-				
-				//request.setAttribute("fiscalizaciones", fiscalizaciones);
-				request.setAttribute("localidades", localidades);
-				request.setAttribute("idLocalidad", paramLocalidad);
-				request.setAttribute("idProductor", idProductor);
-				
-			} catch (Exception e) {
-				request.setAttribute("error", e.getMessage());
-				strForward = "error";
-			}
-
-			return mapping.findForward(strForward);
-		}	
-	*/
+	/*
+	 * @SuppressWarnings("unchecked") public ActionForward
+	 * recuperarLocalidadesParaAltaGFB( ActionMapping mapping, ActionForm form,
+	 * HttpServletRequest request, HttpServletResponse response) throws
+	 * Exception {
+	 * 
+	 * String strForward = "exitoRecuperarLocalidadesParaAltaGFB";
+	 * 
+	 * try { Usuario usuario =
+	 * (Usuario)request.getSession().getAttribute(Constantes
+	 * .USER_LABEL_SESSION); WebApplicationContext ctx =
+	 * getWebApplicationContext();
+	 * 
+	 * IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
+	 * rolFachada
+	 * .verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
+	 * 
+	 * ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
+	 * .getBean("localidadFachada");
+	 * 
+	 * String paramLocalidad = request.getParameter("idLocalidad"); String
+	 * idProductor = request.getParameter("idProductor");
+	 * 
+	 * //List<Fiscalizacion> fiscalizaciones =
+	 * fiscalizacionFachada.recuperarFiscalizaciones(); List<Localidad>
+	 * localidades = localidadFachada.getLocalidades();
+	 * 
+	 * //request.setAttribute("fiscalizaciones", fiscalizaciones);
+	 * request.setAttribute("localidades", localidades);
+	 * request.setAttribute("idLocalidad", paramLocalidad);
+	 * request.setAttribute("idProductor", idProductor);
+	 * 
+	 * } catch (Exception e) { request.setAttribute("error", e.getMessage());
+	 * strForward = "error"; }
+	 * 
+	 * return mapping.findForward(strForward); }
+	 */
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarTiposDeEntidadParaAltaGFB(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward recuperarTiposDeEntidadParaAltaGFB(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoRecuperarTiposDeEntidadParaAltaGFB";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU, usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,
+			// usuario.getRol());
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
 			String idRodal = request.getParameter("idRodal");
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("idRodal", idRodal);
@@ -311,9 +328,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarFiscalizacionesParaAltaGFB(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarFiscalizacionesParaAltaGFB(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoRecuperarFiscalizacionesParaAltaGFB";
 
@@ -324,10 +341,11 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 
 			String idProductor = request.getParameter("idProductor");
-			//String idRodal = request.getParameter("idRodal");
+			// String idRodal = request.getParameter("idRodal");
 
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
-					.recuperarFiscalizacionesDTOParaAltaGFB(new Long(idProductor));
+					.recuperarFiscalizacionesDTOParaAltaGFB(new Long(
+							idProductor));
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("idLocalidad", idProductor);
@@ -342,25 +360,28 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarTiposDeEntidadParaModificacionGFB(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarTiposDeEntidadParaModificacionGFB(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoRecuperarTiposDeEntidadParaModificacionGFB";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU, usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,
+			// usuario.getRol());
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -376,13 +397,13 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaModificacionGFB(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiasForestalesParaModificacionGFB(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiasForestalesParaModificacionGFB";
 
 		try {
-			//String paramForward = request.getParameter("forward");
+			// String paramForward = request.getParameter("forward");
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
 					.getBean("consultasPorProductorFachada");
@@ -393,10 +414,11 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("guiaForestalFachada");
 
 			List<GuiaForestalDTO> guiasForestales = guiaForestalFachada
-					.recuperarGuiasForestalesPorProductor(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesPorProductor(Long
+							.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
-			//request.setAttribute("paramForward", paramForward);
+			// request.setAttribute("paramForward", paramForward);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -408,18 +430,18 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarModificacionGuiaForestalBasica(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarModificacionGuiaForestalBasica(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarModificacionGuiaForestalBasica";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.MODIFICACION_GUIA_FORESTAL_MENU,usuario.getRol());
 
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
@@ -427,15 +449,17 @@ public class GuiaForestalAction extends ValidadorAction {
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx
 					.getBean("localidadFachada");
 
-			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
-			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
+			request.setAttribute("localidades",
+					localidadFachada.getLocalidadesDTO());
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 
 		} catch (Throwable t) {
@@ -448,8 +472,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward modificacionGuiaForestalBasica(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward modificacionGuiaForestalBasica(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		String strForward = "exitoModificacionGuiaForestalBasica";
 
@@ -462,11 +487,16 @@ public class GuiaForestalAction extends ValidadorAction {
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();
 			guiaForestal.setUsuario(usr);
+			String fecha = guiaForestalForm.getFechaVencimiento().trim();
+			Date dFecha = null;
+			if (fecha != null && !"".equals(fecha)) {
+				dFecha = Fecha.stringDDMMAAAAToUtilDate(fecha);
+			}
 			guiaForestalFachada.modificacionGuiaForestalBasica(guiaForestal,
-					guiaForestalForm.getRangos(),
-					Fecha.stringDDMMAAAAToDate(guiaForestalForm.getFechaVencimiento()));
+					guiaForestalForm.getRangos(), guiaForestalForm.getValesTransporte(), dFecha);
 
-			request.setAttribute("exitoModificacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+			request.setAttribute("exitoModificacion",
+					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -477,34 +507,39 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarProductoresParaBoletasDeposito(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarProductoresParaBoletasDeposito(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarProductoresParaBoletaDeposito";
 		try {
 			String paramForward = request.getParameter("forward");
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 
-			if (paramForward.equals(Constantes.METODO_CARGAR_GUIA_PAGO_BOLETA_DEPOSITO)) {
-				//rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
-				request.setAttribute("titulo", "Registrar Pago Boleta de Deposito");
+			if (paramForward
+					.equals(Constantes.METODO_CARGAR_GUIA_PAGO_BOLETA_DEPOSITO)) {
+				// rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
+				request.setAttribute("titulo",
+						"Registrar Pago Boleta de Deposito");
 			} else {
-				//rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());				
+				// rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());
 				request.setAttribute("titulo", "Reemplazar Boleta de Deposito");
 			}
 
-			String forwardBuscarNroGuia = request.getParameter("forwardBuscarNroGuia");
+			String forwardBuscarNroGuia = request
+					.getParameter("forwardBuscarNroGuia");
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -521,9 +556,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaBoletaDeposito(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiasForestalesParaBoletaDeposito(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiasForestalesParaBoletaDeposito";
 
 		try {
@@ -535,7 +570,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasAforo(Long
+							.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -550,9 +586,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalPagoBoletaDepositoPorNroGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalPagoBoletaDepositoPorNroGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalPagoBoletaDeposito";
 
 		try {
@@ -563,7 +599,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -577,26 +614,26 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalPagoBoletaDeposito(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalPagoBoletaDeposito(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalPagoBoletaDeposito";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.REGISTRAR_PAGO_BOLETA_MENU,usuario.getRol());
 
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -610,9 +647,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalReemBoletaDepositoPorNroGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalReemBoletaDepositoPorNroGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalReemBoletaDeposito";
 
 		try {
@@ -623,7 +660,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -636,26 +674,26 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward cargarGuiaForestalReemBoletaDeposito(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalReemBoletaDeposito(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalReemBoletaDeposito";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.REEMPLAZAR_BOLETA_MENU,usuario.getRol());
 
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -668,26 +706,30 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarProductoresParaValeTransporte(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarProductoresParaValeTransporte(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarProductoresParaValeTransporte";
 		try {
 			String paramForward = request.getParameter("forward");
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 
-			if (paramForward.equals(Constantes.METODO_CARGAR_GUIA_DEVOLUCION_VALE)) {
-				//rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());				
-				request.setAttribute("titulo", "Devolución de Vale de Transporte");
+			if (paramForward
+					.equals(Constantes.METODO_CARGAR_GUIA_DEVOLUCION_VALE)) {
+				// rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());
+				request.setAttribute("titulo",
+						"Devolución de Vale de Transporte");
 			} else {
-				//rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());				
+				// rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());
 				request.setAttribute("titulo", "Reemplazar Vale de Transporte");
 			}
 
-			String forwardBuscarNroGuia = request.getParameter("forwardBuscarNroGuia");
+			String forwardBuscarNroGuia = request
+					.getParameter("forwardBuscarNroGuia");
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
 			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 
@@ -696,7 +738,8 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			request.setAttribute("productores", productores);
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -713,9 +756,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaValeTransporte(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiasForestalesParaValeTransporte(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiasForestalesParaValeTransporte";
 
 		try {
@@ -727,7 +770,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasVales(Long
+							.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -755,7 +799,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -768,26 +813,26 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward cargarGuiaForestalDevolucionValeTransporte(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalDevolucionValeTransporte(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalDevolucionValeTransporte";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.DEVOLUCION_VALE_MENU,usuario.getRol());
 
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -814,7 +859,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -827,26 +873,26 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward cargarGuiaForestalReemplazarValeTransporte(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalReemplazarValeTransporte(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalReemplazarValeTransporte";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession()
+					.getAttribute(Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());
+			// rolFachada.verificarMenu(Constantes.REEMPLAZAR_VALE_MENU,usuario.getRol());
 
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
 			String idGuia = request.getParameter("idGuia");
 
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(Long.parseLong(idGuia));
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -859,8 +905,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarGuiaAsociarFiscalizacion(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward recuperarGuiaAsociarFiscalizacion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiaAsociarFiscalizacion";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -872,19 +919,23 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
-			String idProductor = guiaForestal.getProductorForestal().getId().toString();
+			String idProductor = guiaForestal.getProductorForestal().getId()
+					.toString();
 			String idRodal = guiaForestal.getRodal().getId().toString();
 
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this
 					.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
 
-			//La lista de fiscalizaciones a asociar debe contener solo las fiscalizaciones que tengan 
-			//tipos de productos que esten en los subimportes de la guia.			
+			// La lista de fiscalizaciones a asociar debe contener solo las
+			// fiscalizaciones que tengan
+			// tipos de productos que esten en los subimportes de la guia.
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
-					.recuperarFiscalizacionesDTOParaAsociarAGuia(new Long(idProductor), new Long(
-							idRodal), guiaForestal.getSubImportes(), tablaVolFiscAsociar);
+					.recuperarFiscalizacionesDTOParaAsociarAGuia(new Long(
+							idProductor), new Long(idRodal), guiaForestal
+							.getSubImportes(), tablaVolFiscAsociar);
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("guiaForestal", guiaForestal);
@@ -904,7 +955,8 @@ public class GuiaForestalAction extends ValidadorAction {
 
 		HashMap<Long, Double> mapVol = new HashMap<Long, Double>();
 		List<FilaTablaVolFiscAsociarDTO> tabla = new ArrayList<FilaTablaVolFiscAsociarDTO>();
-		List<FiscalizacionDTO> listaFiscalizaciones = guiaForestal.getFiscalizaciones();
+		List<FiscalizacionDTO> listaFiscalizaciones = guiaForestal
+				.getFiscalizaciones();
 		List<SubImporteDTO> listaSubImportes = guiaForestal.getSubImportes();
 
 		for (FiscalizacionDTO fiscalizacion : listaFiscalizaciones) {
@@ -914,7 +966,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			if (vol != null) {
 				volFisc = volFisc + vol.doubleValue();
 			}
-			mapVol.put(fiscalizacion.getTipoProducto().getId(), MathUtils.round(volFisc, 2));
+			mapVol.put(fiscalizacion.getTipoProducto().getId(),
+					MathUtils.round(volFisc, 2));
 		}
 
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
@@ -924,8 +977,10 @@ public class GuiaForestalAction extends ValidadorAction {
 			fila.setNombreProducto(subImporteDTO.getTipoProducto().getNombre());
 			fila.setVolumenTotalEnGuia(subImporteDTO.getCantidadMts());
 
-			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto().getId());
-			fila.setVolumenEnFiscalizaciones((volEnFisc == null) ? 0.0 : volEnFisc);
+			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto()
+					.getId());
+			fila.setVolumenEnFiscalizaciones((volEnFisc == null) ? 0.0
+					: volEnFisc);
 
 			double volumenFaltante = fila.getVolumenTotalEnGuia()
 					- fila.getVolumenEnFiscalizaciones();
@@ -938,9 +993,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		return tabla;
 	}
 
-	public ActionForward asociarFiscalizacionesConGuiasForestales(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward asociarFiscalizacionesConGuiasForestales(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoAsociarFiscalizacionesConGuiasForestales";
 		try {
 
@@ -952,10 +1007,12 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
-			guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(guiaForm.getGuiaForestal()
-					.getId(), guiaForm.getListaFiscalizaciones());
+			guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(
+					guiaForm.getGuiaForestal().getId(),
+					guiaForm.getListaFiscalizaciones());
 
-			request.setAttribute("exitoAsociacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+			request.setAttribute("exitoAsociacion",
+					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -966,9 +1023,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarGuiaDesasociarFiscalizacion(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiaDesasociarFiscalizacion(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiaDesasociarFiscalizacion";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -978,7 +1035,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal()
+							.getNroGuia());
 
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this
 					.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
@@ -995,9 +1053,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward desasociarFiscalizacionesConGuiasForestales(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward desasociarFiscalizacionesConGuiasForestales(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoDesasociarFiscalizacionesConGuiasForestales";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -1006,10 +1064,12 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
-			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(guiaForm
-					.getGuiaForestal().getId(), guiaForm.getListaFiscalizaciones());
+			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(
+					guiaForm.getGuiaForestal().getId(),
+					guiaForm.getListaFiscalizaciones());
 
-			request.setAttribute("exitoAsociacion", Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+			request.setAttribute("exitoAsociacion",
+					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -1019,8 +1079,9 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward anularGuiaForestal(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward anularGuiaForestal(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoAnularGuiaForestal";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -1028,11 +1089,12 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("guiaForestalFachada");
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(guiaForm
-					.getGuiaForestal().getId());
+			GuiaForestalDTO guiaForestal = guiaForestalFachada
+					.recuperarGuiaForestal(guiaForm.getGuiaForestal().getId());
 			guiaForestalFachada.anularGuiaForestal(guiaForestal);
 
-			request.getSession().setAttribute("exito", Constantes.EXITO_ANULACION_GUIA_FORESTAL);
+			request.getSession().setAttribute("exito",
+					Constantes.EXITO_ANULACION_GUIA_FORESTAL);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -1042,21 +1104,24 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarProductoresParaAnulacionDeGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarProductoresParaAnulacionDeGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarProductoresParaAnulacionDeGuia";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			request.setAttribute("exito", request.getSession().getAttribute("exito"));
+			request.setAttribute("exito",
+					request.getSession().getAttribute("exito"));
 			request.getSession().setAttribute("exito", null);
 			request.setAttribute("titulo", "Anulación de Guia Forestal Básica");
 
-			String forwardBuscarNroGuia = request.getParameter("forwardBuscarNroGuia");
+			String forwardBuscarNroGuia = request
+					.getParameter("forwardBuscarNroGuia");
 			String paramForward = request.getParameter("paramForward");
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
 			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 
@@ -1065,7 +1130,8 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			request.setAttribute("productores", productores);
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -1083,9 +1149,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaAnulacionDeGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiasForestalesParaAnulacionDeGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiasForestalesParaAnulacionDeGuia";
 
 		try {
@@ -1097,7 +1163,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestalDTO> guiasForestales = guiaForestalFachada
-					.recuperarGuiasForestalesPorProductor(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesPorProductor(Long
+							.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -1112,9 +1179,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalBasicaParaAnulacion";
 
 		try {
@@ -1127,10 +1194,12 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalDTO guiaForestal = null;
 			if (null == idGuia) {
 				GuiaForestalForm guiaForm = (GuiaForestalForm) form;
-				guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm
-						.getGuiaForestal().getNroGuia());
+				guiaForestal = guiaForestalFachada
+						.recuperarGuiaForestalPorNroGuia(guiaForm
+								.getGuiaForestal().getNroGuia());
 			} else {
-				guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+				guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
+						.parseLong(idGuia));
 			}
 
 			request.setAttribute("guiaForestal", guiaForestal);
@@ -1144,14 +1213,15 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public ActionForward recuperarProductoresParaRestablecerGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarProductoresParaRestablecerGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarProductoresParaRestablecerGuia";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
 
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
 
 			List<EntidadDTO> productores = entidadFachada.getProductoresDTO();
 
@@ -1159,7 +1229,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			request.setAttribute("productores", productores);
-			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("urlDetalle",
@@ -1167,7 +1238,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("mostrarBusquedaNroGuia", false);
 			request.setAttribute("titulo", "Restablecer Guia Forestal Básica");
 
-			//Para cuando se restablece una o unas guias se muestra el mensaje de exito
+			// Para cuando se restablece una o unas guias se muestra el mensaje
+			// de exito
 			String mensaje = request.getParameter("mensaje");
 			request.setAttribute("exito", mensaje);
 
@@ -1181,9 +1253,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward recuperarGuiasForestalesParaRestablecerGuia(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward recuperarGuiasForestalesParaRestablecerGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarGuiasForestalesParaRestablecerGuia";
 
 		try {
@@ -1195,7 +1267,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idProductor = request.getParameter("idProductor");
 
 			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesAnuladas(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesAnuladas(Long
+							.parseLong(idProductor));
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -1210,8 +1283,9 @@ public class GuiaForestalAction extends ValidadorAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward cargarGuiaForestalParaRestablecer(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward cargarGuiaForestalParaRestablecer(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String strForward = "exitoCargarGuiaForestalBasicaParaRestablecer";
 
 		try {
@@ -1222,11 +1296,14 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idGuia = request.getParameter("idGuia");
 
 			GuiaForestalDTO guiaForestal = null;
-			guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
+					.parseLong(idGuia));
 
-			//Uso esta marca para reutilizar la pagina cargarGuiaForestalConsultaPorProductor.jsp
-			//Indico a donde tiene que llamar el boton 'Volver'
-			request.setAttribute("botonVolver", "javascript:volverRestablecerGuia();");
+			// Uso esta marca para reutilizar la pagina
+			// cargarGuiaForestalConsultaPorProductor.jsp
+			// Indico a donde tiene que llamar el boton 'Volver'
+			request.setAttribute("botonVolver",
+					"javascript:volverRestablecerGuia();");
 
 			request.setAttribute("guiaForestal", guiaForestal);
 
@@ -1239,7 +1316,8 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public boolean validarAltaGuiaForestalBasicaForm(StringBuffer error, ActionForm form) {
+	public boolean validarAltaGuiaForestalBasicaForm(StringBuffer error,
+			ActionForm form) {
 
 		try {
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
@@ -1261,56 +1339,62 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok11 = true;
 			boolean ok12 = true;
 
-			ok = Validator.validarEnteroMayorQue(0,
-					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
+			ok = Validator.validarEnteroMayorQue(0, Integer
+					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
 					"Nro de Guía", error);
 
 			if (ok) {
-				ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm.getGuiaForestal()
-						.getNroGuia());
+				ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm
+						.getGuiaForestal().getNroGuia());
 
 				if (!ok1) {
 					Validator.addErrorXML(error, Constantes.NRO_GUIA_EXISTENTE);
 				}
 			}
 
-			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFechaVencimiento(),
-					"Valido Hasta", error);
+			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal()
+					.getFechaVencimiento(), "Valido Hasta", error);
 
-			ok12 = Validator.validarRodalRequerido(guiaForestalForm.getGuiaForestal().getRodal()
-					.getId(), error);
+			ok12 = Validator.validarRodalRequerido(guiaForestalForm
+					.getGuiaForestal().getRodal().getId(), error);
 
-			ok3 = Validator.validarSubImportes(guiaForestalForm.getListaSubImportes(),
-					guiaForestalForm.getListaFiscalizaciones(), guiaForestalForm.getTipoTerreno(),
-					error);
+			ok3 = Validator.validarSubImportes(
+					guiaForestalForm.getListaSubImportes(),
+					guiaForestalForm.getListaFiscalizaciones(),
+					guiaForestalForm.getTipoTerreno(), error);
 
-			ok4 = Validator.validarDoubleMayorQue(0,
-					String.valueOf(guiaForestalForm.getGuiaForestal().getImporteTotal()),
-					"Importe Total", error);
+			ok4 = Validator.validarDoubleMayorQue(0, String
+					.valueOf(guiaForestalForm.getGuiaForestal()
+							.getImporteTotal()), "Importe Total", error);
 
-			double montoTotal = guiaForestalForm.getGuiaForestal().getImporteTotal();
-			ok6 = Validator.validarBoletasDeposito(guiaForestalForm.getBoletasDeposito(),
-					montoTotal, error);
+			double montoTotal = guiaForestalForm.getGuiaForestal()
+					.getImporteTotal();
+			ok6 = Validator.validarBoletasDeposito(
+					guiaForestalForm.getBoletasDeposito(), montoTotal, error);
 			ok7 = Validator.validarRangos(guiaForestalForm.getRangos(), error);
 
 			if (guiaForestalForm.getGuiaForestal().getLocalidad().getId() == null
-					|| "".equals(guiaForestalForm.getGuiaForestal().getLocalidad().getId())
-					|| guiaForestalForm.getGuiaForestal().getLocalidad().getId() <= 0) {
+					|| "".equals(guiaForestalForm.getGuiaForestal()
+							.getLocalidad().getId())
+					|| guiaForestalForm.getGuiaForestal().getLocalidad()
+							.getId() <= 0) {
 				Validator.addErrorXML(error, "Localidad es requerida");
 				ok9 = false;
 			}
 
-			ok10 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFecha(), "Fecha",
-					error);
+			ok10 = Validator.requerido(guiaForestalForm.getGuiaForestal()
+					.getFecha(), "Fecha", error);
 			if (guiaForestalForm.getRangos().size() > 0) {
-				ok5 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
+				ok5 = Validator.requerido(
+						guiaForestalForm.getFechaVencimiento(),
 						"Fecha de Vencimiento de Vales de Transporte", error);
 			}
-			ok11 = Validator.validarFechaValida(guiaForestalForm.getFechaVencimiento(),
+			ok11 = Validator.validarFechaValida(
+					guiaForestalForm.getFechaVencimiento(),
 					"Fecha de Vencimiento de Vales de Transporte", error);
 
-			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10
-					&& ok11 && ok12;
+			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8
+					&& ok9 && ok10 && ok11 && ok12;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -1319,21 +1403,24 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
-	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error,
-			ActionForm form) {
+	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(
+			StringBuffer error, ActionForm form) {
 		try {
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 			guiaForestalForm.normalizarListaFiscalizaciones();
 			Long idRodal = null;
 
 			if (guiaForestalForm.getListaFiscalizaciones().size() > 0) {
-				FiscalizacionDTO fis = guiaForestalForm.getListaFiscalizaciones().get(0);
+				FiscalizacionDTO fis = guiaForestalForm
+						.getListaFiscalizaciones().get(0);
 				idRodal = fis.getRodal().getId();
 			}
-			for (FiscalizacionDTO fiscalizacion : guiaForestalForm.getListaFiscalizaciones()) {
+			for (FiscalizacionDTO fiscalizacion : guiaForestalForm
+					.getListaFiscalizaciones()) {
 				if (idRodal.longValue() != fiscalizacion.getRodal().getId()) {
-					Validator.addErrorXML(error,
-							"Las Fiscalizaciones seleccionadas deben tener la misma Localidad");
+					Validator
+							.addErrorXML(error,
+									"Las Fiscalizaciones seleccionadas deben tener la misma Localidad");
 					return false;
 				}
 			}
@@ -1346,17 +1433,17 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
-	/*private List<FiscalizacionDTO> normalizarListaFiscalizacionesParaAltaGuia(List<FiscalizacionDTO> listaFiscalizaciones){
-		
-		List<FiscalizacionDTO> listaFis = new ArrayList<FiscalizacionDTO>();
-		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-			TipoProductoDTO tipoProd = fiscalizacionDTO.getTipoProducto();
-			if(tipoProd.getId() != null && tipoProd.getId().longValue() != 0){
-				listaFis.add(fiscalizacionDTO);
-			}
-		}
-		return listaFis;
-	}*/
+	/*
+	 * private List<FiscalizacionDTO>
+	 * normalizarListaFiscalizacionesParaAltaGuia(List<FiscalizacionDTO>
+	 * listaFiscalizaciones){
+	 * 
+	 * List<FiscalizacionDTO> listaFis = new ArrayList<FiscalizacionDTO>(); for
+	 * (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
+	 * TipoProductoDTO tipoProd = fiscalizacionDTO.getTipoProducto();
+	 * if(tipoProd.getId() != null && tipoProd.getId().longValue() != 0){
+	 * listaFis.add(fiscalizacionDTO); } } return listaFis; }
+	 */
 
 	public boolean validarNroGuiaForm(StringBuffer error, ActionForm form) {
 		try {
@@ -1365,16 +1452,16 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
-			boolean valido = Validator.validarEnteroMayorQue(0,
-					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
+			boolean valido = Validator.validarEnteroMayorQue(0, Integer
+					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
 					"Nro de Guía", error);
 
 			boolean existe = valido;
 
 			if (valido) {
 				GuiaForestalDTO guiaForestalDTO;
-				guiaForestalDTO = guiaFachada.recuperarGuiaForestalPorNroGuia(guiaForestalForm
-						.getGuiaForestal().getNroGuia(), false);
+				guiaForestalDTO = guiaFachada.recuperarGuiaForestalPorNroGuia(
+						guiaForestalForm.getGuiaForestal().getNroGuia(), false);
 				if (guiaForestalDTO == null) {
 					Validator.addErrorXML(error, Constantes.NO_EXISTE_GUIA);
 					return false;
@@ -1393,17 +1480,20 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
-	public boolean validarRegistrarPagoCuotaForm(StringBuffer error, ActionForm form) {
+	public boolean validarRegistrarPagoCuotaForm(StringBuffer error,
+			ActionForm form) {
 		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 		return true;
 	}
 
-	public boolean validarAnulacionGuiaForestalForm(StringBuffer error, ActionForm form) {
+	public boolean validarAnulacionGuiaForestalForm(StringBuffer error,
+			ActionForm form) {
 		GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 		return true;
 	}
 
-	public boolean validarModificacionGuiaForestalBasicaForm(StringBuffer error, ActionForm form) {
+	public boolean validarModificacionGuiaForestalBasicaForm(
+			StringBuffer error, ActionForm form) {
 		try {
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
@@ -1417,31 +1507,35 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok4 = true;
 			boolean ok5 = true;
 			boolean ok6 = true;
-			GuiaForestalDTO guiaForestal = guiaFachada.recuperarGuiaForestal(guiaForestalForm
-					.getGuiaForestal().getId());
+			GuiaForestalDTO guiaForestal = guiaFachada
+					.recuperarGuiaForestal(guiaForestalForm.getGuiaForestal()
+							.getId());
 
-			ok = Validator.validarEnteroMayorQue(0,
-					Integer.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
+			ok = Validator.validarEnteroMayorQue(0, Integer
+					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
 					"Nro de Guía", error);
 
 			if (ok) {
-				ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm.getGuiaForestal().getId(),
-						guiaForestalForm.getGuiaForestal().getNroGuia());
+				ok1 = !guiaFachada.existeGuiaForestal(guiaForestalForm
+						.getGuiaForestal().getId(), guiaForestalForm
+						.getGuiaForestal().getNroGuia());
 
 				if (!ok1) {
 					Validator.addErrorXML(error, Constantes.NRO_GUIA_EXISTENTE);
 				}
 			}
 
-			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFechaVencimiento(),
-					"Valido Hasta", error);
+			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal()
+					.getFechaVencimiento(), "Valido Hasta", error);
 
 			if (guiaForestalForm.getRangos().size() > 0) {
-				ok6 = Validator.requerido(guiaForestalForm.getFechaVencimiento(),
+				ok6 = Validator.requerido(
+						guiaForestalForm.getFechaVencimiento(),
 						"Fecha de Vencimiento de Vales de Transporte", error);
 				if (ok6) {
 					if (guiaForestal.getValesTransporte().size() > 0) {
-						ValeTransporteDTO primerVale = guiaForestal.getValesTransporte().get(0);
+						ValeTransporteDTO primerVale = guiaForestal
+								.getValesTransporte().get(0);
 
 						if (!primerVale.getFechaVencimiento().equalsIgnoreCase(
 								guiaForestalForm.getFechaVencimiento())) {
@@ -1449,15 +1543,19 @@ public class GuiaForestalAction extends ValidadorAction {
 									.addErrorXML(
 											error,
 											"La fecha de vencimiento de los vales de transporte que está ingresando "
-													+ guiaForestalForm.getFechaVencimiento()
+													+ guiaForestalForm
+															.getFechaVencimiento()
 													+ " no coincide con la fecha de los vales de transporte ya ingresados ("
-													+ primerVale.getFechaVencimiento() + ")");
+													+ primerVale
+															.getFechaVencimiento()
+													+ ")");
 						}
 					}
 				}
 			}
 
-			ok4 = Validator.validarFechaValida(guiaForestalForm.getFechaVencimiento(),
+			ok4 = Validator.validarFechaValida(
+					guiaForestalForm.getFechaVencimiento(),
 					"Fecha de Vencimiento de Vales de Transporte", error);
 
 			ok5 = Validator.validarRangos(guiaForestalForm.getRangos(),

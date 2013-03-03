@@ -374,14 +374,46 @@ function expValesNoDevueltos(){
 
 function pintarFilaVale(idTd){
 
-	$('#'+idTd).attr("class", "verdeSubtitulo");	
+	//$('#'+idTd).attr("class", "verdeSubtitulo");	
+	$('#'+idTd).addClass("verdeSubtitulo");
+	$('#'+idTd).removeClass("grisSubtitulo");
 }
 
 function despintarFilaVale(idTd){
 	
-	$('#'+idTd).attr("class", "grisSubtitulo");		
+	//$('#'+idTd).attr("class", "grisSubtitulo");		
+	$('#'+idTd).addClass("grisSubtitulo");
+	$('#'+idTd).removeClass("verdeSubtitulo");
 }
 
+function apagar(id){
+	$(id).animate(
+		{opacity:"0.3"},
+		{duration:300}
+	  );
+}
+
+function encender(id){
+	$(id).animate(
+		{opacity:"1"},
+		{duration:300}
+	  );
+}
+
+function removerValeEnUso(idVale,index){
+	
+	if($("#idBotonRemoverValeEnUso" + idVale).val()=="-"){
+		apagar($('.apagar' + idVale));
+		$("#idBotonRemoverValeEnUso" + idVale).val("+");
+		$("#tituloVale" + idVale).addClass("tachado");
+		$("#valesTransporte" + index).val(idVale);
+	}else{
+		encender($('.apagar' + idVale));
+		$("#idBotonRemoverValeEnUso" + idVale).val("-");
+		$("#tituloVale" + idVale).removeClass("tachado");
+		$("#valesTransporte" + index).val("0");
+	}
+}
 //-----------------------------------------------------//
 
 </script>
@@ -893,16 +925,16 @@ function despintarFilaVale(idTd){
 								<td colspan="4" class="grisSubtitulo" id="tdVale<c:out value='${index.count}'></c:out>" 									
 									onmouseover="javascript:pintarFilaVale('tdVale<c:out value='${index.count}'></c:out>');"
 									onmouseout="javascript:despintarFilaVale('tdVale<c:out value='${index.count}'></c:out>');">
-									<bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out>
+									<div id="tituloVale${valeTransporte.id}"><bean:message key='SIIF.label.ValeTransporteNro'/><c:out value="${valeTransporte.numero}"></c:out></div>
 								</td>
 							</tr>						
 							<tr id="idTrVale<c:out value='${valeTransporte.numero}'/>" style="display: none" >
 								<td colspan="4" width="90%">
 									<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">																												
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td height="5" colspan="4"></td>
 										</tr>
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td width="20%" class="botoneralNegritaRight">
 												<bean:message key='SIIF.label.NumeroVale'/>
 											</td>
@@ -918,7 +950,7 @@ function despintarFilaVale(idTd){
 													   class="botonerab" type="text" size="30" readonly="readonly">
 											</td>
 										</tr>
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Origen'/></td>
 											<td width="30%" align="left">
 												<input value="${valeTransporte.origen}" class="botonerab" type="text"
@@ -930,7 +962,7 @@ function despintarFilaVale(idTd){
 													   type="text" size="30" readonly="readonly">
 											</td>
 										</tr>
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Vehiculo'/></td>
 											<td width="30%" align="left">
 												<input value="${valeTransporte.vehiculo}" class="botonerab"
@@ -944,7 +976,7 @@ function despintarFilaVale(idTd){
 										</tr>
 										
 										
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td width="20%" class="botoneralNegritaRight">
 												<bean:message key='SIIF.label.Fecha_Venc'/>
 											</td>
@@ -964,7 +996,7 @@ function despintarFilaVale(idTd){
 										</tr>										
 										
 										
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Fecha_Dev'/></td>
 											<td width="30%" align="left">
 												<input type="text" readonly="readonly" class="botonerab"
@@ -977,9 +1009,11 @@ function despintarFilaVale(idTd){
 											</td>
 											<c:choose>
 												<c:when test="${valeTransporte.fechaDevolucion ==null}">
+													<input type="hidden" name="valesTransporte[${index.count}].id" id="valesTransporte${index.count}" value="0"/>
+													
 													<td width="30%" class="rojoAdvertenciaLeft">
 														<bean:message key='SIIF.label.ENUSO'/>
-													</td>		
+													</td>
 												</c:when>
 												<c:otherwise>
 													<td width="30%" class="verdeExitoLeft">
@@ -988,10 +1022,10 @@ function despintarFilaVale(idTd){
 												</c:otherwise>
 											</c:choose>																						
 										</tr>
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td height="5" colspan="4"></td>
 										</tr>
-										<tr>
+										<tr class="apagar${valeTransporte.id}">
 											<td colspan="4">
 											<table class="cuadrado" align="center" width="80%"
 												cellpadding="2">
@@ -1018,13 +1052,22 @@ function despintarFilaVale(idTd){
 											</table>
 											</td>
 										</tr>
-				
-										<tr>
+										
+										<c:if test="${valeTransporte.fechaDevolucion ==null}">
+											<tr>
+												<td align="center" colspan="4">
+													<input id="idBotonRemoverValeEnUso${valeTransporte.id}" type="button" value="-" onclick="javascript:removerValeEnUso(${valeTransporte.id},${index.count});">
+												</td>
+											</tr>
+										</c:if>
+										
+										<tr class="apagar${valeTransporte.id}">
 											<td height="5" colspan="4"></td>
 										</tr>
 									</table>
 								</td>
 							</tr>
+							
 							<tr>
 								<td height="5" colspan="4"></td>
 							</tr>

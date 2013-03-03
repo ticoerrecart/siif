@@ -15,7 +15,7 @@ import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
-import ar.com.siif.struts.utils.Validator;
+import ar.com.siif.dto.ValeTransporteDTO;
 
 public class GuiaForestalForm extends ActionForm {
 
@@ -28,6 +28,8 @@ public class GuiaForestalForm extends ActionForm {
 	private List<SubImporteDTO> listaSubImportes;
 
 	private List<RangoDTO> rangos;
+
+	private List<ValeTransporteDTO> valesTransporte;
 
 	private String fechaVencimiento;
 
@@ -51,6 +53,10 @@ public class GuiaForestalForm extends ActionForm {
 
 		rangos = (List<RangoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(RangoDTO.class));
+
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(
+				new ArrayList(),
+				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 	}
 
 	@Override
@@ -80,6 +86,10 @@ public class GuiaForestalForm extends ActionForm {
 
 		rangos = (List<RangoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(RangoDTO.class));
+
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(
+				new ArrayList(),
+				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 	}
 
 	public List<RangoDTO> getRangos() {
@@ -122,8 +132,7 @@ public class GuiaForestalForm extends ActionForm {
 	public void setListaSubImportes(List<SubImporteDTO> listaSubImportes) {
 		this.listaSubImportes = listaSubImportes;
 	}
-	
-	
+
 	public String getFechaVencimiento() {
 		return fechaVencimiento;
 	}
@@ -140,15 +149,23 @@ public class GuiaForestalForm extends ActionForm {
 		this.tipoTerreno = tipoTerreno;
 	}
 
-	public void normalizarListaFiscalizaciones(){
-		
-		List<FiscalizacionDTO> listaEliminar =  new ArrayList<FiscalizacionDTO>();
+	public void normalizarListaFiscalizaciones() {
+
+		List<FiscalizacionDTO> listaEliminar = new ArrayList<FiscalizacionDTO>();
 		for (FiscalizacionDTO fiscalizacion : listaFiscalizaciones) {
-			if(fiscalizacion != null && fiscalizacion.getId() == 0){
+			if (fiscalizacion != null && fiscalizacion.getId() == 0) {
 				listaEliminar.add(fiscalizacion);
 			}
 		}
 		listaFiscalizaciones.removeAll(listaEliminar);
 	}
-	
+
+	public List<ValeTransporteDTO> getValesTransporte() {
+		return valesTransporte;
+	}
+
+	public void setValesTransporte(List<ValeTransporteDTO> valesTransporte) {
+		this.valesTransporte = valesTransporte;
+	}
+
 }
