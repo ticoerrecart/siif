@@ -32,8 +32,10 @@
 
 
 function submitir(){
-	calcularVolumen();
-	validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
+	if(confirm("Esta seguro que desea modificar la Fiscalización ?")){
+		calcularVolumen();
+		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
+	}	
 }
 
 function volver(){
@@ -389,15 +391,13 @@ $(function() {
 										onclick="calcularVolumen();"></td>
 								</tr>
 						</c:if>
-
-					</c:if>
-
 					<tr>
 						<td height="10" colspan="3"></td>
 					</tr>
 				</table>
 			</td>
 		</tr>
+		</c:if>		
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>

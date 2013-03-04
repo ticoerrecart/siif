@@ -53,7 +53,9 @@ function volverModificacionGuia(){
 function submitir(){
 
 	//validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
-	validarForm("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
+	if(confirm("Esta seguro que desea modificar la Guía Forestal?")){
+		validarForm("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
+	}	
 }
 
 function exp(sec) {
