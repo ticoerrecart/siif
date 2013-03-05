@@ -12,7 +12,11 @@
 
 <link rel="stylesheet" href="<html:rewrite page='/css/ui-lightness/jquery-ui-1.8.10.custom.css'/>"
 	type="text/css">
-
+<style>
+	.claseAnulada {
+		background-image:url("<html:rewrite page='/imagenes/anulada.gif'/>");		
+	}
+</style>
 <script type="text/javascript">
 
 var type;
@@ -157,7 +161,7 @@ function volverAltaGFB(){
 <input id="idParamIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 
 <div id="idGuiaForestal">
-<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+<table border="0" class="cuadrado anulable" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td colspan="4" class="azulAjustado">
 			<bean:message key='SIIF.titulo.GuiaForestal'/>
@@ -214,7 +218,7 @@ function volverAltaGFB(){
 </table>
 
 <!-- LOCALIZACION -->
-<table border="0" class="cuadrado" align="center" width="80%"
+<table border="0" class="cuadrado anulable" align="center" width="80%"
 	cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
@@ -260,7 +264,7 @@ function volverAltaGFB(){
 		</tr>
 	</table>
 
-<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+<table border="0" class="cuadrado anulable" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td height="10" colspan="4"></td>
 	</tr>
@@ -782,7 +786,7 @@ function volverAltaGFB(){
 	</tr>	
 </table>
 
-<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+<table border="0" class="cuadrado anulable" align="center" width="80%" cellpadding="2">
 	<tr>    
 		<td height="10" colspan="4"></td>
 	</tr>
@@ -804,6 +808,8 @@ function volverAltaGFB(){
 		<td height="10" colspan="4"></td>
 	</tr> 
 </table>
+
+
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>    
 		<td height="10" colspan="4"></td>
@@ -825,3 +831,9 @@ function volverAltaGFB(){
 </div>	 				  
 <div id="idDivFiscalizacion" style="display: none;">
 </div>
+
+<c:if test="${guiaForestal.anulado}">
+	<script>
+		$(".anulable").addClass("claseAnulada");
+	</script>
+</c:if>
