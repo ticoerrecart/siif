@@ -14,7 +14,7 @@
 	type="text/css">
 <style>
 	.claseAnulada {
-		background-image:url("<html:rewrite page='/imagenes/anulada.gif'/>");		
+		background-image:url("<html:rewrite page='/imagenes/anulada.jpg'/>");		
 	}
 </style>
 <script type="text/javascript">
@@ -834,6 +834,6 @@ function volverAltaGFB(){
 
 <c:if test="${guiaForestal.anulado}">
 	<script>
-		$(".anulable").addClass("claseAnulada");
+		$("#tdBody").addClass("claseAnulada");
 	</script>
 </c:if>

@@ -88,8 +88,11 @@ function agrElimFisc(indice,idFiscalizacion){
 	}
 }
 
-function submitAsociarGuia(){
-	validarForm("guiaForestalForm","../guiaForestal","validarGuiaForestalBasicaForm","GuiaForestalForm");
+function submitDesasociarGuia(){
+	if(confirm("Esta seguro que desea desasociar las fiscalizaciones ?")){
+		//validarForm("guiaForestalForm","../guiaForestal","validarGuiaForestalBasicaForm","GuiaForestalForm");
+		document.forms[0].submit();
+	}	
 } 
 </script>
 
@@ -432,7 +435,7 @@ function submitAsociarGuia(){
 	</tr>
 	<tr>
 		<td height="20" align="center">
-			<input id="idBotonCrearGuia" class="botonerab" type="submit" value="Aceptar">
+			<input id="idBotonCrearGuia" class="botonerab" type="button" value="Aceptar" onclick="submitDesasociarGuia();">
 			<input type="button" class="botonerab" value="Volver" 
 				onclick="javascript:volverRecuperarGuiaDesasociarFiscalizacion();">
 		</td>

@@ -121,7 +121,12 @@ function headerTabla(){
 				<input class="botonerab" type="text" size="29" readonly="readonly"
 					   value="<c:out value='${fiscalizacion.oficinaAlta.nombre}'></c:out>">
 			</td>
-			<td colspan="2"></td>			
+			<td class="botoneralNegritaRight">
+				<bean:message key='SIIF.label.NroDeGuia'/>
+			</td>
+			<td align="left">
+				<input type="text" class="botonerab" value="${fiscalizacion.guiaForestal.nroGuia}" readonly="readonly">
+			</td>			
 		</tr>		
 				
 		<tr>
