@@ -476,8 +476,8 @@ public abstract class Validator {
 									"Diámetro 2 del " + tipoProd);
 
 					ok = ok
-							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoRollizo,
-									Constantes.maxLargoRollizo, "Largo del " + tipoProd);
+							&& validarLargo(pError, muestra.getLargo(), Constantes.minLargoFuste,
+									Constantes.maxLargoFuste, "Largo del " + tipoProd);
 
 				}
 				if (idTipoProducto == 4) {
