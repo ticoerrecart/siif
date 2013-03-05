@@ -28,7 +28,7 @@
 		<TD><tiles:insert attribute="menu" /></TD>
 	</TR>
 	<TR>
-		<TD height="80%"><tiles:insert attribute="body" /></TD>
+		<TD height="80%" id="tdBody"><tiles:insert attribute="body" /></TD>
 	</TR>
 	<TR>
 		<TD><tiles:insert attribute="footer" /></TD>
