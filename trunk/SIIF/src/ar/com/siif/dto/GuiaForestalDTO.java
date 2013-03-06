@@ -219,7 +219,9 @@ public class GuiaForestalDTO {
 				}
 			}
 			if (mts3 > 0) {
-				prod.setMts3xpieza(mts3 / piezas);
+				if(piezas>0){
+					prod.setMts3xpieza(mts3 / piezas);
+				}
 			}
 			prods.add(prod);
 		}
