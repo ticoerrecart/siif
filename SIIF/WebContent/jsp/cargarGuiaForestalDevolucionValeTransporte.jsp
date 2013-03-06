@@ -60,16 +60,11 @@ var idVale;
 function registrarDevolucion(vale){
 
 	if(confirm("¿Está seguro que desea registrar la devolución del Vale de Transporte?")){
-
-		/*var id= "#idTr"+idBoleta;
-		$(id).html("");
-		$("#idBoletas").load('../../guiaForestal.do?metodo=registrarPagoBoletaDeposito&idBoleta='+idBoleta);*/
-
 		idVale = vale;
 		GuiaForestalFachada.registrarDevolucionYCompletarDatosValeTransporte(idVale, 
 				   $("#idDestino"+idVale).val(),$("#idVehiculo"+idVale).val(),$("#idMarca"+idVale).val(),
 				   $("#idDominio"+idVale).val(),$("#idProducto"+idVale).val(),$("#idNroPiezas"+idVale).val(),
-				   $("#idCantM3"+idVale).val(),$("#idEspecie"+idVale).val(), $("#idFechaDevolucion"+idVale).val(),
+				   $("#idCantM3"+idVale).val(),$("#idEspecie"+idVale).val(),
 				   registrarDevolucionCallback);
 		
 	}		
@@ -85,8 +80,8 @@ function registrarDevolucionCallback(valor){
 		var idBotonDevolucion = "#idBotonDevolucion"+idVale;
 		$(idBotonDevolucion).toggle();
 
-		var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
-		$(idFechaDevolucion).attr('value', valor);
+		/*var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
+		$(idFechaDevolucion).attr('value', valor);*/
 	} else {
 		var valor = valor.replace("<error>","");
 		var nodos = valor.split("</error>");
@@ -137,7 +132,6 @@ function actEspecie(indice){
 	
 	
 	
-	
 	if (piezas != null) {
 		$("#idCantM3"+indice).val(roundNumber(rel*piezas,2));	
 	}
@@ -156,15 +150,7 @@ function pintarFila(idTr){
 }
 
 function despintarFila(idTr){
-
-	/*if(!$('#idCheck'+idTr).is(':checked')){
-		if(idTr%2){
-			clase2 = "par";		
-		}else{
-			clase2 = "";
-		}*/	
 		$('#tdVale'+idTr).attr("class", "grisSubtitulo");
-	//}		
 }
 
 </script>
@@ -545,24 +531,9 @@ function despintarFila(idTr){
 											</td>
 										</tr>																
 										<tr>
-											<td width="10%" class="botoneralNegritaRight">
-												<bean:message key='SIIF.label.Fecha_Dev'/>
-											</td>
-											<td width="40%" align="left">
-												<input id="idFechaDevolucion<c:out value='${valeTransporte.id}'></c:out>"
-													   type="text"  class="botonerab" value="${valeTransporte.fechaDevolucion}"
-													   <c:out value="${readonly}"></c:out>> 
-												<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
-													 align="top" width='17' height='21'>														 					
-											</td>
 											<td width="10%" class="botoneralNegritaRight"></td>
 												<c:choose>
 													<c:when test="${valeTransporte.fechaDevolucion ==null}">
-														<script>
-														$(function() {
-															$( "#idFechaDevolucion<c:out value='${valeTransporte.id}'/>" ).datepicker({ dateFormat: 'dd/mm/yy'});
-														});
-														</script>													
 														<td width="40%" class="rojoAdvertenciaLeft"
 															id="idEstadoVale<c:out value='${valeTransporte.id}'></c:out>">
 															<bean:message key='SIIF.label.ENUSO'/>
@@ -611,6 +582,7 @@ function despintarFila(idTr){
 													</td>
 													<td>
 														<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">
+														${valeTransporte.cantidadMts}
 													</td>
 													<td>
 														<input id="idEspecie<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.especie}" readonly="readonly">
