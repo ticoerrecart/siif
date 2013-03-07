@@ -72,7 +72,6 @@
 			<forward name=".recuperarUsuarios" path=".recuperarUsuarios" />
 			<forward name=".reporteVolumenFiscalizadoProdForestalEntreFechas" 
 						path=".reporteVolumenFiscalizadoProdForestalEntreFechas" />			
-			<forward name=".recuperarGuiaAsociarFiscalizacion" path=".recuperarGuiaAsociarFiscalizacion" />
 			<forward name=".recuperarGuiaDesasociarFiscalizacion" path=".recuperarGuiaDesasociarFiscalizacion" />
 			<forward name=".reportePorProductoVolumenPorAnioForestal" path=".reportePorProductoVolumenPorAnioForestal" />
 			<forward name=".reporteRecaudacionTotalProductoresEntreFechas" path=".reporteRecaudacionTotalProductoresEntreFechas" />
@@ -145,6 +144,8 @@
 						 path="/guiaForestal.do?metodo=recuperarTiposDeEntidadParaModificacionGFB" />
 			
 				<!-- Asociar Fiscalizacion a Guia -->
+				<forward name="exitoRecuperarProductoresParaAsociarFiscalizacionesAGuia" path=".recuperarGuiaAsociarFiscalizacion" />
+				<forward name="exitoRecuperarGuiasForestalesParaAsociarFiscalizaciones" path="/jsp/bloqueMostrarGuiasForestalesParaAsociarFiscalizaciones.jsp" />
 				<forward name="exitoRecuperarGuiaAsociarFiscalizacion" path=".cargarGuiaAsociarFiscalizacion" />
 				<forward name="exitoAsociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaAsociarFiscalizacion" />
 
@@ -152,37 +153,37 @@
 				<forward name="exitoRecuperarGuiaDesasociarFiscalizacion" path=".cargarGuiaDesasociarFiscalizacion" />
 				<forward name="exitoDesasociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaDesasociarFiscalizacion" />				
 			
-			<!-- Boleta de Deposito  -->			
-			<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
-			<forward name="exitoRecuperarGuiasForestalesParaBoletaDeposito" 
-							path="/jsp/bloqueMostrarGuiasForestalesParaBoletaDeposito.jsp" />	
-			<forward name="exitoCargarGuiaForestalPagoBoletaDeposito" path=".cargarGuiaForestalPagoBoletaDepostio" />
-			<!--<forward name="exitoRegistrarPagoBoletaDeposito" path="/jsp/bloqueRegistroPagoBoletaDeposito.jsp" /> -->
-			<forward name="exitoCargarGuiaForestalReemBoletaDeposito" path=".cargarGuiaForestalReemBoletaDeposito" />	
-			
-			<forward name="exitoRecuperarGuiaForestalPorNroGuia" 
-							path="/guiaForestal.do?metodo=cargarGuiaForestalPagoBoletaDeposito" />			
-			
-			<!-- Vale de Transporte  -->
-			<forward name="exitoRecuperarProductoresParaValeTransporte" path=".cargarProductoresParaValeTransporte" />
-			<forward name="exitoRecuperarGuiasForestalesParaValeTransporte" 
-							path="/jsp/bloqueMostrarGuiasForestalesParaValeTransporte.jsp" />	
-			<forward name="exitoCargarGuiaForestalDevolucionValeTransporte" path=".cargarGuiaForestalDevolucionValeTransporte" />
-			<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />
-			
-			<!-- Anulacion de Guia -->
-			<forward name="exitoRecuperarProductoresParaAnulacionDeGuia" path=".cargarProductoresParaAnulacioDeGuia" />
-			<forward name="exitoRecuperarGuiasForestalesParaAnulacionDeGuia" 
-							path="/jsp/bloqueMostrarGuiasForestalesParaAnulacion.jsp" />	
-			<forward name="exitoCargarGuiaForestalBasicaParaAnulacion" path=".cargarGuiaForestalParaAnulacioDeGuia" />
-			<forward name="exitoAnularGuiaForestal" path="/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&amp;forward=cargarGuiaForestalParaAnulacionDeGuia&amp;forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia" />
-			
-			<!-- Restablecer Guia -->
-			<forward name="exitoRecuperarProductoresParaRestablecerGuia" path=".cargarProductoresParaRestablecerGuia" />
-			<forward name="exitoRecuperarGuiasForestalesParaRestablecerGuia" 
-							path="/jsp/bloqueMostrarGuiasForestalesParaRestablecer.jsp" />		
-			<forward name="exitoCargarGuiaForestalBasicaParaRestablecer" path=".cargarGuiaForestalConsultaPorProductor" />				
-			
+				<!-- Boleta de Deposito  -->			
+				<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
+				<forward name="exitoRecuperarGuiasForestalesParaBoletaDeposito" 
+								path="/jsp/bloqueMostrarGuiasForestalesParaBoletaDeposito.jsp" />	
+				<forward name="exitoCargarGuiaForestalPagoBoletaDeposito" path=".cargarGuiaForestalPagoBoletaDepostio" />
+				<!--<forward name="exitoRegistrarPagoBoletaDeposito" path="/jsp/bloqueRegistroPagoBoletaDeposito.jsp" /> -->
+				<forward name="exitoCargarGuiaForestalReemBoletaDeposito" path=".cargarGuiaForestalReemBoletaDeposito" />	
+				
+				<forward name="exitoRecuperarGuiaForestalPorNroGuia" 
+								path="/guiaForestal.do?metodo=cargarGuiaForestalPagoBoletaDeposito" />			
+				
+				<!-- Vale de Transporte  -->
+				<forward name="exitoRecuperarProductoresParaValeTransporte" path=".cargarProductoresParaValeTransporte" />
+				<forward name="exitoRecuperarGuiasForestalesParaValeTransporte" 
+								path="/jsp/bloqueMostrarGuiasForestalesParaValeTransporte.jsp" />	
+				<forward name="exitoCargarGuiaForestalDevolucionValeTransporte" path=".cargarGuiaForestalDevolucionValeTransporte" />
+				<forward name="exitoCargarGuiaForestalReemplazarValeTransporte" path=".cargarGuiaForestalReemplazarValeTransporte" />
+				
+				<!-- Anulacion de Guia -->
+				<forward name="exitoRecuperarProductoresParaAnulacionDeGuia" path=".cargarProductoresParaAnulacioDeGuia" />
+				<forward name="exitoRecuperarGuiasForestalesParaAnulacionDeGuia" 
+								path="/jsp/bloqueMostrarGuiasForestalesParaAnulacion.jsp" />	
+				<forward name="exitoCargarGuiaForestalBasicaParaAnulacion" path=".cargarGuiaForestalParaAnulacioDeGuia" />
+				<forward name="exitoAnularGuiaForestal" path="/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&amp;forward=cargarGuiaForestalParaAnulacionDeGuia&amp;forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia" />
+				
+				<!-- Restablecer Guia -->
+				<forward name="exitoRecuperarProductoresParaRestablecerGuia" path=".cargarProductoresParaRestablecerGuia" />
+				<forward name="exitoRecuperarGuiasForestalesParaRestablecerGuia" 
+								path="/jsp/bloqueMostrarGuiasForestalesParaRestablecer.jsp" />		
+				<forward name="exitoCargarGuiaForestalBasicaParaRestablecer" path=".cargarGuiaForestalConsultaPorProductor" />				
+				
 												
 		</action>
 		<!-- FIN GUIA FORESTAL -->
