@@ -30,7 +30,7 @@
 
 	<tr>
 		<td class="azulAjustado">
-			<bean:message key='SIIF.titulo.AsociarGuiaAFiscalizacion'/>		
+			<bean:message key='SIIF.titulo.AsociarGuiaAFiscalizacion'/>
 		</td>
 	</tr>
 	<tr>
@@ -68,6 +68,7 @@
 	<tr>
 		<td height="30"></td>
 	</tr>
+	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
 </table>
 
 <script type="text/javascript">
