@@ -430,10 +430,15 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
 
+			GuiaForestalDTO guiaForestal = null;
 			String idGuia = request.getParameter("idGuia");
-
-			GuiaForestalDTO guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long
-					.parseLong(idGuia));
+			if (idGuia == null) {
+				GuiaForestalDTO guiaForestalDTO = ((GuiaForestalForm) form).getGuiaForestal();
+				guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForestalDTO
+						.getNroGuia());
+			} else {
+				guiaForestal = guiaForestalFachada.recuperarGuiaForestal(Long.parseLong(idGuia));
+			}
 
 			request.setAttribute("guiaForestal", guiaForestal);
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
