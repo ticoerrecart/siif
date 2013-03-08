@@ -280,6 +280,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		boolean ok10 = true;
 		boolean ok11 = true;
 		boolean ok12 = true;
+		boolean ok13 = true;
 		
 		ok = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getExportador().getId()), 
 											 "Exportador",error);		
@@ -306,6 +307,12 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			if(ok5){
 				ok5 = Validator.validarDoubleMayorQue(0, Double.toString(certificadoDTO.getVolumenTransferido()),
 													 "Volúmen Transferido", error);
+			}
+			
+			if(ok5){
+				ok13 = Validator.validarVolumenTransferenciaCertificadoOrigen(certificadoOrigenForm.getVolumenMaximoParaExportar(),
+						  certificadoDTO.getVolumenTransferido(),
+						  error);				
 			}
 		}
 			
@@ -334,7 +341,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		
 		ok12 = Validator.validarDeudaCertificadoOrigen(certificadoOrigenForm.isTieneDeuda(),certificadoOrigenForm.getRadioDeuda(),error);
 		
-		return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12;				
+		return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13;				
 	}
 
 	public boolean validarNroCertificadoForm(StringBuffer error, ActionForm form) {

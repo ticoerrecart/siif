@@ -50,7 +50,7 @@ public class Fiscalizacion {
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "tipoProducto_fk")
-	private TipoProducto tipoProducto;
+	private TipoProductoForestal tipoProducto;
 
 	@OneToMany(mappedBy = "fiscalizacion")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -130,11 +130,11 @@ public class Fiscalizacion {
 		this.tamanioMuestra = tamanioMuestra;
 	}
 
-	public TipoProducto getTipoProducto() {
+	public TipoProductoForestal getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProducto tipoProducto) {
+	public void setTipoProducto(TipoProductoForestal tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

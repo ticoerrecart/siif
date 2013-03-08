@@ -20,6 +20,7 @@ import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoEnCertificadoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
@@ -56,7 +57,7 @@ public abstract class ProviderDominio {
 
 	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasDTO, Rodal rodal, Entidad productorForestal,
-			Entidad oficinaForestal, TipoProducto tipoProducto, Usuario usuario) {
+			Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
@@ -93,11 +94,18 @@ public abstract class ProviderDominio {
 		return muestra;
 	}
 
-	public static TipoProducto getTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO) {
+	public static TipoProducto getTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO) {
 
 		TipoProductoForestal tipoProducto = new TipoProductoForestal();
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
-
+		tipoProducto.setCantDiametros(tipoProductoForestalDTO.getCantDiametros());
+		tipoProducto.setDiam1Desde(tipoProductoForestalDTO.getDiam1Desde());
+		tipoProducto.setDiam1Hasta(tipoProductoForestalDTO.getDiam1Hasta());
+		tipoProducto.setDiam2Desde(tipoProductoForestalDTO.getDiam2Desde());
+		tipoProducto.setDiam2Hasta(tipoProductoForestalDTO.getDiam2Hasta());
+		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
+		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());
+		
 		return tipoProducto;
 	}
 
@@ -144,7 +152,7 @@ public abstract class ProviderDominio {
 		return entidad;
 	}
 
-	public static Aforo getAforo(AforoDTO aforoDTO, TipoProducto tipoProducto) {
+	public static Aforo getAforo(AforoDTO aforoDTO, TipoProductoForestal tipoProducto) {
 
 		Aforo aforo = new Aforo();
 
@@ -156,7 +164,7 @@ public abstract class ProviderDominio {
 		return aforo;
 	}
 
-	public static Aforo getAforo(Aforo aforo, AforoDTO aforoDTO, TipoProducto tipoProducto) {
+	public static Aforo getAforo(Aforo aforo, AforoDTO aforoDTO, TipoProductoForestal tipoProducto) {
 
 		aforo.setEstado(aforoDTO.getEstado());
 		aforo.setTipoProducto(tipoProducto);
@@ -370,7 +378,7 @@ public abstract class ProviderDominio {
 		return vale;
 	}
 
-	public static SubImporte getSubImporte(GuiaForestal guia, TipoProducto tipoProducto,
+	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto,
 			SubImporteDTO subImporteDTO) {
 
 		SubImporte subImporte = new SubImporte();

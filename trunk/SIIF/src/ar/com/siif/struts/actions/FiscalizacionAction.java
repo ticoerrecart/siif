@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -29,6 +30,7 @@ import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
+import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.MyLogger;
 
@@ -56,7 +58,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidadProductores();
 
-			List<TipoProductoDTO> tiposProducto = tipoProductoForestalFachada
+			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada
 					.recuperarTiposProductoForestalDTO();
 
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
@@ -223,7 +225,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion
 					.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal()
 					.getLocalidad().getId());
-			List<TipoProductoDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
+			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
 
 			List<PMF> pmf = ubicacionFachada.getPMFs(fiscalizacion.getProductorForestal().getId());
 			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal()
@@ -331,11 +333,6 @@ public class FiscalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	public boolean validarFiscalizacionForm(StringBuffer error, ActionForm form) {
-		FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
-		return fiscalizacionForm.validar(error);
-	}
-
 	@SuppressWarnings("unchecked")
 	public ActionForward recuperarTiposDeEntidadParaFiscalizacionesAAnular(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -400,4 +397,81 @@ public class FiscalizacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	
+	//-----------------------------------------------------------------------------//
+	//-------------------- Metodo de Validacion de la Fiscalizacion ---------------//
+	//-----------------------------------------------------------------------------//
+	
+	public boolean validarFiscalizacionForm(StringBuffer error, ActionForm form) {
+		FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
+		FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
+		
+		WebApplicationContext ctx = getWebApplicationContext();
+		ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
+																.getBean("tipoProductoForestalFachada");		
+		TipoProductoForestalDTO tipoProductoForestalDTO = tipoProductoForestalFachada.recuperarTipoProductoForestalDTO(
+																			fiscalizacionDTO.getTipoProducto().getId());
+		
+		//Esto es pq desde la pagina de alta de fiscalizacion, puedo cambiar la cantidad de diametros del tipo de prod,
+		//y debo validar en consecuencia de eso y no por la cantidad de diametros que tenga el tipo de producto recuperado
+		//de la base.
+		tipoProductoForestalDTO.setCantDiametros(fiscalizacionDTO.getTipoProducto().getCantDiametros());
+		tipoProductoForestalDTO.replicarDiametro2();
+		
+		boolean ok2 = true;
+		boolean ok3 = true;
+		boolean ok4 = true;
+		boolean ok5 = true;
+		boolean ok6 = true;
+		boolean ok7 = true;
+		boolean ok8 = true;
+		boolean ok9 = true;
+		boolean ok10 = true;
+		boolean ok11 = true;
+		boolean ok12 = true;
+		boolean ok13 = true;
+		boolean ok14 = true;
+		boolean ok15 = true;
+		boolean ok16 = true;
+
+		ok2 = Validator.validarComboRequerido("-1",
+				Long.toString(fiscalizacionDTO.getProductorForestal().getId()),
+				"Productor Forestal", error);
+
+		ok5 = Validator.requerido(fiscalizacionDTO.getFecha(), "Fecha", error)
+				&& Validator.validarFechaValida(fiscalizacionDTO.getFecha(), "Fecha", error);
+
+		ok3 = Validator.requerido(fiscalizacionDTO.getPeriodoForestal(), "Periodo Forestal", error);
+
+		ok11 = Validator.validarComboRequerido("-1",
+				Long.toString(fiscalizacionDTO.getTipoProducto().getId()), "Tipo de Producto",
+				error);
+
+		ok9 = Validator.validarDoubleMayorQue(0,
+				Double.toString(fiscalizacionDTO.getCantidadMts()), "Cantidad Mts3", error);
+
+		//if (fiscalizacionDTO.getTipoProducto().getId().longValue() != Constantes.LENIA_ID) {
+		if (tipoProductoForestalDTO.getCantDiametros() > 0) {
+		
+			ok8 = Validator.validarEnteroMayorQue(0,
+					Integer.toString(fiscalizacionDTO.getCantidadUnidades()), "Cantidad Unidades",
+					error);
+			ok10 = Validator.validarEnteroMayorQue(0,
+					Integer.toString(fiscalizacionDTO.getTamanioMuestra()), "Tamaño de la Muestra",
+					error);
+			ok16 = Validator.validarMuestras(fiscalizacionForm.getMuestrasDTO(), 
+											 tipoProductoForestalDTO,
+											 error);			
+		}
+
+		ok11 = Validator.validarComboRequerido("-1",
+				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
+
+		ok15 = Validator.validarComboRequerido("-1",
+				Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
+
+		//VALIDACIONES FISCALIZACION
+		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
+				&& ok14 && ok15 && ok16;		
+	}	
 }

@@ -16,13 +16,13 @@ public class SubImporteDTO implements Comparable<SubImporteDTO>{
 	
 	private double importe;
 	
-	private TipoProductoDTO tipoProducto;
+	private TipoProductoForestalDTO tipoProducto;
 	
 	private GuiaForestalDTO guiaForestal;
 
 	public SubImporteDTO(){
 		
-		tipoProducto = new TipoProductoDTO();
+		tipoProducto = new TipoProductoForestalDTO();
 		guiaForestal = new GuiaForestalDTO();
 	}
 	
@@ -82,11 +82,11 @@ public class SubImporteDTO implements Comparable<SubImporteDTO>{
 		this.importe = importe;
 	}
 
-	public TipoProductoDTO getTipoProducto() {
+	public TipoProductoForestalDTO getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProductoDTO tipoProducto) {
+	public void setTipoProducto(TipoProductoForestalDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

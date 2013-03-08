@@ -22,6 +22,7 @@ import ar.com.siif.dto.RolDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoEnCertificadoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
@@ -44,6 +45,7 @@ import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.TipoProductoEnCertificado;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Tranzon;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
@@ -77,11 +79,29 @@ public abstract class ProviderDTO {
 
 		tipoProductoDTO.setId(tipoProducto.getId());
 		tipoProductoDTO.setNombre(tipoProducto.getNombre());
-
+		
 		return tipoProductoDTO;
 
 	}
 
+	public static TipoProductoForestalDTO getTipoProductoForestalDTO(TipoProductoForestal tipoProductoForestal) {
+
+		TipoProductoForestalDTO tipoProductoForestalDTO = new TipoProductoForestalDTO();
+
+		tipoProductoForestalDTO.setId(tipoProductoForestal.getId());
+		tipoProductoForestalDTO.setNombre(tipoProductoForestal.getNombre());
+		tipoProductoForestalDTO.setCantDiametros(tipoProductoForestal.getCantDiametros());
+		tipoProductoForestalDTO.setDiam1Desde(tipoProductoForestal.getDiam1Desde());
+		tipoProductoForestalDTO.setDiam1Hasta(tipoProductoForestal.getDiam1Hasta());
+		tipoProductoForestalDTO.setDiam2Desde(tipoProductoForestal.getDiam2Desde());
+		tipoProductoForestalDTO.setDiam2Hasta(tipoProductoForestal.getDiam2Hasta());
+		tipoProductoForestalDTO.setLargoDesde(tipoProductoForestal.getLargoDesde());
+		tipoProductoForestalDTO.setLargoHasta(tipoProductoForestal.getLargoHasta());		
+		
+		return tipoProductoForestalDTO;
+
+	}	
+	
 	public static PMFDTO getPMFDTO(PMF pmf) {
 
 		PMFDTO pmfDTO = new PMFDTO();
@@ -169,7 +189,7 @@ public abstract class ProviderDTO {
 
 		aforoDTO.setEstado(aforo.getEstado());
 		aforoDTO.setId(aforo.getId());
-		aforoDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(aforo.getTipoProducto()));
+		aforoDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(aforo.getTipoProducto()));
 		aforoDTO.setTipoProductor(aforo.getTipoProductor());
 		aforoDTO.setTipoProductorDesc(aforo.getTipoProductorDesc());
 		aforoDTO.setValorAforo(aforo.getValorAforo());
@@ -235,7 +255,7 @@ public abstract class ProviderDTO {
 		fiscalizacionDTO.setProductorForestal(ProviderDTO.getEntidadDTO(fiscalizacion
 				.getProductorForestal()));
 		fiscalizacionDTO.setRodal(ProviderDTO.getRodalDTO(fiscalizacion.getRodal()));
-		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(fiscalizacion
+		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
 		fiscalizacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuario()));
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
@@ -405,7 +425,7 @@ public abstract class ProviderDTO {
 		subImporteDTO.setId(subImporte.getId());
 		//subImporteDTO.setImporte(subImporte.getImporte());
 		subImporteDTO.setImporte(MathUtils.round(subImporte.getImporte(), 2));
-		subImporteDTO.setTipoProducto(ProviderDTO.getTipoProductoDTO(subImporte.getTipoProducto()));
+		subImporteDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(subImporte.getTipoProducto()));
 		subImporteDTO.setValorAforos(subImporte.getValorAforos());
 
 		return subImporteDTO;

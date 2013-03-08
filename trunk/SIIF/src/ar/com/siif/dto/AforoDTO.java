@@ -12,11 +12,11 @@ public class AforoDTO {
 	
 	private double valorAforo;
 	
-	private TipoProductoDTO tipoProducto;
+	private TipoProductoForestalDTO tipoProducto;
 
 	public AforoDTO(){
 		
-		tipoProducto = new TipoProductoDTO();
+		tipoProducto = new TipoProductoForestalDTO();
 	}
 	
 	public Long getId() {
@@ -51,11 +51,11 @@ public class AforoDTO {
 		this.valorAforo = valorAforo;
 	}
 
-	public TipoProductoDTO getTipoProducto() {
+	public TipoProductoForestalDTO getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProductoDTO tipoProducto) {
+	public void setTipoProducto(TipoProductoForestalDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 
