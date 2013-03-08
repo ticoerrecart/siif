@@ -49,7 +49,9 @@
 		<convert converter="bean" match="ar.com.siif.dto.LocalidadDestinoDTO">
 			<param name="include" value="id,nombre" />
 		</convert>
-				
+		<convert converter="bean" match="ar.com.siif.dto.TipoProductoForestalDTO">
+			<param name="include" value="id,nombre,cantDiametros,largoDesde,largoHasta,diam1Desde,diam1Hasta,diam2Desde,diam2Hasta" />
+		</convert>				
 
 		<convert converter="exception" match="ar.com.siif.negocio.exception.NegocioException">
 			<param name="include" value="message" />
@@ -97,7 +99,11 @@
 		
 		<create creator="spring" javascript="LocalidadFachada">
 			<param name="beanName" value="localidadFachada" />
-		</create>		
+		</create>
+		
+		<create creator="spring" javascript="TipoProductoForestalFachada">
+			<param name="beanName" value="tipoProductoForestalFachada" />
+		</create>	
 	</allow>
 
 </dwr> 

@@ -233,42 +233,47 @@ $(function() {
 						<td colspan="3" height="10"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight"><bean:message
-								key='SIIF.label.PlanManejoForestal' /></td>
-						<td><html:select styleId="idPMF"
-								property="idPMF" styleClass="botonerab disabled"
-								value="${fiscalizacionDTO.rodal.marcacion.tranzon.pmf.id}"
-								onchange="actualizarComboTranzon();">
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.PlanManejoForestal' />
+						</td>
+						<td>
+							<html:select styleId="idPMF" property="idPMF" styleClass="botonerab"
+										value="${fiscalizacionDTO.rodal.marcacion.tranzon.pmf.id}"
+										onchange="actualizarComboTranzon();">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${pmfs}" var="pmf">
 									<html:option value="${pmf.id}">
 										<c:out value="${pmf.nombre} - ${pmf.expediente}"></c:out>
 									</html:option>
 								</c:forEach>
-							</html:select></td>
+							</html:select>
+						</td>
 						<td width="25%"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight"><bean:message
-								key='SIIF.label.Tranzon' /></td>
-						<td><html:select styleId="idTranzon" property="idTranzon"
-								styleClass="botonerab disabled"
-								value="${fiscalizacionDTO.rodal.marcacion.tranzon.id}"
-								onchange="actualizarComboMarcacion();">
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.Tranzon' />
+						</td>
+						<td>
+							<html:select styleId="idTranzon" property="idTranzon" styleClass="botonerab"
+									value="${fiscalizacionDTO.rodal.marcacion.tranzon.id}"
+									onchange="actualizarComboMarcacion();">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${tranzones}" var="tranzon">
 									<html:option value="${tranzon.id}">
 										<c:out value="${tranzon.numero} - ${tranzon.disposicion}"></c:out>
 									</html:option>
 								</c:forEach>
-							</html:select></td>
+							</html:select>
+						</td>
 						<td width="25%"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight"><bean:message
-								key='SIIF.label.Marcacion' /></td>
-						<td><html:select styleId="idMarcacion" property="idMarcacion"
-								styleClass="botonerab disabled"
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.Marcacion' />
+						</td>
+						<td>
+							<html:select styleId="idMarcacion" property="idMarcacion" styleClass="botonerab"
 								value="${fiscalizacionDTO.rodal.marcacion.id}"
 								onchange="actualizarComboRodal();">
 								<option value="-1">- Seleccione -</option>
@@ -277,21 +282,25 @@ $(function() {
 										<c:out value="${marcacion.disposicion}"></c:out>
 									</html:option>
 								</c:forEach>
-							</html:select></td>
+							</html:select>
+						</td>
 						<td width="25%"></td>
 					</tr>
 					<tr>
-						<td width="40%" class="botoneralNegritaRight"><bean:message
-								key='SIIF.label.Rodal' /></td>
-						<td><html:select styleId="idRodal" property="idRodal"
-								styleClass="botonerab disabled" value="${fiscalizacionDTO.rodal.id}">
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.Rodal' />
+						</td>
+						<td>
+							<html:select styleId="idRodal" property="idRodal" styleClass="botonerab" 
+								value="${fiscalizacionDTO.rodal.id}">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${rodales}" var="rodal">
 									<html:option value="${rodal.id}">
 										<c:out value="${rodal.nombre}"></c:out>
 									</html:option>
 								</c:forEach>
-							</html:select></td>
+							</html:select>
+						</td>
 						<td width="25%"></td>
 					</tr>
 					<tr>

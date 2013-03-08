@@ -11,6 +11,8 @@
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript"
+	src="<html:rewrite page='/js/validarNum.js'/>"></script>		
+<script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/jquery-1.3.2.min.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/Concurrent.Thread-full-20090713.js'/>"></script>
@@ -70,7 +72,7 @@ function submitir(metodoValidacion){
 <%-- errores de validaciones AJAX --%>
 <div id="errores" class="rojoAdvertencia">${error}</div>
 
-<<html:hidden property="metodo" value="${metodo}" styleId="idMetodo"/>
+<html:hidden property="metodo" value="${metodo}" styleId="idMetodo"/>
 
 <table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
 	<tr>
@@ -93,7 +95,7 @@ function submitir(metodoValidacion){
 	<tr>
 		<td>
 		<table id="idTipoProducto" border="0" class="cuadrado" align="center"
-			width="60%" cellpadding="2">
+			width="70%" cellpadding="2">
 			<tr>
 				<td class="azulAjustado"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 				<td class="azulAjustado"></td>
