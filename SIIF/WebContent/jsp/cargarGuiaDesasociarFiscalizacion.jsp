@@ -22,8 +22,9 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function volverRecuperarGuiaDesasociarFiscalizacion(){	
-
-	parent.location = contextRoot() +  '/jsp.do?page=.recuperarGuiaDesasociarFiscalizacion';		
+	var idTipoDeEntidad = $("#idParamIdTipoDeEntidad").val();
+	var idProductor = $("#idParamProductor").val();	
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaDesasociarFiscalizacionesAGuia&idTipoDeEntidad='+idTipoDeEntidad + '&idProductor=' + idProductor;		
 }
 
 function exp(sec) {
@@ -97,6 +98,8 @@ function submitDesasociarGuia(){
 </script>
 
 <input id="idParamForward" type="hidden" value="${paramForward}">
+<input id="idParamProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
+<input id="idParamIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 
 <div id="idGuiaForestal">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">

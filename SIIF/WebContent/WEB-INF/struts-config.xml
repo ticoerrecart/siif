@@ -145,13 +145,15 @@
 			
 				<!-- Asociar Fiscalizacion a Guia -->
 				<forward name="exitoRecuperarProductoresParaAsociarFiscalizacionesAGuia" path=".recuperarGuiaAsociarFiscalizacion" />
+				<forward name="exitoRecuperarProductoresParaDesasociarFiscalizacionesAGuia" path=".recuperarGuiaDesasociarFiscalizacion" />
 				<forward name="exitoRecuperarGuiasForestalesParaAsociarFiscalizaciones" path="/jsp/bloqueMostrarGuiasForestalesParaAsociarFiscalizaciones.jsp" />
+				<forward name="exitoRecuperarGuiasForestalesParaDesasociarFiscalizaciones" path="/jsp/bloqueMostrarGuiasForestalesParaDesasociarFiscalizaciones.jsp" />
 				<forward name="exitoRecuperarGuiaAsociarFiscalizacion" path=".cargarGuiaAsociarFiscalizacion" />
-				<forward name="exitoAsociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaAsociarFiscalizacion" />
+				<forward name="exitoAsociarFiscalizacionesConGuiasForestales" path="/guiaForestal.do?metodo=recuperarProductoresParaAsociarFiscalizacionesAGuia" />
 
 				<!-- Desasociar Fiscalizacion a Guia -->
 				<forward name="exitoRecuperarGuiaDesasociarFiscalizacion" path=".cargarGuiaDesasociarFiscalizacion" />
-				<forward name="exitoDesasociarFiscalizacionesConGuiasForestales" path=".recuperarGuiaDesasociarFiscalizacion" />				
+				<forward name="exitoDesasociarFiscalizacionesConGuiasForestales" path="/guiaForestal.do?metodo=recuperarProductoresParaDesasociarFiscalizacionesAGuia" />				
 			
 				<!-- Boleta de Deposito  -->			
 				<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
