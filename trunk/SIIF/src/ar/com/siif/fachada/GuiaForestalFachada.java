@@ -187,9 +187,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale, String destino,
-			String vehiculo, String marca, String dominio, String producto, int nroPiezas,
-			double cantM3, String especie) throws NegocioException {
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
+			String destino, String vehiculo, String marca, String dominio,
+			String producto, int nroPiezas, double cantM3, String especie,
+			String fechaDevolucion) throws NegocioException {
 
 		try {
 			// Validar que en la devolución de Vales de Transporte,
@@ -199,14 +200,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			// mas el del vale en cuestión, no sobrepase lo fiscalizado en la
 			// guía para ese tipo de producto.
 			StringBuffer pError = new StringBuffer();
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			Date date = new Date();
-			String fechaDevolucion = dateFormat.format(date);
-
-			/*boolean ok = Validator.requerido(fechaDevolucion,
-					"Fecha Devolución", pError);*/
-			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
-					"Cantidad(m3)", pError);
+			boolean ok = Validator.requerido(fechaDevolucion,
+					"Fecha Devolución", pError);
+			boolean ok2 = Validator.validarDoubleMayorQue(0,
+					String.valueOf(cantM3), "Cantidad(m3)", pError);
 
 			double totalMts = 0;
 			ValeTransporte vale = (ValeTransporte) this.guiaForestalDAO.getHibernateTemplate().get(
@@ -232,7 +229,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 			boolean ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
 					totalMts, pError);
-			if (ok2 && ok3 && ok4) {
+			if (ok && ok2 && ok3 && ok4) {
 				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 						destino, vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
 						fechaDevolucion);
