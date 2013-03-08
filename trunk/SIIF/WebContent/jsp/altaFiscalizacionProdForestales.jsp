@@ -17,7 +17,8 @@
 	src="<html:rewrite page='/dwr/interface/EntidadFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>	
-
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/TipoProductoForestalFachada.js'/>"></script>
 
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>
@@ -83,10 +84,8 @@ $(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 });
 
-</script>
 
-<%--ACA ESTAN LOS HEADERS DE CADA TIPO DE MUESTRA --%>
-<%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
+</script>
 
 <div id="exitoGrabado" class="verdeExito">${exitoGrabado}</div>
 
@@ -285,10 +284,12 @@ $(function() {
 					</tr>	
 					<tr id="diametros" style="display:none">
 						<td width="35%" class="botoneralNegritaRight" align="right">
-							1 Diámetro <input type="radio" name="diametros" value="1" onchange="cambiarDiametro();"/>
+							1 Diámetro <input type="radio" name="fiscalizacionDTO.tipoProducto.cantDiametros" 
+												value="1" onchange="cambiarDiametro();"/>
 						</td>
 						<td class="botoneralNegritaLeft" align="left">
-							2 Diámetros <input type="radio" name="diametros" value="2" onchange="cambiarDiametro();"/>
+							2 Diámetros <input type="radio" name="fiscalizacionDTO.tipoProducto.cantDiametros" 
+												value="2" onchange="cambiarDiametro();"/>
 						</td>
 						<td width="35%" align="left">
 							&nbsp;

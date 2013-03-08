@@ -207,8 +207,10 @@
 			parameter="metodo">
 			<forward name="exitoCargarModificacionTipoProducto"
 				path=".modificacionTipoProductoForestal" />
-			<forward name="exitoRecuperarTipoProducto"
-				path="/jsp/bloqueModificacionTipoProductoForestal.jsp" />
+			<forward name="exitoRecuperarTipoProductoForestal"
+				path="/jsp/bloqueModificacionTipoProductoForestal.jsp" />				
+			<forward name="exitoRecuperarTipoProductoExportacion"
+				path="/jsp/bloqueModificacionTipoProductoExportacion.jsp" />
 		</action>
 		<!-- FIN TIPO PRODUCTO FORESTAL -->
 

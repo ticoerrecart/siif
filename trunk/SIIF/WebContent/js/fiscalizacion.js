@@ -232,9 +232,11 @@
 <option value="4">Postes</option>
 <option value="5">Trineos</option>		
 */
-	function headerTabla(){
+	function headerTabla(funcion){
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-		if (idTipoProductoForestal == 1){
+		TipoProductoForestalFachada.recuperarTipoProductoForestalDTO(idTipoProductoForestal,eval(funcion));
+		
+		/*if (idTipoProductoForestal == 1){
 			return headerTablaRollizos;
 		}  else if (idTipoProductoForestal == 2){
 			return headerTablaFustes;
@@ -242,20 +244,45 @@
 			return headerTablaPostes;
 		}  else if (idTipoProductoForestal == 5){
 			return headerTablaTrineos;
-		}
-		
+		}*/	
 	}
+	
+	function actualizarHeaderTablaPrependCallback(tipoProducto){
+		
+		var headerTabla = '<tr id="headerT">' +
+		'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+		'   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('+tipoProducto.diam1Desde+'-'+tipoProducto.diam1Hasta+'cm)</td>' +
+		'   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('+tipoProducto.diam2Desde+'-'+tipoProducto.diam2Hasta+'cm)</td>' +
+		'   <td class="verdeTituloTablaChico" width="33%">Largo ('+tipoProducto.largoDesde+'-'+tipoProducto.largoHasta+'mts)</td>' +
+		'</tr>';		
+		
+		$("#tablaMuestras").prepend(headerTabla);
+	}
+	
+	function actualizarHeaderTablaAppendCallback(tipoProducto){
+		
+		var headerTabla = '<tr id="headerT">' +
+		'   <td class="verdeTituloTablaChico" width="3%"></td>' +
+		'   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('+tipoProducto.diam1Desde+'-'+tipoProducto.diam1Hasta+'cm)</td>' +
+		'   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('+tipoProducto.diam2Desde+'-'+tipoProducto.diam2Hasta+'cm)</td>' +
+		'   <td class="verdeTituloTablaChico" width="33%">Largo ('+tipoProducto.largoDesde+'-'+tipoProducto.largoHasta+'mts)</td>' +
+		'</tr>';		
+		
+		$("#tablaMuestras").append(headerTabla);
+	}	
 	
 	//se usa en la edición de Fiscalización
 	function agregarHeader(){
 		if ($('#tablaMuestras tr').size() == 0) {
-			$("#tablaMuestras").prepend(headerTabla);
+			//$("#tablaMuestras").prepend(headerTabla);
+			headerTabla("actualizarHeaderTablaPrependCallback");
 		}
 	}
 
 	function agregarFila() {
 		if ($('#tablaMuestras tr').size() == 0) {
-			$("#tablaMuestras").append(headerTabla);
+			//$("#tablaMuestras").append(headerTabla);
+			headerTabla("actualizarHeaderTablaAppendCallback");
 			$("#tablaMuestras").append(primeraFila);
 			
 		} else {
@@ -311,20 +338,27 @@
 	'5', 'Trineos'
  */
 	function actualizarMuestras() {
-		//$('#cantidadMts').val('');
-		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+		 
+		var idTipoProductoForestal = $('#idTipoProductoForestal').val();	
+		TipoProductoForestalFachada.getCantidadDiametros(idTipoProductoForestal,actualizarMuestrasCallback );		
+	}
+	
+	function actualizarMuestrasCallback(cant) {
+		//$('#cantidadMts').val('');	
 		
 		if ($('#tablaMuestras tr').size() > 0) {
 			$("#headerT").remove();
-			$("#tablaMuestras").prepend(headerTabla);
+			//$("#tablaMuestras").prepend(headerTabla);
+			headerTabla("actualizarHeaderTablaPrependCallback");
 		}
 
-		if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
+		//if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
+		if (cant == 2){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
 				$('.diam2').show();
-				$('[name="diametros"]').filter('[value="2"]').attr('checked', true);
+				$('[name="fiscalizacionDTO.tipoProducto.cantDiametros"]').filter('[value="2"]').attr('checked', true);
 				$('#diametros').show();
 			}else{
 				$('#tablaMuestras').hide();
@@ -334,12 +368,13 @@
 			$("#cantidadUnidades").attr("readonly",false);
 
 			$('#trMuestras').show();
-		}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
+			//}  else if (idTipoProductoForestal == 1 || idTipoProductoForestal == 4 ){
+		}else if (cant == 1){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
 				$('#tablaMuestras').show();
 				$('#calcularVolumen').show();
 				$('.diam2').hide();
-				$('[name="diametros"]').filter('[value="1"]').attr('checked', true);
+				$('[name="fiscalizacionDTO.tipoProducto.cantDiametros"]').filter('[value="1"]').attr('checked', true);
 				$('#diametros').show();
 			}else{
 				$('#tablaMuestras').hide();
@@ -356,12 +391,13 @@
 				$("#cantidadUnidades").val("");
 				$("#cantidadUnidades").attr("readonly",true);
 				$('#trMuestras').hide();
+				$('#diametros').hide();
 		}
 
 	}
 	
 	function cambiarDiametro(){
-		var val = $('input:radio[name=diametros]:checked').val();
+		var val = $('input:radio[name=fiscalizacionDTO.tipoProducto.cantDiametros]:checked').val();
 		if(val==1){
 			$('.diam2').hide();
 			var cantidadDeFilas = $('#tablaMuestras [id*=fila]').size();
