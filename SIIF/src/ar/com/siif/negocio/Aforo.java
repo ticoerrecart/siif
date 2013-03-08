@@ -28,7 +28,7 @@ public class Aforo {
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "tipoProducto_fk")
-	private TipoProducto tipoProducto;
+	private TipoProductoForestal tipoProducto;
 
 	public Long getId() {
 		return id;
@@ -54,11 +54,11 @@ public class Aforo {
 		this.valorAforo = valorAforo;
 	}
 
-	public TipoProducto getTipoProducto() {
+	public TipoProductoForestal getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProducto tipoProducto) {
+	public void setTipoProducto(TipoProductoForestal tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

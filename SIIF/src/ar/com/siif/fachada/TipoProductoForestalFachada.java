@@ -5,12 +5,14 @@ import java.util.List;
 
 import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.utils.MyLogger;
 
 public class TipoProductoForestalFachada implements
 		ITipoProductoForestalFachada {
@@ -24,7 +26,7 @@ public class TipoProductoForestalFachada implements
 		this.datosSistemaDAO = datosSistemaDAO;
 	}
 
-	public void altaTipoProductoForestal(TipoProductoDTO tipoProductoForestalDTO)
+	public void altaTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO)
 			throws NegocioException {
 		datosSistemaDAO.altaTipoProductoForestal(ProviderDominio
 				.getTipoProductoForestal(tipoProductoForestalDTO));
@@ -38,16 +40,25 @@ public class TipoProductoForestalFachada implements
 		return datosSistemaDAO.recuperarTipoProductoForestal(id);
 	}
 
-	public TipoProductoDTO recuperarTipoProductoForestalDTO(long id) {
-		return ProviderDTO.getTipoProductoDTO(datosSistemaDAO
+	public TipoProductoForestalDTO recuperarTipoProductoForestalDTO(long id) {
+		return ProviderDTO.getTipoProductoForestalDTO(datosSistemaDAO
 				.recuperarTipoProductoForestal(id));
 	}
 
-	public void modificacionTipoProductoForestal(TipoProductoDTO tipoProductoDTO)
+	public void modificacionTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO)
 			throws NegocioException {
 		TipoProductoForestal tipoProducto = datosSistemaDAO
-				.recuperarTipoProductoForestal(tipoProductoDTO.getId());
-		tipoProducto.setNombre(tipoProductoDTO.getNombre());
+				.recuperarTipoProductoForestal(tipoProductoForestalDTO.getId());
+		
+		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
+		tipoProducto.setCantDiametros(tipoProductoForestalDTO.getCantDiametros());
+		tipoProducto.setDiam1Desde(tipoProductoForestalDTO.getDiam1Desde());
+		tipoProducto.setDiam1Hasta(tipoProductoForestalDTO.getDiam1Hasta());
+		tipoProducto.setDiam2Desde(tipoProductoForestalDTO.getDiam2Desde());
+		tipoProducto.setDiam2Hasta(tipoProductoForestalDTO.getDiam2Hasta());
+		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
+		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());		
+		
 		datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
 	}
 
@@ -56,14 +67,13 @@ public class TipoProductoForestalFachada implements
 				tipoProdructoDTO.getNombre(), tipoProdructoDTO.getId());
 	}
 
-	public List<TipoProductoDTO> recuperarTiposProductoForestalDTO() {
-		List<TipoProductoDTO> tiposProductoDTO = new ArrayList<TipoProductoDTO>();
-		List<TipoProductoForestal> tiposProducto = datosSistemaDAO
-				.recuperarTiposProducto();
+	public List<TipoProductoForestalDTO> recuperarTiposProductoForestalDTO() {
+		List<TipoProductoForestalDTO> tipoProductoForestalDTO = new ArrayList<TipoProductoForestalDTO>();
+		List<TipoProductoForestal> tiposProducto = datosSistemaDAO.recuperarTiposProducto();
 		for (TipoProductoForestal tipoProducto : tiposProducto) {
-			tiposProductoDTO.add(ProviderDTO.getTipoProductoDTO(tipoProducto));
+			tipoProductoForestalDTO.add(ProviderDTO.getTipoProductoForestalDTO(tipoProducto));
 		}
-		return tiposProductoDTO;
+		return tipoProductoForestalDTO;
 	}
 
 	public List<EstadoProducto> getEstadosProductos() {
@@ -114,4 +124,15 @@ public class TipoProductoForestalFachada implements
 		return datosSistemaDAO.recuperarTipoProductoExportacion(id);
 	}
 
+	public int getCantidadDiametros(long idTipoProductoForestal) throws NegocioException{
+		try{
+			TipoProductoForestal tipoProductoForestal = 
+							datosSistemaDAO.recuperarTipoProductoForestal(idTipoProductoForestal);
+			
+			return tipoProductoForestal.getCantDiametros();
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}			
+	}
 }

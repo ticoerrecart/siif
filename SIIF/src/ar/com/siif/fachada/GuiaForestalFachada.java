@@ -20,7 +20,7 @@ import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.SubImporte;
-import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -74,7 +74,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					.getId()));
 		}
 
-		TipoProducto tipoProducto;
+		TipoProductoForestal tipoProducto;
 		List<SubImporte> listaSubImporte = new ArrayList<SubImporte>();
 		for (SubImporteDTO subImporteDTO : listaSubImportesDTO) {
 			tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(subImporteDTO

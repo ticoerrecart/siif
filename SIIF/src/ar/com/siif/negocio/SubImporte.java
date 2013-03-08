@@ -32,7 +32,7 @@ public class SubImporte {
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "tipoProducto_fk")	
-	private TipoProducto tipoProducto;
+	private TipoProductoForestal tipoProducto;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -87,11 +87,11 @@ public class SubImporte {
 		this.importe = importe;
 	}
 
-	public TipoProducto getTipoProducto() {
+	public TipoProductoForestal getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProducto tipoProducto) {
+	public void setTipoProducto(TipoProductoForestal tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

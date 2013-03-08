@@ -61,7 +61,7 @@ public class FiscalizacionForm extends ActionForm {
 				FactoryUtils.instantiateFactory(MuestraDTO.class));
 	}
 
-	public boolean validar(StringBuffer error) {
+	/*public boolean validar(StringBuffer error) {
 
 		boolean ok2 = true;
 		boolean ok3 = true;
@@ -115,7 +115,7 @@ public class FiscalizacionForm extends ActionForm {
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
 				&& ok14 && ok15 && ok16;
-	}
+	}*/
 
 	public FiscalizacionDTO getFiscalizacionDTO() {
 		return fiscalizacionDTO;

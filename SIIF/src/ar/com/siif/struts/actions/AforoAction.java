@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IAforoFachada;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -47,7 +48,7 @@ public class AforoAction extends ValidadorAction {
 					(ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			
-			List<TipoProductoDTO> tiposProducto = tipoProductoFachada.recuperarTiposProductoForestalDTO();
+			List<TipoProductoForestalDTO> tiposProducto = tipoProductoFachada.recuperarTiposProductoForestalDTO();
 
 			request.setAttribute("estadosProducto", tipoProductoFachada.getEstadosProductos());
 			request.setAttribute("tiposProducto", tiposProducto);
@@ -136,7 +137,7 @@ public class AforoAction extends ValidadorAction {
 			String id = request.getParameter("id");
 
 			AforoDTO aforo = aforoFachada.recuperarAforoDTO(new Long(id).longValue());
-			List<TipoProductoDTO> tiposProducto = tipoProductoFachada.recuperarTiposProductoForestalDTO();
+			List<TipoProductoForestalDTO> tiposProducto = tipoProductoFachada.recuperarTiposProductoForestalDTO();
 
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("estadosProducto", tipoProductoFachada.getEstadosProductos());

@@ -8,6 +8,7 @@ import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.exception.DataBaseException;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
@@ -30,7 +31,7 @@ public class AforoFachada implements IAforoFachada {
 
 	public void altaAforo(AforoDTO aforo) throws NegocioException {
 
-		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforo.getTipoProducto().getId());
+		TipoProductoForestal tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforo.getTipoProducto().getId());
 		aforoDAO.altaAforo(ProviderDominio.getAforo(aforo,tipoProducto));				
 	}
 
@@ -47,7 +48,7 @@ public class AforoFachada implements IAforoFachada {
 	public void modificacionAforo(AforoDTO aforoDTO) throws NegocioException {
 
 		Aforo aforo = aforoDAO.recuperarAforo(aforoDTO.getId());
-		TipoProducto tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforoDTO.getTipoProducto().getId());
+		TipoProductoForestal tipoProducto = tipoProductoFachada.recuperarTipoProductoForestal(aforoDTO.getTipoProducto().getId());
 		
 		aforoDAO.modificacionAforo(ProviderDominio.getAforo(aforo, aforoDTO, tipoProducto));			
 	}

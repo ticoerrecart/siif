@@ -6,6 +6,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 import ar.com.siif.dto.TipoProductoDTO;
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.struts.utils.Validator;
 
@@ -14,11 +15,13 @@ public class TipoProductoForestalForm extends ActionForm {
 	//private String tipoProductoForestal;
 	private TipoProducto productoForestal;
 	private TipoProductoDTO productoForestalDTO;
+	private TipoProductoForestalDTO tipoProductoForestalDTO;
 
 	public TipoProductoForestalForm() {
 
 		productoForestal = new TipoProducto();
 		productoForestalDTO = new TipoProductoDTO();
+		tipoProductoForestalDTO = new TipoProductoForestalDTO();
 	}
 
 	@Override
@@ -51,6 +54,15 @@ public class TipoProductoForestalForm extends ActionForm {
 
 	public void setProductoForestalDTO(TipoProductoDTO productoForestalDTO) {
 		this.productoForestalDTO = productoForestalDTO;
+	}
+
+	public TipoProductoForestalDTO getTipoProductoForestalDTO() {
+		return tipoProductoForestalDTO;
+	}
+
+	public void setTipoProductoForestalDTO(
+			TipoProductoForestalDTO tipoProductoForestalDTO) {
+		this.tipoProductoForestalDTO = tipoProductoForestalDTO;
 	}
 
 	public boolean validar(StringBuffer error) {

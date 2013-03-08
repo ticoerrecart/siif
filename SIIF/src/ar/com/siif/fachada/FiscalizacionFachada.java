@@ -12,6 +12,7 @@ import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Rodal;
 import ar.com.siif.negocio.TipoProducto;
+import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
@@ -127,7 +128,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.getProductorForestal().getId());
 		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta()
 				.getId());
-		TipoProducto tipoProducto = tipoProductoForestalFachada
+		TipoProductoForestal tipoProducto = tipoProductoForestalFachada
 				.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
 		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
 

@@ -20,7 +20,7 @@ public class FiscalizacionDTO {
 	private EntidadDTO productorForestal;
 
 	//private long idTipoProductoForestal;
-	private TipoProductoDTO tipoProducto;	
+	private TipoProductoForestalDTO tipoProducto;	
 
 	private long idPlanManejoForestal;
 	
@@ -44,7 +44,7 @@ public class FiscalizacionDTO {
 	public FiscalizacionDTO(){
 		
 		productorForestal = new EntidadDTO();
-		tipoProducto = new TipoProductoDTO();
+		tipoProducto = new TipoProductoForestalDTO();
 		rodal = new RodalDTO();
 		oficinaAlta = new EntidadDTO();
 		usuario = new UsuarioDTO();
@@ -138,11 +138,11 @@ public class FiscalizacionDTO {
 		this.productorForestal = productorForestal;
 	}
 
-	public TipoProductoDTO getTipoProducto() {
+	public TipoProductoForestalDTO getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProductoDTO tipoProducto) {
+	public void setTipoProducto(TipoProductoForestalDTO tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

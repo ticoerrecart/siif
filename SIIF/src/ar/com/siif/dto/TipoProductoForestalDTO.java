@@ -1,13 +1,6 @@
-package ar.com.siif.negocio;
+package ar.com.siif.dto;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-import ar.com.siif.enums.TipoDeProducto;
-
-@Entity
-@DiscriminatorValue("FST")
-public class TipoProductoForestal extends TipoProducto {
+public class TipoProductoForestalDTO extends TipoProductoDTO {
 
 	private int cantDiametros;
 	
@@ -21,15 +14,7 @@ public class TipoProductoForestal extends TipoProducto {
 	
 	private double diam2Desde;
 	
-	private double diam2Hasta;	
-	
-	public String getTipoEntidad() {
-		return TipoDeProducto.FST.getDescripcion();
-	}
-
-	public String getIdTipoEntidad() {
-		return TipoDeProducto.FST.getName();
-	}
+	private double diam2Hasta;
 
 	public int getCantDiametros() {
 		return cantDiametros;
@@ -85,7 +70,17 @@ public class TipoProductoForestal extends TipoProducto {
 
 	public void setDiam2Hasta(double diam2Hasta) {
 		this.diam2Hasta = diam2Hasta;
-	}	
+	}
 	
-	
+	//Lo uso en la validacion del alta/modif de la fiscalizacion, por si tengo q validar el diametro 2 
+	//pq en la jsp lo cambie a 2 diametros.
+	public void replicarDiametro2(){
+		
+		if(diam2Desde == 0.0){
+			diam2Desde = diam1Desde;
+		}
+		if(diam2Hasta == 0.0){
+			diam2Hasta = diam1Hasta;
+		}		
+	}
 }
