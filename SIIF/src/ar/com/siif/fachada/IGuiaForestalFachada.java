@@ -36,9 +36,10 @@ public interface IGuiaForestalFachada {
 
 	public String registrarDevolucionValeTransporte(long idVale) throws NegocioException;
 
-	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale, String destino,
-			String vehiculo, String marca, String dominio, String producto, int nroPiezas,
-			double cantM3, String especie) throws NegocioException;
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
+			String destino, String vehiculo, String marca, String dominio,
+			String producto, int nroPiezas, double cantM3, String especie,
+			String fechaDevolucion) throws NegocioException;
 
 	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
