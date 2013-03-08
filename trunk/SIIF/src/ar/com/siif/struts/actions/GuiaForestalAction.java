@@ -987,17 +987,25 @@ public class GuiaForestalAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
+			String nroGuia = request.getParameter("nroGuia");
+			GuiaForestalDTO guiaForestal = null;
+			if (nroGuia == null) {
+				GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 
-			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
-
-			GuiaForestalDTO guiaForestal = guiaForestalFachada
-					.recuperarGuiaForestalPorNroGuia(guiaForm.getGuiaForestal().getNroGuia());
+				guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(guiaForm
+						.getGuiaForestal().getNroGuia());
+			} else {
+				guiaForestal = guiaForestalFachada.recuperarGuiaForestalPorNroGuia(Integer
+						.valueOf(nroGuia));
+			}
 
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this
 					.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
 
 			request.setAttribute("guiaForestal", guiaForestal);
 			request.setAttribute("tablaVolFiscAsociar", tablaVolFiscAsociar);
+			//request.setAttribute("idTipoDeEntidad", guiaForestal.gete);
+			//request.setAttribute("idProductor", arg1);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -1087,6 +1095,38 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ActionForward recuperarGuiasForestalesParaDesasociarFiscalizaciones(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoRecuperarGuiasForestalesParaDesasociarFiscalizaciones";
+
+		try {
+			// String paramForward = request.getParameter("forward");
+			WebApplicationContext ctx = getWebApplicationContext();
+			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
+					.getBean("consultasPorProductorFachada");
+
+			String idProductor = request.getParameter("idProductor");
+
+			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+					.getBean("guiaForestalFachada");
+
+			List<GuiaForestalDTO> guiasForestales = guiaForestalFachada
+					.recuperarGuiasForestalesPorProductor(Long.parseLong(idProductor));
+
+			request.setAttribute("guiasForestales", guiasForestales);
+			// request.setAttribute("paramForward", paramForward);
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "bloqueError";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
 	public ActionForward recuperarProductoresParaAsociarFiscalizacionesAGuia(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -1104,6 +1144,33 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("urlDetalle",
 					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaAsociarFiscalizaciones");//
 			request.setAttribute("paramForward", paramForward);//
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+
+		return mapping.findForward(strForward);
+	}
+
+	public ActionForward recuperarProductoresParaDesasociarFiscalizacionesAGuia(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoRecuperarProductoresParaDesasociarFiscalizacionesAGuia";
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
+			String idProductor = request.getParameter("idProductor");
+			String paramForward = request.getParameter("paramForward");
+
+			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());//
+			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);//
+			request.setAttribute("idProductor", idProductor);//
+			request.setAttribute("urlDetalle",
+					"../../guiaForestal.do?metodo=recuperarGuiasForestalesParaDesasociarFiscalizaciones");//
+			request.setAttribute("paramForward", paramForward);//
+
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");

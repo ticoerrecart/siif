@@ -68,8 +68,10 @@
 		</td>
 	</tr>				
 	<tr>
-		<td height="30"></td>
+		<td height="10"></td>
 	</tr>
+	
+	<%@include file="bloqueTipoDeEntidadProductorForestal.jsp" %>
 </table>
 
 <script type="text/javascript">
