@@ -94,6 +94,7 @@ $(function() {
 
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="altaFiscalizacion" />
+	<input type="hidden" id="cantidadDiametros" value="" />
 	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">

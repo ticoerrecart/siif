@@ -249,42 +249,44 @@
 	
 	function actualizarHeaderTablaPrependCallback(tipoProducto){
 		
-		var headerTabla = '<tr id="headerT">' +
+		var headerTablaStr = '<tr id="headerT">' +
 		'   <td class="verdeTituloTablaChico" width="3%"></td>' +
 		'   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('+tipoProducto.diam1Desde+'-'+tipoProducto.diam1Hasta+'cm)</td>' +
 		'   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('+tipoProducto.diam2Desde+'-'+tipoProducto.diam2Hasta+'cm)</td>' +
 		'   <td class="verdeTituloTablaChico" width="33%">Largo ('+tipoProducto.largoDesde+'-'+tipoProducto.largoHasta+'mts)</td>' +
 		'</tr>';		
 		
-		$("#tablaMuestras").prepend(headerTabla);
+		$("#tablaMuestras").prepend(headerTablaStr);
+		mostrarSegunCantidadDiametros();
 	}
 	
 	function actualizarHeaderTablaAppendCallback(tipoProducto){
 		
-		var headerTabla = '<tr id="headerT">' +
+		var headerTablaStr = '<tr id="headerT">' +
 		'   <td class="verdeTituloTablaChico" width="3%"></td>' +
 		'   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('+tipoProducto.diam1Desde+'-'+tipoProducto.diam1Hasta+'cm)</td>' +
 		'   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('+tipoProducto.diam2Desde+'-'+tipoProducto.diam2Hasta+'cm)</td>' +
 		'   <td class="verdeTituloTablaChico" width="33%">Largo ('+tipoProducto.largoDesde+'-'+tipoProducto.largoHasta+'mts)</td>' +
 		'</tr>';		
 		
-		$("#tablaMuestras").append(headerTabla);
-	}	
-	
+		$("#tablaMuestras").append(headerTablaStr);
+		$("#tablaMuestras").append(primeraFila);
+		actualizarMuestras();
+	}
+
 	//se usa en la edición de Fiscalización
-	function agregarHeader(){
+/*	function agregarHeader(){
 		if ($('#tablaMuestras tr').size() == 0) {
 			//$("#tablaMuestras").prepend(headerTabla);
 			headerTabla("actualizarHeaderTablaPrependCallback");
 		}
-	}
+	}*/
 
 	function agregarFila() {
+
 		if ($('#tablaMuestras tr').size() == 0) {
 			//$("#tablaMuestras").append(headerTabla);
 			headerTabla("actualizarHeaderTablaAppendCallback");
-			$("#tablaMuestras").append(primeraFila);
-			
 		} else {
 			var j = $('#tablaMuestras tr:last .ind').text();
 			$("#tablaMuestras tr:last").clone().find("input").each(function() {
@@ -299,9 +301,10 @@
 			var newId = $("#tablaMuestras tr:last").attr('id')
 					.replace(j - 1, j);
 			$("#tablaMuestras tr:last").attr('id', newId);
+			actualizarMuestras();
 		}
 		
-		actualizarMuestras();
+		
 	}
 
 	
@@ -342,16 +345,9 @@
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();	
 		TipoProductoForestalFachada.getCantidadDiametros(idTipoProductoForestal,actualizarMuestrasCallback );		
 	}
-	
-	function actualizarMuestrasCallback(cant) {
-		//$('#cantidadMts').val('');	
-		
-		if ($('#tablaMuestras tr').size() > 0) {
-			$("#headerT").remove();
-			//$("#tablaMuestras").prepend(headerTabla);
-			headerTabla("actualizarHeaderTablaPrependCallback");
-		}
 
+	function mostrarSegunCantidadDiametros(){
+		var cant = $("#cantidadDiametros").val();
 		//if (idTipoProductoForestal == 2 || idTipoProductoForestal == 5){
 		if (cant == 2){
 			if($('#tablaMuestras [id*=fila]').size() > 0){
@@ -393,6 +389,20 @@
 				$('#trMuestras').hide();
 				$('#diametros').hide();
 		}
+
+	}
+	function actualizarMuestrasCallback(cant) {
+		//$('#cantidadMts').val('');	
+		$("#cantidadDiametros").val(cant);
+
+		if ($('#tablaMuestras tr').size() > 0) {
+			$("#headerT").remove();
+			//$("#tablaMuestras").prepend(headerTabla);
+			headerTabla("actualizarHeaderTablaPrependCallback");
+		}else{
+			mostrarSegunCantidadDiametros();
+		}
+
 
 	}
 	
