@@ -348,7 +348,18 @@ CREATE TABLE `TipoProducto` (
 
 LOCK TABLES `TipoProducto` WRITE;
 /*!40000 ALTER TABLE `TipoProducto` DISABLE KEYS */;
-INSERT INTO `TipoProducto` VALUES (1,'Madera Rolliza','FST'),(2,'Fustes','FST'),(3,'Leña','FST'),(4,'Postes','FST'),(5,'Trineos','FST'),(6,'Tirantes','EXP'),(7,'Tablas','EXP'),(8,'Tablones','EXP'),(9,'Recascos','EXP'),(10,'Pallets','EXP'),(11,'Madera corta','EXP');
+INSERT INTO `TipoProducto` VALUES ('1', 'Madera Rolliza', 'FST', '2', '10', '160', '10', '160', '2', '7'),
+('2', 'Fustes', 'FST', '2', '10', '160', '10', '160', '5', '18'),
+('3', 'Leña', 'FST', '0', '0', '0', '0', '0', '5', '1'),
+('4', 'Postes', 'FST', '2', '10', '40', '10', '40', '1.5', '3'),
+('5', 'Trineos', 'FST', '1', '10', '40', '0', '0', '1.5', '3'),
+('6', 'Tirantes', 'EXP', '1', '10', '30', '0', '0', '1', '3'),
+('7', 'Tablas', 'EXP', '1', '20', '160', '0', '0', '1', '5'),
+('8', 'Tablones', 'EXP', '0', '0', '0', '0', '0', '0', '0'),
+('9', 'Recascos', 'EXP', '0', '0', '0', '0', '0', '0', '0'),
+('10', 'Pallets', 'EXP', '0', '0', '0', '0', '0', '0', '0'),
+('11', 'Madera corta', 'EXP', '2', '10', '160', '10', '160', '1.5', '3');
+
 /*!40000 ALTER TABLE `TipoProducto` ENABLE KEYS */;
 UNLOCK TABLES;
 
