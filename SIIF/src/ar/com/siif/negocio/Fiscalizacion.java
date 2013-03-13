@@ -130,11 +130,11 @@ public class Fiscalizacion {
 		this.tamanioMuestra = tamanioMuestra;
 	}
 
-	public TipoProducto getTipoProducto() {
+	public TipoProductoForestal getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProducto tipoProducto) {
+	public void setTipoProducto(TipoProductoForestal tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 
