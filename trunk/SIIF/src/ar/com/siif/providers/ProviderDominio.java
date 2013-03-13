@@ -12,6 +12,7 @@ import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.LocalidadDestinoDTO;
+import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
@@ -25,6 +26,7 @@ import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Aforo;
+import ar.com.siif.negocio.AreaDeCosecha;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.CertificadoOrigen;
 import ar.com.siif.negocio.Entidad;
@@ -33,6 +35,7 @@ import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.LocalidadDestino;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
@@ -55,9 +58,8 @@ import ar.com.siif.utils.Fecha;
 
 public abstract class ProviderDominio {
 
-	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasDTO, Rodal rodal, Entidad productorForestal,
-			Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
+	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO, Localizacion localizacion,
+			Entidad productorForestal, Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
@@ -67,7 +69,7 @@ public abstract class ProviderDominio {
 		fiscalizacion.setOficinaAlta(oficinaForestal);
 		fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
 		fiscalizacion.setProductorForestal(productorForestal);
-		fiscalizacion.setRodal(rodal);
+		fiscalizacion.setLocalizacion(localizacion);
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
 		fiscalizacion.setUsuario(usuario);
@@ -199,48 +201,6 @@ public abstract class ProviderDominio {
 		return periodo;
 	}
 
-	public static PMF getPMF(String expediente, String nombre, String tipoTerreno, Entidad entidad) {
-
-		PMF pmf = new PMF();
-		pmf.setExpediente(expediente);
-		pmf.setNombre(nombre);
-		pmf.setTipoTerreno(tipoTerreno);
-		pmf.setProductorForestal(entidad);
-		pmf.setTranzones(null);
-
-		return pmf;
-	}
-
-	public static Tranzon getTranzon(String numero, String disposicionTranzon, PMF pmf) {
-
-		Tranzon tranzon = new Tranzon();
-		tranzon.setDisposicion(disposicionTranzon);
-		tranzon.setNumero(numero);
-		tranzon.setPmf(pmf);
-		tranzon.setMarcaciones(null);
-
-		return tranzon;
-	}
-
-	public static Marcacion getMarcacion(String disposicionMarcacion, Tranzon tranzon) {
-
-		Marcacion marcacion = new Marcacion();
-		marcacion.setDisposicion(disposicionMarcacion);
-		marcacion.setTranzon(tranzon);
-		marcacion.setRodales(null);
-
-		return marcacion;
-	}
-
-	public static Rodal getRodal(String nombre, Marcacion marcacion) {
-
-		Rodal rodal = new Rodal();
-		rodal.setNombre(nombre);
-		rodal.setMarcacion(marcacion);
-
-		return rodal;
-	}
-
 	public static Usuario getUsuario(UsuarioDTO usuarioDTO, Entidad entidad, Rol rol) {
 
 		Usuario usuario = new Usuario();
@@ -253,8 +213,7 @@ public abstract class ProviderDominio {
 		return usuario;
 	}
 
-	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad,
-			Rol rol) {
+	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad, Rol rol) {
 
 		usuario.setEntidad(entidad);
 		usuario.setHabilitado(usuarioDTO.isHabilitado());
@@ -274,11 +233,9 @@ public abstract class ProviderDominio {
 		return rol;
 	}
 
-	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,
-			List<BoletaDepositoDTO> listaBoletaDepositoDTO, List<RangoDTO> listaRangosDTO,
-			Date fechaVencimiento, List<Fiscalizacion> listaFiscalizaciones,
-			List<SubImporte> listaSubImportes, Entidad productorForestal, Rodal rodal,
-			Localidad localidad, Usuario usuario) {
+	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO, List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+			List<RangoDTO> listaRangosDTO, Date fechaVencimiento, List<Fiscalizacion> listaFiscalizaciones, List<SubImporte> listaSubImportes,
+			Entidad productorForestal, Rodal rodal, Localidad localidad, Usuario usuario) {
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -305,8 +262,7 @@ public abstract class ProviderDominio {
 		}
 
 		for (RangoDTO rangoDTO : listaRangosDTO) {
-			guia.getValesTransporte().addAll(
-					ProviderDominio.getValesTransportes(guia, rangoDTO, fechaVencimiento));
+			guia.getValesTransporte().addAll(ProviderDominio.getValesTransportes(guia, rangoDTO, fechaVencimiento));
 		}
 
 		for (SubImporte subImporte : listaSubImportes) {
@@ -338,15 +294,14 @@ public abstract class ProviderDominio {
 		return boleta;
 	}
 
-	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO,
-			Date fechaVencimiento) {
+	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO, Date fechaVencimiento) {
 		List<ValeTransporte> vales = new ArrayList<ValeTransporte>();
 		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {
 			ValeTransporte vale = new ValeTransporte();
 			vale.setFechaVencimiento(fechaVencimiento);
 			vale.setGuiaForestal(guia);
 			vale.setNumero(i);
-			vale.setOrigen(guia.getRodal().getNombre());
+			vale.setOrigen(guia.getRodal().getNombreRodal());
 			vales.add(vale);
 		}
 		return vales;
@@ -378,8 +333,7 @@ public abstract class ProviderDominio {
 		return vale;
 	}
 
-	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto,
-			SubImporteDTO subImporteDTO) {
+	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto, SubImporteDTO subImporteDTO) {
 
 		SubImporte subImporte = new SubImporte();
 
@@ -402,15 +356,13 @@ public abstract class ProviderDominio {
 		return provincia;
 	}
 
-	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia,
-			ProvinciaDestinoDTO provinciaDTO) {
+	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia, ProvinciaDestinoDTO provinciaDTO) {
 
 		provincia.setNombre(provinciaDTO.getNombre());
 		return provincia;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO,
-			ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
 
 		LocalidadDestino localidad = new LocalidadDestino();
 		localidad.setNombre(localidadDTO.getNombre());
@@ -419,8 +371,7 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO,
-			LocalidadDestino localidad, ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad, ProvinciaDestino provincia) {
 
 		localidad.setNombre(localidadDTO.getNombre());
 		localidad.setProvinciaDestino(provincia);
@@ -428,23 +379,19 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static TipoProductoEnCertificado getTipoProductoEnCertificado(
-			CertificadoOrigen certificadoOrigen, TipoProductoExportacion tipoProductoExportacion,
-			TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
+	public static TipoProductoEnCertificado getTipoProductoEnCertificado(CertificadoOrigen certificadoOrigen,
+			TipoProductoExportacion tipoProductoExportacion, TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
 		TipoProductoEnCertificado tipoProdEnCertif = new TipoProductoEnCertificado();
 
 		tipoProdEnCertif.setCertificadoOrigen(certificadoOrigen);
 		tipoProdEnCertif.setTipoProductoExportacion(tipoProductoExportacion);
-		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO
-				.getVolumenTipoProducto());
+		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO.getVolumenTipoProducto());
 
 		return tipoProdEnCertif;
 	}
 
-	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO,
-			Usuario usuario, Entidad productor, Entidad exportador,
-			LocalidadDestino localidadDestino, PMF pmf, Date fecha,
-			List<TipoProductoEnCertificado> listaTipoProdEnCert) {
+	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO, Usuario usuario, Entidad productor, Entidad exportador,
+			LocalidadDestino localidadDestino, PMF pmf, Date fecha, List<TipoProductoEnCertificado> listaTipoProdEnCert) {
 		CertificadoOrigen certificado = new CertificadoOrigen();
 
 		certificado.setExportador(exportador);
@@ -469,112 +416,100 @@ public abstract class ProviderDominio {
 		return certificado;
 	}
 
-	/*public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
-
-		Fiscalizacion acta = form.getFiscalizacion();
-		if (form.getFecha() != null && !form.getFecha().equals("")) {
-			acta.setFecha(Fecha.stringDDMMAAAAToDate(form.getFecha()));
-		}
-
-		return acta;
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO, Entidad entidad) {
+		return localizacionDTO.getLocalizacion(entidad);
 	}
 
-	public static void getActaMartilladoAModificar(Fiscalizacion actaBD, Fiscalizacion acta) {
-
-		actaBD.setCantidadMts(acta.getCantidadMts());
-		actaBD.setCantidadUnidades(acta.getCantidadUnidades());
-		// actaBD.getUbicacion().setExpediente(acta.getUbicacion().getExpediente());
-		if (acta.getFecha() != null) {
-			actaBD.setFecha(acta.getFecha());
-		}
-		actaBD.setPeriodoForestal(acta.getPeriodoForestal());
-		actaBD.setProductorForestal(acta.getProductorForestal());
-		actaBD.setTamanioMuestra(acta.getTamanioMuestra());
-		// actaBD.setUbicacionZonal(acta.getUbicacionZonal());
-
-	}
-
-	public static GuiaForestal getGuiaForestal(GuiaForestalForm guiaForm,
-			Fiscalizacion actaMartillado, Usuario usuario) {
-
-		GuiaForestal guia = guiaForm.getGuiaForestal();
-		guia.setFiscalizacion(actaMartillado);
-		actaMartillado.setGuiaForestal(guia);
-		guia.setFecha(Fecha.stringDDMMAAAAToDate(guiaForm.getFecha()));
-		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToDate(guiaForm.getFechaVencimiento()));
-
-		guia.setBoletasDeposito(getBoletasDeposito(guiaForm.getBoletasDeposito(), guia));
-		guia.setValesTransporte(getValesTransporte(guiaForm.getValesTransporte(), guia));
-
-		guia.setUsuario(usuario);
-
-		return guia;
-	}
-
-	public static List<BoletaDeposito> getBoletasDeposito(List<BoletaDeposito> boletas,
-			GuiaForestal guia) {
-
-		List<BoletaDeposito> boletasAEliminar = new ArrayList<BoletaDeposito>();
-
-		for (BoletaDeposito boleta : boletas) {
-
-			if (boleta.getNumero() == 0) {
-				boletasAEliminar.add(boleta);
-			} else {
-				boleta.setGuiaForestal(guia);
-
-				// BORRAR
-				boleta.setFechaVencimiento(guia.getFechaVencimiento());
-				// boleta.setFechaPago(guia.getFecha());
-				//
-			}
-		}
-		boletas.removeAll(boletasAEliminar);
-
-		return boletas;
-	}
-
-	public static List<ValeTransporte> getValesTransporte(List<ValeTransporte> vales,
-			GuiaForestal guia) {
-
-		List<ValeTransporte> valesAEliminar = new ArrayList<ValeTransporte>();
-
-		for (ValeTransporte vale : vales) {
-
-			if (vale.getNumero() == 0) {
-				valesAEliminar.add(vale);
-			} else {
-				vale.setGuiaForestal(guia);
-
-				// BORRAR
-				// vale.setFecha(guia.getFecha());
-				vale.setFechaVencimiento(guia.getFechaVencimiento());
-				//
-			}
-		}
-
-		vales.removeAll(valesAEliminar);
-
-		return vales;
-	}
-
-	public static GuiaForestal getGuiaForestalRegistrarPago(GuiaForestalForm guiaForm) {
-
-		GuiaForestal guia = guiaForm.getGuiaForestal();
-		int i = 0;
-		for (BoletaDeposito boleta : guiaForm.getBoletasDeposito()) {
-
-			if (boleta != null && boleta.getFechaPagoTransient() != null
-					&& !boleta.getFechaPagoTransient().equals("")) {
-
-				BoletaDeposito boletaGuia = guia.getBoletasDeposito().get(i);
-				boletaGuia.setFechaPago(Fecha.stringDDMMAAAAToDate(boleta.getFechaPagoTransient()));
-			}
-			i++;
-		}
-
-		return guia;
-	}*/
+	/*
+	 * public static Fiscalizacion getActaMartillado(FiscalizacionForm form) {
+	 * 
+	 * Fiscalizacion acta = form.getFiscalizacion(); if (form.getFecha() != null
+	 * && !form.getFecha().equals("")) {
+	 * acta.setFecha(Fecha.stringDDMMAAAAToDate(form.getFecha())); }
+	 * 
+	 * return acta; }
+	 * 
+	 * public static void getActaMartilladoAModificar(Fiscalizacion actaBD,
+	 * Fiscalizacion acta) {
+	 * 
+	 * actaBD.setCantidadMts(acta.getCantidadMts());
+	 * actaBD.setCantidadUnidades(acta.getCantidadUnidades()); //
+	 * actaBD.getUbicacion().setExpediente(acta.getUbicacion().getExpediente());
+	 * if (acta.getFecha() != null) { actaBD.setFecha(acta.getFecha()); }
+	 * actaBD.setPeriodoForestal(acta.getPeriodoForestal());
+	 * actaBD.setProductorForestal(acta.getProductorForestal());
+	 * actaBD.setTamanioMuestra(acta.getTamanioMuestra()); //
+	 * actaBD.setUbicacionZonal(acta.getUbicacionZonal());
+	 * 
+	 * }
+	 * 
+	 * public static GuiaForestal getGuiaForestal(GuiaForestalForm guiaForm,
+	 * Fiscalizacion actaMartillado, Usuario usuario) {
+	 * 
+	 * GuiaForestal guia = guiaForm.getGuiaForestal();
+	 * guia.setFiscalizacion(actaMartillado);
+	 * actaMartillado.setGuiaForestal(guia);
+	 * guia.setFecha(Fecha.stringDDMMAAAAToDate(guiaForm.getFecha()));
+	 * guia.setFechaVencimiento
+	 * (Fecha.stringDDMMAAAAToDate(guiaForm.getFechaVencimiento()));
+	 * 
+	 * guia.setBoletasDeposito(getBoletasDeposito(guiaForm.getBoletasDeposito(),
+	 * guia));
+	 * guia.setValesTransporte(getValesTransporte(guiaForm.getValesTransporte(),
+	 * guia));
+	 * 
+	 * guia.setUsuario(usuario);
+	 * 
+	 * return guia; }
+	 * 
+	 * public static List<BoletaDeposito>
+	 * getBoletasDeposito(List<BoletaDeposito> boletas, GuiaForestal guia) {
+	 * 
+	 * List<BoletaDeposito> boletasAEliminar = new ArrayList<BoletaDeposito>();
+	 * 
+	 * for (BoletaDeposito boleta : boletas) {
+	 * 
+	 * if (boleta.getNumero() == 0) { boletasAEliminar.add(boleta); } else {
+	 * boleta.setGuiaForestal(guia);
+	 * 
+	 * // BORRAR boleta.setFechaVencimiento(guia.getFechaVencimiento()); //
+	 * boleta.setFechaPago(guia.getFecha()); // } }
+	 * boletas.removeAll(boletasAEliminar);
+	 * 
+	 * return boletas; }
+	 * 
+	 * public static List<ValeTransporte>
+	 * getValesTransporte(List<ValeTransporte> vales, GuiaForestal guia) {
+	 * 
+	 * List<ValeTransporte> valesAEliminar = new ArrayList<ValeTransporte>();
+	 * 
+	 * for (ValeTransporte vale : vales) {
+	 * 
+	 * if (vale.getNumero() == 0) { valesAEliminar.add(vale); } else {
+	 * vale.setGuiaForestal(guia);
+	 * 
+	 * // BORRAR // vale.setFecha(guia.getFecha());
+	 * vale.setFechaVencimiento(guia.getFechaVencimiento()); // } }
+	 * 
+	 * vales.removeAll(valesAEliminar);
+	 * 
+	 * return vales; }
+	 * 
+	 * public static GuiaForestal getGuiaForestalRegistrarPago(GuiaForestalForm
+	 * guiaForm) {
+	 * 
+	 * GuiaForestal guia = guiaForm.getGuiaForestal(); int i = 0; for
+	 * (BoletaDeposito boleta : guiaForm.getBoletasDeposito()) {
+	 * 
+	 * if (boleta != null && boleta.getFechaPagoTransient() != null &&
+	 * !boleta.getFechaPagoTransient().equals("")) {
+	 * 
+	 * BoletaDeposito boletaGuia = guia.getBoletasDeposito().get(i);
+	 * boletaGuia.setFechaPago
+	 * (Fecha.stringDDMMAAAAToDate(boleta.getFechaPagoTransient())); } i++; }
+	 * 
+	 * return guia; }
+	 */
 
 	/*
 	 * public static Entidad getEntidad(EntidadDTO entidadDTO){

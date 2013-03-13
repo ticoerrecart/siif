@@ -19,6 +19,18 @@
 		$('#' + id).toggle();
 	}
 
+	function mostrarDatosArea(idFila,idArea, reservaForestalArea,nombreArea, disposicionArea, expedienteArea){
+		$("#tablaAreas tr").removeClass("seleccionado");
+		$("#A" + idFila).addClass("seleccionado"); 
+		$('#divModificacionArea').fadeIn(600);
+		$('#idArea').val(idArea);	
+		$('#reservaForestalArea').val(reservaForestalArea); 	
+		$('#nombreArea').val(nombreArea);
+		$('#disposicionArea').val(disposicionArea);
+		$('#expedienteArea').val(expedienteArea);
+	}
+
+	
 	function mostrarDatosRodal(idFila,idRodal, nombreRodal){
 		$("#tablaRodales tr").removeClass("seleccionado");
 		$("#R" + idFila).addClass("seleccionado"); 
@@ -54,22 +66,31 @@
 		$('#tipoTerrenoPMF').val(tipoTerrenoPMF); 	
 	}
 	
+	function modificarArea(){
+		idArea = $('#idArea').val();
+		reservaForestalArea  = $('#reservaForestalArea').val();
+		nombreArea  = $('#nombreArea').val(); 
+		disposicionArea  = $('#disposicionArea').val(); 
+		expedienteArea  = $('#expedienteArea').val();
+		UbicacionFachada.modificarArea(idArea,reservaForestalArea,nombreArea,disposicionArea,expedienteArea,submitirAreaCallback );
+	}
+	
 	function modificarRodal(){
 		idRodal = $('#idRodal').val();
-		nombreRodal = $('#nombreRodal').val() 
+		nombreRodal = $('#nombreRodal').val(); 
 		UbicacionFachada.modificarRodal(idRodal,nombreRodal,submitirRodalCallback );
 	}
 
 	function modificarMarcacion(){
 		idMarcacion = $('#idMarcacion').val();
-		disposicionMarcacion = $('#disposicionMarcacion').val() 
+		disposicionMarcacion = $('#disposicionMarcacion').val();
 		UbicacionFachada.modificarMarcacion(idMarcacion,disposicionMarcacion,submitirMarcacionCallback );
 	}
 
 	function modificarTranzon(){
 		idTranzon = $('#idTranzon').val();
 		numeroTranzon = $('#numeroTranzon').val();
-		disposicionTranzon = $('#disposicionTranzon').val() 
+		disposicionTranzon = $('#disposicionTranzon').val(); 
 		UbicacionFachada.modificarTranzon(idTranzon,numeroTranzon,disposicionTranzon,submitirTranzonCallback );
 	}
 
@@ -78,6 +99,11 @@
 		nombrePMF = $('#nombrePMF').val();
 		expedientePMF = $('#expedientePMF').val();
 		UbicacionFachada.modificarPMF(idPMF,nombrePMF,expedientePMF,submitirPMFCallback );
+	}
+
+	function deleteAreal(){
+		idArea = $('#idAreal').val();
+		UbicacionFachada.deleteArea(idArea,submitirAreaCallback );
 	}
 	
 	function deleteRodal(){
@@ -98,6 +124,12 @@
 	function deletePMF(){
 		idPMF = $('#idPMF').val();
 		UbicacionFachada.deletePMF(idPMF,submitirPMFCallback );
+	}
+	
+	function cancelarArea(){
+		$('#exitoGrabado').html("");
+		$("#tablaAreas tr").removeClass("seleccionado");
+		$('#divModificacionArea').hide();
 	}
 	
 	function cancelarRodal(){
@@ -122,6 +154,15 @@
 		$('#exitoGrabado').html("");
 		$("#tablaPmfs tr").removeClass("seleccionado");
 		$('#divModificacionPMF').hide();
+	}
+
+	
+	function submitirAreaCallback(){
+		cancelarArea();
+		var idProductor = $('#idProductor').val();
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeAreas&idProductor='+ idProductor;
+		$('#bloqueAreas').load(url);
+		$('#exitoGrabado').html("Area de Cosecha Modificada/Borrada con Exito");
 	}
 	
 	function submitirRodalCallback(){
@@ -180,6 +221,9 @@
 
 		var idProductor = $('#idProductor').val();
 		
+		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeAreas&idProductor='+ idProductor;
+		$('#bloqueAreas').load(url);
+		
 		var url = '../../ubicacion.do?metodo=recuperarUbicacionesParaModificacionDeRodales&idProductor='+ idProductor;
 		$('#bloqueRodales').load(url);
 
@@ -227,10 +271,14 @@
 	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="2" class="azulAjustado">
-				 <bean:message key='SIIF.titulo.ModificacionPMF'/>
+				 <bean:message key='SIIF.titulo.ModificacionZMF'/>
 			</td>
 		</tr>
 	</table>		
+
+	<div id="bloqueAreas" >
+	</div>
+
 	<div id="bloqueRodales" >
 	</div>
 	

@@ -1,36 +1,33 @@
 package ar.com.siif.dto;
 
-public class RodalDTO {
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Rodal;
 
-	private Long id;
+public class RodalDTO extends LocalizacionDTO {
 
-	private String nombre;
+	private String nombreRodal;
 
 	private MarcacionDTO marcacion;
-	
-	public Long getId() {
-		return id;
+
+	public String getNombreRodal() {
+		return nombreRodal;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreRodal(String nombreRodal) {
+		this.nombreRodal = nombreRodal;
 	}
 
 	public MarcacionDTO getMarcacion() {
 		return marcacion;
 	}
 
-	public void setMarcacion(MarcacionDTO marcacion) {
-		this.marcacion = marcacion;
+	public void setMarcacion(MarcacionDTO marcacionDTO) {
+		this.marcacion = marcacionDTO;
 	}
-	
-	
+
+	@Override
+	public Rodal getLocalizacion(Entidad entidad) {
+		return new Rodal(this.nombreRodal, null);
+	}
+
 }

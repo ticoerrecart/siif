@@ -22,14 +22,21 @@ public class FiscalizacionDTO {
 	//private long idTipoProductoForestal;
 	private TipoProductoForestalDTO tipoProducto;	
 
+	
+	private long idArea;
+	
 	private long idPlanManejoForestal;
 	
+
+
 	private long idTranzon;
 	
 	private long idMarcacion;
 	
+	
+	
 	//private long idRodal;
-	private RodalDTO rodal;
+	private LocalizacionDTO localizacion;
 
 	//private long idOficinaForestal;	
 	private EntidadDTO oficinaAlta;
@@ -45,11 +52,18 @@ public class FiscalizacionDTO {
 		
 		productorForestal = new EntidadDTO();
 		tipoProducto = new TipoProductoForestalDTO();
-		rodal = new RodalDTO();
 		oficinaAlta = new EntidadDTO();
 		usuario = new UsuarioDTO();
 	}
 	
+	public LocalizacionDTO getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(LocalizacionDTO localizacion) {
+		this.localizacion = localizacion;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -146,14 +160,6 @@ public class FiscalizacionDTO {
 		this.tipoProducto = tipoProducto;
 	}
 
-	public RodalDTO getRodal() {
-		return rodal;
-	}
-
-	public void setRodal(RodalDTO rodal) {
-		this.rodal = rodal;
-	}
-
 	public EntidadDTO getOficinaAlta() {
 		return oficinaAlta;
 	}
@@ -178,4 +184,11 @@ public class FiscalizacionDTO {
 		this.guiaForestal = guiaForestal;
 	}
 	
+	public long getIdArea() {
+		return idArea;
+	}
+
+	public void setIdArea(long idArea) {
+		this.idArea = idArea;
+	}
 }

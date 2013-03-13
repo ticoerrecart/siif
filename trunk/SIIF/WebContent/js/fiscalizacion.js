@@ -1,26 +1,11 @@
-	function actualizarComboProductores() {
-
-		deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
-				"idRodal" ]);
-
-		/*if ($("#idLocalidad").val() != "-1") {
-			$('#idProductor').removeAttr('disabled');
-			EntidadFachada.getEntidadesPorLocalidad($("#idLocalidad").val(),
-					actualizarProductoresCallback);
-		} else {
-			dwr.util.removeAllOptions("idProductor");
-			var data = [ {
-				nombre : "-Seleccione un Productor-",
-				id : -1
-			} ];
-			dwr.util.addOptions("idProductor", data, "id", "nombre");
-			$('#idProductor').attr('disabled', 'disabled');
-		}*/
-
+	function cambioComboEntidad() {
+		$(".area").hide();
+		$(".plan").hide();
+		
 		var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 		if(idTipoDeEntidad != "-1"){
 			$('#idProductor').attr('disabled',false);
-			EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
+			EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,cambioComboEntidadCallback );		
 		}else{
 			dwr.util.removeAllOptions("idProductor");
 			var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
@@ -29,7 +14,7 @@
 		}		
 	}
 
-	function actualizarProductoresCallback(productores) {
+	function cambioComboEntidadCallback(productores) {
 
 		dwr.util.removeAllOptions("idProductor");
 		var data = [ {
@@ -40,36 +25,68 @@
 		dwr.util.addOptions("idProductor", productores, "id", "nombre");
 	}
 
+	function cambioComboProductores(){
+		cambioComboZona();
+	}
+	
+	function cambioComboZona(){
+		
+		zmf = $('#idZMF').val();
+		idPF = $('#idProductor').val();
+		if (idPF == 0 ){
+			$(".area").hide();
+			$(".plan").hide();
+		} else {
+			if (zmf == 1 ){
+				$(".plan").show();
+				$(".area").hide();
+				
+				actualizarComboPMF();
+			}	
+			if (zmf == 2 ){
+				$(".area").show();
+				$(".plan").hide();
+				
+				actualizarComboArea();
+			}
+		}
+		
+	}
+	
+	function actualizarComboArea(){
+		idPF = $('#idProductor').val();
+		UbicacionFachada.getAreasDTO(idPF,actualizarComboAreaCallback );
+	}
+	
+	function actualizarComboAreaCallback(areas){
+		dwr.util.removeAllOptions("idArea");		
+		var data = [ { nombre:"- Seleccione -", id:-1 }];
+		dwr.util.addOptions("idArea", data, "id", "nombre");
+		dwr.util.addOptions("idArea", areas,"id","fullNombre");
+		$(".area").show();
+	}
+	
 	function actualizarComboPMF() {
 		idPF = $('#idProductor').val();
-
-		deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
-				"idRodal" ]);
-
-		if (idPF > 0) {
-			UbicacionFachada.getPMFs(idPF, actualizarComboPMFCallback);
-		}
+		UbicacionFachada.getPMFs(idPF, actualizarComboPMFCallback);
+		
+		
 	}
 
 	function actualizarComboPMFCallback(pmfs) {
 		dwr.util.removeAllOptions("idPMF");
-		var data = [ {
-			nombre : "- Seleccione -",
-			id : -1
-		} ];
+		var data = [ {nombre : "- Seleccione -",id : -1} ];
 		dwr.util.addOptions("idPMF", data, "id", "nombre");
 		dwr.util.addOptions("idPMF", pmfs, "id", "nombreExpediente");
-		$('#idPMF').removeAttr('disabled');
+		actualizarComboTranzon();
+		$(".plan").show();
 	}
 
 	function actualizarComboTranzon() {
 		idPMF = $('#idPMF').val();
-		deshabilitarLocalizacion([ "idTranzon", "idMarcacion", "idRodal" ]);
-
-		if (idPMF > 0) {
-			UbicacionFachada.getTranzonesById(idPMF,
+		UbicacionFachada.getTranzonesById(idPMF,
 					actualizarComboTranzonCallback);
-		}
+		
 	}
 
 	function actualizarComboTranzonCallback(tranzones) {
@@ -79,19 +96,14 @@
 			id : -1
 		} ];
 		dwr.util.addOptions("idTranzon", data, "id", "nombre");
-		dwr.util.addOptions("idTranzon", tranzones, "id", "numeroDisposicion");
-		$('#idTranzon').removeAttr('disabled');
+		dwr.util.addOptions("idTranzon", tranzones, "id", "numeroDisposicionTranzon");
+		actualizarComboMarcacion();
 	}
 
 	function actualizarComboMarcacion() {
 		idTranzon = $('#idTranzon').val();
-
-		deshabilitarLocalizacion([ "idMarcacion", "idRodal" ]);
-
-		if (idTranzon > 0) {
-			UbicacionFachada.getMarcacionesById(idTranzon,
+		UbicacionFachada.getMarcacionesById(idTranzon,
 					actualizarComboMarcacionCallback);
-		}
 	}
 
 	function actualizarComboMarcacionCallback(marcaciones) {
@@ -101,19 +113,15 @@
 			id : -1
 		} ];
 		dwr.util.addOptions("idMarcacion", data, "id", "nombre");
-		dwr.util.addOptions("idMarcacion", marcaciones, "id", "disposicion");
-		$('#idMarcacion').removeAttr('disabled');
+		dwr.util.addOptions("idMarcacion", marcaciones, "id", "disposicionMarcacion");
+		actualizarComboRodal();
 	}
 
 	function actualizarComboRodal() {
 		idMarcacion = $('#idMarcacion').val();
-
-		deshabilitarLocalizacion([ "idRodal" ]);
-
-		if (idMarcacion > 0) {
-			UbicacionFachada.getRodalesById(idMarcacion,
+		UbicacionFachada.getRodalesById(idMarcacion,
 					actualizarComboRodalCallback);
-		}
+
 	}
 
 	function actualizarComboRodalCallback(rodales) {
@@ -123,8 +131,8 @@
 			id : -1
 		} ];
 		dwr.util.addOptions("idRodal", data, "id", "nombre");
-		dwr.util.addOptions("idRodal", rodales, "id", "nombre");
-		$('#idRodal').removeAttr('disabled');
+		dwr.util.addOptions("idRodal", rodales, "id", "nombreRodal");
+	
 	}
 
 	function deshabilitarLocalizacion(ids) {

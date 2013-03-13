@@ -2,80 +2,69 @@ package ar.com.siif.negocio;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.dto.PMFDTO;
+import ar.com.siif.providers.ProviderDTO;
+
 @Entity
-public class PMF {
+@DiscriminatorValue("PMF")
+public class PMF extends Localizacion {
 
 	public PMF() {
 		super();
 	}
 
-	public PMF(String expediente, String nombre, Entidad entidad) {
+	public PMF(String expediente, String nombre, String tipoTerreno, Entidad entidad) {
 		super();
-		this.expediente = expediente;
-		this.nombre = nombre;
+		this.expedientePMF = expediente;
+		this.nombrePMF = nombre;
+		this.tipoTerrenoPMF = tipoTerreno;
 		this.productorForestal = entidad;
+
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String expedientePMF;
 
-	private String expediente;
+	private String nombrePMF;
 
-	private String nombre;
+	private String tipoTerrenoPMF;
 
-	private String tipoTerreno;
-	
 	@OneToMany(mappedBy = "pmf")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<Tranzon> tranzones;
 
-	@ManyToOne()
-	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "entidad_fk")
-	private Entidad productorForestal;
-
-	public Long getId() {
-		return id;
+	public String getExpedientePMF() {
+		return expedientePMF;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setExpedientePMF(String expedientePMF) {
+		this.expedientePMF = expedientePMF;
 	}
 
-	public String getExpediente() {
-		return expediente;
+	public String getNombrePMF() {
+		return nombrePMF;
 	}
 
-	public void setExpediente(String expediente) {
-		this.expediente = expediente;
+	public String getNombreExpediente() {
+		return this.getNombrePMF() + " - " + this.getExpedientePMF();
 	}
 
-	public String getNombre() {
-		return nombre;
+	public void setNombrePMF(String nombrePMF) {
+		this.nombrePMF = nombrePMF;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public String getTipoTerrenoPMF() {
+		return tipoTerrenoPMF;
 	}
 
-	public Entidad getProductorForestal() {
-		return productorForestal;
-	}
-
-	public void setProductorForestal(Entidad productorForestal) {
-		this.productorForestal = productorForestal;
+	public void setTipoTerrenoPMF(String tipoTerrenoPMF) {
+		this.tipoTerrenoPMF = tipoTerrenoPMF;
 	}
 
 	public List<Tranzon> getTranzones() {
@@ -85,18 +74,16 @@ public class PMF {
 	public void setTranzones(List<Tranzon> tranzones) {
 		this.tranzones = tranzones;
 	}
-	
-	public String getNombreExpediente(){
-		
-		return this.getNombre()+" - "+this.getExpediente();
-	}
 
-	public String getTipoTerreno() {
-		return tipoTerreno;
-	}
+	public PMFDTO getLocalizacionDTO() {
+		PMFDTO pmfDTO = new PMFDTO();
+		pmfDTO.setId(this.getId());
+		pmfDTO.setExpedientePMF(this.getExpedientePMF());
+		pmfDTO.setNombrePMF(this.getNombrePMF());
+		pmfDTO.setTipoTerrenoPMF(this.getTipoTerrenoPMF());
+		pmfDTO.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
 
-	public void setTipoTerreno(String tipoTerreno) {
-		this.tipoTerreno = tipoTerreno;
+		return pmfDTO;
 	}
 
 }

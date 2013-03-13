@@ -43,13 +43,7 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargaAltaFiscalizacion";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.ALTA_FISCALIZACION_MENU, usuario.getRol());
-
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
 
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx
@@ -222,8 +216,7 @@ public class FiscalizacionAction extends ValidadorAction {
 			Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(idFiscalizacion);
 
-			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion
-					.getRodal().getMarcacion().getTranzon().getPmf().getProductorForestal()
+			List<Entidad> productores = entidadFachada.getEntidadesPorLocalidad(fiscalizacion.getLocalizacion().getProductorForestal()
 					.getLocalidad().getId());
 			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
 

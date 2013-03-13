@@ -71,14 +71,14 @@ function seleccionarRodal(idTr){
 					<c:forEach items="${rodales}" var="rodal" varStatus="rodalSt">
 						<tr id=R${rodalSt.index} onmouseover="javascript:seleccionarRodal(R${rodalSt.index});">
 							<td class="botonerab"> ${rodal.marcacion.tranzon.pmf.productorForestal.nombre}</td>
-							<td class="botonerab"> ${rodal.marcacion.tranzon.pmf.nombre}</td>
-							<td class="botonerab"> ${rodal.marcacion.tranzon.pmf.expediente}</td>
-							<td class="botonerab"> ${rodal.marcacion.tranzon.numero}</td>
-							<td class="botonerab"> ${rodal.marcacion.tranzon.disposicion}</td>
-							<td class="botonerab"> ${rodal.marcacion.disposicion}</td>
-							<td class="botonerab"> ${rodal.nombre}</td>
+							<td class="botonerab"> ${rodal.marcacion.tranzon.pmf.nombrePMF}</td>
+							<td class="botonerab"> ${rodal.marcacion.tranzon.pmf.expedientePMF}</td>
+							<td class="botonerab"> ${rodal.marcacion.tranzon.numeroTranzon}</td>
+							<td class="botonerab"> ${rodal.marcacion.tranzon.disposicionTranzon}</td>
+							<td class="botonerab"> ${rodal.marcacion.disposicionMarcacion}</td>
+							<td class="botonerab"> ${rodal.nombreRodal}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosRodal(${rodalSt.index}, ${rodal.id}, '${rodal.nombre}')">
+								<a href="javascript:mostrarDatosRodal(${rodalSt.index}, ${rodal.id}, '${rodal.nombreRodal}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>

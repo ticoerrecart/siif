@@ -2,6 +2,7 @@ package ar.com.siif.fachada;
 
 import java.util.List;
 
+import ar.com.siif.dto.AreaDeCosechaDTO;
 import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
@@ -16,22 +17,22 @@ public interface IUbicacionFachada {
 
 	public List<PMF> recuperarPMFs();
 
-	public List<PMF> getPMFs(Long idPF)throws NegocioException;
+	public List<PMF> getPMFs(Long idPF) throws NegocioException;
 
 	public List<Tranzon> getTranzonesById(Long idPMF) throws NegocioException;
 
 	public List<Rodal> getRodales();
-	
-	public List<Rodal> getRodalesById(Long idMarcacion) throws NegocioException;	
+
+	public List<Rodal> getRodalesById(Long idMarcacion) throws NegocioException;
 
 	public List<Marcacion> getMarcacionesById(Long idTranzon) throws NegocioException;
-	
+
 	public List<Marcacion> getMarcaciones();
 
 	public List<Tranzon> getTranzones();
 
-	public Marcacion getMarcacion(Long idMarcacion);	
-	
+	public Marcacion getMarcacion(Long idMarcacion);
+
 	public void altaRodal(String nombre, Long idMarcacion) throws NegocioException;
 
 	public void altaMarcacion(String disposicionMarcacion, Long idTranzon) throws NegocioException;
@@ -40,9 +41,12 @@ public interface IUbicacionFachada {
 
 	public void altaPMF(String expediente, String nombre, String tipoTerreno, Long idEntidad) throws NegocioException;
 
+	public void altaArea(String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea, Long idEntidad)
+			throws NegocioException;
+
 	public void deleteRodal(Long idRodal) throws NegocioException;
 
-	public void modificarRodal(Long idRodal, String nombre)throws NegocioException;
+	public void modificarRodal(Long idRodal, String nombre) throws NegocioException;
 
 	public void deleteMarcacion(Long idMarcacion) throws NegocioException;
 
@@ -55,30 +59,39 @@ public interface IUbicacionFachada {
 	public void deletePMF(Long idPMF);
 
 	public void modificarPMF(Long idPMF, String nombre, String expediente) throws NegocioException;
-	
+
 	public Rodal getRodal(Long idRodal);
-	
+
 	public RodalDTO getRodalDTO(Long idRodal);
-	
+
 	public List<PMFDTO> getPMFsDTO(Long idPF) throws NegocioException;
-	
+
+	public List<AreaDeCosechaDTO> getAreasDTO(Long idPF) throws NegocioException;
+
 	public List<TranzonDTO> getTranzonesDTOById(Long idPMF) throws NegocioException;
-	
+
 	public List<MarcacionDTO> getMarcacionesDTOById(Long idTranzon) throws NegocioException;
 
 	public List<RodalDTO> getRodalesDTOById(Long idMarcacion) throws NegocioException;
-	
+
 	public List<PMFDTO> recuperarPMFsDTO();
-	
-	public List<PMFDTO> getPMFsDTOPorProductor(Long idProductor);	
-	
+
+	public List<PMFDTO> getPMFsDTOPorProductor(Long idProductor);
+
 	public List<TranzonDTO> getTranzonesDTOPorProductor(Long idProductor);
-	
+
 	public List<MarcacionDTO> getMarcacionesDTOPorProductor(Long idProductor);
-	
-	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor);	
-	
-	public String getTipoTerrenoPMF(Long idPMF)throws NegocioException;
-	
+
+	public List<RodalDTO> getRodalesDTOPorProductor(Long idProductor);
+
+	public String getTipoTerrenoPMF(Long idPMF) throws NegocioException;
+
 	public PMF getPMF(Long idPF);
+
+	public void modificarArea(Long idArea, String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea)
+			throws NegocioException;
+
+	public void deleteArea(Long idArea) throws NegocioException;
+
+	public List<AreaDeCosechaDTO> getAreasDTOPorProductor(Long idProductor);
 }

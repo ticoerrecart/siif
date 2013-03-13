@@ -5,28 +5,34 @@
 <dwr>
 	<allow>
 		<convert converter="bean" match="ar.com.siif.negocio.PMF">
-			<param name="include" value="id, nombre, nombreExpediente" />
+			<param name="include" value="id, nombrePMF, nombreExpediente" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.AreaDeCosecha">
+			<param name="include" value="id, nombreArea" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.PMFDTO">
-			<param name="include" value="id, nombre, nombreExpediente" />
+			<param name="include" value="id, nombrePMF, nombreExpediente" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.AreaDeCosechaDTO">
+			<param name="include" value="id, nombreArea, fullNombre" />
 		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Tranzon">
-			<param name="include" value="id, numero, numeroDisposicion" />
+			<param name="include" value="id, numeroTranzon, numeroDisposicionTranzon" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.TranzonDTO">
-			<param name="include" value="id, numero, numeroDisposicion" />
+			<param name="include" value="id, numeroTranzon, numeroDisposicionTranzon" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.negocio.Marcacion">
-			<param name="include" value="id, disposicion" />
+			<param name="include" value="id, disposicionMarcacion" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.MarcacionDTO">
-			<param name="include" value="id, disposicion" />
+			<param name="include" value="id, disposicionMarcacion" />
 		</convert>		
 		<convert converter="bean" match="ar.com.siif.negocio.Rodal">
-			<param name="include" value="id, nombre" />
+			<param name="include" value="id, nombreRodal" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.dto.RodalDTO">
-			<param name="include" value="id, nombre" />
+			<param name="include" value="id, nombreRodal" />
 		</convert>
 		<convert converter="bean" match="ar.com.siif.negocio.Entidad">
 			<param name="include" value="id, nombre, nroMatricula, cuit" />

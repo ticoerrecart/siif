@@ -2,10 +2,8 @@ package ar.com.siif.negocio;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -13,8 +11,11 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.dto.TranzonDTO;
+
 @Entity
-public class Tranzon {
+@DiscriminatorValue("TRANZON")
+public class Tranzon extends Localizacion {
 
 	public Tranzon() {
 		super();
@@ -22,19 +23,15 @@ public class Tranzon {
 
 	public Tranzon(String numero, String disposicion, PMF pmf) {
 		super();
-		this.numero = numero;
-		this.disposicion = disposicion;
+		this.numeroTranzon = numero;
+		this.disposicionTranzon = disposicion;
 		this.pmf = pmf;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String numeroTranzon;
 
-	private String numero;
+	private String disposicionTranzon;
 
-	private String disposicion;
-	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "pmf_fk")
@@ -52,28 +49,20 @@ public class Tranzon {
 		this.marcaciones = marcaciones;
 	}
 
-	public Long getId() {
-		return id;
+	public String getNumeroTranzon() {
+		return numeroTranzon;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setNumeroTranzon(String numeroTranzon) {
+		this.numeroTranzon = numeroTranzon;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getDisposicionTranzon() {
+		return disposicionTranzon;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
-	public String getDisposicion() {
-		return disposicion;
-	}
-
-	public void setDisposicion(String disposicion) {
-		this.disposicion = disposicion;
+	public void setDisposicionTranzon(String disposicionTranzon) {
+		this.disposicionTranzon = disposicionTranzon;
 	}
 
 	public PMF getPmf() {
@@ -83,9 +72,27 @@ public class Tranzon {
 	public void setPmf(PMF pmf) {
 		this.pmf = pmf;
 	}
-		
-	public String getNumeroDisposicion(){
-		
-		return (this.getNumero()+" - "+this.getDisposicion());
+
+	public String getNumeroDisposicionTranzon() {
+
+		return (this.getNumeroTranzon() + " - " + this.getDisposicionTranzon());
 	}
+
+	@Override
+	public Entidad getProductorForestal() {
+		return getPmf().getProductorForestal();
+	}
+
+	@Override
+	public TranzonDTO getLocalizacionDTO() {
+		TranzonDTO tranzonDTO = new TranzonDTO();
+
+		tranzonDTO.setId(this.getId());
+		tranzonDTO.setDisposicionTranzon(this.getDisposicionTranzon());
+		tranzonDTO.setNumeroTranzon(this.getNumeroTranzon());
+		tranzonDTO.setPmf(this.getPmf().getLocalizacionDTO());
+
+		return tranzonDTO;
+	}
+
 }

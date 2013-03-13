@@ -110,7 +110,7 @@ public class FiscalizacionForm extends ActionForm {
 				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
 
 		ok15 = Validator.validarComboRequerido("-1",
-				Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
+				Long.toString(fiscalizacionDTO.getLocalizacion().getId()), "Localizacion", error);
 
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
