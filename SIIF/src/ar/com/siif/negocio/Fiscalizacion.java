@@ -44,9 +44,9 @@ public class Fiscalizacion {
 
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "rodal_fk")
-	private Rodal rodal;	
-	
+	@JoinColumn(name = "localizacion_fk")
+	private Localizacion localizacion;
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "tipoProducto_fk")
@@ -59,13 +59,13 @@ public class Fiscalizacion {
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "usuario_fk")
-	private Usuario usuario;	
-	
+	private Usuario usuario;
+
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "oficina_fk")
-	private Entidad oficinaAlta;	
-	
+	private Entidad oficinaAlta;
+
 	public String getPeriodoForestal() {
 		return periodoForestal;
 	}
@@ -130,11 +130,11 @@ public class Fiscalizacion {
 		this.tamanioMuestra = tamanioMuestra;
 	}
 
-	public TipoProductoForestal getTipoProducto() {
+	public TipoProducto getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(TipoProductoForestal tipoProducto) {
+	public void setTipoProducto(TipoProducto tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 
@@ -146,12 +146,12 @@ public class Fiscalizacion {
 		this.muestra = muestra;
 	}
 
-	public Rodal getRodal() {
-		return rodal;
+	public Localizacion getLocalizacion() {
+		return localizacion;
 	}
 
-	public void setRodal(Rodal rodal) {
-		this.rodal = rodal;
+	public void setLocalizacion(Localizacion localizacion) {
+		this.localizacion = localizacion;
 	}
 
 	public Usuario getUsuario() {

@@ -54,7 +54,7 @@ function mostrarModificacionPMF(){
 <br>
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
-		<td class="azulAjustado">Modificación Plan de Manejo Forestal </td>
+		<td class="azulAjustado">Modificación Zona de Manejo Forestal </td>
 	</tr>
 	<tr>
 		<td height="20"></td>

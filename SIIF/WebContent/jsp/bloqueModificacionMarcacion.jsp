@@ -67,13 +67,13 @@ function seleccionarMarcacion(idTr){
 					<c:forEach items="${marcaciones}" var="marcacion" varStatus="marcacionSt">
 						<tr id=M${marcacionSt.index} onmouseover="javascript:seleccionarMarcacion(M${marcacionSt.index});">
 							<td class="botonerab"> ${marcacion.tranzon.pmf.productorForestal.nombre}</td>
-							<td class="botonerab"> ${marcacion.tranzon.pmf.nombre}</td>
-							<td class="botonerab"> ${marcacion.tranzon.pmf.expediente}</td>
-							<td class="botonerab"> ${marcacion.tranzon.numero}</td>
-							<td class="botonerab"> ${marcacion.tranzon.disposicion}</td>
-							<td class="botonerab"> ${marcacion.disposicion}</td>
+							<td class="botonerab"> ${marcacion.tranzon.pmf.nombrePMF}</td>
+							<td class="botonerab"> ${marcacion.tranzon.pmf.expedientePMF}</td>
+							<td class="botonerab"> ${marcacion.tranzon.numeroTranzon}</td>
+							<td class="botonerab"> ${marcacion.tranzon.disposicionTranzon}</td>
+							<td class="botonerab"> ${marcacion.disposicionMarcacion}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosMarcacion(${marcacionSt.index}, ${marcacion.id}, '${marcacion.disposicion}')">
+								<a href="javascript:mostrarDatosMarcacion(${marcacionSt.index}, ${marcacion.id}, '${marcacion.disposicionMarcacion}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>

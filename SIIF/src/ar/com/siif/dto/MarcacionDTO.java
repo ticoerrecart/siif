@@ -1,35 +1,32 @@
 package ar.com.siif.dto;
 
-public class MarcacionDTO {
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Marcacion;
 
-	private Long id;
+public class MarcacionDTO extends LocalizacionDTO {
 
-	private String disposicion;
+	private String disposicionMarcacion;
 
 	private TranzonDTO tranzon;
-	
-	public Long getId() {
-		return id;
+
+	public String getDisposicionMarcacion() {
+		return disposicionMarcacion;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDisposicion() {
-		return disposicion;
-	}
-
-	public void setDisposicion(String disposicion) {
-		this.disposicion = disposicion;
+	public void setDisposicionMarcacion(String disposicionMarcacion) {
+		this.disposicionMarcacion = disposicionMarcacion;
 	}
 
 	public TranzonDTO getTranzon() {
 		return tranzon;
 	}
 
-	public void setTranzon(TranzonDTO tranzon) {
-		this.tranzon = tranzon;
+	public void setTranzon(TranzonDTO tranzonDTO) {
+		this.tranzon = tranzonDTO;
 	}
-	
+
+	@Override
+	public Marcacion getLocalizacion(Entidad entidad) {
+		return new Marcacion(this.disposicionMarcacion, null);
+	}
 }

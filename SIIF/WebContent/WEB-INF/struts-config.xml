@@ -117,6 +117,7 @@
 			<forward name="exitoRecuperarUbicacionParaModificacionDeMarcaciones" path="/jsp/bloqueModificacionMarcacion.jsp" />
 			<forward name="exitoRecuperarUbicacionParaModificacionDeTranzones" path="/jsp/bloqueModificacionTranzon.jsp" />
 			<forward name="exitoRecuperarUbicacionParaModificacionDePMFs" path="/jsp/bloqueModificacionPMF.jsp" />
+			<forward name="exitoRecuperarUbicacionParaModificacionDeAreas" path="/jsp/bloqueModificacionArea.jsp" />
 			
 			<forward name="exitoAltaUbicacion" path=".index" />
 		</action>

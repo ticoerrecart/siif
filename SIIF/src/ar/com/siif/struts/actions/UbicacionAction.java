@@ -77,6 +77,26 @@ public class UbicacionAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	
+	public ActionForward recuperarUbicacionesParaModificacionDeAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoRecuperarUbicacionParaModificacionDeAreas";
+		try {
+			WebApplicationContext ctx = getWebApplicationContext();
+			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx.getBean("ubicacionFachada");
+
+			Long idProductor = Long.valueOf(request.getParameter("idProductor"));
+
+			request.setAttribute("areas", ubicacionFachada.getAreasDTOPorProductor(idProductor));
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}
+	
+	
 	public ActionForward recuperarUbicacionesParaModificacionDeRodales(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String strForward = "exitoRecuperarUbicacionParaModificacionDeRodales";
@@ -178,4 +198,12 @@ public class UbicacionAction extends ValidadorAction {
 		return pError.toString();
 	}
 
+	public String validarArea(String reservaForestalArea, String nombreArea, String disposicionArea, String expedienteArea,  Long idPF) {
+		StringBuffer pError = new StringBuffer();
+		Validator.requerido(reservaForestalArea, "Reserva Forestal", pError);
+		Validator.requerido(nombreArea, "Nombre", pError);
+		Validator.requerido(disposicionArea, "Disposicion", pError);
+		Validator.requerido(expedienteArea, "Expediente", pError);
+		return pError.toString();
+	}
 }

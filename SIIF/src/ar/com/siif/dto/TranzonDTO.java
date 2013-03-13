@@ -1,42 +1,34 @@
 package ar.com.siif.dto;
 
-public class TranzonDTO {
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Tranzon;
 
-	private Long id;
+public class TranzonDTO extends LocalizacionDTO {
 
-	private String numero;
+	private String numeroTranzon;
 
-	private String disposicion;
+	private String disposicionTranzon;
 
 	private PMFDTO pmf;
-	
-	public Long getId() {
-		return id;
+
+	public String getNumeroTranzon() {
+		return numeroTranzon;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setNumeroTranzon(String numeroTranzon) {
+		this.numeroTranzon = numeroTranzon;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getDisposicionTranzon() {
+		return disposicionTranzon;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setDisposicionTranzon(String disposicionTranzon) {
+		this.disposicionTranzon = disposicionTranzon;
 	}
 
-	public String getDisposicion() {
-		return disposicion;
-	}
-
-	public void setDisposicion(String disposicion) {
-		this.disposicion = disposicion;
-	}
-	
-	public String getNumeroDisposicion(){
-		
-		return (this.getNumero()+" - "+this.getDisposicion());
+	public String getNumeroDisposicionTranzon() {
+		return (this.getNumeroTranzon() + " - " + this.getDisposicionTranzon());
 	}
 
 	public PMFDTO getPmf() {
@@ -45,5 +37,10 @@ public class TranzonDTO {
 
 	public void setPmf(PMFDTO pmf) {
 		this.pmf = pmf;
-	}	
+	}
+
+	@Override
+	public Tranzon getLocalizacion(Entidad entidad) {
+		return new Tranzon(this.numeroTranzon, this.disposicionTranzon, null);
+	}
 }

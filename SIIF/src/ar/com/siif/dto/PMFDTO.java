@@ -1,41 +1,18 @@
 package ar.com.siif.dto;
 
-public class PMFDTO {
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.PMF;
 
-	private Long id;
+public class PMFDTO extends LocalizacionDTO {
 
-	private String expediente;
+	private String expedientePMF;
 
-	private String nombre;
+	private String nombrePMF;
 
-	private String tipoTerreno;	
-	
+	private String tipoTerrenoPMF;
+
 	private EntidadDTO productorForestal;
-	
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getExpediente() {
-		return expediente;
-	}
-
-	public void setExpediente(String expediente) {
-		this.expediente = expediente;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}	
-	
 	public EntidadDTO getProductorForestal() {
 		return productorForestal;
 	}
@@ -44,16 +21,39 @@ public class PMFDTO {
 		this.productorForestal = productorForestal;
 	}
 
-	public String getNombreExpediente(){
-		
-		return this.getNombre()+" - "+this.getExpediente();
+	public String getNombreExpediente() {
+
+		return this.getNombrePMF() + " - " + this.getExpedientePMF();
 	}
 
-	public String getTipoTerreno() {
-		return tipoTerreno;
+	public String getExpedientePMF() {
+		return expedientePMF;
 	}
 
-	public void setTipoTerreno(String tipoTerreno) {
-		this.tipoTerreno = tipoTerreno;
+	public void setExpedientePMF(String expedientePMF) {
+		this.expedientePMF = expedientePMF;
 	}
+
+	public String getNombrePMF() {
+		return nombrePMF;
+	}
+
+	public void setNombrePMF(String nombrePMF) {
+		this.nombrePMF = nombrePMF;
+	}
+
+	public String getTipoTerrenoPMF() {
+		return tipoTerrenoPMF;
+	}
+
+	public void setTipoTerrenoPMF(String tipoTerrenoPMF) {
+		this.tipoTerrenoPMF = tipoTerrenoPMF;
+	}
+
+	@Override
+	public PMF getLocalizacion(Entidad entidad) {
+		PMF pmf = new PMF(this.expedientePMF, this.nombrePMF, this.getTipoTerrenoPMF(), entidad);
+		return pmf;
+	}
+
 }

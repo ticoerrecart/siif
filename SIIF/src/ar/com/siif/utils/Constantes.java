@@ -231,6 +231,8 @@ public class Constantes {
 
 	public static final String ERROR_EXISTE_PMF = "Ya Existe un Plan de Manejo Forestal con el nombre: ";
 
+	public static final String ERROR_EXISTE_AREA = "Ya Existe un Area de Cosecha con el nombre: ";
+	
 	public static final String ERROR_EXISTE_TRANZON = "Ya Existe un Tranzon con el número: ";
 
 	public static final String ERROR_EXISTE_MARCACION = "Ya Existe una Marcación con la disposición: ";
@@ -464,4 +466,6 @@ public class Constantes {
 	public static final String ERROR_OBTENER_CERTIFICADO_ORIGEN = "Ha ocurrido un error en la recuperación del Certificado de Orígen";
 	
 	public static final String NO_EXISTE_CERTIFICADO = "Certificado de Orígen no encontrado";
+
+	
 }

@@ -1,17 +1,19 @@
 package ar.com.siif.negocio;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.dto.MarcacionDTO;
+import ar.com.siif.dto.RodalDTO;
+
 @Entity
-public class Rodal {
+@DiscriminatorValue("RODAL")
+public class Rodal extends Localizacion {
 
 	public Rodal() {
 		super();
@@ -19,35 +21,23 @@ public class Rodal {
 
 	public Rodal(String nombre, Marcacion marcacion) {
 		super();
-		this.nombre = nombre;
+		this.nombreRodal = nombre;
 		this.marcacion = marcacion;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	private String nombre;
+	private String nombreRodal;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "marcacion_fk")
 	private Marcacion marcacion;
 
-	public Long getId() {
-		return id;
+	public String getNombreRodal() {
+		return nombreRodal;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreRodal(String nombreRodal) {
+		this.nombreRodal = nombreRodal;
 	}
 
 	public Marcacion getMarcacion() {
@@ -56,6 +46,21 @@ public class Rodal {
 
 	public void setMarcacion(Marcacion marcacion) {
 		this.marcacion = marcacion;
+	}
+
+	@Override
+	public Entidad getProductorForestal() {
+		return getMarcacion().getProductorForestal();
+	}
+
+	@Override
+	public RodalDTO getLocalizacionDTO() {
+		RodalDTO rodalDTO = new RodalDTO();
+		rodalDTO.setId(this.getId());
+		rodalDTO.setNombreRodal(this.getNombreRodal());
+		rodalDTO.setMarcacion((MarcacionDTO)this.getMarcacion().getLocalizacionDTO());
+
+		return rodalDTO;
 	}
 
 }

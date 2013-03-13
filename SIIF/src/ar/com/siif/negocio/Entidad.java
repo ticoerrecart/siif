@@ -51,7 +51,7 @@ public class Entidad implements Comparable<Entidad> {
 
 	@OneToMany(mappedBy = "productorForestal")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
-	private List<PMF> pmfs;
+	private List<Localizacion> localizaciones;
 
 	/**
 	 * Cada subclase debe implementar éste método.
@@ -119,12 +119,13 @@ public class Entidad implements Comparable<Entidad> {
 		this.id = id;
 	}
 
-	public List<PMF> getPmfs() {
-		return pmfs;
+	
+	public List<Localizacion> getLocalizaciones() {
+		return localizaciones;
 	}
 
-	public void setPmfs(List<PMF> pmfs) {
-		this.pmfs = pmfs;
+	public void setLocalizaciones(List<Localizacion> localizaciones) {
+		this.localizaciones = localizaciones;
 	}
 
 	public int compareTo(Entidad o) {

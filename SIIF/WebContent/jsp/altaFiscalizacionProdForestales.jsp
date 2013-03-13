@@ -107,7 +107,7 @@ $(function() {
 		<tr>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeProductor'/></td>
 			<td width="30%">
-				<select id="selectTiposDeEntidad" class="botonerab" onchange="actualizarComboProductores();">
+				<select id="selectTiposDeEntidad" class="botonerab" onchange="cambioComboEntidad();">
 					<option value="-1">-Seleccione una Entidad-</option>
 					<c:forEach items="${tiposEntidad}" var="tipoDeEntidad" varStatus="i">
 						<option value="${tipoDeEntidad.name}">
@@ -118,7 +118,7 @@ $(function() {
 			</td>
 			<td width="20%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 			<td width="30%">
-				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.productorForestal.id" onchange="actualizarComboPMF();" 
+				<select id="idProductor" class="botonerab" name="fiscalizacionDTO.productorForestal.id" onchange="cambioComboProductores();" 
 						disabled="disabled">
 					<option value="-1">-Seleccione un Productor-</option>
 				</select>
@@ -202,50 +202,76 @@ $(function() {
 					</tr>
 					<tr>
 						<td colspan="3" height="10"></td>
-					</tr>				
+					</tr>			
+					
 					<tr>
 						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.PlanManejoForestal'/>
+							<bean:message key='SIIF.label.ZonaManejoForestal'/>
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" disabled="disabled" 
-									onchange="actualizarComboTranzon();">
+							<select id="idZMF" class="botonerab" 
+									onchange="cambioComboZona();">
+								<option value="0">--Seleccione una Opcion de Zona--</option>
+								<option value="1">--PMF--</option>
+								<option value="2">--Area de Cosecha--</option>
+							</select>					
+						</td>						
+					</tr>				
+
+					<tr class="area" style="display: none">	
+						<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+						<td width="4%"></td>
+						<td align="left"> 
+							<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" >
+								<option value="-1">- Seleccione -</option>						
+							</select>	
+						</td>
+					</tr>
+						
+					<tr class="plan" style="display: none">
+						<td width="47%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
+						</td>
+						<td width="4%"></td>			
+						<td align="left">
+							<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();">
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>						
 					</tr>				
-					<tr>
+					
+					<tr class="plan" style="display: none">
 						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td width="4%"></td>						
 						<td align="left">
-							<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" disabled="disabled" 
-									onchange="actualizarComboMarcacion();">
+							<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" 	onchange="actualizarComboMarcacion();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
 						</td>
 					</tr>
-					<tr>
+					
+					<tr class="plan" style="display: none">
 						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td width="4%"></td>
 						<td align="left">
-							<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" disabled="disabled" 
-									onchange="actualizarComboRodal();">
+							<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" 	onchange="actualizarComboRodal();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
 						</td>
 					</tr>
-					<tr>
+					
+					<tr class="plan" style="display: none">
 						<td width="47%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td width="4%"></td>
 						<td align="left">
-							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.rodal.id" disabled="disabled">
+							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.rodal.id" >
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>

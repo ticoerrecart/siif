@@ -67,12 +67,12 @@ function seleccionarTranzon(idTr){
 					<c:forEach items="${tranzones}" var="tranzon" varStatus="tranzonSt">
 						<tr id=T${tranzonSt.index} onmouseover="javascript:seleccionarTranzon(T${tranzonSt.index});">
 							<td class="botonerab"> ${tranzon.pmf.productorForestal.nombre}</td>
-							<td class="botonerab"> ${tranzon.pmf.nombre}</td>
-							<td class="botonerab"> ${tranzon.pmf.expediente}</td>
-							<td class="botonerab"> ${tranzon.numero}</td>
-							<td class="botonerab"> ${tranzon.disposicion}</td>
+							<td class="botonerab"> ${tranzon.pmf.nombrePMF}</td>
+							<td class="botonerab"> ${tranzon.pmf.expedientePMF}</td>
+							<td class="botonerab"> ${tranzon.numeroTranzon}</td>
+							<td class="botonerab"> ${tranzon.disposicionTranzon}</td>
 							<td class="botonerab">
-							<a href="javascript:mostrarDatosTranzon(${tranzonSt.index}, ${tranzon.id}, '${tranzon.numero}', '${tranzon.disposicion}')">
+							<a href="javascript:mostrarDatosTranzon(${tranzonSt.index}, ${tranzon.id}, '${tranzon.numeroTranzon}', '${tranzon.disposicionTranzon}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>

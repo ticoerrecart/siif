@@ -179,7 +179,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<!-- UBICACION --> 
 	<bean id="ubicacionFachadaImpl" class="ar.com.siif.fachada.UbicacionFachada">
 		<constructor-arg ref="ubicacionDAO" />
-		<constructor-arg ref="entidadFachada" />
 	</bean>	
 
 	<bean id="ubicacionFachada"

@@ -69,11 +69,11 @@ function seleccionarPMF(idTr){
 					<c:forEach items="${pmfs}" var="pmf" varStatus="pmfSt">
 						<tr id=P${pmfSt.index} onmouseover="javascript:seleccionarPMF(P${pmfSt.index});">
 							<td class="botonerab"> ${pmf.productorForestal.nombre}</td>
-							<td class="botonerab"> ${pmf.nombre}</td>
-							<td class="botonerab"> ${pmf.expediente}</td>
-							<td class="botonerab"> ${pmf.tipoTerreno}</td>
+							<td class="botonerab"> ${pmf.nombrePMF}</td>
+							<td class="botonerab"> ${pmf.expedientePMF}</td>
+							<td class="botonerab"> ${pmf.tipoTerrenoPMF}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombre}', '${pmf.expediente}', '${pmf.tipoTerreno}')">
+								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombrePMF}', '${pmf.expedientePMF}', '${pmf.tipoTerrenoPMF}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>

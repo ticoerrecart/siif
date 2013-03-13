@@ -8,6 +8,12 @@ public class UbicacionForm extends ActionForm {
 
 	private Long idPMF;
 
+	private Long idArea;
+
+	public Long getIdZMF() {
+		return idZMF;
+	}
+
 	private Long idTranzon;
 
 	private Long idRodal;
@@ -52,6 +58,20 @@ public class UbicacionForm extends ActionForm {
 
 	public void setIdPMF(Long idPMF) {
 		this.idPMF = idPMF;
+	}
+
+	public void setIdZMF(Long idZMF) {
+		this.idZMF = idZMF;
+	}
+
+	private Long idZMF;
+
+	public Long getIdArea() {
+		return idArea;
+	}
+
+	public void setIdArea(Long idArea) {
+		this.idArea = idArea;
 	}
 
 	public UbicacionForm() {
