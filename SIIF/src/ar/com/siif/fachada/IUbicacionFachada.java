@@ -7,6 +7,7 @@ import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.TranzonDTO;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
@@ -94,4 +95,6 @@ public interface IUbicacionFachada {
 	public void deleteArea(Long idArea) throws NegocioException;
 
 	public List<AreaDeCosechaDTO> getAreasDTOPorProductor(Long idProductor);
+	
+	public Localizacion getLocalizacion(Long idLocalizacion);
 }

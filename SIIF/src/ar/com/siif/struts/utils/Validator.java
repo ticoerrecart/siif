@@ -60,6 +60,15 @@ public abstract class Validator {
 		return false;
 	}
 
+	public static boolean requerido(Object entrada, String label, StringBuffer pError) {
+		if (entrada != null) {
+			return true;
+		}
+		addErrorXML(pError, label + " es un dato obligatorio");
+
+		return false;
+	}
+	
 	public static boolean validarRequeridoSi(String entradaCondicion, String valorCondicion,
 			String entrada, String label, StringBuffer pError) {
 
@@ -854,6 +863,8 @@ public abstract class Validator {
 		return true;
 	}
 
+	
+	
 	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError) {
 		try {
 			String[] strArray = periodo.split("-");

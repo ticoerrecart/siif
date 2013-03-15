@@ -11,6 +11,7 @@ import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.TranzonDTO;
 import ar.com.siif.negocio.AreaDeCosecha;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
@@ -319,6 +320,10 @@ public class UbicacionFachada implements IUbicacionFachada {
 		return this.ubicacionDAO.getRodal(idRodal);
 	}
 
+	public Localizacion getLocalizacion(Long idLocalizacion) {
+		return this.ubicacionDAO.getLocalizacion(idLocalizacion);
+	}
+	
 	public RodalDTO getRodalDTO(Long idRodal) {
 		Rodal rodal = this.ubicacionDAO.getRodal(idRodal);
 		return rodal.getLocalizacionDTO();

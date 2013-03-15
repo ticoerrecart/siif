@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.negocio.AreaDeCosecha;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.Rodal;
@@ -31,7 +32,11 @@ public class UbicacionDAO extends HibernateDaoSupport {
 	public Rodal getRodal(Long idRodal) {
 		return (Rodal) this.getHibernateTemplate().get(Rodal.class, idRodal);
 	}
-
+	
+	public Localizacion getLocalizacion(Long idLocalizacion) {
+		return (Localizacion) this.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
+	}
+	
 	public List<Rodal> getRodales() {
 		return this.getHibernateTemplate().loadAll(Rodal.class);
 	}

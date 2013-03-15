@@ -15,53 +15,53 @@ public class FiscalizacionDTO {
 	private double cantidadMts;
 
 	private int tamanioMuestra;
-	
-	//private long idProductorForestal;
+
+	// private long idProductorForestal;
 	private EntidadDTO productorForestal;
 
-	//private long idTipoProductoForestal;
-	private TipoProductoForestalDTO tipoProducto;	
+	// private long idTipoProductoForestal;
+	private TipoProductoForestalDTO tipoProducto;
 
-	
 	private long idArea;
-	
-	private long idPlanManejoForestal;
-	
 
+	private long idPlanManejoForestal;
+
+	private long idRodal;
 
 	private long idTranzon;
-	
-	private long idMarcacion;
-	
-	
-	
-	//private long idRodal;
-	private LocalizacionDTO localizacion;
 
-	//private long idOficinaForestal;	
+	private long idMarcacion;
+
+	// private long idOficinaForestal;
 	private EntidadDTO oficinaAlta;
-	
-	//private long idUsuario;
+
+	// private long idUsuario;
 	private UsuarioDTO usuario;
-	
+
 	private List<MuestraDTO> muestra;
 
 	private GuiaForestalDTO guiaForestal;
-	
-	public FiscalizacionDTO(){
-		
+
+	public FiscalizacionDTO() {
+
 		productorForestal = new EntidadDTO();
 		tipoProducto = new TipoProductoForestalDTO();
 		oficinaAlta = new EntidadDTO();
 		usuario = new UsuarioDTO();
 	}
-	
-	public LocalizacionDTO getLocalizacion() {
-		return localizacion;
-	}
 
-	public void setLocalizacion(LocalizacionDTO localizacion) {
-		this.localizacion = localizacion;
+	public Long getLocalizacionId() {
+		if (idRodal != -1)
+			return idRodal;
+		if (idMarcacion != -1)
+			return idMarcacion;
+		if (idTranzon != -1)
+			return idTranzon;
+		if (idPlanManejoForestal != -1)
+			return idPlanManejoForestal;
+		if (idArea != -1)
+			return idArea;
+		return null;
 	}
 
 	public Long getId() {
@@ -183,7 +183,7 @@ public class FiscalizacionDTO {
 	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
 	}
-	
+
 	public long getIdArea() {
 		return idArea;
 	}
@@ -191,4 +191,13 @@ public class FiscalizacionDTO {
 	public void setIdArea(long idArea) {
 		this.idArea = idArea;
 	}
+
+	public long getIdRodal() {
+		return idRodal;
+	}
+
+	public void setIdRodal(long idRodal) {
+		this.idRodal = idRodal;
+	}
+
 }
