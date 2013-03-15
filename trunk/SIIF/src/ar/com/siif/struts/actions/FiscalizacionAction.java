@@ -460,9 +460,8 @@ public class FiscalizacionAction extends ValidadorAction {
 		ok11 = Validator.validarComboRequerido("-1",
 				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
 
-		ok15 = Validator.validarComboRequerido("-1",
-				Long.toString(fiscalizacionDTO.getRodal().getId()), "Rodal", error);
-
+		/*ok15 = Validator.requerido(fiscalizacionDTO.getLocalizacion(), "Localizacion", error);
+		 */
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
 				&& ok14 && ok15 && ok16;		
