@@ -271,7 +271,7 @@ $(function() {
 						</td>
 						<td width="4%"></td>
 						<td align="left">
-							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.rodal.id" >
+							<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" >
 								<option value="-1">- Seleccione -</option>						
 							</select>					
 						</td>
