@@ -125,12 +125,14 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getProductorForestal().getId());
 		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta().getId());
-		TipoProductoForestal tipoProducto = tipoProductoForestalFachada
-				.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
-	
+		TipoProductoForestal tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
+
 		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
 
-		Localizacion localizacion = fiscalizacionDTO.getLocalizacion().getLocalizacion(productorForestal);
+		Long idLocalizacion = fiscalizacionDTO.getLocalizacionId();
+
+		Localizacion localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
+
 		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
 				oficinaForestal, tipoProducto, usuario);
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
