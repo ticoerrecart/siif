@@ -863,8 +863,6 @@ public abstract class Validator {
 		return true;
 	}
 
-	
-	
 	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError) {
 		try {
 			String[] strArray = periodo.split("-");
