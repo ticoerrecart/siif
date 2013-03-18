@@ -31,6 +31,8 @@ public class FiscalizacionDTO {
 	private long idTranzon;
 
 	private long idMarcacion;
+	
+	private long idLocalizacion;
 
 	// private long idOficinaForestal;
 	private EntidadDTO oficinaAlta;
@@ -48,20 +50,6 @@ public class FiscalizacionDTO {
 		tipoProducto = new TipoProductoForestalDTO();
 		oficinaAlta = new EntidadDTO();
 		usuario = new UsuarioDTO();
-	}
-
-	public Long getLocalizacionId() {
-		if (idRodal != -1)
-			return idRodal;
-		if (idMarcacion != -1)
-			return idMarcacion;
-		if (idTranzon != -1)
-			return idTranzon;
-		if (idPlanManejoForestal != -1)
-			return idPlanManejoForestal;
-		if (idArea != -1)
-			return idArea;
-		return null;
 	}
 
 	public Long getId() {
@@ -199,5 +187,11 @@ public class FiscalizacionDTO {
 	public void setIdRodal(long idRodal) {
 		this.idRodal = idRodal;
 	}
+	public long getIdLocalizacion() {
+		return idLocalizacion;
+	}
 
+	public void setIdLocalizacion(long idLocalizacion) {
+		this.idLocalizacion = idLocalizacion;
+	}
 }

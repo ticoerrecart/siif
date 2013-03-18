@@ -122,14 +122,8 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoRecuperarTiposDeEntidadParaFiscalizacionesAModificar";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
-
-			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+				IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");

@@ -33,7 +33,7 @@
 		
 		zmf = $('#idZMF').val();
 		idPF = $('#idProductor').val();
-		if (idPF == 0 ){
+		if (idPF == 0 || zmf == 0){
 			$(".area").hide();
 			$(".plan").hide();
 		} else {
@@ -242,7 +242,10 @@
 */
 	function headerTabla(funcion){
 		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-		TipoProductoForestalFachada.recuperarTipoProductoForestalDTO(idTipoProductoForestal,eval(funcion));
+		TipoProductoForestalFachada.recuperarTipoProductoForestalDTO(idTipoProductoForestal,{
+			callback:eval(funcion),
+			async:false
+			});
 		
 		/*if (idTipoProductoForestal == 1){
 			return headerTablaRollizos;
@@ -254,6 +257,7 @@
 			return headerTablaTrineos;
 		}*/	
 	}
+	
 	
 	function actualizarHeaderTablaPrependCallback(tipoProducto){
 		
@@ -280,6 +284,7 @@
 		$("#tablaMuestras").append(headerTablaStr);
 		$("#tablaMuestras").append(primeraFila);
 		actualizarMuestras();
+		
 	}
 
 	//se usa en la edición de Fiscalización

@@ -129,7 +129,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
 
-		Long idLocalizacion = fiscalizacionDTO.getLocalizacionId();
+		Long idLocalizacion = fiscalizacionDTO.getIdLocalizacion();
 
 		Localizacion localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
 
