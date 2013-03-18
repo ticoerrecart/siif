@@ -52,6 +52,20 @@ public class FiscalizacionDTO {
 		usuario = new UsuarioDTO();
 	}
 
+	public Long getLocalizacionId() {
+		if (idRodal != -1)
+			return idRodal;
+		if (idMarcacion != -1)
+			return idMarcacion;
+		if (idTranzon != -1)
+			return idTranzon;
+		if (idPlanManejoForestal != -1)
+			return idPlanManejoForestal;
+		if (idArea != -1)
+			return idArea;
+		return null;
+	}
+
 	public Long getId() {
 		return id;
 	}
