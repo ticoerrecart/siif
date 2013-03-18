@@ -1466,18 +1466,6 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
-	private boolean sonTodasAreasDeCosecha(List<Fiscalizacion> fiscalizaciones) {
-		int areaDeCosecha = 0;
-		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-			if (fiscalizacion.getLocalizacion() != null
-					&& fiscalizacion.getLocalizacion().esAreaDeCosecha()) {
-				areaDeCosecha++;
-			}
-		}
-
-		return areaDeCosecha > 0 && areaDeCosecha == fiscalizaciones.size();
-	}
-
 	private boolean tienenLocalizacionValida(List<Fiscalizacion> fiscalizaciones) {
 		Localizacion localizacionMayor = null;
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
@@ -1521,9 +1509,6 @@ public class GuiaForestalAction extends ValidadorAction {
 				}
 
 				if (fiscalizaciones.size() > 1) {
-					/*if (sonTodasAreasDeCosecha(fiscalizaciones)) {
-						return true;
-					} else {*/
 					if (tienenLocalizacionValida(fiscalizaciones)) {
 						return true;
 					} else {
@@ -1545,18 +1530,6 @@ public class GuiaForestalAction extends ValidadorAction {
 			return false;
 		}
 	}
-
-	/*
-	 * private List<FiscalizacionDTO>
-	 * normalizarListaFiscalizacionesParaAltaGuia(List<FiscalizacionDTO>
-	 * listaFiscalizaciones){
-	 * 
-	 * List<FiscalizacionDTO> listaFis = new ArrayList<FiscalizacionDTO>(); for
-	 * (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-	 * TipoProductoDTO tipoProd = fiscalizacionDTO.getTipoProducto();
-	 * if(tipoProd.getId() != null && tipoProd.getId().longValue() != 0){
-	 * listaFis.add(fiscalizacionDTO); } } return listaFis; }
-	 */
 
 	public boolean validarNroGuiaForm(StringBuffer error, ActionForm form) {
 		try {
