@@ -31,23 +31,29 @@ function submitir(){
 	
 	var ok = calcularVolumen();
 	if(ok){
-		var prodEnabled = $('#idProductor').attr('disabled');
-		var pmfEnabled = $('#idPMF').attr('disabled');
-		var tranEnabled = $('#idTranzon').attr('disabled');
-		var marcEnabled = $('#idMarcacion').attr('disabled');
-		var rodEnabled = $('#idRodal').attr('disabled');
-		
-		$('#idProductor').attr('disabled',false);
-		$('#idPMF').attr('disabled',false);
-		$('#idTranzon').attr('disabled',false);
-		$('#idMarcacion').attr('disabled',false);
-		$('#idRodal').attr('disabled',false);
+		if ($('#idZMF').val() == 1){
+			if ($('#idRodal').val() > -1){
+				$('#idLocalizacion').val($('#idRodal').val());	
+			} else {
+				if ($('#idMarcacion').val() > -1){
+					$('#idLocalizacion').val($('#idMarcacion').val());	
+				} else {
+					if ($('#idTranzon').val() > -1){
+						$('#idLocalizacion').val($('#idTranzon').val());	
+					} else {
+						if ($('#idPMF').val() > -1){
+							$('#idLocalizacion').val($('#idPMF').val());
+						}	
+					}
+				}
+			} 
+			 
+		} else {
+			if ($('#idZMF').val()== 2) {
+				$('#idLocalizacion').val($('#idArea').val());
+			}
+		}
 		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
-		$('#idProductor').attr('disabled',prodEnabled);
-		$('#idPMF').attr('disabled',pmfEnabled);
-		$('#idTranzon').attr('disabled',tranEnabled);
-		$('#idMarcacion').attr('disabled',marcEnabled);
-		$('#idRodal').attr('disabled',rodEnabled);	
 	}
 }
 
@@ -215,7 +221,8 @@ $(function() {
 								<option value="0">--Seleccione una Opcion de Zona--</option>
 								<option value="1">--PMF--</option>
 								<option value="2">--Area de Cosecha--</option>
-							</select>					
+							</select>	
+							<input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" />				
 						</td>						
 					</tr>				
 
