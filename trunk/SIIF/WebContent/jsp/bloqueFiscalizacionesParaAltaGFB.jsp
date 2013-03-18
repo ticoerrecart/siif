@@ -61,7 +61,6 @@
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
 				
 					<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>
-					<%--html:hidden styleId="idLocalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].localizacion.id" value=""/--%>
 
 					<%clase=(clase.equals("")?"par":""); %>
 					<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
