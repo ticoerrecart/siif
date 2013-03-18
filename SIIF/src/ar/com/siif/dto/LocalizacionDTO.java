@@ -45,4 +45,18 @@ public abstract class LocalizacionDTO {
 		return null;
 	}
 
+	public abstract boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion);
+
+	public boolean esRodal() {
+		return false;
+	}
+
+	public boolean esMarcacion() {
+		return false;
+	}
+
+	public boolean esTranzon() {
+		return false;
+	}
+
 }

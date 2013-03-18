@@ -56,4 +56,8 @@ public class PMFDTO extends LocalizacionDTO {
 		return pmf;
 	}
 
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
+		return false;
+	}
 }

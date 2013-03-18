@@ -65,4 +65,16 @@ public class RodalDTO extends LocalizacionDTO {
 		return null;
 	}
 
+	public boolean esRodal() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
+		if (localizacion.esRodal()) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -58,4 +58,15 @@ public class TranzonDTO extends LocalizacionDTO {
 		return null;
 	}
 
+	public boolean esTranzon() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
+		if (localizacion.esRodal() || localizacion.esMarcacion() || localizacion.esTranzon()) {
+			return false;
+		}
+		return true;
+	}
 }

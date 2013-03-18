@@ -58,4 +58,15 @@ public class MarcacionDTO extends LocalizacionDTO {
 		return null;
 	}
 
+	public boolean esMarcacion() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
+		if (localizacion.esRodal() || localizacion.esMarcacion()) {
+			return false;
+		}
+		return true;
+	}
 }
