@@ -86,4 +86,46 @@ public class PMF extends Localizacion {
 		return pmfDTO;
 	}
 
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(Localizacion localizacion) {
+		return false;
+	}
+
+	@Override
+	public boolean esParteDeLaLocalizacion(Localizacion localizacion) {
+		if (this.getId() == localizacion.getId()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneRodal(Long idRodal) {
+		for (Tranzon tranzon : this.getTranzones()) {
+			if (tranzon.tieneRodal(idRodal)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneMarcacion(Long idMarcacion) {
+		for (Tranzon tranzon : this.getTranzones()) {
+			if (tranzon.tieneMarcacion(idMarcacion)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneTranzon(Long idTranzon) {
+		for (Tranzon tranzon : this.getTranzones()) {
+			if (tranzon.getId() == idTranzon) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

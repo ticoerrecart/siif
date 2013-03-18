@@ -43,4 +43,19 @@ public class TranzonDTO extends LocalizacionDTO {
 	public Tranzon getLocalizacion(Entidad entidad) {
 		return new Tranzon(this.numeroTranzon, this.disposicionTranzon, null);
 	}
+
+	public String getExpedientePMF() {
+		if (this.getPmf() != null) {
+			return this.getPmf().getExpedientePMF();
+		}
+		return null;
+	}
+
+	public String getNombrePMF() {
+		if (this.getPmf() != null) {
+			return this.getPmf().getNombrePMF();
+		}
+		return null;
+	}
+
 }

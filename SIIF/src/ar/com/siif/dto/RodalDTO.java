@@ -30,4 +30,39 @@ public class RodalDTO extends LocalizacionDTO {
 		return new Rodal(this.nombreRodal, null);
 	}
 
+	public String getExpedientePMF() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getExpedientePMF();
+		}
+		return null;
+	}
+
+	public String getNombrePMF() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getNombrePMF();
+		}
+		return null;
+	}
+
+	public String getNumeroTranzon() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getNumeroTranzon();
+		}
+		return null;
+	}
+
+	public String getDisposicionTranzon() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getDisposicionTranzon();
+		}
+		return null;
+	}
+
+	public String getDisposicionMarcacion() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getDisposicionMarcacion();
+		}
+		return null;
+	}
+
 }

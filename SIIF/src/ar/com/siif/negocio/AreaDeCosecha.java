@@ -14,7 +14,8 @@ public class AreaDeCosecha extends Localizacion {
 		super();
 	}
 
-	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea, String expedienteArea, Entidad entidad) {
+	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea,
+			String expedienteArea, Entidad entidad) {
 		super();
 		this.reservaForestalArea = reservaForestalArea;
 		this.nombreArea = nombreArea;
@@ -72,9 +73,41 @@ public class AreaDeCosecha extends Localizacion {
 		areaDeCosechaDTO.setExpedienteArea(this.getExpedienteArea());
 		areaDeCosechaDTO.setNombreArea(this.getNombreArea());
 		areaDeCosechaDTO.setReservaForestalArea(this.getReservaForestalArea());
-		areaDeCosechaDTO.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
+		areaDeCosechaDTO
+				.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
 
 		return areaDeCosechaDTO;
 	}
 
+	public boolean esAreaDeCosecha() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(Localizacion localizacion) {
+		return false;
+	}
+
+	@Override
+	public boolean esParteDeLaLocalizacion(Localizacion localizacion) {
+		if (this.getId() == localizacion.getId()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneRodal(Long idRodal) {
+		return false;
+	}
+
+	@Override
+	public boolean tieneMarcacion(Long idMarcacion) {
+		return false;
+	}
+
+	@Override
+	public boolean tieneTranzon(Long idTranzon) {
+		return false;
+	}
 }

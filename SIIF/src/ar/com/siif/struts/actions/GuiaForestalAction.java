@@ -32,6 +32,8 @@ import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
+import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
@@ -87,7 +89,7 @@ public class GuiaForestalAction extends ValidadorAction {
 				FiscalizacionDTO fiscalizacion = fiscalizacionFachada
 						.recuperarFiscalizacionDTO(guiaForm.getListaFiscalizaciones().get(0)
 								.getId());
-				rodal = ubicacionFachada.getRodalDTO(fiscalizacion.getRodal().getId());
+				//ARREGLAR rodal = ubicacionFachada.getRodalDTO(fiscalizacion.getRodal().getId());
 			} else {
 				listaPMFs = ubicacionFachada.getPMFsDTO(guiaForm.getGuiaForestal()
 						.getProductorForestal().getId());
@@ -1464,24 +1466,77 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
+	private boolean sonTodasAreasDeCosecha(List<Fiscalizacion> fiscalizaciones) {
+		int areaDeCosecha = 0;
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			if (fiscalizacion.getLocalizacion() != null
+					&& fiscalizacion.getLocalizacion().esAreaDeCosecha()) {
+				areaDeCosecha++;
+			}
+		}
+
+		return areaDeCosecha > 0 && areaDeCosecha == fiscalizaciones.size();
+	}
+
+	private boolean tienenLocalizacionValida(List<Fiscalizacion> fiscalizaciones) {
+		Localizacion localizacionMayor = null;
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			if (localizacionMayor == null) {
+				localizacionMayor = fiscalizacion.getLocalizacion();
+			} else {
+				if (localizacionMayor
+						.estaIncluidoGeograficamenteEn(fiscalizacion.getLocalizacion())) {
+					localizacionMayor = fiscalizacion.getLocalizacion();
+				}
+			}
+		}
+
+		if (localizacionMayor != null) {
+			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+				if (!fiscalizacion.getLocalizacion().esParteDeLaLocalizacion(localizacionMayor)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	public boolean validarFiscalizacionesParaAltaGuiaForestalForm(StringBuffer error,
 			ActionForm form) {
 		try {
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 			guiaForestalForm.normalizarListaFiscalizaciones();
-			Long idRodal = null;
 
 			if (guiaForestalForm.getListaFiscalizaciones().size() > 0) {
-				FiscalizacionDTO fis = guiaForestalForm.getListaFiscalizaciones().get(0);
-				idRodal = fis.getRodal().getId();
-			}
-			for (FiscalizacionDTO fiscalizacion : guiaForestalForm.getListaFiscalizaciones()) {
-				if (idRodal.longValue() != fiscalizacion.getRodal().getId()) {
-					Validator.addErrorXML(error,
-							"Las Fiscalizaciones seleccionadas deben tener la misma Localidad");
-					return false;
+				WebApplicationContext ctx = getWebApplicationContext();
+				IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
+						.getBean("fiscalizacionFachada");
+
+				List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
+				for (FiscalizacionDTO fiscalizacionDTO : guiaForestalForm.getListaFiscalizaciones()) {
+					fiscalizaciones.add(fiscalizacionFachada
+							.recuperarFiscalizacion(fiscalizacionDTO.getId()));
+
+				}
+
+				if (fiscalizaciones.size() > 1) {
+					/*if (sonTodasAreasDeCosecha(fiscalizaciones)) {
+						return true;
+					} else {*/
+					if (tienenLocalizacionValida(fiscalizaciones)) {
+						return true;
+					} else {
+						Validator
+								.addErrorXML(error,
+										"Las Fiscalizaciones seleccionadas deben tener la misma Localización");
+						return false;
+
+					}
+					//	}
 				}
 			}
+
 			return true;
 
 		} catch (Throwable t) {

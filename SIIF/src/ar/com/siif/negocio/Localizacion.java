@@ -48,4 +48,32 @@ public abstract class Localizacion {
 
 	public abstract LocalizacionDTO getLocalizacionDTO();
 
+	//metodos nuevos//
+
+	public boolean esAreaDeCosecha() {
+		return false;
+	}
+
+	public abstract boolean estaIncluidoGeograficamenteEn(Localizacion localizacion);
+
+	public boolean esRodal() {
+		return false;
+	}
+
+	public boolean esMarcacion() {
+		return false;
+	}
+
+	public boolean esTranzon() {
+		return false;
+	}
+
+	public abstract boolean esParteDeLaLocalizacion(Localizacion localizacion);
+
+	public abstract boolean tieneRodal(Long idRodal);
+
+	public abstract boolean tieneMarcacion(Long idMarcacion);
+
+	public abstract boolean tieneTranzon(Long idTranzon);
+
 }

@@ -78,4 +78,40 @@ public class Marcacion extends Localizacion {
 		return marcacionDTO;
 	}
 
+	public boolean esMarcacion() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(Localizacion localizacion) {
+		if (localizacion.esRodal() || localizacion.esMarcacion()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean esParteDeLaLocalizacion(Localizacion localizacion) {
+		return localizacion.tieneMarcacion(this.getId());
+	}
+
+	@Override
+	public boolean tieneRodal(Long idRodal) {
+		for (Rodal rodal : this.getRodales()) {
+			if (rodal.getId() == idRodal) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneMarcacion(Long idMarcacion) {
+		return this.getId() == idMarcacion;
+	}
+
+	@Override
+	public boolean tieneTranzon(Long idTranzon) {
+		return false;
+	}
 }

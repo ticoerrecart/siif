@@ -17,4 +17,32 @@ public abstract class LocalizacionDTO {
 
 	public abstract Localizacion getLocalizacion(Entidad entidad);
 
+	public String getExpedientePMF() {
+		return null;
+	}
+
+	public String getNombrePMF() {
+		return null;
+	}
+
+	public String getNumeroTranzon() {
+		return null;
+	}
+
+	public String getDisposicionTranzon() {
+		return null;
+	}
+
+	public String getDisposicionMarcacion() {
+		return null;
+	}
+
+	public String getNombreRodal() {
+		return null;
+	}
+
+	public String getNombreArea() {
+		return null;
+	}
+
 }
