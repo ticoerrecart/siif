@@ -8,25 +8,23 @@
 
 <script type="text/javascript">
 
-	function agrElimFisc(indice,idFiscalizacion,idRodal){
+	function agrElimFisc(indice,idFiscalizacion){
 
 		var i = indice+1;
 		if($('#idCheck'+i).is(':checked')){
 			$("#idFiscalizacion"+indice).val(idFiscalizacion);
-			$("#idRodal"+indice).val(idRodal);			
+			//$("#idLocalizacion"+indice).val(idLocalizacion);			
 		}else{
 			$("#idFiscalizacion"+indice).val(0);
-			$("#idRodal"+indice).val(0);
+			//$("#idLocalizacion"+indice).val(0);
 		}
-	}	
+	}
 
 	function submitCrearGuia(){
 		
 		$("#idProdForestal").val($("#selectProductores").val());
-		//$("#idLocalizacionRodal").val($("#idRodal").val());
 		
 		validarForm("guiaForestalForm","../guiaForestal","validarFiscalizacionesParaAltaGuiaForestalForm","GuiaForestalForm");
-		//document.forms[0].submit();
 	}
 	
 </script>
@@ -34,7 +32,7 @@
 <html:form action="guiaForestal" styleId="guiaForestalForm">
 	<html:hidden property="metodo" value="cargarAltaGuiaForestalBasica" />
 	<html:hidden styleId="idProdForestal" property="guiaForestal.productorForestal.id" value="" />
-	<html:hidden styleId="idLocalizacionRodal" property="guiaForestal.rodal.id" value="" />
+	<%--html:hidden styleId="idLocalizacion" property="guiaForestal.localizacion.id" value="" /--%>
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
@@ -48,7 +46,7 @@
 				<tr>
 					<td class="azulAjustado" rowspan="2"></td>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Fecha'/></td>
-					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>					
+					<td class="azulAjustado" colspan="5"><bean:message key='SIIF.label.Localizacion'/></td>					
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.CantMts3'/></td>					
 				</tr>
@@ -57,11 +55,14 @@
 					<td class="azulAjustado"><bean:message key='SIIF.label.Tranzon'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Marcacion'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Rodal'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
+				
 					<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>
-					<html:hidden styleId="idRodal${i.count-1}" property="listaFiscalizaciones[${i.count-1}].rodal.id" value=""/>					
+					<%--html:hidden styleId="idLocalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].localizacion.id" value=""/--%>
+
 					<%clase=(clase.equals("")?"par":""); %>
 					<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
 						onmouseover="javascript:pintarFila(<c:out value='${i.count}'></c:out>);"
@@ -69,37 +70,35 @@
 						
 						<td class="botonerab">
 							<input type="checkbox" id="idCheck<c:out value='${i.count}'></c:out>"
-								onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>,<c:out value='${fiscalizacion.rodal.id}'></c:out>);">
+								onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>);">
 						</td>						
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.fecha}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}"></c:out>-
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.expedientePMF}"></c:out>-
+							<c:out value="${fiscalizacion.localizacion.nombrePMF}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.numero}"></c:out>-
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.disposicion}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.numeroTranzon}"></c:out>-
+							<c:out value="${fiscalizacion.localizacion.disposicionTranzon}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.disposicion}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.disposicionMarcacion}"></c:out>
 						</td>						
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.nombre}"></c:out>
-						</td>						
+							<c:out value="${fiscalizacion.localizacion.nombreRodal}"></c:out>
+						</td>
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.localizacion.nombreArea}"></c:out>
+						</td>
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
 						</td>	
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.cantidadMts}"></c:out>
 						</td>	
-											
-						<!--<td class="botonerab">
-							 <a href="../../guiaForestal.do?metodo=cargarAltaGuiaForestalBasica&id=<c:out value='${fiscalizacion.id}'></c:out>">
-								<bean:message key='SIIF.label.Seleccionar'/>
-							</a> 
-						</td>-->
+
 					</tr>
 				</c:forEach>
 			</table>

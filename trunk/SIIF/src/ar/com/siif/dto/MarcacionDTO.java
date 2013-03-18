@@ -29,4 +29,33 @@ public class MarcacionDTO extends LocalizacionDTO {
 	public Marcacion getLocalizacion(Entidad entidad) {
 		return new Marcacion(this.disposicionMarcacion, null);
 	}
+
+	public String getExpedientePMF() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getExpedientePMF();
+		}
+		return null;
+	}
+
+	public String getNombrePMF() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getNombrePMF();
+		}
+		return null;
+	}
+
+	public String getNumeroTranzon() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getNumeroTranzon();
+		}
+		return null;
+	}
+
+	public String getDisposicionTranzon() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getDisposicionTranzon();
+		}
+		return null;
+	}
+
 }

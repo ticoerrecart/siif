@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.RodalDTO;
 
@@ -63,4 +64,35 @@ public class Rodal extends Localizacion {
 		return rodalDTO;
 	}
 
+	public boolean esRodal() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(Localizacion localizacion) {
+		if (localizacion.esRodal()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean esParteDeLaLocalizacion(Localizacion localizacion) {
+		return localizacion.tieneRodal(this.getId());
+	}
+
+	@Override
+	public boolean tieneRodal(Long idRodal) {
+		return this.getId() == idRodal;
+	}
+
+	@Override
+	public boolean tieneMarcacion(Long idMarcacion) {
+		return false;
+	}
+
+	@Override
+	public boolean tieneTranzon(Long idTranzon) {
+		return false;
+	}
 }

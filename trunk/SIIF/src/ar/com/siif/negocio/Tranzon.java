@@ -95,4 +95,45 @@ public class Tranzon extends Localizacion {
 		return tranzonDTO;
 	}
 
+	public boolean esTranzon() {
+		return true;
+	}
+
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(Localizacion localizacion) {
+		if (localizacion.esRodal() || localizacion.esMarcacion() || localizacion.esTranzon()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean esParteDeLaLocalizacion(Localizacion localizacion) {
+		return localizacion.tieneTranzon(this.getId());
+	}
+
+	@Override
+	public boolean tieneRodal(Long idRodal) {
+		for (Marcacion marcacion : this.getMarcaciones()) {
+			if (marcacion.tieneRodal(idRodal)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneMarcacion(Long idMarcacion) {
+		for (Marcacion marcacion : this.getMarcaciones()) {
+			if (marcacion.getId() == idMarcacion) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean tieneTranzon(Long idTranzon) {
+		return this.getId() == idTranzon;
+	}
 }

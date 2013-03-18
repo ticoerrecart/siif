@@ -6,9 +6,13 @@ import ar.com.siif.negocio.Entidad;
 public class AreaDeCosechaDTO extends LocalizacionDTO {
 
 	private String reservaForestalArea;
+
 	private String nombreArea;
+
 	private String disposicionArea;
+
 	private String expedienteArea;
+
 	private EntidadDTO productorForestal;
 
 	public String getReservaForestalArea() {
@@ -68,4 +72,8 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 		return area;
 	}
 
+	@Override
+	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
+		return false;
+	}
 }
