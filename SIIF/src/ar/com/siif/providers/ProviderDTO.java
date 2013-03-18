@@ -197,7 +197,7 @@ public abstract class ProviderDTO {
 		fiscalizacionDTO.setId(fiscalizacion.getId());
 		fiscalizacionDTO.setOficinaAlta(ProviderDTO.getEntidadDTO(fiscalizacion.getOficinaAlta()));
 		fiscalizacionDTO.setProductorForestal(ProviderDTO.getEntidadDTO(fiscalizacion.getProductorForestal()));
-		fiscalizacionDTO.setLocalizacion(fiscalizacion.getLocalizacion().getLocalizacionDTO());
+		fiscalizacionDTO.setIdLocalizacion(fiscalizacion.getLocalizacion().getLocalizacionDTO().getId());
 		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
 		fiscalizacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuario()));
