@@ -48,7 +48,7 @@ public abstract class Localizacion {
 
 	public abstract LocalizacionDTO getLocalizacionDTO();
 
-	//metodos nuevos//
+	// metodos nuevos//
 
 	public boolean esAreaDeCosecha() {
 		return false;
@@ -75,5 +75,33 @@ public abstract class Localizacion {
 	public abstract boolean tieneMarcacion(Long idMarcacion);
 
 	public abstract boolean tieneTranzon(Long idTranzon);
+
+	public String getExpedientePMF() {
+		return null;
+	}
+
+	public String getNombrePMF() {
+		return null;
+	}
+
+	public String getDisposicionTranzon() {
+		return null;
+	}
+
+	public String getNumeroTranzon() {
+		return null;
+	}
+
+	public String getDisposicionMarcacion() {
+		return null;
+	}
+
+	public String getNombreRodal() {
+		return null;
+	}
+
+	public String getNombreArea() {
+		return null;
+	}
 
 }
