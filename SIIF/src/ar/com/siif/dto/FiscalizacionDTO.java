@@ -31,7 +31,7 @@ public class FiscalizacionDTO {
 	private long idTranzon;
 
 	private long idMarcacion;
-	
+
 	private long idLocalizacion;
 
 	// private long idOficinaForestal;
@@ -43,6 +43,8 @@ public class FiscalizacionDTO {
 	private List<MuestraDTO> muestra;
 
 	private GuiaForestalDTO guiaForestal;
+
+	private LocalizacionDTO localizacion;
 
 	public FiscalizacionDTO() {
 
@@ -201,6 +203,7 @@ public class FiscalizacionDTO {
 	public void setIdRodal(long idRodal) {
 		this.idRodal = idRodal;
 	}
+
 	public long getIdLocalizacion() {
 		return idLocalizacion;
 	}
@@ -208,4 +211,13 @@ public class FiscalizacionDTO {
 	public void setIdLocalizacion(long idLocalizacion) {
 		this.idLocalizacion = idLocalizacion;
 	}
+
+	public LocalizacionDTO getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(LocalizacionDTO localizacion) {
+		this.localizacion = localizacion;
+	}
+
 }
