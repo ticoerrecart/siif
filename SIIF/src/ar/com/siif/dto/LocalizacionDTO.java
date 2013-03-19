@@ -62,4 +62,8 @@ public abstract class LocalizacionDTO {
 	public boolean getEsAreaDeCosecha() {
 		return false;
 	}
+
+	public String getTipoTerrenoPMF() {
+		return null;
+	}
 }

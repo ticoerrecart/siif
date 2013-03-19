@@ -17,8 +17,8 @@ import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.PMFDTO;
-import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
@@ -34,6 +34,7 @@ import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Localizacion;
+import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
@@ -82,18 +83,24 @@ public class GuiaForestalAction extends ValidadorAction {
 			EntidadDTO productorForestal = entidadFachada.getEntidadDTO(guiaForm.getGuiaForestal()
 					.getProductorForestal().getId());
 
-			RodalDTO rodal = null;
-			List<PMFDTO> listaPMFs = new ArrayList<PMFDTO>();
+			//RodalDTO rodal = null;
+			LocalizacionDTO localizacion = null;
+			//List<PMFDTO> listaPMFs = new ArrayList<PMFDTO>();
 
 			if (!guiaForm.getListaFiscalizaciones().isEmpty()) {
-				FiscalizacionDTO fiscalizacion = fiscalizacionFachada
-						.recuperarFiscalizacionDTO(guiaForm.getListaFiscalizaciones().get(0)
-								.getId());
-				//ARREGLAR rodal = ubicacionFachada.getRodalDTO(fiscalizacion.getRodal().getId());
-			} else {
+				List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
+				for (FiscalizacionDTO fiscalizacionDTO : guiaForm.getListaFiscalizaciones()) {
+					fiscalizaciones.add(fiscalizacionFachada
+							.recuperarFiscalizacion(fiscalizacionDTO.getId()));
+
+				}
+
+				localizacion = ProviderDTO
+						.getLocalizacionDTO(getLocalizacionMayor(fiscalizaciones));
+			}/* else {
 				listaPMFs = ubicacionFachada.getPMFsDTO(guiaForm.getGuiaForestal()
 						.getProductorForestal().getId());
-			}
+			}*/
 
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
@@ -124,8 +131,9 @@ public class GuiaForestalAction extends ValidadorAction {
 					tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal", tipoProdFachada.getEstadosProductos());
 			request.setAttribute("productorForestal", productorForestal);
-			request.setAttribute("rodal", rodal);
-			request.setAttribute("pmfs", listaPMFs);
+			//request.setAttribute("rodal", rodal);
+			request.setAttribute("localizacion", localizacion);
+			//request.setAttribute("pmfs", listaPMFs);
 			request.setAttribute("fiscalizaciones", listaFiscalizacionesDTO);
 			request.setAttribute("subImportes", hashProductosFiscalizados.values());
 
@@ -1466,8 +1474,23 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
-	private boolean tienenLocalizacionValida(List<Fiscalizacion> fiscalizaciones) {
+	private Localizacion getLocalizacionMayor(List<Fiscalizacion> fiscalizaciones) {
 		Localizacion localizacionMayor = null;
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			if (localizacionMayor == null) {
+				localizacionMayor = fiscalizacion.getLocalizacion();
+			} else {
+				if (localizacionMayor
+						.estaIncluidoGeograficamenteEn(fiscalizacion.getLocalizacion())) {
+					localizacionMayor = fiscalizacion.getLocalizacion();
+				}
+			}
+		}
+		return localizacionMayor;
+	}
+
+	private boolean tienenLocalizacionValida(List<Fiscalizacion> fiscalizaciones) {
+		Localizacion localizacionMayor = getLocalizacionMayor(fiscalizaciones);
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
 			if (localizacionMayor == null) {
 				localizacionMayor = fiscalizacion.getLocalizacion();

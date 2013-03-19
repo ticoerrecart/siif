@@ -77,4 +77,9 @@ public class RodalDTO extends LocalizacionDTO {
 		return true;
 	}
 
+	@Override
+	public String getTipoTerrenoPMF() {
+		return this.getMarcacion().getTipoTerrenoPMF();
+	}
+
 }
