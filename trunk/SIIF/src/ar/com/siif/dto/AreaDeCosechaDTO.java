@@ -76,4 +76,8 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 	public boolean estaIncluidoGeograficamenteEn(LocalizacionDTO localizacion) {
 		return false;
 	}
+	
+	public boolean getEsAreaDeCosecha() {
+		return true;
+	}
 }

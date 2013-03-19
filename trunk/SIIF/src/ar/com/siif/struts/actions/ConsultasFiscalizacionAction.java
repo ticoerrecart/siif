@@ -176,17 +176,7 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 		try {
 
 			String paramForward = request.getParameter("paramForward");			
-			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
-			
 			WebApplicationContext ctx = getWebApplicationContext();			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			
-			/*if(paramForward.equals(Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL)){
-				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_CON_GUIA_MENU,usuario.getRol());											
-			}
-			else{
-				rolFachada.verificarMenu(Constantes.CONSULTA_FISCALIZACIONES_SIN_GUIA_MENU,usuario.getRol());				
-			}*/						
 			
 			IFiscalizacionFachada fiscalizacionFachada = 
 								(IFiscalizacionFachada) ctx.getBean("fiscalizacionFachada");

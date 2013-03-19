@@ -149,17 +149,12 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor){
 
 		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-
 		criteria.createAlias("productorForestal", "pf");
-		criteria.createAlias("rodal", "rod");			
-		criteria.createAlias("tipoProducto", "tp");
-		
+				
 		criteria.add(Restrictions.conjunction()
 				.add(Restrictions.eq("productorForestal.id", idProductor))
 				.add(Restrictions.isNull("guiaForestal")));
-
-		criteria.addOrder(Order.asc("rod.id"));
-		/*criteria.addOrder(Order.asc("tp.id"));*/
+		
 		criteria.addOrder(Order.asc("fecha"));
 
 		List<Fiscalizacion> fiscalizaciones = criteria.list();

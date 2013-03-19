@@ -146,43 +146,65 @@ function headerTabla(){
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>				
-					<tr>
+					
+					<tr class="area">
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.AreaDeCosecha'/>
+						</td>
+						<td>
+							<input class="botonerab" type="text" size="25" readonly="readonly"
+								   value="<c:out value='${fiscalizacion.localizacion.nombreArea}'></c:out>">																					
+						</td>
+						<td width="25%"></td>
+					</tr>	
+								
+					<tr class="plan">
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
-								   value="<c:out value='${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre}- ${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}'></c:out>">																					
+								   value="<c:out value='${fiscalizacion.localizacion.nombrePMF}- ${fiscalizacion.localizacion.expedientePMF}'></c:out>">																					
 						</td>
 						<td width="25%"></td>
 					</tr>		
-					<tr>
+					<tr class="plan">
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Tranzon'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
-								   value="<c:out value='${fiscalizacion.rodal.marcacion.tranzon.numero}- ${fiscalizacion.rodal.marcacion.tranzon.disposicion}'></c:out>">																						
+								   value="<c:out value='${fiscalizacion.localizacion.numeroTranzon}- ${fiscalizacion.localizacion.disposicionTranzon}'></c:out>">																						
 						</td>
 						<td width="25%"></td>
 					</tr>	
-					<tr>
+					<tr class="plan">
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Marcacion'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
-								   value="<c:out value='${fiscalizacion.rodal.marcacion.disposicion}'></c:out>">																					
+								   value="<c:out value='${fiscalizacion.localizacion.disposicionMarcacion}'></c:out>">																					
 						</td>
 						<td width="25%"></td>
 					</tr>
-					<tr>
+					<tr class="plan">
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Rodal'/>
 						</td>
 						<td>
 							<input class="botonerab" type="text" size="25" readonly="readonly"
-								   value="<c:out value='${fiscalizacion.rodal.nombre}'></c:out>">	
+								   value="<c:out value='${fiscalizacion.localizacion.nombreRodal}'></c:out>">
+						<script>
+							if (eval("<c:out value='${fiscalizacion.localizacion.esAreaDeCosecha}'/>")){
+								$(".area").show();
+								$(".plan").hide();
+							} else {
+								$(".area").hide();
+								$(".plan").show();
+							}						
+						</script>
+								   	
 						</td>
 						<td width="25%"></td>
 					</tr>																
@@ -195,7 +217,6 @@ function headerTabla(){
 		<tr>
 			<td height="10" colspan="4"></td>
 		</tr>			
-		
 
 		<%--ACA ESTAN LOS HEADERS DE CADA TIPO DE MUESTRA --%>
 		<%@include file="bloqueHeaderTablaMuestrasFiscalizacion.jspf" %>
