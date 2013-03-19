@@ -128,30 +128,35 @@
 	
 	function cancelarArea(){
 		$('#exitoGrabado').html("");
+		$('#errores').html("");
 		$("#tablaAreas tr").removeClass("seleccionado");
 		$('#divModificacionArea').hide();
 	}
 	
 	function cancelarRodal(){
 		$('#exitoGrabado').html("");
+		$('#errores').html("");
 		$("#tablaRodales tr").removeClass("seleccionado");
 		$('#divModificacionRodal').hide();
 	}
 
 	function cancelarMarcacion(){
 		$('#exitoGrabado').html("");
+		$('#errores').html("");
 		$("#tablaMarcaciones tr").removeClass("seleccionado");
 		$('#divModificacionMarcacion').hide();
 	}
 
 	function cancelarTranzon(){
 		$('#exitoGrabado').html("");
+		$('#errores').html("");
 		$("#tablaTranzones tr").removeClass("seleccionado");
 		$('#divModificacionTranzon').hide();
 	}
 
 	function cancelarPMF(){
 		$('#exitoGrabado').html("");
+		$('#errores').html("");
 		$("#tablaPmfs tr").removeClass("seleccionado");
 		$('#divModificacionPMF').hide();
 	}
@@ -240,8 +245,7 @@
 	
 	
 	function errorHandler(msg, exc) {
-		alert(msg);
-		$('#errores').html(msg + " - Detalle: " + dwr.util.toDescriptiveString(exc, 2));
+		$('#errores').html(msg);
 	}
 	dwr.engine.setErrorHandler(errorHandler);
 

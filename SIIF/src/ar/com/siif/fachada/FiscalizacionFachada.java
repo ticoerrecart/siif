@@ -91,7 +91,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta().getId());
 		fiscalizacion.setOficinaAlta(oficinaAlta);
 		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
-
+		fiscalizacion.setLocalizacion(ubicacionFachada.getLocalizacion(fiscalizacionDTO.getIdLocalizacion()));
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion, muestrasNuevasDTO);
 	}
 

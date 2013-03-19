@@ -46,6 +46,18 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}
 	}
 
+	public List<AreaDeCosecha> getAreas(Long idPF) throws NegocioException {
+		try {
+			List<AreaDeCosecha> list = ubicacionDAO.getAreas(idPF);
+			return list;
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}
+	}
+
+	
 	public List<Tranzon> getTranzonesById(Long idPMF) throws NegocioException {
 		try {
 			PMF pmf = ubicacionDAO.getPMF(idPMF);
@@ -304,12 +316,16 @@ public class UbicacionFachada implements IUbicacionFachada {
 			throws NegocioException {
 		try {
 			AreaDeCosecha area = this.ubicacionDAO.getArea(idArea);
+			if (ubicacionDAO.getAreasPorNombreParaPF(nombreArea, area.getProductorForestal().getId()).size() > 0) {
+				throw new NegocioException(Constantes.ERROR_EXISTE_AREA + nombreArea);
+			}
 			area.setReservaForestalArea(reservaForestal);
 			area.setNombreArea(nombreArea);
 			area.setDisposicionArea(disposicionArea);
 			area.setExpedienteArea(expedienteArea);
 			this.ubicacionDAO.altaArea(area);
-
+		} catch (NegocioException ne){
+			throw ne;
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");

@@ -114,4 +114,37 @@ public class Marcacion extends Localizacion {
 	public boolean tieneTranzon(Long idTranzon) {
 		return false;
 	}
+	
+	@Override
+	public String getExpedientePMF() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getExpedientePMF();
+		}
+		return null;
+	}
+
+	@Override
+	public String getNombrePMF() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getNombrePMF();
+		}
+		return null;
+	}
+
+	@Override
+	public String getNumeroTranzon() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getNumeroTranzon();
+		}
+		return null;
+	}
+
+	@Override
+	public String getDisposicionTranzon() {
+		if (this.getTranzon() != null) {
+			return this.getTranzon().getDisposicionTranzon();
+		}
+		return null;
+	}
+	
 }
