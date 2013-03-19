@@ -188,7 +188,8 @@ function cambiarEstado(ind){
 	var estado = $('#idEstado'+ind).val();
 	var idTipoProducto = $('#selectTiposDeProductos'+ind).val();
 	//idTipoProducto = (idTipoProducto ==null)?$('#idTipoProducto'+ind).val():idTipoProducto;
-	var idProdForestal = $('#idProdForestal').val();
+	
+	var idProdForestal = $('#idProductor').val();
 
 	if(estado != ""){
 		idRenglon = ind;	
@@ -421,9 +422,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Permisionario'/></td>
 			<td align="left">
-				<input id="idProdForestal" type="hidden" name="guiaForestal.productorForestal.id" value="${productorForestal.id}">
-				<input id="nombreProductor" value="${productorForestal.nombre}" class="botonerab"
-					type="text" size="40" readonly="readonly">			
+				<input id="idProductor" type="hidden" name="guiaForestal.productorForestal.id" value="${productorForestal.id}">
+				<input id="nombreProductor" value="${productorForestal.nombre}" class="botonerab" type="text" size="40" readonly="readonly">
 			</td>
 		</tr>
 
@@ -437,9 +437,9 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 			<td align="left">
 					<select name="guiaForestal.periodoForestal" class="botonerab" >
 						<c:forEach items="${periodos}" var="per">
-											<option value="${per.periodo}">
-												<c:out value="${per.periodo}"></c:out>
-											</option>
+							<option value="${per.periodo}">
+								<c:out value="${per.periodo}"></c:out>
+							</option>
 						</c:forEach>
 					</select>	
 			</td>
@@ -461,142 +461,202 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 		</tr>
 	</table>
 
+
 	<!-- LOCALIZACION -->
 	<c:choose>
-		<c:when test="${fn:length(fiscalizaciones)>0}">		
-			<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-				<tr>
-					<td height="10" colspan="4"></td>
-				</tr>
-				<tr>
-					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-					<td width="30%" align="left">
-						<input value="${rodal.marcacion.tranzon.pmf.nombre} - ${rodal.marcacion.tranzon.pmf.expediente}" 
-								class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-					<td width="30%" class="botoneralNegritaRight">
-						<bean:message key='SIIF.label.Tranzon'/>
-					</td>
-					<td align="left">
-						<input value="${rodal.marcacion.tranzon.numero} - ${rodal.marcacion.tranzon.disposicion}" 
-								class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-					<td width="30%" align="left">
-						<input value="${rodal.marcacion.disposicion}" 
-								class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-					<td width="30%" class="botoneralNegritaRight">
-						<bean:message key='SIIF.label.Rodal'/>
-					</td>
-					<td align="left">
-						<input id="idRodal" type="hidden" name="guiaForestal.rodal.id" value="${rodal.id}">
-						<input value="${rodal.nombre}"
-							   class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
-					<td width="30%" align="left">
-						<input value="${rodal.marcacion.tranzon.pmf.tipoTerreno}" id="tipoTerrenoPMF" name="tipoTerreno"
-								class="botonerab" type="text" size="40" readonly="readonly">
-					</td>
-					<td colspan="2">
-					
-					</td>
-				</tr>		
-				<tr>
-					<td height="10" colspan="4"></td>
-				</tr>
-			</table>
+		<c:when test="${fn:length(fiscalizaciones)>0}">	
+			<c:choose>
+				<c:when test="${localizacion.esAreaDeCosecha}">
+					<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+						<tr>
+							<td height="10" colspan="2"></td>
+						</tr>
+						<tr>
+							<td width="12%" align="left" class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+							<td width="88%" align="left">
+								<input value="${localizacion.nombreArea}" class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+						</tr>
+					</table>
+				</c:when>
+
+				<c:otherwise>
+					<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+						<tr>
+							<td height="10" colspan="4"></td>
+						</tr>
+						<tr>
+							<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
+							<td width="30%" align="left">
+								<input value="${localizacion.expedientePMF} - ${localizacion.nombrePMF}" 
+										class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+							<td width="30%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.Tranzon'/>
+							</td>
+							<td align="left">
+								<input value="${localizacion.numeroTranzon} - ${localizacion.disposicionTranzon}" 
+										class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+						</tr>
+						<tr>
+							<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
+							<td width="30%" align="left">
+								<input value="${localizacion.disposicionMarcacion}" 
+										class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+							<td width="30%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.Rodal'/>
+							</td>
+							<td align="left">
+								<input id="idRodal" type="hidden" name="guiaForestal.rodal.id" value="${rodal.id}">
+								<input value="${localizacion.nombreRodal}"
+									   class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+						</tr>
+						<tr>
+							<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+							<td width="30%" align="left">
+								<input value="${localizacion.tipoTerrenoPMF}" id="tipoTerrenoPMF" name="tipoTerreno"
+										class="botonerab" type="text" size="40" readonly="readonly">
+							</td>
+							<td colspan="2">
+							
+							</td>
+						</tr>		
+						<tr>
+							<td height="10" colspan="4"></td>
+						</tr>
+					</table>
+				</c:otherwise>
+			</c:choose>
+			
 		</c:when>
 		<c:otherwise>
 			<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 				<tr>
 					<td height="10"></td>
 				</tr>
+				
+				<!-- LOCALIZACION -->
 				<tr>
-					<td>		
-						<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2" cellspacing="0">
+					<td colspan="4" align="left">
+						<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2" cellspacing="0">
 							<tr>
 								<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
 							</tr>
 							<tr>
 								<td colspan="3" height="10"></td>
-							</tr>				
+							</tr>			
+							
 							<tr>
+								<td width="47%" class="botoneralNegritaRight">
+									<bean:message key='SIIF.label.ZonaManejoForestal'/>
+								</td>
+								<td width="4%"></td>						
+								<td align="left">
+									<select id="idZMF" class="botonerab" 
+											onchange="cambioComboZona();">
+										<option value="0">--Seleccione una Opcion de Zona--</option>
+										<option value="1">--PMF--</option>
+										<option value="2">--Area de Cosecha--</option>
+									</select>	
+									<input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" />				
+								</td>						
+							</tr>				
+		
+							<tr class="area" style="display: none">	
+								<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+								<td width="4%"></td>
+								<td align="left"> 
+									<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" >
+										<option value="-1">- Seleccione -</option>						
+									</select>	
+								</td>
+							</tr>
+								
+							<tr class="plan" style="display: none">
 								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.PlanManejoForestal'/>
 								</td>
-								<td width="4%"></td>						
-								<td align="left">									
-									<select id="idPMF" class="botonerab" onchange="actualizarTipoTerrenoPMF();actualizarComboTranzon();">
-										<option value="-1">- Seleccione -</option>
-										<c:forEach items="${pmfs}" var="pmf">
-											<option value="${pmf.id}">
-												<c:out value="${pmf.nombre} - ${pmf.expediente}"></c:out>
-											</option>
-										</c:forEach>
+								<td width="4%"></td>			
+								<td align="left">
+									<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();">
+										<option value="-1">- Seleccione -</option>						
 									</select>					
 								</td>						
 							</tr>				
-							<tr>
+							
+							<tr class="plan" style="display: none">
 								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.Tranzon'/>
 								</td>
 								<td width="4%"></td>						
 								<td align="left">
-									<select id="idTranzon" class="botonerab" disabled="disabled" onchange="actualizarComboMarcacion();">
+									<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" 	onchange="actualizarComboMarcacion();">
 										<option value="-1">- Seleccione -</option>
 									</select>					
 								</td>
 							</tr>
-							<tr>
+							
+							<tr class="plan" style="display: none">
 								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.Marcacion'/>
 								</td>
 								<td width="4%"></td>
 								<td align="left">
-									<select id="idMarcacion" class="botonerab" disabled="disabled" onchange="actualizarComboRodal();">
+									<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" 	onchange="actualizarComboRodal();">
 										<option value="-1">- Seleccione -</option>
 									</select>					
 								</td>
 							</tr>
-							<tr>
+							
+							<tr class="plan" style="display: none">
 								<td width="47%" class="botoneralNegritaRight">
 									<bean:message key='SIIF.label.Rodal'/>
 								</td>
 								<td width="4%"></td>
 								<td align="left">
-									<select id="idRodal" class="botonerab" name="guiaForestal.rodal.id" disabled="disabled">
+									<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" >
 										<option value="-1">- Seleccione -</option>						
-									</select>				
+									</select>					
 								</td>
-							</tr>
-							<tr>
-								<td width="47%" class="botoneralNegritaRight">
-									<bean:message key='SIIF.label.TipoTerreno'/>
-								</td>
-								<td width="4%"></td>
-								<td align="left">
-									<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
-										class="botonerab" type="text" size="15">
-								</td>
-							</tr>
+							</tr>															
 							<tr>
 								<td colspan="3" height="10"></td>
 							</tr>				
-						</table>	
+						</table>
 					</td>
-				</tr>	
+				</tr>
+							
+											
+							
 				<tr>
-					<td height="10"></td>
-				</tr>									
+					<td width="47%" class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.TipoTerreno'/>
+					</td>
+					<td width="4%"></td>
+					<td align="left">
+						<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
+							class="botonerab" type="text" size="15">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" height="10"></td>
+				</tr>				
 			</table>									
 		</c:otherwise>
 	</c:choose>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
@@ -1005,7 +1065,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</tr>
 		
 							</table>								
-		<!--  -->
 		
 							<div id="dummy" style="display: none"></div>
 							<div id="divPlanDePagos2"></div>
