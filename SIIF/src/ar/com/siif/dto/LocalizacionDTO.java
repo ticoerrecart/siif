@@ -59,4 +59,7 @@ public abstract class LocalizacionDTO {
 		return false;
 	}
 
+	public boolean getEsAreaDeCosecha() {
+		return false;
+	}
 }

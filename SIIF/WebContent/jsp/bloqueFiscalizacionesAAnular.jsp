@@ -52,7 +52,7 @@
 				<tr>
 					<td class="azulAjustado" rowspan="2"></td>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Fecha'/></td>
-					<td class="azulAjustado" colspan="4"><bean:message key='SIIF.label.Localizacion'/></td>					
+					<td class="azulAjustado" colspan="5"><bean:message key='SIIF.label.Localizacion'/></td>					
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.TipoDeProducto'/></td>
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.CantMts3'/></td>					
 					<td class="azulAjustado" rowspan="2"><bean:message key='SIIF.label.Ver'/></td>
@@ -62,6 +62,7 @@
 					<td class="azulAjustado"><bean:message key='SIIF.label.Tranzon'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Marcacion'/></td>
 					<td class="azulAjustado"><bean:message key='SIIF.label.Rodal'/></td>
+					<td class="azulAjustado"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
 				</tr>
 				<%String clase=""; %>
 				<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
@@ -77,19 +78,22 @@
 							<fmt:formatDate	value='${fiscalizacion.fecha}' pattern='dd/MM/yyyy' />
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.expediente}"></c:out>-
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.pmf.nombre}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.expedientePMF}"></c:out>-
+							<c:out value="${fiscalizacion.localizacion.nombrePMF}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.numero}"></c:out>-
-							<c:out value="${fiscalizacion.rodal.marcacion.tranzon.disposicion}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.numeroTranzon}"></c:out>-
+							<c:out value="${fiscalizacion.localizacion.disposicionTranzon}"></c:out>
 						</td>
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.marcacion.disposicion}"></c:out>
+							<c:out value="${fiscalizacion.localizacion.disposicionMarcacion}"></c:out>
 						</td>						
 						<td class="botonerab">
-							<c:out value="${fiscalizacion.rodal.nombre}"></c:out>
-						</td>						
+							<c:out value="${fiscalizacion.localizacion.nombreRodal}"></c:out>
+						</td>
+						<td class="botonerab">
+							<c:out value="${fiscalizacion.localizacion.nombreArea}"></c:out>
+						</td>
 						<td class="botonerab">
 							<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>
 						</td>	
