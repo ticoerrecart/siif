@@ -18,7 +18,8 @@
 	src="<html:rewrite page='/dwr/interface/UbicacionFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/dwr/interface/FiscalizacionFachada.js'/>"></script>
-
+<script type="text/javascript"
+	src="<html:rewrite page='/dwr/interface/TipoProductoForestalFachada.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
 
@@ -34,6 +35,29 @@
 function submitir(){
 	if(confirm("Esta seguro que desea modificar la Fiscalización ?")){
 		calcularVolumen();
+		
+		if ($('#idZMF').val() == 1){
+			if ($('#idRodal').val() > -1){
+				$('#idLocalizacion').val($('#idRodal').val());	
+			} else {
+				if ($('#idMarcacion').val() > -1){
+					$('#idLocalizacion').val($('#idMarcacion').val());	
+				} else {
+					if ($('#idTranzon').val() > -1){
+						$('#idLocalizacion').val($('#idTranzon').val());	
+					} else {
+						if ($('#idPMF').val() > -1){
+							$('#idLocalizacion').val($('#idPMF').val());
+						}	
+					}
+				}
+			} 
+		} else {
+			if ($('#idZMF').val()== 2) {
+				$('#idLocalizacion').val($('#idArea').val());
+			}
+		}
+		
 		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
 	}	
 }
@@ -67,7 +91,8 @@ $(function() {
 	value="${fiscalizacionDTO.productorForestal.id}">
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="modificacionFiscalizacion" />
-
+	<input type="hidden" id="cantidadDiametros" value="1" />
+	
 	<html:hidden property="fiscalizacionDTO.id"
 		value="${fiscalizacionDTO.id}" styleId="idFiscalizacion" />
 	
@@ -75,8 +100,6 @@ $(function() {
 		value="${fiscalizacionDTO.productorForestal.id}"/>
 	<html:hidden property="fiscalizacionDTO.tipoProducto.id"
 		value="${fiscalizacionDTO.tipoProducto.id}"/>		
-	<html:hidden property="fiscalizacionDTO.rodal.id"
-		value="${fiscalizacionDTO.rodal.id}"/>	
 
 	<table border="0" class="cuadrado" align="center" width="70%"
 		cellpadding="2">
@@ -232,71 +255,107 @@ $(function() {
 					<tr>
 						<td colspan="3" height="10"></td>
 					</tr>
+					
 					<tr>
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.ZonaManejoForestal' />
+						</td>
+						<td>
+						<select id="idZMF" class="botonerab" 
+									onchange="cambioComboZona();" >
+								<option value="0">--Seleccione una Opcion de Zona--</option>
+								<option value="1">--PMF--</option>
+								<option value="2">--Area de Cosecha--</option>
+							</select>
+							<input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" />	
+						</td>
+						<td width="25%"></td>
+						
+					</tr>
+					
+					<tr class="area" >
+						<td width="40%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.AreaDeCosecha' />
+						</td>
+						<td>
+							<html:select styleId="idArea" property="idArea" styleClass="botonerab"
+										value="${idArea}">
+								<option value="-1">- Seleccione -</option>
+								<c:forEach items="${areas}" var="area">
+									<html:option value="${area.id}">
+										<c:out value="${area.nombreArea}"></c:out>
+									</html:option>
+								</c:forEach>
+							</html:select>
+						</td>
+						<td width="25%"></td>
+					</tr>
+					
+					<tr class="plan" >
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.PlanManejoForestal' />
 						</td>
 						<td>
 							<html:select styleId="idPMF" property="idPMF" styleClass="botonerab"
-										value="${fiscalizacionDTO.rodal.marcacion.tranzon.pmf.id}"
+										value="${idPMF}"
 										onchange="actualizarComboTranzon();">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${pmfs}" var="pmf">
 									<html:option value="${pmf.id}">
-										<c:out value="${pmf.nombre} - ${pmf.expediente}"></c:out>
+										<c:out value="${pmf.nombrePMF} - ${pmf.expedientePMF}"></c:out>
 									</html:option>
 								</c:forEach>
 							</html:select>
 						</td>
 						<td width="25%"></td>
 					</tr>
-					<tr>
+					<tr class="plan" >
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Tranzon' />
 						</td>
 						<td>
 							<html:select styleId="idTranzon" property="idTranzon" styleClass="botonerab"
-									value="${fiscalizacionDTO.rodal.marcacion.tranzon.id}"
+									value="${idTranzon}"
 									onchange="actualizarComboMarcacion();">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${tranzones}" var="tranzon">
 									<html:option value="${tranzon.id}">
-										<c:out value="${tranzon.numero} - ${tranzon.disposicion}"></c:out>
+										<c:out value="${tranzon.numeroTranzon} - ${tranzon.disposicionTranzon}"></c:out>
 									</html:option>
 								</c:forEach>
 							</html:select>
 						</td>
 						<td width="25%"></td>
 					</tr>
-					<tr>
+					<tr class="plan" >
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Marcacion' />
 						</td>
 						<td>
 							<html:select styleId="idMarcacion" property="idMarcacion" styleClass="botonerab"
-								value="${fiscalizacionDTO.rodal.marcacion.id}"
+								value="${idMarcacion}"
 								onchange="actualizarComboRodal();">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${marcaciones}" var="marcacion">
 									<html:option value="${marcacion.id}">
-										<c:out value="${marcacion.disposicion}"></c:out>
+										<c:out value="${marcacion.disposicionMarcacion}"></c:out>
 									</html:option>
 								</c:forEach>
 							</html:select>
 						</td>
 						<td width="25%"></td>
 					</tr>
-					<tr>
+					<tr class="plan" >
 						<td width="40%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.Rodal' />
 						</td>
 						<td>
 							<html:select styleId="idRodal" property="idRodal" styleClass="botonerab" 
-								value="${fiscalizacionDTO.rodal.id}">
+								value="${idRodal}">
 								<option value="-1">- Seleccione -</option>
 								<c:forEach items="${rodales}" var="rodal">
 									<html:option value="${rodal.id}">
-										<c:out value="${rodal.nombre}"></c:out>
+										<c:out value="${rodal.nombreRodal}"></c:out>
 									</html:option>
 								</c:forEach>
 							</html:select>
@@ -384,7 +443,7 @@ $(function() {
 								</table>
 								<c:if test="${fn:length(fiscalizacionDTO.muestra) > 0}">
 									<script type="text/javascript">
-										$("#tablaMuestras").prepend(headerTabla);
+										$("#tablaMuestras").prepend(headerTabla('actualizarHeaderTablaPrependCallback'));
 										cantTotales = '<c:out value="${fn:length(fiscalizacionDTO.muestra)}"/>';
 										actualizarMuestras();
 										calcularVolumen();
@@ -434,4 +493,16 @@ $(function() {
 
 <script>
 	$(".disabled").attr("disabled","disabled");
+	$('#idZMF').val("${idZMF}");
+	cambioComboZona();
+	$('#idArea').val("${idArea}");
+	$('#idPMF').val("${idPMF}");
+	actualizarComboTranzon();
+	$('#idTranzon').val("${idTranzon}");
+	actualizarComboMarcacion();
+	$('#idMarcacion').val("${idMarcacion}");
+	actualizarComboRodal();
+	$('#idRodal').val("${idRodal}");
+		
+	
 </script>

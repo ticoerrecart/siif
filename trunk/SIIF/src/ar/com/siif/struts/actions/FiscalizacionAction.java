@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.AreaDeCosechaDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.TipoProductoDTO;
@@ -22,6 +23,7 @@ import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
+import ar.com.siif.negocio.AreaDeCosecha;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Marcacion;
@@ -186,13 +188,8 @@ public class FiscalizacionAction extends ValidadorAction {
 		String strForward = "exitoCargarFiscalizacionAModificar";
 
 		try {
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
+
 			WebApplicationContext ctx = getWebApplicationContext();
-
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.MODIFICACION_FISCALIZACION_MENU, usuario.getRol());
-
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
@@ -214,31 +211,56 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getLocalidad().getId());
 			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
 
+			int idZMF = 1;
+			if (fiscalizacion.getLocalizacion().esAreaDeCosecha()){
+				idZMF = 2;
+				request.setAttribute("idArea", fiscalizacion.getLocalizacion().getId());
+			} else {
+				if (fiscalizacion.getLocalizacion().esRodal()){
+					Rodal rodal =(Rodal)fiscalizacion.getLocalizacion();
+					request.setAttribute("idPMF", rodal.getMarcacion().getTranzon().getPmf().getId());
+					request.setAttribute("idTranzon", rodal.getMarcacion().getTranzon().getId());
+					request.setAttribute("idMarcacion", rodal.getMarcacion().getId());
+					request.setAttribute("idRodal", rodal.getId());
+				} else {
+					if (fiscalizacion.getLocalizacion().esMarcacion()){
+						Marcacion marcacion =(Marcacion)fiscalizacion.getLocalizacion();
+						request.setAttribute("idPMF", marcacion.getTranzon().getPmf().getId());
+						request.setAttribute("idTranzon", marcacion.getTranzon().getId());
+						request.setAttribute("idMarcacion", marcacion.getId());
+					} else {
+						if (fiscalizacion.getLocalizacion().esTranzon()){
+							Tranzon tranzon =(Tranzon)fiscalizacion.getLocalizacion();
+							request.setAttribute("idPMF", tranzon.getPmf().getId());
+							request.setAttribute("idTranzon", tranzon.getId());
+						} else {
+							request.setAttribute("idPMF", fiscalizacion.getLocalizacion().getId());
+						}			
+					}
+				}
+			}	
+			
+			
+			request.setAttribute("idZMF", idZMF);
 			List<PMF> pmf = ubicacionFachada.getPMFs(fiscalizacion.getProductorForestal().getId());
-			List<Tranzon> tranzones = ubicacionFachada.getTranzonesById(fiscalizacion.getRodal()
-					.getMarcacion().getTranzon().getPmf().getId());
-			List<Marcacion> marcaciones = ubicacionFachada.getMarcacionesById(fiscalizacion
-					.getRodal().getMarcacion().getTranzon().getId());
-			List<Rodal> rodales = ubicacionFachada.getRodalesById(fiscalizacion.getRodal()
-					.getMarcacion().getId());
+			List<AreaDeCosecha> areas = ubicacionFachada.getAreas(fiscalizacion.getProductorForestal().getId());
 
 			FiscalizacionDTO fiscalizacionDTO = ProviderDTO.getFiscalizacionDTO(fiscalizacion);
 			request.getSession().setAttribute("fiscalizacionDTO", fiscalizacionDTO);
 
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
 			request.setAttribute("oficinas", oficinas);
-
+			
 			List<TipoDeEntidad> tiposEntidad = entidadFachada.getTiposDeEntidadProductores();
 			request.setAttribute("tiposEntidad", tiposEntidad);
 			request.setAttribute("productores", productores);
 			request.setAttribute("tiposProducto", tiposProducto);
+			request.setAttribute("areas", areas);
 			request.setAttribute("pmfs", pmf);
-			request.setAttribute("tranzones", tranzones);
-			request.setAttribute("marcaciones", marcaciones);
-			request.setAttribute("rodales", rodales);
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 
 			request.setAttribute("LENIA", Constantes.LENIA_ID);
+			
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -454,8 +476,8 @@ public class FiscalizacionAction extends ValidadorAction {
 		ok11 = Validator.validarComboRequerido("-1",
 				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
 
-		/*ok15 = Validator.requerido(fiscalizacionDTO.getLocalizacion(), "Localizacion", error);
-		 */
+		ok15 = Validator.validarComboRequerido("0",Long.toString(fiscalizacionDTO.getIdLocalizacion()), "Localizacion", error);
+		 
 		//VALIDACIONES FISCALIZACION
 		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
 				&& ok14 && ok15 && ok16;		

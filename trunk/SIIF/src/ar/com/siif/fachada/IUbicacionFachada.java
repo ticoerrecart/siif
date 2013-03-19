@@ -7,6 +7,7 @@ import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.RodalDTO;
 import ar.com.siif.dto.TranzonDTO;
+import ar.com.siif.negocio.AreaDeCosecha;
 import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Marcacion;
 import ar.com.siif.negocio.PMF;
@@ -20,6 +21,8 @@ public interface IUbicacionFachada {
 
 	public List<PMF> getPMFs(Long idPF) throws NegocioException;
 
+	public List<AreaDeCosecha> getAreas(Long idPF) throws NegocioException;
+	
 	public List<Tranzon> getTranzonesById(Long idPMF) throws NegocioException;
 
 	public List<Rodal> getRodales();

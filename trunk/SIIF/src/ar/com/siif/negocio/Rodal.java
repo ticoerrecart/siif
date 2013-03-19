@@ -8,7 +8,6 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MarcacionDTO;
 import ar.com.siif.dto.RodalDTO;
 
@@ -94,5 +93,45 @@ public class Rodal extends Localizacion {
 	@Override
 	public boolean tieneTranzon(Long idTranzon) {
 		return false;
+	}
+	
+	@Override
+	public String getExpedientePMF() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getExpedientePMF();
+		}
+		return null;
+	}
+
+	@Override
+	public String getNombrePMF() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getNombrePMF();
+		}
+		return null;
+	}
+
+	@Override
+	public String getNumeroTranzon() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getNumeroTranzon();
+		}
+		return null;
+	}
+
+	@Override
+	public String getDisposicionTranzon() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getDisposicionTranzon();
+		}
+		return null;
+	}
+
+	@Override
+	public String getDisposicionMarcacion() {
+		if (this.getMarcacion() != null) {
+			return this.getMarcacion().getDisposicionMarcacion();
+		}
+		return null;
 	}
 }

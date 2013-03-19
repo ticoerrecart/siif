@@ -136,4 +136,20 @@ public class Tranzon extends Localizacion {
 	public boolean tieneTranzon(Long idTranzon) {
 		return this.getId() == idTranzon;
 	}
+
+	@Override
+	public String getExpedientePMF() {
+		if (this.getPmf() != null) {
+			return this.getPmf().getExpedientePMF();
+		}
+		return null;
+	}
+
+	@Override
+	public String getNombrePMF() {
+		if (this.getPmf() != null) {
+			return this.getPmf().getNombrePMF();
+		}
+		return null;
+	}
 }
