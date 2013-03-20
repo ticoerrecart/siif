@@ -18,7 +18,6 @@ import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.LocalizacionDTO;
-import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
@@ -100,7 +99,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			}/* else {
 				listaPMFs = ubicacionFachada.getPMFsDTO(guiaForm.getGuiaForestal()
 						.getProductorForestal().getId());
-			}*/
+				}*/
 
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
@@ -301,13 +300,11 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
-			String idRodal = request.getParameter("idRodal");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
-			request.setAttribute("idRodal", idRodal);
 			request.setAttribute("urlDetalle",
 					"../../guiaForestal.do?metodo=recuperarFiscalizacionesParaAltaGFB");
 
@@ -1432,8 +1429,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal().getFechaVencimiento(),
 					"Valido Hasta", error);
 
-			ok12 = Validator.validarRodalRequerido(guiaForestalForm.getGuiaForestal().getRodal()
-					.getId(), error);
+			ok12 = Validator.validarLocalizacionRequerido(guiaForestalForm.getGuiaForestal()
+					.getIdLocalizacion(), error);
 
 			ok3 = Validator.validarSubImportes(guiaForestalForm.getListaSubImportes(),
 					guiaForestalForm.getListaFiscalizaciones(), guiaForestalForm.getTipoTerreno(),
