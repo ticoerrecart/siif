@@ -18,7 +18,6 @@ import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.DateUtils;
 import ar.com.siif.utils.MathUtils;
 
@@ -68,7 +67,7 @@ public abstract class Validator {
 
 		return false;
 	}
-	
+
 	public static boolean validarRequeridoSi(String entradaCondicion, String valorCondicion,
 			String entrada, String label, StringBuffer pError) {
 
@@ -220,8 +219,8 @@ public abstract class Validator {
 		}
 
 		return true;
-	}	
-	
+	}
+
 	/*
 	 * Si la entrada es nula entonces se considera valido chequea que el año se
 	 * mayor que 1900 y menor que 2100
@@ -546,44 +545,49 @@ public abstract class Validator {
 		return ok;
 	}*/
 
-	private static boolean validarRangoMuestras(List<MuestraDTO> muestras, TipoProductoForestalDTO tipoProducto,
-												StringBuffer pError) 
-	{
+	private static boolean validarRangoMuestras(List<MuestraDTO> muestras,
+			TipoProductoForestalDTO tipoProducto, StringBuffer pError) {
 		boolean ok = true;
 		for (MuestraDTO muestra : muestras) {
 			if (muestra != null) {
-				
-				if(tipoProducto.getCantDiametros() == 1){
-					ok = ok && validarDiametro(pError, muestra.getDiametro1(),
-							new Double(tipoProducto.getDiam1Desde()).intValue(),
-							new Double(tipoProducto.getDiam1Hasta()).intValue(),
-							"Diámetro 1 del " + tipoProducto.getNombre());
 
-					ok = ok && validarLargo(pError, muestra.getLargo(), tipoProducto.getLargoDesde(),
-							tipoProducto.getLargoHasta(), "Largo del " + tipoProducto.getNombre());					
-				}
-				else{
-					if(tipoProducto.getCantDiametros() == 2){
-						ok = ok && validarDiametro(pError, muestra.getDiametro1(),
-								new Double(tipoProducto.getDiam1Desde()).intValue(),
-								new Double(tipoProducto.getDiam1Hasta()).intValue(),
-								"Diámetro 1 del " + tipoProducto.getNombre());
+				if (tipoProducto.getCantDiametros() == 1) {
+					ok = ok
+							&& validarDiametro(pError, muestra.getDiametro1(), new Double(
+									tipoProducto.getDiam1Desde()).intValue(), new Double(
+									tipoProducto.getDiam1Hasta()).intValue(), "Diámetro 1 del "
+									+ tipoProducto.getNombre());
 
-						ok = ok && validarDiametro(pError, muestra.getDiametro2(),
-								new Double(tipoProducto.getDiam2Desde()).intValue(),
-								new Double(tipoProducto.getDiam2Hasta()).intValue(),
-								"Diámetro 2 del " + tipoProducto.getNombre());						
-						
-						ok = ok && validarLargo(pError, muestra.getLargo(), tipoProducto.getLargoDesde(),
-								tipoProducto.getLargoHasta(), "Largo del " + tipoProducto.getNombre());					
-					}					
+					ok = ok
+							&& validarLargo(pError, muestra.getLargo(),
+									tipoProducto.getLargoDesde(), tipoProducto.getLargoHasta(),
+									"Largo del " + tipoProducto.getNombre());
+				} else {
+					if (tipoProducto.getCantDiametros() == 2) {
+						ok = ok
+								&& validarDiametro(pError, muestra.getDiametro1(), new Double(
+										tipoProducto.getDiam1Desde()).intValue(), new Double(
+										tipoProducto.getDiam1Hasta()).intValue(), "Diámetro 1 del "
+										+ tipoProducto.getNombre());
+
+						ok = ok
+								&& validarDiametro(pError, muestra.getDiametro2(), new Double(
+										tipoProducto.getDiam2Desde()).intValue(), new Double(
+										tipoProducto.getDiam2Hasta()).intValue(), "Diámetro 2 del "
+										+ tipoProducto.getNombre());
+
+						ok = ok
+								&& validarLargo(pError, muestra.getLargo(),
+										tipoProducto.getLargoDesde(), tipoProducto.getLargoHasta(),
+										"Largo del " + tipoProducto.getNombre());
+					}
 				}
 			}
 		}
 
 		return ok;
-	}	
-	
+	}
+
 	/*
 	 * 
 		<option value="1">Rollizos</option>
@@ -626,8 +630,8 @@ public abstract class Validator {
 		return validarRangoMuestras(muestras, idTipoProducto, pError);
 	}*/
 
-	public static boolean validarMuestras(List<MuestraDTO> muestras, TipoProductoForestalDTO tipoProducto,
-			StringBuffer pError) {
+	public static boolean validarMuestras(List<MuestraDTO> muestras,
+			TipoProductoForestalDTO tipoProducto, StringBuffer pError) {
 
 		if (muestras.size() == 0) {
 			addErrorXML(pError, "Cantidad de Muestras debe ser un numero mayor a 0");
@@ -645,7 +649,7 @@ public abstract class Validator {
 					}
 				} else {
 					//if (idTipoProducto == 1 || idTipoProducto == 4) {
-					if (tipoProducto.getCantDiametros() == 1) {					
+					if (tipoProducto.getCantDiametros() == 1) {
 						if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0) {
 							addErrorXML(pError,
 									"Faltan datos de Largo y/o Diametro en las Muestras");
@@ -657,8 +661,8 @@ public abstract class Validator {
 		}
 
 		return validarRangoMuestras(muestras, tipoProducto, pError);
-	}	
-	
+	}
+
 	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas,
 			double montoTotal, StringBuffer pError) {
 
@@ -854,10 +858,11 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarRodalRequerido(Long idRodal, StringBuffer pError) {
+	public static boolean validarLocalizacionRequerido(String idLocalizacion, StringBuffer pError) {
 
-		if (idRodal == null || idRodal.longValue() <= 0) {
-			addErrorXML(pError, "Rodal es un dato obligatorio");
+		if (idLocalizacion == null
+				|| (idLocalizacion != null && Long.parseLong(idLocalizacion) <= 0)) {
+			addErrorXML(pError, "Localización es un dato obligatorio");
 			return false;
 		}
 		return true;
@@ -969,16 +974,16 @@ public abstract class Validator {
 		}
 		return true;
 	}
-	
-	public static boolean validarVolumenTransferenciaCertificadoOrigen(double volumenMaximoParaExportar, 
-																	   double volumenTransferido, StringBuffer pError){
-		
-		if(volumenTransferido <= volumenMaximoParaExportar/0.3){
+
+	public static boolean validarVolumenTransferenciaCertificadoOrigen(
+			double volumenMaximoParaExportar, double volumenTransferido, StringBuffer pError) {
+
+		if (volumenTransferido <= volumenMaximoParaExportar / 0.3) {
 			addErrorXML(pError,
-			"El Volumen Transferido debe ser mayor al Volúmen máximo permitido por exportar /0.3 ");
-			return false;			
+					"El Volumen Transferido debe ser mayor al Volúmen máximo permitido por exportar /0.3 ");
+			return false;
 		}
-		
+
 		return true;
 	}
 }

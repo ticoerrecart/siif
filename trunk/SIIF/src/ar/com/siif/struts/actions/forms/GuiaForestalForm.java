@@ -39,23 +39,19 @@ public class GuiaForestalForm extends ActionForm {
 
 		guiaForestal = new GuiaForestalDTO();
 
-		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(
-				new ArrayList(),
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
 
-		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(
-				new ArrayList(),
+		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));
 
-		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(
-				new ArrayList(),
+		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(SubImporteDTO.class));
 
 		rangos = (List<RangoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(RangoDTO.class));
 
-		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(
-				new ArrayList(),
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 	}
 
@@ -72,23 +68,19 @@ public class GuiaForestalForm extends ActionForm {
 			}
 		}
 
-		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(
-				new ArrayList(),
+		boletasDeposito = (List<BoletaDepositoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(BoletaDepositoDTO.class));
 
-		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(
-				new ArrayList(),
+		listaFiscalizaciones = (List<FiscalizacionDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(FiscalizacionDTO.class));
 
-		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(
-				new ArrayList(),
+		listaSubImportes = (List<SubImporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(SubImporteDTO.class));
 
 		rangos = (List<RangoDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(RangoDTO.class));
 
-		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(
-				new ArrayList(),
+		valesTransporte = (List<ValeTransporteDTO>) LazyList.decorate(new ArrayList(),
 				FactoryUtils.instantiateFactory(ValeTransporteDTO.class));
 	}
 
@@ -120,8 +112,7 @@ public class GuiaForestalForm extends ActionForm {
 		return listaFiscalizaciones;
 	}
 
-	public void setListaFiscalizaciones(
-			List<FiscalizacionDTO> listaFiscalizaciones) {
+	public void setListaFiscalizaciones(List<FiscalizacionDTO> listaFiscalizaciones) {
 		this.listaFiscalizaciones = listaFiscalizaciones;
 	}
 
@@ -167,5 +158,4 @@ public class GuiaForestalForm extends ActionForm {
 	public void setValesTransporte(List<ValeTransporteDTO> valesTransporte) {
 		this.valesTransporte = valesTransporte;
 	}
-
 }

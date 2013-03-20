@@ -50,15 +50,12 @@ function despintarFila(idTr){
 function mostrarDetalle(){
 
 	var idProductor = $('#selectProductores').val();
-	var idRodal = $('#idRodal').val();
 	var forward = $('#paramForward').val();
 	$('#divCargando').show();	
 	$('#divDetalle').html("");
 	$('#errores').html("");
 	
 	if(idProductor != "" && idProductor != "-1"){
-	//alert($('#paramUrlDetalle').val() + '&idProductor='+idProductor)
-		//$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&idRodal='+idRodal + '&forward=' + forward);
 		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
 		$('#divDetalle').hide();
 		$('#divDetalle').fadeIn(600);
@@ -79,8 +76,6 @@ function cargarProductores(){
 
 	$('#divDetalle').html("");
 	$('#errores').html("");
-	/*deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
-	           				"idRodal" ]);*/
 		
 	var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 	if(idTipoDeEntidad != "-1"){
@@ -123,114 +118,6 @@ function actualizarProductoresVolverCallback(productores){
 	$('#selectProductores').val($('#paramProductor').val());
 	mostrarDetalle();		
 }
-
-/*function actualizarComboPMF() {
-	
-	$('#divDetalle').html("");
-	idPF = $('#selectProductores').val();
-
-	deshabilitarLocalizacion([ "idPMF", "idTranzon", "idMarcacion",
-			"idRodal" ]);
-
-	if (idPF > 0) {
-		UbicacionFachada.getPMFs(idPF, actualizarComboPMFCallback);
-	}
-}
-
-function actualizarComboPMFCallback(pmfs) {
-	dwr.util.removeAllOptions("idPMF");
-	var data = [ {
-		nombre : "- Seleccione -",
-		id : -1
-	} ];
-	dwr.util.addOptions("idPMF", data, "id", "nombre");
-	dwr.util.addOptions("idPMF", pmfs, "id", "nombreExpediente");
-	$('#idPMF').removeAttr('disabled');
-}
-
-function actualizarComboTranzon() {
-
-	$('#divDetalle').html("");
-	idPMF = $('#idPMF').val();
-	deshabilitarLocalizacion([ "idTranzon", "idMarcacion", "idRodal" ]);
-
-	if (idPMF > 0) {
-		UbicacionFachada.getTranzonesById(idPMF,
-				actualizarComboTranzonCallback);
-	}
-}
-
-function actualizarComboTranzonCallback(tranzones) {
-	dwr.util.removeAllOptions("idTranzon");
-	var data = [ {
-		nombre : "- Seleccione -",
-		id : -1
-	} ];
-	dwr.util.addOptions("idTranzon", data, "id", "nombre");
-	dwr.util.addOptions("idTranzon", tranzones, "id", "numeroDisposicion");
-	$('#idTranzon').removeAttr('disabled');
-}
-
-function actualizarComboMarcacion() {
-
-	$('#divDetalle').html("");
-	idTranzon = $('#idTranzon').val();
-
-	deshabilitarLocalizacion([ "idMarcacion", "idRodal" ]);
-
-	if (idTranzon > 0) {
-		UbicacionFachada.getMarcacionesById(idTranzon,
-				actualizarComboMarcacionCallback);
-	}
-}
-
-function actualizarComboMarcacionCallback(marcaciones) {
-	dwr.util.removeAllOptions("idMarcacion");
-	var data = [ {
-		nombre : "- Seleccione -",
-		id : -1
-	} ];
-	dwr.util.addOptions("idMarcacion", data, "id", "nombre");
-	dwr.util.addOptions("idMarcacion", marcaciones, "id", "disposicion");
-	$('#idMarcacion').removeAttr('disabled');
-}
-
-function actualizarComboRodal() {
-
-	$('#divDetalle').html("");
-	idMarcacion = $('#idMarcacion').val();
-
-	deshabilitarLocalizacion([ "idRodal" ]);
-
-	if (idMarcacion > 0) {
-		UbicacionFachada.getRodalesById(idMarcacion,
-				actualizarComboRodalCallback);
-	}
-}
-
-function actualizarComboRodalCallback(rodales) {
-	dwr.util.removeAllOptions("idRodal");
-	var data = [ {
-		nombre : "- Seleccione -",
-		id : -1
-	} ];
-	dwr.util.addOptions("idRodal", data, "id", "nombre");
-	dwr.util.addOptions("idRodal", rodales, "id", "nombre");
-	$('#idRodal').removeAttr('disabled');
-}
-
-function deshabilitarLocalizacion(ids) {
-
-	var data = [ {
-		nombre : "- Seleccione -",
-		id : -1
-	} ];
-	for (i = 0; i < ids.length; i++) {
-		dwr.util.removeAllOptions(ids[i]);
-		dwr.util.addOptions(ids[i], data, "id", "nombre");
-		$('#' + ids[i]).attr('disabled', 'disabled');
-	}
-}*/
 
 </script>
 
@@ -276,9 +163,6 @@ function deshabilitarLocalizacion(ids) {
 			<tr>
 				<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 				<td class="botonerab">
-					<!-- <select id="selectProductores" class="botonerab" disabled="disabled" onchange="actualizarComboPMF()">
-						<option value="">-Seleccione un Productor-</option>
-					</select>-->
 					<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarDetalle()">
 						<option value="">-Seleccione un Productor-</option>
 					</select>					
@@ -295,71 +179,6 @@ function deshabilitarLocalizacion(ids) {
 
 
 
-		<!-- LOCALIZACION -->
-		<!-- 
-		<tr>
-			<td>
-				<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2" cellspacing="0">
-					<tr>
-						<td colspan="3" class="grisSubtitulo"><bean:message key='SIIF.subTitulo.Localizacion'/></td>
-					</tr>
-					<tr>
-						<td colspan="3" height="10"></td>
-					</tr>				
-					<tr>
-						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.PlanManejoForestal'/>
-						</td>
-						<td width="4%"></td>						
-						<td align="left">
-							<select id="idPMF" class="botonerab" disabled="disabled" onchange="actualizarComboTranzon();">
-								<option value="-1">- Seleccione -</option>						
-							</select>					
-						</td>						
-					</tr>				
-					<tr>
-						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.Tranzon'/>
-						</td>
-						<td width="4%"></td>						
-						<td align="left">
-							<select id="idTranzon" class="botonerab" disabled="disabled" onchange="actualizarComboMarcacion();">
-								<option value="-1">- Seleccione -</option>
-							</select>					
-						</td>
-					</tr>
-					<tr>
-						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.Marcacion'/>
-						</td>
-						<td width="4%"></td>
-						<td align="left">
-							<select id="idMarcacion" class="botonerab" disabled="disabled" onchange="actualizarComboRodal();">
-								<option value="-1">- Seleccione -</option>
-							</select>					
-						</td>
-					</tr>
-					<tr>
-						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.Rodal'/>
-						</td> 
-						<td width="4%"></td>
-						<td align="left">
-							<select id="idRodal" class="botonerab" disabled="disabled" onchange="mostrarDetalle();">
-								<option value="-1">- Seleccione -</option>						
-							</select>					
-						</td>
-					</tr>															
-					<tr>
-						<td colspan="3" height="10"></td>
-					</tr>				
-				</table>
-			</td>
-		</tr> -->
-		
-		
-		
-		
 		
 <tr>
 	<td height="20"></td>

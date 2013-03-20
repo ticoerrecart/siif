@@ -33,13 +33,15 @@ public class GuiaForestalDTO {
 
 	private UsuarioDTO usuario;
 
-	private RodalDTO rodal;
+	//private LocalizacionDTO localizacion;
 
 	private List<FiscalizacionDTO> fiscalizaciones;
 
 	private List<SubImporteDTO> subImportes;
 
 	private boolean anulado;
+
+	private String idLocalizacion;
 
 	public GuiaForestalDTO() {
 
@@ -48,7 +50,7 @@ public class GuiaForestalDTO {
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
 		usuario = new UsuarioDTO();
 		productorForestal = new EntidadDTO();
-		rodal = new RodalDTO();
+		//rodal = new RodalDTO();
 		subImportes = new ArrayList<SubImporteDTO>();
 		localidad = new LocalidadDTO();
 	}
@@ -165,13 +167,13 @@ public class GuiaForestalDTO {
 		this.fiscalizaciones = fiscalizaciones;
 	}
 
-	public RodalDTO getRodal() {
-		return rodal;
-	}
+	/*	public LocalizacionDTO getLocalizacion() {
+			return localizacion;
+		}
 
-	public void setRodal(RodalDTO rodal) {
-		this.rodal = rodal;
-	}
+		public void setLocalizacion(LocalizacionDTO localizacion) {
+			this.localizacion = localizacion;
+		}*/
 
 	public double getImporteTotal() {
 		return importeTotal;
@@ -219,13 +221,21 @@ public class GuiaForestalDTO {
 				}
 			}
 			if (mts3 > 0) {
-				if(piezas>0){
+				if (piezas > 0) {
 					prod.setMts3xpieza(mts3 / piezas);
 				}
 			}
 			prods.add(prod);
 		}
 		return prods;
+	}
+
+	public String getIdLocalizacion() {
+		return idLocalizacion;
+	}
+
+	public void setIdLocalizacion(String idLocalizacion) {
+		this.idLocalizacion = idLocalizacion;
 	}
 
 }

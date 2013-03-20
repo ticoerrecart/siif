@@ -113,7 +113,23 @@ function actualizarComboTranzonCallback(tranzones) {
 	dwr.util.addOptions("idTranzon", data, "id", "nombre");
 	dwr.util.addOptions("idTranzon", tranzones, "id",
 			"numeroDisposicionTranzon");
+
 	actualizarComboMarcacion();
+}
+
+function actualizarTipoTerreno(){
+	if($("#tipoTerrenoPMF").length>0){
+		idPMF = $('#idPMF').val();
+		if(idPMF>0){
+			UbicacionFachada.getTipoTerrenoPMF(idPMF, tipoTerrenoCallback);
+		}else{
+			$("#tipoTerrenoPMF").val("");
+		}
+	}
+}
+
+function tipoTerrenoCallback(tipoTerreno){
+	$("#tipoTerrenoPMF").val(tipoTerreno);
 }
 
 function actualizarComboMarcacion() {

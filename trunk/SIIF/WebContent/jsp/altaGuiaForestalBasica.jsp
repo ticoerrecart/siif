@@ -10,8 +10,6 @@
 	src="<html:rewrite page='/js/validarLetras.js'/>"></script>
 <script type="text/javascript"
 	src="<html:rewrite page='/js/validarNum.js'/>"></script>
-<!-- <script type="text/javascript"
-	src="<html:rewrite page='/js/guiaForestal.js'/>"></script> -->
 <script type="text/javascript"
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 <script type="text/javascript"
@@ -31,9 +29,6 @@
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 	});
-</script>
-
-<script type="text/javascript">
 
 var type;
 if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
@@ -41,18 +36,17 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function volverAltaGuia(){	
-	//document.forms[0].elements["metodo"].value = "recuperarLocalidadesParaAltaGFB";
-	//document.forms[0].submit();
-
 	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();
-	var rodal = $('#idRodal').val();
 	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idRodal=' + rodal;		
+	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor;		
+}
+
+function setValorLocalizacion(valor){
+	$("#idLocalizacion").val(valor);
 }
 
 function submitir(){
-
 	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
 }
 
@@ -187,7 +181,6 @@ function cambiarEstado(ind){
 
 	var estado = $('#idEstado'+ind).val();
 	var idTipoProducto = $('#selectTiposDeProductos'+ind).val();
-	//idTipoProducto = (idTipoProducto ==null)?$('#idTipoProducto'+ind).val():idTipoProducto;
 	
 	var idProdForestal = $('#idProductor').val();
 
@@ -203,10 +196,6 @@ function actualizarImporteCallback(valor){
 		$('#TDValorAforo'+idRenglon).show();
 		$('#errorAforo'+idRenglon).hide();
 		$('#idValorAforo'+idRenglon).val(valor);
-		/*var cantidadMts = $('#idCantidadMts').val();
-		$('#idImporte').val(valor*cantidadMts);
-		$('#idImporte').focus();		
-		$('#idValorAforo').focus();*/
 		
 	}
 	else{
@@ -266,8 +255,6 @@ function calcularTotales(){
 			$('#idTotal').val(0);
 		}
 		else{
-			//var importeFloat = parseFloat(importe);
-			//var sumaImportes = new Number(importe0) + new Number(importe1) + new Number(importe2) + new Number(importe3) + new Number(importe4);
 			var porcentaje = parseFloat(sumaImportes*0.2);
 			
 			document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);
@@ -441,7 +428,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								<c:out value="${per.periodo}"></c:out>
 							</option>
 						</c:forEach>
-					</select>	
+					</select>
 			</td>
 		</tr>
 		<tr>
@@ -463,8 +450,10 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 
 
 	<!-- LOCALIZACION -->
+	
+	<html:hidden styleId="idLocalizacion" property="guiaForestal.idLocalizacion" value="${localizacion.id}" />
 	<c:choose>
-		<c:when test="${fn:length(fiscalizaciones)>0}">	
+		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<c:choose>
 				<c:when test="${localizacion.esAreaDeCosecha}">
 					<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
@@ -509,7 +498,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								<bean:message key='SIIF.label.Rodal'/>
 							</td>
 							<td align="left">
-								<input id="idRodal" type="hidden" name="guiaForestal.rodal.id" value="${rodal.id}">
 								<input value="${localizacion.nombreRodal}"
 									   class="botonerab" type="text" size="40" readonly="readonly">
 							</td>
@@ -561,16 +549,16 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 										<option value="1">--PMF--</option>
 										<option value="2">--Area de Cosecha--</option>
 									</select>	
-									<input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" />				
+									<!--input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" /-->				
 								</td>						
 							</tr>				
 		
-							<tr class="area" style="display: none">	
+							<tr class="area" style="display: none">
 								<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
 								<td width="4%"></td>
 								<td align="left"> 
-									<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" >
-										<option value="-1">- Seleccione -</option>						
+									<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" onchange="setValorLocalizacion(this.value);">
+										<option value="-1">- Seleccione -</option>
 									</select>	
 								</td>
 							</tr>
@@ -581,7 +569,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</td>
 								<td width="4%"></td>			
 								<td align="left">
-									<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();">
+									<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();actualizarTipoTerreno();setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>						
 									</select>					
 								</td>						
@@ -593,7 +581,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</td>
 								<td width="4%"></td>						
 								<td align="left">
-									<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" 	onchange="actualizarComboMarcacion();">
+									<select id="idTranzon" class="botonerab" name="fiscalizacionDTO.idTranzon" 	onchange="actualizarComboMarcacion();setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>
 									</select>					
 								</td>
@@ -605,7 +593,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</td>
 								<td width="4%"></td>
 								<td align="left">
-									<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" 	onchange="actualizarComboRodal();">
+									<select id="idMarcacion" class="botonerab" name="fiscalizacionDTO.idMarcacion" 	onchange="actualizarComboRodal();setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>
 									</select>					
 								</td>
@@ -617,7 +605,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</td>
 								<td width="4%"></td>
 								<td align="left">
-									<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" >
+									<select id="idRodal" class="botonerab" name="fiscalizacionDTO.idRodal" onchange="setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>						
 									</select>					
 								</td>
@@ -935,17 +923,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 					<tr>
 						<td height="15" colspan="4"></td>
 					</tr>
-					 <!-- <tr>
-						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ValorAforo'/></td>
-						<td width="55%" align="left">
-							<input id="idValorAforo" name="guiaForestal.valorAforos" 
-								class="botonerab" type="text" size="70" readonly="readonly">
-						</td>
-						<td id="errorAforo" class="rojoAdvertenciaLeft" style="display: none;">
-							<bean:message key='SIIF.error.NoExiValorAforo'/> 
-						</td>
-						<td></td>
-					</tr>  -->
 					<tr>
 						<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Observaciones'/></td>
 						<td align="left" colspan="3">

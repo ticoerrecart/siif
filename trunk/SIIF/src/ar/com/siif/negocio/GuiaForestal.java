@@ -50,8 +50,8 @@ public class GuiaForestal {
 
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "rodal_fk")
-	private Rodal rodal;
+	@JoinColumn(name = "localizacion_fk")
+	private Localizacion localizacion;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -199,14 +199,6 @@ public class GuiaForestal {
 		this.fiscalizaciones = fiscalizaciones;
 	}
 
-	public Rodal getRodal() {
-		return rodal;
-	}
-
-	public void setRodal(Rodal rodal) {
-		this.rodal = rodal;
-	}
-
 	public List<SubImporte> getSubImportes() {
 		return subImportes;
 	}
@@ -229,6 +221,14 @@ public class GuiaForestal {
 
 	public void setAnulado(boolean anulado) {
 		this.anulado = anulado;
+	}
+
+	public Localizacion getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(Localizacion localizacion) {
+		this.localizacion = localizacion;
 	}
 
 }
