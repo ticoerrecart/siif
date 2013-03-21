@@ -273,8 +273,11 @@ public abstract class ProviderDTO {
 		guiaForestalDTO.setProductorForestal(ProviderDTO.getEntidadDTO(guiaForestal
 				.getProductorForestal()));
 
-		if (guiaForestal.getRodal() != null) {
-			guiaForestalDTO.setRodal(guiaForestal.getRodal().getLocalizacionDTO());
+		if (guiaForestal.getLocalizacion() != null) {
+			guiaForestalDTO.setLocalizacion(ProviderDTO.getLocalizacionDTO(guiaForestal
+					.getLocalizacion()));
+			guiaForestalDTO.setIdLocalizacion(String
+					.valueOf(guiaForestal.getLocalizacion().getId()));
 		}
 
 		if (guiaForestal.getUsuario() != null) {

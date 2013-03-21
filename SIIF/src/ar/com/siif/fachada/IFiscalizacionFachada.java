@@ -16,7 +16,7 @@ public interface IFiscalizacionFachada {
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor);
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar);
+			Long idFiscalizacion, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar);
 
 	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor);
 
