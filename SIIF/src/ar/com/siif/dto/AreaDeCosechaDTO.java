@@ -80,4 +80,9 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 	public boolean getEsAreaDeCosecha() {
 		return true;
 	}
+
+	@Override
+	public String getTipoTerrenoPMF() {
+		return null;
+	}
 }

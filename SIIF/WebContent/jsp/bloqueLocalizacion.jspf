@@ -1,45 +1,63 @@
-<table border="0" class="cuadrado" align="center" width="80%"
-	cellpadding="2">
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
-		<td width="30%" align="left"> 
-			<input value="${guiaForestal.localizacion.tipoTerrenoPMF}" class="botonerab" type="text" 
-				size="40" readonly="readonly">
-		</td> 
-		<td colspan="2"></td>
-	</tr>	
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.localizacion.nombrePMF} - ${guiaForestal.localizacion.expedientePMF}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Tranzon'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.localizacion.numeroTranzon} - ${guiaForestal.localizacion.disposicionTranzon}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.localizacion.disposicionMarcacion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Rodal'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.localizacion.nombreRodal}" class="botonerab" 
-					type="text" size="40" readonly="readonly">
-		</td>
-	</tr>		
-	<tr>
-		<td height="10" colspan="4"></td>
-		</tr>
-</table>
+<c:choose>
+	<c:when test="${guiaForestal.localizacion.esAreaDeCosecha}">
+		<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+			<tr>
+				<td height="10" colspan="2"></td>
+			</tr>
+			<tr>
+				<td width="12%" align="left" class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+				<td width="88%" align="left">
+					<input value="${guiaForestal.localizacion.nombreArea}" class="botonerab" type="text" size="40" readonly="readonly">
+				</td>
+			</tr>
+		</table>
+	</c:when>
+	
+	<c:otherwise>
+		<table border="0" class="cuadrado" align="center" width="80%"
+			cellpadding="2">
+			<tr>
+				<td height="10" colspan="4"></td>
+			</tr>
+			<tr>
+				<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
+				<td width="30%" align="left"> 
+					<input value="${guiaForestal.localizacion.tipoTerrenoPMF}" class="botonerab" type="text" 
+						size="40" readonly="readonly">
+				</td> 
+				<td colspan="2"></td>
+			</tr>	
+			<tr>
+				<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
+				<td width="30%" align="left">
+					<input value="${guiaForestal.localizacion.nombrePMF} - ${guiaForestal.localizacion.expedientePMF}" 
+							class="botonerab" type="text" size="40" readonly="readonly">
+				</td>
+				<td width="30%" class="botoneralNegritaRight">
+					<bean:message key='SIIF.label.Tranzon'/>
+				</td>
+				<td align="left">
+					<input value="${guiaForestal.localizacion.numeroTranzon} - ${guiaForestal.localizacion.disposicionTranzon}" 
+							class="botonerab" type="text" size="40" readonly="readonly">
+				</td>
+			</tr>
+			<tr>
+				<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
+				<td width="30%" align="left">
+					<input value="${guiaForestal.localizacion.disposicionMarcacion}" 
+							class="botonerab" type="text" size="40" readonly="readonly">
+				</td>
+				<td width="30%" class="botoneralNegritaRight">
+					<bean:message key='SIIF.label.Rodal'/>
+				</td>
+				<td align="left">
+					<input value="${guiaForestal.localizacion.nombreRodal}" class="botonerab" 
+							type="text" size="40" readonly="readonly">
+				</td>
+			</tr>		
+			<tr>
+				<td height="10" colspan="4"></td>
+				</tr>
+		</table>
+	</c:otherwise>
+</c:choose>

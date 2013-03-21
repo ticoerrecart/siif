@@ -30,9 +30,6 @@
 		$( "#datepicker" ).datepicker({ dateFormat: 'dd/mm/yy'});
 		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 	});
-</script>
-
-<script type="text/javascript">
 
 var type;
 if (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) type="OP"; 
@@ -40,9 +37,6 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function volverModificacionGuia(){	
-	//document.forms[0].elements["metodo"].value = "recuperarLocalidadesParaAltaGFB";
-	//document.forms[0].submit();
-
 	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();
 	var rodal = $('#idRodal').val();
@@ -52,7 +46,6 @@ function volverModificacionGuia(){
 
 function submitir(){
 
-	//validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
 	if(confirm("Esta seguro que desea modificar la Guía Forestal?")){
 		validarForm("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
 	}	
@@ -210,10 +203,6 @@ function actualizarImporteCallback(valor){
 		$('#TDValorAforo'+idRenglon).show();
 		$('#errorAforo'+idRenglon).hide();
 		$('#idValorAforo'+idRenglon).val(valor);
-		/*var cantidadMts = $('#idCantidadMts').val();
-		$('#idImporte').val(valor*cantidadMts);
-		$('#idImporte').focus();		
-		$('#idValorAforo').focus();*/
 		
 	}
 	else{
@@ -250,8 +239,6 @@ function calcularTotales(){
 		$('#idTotal').val(0);
 	}
 	else{
-		//var importeFloat = parseFloat(importe);
-		//var sumaImportes = new Number(importe0) + new Number(importe1) + new Number(importe2) + new Number(importe3) + new Number(importe4);
 		var porcentaje = parseFloat(sumaImportes*0.2);
 		
 		document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);
@@ -276,22 +263,6 @@ function despintarFila(idTr){
 		$('#tr'+idTr).attr("class", clase2);
 	}		
 }
-
-/*function mostrarFiscalizacion(idFiscalizacion){
-
-	$("#idGuia").hide();	
-	$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
-	$("#idDivFiscalizacion").show(); 
-	$("#errores").hide();
-}
-
-function volverAltaGFB(){
-
-	$("#idGuia").show();
-	$("#idDivFiscalizacion").hide();
-	$("#idDivFiscalizacion").empty();
-	$("#errores").show();
-}*/
 
 //Funciones para agregar filas en el calculo de la deuda//
 
@@ -376,14 +347,12 @@ function expValesNoDevueltos(){
 
 function pintarFilaVale(idTd){
 
-	//$('#'+idTd).attr("class", "verdeSubtitulo");	
 	$('#'+idTd).addClass("verdeSubtitulo");
 	$('#'+idTd).removeClass("grisSubtitulo");
 }
 
 function despintarFilaVale(idTd){
 	
-	//$('#'+idTd).attr("class", "grisSubtitulo");		
 	$('#'+idTd).addClass("grisSubtitulo");
 	$('#'+idTd).removeClass("verdeSubtitulo");
 }
@@ -510,50 +479,7 @@ function removerValeEnUso(idVale,index){
 	</table>
 
 	<!-- LOCALIZACION -->
-	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
-		<tr>
-			<td height="10" colspan="4"></td>
-		</tr>
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
-			<td width="30%" align="left"> 
-				<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.tipoTerreno}" class="botonerab" type="text" 
-					size="40" readonly="readonly">
-			</td> 
-			<td colspan="2"></td>
-		</tr>		
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-			<td width="30%" align="left">
-				<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.rodal.marcacion.tranzon.pmf.expediente}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-			<td width="30%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.Tranzon'/>
-			</td>
-			<td align="left">
-				<input value="${guiaForestal.rodal.marcacion.tranzon.numero} - ${guiaForestal.rodal.marcacion.tranzon.disposicion}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-		</tr>
-		<tr>
-			<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-			<td width="30%" align="left">
-				<input value="${guiaForestal.rodal.marcacion.disposicion}" 
-						class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-			<td width="30%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.Rodal'/>
-			</td>
-			<td align="left">				
-				<input value="${guiaForestal.rodal.nombre}"
-					   class="botonerab" type="text" size="40" readonly="readonly">
-			</td>
-		</tr>		
-		<tr>
-			<td height="10" colspan="4"></td>
-		</tr>
-	</table>
+	<%@include file="bloqueLocalizacion.jspf" %>
 
 
 	<table border="0" class="cuadrado" align="center" width="80%"
