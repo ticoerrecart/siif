@@ -33,7 +33,7 @@ public class GuiaForestalDTO {
 
 	private UsuarioDTO usuario;
 
-	//private LocalizacionDTO localizacion;
+	private LocalizacionDTO localizacion;
 
 	private List<FiscalizacionDTO> fiscalizaciones;
 
@@ -236,6 +236,14 @@ public class GuiaForestalDTO {
 
 	public void setIdLocalizacion(String idLocalizacion) {
 		this.idLocalizacion = idLocalizacion;
+	}
+
+	public LocalizacionDTO getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(LocalizacionDTO localizacion) {
+		this.localizacion = localizacion;
 	}
 
 }

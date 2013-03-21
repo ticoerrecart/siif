@@ -113,16 +113,11 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idRodal, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
+			Long idLocalizacion, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
 	{	
 		List<Long> listaIdsTipoProducto = new ArrayList<Long>();
 		List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
 		
-		/*for (SubImporteDTO subImporte : listaSubImportesDTO) {	
-			listaIdsTipoProducto.add(subImporte.getTipoProducto().getId());
-		}							
-		}*/
-
 		for (FilaTablaVolFiscAsociarDTO fila : tablaVolFiscAsociar) {
 			if (fila.getVolumenFaltante() > 0.0){			
 				listaIdsTipoProducto.add(fila.getIdTipoProducto());
@@ -135,7 +130,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 
 			criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
 					.add(Restrictions.eq("pf.id", idProductor))
-					.add(Restrictions.eq("rodal.id", idRodal))
+					.add(Restrictions.eq("localizacion.id", idLocalizacion))
 					.add(Restrictions.in("tipoProducto.id", listaIdsTipoProducto)));
 
 			criteria.addOrder(Order.asc("pf.nombre"));

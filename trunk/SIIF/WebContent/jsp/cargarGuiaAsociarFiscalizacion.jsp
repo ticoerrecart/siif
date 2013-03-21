@@ -171,51 +171,8 @@ function submitAsociarGuia(){
 </table>
 
 <!-- LOCALIZACION -->
-<table border="0" class="cuadrado" align="center" width="80%"
-	cellpadding="2">
-	<tr>
-		<td height="10" colspan="4"></td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
-		<td width="30%" align="left"> 
-			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.tipoTerreno}" class="botonerab" type="text" 
-				size="40" readonly="readonly">
-		</td> 
-		<td colspan="2"></td>
-	</tr>	
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.rodal.marcacion.tranzon.pmf.nombre} - ${guiaForestal.rodal.marcacion.tranzon.pmf.expediente}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Tranzon'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.rodal.marcacion.tranzon.numero} - ${guiaForestal.rodal.marcacion.tranzon.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-	</tr>
-	<tr>
-		<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Marcacion'/></td>
-		<td width="30%" align="left">
-			<input value="${guiaForestal.rodal.marcacion.disposicion}" 
-					class="botonerab" type="text" size="40" readonly="readonly">
-		</td>
-		<td width="30%" class="botoneralNegritaRight">
-			<bean:message key='SIIF.label.Rodal'/>
-		</td>
-		<td align="left">
-			<input value="${guiaForestal.rodal.nombre}" class="botonerab" 
-					type="text" size="40" readonly="readonly">
-		</td>
-	</tr>		
-	<tr>
-		<td height="10" colspan="4"></td>
-		</tr>
-	</table>
+<%@include file="bloqueLocalizacion.jspf" %>
+
 <html:form action="guiaForestal" styleId="guiaForestalForm">
 <html:hidden property="metodo" value="asociarFiscalizacionesConGuiasForestales" />
 <input id="idGuia" type="hidden" name="guiaForestal.id" value="${guiaForestal.id}">

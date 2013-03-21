@@ -144,12 +144,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor, Long idRodal,
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor, Long idLocalizacion,
 			List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
 
 	{
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idRodal,
+		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idLocalizacion,
 				listaSubImportesDTO, tablaVolFiscAsociar);
 
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {

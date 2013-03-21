@@ -899,7 +899,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			}
 
 			String idProductor = guiaForestal.getProductorForestal().getId().toString();
-			String idRodal = guiaForestal.getRodal().getId().toString();
+			String idLocalizacion = guiaForestal.getIdLocalizacion();
 
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar = this
 					.armarTablaVolumenesFiscalizacionesAAsociar(guiaForestal);
@@ -909,7 +909,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			// tipos de productos que esten en los subimportes de la guia.
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
 					.recuperarFiscalizacionesDTOParaAsociarAGuia(new Long(idProductor), new Long(
-							idRodal), guiaForestal.getSubImportes(), tablaVolFiscAsociar);
+							idLocalizacion), guiaForestal.getSubImportes(), tablaVolFiscAsociar);
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 			request.setAttribute("guiaForestal", guiaForestal);
