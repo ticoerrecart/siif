@@ -1,7 +1,5 @@
 package ar.com.siif.fachada;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +16,7 @@ import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localidad;
-import ar.com.siif.negocio.Rodal;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Usuario;
@@ -84,12 +82,13 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 		Usuario usuario = usuarioFachada.getUsuario(guia.getUsuario().getId());
 		Entidad productorForestal = entidadFachada.getEntidad(guia.getProductorForestal().getId());
-		Rodal rodal = ubicacionFachada.getRodal(guia.getRodal().getId());
+		Localizacion localizacion = ubicacionFachada.getLocalizacion(Long.parseLong(guia
+				.getIdLocalizacion()));
 		Localidad localidad = localidadFachada.getLocalidadPorId(guia.getLocalidad().getId());
 
 		GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia, listaBoletaDepositoDTO,
 				listaRangosDTO, fechaVencimiento, listaFiscalizaciones, listaSubImporte,
-				productorForestal, rodal, localidad, usuario);
+				productorForestal, localizacion, localidad, usuario);
 
 		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 
@@ -187,10 +186,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale,
-			String destino, String vehiculo, String marca, String dominio,
-			String producto, int nroPiezas, double cantM3, String especie,
-			String fechaDevolucion) throws NegocioException {
+	public String registrarDevolucionYCompletarDatosValeTransporte(long idVale, String destino,
+			String vehiculo, String marca, String dominio, String producto, int nroPiezas,
+			double cantM3, String especie, String fechaDevolucion) throws NegocioException {
 
 		try {
 			// Validar que en la devolución de Vales de Transporte,
@@ -200,10 +198,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			// mas el del vale en cuestión, no sobrepase lo fiscalizado en la
 			// guía para ese tipo de producto.
 			StringBuffer pError = new StringBuffer();
-			boolean ok = Validator.requerido(fechaDevolucion,
-					"Fecha Devolución", pError);
-			boolean ok2 = Validator.validarDoubleMayorQue(0,
-					String.valueOf(cantM3), "Cantidad(m3)", pError);
+			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
+			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
+					"Cantidad(m3)", pError);
 
 			double totalMts = 0;
 			ValeTransporte vale = (ValeTransporte) this.guiaForestalDAO.getHibernateTemplate().get(
