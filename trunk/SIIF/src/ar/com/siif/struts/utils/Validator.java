@@ -836,7 +836,8 @@ public abstract class Validator {
 						"Faltan especificar datos en el Valor del Aforo del Producto Forestal");
 				return false;
 			}
-			if (!tipoTerreno.equals("Privado") && subImporteDTO.getImporte() <= 0.0) {
+			if (tipoTerreno != null && !tipoTerreno.equals("Privado")
+					&& subImporteDTO.getImporte() <= 0.0) {
 				addErrorXML(pError, "Faltan especificar datos en el Importe del Producto Forestal");
 				return false;
 			}
