@@ -276,23 +276,6 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			
-			/*if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_VIGENTES)){
-				rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_VIGENTE_MENU,usuario.getRol());
-			}
-			else{
-				if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES)){
-					rolFachada.verificarMenu(Constantes.CONSULTA_GUIA_NO_VIGENTE_MENU,usuario.getRol());
-				}
-				else{
-					if(paramForward.equals(Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO)){
-						rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_AFORO_MENU,usuario.getRol());
-					}
-					else{
-						rolFachada.verificarMenu(Constantes.CONSULTA_DEUDA_VALE_MENU,usuario.getRol());
-					}
-				}
-			}*/			
-			
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
