@@ -146,10 +146,10 @@
 				<put name="body" value="/jsp/cargarProductoresParaBoletaDepostio.jsp" />
 			</definition>
 		
-			<definition name=".cargarGuiaForestalPagoBoletaDepostio"
+			<definition name=".cargarGuiaForestalPagoBoletaDeposito"
 				extends=".base">
 				<put name="title" value="SIIFs" />
-				<put name="body" value="/jsp/cargarGuiaForestalPagoBoletaDepostio.jsp" />
+				<put name="body" value="/jsp/cargarGuiaForestalPagoBoletaDeposito.jsp" />
 			</definition>
 		
 			<definition name=".cargarGuiaForestalReemBoletaDeposito"

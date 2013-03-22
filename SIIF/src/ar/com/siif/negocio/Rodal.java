@@ -134,4 +134,9 @@ public class Rodal extends Localizacion {
 		}
 		return null;
 	}
+	
+	@Override
+	public String getNombreLocalizacion(){
+		return this.getMarcacion().getNombreLocalizacion() + " Rodal:" + this.getNombreRodal();
+	}
 }

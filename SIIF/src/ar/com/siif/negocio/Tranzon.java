@@ -152,4 +152,9 @@ public class Tranzon extends Localizacion {
 		}
 		return null;
 	}
+	
+	@Override
+	public String getNombreLocalizacion(){
+		return this.getPmf().getNombreLocalizacion() + " Tranzon:" + this.getNumeroDisposicionTranzon();
+	}
 }
