@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.com.siif.dao.ReportesDAO;
+import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.StringUtils;
 
 public class ReportesFachada implements IReportesFachada {
 
@@ -24,41 +28,52 @@ public class ReportesFachada implements IReportesFachada {
 
 	}
 
-	public byte[] generarReporteGuiaForestal(long idGuiaForestal, String path)
-			throws Exception {
+	public byte[] generarReporteGuiaForestal(long idGuiaForestal, String path) throws Exception {
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("idGuiaForestal", idGuiaForestal);
 		parameters.put("PATH_SUB_REPORTES", path);
 
-		return reportesDAO.generarReporte(Constantes.REPORTE_GUIA_FORESTAL,
-				parameters);
+
+		GuiaForestal guia = (GuiaForestal) reportesDAO.getHibernateTemplate().get(GuiaForestal.class, idGuiaForestal);
+		setParemetersLocalizacion(parameters, guia.getLocalizacion());
+		parameters.put("tipoTerreno", StringUtils.nullToBlank(guia.getLocalizacion().getLocalizacionDTO().getTipoTerrenoPMF()));
+		return reportesDAO.generarReporte(Constantes.REPORTE_GUIA_FORESTAL, parameters);
 		// return reportesDAO.generarReporteGuiaForestal(idGuiaForestal,path);
 
 	}
 
-	public byte[] generarReporteFiscalizacion(long idFiscalizacion, String path)
-			throws Exception {
+	public byte[] generarReporteFiscalizacion(long idFiscalizacion, String path) throws Exception {
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("idFiscalizacion", idFiscalizacion);
 		parameters.put("PATH_SUB_REPORTES", path);
 
-		return reportesDAO.generarReporte(Constantes.REPORTE_FISCALIZACION,
-				parameters);
+		Fiscalizacion fisc = (Fiscalizacion) reportesDAO.getHibernateTemplate().get(Fiscalizacion.class, idFiscalizacion);
+		setParemetersLocalizacion(parameters, fisc.getLocalizacion());
+
+		return reportesDAO.generarReporte(Constantes.REPORTE_FISCALIZACION, parameters);
 
 	}
 
-	public byte[] generarReporteCertificadoOrigen(long idCertificado,
-			String path) throws Exception {
+	public byte[] generarReporteCertificadoOrigen(long idCertificado, String path) throws Exception {
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("idCertificado", idCertificado);
 		parameters.put("PATH_SUB_REPORTES", path);
 
-		return reportesDAO.generarReporte(
-				Constantes.REPORTE_CERTIFICADO_ORIGEN, parameters);
+		return reportesDAO.generarReporte(Constantes.REPORTE_CERTIFICADO_ORIGEN, parameters);
 
+	}
+
+	private void setParemetersLocalizacion(Map<String, Object> parameters, Localizacion localizacion) {
+		parameters.put("area", StringUtils.nullToBlank(localizacion.getNombreArea()));
+		parameters.put("nombrePmf", StringUtils.nullToBlank(localizacion.getNombrePMF()));
+		parameters.put("expPmf", StringUtils.nullToBlank(localizacion.getExpedientePMF()));
+		parameters.put("numeroTranzon", StringUtils.nullToBlank(localizacion.getNumeroTranzon()));
+		parameters.put("dispTranzon", StringUtils.nullToBlank(localizacion.getDisposicionTranzon()));
+		parameters.put("dispMarcacion", StringUtils.nullToBlank(localizacion.getDisposicionMarcacion()));
+		parameters.put("nombreRodal", StringUtils.nullToBlank(localizacion.getNombreRodal()));
 	}
 
 	/*

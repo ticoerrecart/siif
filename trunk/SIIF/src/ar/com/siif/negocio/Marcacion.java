@@ -147,4 +147,8 @@ public class Marcacion extends Localizacion {
 		return null;
 	}
 	
+	@Override
+	public String getNombreLocalizacion(){
+		return this.getTranzon().getNombreLocalizacion() + " Marcacion:" + this.getDisposicionMarcacion();
+	}
 }

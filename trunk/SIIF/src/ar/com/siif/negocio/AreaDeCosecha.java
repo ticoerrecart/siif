@@ -14,8 +14,7 @@ public class AreaDeCosecha extends Localizacion {
 		super();
 	}
 
-	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea,
-			String expedienteArea, Entidad entidad) {
+	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea, String expedienteArea, Entidad entidad) {
 		super();
 		this.reservaForestalArea = reservaForestalArea;
 		this.nombreArea = nombreArea;
@@ -73,8 +72,7 @@ public class AreaDeCosecha extends Localizacion {
 		areaDeCosechaDTO.setExpedienteArea(this.getExpedienteArea());
 		areaDeCosechaDTO.setNombreArea(this.getNombreArea());
 		areaDeCosechaDTO.setReservaForestalArea(this.getReservaForestalArea());
-		areaDeCosechaDTO
-				.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
+		areaDeCosechaDTO.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
 
 		return areaDeCosechaDTO;
 	}
@@ -109,5 +107,10 @@ public class AreaDeCosecha extends Localizacion {
 	@Override
 	public boolean tieneTranzon(Long idTranzon) {
 		return false;
+	}
+
+	@Override
+	public String getNombreLocalizacion() {
+		return " Area :" + this.getNombreArea();
 	}
 }

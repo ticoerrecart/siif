@@ -128,4 +128,9 @@ public class PMF extends Localizacion {
 		}
 		return false;
 	}
+	
+	public String getNombreLocalizacion(){
+		return "PMF:" + this.getNombreExpediente();
+	}
+	
 }

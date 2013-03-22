@@ -54,9 +54,8 @@ import ar.com.siif.utils.Fecha;
 
 public abstract class ProviderDominio {
 
-	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasDTO, Localizacion localizacion, Entidad productorForestal,
-			Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
+	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO, Localizacion localizacion,
+			Entidad productorForestal, Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
@@ -93,8 +92,7 @@ public abstract class ProviderDominio {
 		return muestra;
 	}
 
-	public static TipoProducto getTipoProductoForestal(
-			TipoProductoForestalDTO tipoProductoForestalDTO) {
+	public static TipoProducto getTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO) {
 
 		TipoProductoForestal tipoProducto = new TipoProductoForestal();
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
@@ -211,8 +209,7 @@ public abstract class ProviderDominio {
 		return usuario;
 	}
 
-	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad,
-			Rol rol) {
+	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad, Rol rol) {
 
 		usuario.setEntidad(entidad);
 		usuario.setHabilitado(usuarioDTO.isHabilitado());
@@ -232,11 +229,9 @@ public abstract class ProviderDominio {
 		return rol;
 	}
 
-	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,
-			List<BoletaDepositoDTO> listaBoletaDepositoDTO, List<RangoDTO> listaRangosDTO,
-			Date fechaVencimiento, List<Fiscalizacion> listaFiscalizaciones,
-			List<SubImporte> listaSubImportes, Entidad productorForestal,
-			Localizacion localizacion, Localidad localidad, Usuario usuario) {
+	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO, List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+			List<RangoDTO> listaRangosDTO, Date fechaVencimiento, List<Fiscalizacion> listaFiscalizaciones, List<SubImporte> listaSubImportes,
+			Entidad productorForestal, Localizacion localizacion, Localidad localidad, Usuario usuario) {
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -263,8 +258,7 @@ public abstract class ProviderDominio {
 		}
 
 		for (RangoDTO rangoDTO : listaRangosDTO) {
-			guia.getValesTransporte().addAll(
-					ProviderDominio.getValesTransportes(guia, rangoDTO, fechaVencimiento));
+			guia.getValesTransporte().addAll(ProviderDominio.getValesTransportes(guia, rangoDTO, fechaVencimiento));
 		}
 
 		for (SubImporte subImporte : listaSubImportes) {
@@ -296,15 +290,14 @@ public abstract class ProviderDominio {
 		return boleta;
 	}
 
-	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO,
-			Date fechaVencimiento) {
+	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO, Date fechaVencimiento) {
 		List<ValeTransporte> vales = new ArrayList<ValeTransporte>();
 		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {
 			ValeTransporte vale = new ValeTransporte();
 			vale.setFechaVencimiento(fechaVencimiento);
 			vale.setGuiaForestal(guia);
 			vale.setNumero(i);
-			vale.setOrigen(guia.getRodal().getNombreRodal());
+			vale.setOrigen(guia.getLocalizacion().getNombreLocalizacion());
 			vales.add(vale);
 		}
 		return vales;
@@ -336,8 +329,7 @@ public abstract class ProviderDominio {
 		return vale;
 	}
 
-	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto,
-			SubImporteDTO subImporteDTO) {
+	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto, SubImporteDTO subImporteDTO) {
 
 		SubImporte subImporte = new SubImporte();
 
@@ -360,15 +352,13 @@ public abstract class ProviderDominio {
 		return provincia;
 	}
 
-	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia,
-			ProvinciaDestinoDTO provinciaDTO) {
+	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia, ProvinciaDestinoDTO provinciaDTO) {
 
 		provincia.setNombre(provinciaDTO.getNombre());
 		return provincia;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO,
-			ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
 
 		LocalidadDestino localidad = new LocalidadDestino();
 		localidad.setNombre(localidadDTO.getNombre());
@@ -377,8 +367,7 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO,
-			LocalidadDestino localidad, ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad, ProvinciaDestino provincia) {
 
 		localidad.setNombre(localidadDTO.getNombre());
 		localidad.setProvinciaDestino(provincia);
@@ -386,23 +375,19 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static TipoProductoEnCertificado getTipoProductoEnCertificado(
-			CertificadoOrigen certificadoOrigen, TipoProductoExportacion tipoProductoExportacion,
-			TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
+	public static TipoProductoEnCertificado getTipoProductoEnCertificado(CertificadoOrigen certificadoOrigen,
+			TipoProductoExportacion tipoProductoExportacion, TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
 		TipoProductoEnCertificado tipoProdEnCertif = new TipoProductoEnCertificado();
 
 		tipoProdEnCertif.setCertificadoOrigen(certificadoOrigen);
 		tipoProdEnCertif.setTipoProductoExportacion(tipoProductoExportacion);
-		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO
-				.getVolumenTipoProducto());
+		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO.getVolumenTipoProducto());
 
 		return tipoProdEnCertif;
 	}
 
-	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO,
-			Usuario usuario, Entidad productor, Entidad exportador,
-			LocalidadDestino localidadDestino, PMF pmf, Date fecha,
-			List<TipoProductoEnCertificado> listaTipoProdEnCert) {
+	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO, Usuario usuario, Entidad productor, Entidad exportador,
+			LocalidadDestino localidadDestino, PMF pmf, Date fecha, List<TipoProductoEnCertificado> listaTipoProdEnCert) {
 		CertificadoOrigen certificado = new CertificadoOrigen();
 
 		certificado.setExportador(exportador);

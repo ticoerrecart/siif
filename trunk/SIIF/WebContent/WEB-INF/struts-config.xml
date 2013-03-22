@@ -160,7 +160,7 @@
 				<forward name="exitoRecuperarProductoresParaBoletaDeposito" path=".cargarProductoresParaBoletaDepostio" />					
 				<forward name="exitoRecuperarGuiasForestalesParaBoletaDeposito" 
 								path="/jsp/bloqueMostrarGuiasForestalesParaBoletaDeposito.jsp" />	
-				<forward name="exitoCargarGuiaForestalPagoBoletaDeposito" path=".cargarGuiaForestalPagoBoletaDepostio" />
+				<forward name="exitoCargarGuiaForestalPagoBoletaDeposito" path=".cargarGuiaForestalPagoBoletaDeposito" />
 				<!--<forward name="exitoRegistrarPagoBoletaDeposito" path="/jsp/bloqueRegistroPagoBoletaDeposito.jsp" /> -->
 				<forward name="exitoCargarGuiaForestalReemBoletaDeposito" path=".cargarGuiaForestalReemBoletaDeposito" />	
 				

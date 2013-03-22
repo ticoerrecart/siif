@@ -104,4 +104,7 @@ public abstract class Localizacion {
 		return null;
 	}
 
+	public String getNombreLocalizacion(){
+		return null;
+	}
 }
