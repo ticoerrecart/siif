@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.com.siif.dao.ReportesDAO;
+import ar.com.siif.negocio.CertificadoOrigen;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localizacion;
@@ -34,7 +35,6 @@ public class ReportesFachada implements IReportesFachada {
 		parameters.put("idGuiaForestal", idGuiaForestal);
 		parameters.put("PATH_SUB_REPORTES", path);
 
-
 		GuiaForestal guia = (GuiaForestal) reportesDAO.getHibernateTemplate().get(GuiaForestal.class, idGuiaForestal);
 		setParemetersLocalizacion(parameters, guia.getLocalizacion());
 		parameters.put("tipoTerreno", StringUtils.nullToBlank(guia.getLocalizacion().getLocalizacionDTO().getTipoTerrenoPMF()));
@@ -51,7 +51,6 @@ public class ReportesFachada implements IReportesFachada {
 
 		Fiscalizacion fisc = (Fiscalizacion) reportesDAO.getHibernateTemplate().get(Fiscalizacion.class, idFiscalizacion);
 		setParemetersLocalizacion(parameters, fisc.getLocalizacion());
-
 		return reportesDAO.generarReporte(Constantes.REPORTE_FISCALIZACION, parameters);
 
 	}
@@ -61,7 +60,9 @@ public class ReportesFachada implements IReportesFachada {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("idCertificado", idCertificado);
 		parameters.put("PATH_SUB_REPORTES", path);
-
+		
+		CertificadoOrigen cert = (CertificadoOrigen) reportesDAO.getHibernateTemplate().get(CertificadoOrigen.class, idCertificado);
+		setParemetersLocalizacion(parameters, cert.getLocalizacion());
 		return reportesDAO.generarReporte(Constantes.REPORTE_CERTIFICADO_ORIGEN, parameters);
 
 	}

@@ -187,14 +187,25 @@ function mostrarCuit() {
 							<input class="botonerab" type="text" size="27" readonly="readonly" 
 									value='<c:out value="${certificado.periodoForestal}"></c:out>'>										
 						</td>	
-						
-						<td width="21%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.PlanManejoForestal'/>						
-						</td>
-						<td width="32%" align="center">
-							<input class="botonerab" type="text" size="27" readonly="readonly" 
-									value='<c:out value="${certificado.pmf.nombre}- ${certificado.pmf.expediente}"></c:out>'>	
-						</td>																
+						<c:if test="${not empty certificado.pmf.nombrePMF}">
+							<td width="21%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.PlanManejoForestal'/>						
+							</td>
+							<td width="32%" align="center">
+								<input class="botonerab" type="text" size="27" readonly="readonly" 
+										value='<c:out value="${certificado.pmf.nombrePMF}- ${certificado.pmf.expedientePMF}"></c:out>'>	
+							</td>
+						</c:if>
+						<c:if test="${empty certificado.pmf.nombrePMF}">
+							<td width="21%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.AreaDeCosecha'/>						
+							</td>
+							<td width="32%" align="center">
+								<input class="botonerab" type="text" size="27" readonly="readonly" 
+										value='<c:out value="${certificado.areaDeCosecha.nombreArea}"></c:out>'>	
+							</td>
+						</c:if>
+																						
 					</tr>
 					
 					<tr>

@@ -67,7 +67,7 @@ public class ReportesAction extends ValidadorAction {
 					.getBean("reportesFachada");
 
 			String idGuia = request.getParameter("idGuia");
-			long idGuiaForestal = Long.valueOf(idGuia).intValue();
+			long idGuiaForestal = Long.valueOf(idGuia);
 
 			byte[] bytes = reportesFachada.generarReporteGuiaForestal(
 					idGuiaForestal, path);
@@ -98,7 +98,7 @@ public class ReportesAction extends ValidadorAction {
 					.getBean("reportesFachada");
 
 			String paramFiscalizacion = request.getParameter("idFiscalizacion");
-			long idFiscalizacion = Long.valueOf(paramFiscalizacion).intValue();
+			long idFiscalizacion = Long.valueOf(paramFiscalizacion);
 
 			byte[] bytes = reportesFachada.generarReporteFiscalizacion(
 					idFiscalizacion, path);
@@ -129,7 +129,7 @@ public class ReportesAction extends ValidadorAction {
 					.getBean("reportesFachada");
 
 			String idCertificado = request.getParameter("idCertificado");
-			long idCertificadoOrigen = Long.valueOf(idCertificado).intValue();
+			long idCertificadoOrigen = Long.valueOf(idCertificado);
 
 			byte[] bytes = reportesFachada.generarReporteCertificadoOrigen(
 					idCertificadoOrigen, path);

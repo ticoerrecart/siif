@@ -64,7 +64,7 @@ public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 
 		} else {
 			if (certificadoOrigen.getAreaDeCosecha().getId() > 0) {
-				idLocalizacion = certificadoOrigen.getPmf().getId();
+				idLocalizacion = certificadoOrigen.getAreaDeCosecha().getId();
 
 			}
 		}

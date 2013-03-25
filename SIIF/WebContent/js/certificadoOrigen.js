@@ -225,7 +225,7 @@
 
 		var idProductor = $('#idProductor').val();
 		var periodo = $('#periodo').val();
-		var zmf = $('#idPMF').val();
+		var zmf = $('#idZMF').val();
 		var idLocalizacion = -1;
 		if (zmf == 1) {
 			idLocalizacion =  $('#idPMF').val();
