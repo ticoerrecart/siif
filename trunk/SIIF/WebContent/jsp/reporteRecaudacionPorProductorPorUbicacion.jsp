@@ -116,35 +116,57 @@ function actualizarProductoresCallback(productores){
 				</tr>
 				
 				<tr>
+					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ZonaManejoForestal'/></td>
+					<td align="left">
+						<select id="idZMF" class="botonerab" 
+								onchange="cambioComboZona();">
+							<option value="0">--Seleccione una Opcion de Zona--</option>
+							<option value="1">--PMF--</option>
+							<option value="2">--Area de Cosecha--</option>
+						</select>	
+					</td>						
+				</tr>				
+
+				<tr class="area" style="display: none">	
+					<td width="40%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+					<td align="left"> 
+						<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" >
+							<option value="-1">- Seleccione -</option>						
+						</select>	
+					</td>
+				</tr>
+				
+				<tr class="plan" >
 					<td width="40%" class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.PlanManejoForestal'/>
 					</td>
 					<td align="left" class="botonerab">
-						<select id="idPMF" class="botonerab" disabled="disabled" onchange="actualizarComboTranzon();">
+						<select id="idPMF" class="botonerab"  onchange="actualizarComboTranzon();">
 							<option value="-1">- Seleccione -</option>						
 						</select>
 					</td>
 				</tr>				
-				<tr>
+				<tr class="plan">
 					<td width="40%" class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.Tranzon'/>
 					</td>
 					<td align="left" class="botonerab">
-						<select id="idTranzon" class="botonerab" disabled="disabled" onchange="actualizarComboMarcacion();">
+						<select id="idTranzon" class="botonerab"  onchange="actualizarComboMarcacion();">
 							<option value="-1">- Seleccione -</option>
 						</select>
 					</td>
 				</tr>
-				<tr>
+				<tr class="plan">
 					<td width="40%" class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.Marcacion'/>
 					</td>
 					<td align="left" class="botonerab">
-						<select id="idMarcacion" class="botonerab" disabled="disabled" onchange="actualizarComboRodal();">
+						<select id="idMarcacion" class="botonerab" onchange="actualizarComboRodal();">
 							<option value="-1">- Seleccione -</option>
 						</select>
 					</td>
-				</tr>				
+				</tr>
+										
 				<tr>
 					<td height="10" colspan="2"></td>
 				</tr>
