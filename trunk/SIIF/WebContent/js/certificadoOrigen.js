@@ -59,7 +59,7 @@
 	
 	function actualizarComboProductores() {
 
-		deshabilitarLocalizacion([ "idPMF"]);
+		//deshabilitarLocalizacion([ "idZMF"]);
 
 		$('#idTrFacturaVolTrans').hide();
 		
@@ -89,7 +89,7 @@
 				
 	}
 
-	function actualizarComboPMF() {
+	/*function actualizarComboPMF() {
 		idPF = $('#idProductor').val();
 
 		deshabilitarLocalizacion([ "idPMF" ]);
@@ -101,6 +101,15 @@
 		$('#divFiscalizaciones').html("");	
 		
 		verificarExportadorProductor();		
+	}*/
+	
+
+	function actualizarComboPMF() {
+		idPF = $('#idProductor').val();
+		UbicacionFachada.getPMFs(idPF, {
+			callback : actualizarComboPMFCallback,
+			async : false
+		});
 	}
 
 	function actualizarComboPMFCallback(pmfs) {
@@ -111,8 +120,79 @@
 		} ];
 		dwr.util.addOptions("idPMF", data, "id", "nombre");
 		dwr.util.addOptions("idPMF", pmfs, "id", "nombreExpediente");
-		$('#idPMF').removeAttr('disabled');
+		$('#idZMF').removeAttr('disabled');
+		$(".plan").show();
 	}
+
+	function actualizarComboArea() {
+		idPF = $('#idProductor').val();
+		UbicacionFachada.getAreasDTO(idPF, {
+			callback : actualizarComboAreaCallback,
+			async : false
+		});
+	}
+
+	function actualizarComboAreaCallback(areas) {
+		dwr.util.removeAllOptions("idArea");
+		var data = [ {
+			nombre : "- Seleccione -",
+			id : -1
+		} ];
+		dwr.util.addOptions("idArea", data, "id", "nombre");
+		dwr.util.addOptions("idArea", areas, "id", "fullNombre");
+		$('#idZMF').removeAttr('disabled');
+		$(".area").show();
+	}
+
+
+	function cambioComboProductores() {
+		$('#idZMF').removeAttr('disabled');
+		$('#idZMF').val('0');
+		cambioComboZona();
+	}
+
+	function cambioComboZona() {
+
+		zmf = $('#idZMF').val();
+		idPF = $('#idProductor').val();
+		
+		if (idPF == 0 || zmf == 0) {
+			$(".area").hide();
+			$(".plan").hide();
+		} else {
+			if (zmf == 1) {
+				$(".plan").show();
+				$(".area").hide();
+
+				actualizarComboPMF();
+			}
+			if (zmf == 2) {
+				$(".area").show();
+				$(".plan").hide();
+
+				actualizarComboArea();
+			}
+		}
+		
+		$('#divFiscalizaciones').html("");
+		
+		verificarExportadorProductor();	
+	}
+	
+	
+	
+	
+
+/*	function actualizarComboPMFCallback(pmfs) {
+		dwr.util.removeAllOptions("idPMF");
+		var data = [ {
+			nombre : "- Seleccione -",
+			id : -1
+		} ];
+		dwr.util.addOptions("idPMF", data, "id", "nombre");
+		dwr.util.addOptions("idPMF", pmfs, "id", "nombreExpediente");
+		$('#idPMF').removeAttr('disabled');
+	}*/
 
 	function deshabilitarLocalizacion(ids) {
 
@@ -145,16 +225,20 @@
 
 		var idProductor = $('#idProductor').val();
 		var periodo = $('#periodo').val();
-		var idPMF = $('#idPMF').val();
-		
-		//var forward = $('#paramForward').val();
+		var zmf = $('#idPMF').val();
+		var idLocalizacion = -1;
+		if (zmf == 1) {
+			idLocalizacion =  $('#idPMF').val();
+		}
+		if (zmf == 2) {
+			idLocalizacion =  $('#idArea').val();
+		}
 		
 		$('#divCargando').show();	
 		$('#divFiscalizaciones').html("");
-		
-		if(idProductor != "" && idProductor != "-1" && idPMF != "" && idPMF != "-1"){
-		//alert($('#paramUrlDetalle').val() + '&idProductor='+idProductor)
-			$('#divFiscalizaciones').load( "../../certificadoOrigen.do?metodo=recuperarDatosParaAltaCertificadoOrigen&idProductor="+idProductor+"&periodo="+periodo+"&idPMF="+idPMF);
+		//alert(idProductor + "/" + zmf + "/" + idLocalizacion)
+		if(idProductor != "" && idProductor != "-1" && idLocalizacion != "" && idLocalizacion != "-1"){
+			$('#divFiscalizaciones').load( "../../certificadoOrigen.do?metodo=recuperarDatosParaAltaCertificadoOrigen&idProductor="+idProductor+"&periodo="+periodo+"&idLocalizacion="+idLocalizacion);
 			$('#divFiscalizaciones').hide();
 			$('#divFiscalizaciones').fadeIn(600);
 

@@ -10,16 +10,13 @@ import ar.com.siif.dto.TipoProductoEnCertificadoDTO;
 import ar.com.siif.negocio.CertificadoOrigen;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.LocalidadDestino;
-import ar.com.siif.negocio.PMF;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.TipoProductoEnCertificado;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.Usuario;
-import ar.com.siif.negocio.exception.DataBaseException;
-import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.Fecha;
-import ar.com.siif.utils.MyLogger;
 
 public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 
@@ -29,13 +26,17 @@ public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 	private IUbicacionFachada ubicacionFachada;
 	private IUsuarioFachada usuarioFachada;
 	private ILocalidadFachada localidadFachada;
-	
-	public CertificadoDeOrigenFachada(){}
-	
-	public CertificadoDeOrigenFachada(CertificadoDeOrigenDAO pCertificadoDeOrigenDAO, IUsuarioFachada pUsuarioFachada,
-										IEntidadFachada pEntidadFachada, ITipoProductoForestalFachada pTipoProductoForestalFachada,
-										IUbicacionFachada pUbicacionFachada, ILocalidadFachada pLocalidadFachada){
-		
+
+	public CertificadoDeOrigenFachada() {
+	}
+
+	public CertificadoDeOrigenFachada(
+			CertificadoDeOrigenDAO pCertificadoDeOrigenDAO,
+			IUsuarioFachada pUsuarioFachada, IEntidadFachada pEntidadFachada,
+			ITipoProductoForestalFachada pTipoProductoForestalFachada,
+			IUbicacionFachada pUbicacionFachada,
+			ILocalidadFachada pLocalidadFachada) {
+
 		this.certificadoDeOrigenDAO = pCertificadoDeOrigenDAO;
 		this.usuarioFachada = pUsuarioFachada;
 		this.entidadFachada = pEntidadFachada;
@@ -43,70 +44,98 @@ public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 		this.ubicacionFachada = pUbicacionFachada;
 		this.localidadFachada = pLocalidadFachada;
 	}
-	
-	public long altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen, 
-									  List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado)									  
-	{
 
-		Usuario usuario = usuarioFachada.getUsuario(certificadoOrigen.getUsuarioAlta().getId());
-		Entidad productor = entidadFachada.getEntidad(certificadoOrigen.getProductor().getId());
-		Entidad exportador = entidadFachada.getEntidad(certificadoOrigen.getExportador().getId());
-		LocalidadDestino localidadDestino = localidadFachada.getLocalidadDestinoPorId(certificadoOrigen.getLocalidadDestino().getId());
-		PMF pmf = ubicacionFachada.getPMF(certificadoOrigen.getPmf().getId());
-		
-		Date fecha = Fecha.stringDDMMAAAAToUtilDate(certificadoOrigen.getFecha());
-		
+	public long altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen,
+			List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado) {
+
+		Usuario usuario = usuarioFachada.getUsuario(certificadoOrigen
+				.getUsuarioAlta().getId());
+		Entidad productor = entidadFachada.getEntidad(certificadoOrigen
+				.getProductor().getId());
+		Entidad exportador = entidadFachada.getEntidad(certificadoOrigen
+				.getExportador().getId());
+		LocalidadDestino localidadDestino = localidadFachada
+				.getLocalidadDestinoPorId(certificadoOrigen
+						.getLocalidadDestino().getId());
+		Localizacion localizacion = null;
+		Long idLocalizacion = null;
+		if (certificadoOrigen.getPmf().getId() > 0) {
+			idLocalizacion = certificadoOrigen.getPmf().getId();
+
+		} else {
+			if (certificadoOrigen.getAreaDeCosecha().getId() > 0) {
+				idLocalizacion = certificadoOrigen.getPmf().getId();
+
+			}
+		}
+		localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
+
+		Date fecha = Fecha.stringDDMMAAAAToUtilDate(certificadoOrigen
+				.getFecha());
+
 		TipoProductoExportacion tipoProductoExportacion;
 		List<TipoProductoEnCertificado> listaTipoProdEnCert = new ArrayList<TipoProductoEnCertificado>();
 		for (TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO : listaTipoProductoEnCertificado) {
-			
-			tipoProductoExportacion = tipoProductoForestalFachada.recuperarTipoProductoExportacion(
-															tipoProductoEnCertificadoDTO.getTipoProductoExportacion().getId());
-			
-			listaTipoProdEnCert.add(ProviderDominio.getTipoProductoEnCertificado(
-														null,tipoProductoExportacion,tipoProductoEnCertificadoDTO));
+
+			tipoProductoExportacion = tipoProductoForestalFachada
+					.recuperarTipoProductoExportacion(tipoProductoEnCertificadoDTO
+							.getTipoProductoExportacion().getId());
+
+			listaTipoProdEnCert.add(ProviderDominio
+					.getTipoProductoEnCertificado(null,
+							tipoProductoExportacion,
+							tipoProductoEnCertificadoDTO));
 		}
-		
-		return this.certificadoDeOrigenDAO.altaCertificadoOrigen(
-										ProviderDominio.getCertificadoOrigen(certificadoOrigen, usuario, productor, 
-																			 exportador, localidadDestino, pmf, fecha, 
-																			 listaTipoProdEnCert));
+
+		return this.certificadoDeOrigenDAO
+				.altaCertificadoOrigen(ProviderDominio.getCertificadoOrigen(
+						certificadoOrigen, usuario, productor, exportador,
+						localidadDestino, localizacion, fecha,
+						listaTipoProdEnCert));
 
 	}
-	
-	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF){
 
-		return certificadoDeOrigenDAO.obtenerVolumenExportado(idProductor,periodo,idPMF);		
-	}	
-	
-	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF){
+	public double obtenerVolumenExportado(Long idProductor, String periodo,
+			Long idLocalizacion) {
+
+		return certificadoDeOrigenDAO.obtenerVolumenExportado(idProductor,
+				periodo, idLocalizacion);
+	}
+
+	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor,
+			String periodo, Long idPMF) {
 
 		List<CertificadoOrigenDTO> listaCertificadosDTO = new ArrayList<CertificadoOrigenDTO>();
-		List<CertificadoOrigen> listaCertificados = certificadoDeOrigenDAO.getCertificadosOrigen(idProductor,periodo,idPMF);
-		
+		List<CertificadoOrigen> listaCertificados = certificadoDeOrigenDAO
+				.getCertificadosOrigen(idProductor, periodo, idPMF);
+
 		for (CertificadoOrigen certificadoOrigen : listaCertificados) {
-			
-			listaCertificadosDTO.add(ProviderDTO.getCertificadoOrigenDTO(certificadoOrigen));
+
+			listaCertificadosDTO.add(ProviderDTO
+					.getCertificadoOrigenDTO(certificadoOrigen));
 		}
-		
-		return listaCertificadosDTO;			
-	}	
-	
-	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado){
 
-		CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigen(idCertificado);
-			
+		return listaCertificadosDTO;
+	}
+
+	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado) {
+
+		CertificadoOrigen certificado = certificadoDeOrigenDAO
+				.recuperarCertificadoOrigen(idCertificado);
+
 		return ProviderDTO.getCertificadoOrigenDTO(certificado);
 	}
-	
-	public CertificadoOrigenDTO recuperarCertificadoOrigenPorNroCertificado(long nroCertificado){
 
-		CertificadoOrigen certificado = certificadoDeOrigenDAO.recuperarCertificadoOrigenPorNroCertificado(nroCertificado);
+	public CertificadoOrigenDTO recuperarCertificadoOrigenPorNroCertificado(
+			long nroCertificado) {
+
+		CertificadoOrigen certificado = certificadoDeOrigenDAO
+				.recuperarCertificadoOrigenPorNroCertificado(nroCertificado);
 		return ProviderDTO.getCertificadoOrigenDTO(certificado);
 	}
-	
-	public boolean existeCertificado(long nroCertificado){
 
-		return certificadoDeOrigenDAO.existeCertificado(nroCertificado);	
+	public boolean existeCertificado(long nroCertificado) {
+
+		return certificadoDeOrigenDAO.existeCertificado(nroCertificado);
 	}
 }

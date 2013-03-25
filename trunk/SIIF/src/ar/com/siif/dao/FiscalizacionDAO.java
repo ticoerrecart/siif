@@ -176,17 +176,17 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	}
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
-																				    Long idPMF) 
+																				    Long idLocalizacion) 
 	{	
 		String q = "from Fiscalizacion where productorForestal.id = :idPf and periodoForestal = :periodo "+
-											  "and rodal.marcacion.tranzon.pmf.id = :idPmf and "+
-											  "tipoProducto.id != :idLenia and guiaForestal != null order by fecha";
+											  //"and localizacion.id = :idLocalizacion "+
+											  "and tipoProducto.id != :idLenia and guiaForestal != null order by fecha";
 		Query query = getSession().createQuery(q);
 		query.setParameter("idPf", idProductor);
 		query.setParameter("periodo", periodo);
-		query.setParameter("idPmf", idPMF);
+		//query.setParameter("idLocalizacion", idLocalizacion);
 		query.setParameter("idLenia", 3L);
-		
+
 		List<Fiscalizacion> fiscalizaciones = query.list();
 		
 		return fiscalizaciones;		

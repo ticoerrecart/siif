@@ -81,11 +81,11 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			
 			String idProductor = request.getParameter("idProductor");
 			String periodo = request.getParameter("periodo");
-			String idPMF = request.getParameter("idPMF");
+			String idLocalizacion = request.getParameter("idLocalizacion");
 			
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
 											.recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long.parseLong(idProductor),periodo,
-																							 Long.parseLong(idPMF));
+																							 Long.parseLong(idLocalizacion));
 
 			boolean deuda = guiaForestalFachada.verificarBoletasDepositoVencidasImpagas(Long.parseLong(idProductor));
 			
@@ -94,7 +94,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 																								  Long.parseLong(idPMF));
 			*/
 			double volumenExportado = certificadoOrigenFachada.obtenerVolumenExportado(Long.parseLong(idProductor),periodo,
-																					   Long.parseLong(idPMF));
+																					   Long.parseLong(idLocalizacion));
 			
 			List<ProvinciaDestinoDTO> provincias = localidadFachada.getProvinciasDTO();
 			
@@ -287,9 +287,11 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 		ok1 = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getProductor().getId()), 
 				 							 "Productor Forestal",error);
-		
-		ok2 = Validator.validarComboRequerido("-1",Long.toString(certificadoDTO.getPmf().getId()), 
-				 							 "Plan de Manejo Forestal",error);
+
+		if(certificadoDTO.getPmf().getId() <=0 && certificadoDTO.getAreaDeCosecha().getId()<=0){
+			Validator.addErrorXML(error, "Debe seleccionar un Plan de manejo Forestal o un Area de Cosecha");
+			ok2=false;
+		}
 		
 		//ok3 = Validator.requerido(certificadoDTO.getReservaForestal(), "Reserva Forestal", error);
 		

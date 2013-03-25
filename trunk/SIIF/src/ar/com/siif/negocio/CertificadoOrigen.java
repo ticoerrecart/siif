@@ -21,54 +21,54 @@ public class CertificadoOrigen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long nroCertificado;
-	
+
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "exportador_fk")	
+	@JoinColumn(name = "exportador_fk")
 	private Entidad exportador;
-	
+
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "productor_fk")	
+	@JoinColumn(name = "productor_fk")
 	private Entidad productor;
-	
+
 	private String periodoForestal;
-	
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "pmf_fk")
-	private PMF pmf;
-	
+	@JoinColumn(name = "localizacion_fk")
+	private Localizacion localizacion;
+
 	private String reservaForestal;
-	
+
 	private String nroFactura;
-	
+
 	private double volumenTransferido;
-	
-	//private boolean deudaAforo;
-	
-	//private boolean compromisoPago;
-	
+
+	// private boolean deudaAforo;
+
+	// private boolean compromisoPago;
+
 	private String origenMateriaPrima;
-	
+
 	private String nroRemito;
-	
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "localidadDestino_fk")
 	private LocalidadDestino localidadDestino;
-	
+
 	@OneToMany(mappedBy = "certificadoOrigen")
-	@Cascade(value = CascadeType.SAVE_UPDATE)	
-	private List<TipoProductoEnCertificado> tiposProductoEnCertificado= new ArrayList<TipoProductoEnCertificado>();
-	
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	private List<TipoProductoEnCertificado> tiposProductoEnCertificado = new ArrayList<TipoProductoEnCertificado>();
+
 	private double volumenTotalTipoProductos;
-	
+
 	private Date fecha;
-	
+
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "usuario_fk")
@@ -112,14 +112,6 @@ public class CertificadoOrigen {
 
 	public void setPeriodoForestal(String periodoForestal) {
 		this.periodoForestal = periodoForestal;
-	}
-
-	public PMF getPmf() {
-		return pmf;
-	}
-
-	public void setPmf(PMF pmf) {
-		this.pmf = pmf;
 	}
 
 	public String getReservaForestal() {
@@ -202,6 +194,13 @@ public class CertificadoOrigen {
 			List<TipoProductoEnCertificado> tiposProductoEnCertificado) {
 		this.tiposProductoEnCertificado = tiposProductoEnCertificado;
 	}
-	
-	
+
+	public Localizacion getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(Localizacion localizacion) {
+		this.localizacion = localizacion;
+	}
+
 }

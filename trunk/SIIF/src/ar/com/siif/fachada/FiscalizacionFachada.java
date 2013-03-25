@@ -11,7 +11,6 @@ import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Localizacion;
-import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -35,8 +34,11 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public FiscalizacionFachada() {
 	}
 
-	public FiscalizacionFachada(FiscalizacionDAO fiscalizacionDAO, IUbicacionFachada pUbicacionFachada, IEntidadFachada pEntidadFachada,
-			ITipoProductoForestalFachada pTipoProductoForestalFachada, IUsuarioFachada pUsuarioFachada) {
+	public FiscalizacionFachada(FiscalizacionDAO fiscalizacionDAO,
+			IUbicacionFachada pUbicacionFachada,
+			IEntidadFachada pEntidadFachada,
+			ITipoProductoForestalFachada pTipoProductoForestalFachada,
+			IUsuarioFachada pUsuarioFachada) {
 
 		this.fiscalizacionDAO = fiscalizacionDAO;
 		this.ubicacionFachada = pUbicacionFachada;
@@ -50,21 +52,26 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		return fiscalizacionDAO.recuperarFiscalizaciones();
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor) {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(
+			Long idProductor) {
 
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesParaAltaGFB(idProductor);
+		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
+				.recuperarFiscalizacionesParaAltaGFB(idProductor);
 
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+			listaFiscalizacionesDTO.add(ProviderDTO
+					.getFiscalizacionDTO(fiscalizacion));
 		}
 
 		return listaFiscalizacionesDTO;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor) {
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(
+			Long idProductor) {
 
-		return fiscalizacionDAO.recuperarFiscalizacionesParaModificacionGFB(idProductor);
+		return fiscalizacionDAO
+				.recuperarFiscalizacionesParaModificacionGFB(idProductor);
 	}
 
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion) {
@@ -80,19 +87,26 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * @param muestrasNuevasDTO
 	 * @throws NegocioException
 	 */
-	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasNuevasDTO) {
+	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
+			List<MuestraDTO> muestrasNuevasDTO) {
 
-		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(fiscalizacionDTO.getId());
+		Fiscalizacion fiscalizacion = fiscalizacionDAO
+				.recuperarFiscalizacion(fiscalizacionDTO.getId());
 
-		fiscalizacion.setFecha((Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha())));
+		fiscalizacion.setFecha((Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO
+				.getFecha())));
 		fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
-		fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
+		fiscalizacion.setCantidadUnidades(fiscalizacionDTO
+				.getCantidadUnidades());
 		fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
-		Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta().getId());
+		Entidad oficinaAlta = entidadFachada.getEntidad(fiscalizacionDTO
+				.getOficinaAlta().getId());
 		fiscalizacion.setOficinaAlta(oficinaAlta);
 		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
-		fiscalizacion.setLocalizacion(ubicacionFachada.getLocalizacion(fiscalizacionDTO.getIdLocalizacion()));
-		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion, muestrasNuevasDTO);
+		fiscalizacion.setLocalizacion(ubicacionFachada
+				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion()));
+		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,
+				muestrasNuevasDTO);
 	}
 
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) {
@@ -117,53 +131,72 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * fiscalizacionDAO.recuperarFiscalizacionesPorLocalidad(idLocalidad); }
 	 */
 
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor) {
-		return fiscalizacionDAO.recuperarFiscalizacionesPorProductor(idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(
+			Long idProductor) {
+		return fiscalizacionDAO
+				.recuperarFiscalizacionesPorProductor(idProductor);
 	}
 
-	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO) {
+	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
+			List<MuestraDTO> muestrasDTO) {
 
-		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO.getProductorForestal().getId());
-		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO.getOficinaAlta().getId());
-		TipoProductoForestal tipoProducto = tipoProductoForestalFachada.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId());
+		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO
+				.getProductorForestal().getId());
+		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO
+				.getOficinaAlta().getId());
+		TipoProductoForestal tipoProducto = tipoProductoForestalFachada
+				.recuperarTipoProductoForestal(fiscalizacionDTO
+						.getTipoProducto().getId());
 
-		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO.getUsuario().getId());
+		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO
+				.getUsuario().getId());
 
 		Long idLocalizacion = fiscalizacionDTO.getIdLocalizacion();
 
-		Localizacion localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
+		Localizacion localizacion = ubicacionFachada
+				.getLocalizacion(idLocalizacion);
 
-		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
+		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(
+				fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
 				oficinaForestal, tipoProducto, usuario);
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion) {
 
-		return ProviderDTO.getFiscalizacionDTO(fiscalizacionDAO.recuperarFiscalizacion(idFiscalizacion));
+		return ProviderDTO.getFiscalizacionDTO(fiscalizacionDAO
+				.recuperarFiscalizacion(idFiscalizacion));
 
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor, Long idLocalizacion,
-			List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(
+			Long idProductor, Long idLocalizacion,
+			List<SubImporteDTO> listaSubImportesDTO,
+			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
 
 	{
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor, idLocalizacion,
-				listaSubImportesDTO, tablaVolFiscAsociar);
+		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
+				.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor,
+						idLocalizacion, listaSubImportesDTO,
+						tablaVolFiscAsociar);
 
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+			listaFiscalizacionesDTO.add(ProviderDTO
+					.getFiscalizacionDTO(fiscalizacion));
 		}
 
 		return listaFiscalizacionesDTO;
 	}
 
-	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal, String idTipoProducto, String idRodal)
+	public void validarFiscalizacionDTO(String idFiscalizacion,
+			String idProductorForestal, String idTipoProducto, String idRodal)
 			throws NumberFormatException, NegocioException {
-		Fiscalizacion fiscalizacion = fiscalizacionDAO.recuperarFiscalizacion(Long.parseLong(idFiscalizacion));
+		Fiscalizacion fiscalizacion = fiscalizacionDAO
+				.recuperarFiscalizacion(Long.parseLong(idFiscalizacion));
 		if (fiscalizacion.getGuiaForestal() != null) {
-			String msjPrefijo = "La Fiscalización tiene asociada la Guía Forestal Nro. " + fiscalizacion.getGuiaForestal().getNroGuia()
+			String msjPrefijo = "La Fiscalización tiene asociada la Guía Forestal Nro. "
+					+ fiscalizacion.getGuiaForestal().getNroGuia()
 					+ " y se está/n cambiando ";
 			String msjDesvincular = " Desea desvincularla de la Guía Forestal y guardarla de todas formas?";
 			/*
@@ -172,11 +205,15 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 			 * NegocioException(msjPrefijo + "el Tipo De Entidad." +
 			 * msjDesvincular); } else {
 			 */
-			if (fiscalizacion.getProductorForestal().getId() != Long.parseLong(idProductorForestal)) {
-				throw new NegocioException(msjPrefijo + "el Productor Forestal." + msjDesvincular);
+			if (fiscalizacion.getProductorForestal().getId() != Long
+					.parseLong(idProductorForestal)) {
+				throw new NegocioException(msjPrefijo
+						+ "el Productor Forestal." + msjDesvincular);
 			} else {
-				if (fiscalizacion.getTipoProducto().getId() != Long.parseLong(idTipoProducto)) {
-					throw new NegocioException(msjPrefijo + "el Tipo de Producto." + msjDesvincular);
+				if (fiscalizacion.getTipoProducto().getId() != Long
+						.parseLong(idTipoProducto)) {
+					throw new NegocioException(msjPrefijo
+							+ "el Tipo de Producto." + msjDesvincular);
 				} else {
 					/*
 					 * if
@@ -194,8 +231,10 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 					 * NegocioException(msjPrefijo + "la Marcación." +
 					 * msjDesvincular); } else {
 					 */
-					if (fiscalizacion.getLocalizacion().getId() != Long.parseLong(idRodal)) {
-						throw new NegocioException(msjPrefijo + "el Rodal." + msjDesvincular);
+					if (fiscalizacion.getLocalizacion().getId() != Long
+							.parseLong(idRodal)) {
+						throw new NegocioException(msjPrefijo + "el Rodal."
+								+ msjDesvincular);
 						/*
 						 * } else { //valido las muestras if (muestras.length >
 						 * 0) { if (muestras.length !=
@@ -214,11 +253,14 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor) {
-		return fiscalizacionDAO.recuperarFiscalizacionesAAnularPorProductor(idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(
+			Long idProductor) {
+		return fiscalizacionDAO
+				.recuperarFiscalizacionesAAnularPorProductor(idProductor);
 	}
 
-	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws NegocioException {
+	public void anularFiscalizaciones(Long[] idsFiscalizaciones)
+			throws NegocioException {
 		try {
 			if (idsFiscalizaciones == null || idsFiscalizaciones.length == 0) {
 				throw new NegocioException("Seleccione alguna Fiscalización");
@@ -234,12 +276,23 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		}
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo, Long idPMF) {
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(
+			Long idProductor, String periodo, Long idLocalizacion) {
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
-		List<Fiscalizacion> fiscalizaciones = fiscalizacionDAO.recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(idProductor, periodo, idPMF);
 
-		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
+		List<Fiscalizacion> fiscalizaciones = fiscalizacionDAO
+				.recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(
+						idProductor, periodo, idLocalizacion);
+		if (fiscalizaciones.size() > 0) {
+			Localizacion localizacionOrigen = ubicacionFachada
+					.getLocalizacion(idLocalizacion);
+			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+				if (fiscalizacion.getLocalizacion().esParteDeLaLocalizacion(
+						localizacionOrigen)) {
+					listaFiscalizacionesDTO.add(ProviderDTO
+							.getFiscalizacionDTO(fiscalizacion));
+				}
+			}
 		}
 
 		return listaFiscalizacionesDTO;

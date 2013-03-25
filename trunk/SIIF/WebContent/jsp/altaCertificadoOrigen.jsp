@@ -42,25 +42,28 @@ if (document.all) type="IE";
 if (!document.all && document.getElementById) type="MO";
 
 function submitir(){
+	if($("#tablaFiscalizaciones").length>0){
 
-
-	var exportadorEnabled = $('#idExportador').attr('disabled');
-	var productorEnabled = $('#idProductor').attr('disabled');
-	var pmfEnabled = $('#idPMF').attr('disabled');
-	var localidadEnabled = $('#idLocalidad').attr('disabled');	
+		var exportadorEnabled = $('#idExportador').attr('disabled');
+		var productorEnabled = $('#idProductor').attr('disabled');
+		var zmfEnabled = $('#idZMF').attr('disabled');
+		var localidadEnabled = $('#idLocalidad').attr('disabled');	
+		
+		$('#idExportador').attr('disabled',false);
+		$('#idProductor').attr('disabled',false);
+		$('#idZMF').attr('disabled',false);
+		$('#idLocalidad').attr('disabled',false);
 	
-	$('#idExportador').attr('disabled',false);
-	$('#idProductor').attr('disabled',false);
-	$('#idPMF').attr('disabled',false);
-	$('#idLocalidad').attr('disabled',false);
-
-	validarForm("certificadoOrigenForm","../certificadoOrigen","validarCertificadoOrigenForm","CertificadoOrigenForm");
-
-	$('#idExportador').attr('disabled',exportadorEnabled);
-	$('#idProductor').attr('disabled',productorEnabled);
-	$('#idPMF').attr('disabled',pmfEnabled);
-	$('#idLocalidad').attr('disabled',localidadEnabled);
+		validarForm("certificadoOrigenForm","../certificadoOrigen","validarCertificadoOrigenForm","CertificadoOrigenForm");
 	
+		$('#idExportador').attr('disabled',exportadorEnabled);
+		$('#idProductor').attr('disabled',productorEnabled);
+		$('#idZMF').attr('disabled',zmfEnabled);
+		$('#idLocalidad').attr('disabled',localidadEnabled);
+	}else{
+		$("#errores").html("Seleccione una Zona de Manejo Forestal que posea Fiscalizaciones válidas");
+		moverAErrores();
+	}	
 }
 
 function exp(sec) {
@@ -207,11 +210,11 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td width="21%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 						<td width="32%" align="center">
 							<select id="idProductor" class="botonerab" style="width: 16em" name="certificadoOrigenDTO.productor.id"
-									onchange="actualizarComboPMF();" disabled="disabled">
+									onchange="cambioComboProductores();" disabled="disabled">
 								<option value="-1">-Seleccione un Productor-</option>
 							</select>
-						</td>																
-					</tr>	
+						</td>
+					</tr>
 					
 					<tr>
 						<td width="17%" class="botoneralNegritaRight">
@@ -229,16 +232,51 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						</td>	
 						
 						<td width="21%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.PlanManejoForestal'/>						
+							<bean:message key='SIIF.label.ZonaManejoForestal'/>						
 						</td>
-						<td width="32%" align="center">
+						<%--td width="32%" align="center">
 							<select id="idPMF" class="botonerab" disabled="disabled" style="width: 16em" onchange="mostrarFiscalizaciones();"
 									name="certificadoOrigenDTO.pmf.id">
 								<option value="-1">- Seleccione -</option>						
 							</select>	
-						</td>																
+						</td--%>
+											
+							<td width="32%" align="center">
+								<select id="idZMF" class="botonerab" 
+										onchange="cambioComboZona();" disabled="disabled">
+									<option value="0">--Seleccione una Opcion de Zona--</option>
+									<option value="1">--PMF--</option>
+									<option value="2">--Area de Cosecha--</option>
+								</select>	
+							</td>						
+	
+																						
 					</tr>
-					
+
+					<tr class="area" style="display: none">	
+						<td colspan="2"></td>
+						<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+						
+						<td align="left"> 
+							<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarFiscalizaciones();">
+								<option value="-1">- Seleccione -</option>						
+							</select>	
+						</td>
+					</tr>
+							
+					<tr class="plan" style="display: none">
+						<td colspan="2"></td>
+						<td width="47%" class="botoneralNegritaRight">
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
+						</td>
+						<td align="left">
+							<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarFiscalizaciones();">
+								<option value="-1">- Seleccione -</option>
+							</select>					
+						</td>						
+					</tr>
+
+
 					<tr>
 						<td width="17%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.ReservaForestal'/>
@@ -246,11 +284,13 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td width="30%" align="center">
 							<input class="botonerab" type="text" size="27" id="idReservaForestal" name="certificadoOrigenDTO.reservaForestal">					
 						</td>	
-						
+										
 						<td colspan="2"></td>
 																
 					</tr>					
-					
+
+
+											
 					<tr id="idTrFacturaVolTrans" style="display: none">
 						<td width="17%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.NroFactura'/>
