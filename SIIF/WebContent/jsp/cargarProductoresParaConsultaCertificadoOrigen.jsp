@@ -30,29 +30,29 @@
 
 		var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 
-		deshabilitarLocalizacion([ "selectPmf" ]);
+		//deshabilitarLocalizacion([ "idZMF" ]);
 		
 		if(idTipoDeEntidad != "-1"){
-			$('#selectProductores').attr('disabled',false);
+			$('#idProductor').attr('disabled',false);
 			EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
 		}else{
-			dwr.util.removeAllOptions("selectProductores");
+			dwr.util.removeAllOptions("idProductor");
 			var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-			dwr.util.addOptions("selectProductores", data, "id", "nombre");		
-			$('#selectProductores').attr('disabled','disabled');
+			dwr.util.addOptions("idProductor", data, "id", "nombre");
+			$('#idProductor').attr('disabled','disabled');
 		}		
 		$('#divDetalle').hide(600);
 		$('#divDetalle').html("");
 	}
 
 	function actualizarProductoresCallback(productores){
-		dwr.util.removeAllOptions("selectProductores");
+		dwr.util.removeAllOptions("idProductor");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-		dwr.util.addOptions("selectProductores", data, "id", "nombre");	
-		dwr.util.addOptions("selectProductores", productores,"id","nombre");	
+		dwr.util.addOptions("idProductor", data, "id", "nombre");	
+		dwr.util.addOptions("idProductor", productores,"id","nombre");	
 	}
 
-	function actualizarComboPMF() {
+/*	function actualizarComboPMF() {
 		idPF = $('#selectProductores').val();
 
 		deshabilitarLocalizacion([ "selectPmf" ]);
@@ -73,19 +73,98 @@
 		dwr.util.addOptions("selectPmf", pmfs, "id", "nombreExpediente");
 		$('#selectPmf').removeAttr('disabled');
 	}
+*/
+
+function actualizarComboPMF() {
+	idPF = $('#idProductor').val();
+	UbicacionFachada.getPMFs(idPF, {
+		callback : actualizarComboPMFCallback,
+		async : false
+	});
+}
+
+function actualizarComboPMFCallback(pmfs) {
+	dwr.util.removeAllOptions("idPMF");
+	var data = [ {
+		nombre : "- Seleccione -",
+		id : -1
+	} ];
+	dwr.util.addOptions("idPMF", data, "id", "nombre");
+	dwr.util.addOptions("idPMF", pmfs, "id", "nombreExpediente");
+	$('#idZMF').removeAttr('disabled');
+	$(".plan").show();
+}
+
+function actualizarComboArea() {
+	idPF = $('#idProductor').val();
+	UbicacionFachada.getAreasDTO(idPF, {
+		callback : actualizarComboAreaCallback,
+		async : false
+	});
+}
+
+function actualizarComboAreaCallback(areas) {
+	dwr.util.removeAllOptions("idArea");
+	var data = [ {
+		nombre : "- Seleccione -",
+		id : -1
+	} ];
+	dwr.util.addOptions("idArea", data, "id", "nombre");
+	dwr.util.addOptions("idArea", areas, "id", "fullNombre");
+	$('#idZMF').removeAttr('disabled');
+	$(".area").show();
+}
+
+
+function cambioComboProductores() {
+	$('#idZMF').removeAttr('disabled');
+	$('#idZMF').val('0');
+	cambioComboZona();
+}
+
+function cambioComboZona() {
+
+	zmf = $('#idZMF').val();
+	idPF = $('#idProductor').val();
 	
+	if (idPF == 0 || zmf == 0) {
+		$(".area").hide();
+		$(".plan").hide();
+	} else {
+		if (zmf == 1) {
+			$(".plan").show();
+			$(".area").hide();
+
+			actualizarComboPMF();
+		}
+		if (zmf == 2) {
+			$(".area").show();
+			$(".plan").hide();
+
+			actualizarComboArea();
+		}
+	}
+
+}
+
+
 	function mostrarListaCertificadosOrigen(){
 
-		var idProductor = $('#selectProductores').val();
+		var idProductor = $('#idProductor').val();
 		var periodo= $('#selectPeriodo').val();
-		var idPmf = $('#selectPmf').val();
-		
-		//var forward = $('#paramForward').val();
+		var idLocalizacion = -1;
+		if (zmf == 1) {
+			idLocalizacion =  $('#idPMF').val();
+		}
+		if (zmf == 2) {
+			idLocalizacion =  $('#idArea').val();
+		}
+
 		$('#divCargando').show();	
 		$('#divDetalle').html("");
-		
-		if(idProductor != "" && idProductor != "-1" && idPmf != "" && idPmf != "-1"){
-			$('#divDetalle').load('../../certificadoOrigen.do?metodo=recuperarCertificadosOrigenParaConsulta&idProductor='+idProductor+'&periodo='+periodo+'&idPmf='+idPmf);
+		//alert(idProductor + "/" + idLocalizacion + "/" + periodo);
+		if(idProductor != "" && idProductor != "-1" && idLocalizacion != "" && idLocalizacion != "-1"){
+			$('#divDetalle').load('../../certificadoOrigen.do?metodo=recuperarCertificadosOrigenParaConsulta&idProductor='+idProductor+'&periodo='+periodo+'&idLocalizacion='+idLocalizacion);
 			$('#divDetalle').hide();
 			$('#divDetalle').fadeIn(600);
 
@@ -130,7 +209,7 @@
 		$('#selectTiposDeEntidad').val($('#paramIdTipoDeEntidad').val());
 		var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
 
-		$('#selectProductores').attr('disabled',false);
+		$('#idProductor').attr('disabled',false);
 		EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresVolverCallback );		
 
 		$('#divDetalle').hide(600);
@@ -138,13 +217,13 @@
 	}
 
 	function actualizarProductoresVolverCallback(productores){
-		dwr.util.removeAllOptions("selectProductores");
+		dwr.util.removeAllOptions("idProductor");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
-		dwr.util.addOptions("selectProductores", data, "id", "nombre");	
-		dwr.util.addOptions("selectProductores", productores,"id","nombre");
+		dwr.util.addOptions("idProductor", data, "id", "nombre");	
+		dwr.util.addOptions("idProductor", productores,"id","nombre");
 
-		$('#selectProductores').val($('#paramProductor').val());
-		idPF = $('#selectProductores').val();
+		$('#idProductor').val($('#paramProductor').val());
+		idPF = $('#idProductor').val();
 		
 		UbicacionFachada.getPMFs(idPF, actualizarComboPMFVolverCallback);
 	}
@@ -170,7 +249,7 @@
 
 <input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
 <input id="paramProductor" type="hidden" value="${idProductor}">
-<input id="idPMF" type="hidden" value="${idPMF}">
+<%-- input id="idPMF" type="hidden" value="${idPMF}"--%>
 <input id="periodoForestal" type="hidden" value="${periodoForestal}">
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
@@ -226,7 +305,7 @@
 				</tr>
 				<tr>
 					<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoDeProductor'/></td>
-					<td class="botonerab">
+					<td class="botonerab" align="left">
 						<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
 							<option value="-1">-Seleccione un Tipo de Entidad-</option>
 							<c:forEach items="${tiposEntidad}" var="tipoDeEntidad" varStatus="i">
@@ -241,26 +320,52 @@
 				
 				<tr>
 					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
-					<td class="botonerab">
-						<select id="selectProductores" class="botonerab" disabled="disabled" onchange="actualizarComboPMF()">
+					<td class="botonerab" align="left">
+						<select id="idProductor" class="botonerab" disabled="disabled" onchange="cambioComboProductores();">
 							<option value="">-Seleccione un Productor-</option>
 						</select>
 					</td>
-				</tr>				
+				</tr>
 				<tr>
-					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PlanManejoForestal'/></td>
-					<td class="botonerab">
-							<select id="selectPmf" class="botonerab" disabled="disabled" style="width: 16em" 
-									onchange="mostrarListaCertificadosOrigen();">
-								<option value="-1">- Seleccione -</option>						
-							</select>
+					<td class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.ZonaManejoForestal'/>						
 					</td>
-				</tr>	
+					<td align="left">
+						<select id="idZMF" class="botonerab" 
+								onchange="cambioComboZona();" disabled="disabled">
+							<option value="0">--Seleccione una Opcion de Zona--</option>
+							<option value="1">--PMF--</option>
+							<option value="2">--Area de Cosecha--</option>
+						</select>	
+					</td>						
+				</tr>
+
+				<tr class="area" style="display: none">	
+					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
+					
+					<td align="left"> 
+						<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarListaCertificadosOrigen();">
+							<option value="-1">- Seleccione -</option>						
+						</select>	
+					</td>
+				</tr>
+						
+				<tr class="plan" style="display: none">
+					<td class="botoneralNegritaRight">
+						<bean:message key='SIIF.label.PlanManejoForestal'/>
+					</td>
+					<td align="left">
+						<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarListaCertificadosOrigen();">
+							<option value="-1">- Seleccione -</option>
+						</select>
+					</td>
+				</tr>
+
 				<tr>
 					<td class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.PeríodoForestal'/>
 					</td>
-					<td class="botonerab">
+					<td class="botonerab" align="left">
 						<select id="selectPeriodo" class="botonerab" style="width: 16em" onchange="mostrarListaCertificadosOrigen();">
 							<c:forEach items="${periodos}" var="per">
 								<option value="${per.periodo}">

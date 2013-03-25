@@ -13,7 +13,7 @@ public interface ICertificadoDeOrigenFachada {
 	
 	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idLocalizacion);
 	
-	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF);
+	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idLocalizacion);
 	
 	public CertificadoOrigenDTO recuperarCertificadoOrigen(long idCertificado);
 	
