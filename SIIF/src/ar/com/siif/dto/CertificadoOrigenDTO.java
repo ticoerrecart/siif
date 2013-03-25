@@ -3,55 +3,57 @@ package ar.com.siif.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CertificadoOrigenDTO {
 
 	private Long id;
-	
+
 	private Long nroCertificado;
-	
+
 	private EntidadDTO exportador;
-	
+
 	private EntidadDTO productor;
-	
+
 	private String periodoForestal;
 
 	private PMFDTO pmf;
-	
+
+	private AreaDeCosechaDTO areaDeCosecha;
+
 	private String reservaForestal;
-	
+
 	private String nroFactura;
-	
+
 	private double volumenTransferido;
-	
-	//private boolean deudaAforo;
-	
-	//private boolean compromisoPago;
-	
+
+	// private boolean deudaAforo;
+
+	// private boolean compromisoPago;
+
 	private String origenMateriaPrima;
-	
+
 	private String nroRemito;
 
 	private LocalidadDestinoDTO localidadDestino;
-	
+
 	private List<TipoProductoEnCertificadoDTO> tiposProductoEnCertificado;
-	
+
 	private double volumenTotalTipoProductos;
-	
+
 	private String fecha;
 
 	private UsuarioDTO usuarioAlta;
 
-	public CertificadoOrigenDTO(){
-		
+	public CertificadoOrigenDTO() {
+
 		exportador = new EntidadDTO();
 		productor = new EntidadDTO();
 		pmf = new PMFDTO();
+		areaDeCosecha = new AreaDeCosechaDTO();
 		localidadDestino = new LocalidadDestinoDTO();
 		tiposProductoEnCertificado = new ArrayList<TipoProductoEnCertificadoDTO>();
 		usuarioAlta = new UsuarioDTO();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -179,7 +181,14 @@ public class CertificadoOrigenDTO {
 	public void setTiposProductoEnCertificado(
 			List<TipoProductoEnCertificadoDTO> tiposProductoEnCertificado) {
 		this.tiposProductoEnCertificado = tiposProductoEnCertificado;
-	}	
-	
-	
+	}
+
+	public AreaDeCosechaDTO getAreaDeCosecha() {
+		return areaDeCosecha;
+	}
+
+	public void setAreaDeCosecha(AreaDeCosechaDTO areaDeCosecha) {
+		this.areaDeCosecha = areaDeCosecha;
+	}
+
 }

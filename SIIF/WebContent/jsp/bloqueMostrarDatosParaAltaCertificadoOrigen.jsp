@@ -29,7 +29,7 @@ function calcularVolumenTiposProductos(){
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 		<!-- FISCALIZACIONES -->
-			<table border="0" class="cuadradoSinBorde" align="center" width="75%" cellpadding="2">
+			<table border="0" class="cuadradoSinBorde" align="center" width="75%" cellpadding="2" id="tablaFiscalizaciones">
 				<tr>
 					<td class="botoneralNegritaLeftGrande">
 						<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>
@@ -91,38 +91,6 @@ function calcularVolumenTiposProductos(){
 			<br>
 			<br>
 			
-		<!-- GUIAS FORESTALES 				
-			<table border="0" class="cuadradoSinBorde" align="center" width="75%" cellpadding="2">
-				<tr>
-					<td class="botoneralNegritaLeftGrande">
-						<bean:message key='SIIF.subTitulo.GuiasForestales'/>
-					</td>
-				</tr>
-			</table>			
-			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2">
-				<tr>
-					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.NroDeGuia'/></td>
-					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.FechaVenc'/></td>
-					<td class="verdeTituloTablaChico"><bean:message key='SIIF.label.Volumen'/></td>					
-				</tr>
-				<tr class="par">				
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-				</tr>
-				<tr class="">				
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-				</tr>
-				<tr class="par">				
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-					<td class="botonerab">-</td>
-				</tr>													
-			</table>			
-			<br>
-			<br>-->
 						
 		<!-- ESTADO DE DEUDA DEL PRODUCTOR -->	
 			<table border="0" class="cuadrado" align="center" width="75%" cellpadding="2" cellspacing="0">
@@ -369,6 +337,7 @@ function calcularVolumenTiposProductos(){
 			</table>				
 			
 		</c:when>	
+
 		<c:otherwise>
 			<bean:message key='SIIF.error.NoExiFis'/>
 		</c:otherwise>

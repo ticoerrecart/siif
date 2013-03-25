@@ -37,7 +37,6 @@ import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
-import ar.com.siif.negocio.PMF;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.Periodo;
 import ar.com.siif.negocio.ProvinciaDestino;
@@ -54,14 +53,19 @@ import ar.com.siif.utils.Fecha;
 
 public abstract class ProviderDominio {
 
-	public static Fiscalizacion getFiscalizacion(FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO, Localizacion localizacion,
-			Entidad productorForestal, Entidad oficinaForestal, TipoProductoForestal tipoProducto, Usuario usuario) {
+	public static Fiscalizacion getFiscalizacion(
+			FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO,
+			Localizacion localizacion, Entidad productorForestal,
+			Entidad oficinaForestal, TipoProductoForestal tipoProducto,
+			Usuario usuario) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
 		fiscalizacion.setCantidadMts(fiscalizacionDTO.getCantidadMts());
-		fiscalizacion.setCantidadUnidades(fiscalizacionDTO.getCantidadUnidades());
-		fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO.getFecha()));
+		fiscalizacion.setCantidadUnidades(fiscalizacionDTO
+				.getCantidadUnidades());
+		fiscalizacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(fiscalizacionDTO
+				.getFecha()));
 		fiscalizacion.setOficinaAlta(oficinaForestal);
 		fiscalizacion.setPeriodoForestal(fiscalizacionDTO.getPeriodoForestal());
 		fiscalizacion.setProductorForestal(productorForestal);
@@ -80,7 +84,8 @@ public abstract class ProviderDominio {
 
 	}
 
-	public static Muestra getMuestra(MuestraDTO muestraDTO, Fiscalizacion fiscalizacion) {
+	public static Muestra getMuestra(MuestraDTO muestraDTO,
+			Fiscalizacion fiscalizacion) {
 
 		Muestra muestra = new Muestra();
 
@@ -92,11 +97,13 @@ public abstract class ProviderDominio {
 		return muestra;
 	}
 
-	public static TipoProducto getTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO) {
+	public static TipoProducto getTipoProductoForestal(
+			TipoProductoForestalDTO tipoProductoForestalDTO) {
 
 		TipoProductoForestal tipoProducto = new TipoProductoForestal();
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
-		tipoProducto.setCantDiametros(tipoProductoForestalDTO.getCantDiametros());
+		tipoProducto.setCantDiametros(tipoProductoForestalDTO
+				.getCantDiametros());
 		tipoProducto.setDiam1Desde(tipoProductoForestalDTO.getDiam1Desde());
 		tipoProducto.setDiam1Hasta(tipoProductoForestalDTO.getDiam1Hasta());
 		tipoProducto.setDiam2Desde(tipoProductoForestalDTO.getDiam2Desde());
@@ -107,7 +114,8 @@ public abstract class ProviderDominio {
 		return tipoProducto;
 	}
 
-	public static TipoProducto getTipoProductoExportacion(TipoProductoDTO tipoProductoForestalDTO) {
+	public static TipoProducto getTipoProductoExportacion(
+			TipoProductoDTO tipoProductoForestalDTO) {
 
 		TipoProductoExportacion tipoProducto = new TipoProductoExportacion();
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
@@ -118,7 +126,8 @@ public abstract class ProviderDominio {
 	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad) {
 
 		Entidad entidad = null;
-		if (TipoDeEntidad.PPF.getName().equalsIgnoreCase(entidadDTO.getTipoEntidad())) {
+		if (TipoDeEntidad.PPF.getName().equalsIgnoreCase(
+				entidadDTO.getTipoEntidad())) {
 			entidad = new PPF();
 		} else {
 			if (TipoDeEntidad.OBR.getName().equals(entidadDTO.getTipoEntidad())) {
@@ -137,7 +146,8 @@ public abstract class ProviderDominio {
 		return entidad;
 	}
 
-	public static Entidad getEntidad(Entidad entidad, EntidadDTO entidadDTO, Localidad localidad) {
+	public static Entidad getEntidad(Entidad entidad, EntidadDTO entidadDTO,
+			Localidad localidad) {
 
 		entidad.setDireccion(entidadDTO.getDireccion());
 		entidad.setEmail(entidadDTO.getEmail());
@@ -150,7 +160,8 @@ public abstract class ProviderDominio {
 		return entidad;
 	}
 
-	public static Aforo getAforo(AforoDTO aforoDTO, TipoProductoForestal tipoProducto) {
+	public static Aforo getAforo(AforoDTO aforoDTO,
+			TipoProductoForestal tipoProducto) {
 
 		Aforo aforo = new Aforo();
 
@@ -162,7 +173,8 @@ public abstract class ProviderDominio {
 		return aforo;
 	}
 
-	public static Aforo getAforo(Aforo aforo, AforoDTO aforoDTO, TipoProductoForestal tipoProducto) {
+	public static Aforo getAforo(Aforo aforo, AforoDTO aforoDTO,
+			TipoProductoForestal tipoProducto) {
 
 		aforo.setEstado(aforoDTO.getEstado());
 		aforo.setTipoProducto(tipoProducto);
@@ -179,7 +191,8 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static Localidad getLocalidad(Localidad localidad, LocalidadDTO localidadDTO) {
+	public static Localidad getLocalidad(Localidad localidad,
+			LocalidadDTO localidadDTO) {
 
 		localidad.setNombre(localidadDTO.getNombre());
 		return localidad;
@@ -197,7 +210,8 @@ public abstract class ProviderDominio {
 		return periodo;
 	}
 
-	public static Usuario getUsuario(UsuarioDTO usuarioDTO, Entidad entidad, Rol rol) {
+	public static Usuario getUsuario(UsuarioDTO usuarioDTO, Entidad entidad,
+			Rol rol) {
 
 		Usuario usuario = new Usuario();
 		usuario.setEntidad(entidad);
@@ -209,7 +223,8 @@ public abstract class ProviderDominio {
 		return usuario;
 	}
 
-	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO, Entidad entidad, Rol rol) {
+	public static Usuario getUsuario(Usuario usuario, UsuarioDTO usuarioDTO,
+			Entidad entidad, Rol rol) {
 
 		usuario.setEntidad(entidad);
 		usuario.setHabilitado(usuarioDTO.isHabilitado());
@@ -229,9 +244,12 @@ public abstract class ProviderDominio {
 		return rol;
 	}
 
-	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO, List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-			List<RangoDTO> listaRangosDTO, Date fechaVencimiento, List<Fiscalizacion> listaFiscalizaciones, List<SubImporte> listaSubImportes,
-			Entidad productorForestal, Localizacion localizacion, Localidad localidad, Usuario usuario) {
+	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,
+			List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+			List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
+			List<Fiscalizacion> listaFiscalizaciones,
+			List<SubImporte> listaSubImportes, Entidad productorForestal,
+			Localizacion localizacion, Localidad localidad, Usuario usuario) {
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -240,7 +258,8 @@ public abstract class ProviderDominio {
 
 		guia.setDistanciaAforoMovil(guiaDTO.getDistanciaAforoMovil());
 		guia.setFecha(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFecha()));
-		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(guiaDTO.getFechaVencimiento()));
+		guia.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(guiaDTO
+				.getFechaVencimiento()));
 		guia.setFiscalizaciones(listaFiscalizaciones);
 		guia.setImporteTotal(guiaDTO.getImporteTotal());
 		guia.setInspFiscalizacion(guiaDTO.getInspFiscalizacion());
@@ -254,11 +273,14 @@ public abstract class ProviderDominio {
 		guia.setLocalizacion(localizacion);
 
 		for (BoletaDepositoDTO boletaDTO : listaBoletaDepositoDTO) {
-			guia.getBoletasDeposito().add(ProviderDominio.getBoletaDeposito(guia, boletaDTO));
+			guia.getBoletasDeposito().add(
+					ProviderDominio.getBoletaDeposito(guia, boletaDTO));
 		}
 
 		for (RangoDTO rangoDTO : listaRangosDTO) {
-			guia.getValesTransporte().addAll(ProviderDominio.getValesTransportes(guia, rangoDTO, fechaVencimiento));
+			guia.getValesTransporte().addAll(
+					ProviderDominio.getValesTransportes(guia, rangoDTO,
+							fechaVencimiento));
 		}
 
 		for (SubImporte subImporte : listaSubImportes) {
@@ -269,7 +291,8 @@ public abstract class ProviderDominio {
 		return guia;
 	}
 
-	public static BoletaDeposito getBoletaDeposito(GuiaForestal guia, BoletaDepositoDTO boletaDTO) {
+	public static BoletaDeposito getBoletaDeposito(GuiaForestal guia,
+			BoletaDepositoDTO boletaDTO) {
 
 		BoletaDeposito boleta = new BoletaDeposito();
 
@@ -279,10 +302,13 @@ public abstract class ProviderDominio {
 		boleta.setArea(boletaDTO.getArea());
 		boleta.setConcepto(boletaDTO.getConcepto());
 		boleta.setEfectivoCheque(boletaDTO.getEfectivoCheque());
-		if (boletaDTO.getFechaPago() != null && !boletaDTO.getFechaPago().equals("")) {
-			boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO.getFechaPago()));
+		if (boletaDTO.getFechaPago() != null
+				&& !boletaDTO.getFechaPago().equals("")) {
+			boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+					.getFechaPago()));
 		}
-		boleta.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(boletaDTO.getFechaVencimiento()));
+		boleta.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(boletaDTO
+				.getFechaVencimiento()));
 		boleta.setGuiaForestal(guia);
 		boleta.setMonto(boletaDTO.getMonto());
 		boleta.setNumero(boletaDTO.getNumero());
@@ -290,7 +316,8 @@ public abstract class ProviderDominio {
 		return boleta;
 	}
 
-	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia, RangoDTO rangoDTO, Date fechaVencimiento) {
+	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia,
+			RangoDTO rangoDTO, Date fechaVencimiento) {
 		List<ValeTransporte> vales = new ArrayList<ValeTransporte>();
 		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {
 			ValeTransporte vale = new ValeTransporte();
@@ -303,7 +330,8 @@ public abstract class ProviderDominio {
 		return vales;
 	}
 
-	public static ValeTransporte getValeTransporte(GuiaForestal guia, ValeTransporteDTO valeDTO) {
+	public static ValeTransporte getValeTransporte(GuiaForestal guia,
+			ValeTransporteDTO valeDTO) {
 
 		ValeTransporte vale = new ValeTransporte();
 
@@ -311,10 +339,13 @@ public abstract class ProviderDominio {
 		vale.setDestino(valeDTO.getDestino());
 		vale.setDominio(valeDTO.getDominio());
 		vale.setEspecie(valeDTO.getEspecie());
-		if (valeDTO.getFechaDevolucion() != null && !valeDTO.getFechaDevolucion().equals("")) {
-			vale.setFechaDevolucion(Fecha.stringDDMMAAAAToUtilDate(valeDTO.getFechaDevolucion()));
+		if (valeDTO.getFechaDevolucion() != null
+				&& !valeDTO.getFechaDevolucion().equals("")) {
+			vale.setFechaDevolucion(Fecha.stringDDMMAAAAToUtilDate(valeDTO
+					.getFechaDevolucion()));
 		}
-		vale.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(valeDTO.getFechaVencimiento()));
+		vale.setFechaVencimiento(Fecha.stringDDMMAAAAToUtilDate(valeDTO
+				.getFechaVencimiento()));
 		vale.setGuiaForestal(guia);
 		if (valeDTO.getId() != 0) {
 			vale.setId(valeDTO.getId());
@@ -329,7 +360,8 @@ public abstract class ProviderDominio {
 		return vale;
 	}
 
-	public static SubImporte getSubImporte(GuiaForestal guia, TipoProductoForestal tipoProducto, SubImporteDTO subImporteDTO) {
+	public static SubImporte getSubImporte(GuiaForestal guia,
+			TipoProductoForestal tipoProducto, SubImporteDTO subImporteDTO) {
 
 		SubImporte subImporte = new SubImporte();
 
@@ -352,13 +384,15 @@ public abstract class ProviderDominio {
 		return provincia;
 	}
 
-	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia, ProvinciaDestinoDTO provinciaDTO) {
+	public static ProvinciaDestino getProvincia(ProvinciaDestino provincia,
+			ProvinciaDestinoDTO provinciaDTO) {
 
 		provincia.setNombre(provinciaDTO.getNombre());
 		return provincia;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(
+			LocalidadDestinoDTO localidadDTO, ProvinciaDestino provincia) {
 
 		LocalidadDestino localidad = new LocalidadDestino();
 		localidad.setNombre(localidadDTO.getNombre());
@@ -367,7 +401,9 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static LocalidadDestino getLocalidadDestino(LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad, ProvinciaDestino provincia) {
+	public static LocalidadDestino getLocalidadDestino(
+			LocalidadDestinoDTO localidadDTO, LocalidadDestino localidad,
+			ProvinciaDestino provincia) {
 
 		localidad.setNombre(localidadDTO.getNombre());
 		localidad.setProvinciaDestino(provincia);
@@ -375,19 +411,25 @@ public abstract class ProviderDominio {
 		return localidad;
 	}
 
-	public static TipoProductoEnCertificado getTipoProductoEnCertificado(CertificadoOrigen certificadoOrigen,
-			TipoProductoExportacion tipoProductoExportacion, TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
+	public static TipoProductoEnCertificado getTipoProductoEnCertificado(
+			CertificadoOrigen certificadoOrigen,
+			TipoProductoExportacion tipoProductoExportacion,
+			TipoProductoEnCertificadoDTO tipoProductoEnCertificadoDTO) {
 		TipoProductoEnCertificado tipoProdEnCertif = new TipoProductoEnCertificado();
 
 		tipoProdEnCertif.setCertificadoOrigen(certificadoOrigen);
 		tipoProdEnCertif.setTipoProductoExportacion(tipoProductoExportacion);
-		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO.getVolumenTipoProducto());
+		tipoProdEnCertif.setVolumenTipoProducto(tipoProductoEnCertificadoDTO
+				.getVolumenTipoProducto());
 
 		return tipoProdEnCertif;
 	}
 
-	public static CertificadoOrigen getCertificadoOrigen(CertificadoOrigenDTO certificadoDTO, Usuario usuario, Entidad productor, Entidad exportador,
-			LocalidadDestino localidadDestino, PMF pmf, Date fecha, List<TipoProductoEnCertificado> listaTipoProdEnCert) {
+	public static CertificadoOrigen getCertificadoOrigen(
+			CertificadoOrigenDTO certificadoDTO, Usuario usuario,
+			Entidad productor, Entidad exportador,
+			LocalidadDestino localidadDestino, Localizacion localizacion,
+			Date fecha, List<TipoProductoEnCertificado> listaTipoProdEnCert) {
 		CertificadoOrigen certificado = new CertificadoOrigen();
 
 		certificado.setExportador(exportador);
@@ -395,14 +437,17 @@ public abstract class ProviderDominio {
 		certificado.setLocalidadDestino(localidadDestino);
 		certificado.setNroFactura(certificadoDTO.getNroFactura());
 		certificado.setNroRemito(certificadoDTO.getNroRemito());
-		certificado.setOrigenMateriaPrima(certificadoDTO.getOrigenMateriaPrima());
+		certificado.setOrigenMateriaPrima(certificadoDTO
+				.getOrigenMateriaPrima());
 		certificado.setPeriodoForestal(certificadoDTO.getPeriodoForestal());
-		certificado.setPmf(pmf);
+		certificado.setLocalizacion(localizacion);
 		certificado.setProductor(productor);
 		certificado.setReservaForestal(certificadoDTO.getReservaForestal());
 		certificado.setUsuarioAlta(usuario);
-		certificado.setVolumenTotalTipoProductos(certificadoDTO.getVolumenTotalTipoProductos());
-		certificado.setVolumenTransferido(certificadoDTO.getVolumenTransferido());
+		certificado.setVolumenTotalTipoProductos(certificadoDTO
+				.getVolumenTotalTipoProductos());
+		certificado.setVolumenTransferido(certificadoDTO
+				.getVolumenTransferido());
 
 		for (TipoProductoEnCertificado tipoProductoEnCertificado : listaTipoProdEnCert) {
 			tipoProductoEnCertificado.setCertificadoOrigen(certificado);
@@ -412,7 +457,8 @@ public abstract class ProviderDominio {
 		return certificado;
 	}
 
-	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO, Entidad entidad) {
+	public static Localizacion getLocalizacion(LocalizacionDTO localizacionDTO,
+			Entidad entidad) {
 		return localizacionDTO.getLocalizacion(entidad);
 	}
 

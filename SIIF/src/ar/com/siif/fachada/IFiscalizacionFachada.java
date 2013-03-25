@@ -42,5 +42,5 @@ public interface IFiscalizacionFachada {
 			NegocioException;
 	
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
-																					 Long idPMF);		
+																					 Long idLocalizacion);		
 }

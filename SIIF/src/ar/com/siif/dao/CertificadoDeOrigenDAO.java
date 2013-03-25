@@ -38,15 +38,15 @@ public class CertificadoDeOrigenDAO extends HibernateDaoSupport {
 		return nroCertificado;		
 	}	
 	
-	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF){
+	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idLocalizacion){
 
 		double volumen = 0;
 		Criteria criteria = getSession().createCriteria(CertificadoOrigen.class);
 		criteria.createAlias("productor", "prod");
-		criteria.createAlias("pmf", "planManejo");
+		criteria.createAlias("localizacion", "localizacion");
 
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("prod.id", idProductor)));
-		criteria.add(Restrictions.conjunction().add(Restrictions.eq("planManejo.id", idPMF)));
+		criteria.add(Restrictions.conjunction().add(Restrictions.eq("localizacion.id", idLocalizacion)));
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("periodoForestal", periodo)));
 		
 		List<CertificadoOrigen> lista = criteria.list();

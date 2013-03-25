@@ -11,7 +11,7 @@ public interface ICertificadoDeOrigenFachada {
 	public long altaCertificadoOrigen(CertificadoOrigenDTO certificadoOrigen, 
 			List<TipoProductoEnCertificadoDTO> listaTipoProductoEnCertificado);	
 	
-	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idPMF);
+	public double obtenerVolumenExportado(Long idProductor, String periodo, Long idLocalizacion);
 	
 	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor, String periodo, Long idPMF);
 	
