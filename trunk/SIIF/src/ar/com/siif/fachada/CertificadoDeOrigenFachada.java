@@ -103,11 +103,11 @@ public class CertificadoDeOrigenFachada implements ICertificadoDeOrigenFachada {
 	}
 
 	public List<CertificadoOrigenDTO> getCertificadosOrigen(Long idProductor,
-			String periodo, Long idPMF) {
+			String periodo, Long idLocalizacion) {
 
 		List<CertificadoOrigenDTO> listaCertificadosDTO = new ArrayList<CertificadoOrigenDTO>();
 		List<CertificadoOrigen> listaCertificados = certificadoDeOrigenDAO
-				.getCertificadosOrigen(idProductor, periodo, idPMF);
+				.getCertificadosOrigen(idProductor, periodo, idLocalizacion);
 
 		for (CertificadoOrigen certificadoOrigen : listaCertificados) {
 

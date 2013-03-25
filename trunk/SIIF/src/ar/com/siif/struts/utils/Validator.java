@@ -1,5 +1,6 @@
 package ar.com.siif.struts.utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -980,8 +981,11 @@ public abstract class Validator {
 			double volumenMaximoParaExportar, double volumenTransferido, StringBuffer pError) {
 
 		if (volumenTransferido <= volumenMaximoParaExportar / 0.3) {
-			addErrorXML(pError,
-					"El Volumen Transferido debe ser mayor al Volúmen máximo permitido por exportar /0.3 ");
+			DecimalFormat df = new DecimalFormat("#.##");
+			addErrorXML(
+					pError,
+					"El Volumen Transferido debe ser mayor al Volúmen máximo permitido por exportar dividido por 0.3, es decir mayor a  "
+							+ df.format(volumenMaximoParaExportar / 0.3));
 			return false;
 		}
 

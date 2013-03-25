@@ -29,7 +29,6 @@
 
 <script>
 	$(function() {
-
 		$( "#datepickerFecha" ).datepicker({ dateFormat: 'dd/mm/yy'});		
 	});
 </script>

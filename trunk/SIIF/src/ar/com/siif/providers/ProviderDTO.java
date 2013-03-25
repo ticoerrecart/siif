@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dto.AforoDTO;
+import ar.com.siif.dto.AreaDeCosechaDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.CertificadoOrigenDTO;
 import ar.com.siif.dto.EntidadDTO;
@@ -14,6 +15,7 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.dto.RolDTO;
@@ -441,7 +443,13 @@ public abstract class ProviderDTO {
 		certificadoDTO.setNroRemito(certificado.getNroRemito());
 		certificadoDTO.setOrigenMateriaPrima(certificado.getOrigenMateriaPrima());
 		certificadoDTO.setPeriodoForestal(certificado.getPeriodoForestal());
-		certificadoDTO.setPmf(certificado.getPmf().getLocalizacionDTO());
+		if (certificado.getLocalizacion().esAreaDeCosecha()) {
+			certificadoDTO.setAreaDeCosecha((AreaDeCosechaDTO) certificado.getLocalizacion()
+					.getLocalizacionDTO());
+		} else {
+			certificadoDTO.setPmf((PMFDTO) certificado.getLocalizacion().getLocalizacionDTO());
+		}
+
 		certificadoDTO.setProductor(ProviderDTO.getEntidadDTO(certificado.getProductor()));
 		certificadoDTO.setReservaForestal(certificado.getReservaForestal());
 		certificadoDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(certificado.getUsuarioAlta()));
