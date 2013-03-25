@@ -28,7 +28,6 @@ import ar.com.siif.utils.MyLogger;
 
 public class CertificadoDeOrigenAction extends ValidadorAction {
 
-	@SuppressWarnings("unchecked")
 	public ActionForward inicializarAltaCertificadoOrigen(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoInicializarAltaCertificadoOrigen";
@@ -53,7 +52,6 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward recuperarDatosParaAltaCertificadoOrigen(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -115,7 +113,6 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward altaCertificadoOrigen(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -153,14 +150,11 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward cargarProductoresParaConsultaCertificadoOrigen(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoCargarProductoresParaConsultaCertificadoOrigen";
 		try {
 
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
@@ -186,14 +180,11 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward recuperarCertificadosOrigenParaConsulta(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoRecuperarCertificadosOrigenParaConsulta";
 		try {
 
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			String idProductor = request.getParameter("idProductor");
@@ -223,8 +214,6 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		String strForward = "exitoCargarCertificadoOrigen";
 		try {
 
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm) form;
@@ -248,14 +237,11 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ActionForward cargarCertificadoOrigen(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		String strForward = "exitoCargarCertificadoOrigen";
 		try {
 
-			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
-					Constantes.USER_LABEL_SESSION);
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			String idCertificado = request.getParameter("idCertificado");
