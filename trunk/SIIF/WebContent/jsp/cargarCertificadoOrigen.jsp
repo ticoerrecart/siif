@@ -40,10 +40,11 @@ function volverConsultaCertificado(){
 
 	var productor = $('#idParamProductor').val();
 	var entidad = $('#idParamIdTipoDeEntidad').val();
-	var pmf = $('#idPMF').val();
+	var idPMF = $('#idPMF').val();
+	var idArea = $('#idArea').val();
 	var periodoForestal = $('#periodoForestal').val();
-	
-	parent.location = contextRoot() +  '/certificadoOrigen.do?metodo=cargarProductoresParaConsultaCertificadoOrigen&entidad='+entidad+"&productor="+productor+"&pmf="+pmf+"&periodoForestal="+periodoForestal;	
+		
+	parent.location = contextRoot() +  '/certificadoOrigen.do?metodo=cargarProductoresParaConsultaCertificadoOrigen&entidad='+entidad+"&productor="+productor+"&idPMF="+idPMF+"&idArea="+idArea+"&periodoForestal="+periodoForestal;	
 }
 
 function imprimirCertificado(){	
@@ -73,6 +74,7 @@ function mostrarCuit() {
 	<input id="idParamProductor" type="hidden" value="${certificado.productor.id}">
 	<input id="idParamIdTipoDeEntidad" type="hidden" value="${certificado.productor.tipoEntidad}">
 	<input id="idPMF" type="hidden" value="${certificado.pmf.id}">
+	<input id="idArea" type="hidden" value="${certificado.areaDeCosecha.id}">
 	<input id="periodoForestal" type="hidden" value="${certificado.periodoForestal}">
 	
 	<input id="idCertificado" type="hidden" value="<c:out value="${certificado.id}"></c:out>">

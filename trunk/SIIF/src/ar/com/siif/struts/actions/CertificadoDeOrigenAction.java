@@ -162,7 +162,8 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 
 			String idTipoDeEntidad = request.getParameter("entidad");
 			String idProductor = request.getParameter("productor");
-			String idPMF = request.getParameter("pmf");
+			String idPMF = request.getParameter("idPMF");
+			String idArea = request.getParameter("idArea");
 			String periodoForestal = request.getParameter("periodoForestal");
 
 			request.setAttribute("tiposEntidad", entidadFachada.getTiposDeEntidadProductores());
@@ -170,6 +171,7 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
 			request.setAttribute("idPMF", idPMF);
+			request.setAttribute("idArea", idArea);
 			request.setAttribute("periodoForestal", periodoForestal);
 
 		} catch (Throwable t) {
