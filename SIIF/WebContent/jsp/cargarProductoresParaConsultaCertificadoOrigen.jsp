@@ -31,7 +31,7 @@
 		var idTipoDeEntidad = $('#selectTiposDeEntidad').val();
 
 		//deshabilitarLocalizacion([ "idZMF" ]);
-		
+
 		if(idTipoDeEntidad != "-1"){
 			$('#idProductor').attr('disabled',false);
 			EntidadFachada.getEntidadesPorTipoDeEntidadDTO(idTipoDeEntidad,actualizarProductoresCallback );		
@@ -52,28 +52,6 @@
 		dwr.util.addOptions("idProductor", productores,"id","nombre");	
 	}
 
-/*	function actualizarComboPMF() {
-		idPF = $('#selectProductores').val();
-
-		deshabilitarLocalizacion([ "selectPmf" ]);
-
-		if (idPF > 0) {
-			UbicacionFachada.getPMFs(idPF, actualizarComboPMFCallback);
-		}						
-	}
-
-	function actualizarComboPMFCallback(pmfs) {
-		
-		dwr.util.removeAllOptions("selectPmf");
-		var data = [ {
-			nombre : "- Seleccione -",
-			id : -1
-		} ];
-		dwr.util.addOptions("selectPmf", data, "id", "nombre");
-		dwr.util.addOptions("selectPmf", pmfs, "id", "nombreExpediente");
-		$('#selectPmf').removeAttr('disabled');
-	}
-*/
 
 function actualizarComboPMF() {
 	idPF = $('#idProductor').val();
@@ -96,7 +74,7 @@ function actualizarComboPMFCallback(pmfs) {
 }
 
 function actualizarComboArea() {
-	idPF = $('#idProductor').val();
+	var idPF = $('#idProductor').val();
 	UbicacionFachada.getAreasDTO(idPF, {
 		callback : actualizarComboAreaCallback,
 		async : false
@@ -124,8 +102,8 @@ function cambioComboProductores() {
 
 function cambioComboZona() {
 
-	zmf = $('#idZMF').val();
-	idPF = $('#idProductor').val();
+	var zmf = $('#idZMF').val();
+	var idPF = $('#idProductor').val();
 	
 	if (idPF == 0 || zmf == 0) {
 		$(".area").hide();
@@ -152,6 +130,7 @@ function cambioComboZona() {
 
 		var idProductor = $('#idProductor').val();
 		var periodo= $('#selectPeriodo').val();
+		var zmf = $('#idZMF').val();
 		var idLocalizacion = -1;
 		if (zmf == 1) {
 			idLocalizacion =  $('#idPMF').val();
@@ -216,6 +195,8 @@ function cambioComboZona() {
 		$('#divDetalle').html("");
 	}
 
+
+	
 	function actualizarProductoresVolverCallback(productores){
 		dwr.util.removeAllOptions("idProductor");
 		var data = [ { nombre:"-Seleccione un Productor-", id:-1 }];
@@ -224,32 +205,47 @@ function cambioComboZona() {
 
 		$('#idProductor').val($('#paramProductor').val());
 		idPF = $('#idProductor').val();
-		
-		UbicacionFachada.getPMFs(idPF, actualizarComboPMFVolverCallback);
-	}
 
-	function actualizarComboPMFVolverCallback(pmfs) {
+		if($('#paramPMF').val()>0){
+			$('#idZMF').val("1");
+			cambioComboZona();
+			$('#idPMF').val($('#paramPMF').val());
+
+		}else{
+			if($('#paramArea').val()>0){
+				$('#idZMF').val("2");
+				cambioComboZona();
+				$('#idArea').val($('#paramArea').val());
+			}
+		}
 		
-		dwr.util.removeAllOptions("selectPmf");
+		mostrarListaCertificadosOrigen();
+		//UbicacionFachada.getPMFs(idPF, actualizarComboPMFVolverCallback);
+	}
+	
+/*	function actualizarComboPMFVolverCallback(pmfs) {
+		
+		 dwr.util.removeAllOptions("idPMF");
 		var data = [ {
 			nombre : "- Seleccione -",
 			id : -1
 		} ];
-		dwr.util.addOptions("selectPmf", data, "id", "nombre");
-		dwr.util.addOptions("selectPmf", pmfs, "id", "nombreExpediente");
-		$('#selectPmf').removeAttr('disabled');
+		dwr.util.addOptions("idPMF", data, "id", "nombrePMF");
+		dwr.util.addOptions("idPMF", pmfs, "id", "expedientePMF");
+		$('#idPMF').removeAttr('disabled');
 
-		$('#selectPmf').val($('#idPMF').val());
+		$('#idPMF').val($('#idPMF').val());
 		$('#selectPeriodo').val($('#periodoForestal').val());
 		
 		mostrarListaCertificadosOrigen();
 	}
-	
+	*/
 </script>
 
 <input id="paramIdTipoDeEntidad" type="hidden" value="${idTipoDeEntidad}">
 <input id="paramProductor" type="hidden" value="${idProductor}">
-<%-- input id="idPMF" type="hidden" value="${idPMF}"--%>
+<input id="paramPMF" type="hidden" value="${idPMF}">
+<input id="paramArea" type="hidden" value="${idArea}">
 <input id="periodoForestal" type="hidden" value="${periodoForestal}">
 
 <div id="errores" class="rojoAdvertencia">${error}</div>
