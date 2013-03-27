@@ -24,7 +24,7 @@ public class GuiaForestal {
 	private Long id;
 
 	@Column(nullable = false)
-	private int nroGuia;
+	private long nroGuia;
 
 	private Date fechaVencimiento;
 
@@ -87,11 +87,11 @@ public class GuiaForestal {
 		subImportes = new ArrayList<SubImporte>();
 	}
 
-	public int getNroGuia() {
+	public long getNroGuia() {
 		return nroGuia;
 	}
 
-	public void setNroGuia(int nroGuia) {
+	public void setNroGuia(long nroGuia) {
 		this.nroGuia = nroGuia;
 	}
 

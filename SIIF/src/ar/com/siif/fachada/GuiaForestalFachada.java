@@ -130,7 +130,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return ProviderDTO.getGuiaForestalDTO(guiaForestal);
 	}
 
-	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal) {
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal) {
 
 		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestalPorNroGuia(
 				nroGuiaForestal, true);
@@ -140,7 +140,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return null;
 	}
 
-	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados) {
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal, boolean sinAnulados) {
 
 		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestalPorNroGuia(
 				nroGuiaForestal, sinAnulados);
@@ -259,11 +259,11 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public boolean existeGuiaForestal(int nroGuia) {
+	public boolean existeGuiaForestal(long nroGuia) {
 		return guiaForestalDAO.existeGuiaForestal(nroGuia);
 	}
 
-	public boolean existeGuiaForestal(long idGuia, int nroGuia) {
+	public boolean existeGuiaForestal(long idGuia, long nroGuia) {
 		return guiaForestalDAO.existeGuiaForestal(idGuia, nroGuia);
 	}
 

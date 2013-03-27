@@ -178,12 +178,21 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
 				.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor,
-						idLocalizacion, listaSubImportesDTO,
-						tablaVolFiscAsociar);
+						listaSubImportesDTO, tablaVolFiscAsociar);
 
-		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
-			listaFiscalizacionesDTO.add(ProviderDTO
-					.getFiscalizacionDTO(fiscalizacion));
+		if (listaFiscalizaciones.size() > 0) {
+			Localizacion localizacionOrigen = ubicacionFachada
+					.getLocalizacion(idLocalizacion);
+			for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
+				if (fiscalizacion.getLocalizacion().esParteDeLaLocalizacion(
+						localizacionOrigen)
+						|| localizacionOrigen
+								.esParteDeLaLocalizacion(fiscalizacion
+										.getLocalizacion())) {
+					listaFiscalizacionesDTO.add(ProviderDTO
+							.getFiscalizacionDTO(fiscalizacion));
+				}
+			}
 		}
 
 		return listaFiscalizacionesDTO;

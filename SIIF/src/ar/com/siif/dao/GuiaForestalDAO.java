@@ -59,7 +59,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return (GuiaForestal) getSession().get(GuiaForestal.class, idGuiaForestal);
 	}
 
-	public GuiaForestal recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados){
+	public GuiaForestal recuperarGuiaForestalPorNroGuia(long nroGuiaForestal, boolean sinAnulados){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuiaForestal));
@@ -192,7 +192,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return null;
 	}
 
-	public boolean existeGuiaForestal(int nroGuia) {
+	public boolean existeGuiaForestal(long nroGuia) {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuia));
@@ -203,7 +203,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return (guias.size() > 0);
 	}
 
-	public boolean existeGuiaForestal(long idGuia, int nroGuia) {
+	public boolean existeGuiaForestal(long idGuia, long nroGuia) {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuia));
