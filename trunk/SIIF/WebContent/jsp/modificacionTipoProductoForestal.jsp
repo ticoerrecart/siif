@@ -78,7 +78,7 @@ function submitir(metodoValidacion){
 	<tr>
 		<td class="azulAjustado">
 			<c:choose>
-				<c:when test="${metodo == 'altaTipoProductoForestal'}">
+				<c:when test="${metodo eq 'recuperarTipoProductoForestal'}">
 					<bean:message key='SIIF.titulo.ModificacionTipoProducto'/>
 					<c:set var="metodoValidacion" value="${'validarTipoProductoForestalForm'}" />
 				</c:when>

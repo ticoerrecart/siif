@@ -7,7 +7,7 @@ public class GuiaForestalDTO {
 
 	private Long id;
 
-	private int nroGuia;
+	private long nroGuia;
 
 	private EntidadDTO productorForestal;
 
@@ -55,11 +55,11 @@ public class GuiaForestalDTO {
 		localidad = new LocalidadDTO();
 	}
 
-	public int getNroGuia() {
+	public long getNroGuia() {
 		return nroGuia;
 	}
 
-	public void setNroGuia(int nroGuia) {
+	public void setNroGuia(long nroGuia) {
 		this.nroGuia = nroGuia;
 	}
 

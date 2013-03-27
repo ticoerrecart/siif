@@ -25,9 +25,9 @@ public interface IGuiaForestalFachada {
 
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal);
 
-	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal);
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal);
 
-	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(int nroGuiaForestal, boolean sinAnulados);
+	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal, boolean sinAnulados);
 
 	public String registrarPagoBoletaDeposito(long idBoleta) throws NegocioException;
 
@@ -46,7 +46,7 @@ public interface IGuiaForestalFachada {
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento)
 			throws NegocioException;
 
-	public boolean existeGuiaForestal(int nroGuia);
+	public boolean existeGuiaForestal(long nroGuia);
 
 	public void asociarFiscalizacionesConGuiasForestales(long id,
 			List<FiscalizacionDTO> listaFiscalizacionesAAsociar);
@@ -61,5 +61,5 @@ public interface IGuiaForestalFachada {
 	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<RangoDTO> listaRangosDTO,
 			List<ValeTransporteDTO> valesTransporteDTO, Date fechaVencimiento);
 
-	public boolean existeGuiaForestal(long idGuia, int nroGuia);
+	public boolean existeGuiaForestal(long idGuia, long nroGuia);
 }
