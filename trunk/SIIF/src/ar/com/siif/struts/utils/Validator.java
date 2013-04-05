@@ -872,16 +872,23 @@ public abstract class Validator {
 
 	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError) {
 		try {
+			Pattern pattern = Pattern.compile("^[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]");
+			Matcher matcher = pattern.matcher(periodo);
+			if (!matcher.matches()) {
+				addErrorXML(pError, "El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
+				return false;
+			}
 			String[] strArray = periodo.split("-");
 			int n = Integer.parseInt(strArray[0]);
 			int n2 = Integer.parseInt(strArray[1]);
+
 			if (n + 1 != n2) {
 				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
 				return false;
 			}
 			return true;
 		} catch (Exception e) {
-			addErrorXML(pError, "El formato del periodo deben ser AAAA-AAAA. Ej 2011-2012");
+			addErrorXML(pError, "El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
 			return false;
 		}
 	}
