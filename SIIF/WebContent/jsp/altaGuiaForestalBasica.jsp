@@ -991,7 +991,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 										<bean:message key='SIIF.label.Concepto'/>
 									</td>
 									<td colspan="3" align="left">
-										<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90">
+										<input name="boletasDeposito[0].concepto" class="botonerab" type="text" size="90"
+												value="Aforo">
 									</td>
 								</tr>
 								<tr>
