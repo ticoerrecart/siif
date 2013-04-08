@@ -38,14 +38,14 @@
 				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Concepto'/></td>
 				<td colspan="3" align="left">
 					<input name='<%="boletasDeposito["+(i-1)+"].concepto"%>' class="botonerab"
-						type="text" size="90">
+						type="text" size="90" value="Aforo">
 				</td>
 			</tr>
 			<tr>
 				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Area'/></td>
 				<td colspan="3" align="left">
 					<input name='<%="boletasDeposito["+(i-1)+"].area"%>' class="botonerab"
-						type="text" size="90">
+						type="text" size="90" value="Direccion General de Bosques">
 				</td>
 			</tr>
 			<tr>
