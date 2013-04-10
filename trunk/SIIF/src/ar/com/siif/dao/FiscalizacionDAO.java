@@ -116,6 +116,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	{	
 		List<Long> listaIdsTipoProducto = new ArrayList<Long>();
 		List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
+		List<Fiscalizacion> fiscalizacionesAptasParaAsociar = new ArrayList<Fiscalizacion>();
 		
 		for (FilaTablaVolFiscAsociarDTO fila : tablaVolFiscAsociar) {
 			if (fila.getVolumenFaltante() > 0.0){			
@@ -137,7 +138,19 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 
 			fiscalizaciones = criteria.list();
 		}
-		return fiscalizaciones;
+		
+		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+			for (FilaTablaVolFiscAsociarDTO fila : tablaVolFiscAsociar) {			
+				
+				if(fila.getIdTipoProducto() == fiscalizacion.getTipoProducto().getId() 
+						&& fila.getVolumenFaltante() >= fiscalizacion.getCantidadMts())
+				{
+					fiscalizacionesAptasParaAsociar.add(fiscalizacion);
+				}
+			}
+		}
+		
+		return fiscalizacionesAptasParaAsociar;
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor){
