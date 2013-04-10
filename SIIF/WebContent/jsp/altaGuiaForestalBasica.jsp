@@ -185,8 +185,13 @@ function cambiarEstado(ind){
 	var idProdForestal = $('#idProductor').val();
 
 	if(estado != ""){
-		idRenglon = ind;	
-		AforoFachada.getValor(estado,idTipoProducto,idProdForestal,actualizarImporteCallback );
+		idRenglon = ind;
+		//AforoFachada.getValor(estado,idTipoProducto,idProdForestal,actualizarImporteCallback );
+		
+		AforoFachada.getValor(estado,idTipoProducto,idProdForestal, 
+			{callback : actualizarImporteCallback,
+			 async : false}
+		);
 	}
 }
 
@@ -240,8 +245,8 @@ function calcularTotales(){
 			}	 
 		}		
 		var porcentaje = parseFloat(sumaImportes*0.2);
-		document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);		
-		document.getElementById("idTotal").value = new Number(parseFloat($('#idPorcentaje').val())).toFixed(2);		
+		$('#idPorcentaje').val(new Number(porcentaje).toFixed(2));		
+		$('#idTotal').val(new Number(parseFloat($('#idPorcentaje').val())).toFixed(2));		
 	}
 	else{	
 		for ( var i = 0; i <= j; i++) {
@@ -257,8 +262,8 @@ function calcularTotales(){
 		else{
 			var porcentaje = parseFloat(sumaImportes*0.2);
 			
-			document.getElementById("idPorcentaje").value = new Number(porcentaje).toFixed(2);
-			document.getElementById("idTotal").value = new Number(parseFloat(sumaImportes * 1.2)).toFixed(2);
+			$('#idPorcentaje').val(new Number(porcentaje).toFixed(2));
+			$('#idTotal').val(new Number(parseFloat(sumaImportes * 1.2)).toFixed(2));
 		}	
 	}
 }
@@ -809,7 +814,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</select>																									
 												</td> 
 												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie">
+													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie" value="${defaultEspecie}">
 												</td>
 												<td>
 													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" 
@@ -916,6 +921,13 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 									<td colspan="2">&nbsp;</td>
 								</tr>
 							</table>
+							
+							<%--RECIEN ACA ESTAN CREADOS LOS CAMPOS DE porcentaje e importeTotal, asi que aca tengo que llamar a cambiarEstado, porq actualiza esos campos --%>
+							<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
+								<script>
+									cambiarEstado(${i.count-1});
+								</script>
+							</c:forEach>
 						</td>					
 					</tr>
 					<tr>
