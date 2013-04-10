@@ -943,7 +943,7 @@ public class GuiaForestalAction extends ValidadorAction {
 								.getGuiaForestal().getNroGuia());
 			} else {
 				guiaForestal = guiaForestalFachada
-						.recuperarGuiaForestalPorNroGuia(Integer
+						.recuperarGuiaForestalPorNroGuia(Long
 								.valueOf(nroGuia));
 			}
 
