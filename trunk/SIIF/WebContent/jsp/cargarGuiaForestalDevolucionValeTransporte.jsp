@@ -79,9 +79,8 @@ function registrarDevolucionCallback(valor){
 			
 		var idBotonDevolucion = "#idBotonDevolucion"+idVale;
 		$(idBotonDevolucion).toggle();
+		$('#errores').text("");
 
-		/*var idFechaDevolucion = "#idFechaDevolucion"+idVale;	
-		$(idFechaDevolucion).attr('value', valor);*/
 	} else {
 		var valor = valor.replace("<error>","");
 		var nodos = valor.split("</error>");
@@ -593,7 +592,7 @@ function despintarFila(idTr){
 													</td>
 													<td>
 														<input id="idNroPiezas<c:out value='${valeTransporte.id}'/>"  class="botonerab" type="text" value="${valeTransporte.nroPiezas}" 
-																onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" <c:out value="${readonly}"></c:out>> 
+																onkeyup="actEspecie(<c:out value='${valeTransporte.id}'/>)" onblur="actEspecie(<c:out value='${valeTransporte.id}'/>)" <c:out value="${readonly}"></c:out>> 
 													</td>
 													<td>
 														<input id="idCantM3<c:out value='${valeTransporte.id}'/>" class="botonerab" type="text" value="${valeTransporte.cantidadMts}" readonly="readonly">

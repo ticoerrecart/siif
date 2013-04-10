@@ -198,7 +198,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			// mas el del vale en cuestión, no sobrepase lo fiscalizado en la
 			// guía para ese tipo de producto.
 			StringBuffer pError = new StringBuffer();
+			
 			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
+			boolean ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
+					"Nº de Piezas", pError);
 			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
 					"Cantidad(m3)", pError);
 
@@ -226,7 +229,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 			boolean ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
 					totalMts, pError);
-			if (ok && ok2 && ok3 && ok4) {
+			if (ok && ok1 && ok2 && ok3 && ok4) {
 				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 						destino, vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
 						fechaDevolucion);
