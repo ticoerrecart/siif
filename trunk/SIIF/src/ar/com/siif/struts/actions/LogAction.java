@@ -50,8 +50,9 @@ public class LogAction extends DispatchAction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ActionForward verLog(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward verLog(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		try {
 
@@ -66,11 +67,13 @@ public class LogAction extends DispatchAction {
 					out.write(s.getBytes());
 				} else {
 					if (file.isDirectory()) {
-						String s = "El archivo '" + fileName + "' es un directorio.";
+						String s = "El archivo '" + fileName
+								+ "' es un directorio.";
 						out.write(s.getBytes());
 					} else {
 						if (file.length() == 0) {
-							String s = "El archivo '" + fileName + "' tiene 0 bytes.";
+							String s = "El archivo '" + fileName
+									+ "' tiene 0 bytes.";
 							out.write(s.getBytes());
 						} else {
 							byte[] bytes = getByteArrayFromFile(file);
@@ -94,14 +97,9 @@ public class LogAction extends DispatchAction {
 		return null;
 	}
 
-	public ActionForward log(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		String success = "logSuccess";
-		String path = MyLogger.getResourceBundle().getString("logger.path");
+	private void log(String path, HttpServletRequest request) {
 		int lastIndex = path.lastIndexOf(File.separator);
 		String fileName = path.substring(0, lastIndex + 1);// "/usr/local/tomcat-7.0.6/logs/";
-
 		File file = new File(fileName);
 
 		if (file.exists() && file.isDirectory()) {
@@ -118,21 +116,24 @@ public class LogAction extends DispatchAction {
 					listFiles.add(file2);
 				}
 
-				//cargo el fileSize
+				// cargo el fileSize
 				if (file2.isDirectory()) {
 					listFileSize.put(file2.getName(), "DIR");
 				} else {
-					listFileSize.put(file2.getName(), String.valueOf(file2.length()) + " bytes");
+					listFileSize.put(file2.getName(),
+							String.valueOf(file2.length()) + " bytes");
 				}
 
-				//cargo la fecha de modificación
-				listFileModified.put(file2.getName(), sdf.format((file2.lastModified())));
+				// cargo la fecha de modificación
+				listFileModified.put(file2.getName(),
+						sdf.format((file2.lastModified())));
 
 			}
 
 			Collections.sort(listFiles, new Comparator<File>() {
 				public int compare(File f1, File f2) {
-					//return o2.getScores().get(0).compareTo(o1.getScores().get(0));
+					// return
+					// o2.getScores().get(0).compareTo(o1.getScores().get(0));
 					long d1 = f1.lastModified();
 					long d2 = f2.lastModified();
 					if (d1 == d2) {
@@ -148,12 +149,31 @@ public class LogAction extends DispatchAction {
 			request.setAttribute("files", listFiles);
 			request.setAttribute("filesSize", listFileSize);
 			request.setAttribute("filesModified", listFileModified);
-			MyLogger.log("Se encontraron " + file.listFiles().length + " archivos.");
+			MyLogger.log("Se encontraron " + file.listFiles().length
+					+ " archivos.");
 		} else {
 			request.setAttribute("error", "El directorio '" + fileName
 					+ "' no existe o no es un directorio.");
 		}
+	}
 
+	public ActionForward log(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String success = "logSuccess";
+		String path = MyLogger.getResourceBundle().getString("logger.path");
+		log(path, request);
+		return mapping.findForward(success);
+	}
+	
+	public ActionForward logBD(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		String success = "logSuccess";
+		String path = MyLogger.getResourceBundle().getString("bd.backups.path");
+		log(path, request);
 		return mapping.findForward(success);
 	}
 }
