@@ -85,7 +85,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 				.getFechaPago()));
 	}
 
-	public String reemplazarBoletaDeDeposito(long idBoleta, int numero, String concepto,
+	public String reemplazarBoletaDeDeposito(long idBoleta, Long numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) throws NegocioException {
 
 			BoletaDeposito boletaDeposito = (BoletaDeposito) getSession().get(BoletaDeposito.class,
