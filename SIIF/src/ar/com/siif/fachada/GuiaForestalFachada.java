@@ -160,7 +160,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public String reemplazarBoletaDeDeposito(long idBoleta, int numero, String concepto,
+	public String reemplazarBoletaDeDeposito(long idBoleta, Long numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) throws NegocioException {
 		try {
 			return guiaForestalDAO.reemplazarBoletaDeDeposito(idBoleta, numero, concepto, area,

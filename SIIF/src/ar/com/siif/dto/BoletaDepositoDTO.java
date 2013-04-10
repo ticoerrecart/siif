@@ -4,7 +4,7 @@ public class BoletaDepositoDTO {
 
 	private long idBoleta;
 
-	private int numero;
+	private Long numero;
 
 	private String concepto;
 
@@ -33,11 +33,11 @@ public class BoletaDepositoDTO {
 		this.idBoleta = idBoleta;
 	}
 
-	public int getNumero() {
+	public Long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
 

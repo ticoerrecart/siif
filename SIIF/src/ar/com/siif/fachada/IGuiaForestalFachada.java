@@ -31,7 +31,7 @@ public interface IGuiaForestalFachada {
 
 	public String registrarPagoBoletaDeposito(long idBoleta) throws NegocioException;
 
-	public String reemplazarBoletaDeDeposito(long idBoleta, int numero, String concepto,
+	public String reemplazarBoletaDeDeposito(long idBoleta, Long numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) throws NegocioException;
 
 	public String registrarDevolucionValeTransporte(long idVale) throws NegocioException;
