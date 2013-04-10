@@ -332,6 +332,10 @@ function agregarFila() {
 	$('#tablaImportes tr[id*=fila]:last input.ind').val(k);
 
 	$("#tablaImportes tr[id*=fila]:last").attr('id', "fila"+k);
+	
+
+	$("input[name='listaSubImportes[" + k + "].especie']").val("${defaultEspecie}");
+	cambiarEstado(k);
 }
 
 function removerFila() {
@@ -779,56 +783,56 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								<c:choose>
 									<c:when test="${fn:length(subImportes)>0}">
 										<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
-										<tr id="fila${i.count-1}">
-											<td>
-												<input class="ind" type="hidden" value="${i.count-1}">		
-																
-												<html:select styleId="selectTiposDeProductos${i.count-1}" onchange="cambiarEstado(${i.count-1});"
-														property="listaSubImportes[${i.count-1}].tipoProducto.id" 
-														styleClass="botonerab" value="${subImporte.tipoProducto.id}">
-																																										
-													<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
-														<html:option value="${tipoProducto.id}">
-															<c:out value="${tipoProducto.nombre}"></c:out>
-														</html:option>
-													</c:forEach>
-												</html:select>															
-											</td>
-											<td>
-												<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estado" class="botonerab" 
-													onchange="cambiarEstado(${i.count-1});">
-													<option value="">-Seleccione un Estado-</option>									
-													<c:forEach items="${estadosProductoForestal}" var="estado">
-														<option value="<c:out value='${estado.name}'></c:out>">
-															<c:out value="${estado.descripcion}"></c:out>
-														</option>
-													</c:forEach>
-												</select>																									
-											</td> 
-											<td>
-												<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie">
-											</td>
-											<td>
-												<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" 
-													name="listaSubImportes[${i.count-1}].cantidadMts" onchange="javascript:actualizarImporte(${i.count-1});"
-													onkeypress="javascript:esNumericoConDecimal(event);"
-													value="${subImporte.cantidadMts}">									
-											</td>
-											<td id="TDValorAforo${i.count-1}">
-												<input id="idValorAforo${i.count-1}" name="listaSubImportes[${i.count-1}].valorAforos" class="botonerab" 
-													type="text"	readonly="readonly">				
+											<tr id="fila${i.count-1}">
+												<td>
+													<input class="ind" type="hidden" value="${i.count-1}">		
 																	
-												<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
-													onkeypress="javascript:esNumerico(event);"> -->
-											</td>
-											<td id="errorAforo${i.count-1}" class="rojoAdvertenciaLeft" style="display: none;">
-												No Definido 
-											</td>
-											<td>
-												<input id="idImporte${i.count-1}" class="botonerab" type="text" name="listaSubImportes[${i.count-1}].importe" 
-													readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
-											</td>
-										</tr>
+													<html:select styleId="selectTiposDeProductos${i.count-1}" onchange="cambiarEstado(${i.count-1});"
+															property="listaSubImportes[${i.count-1}].tipoProducto.id" 
+															styleClass="botonerab" value="${subImporte.tipoProducto.id}">
+																																											
+														<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
+															<html:option value="${tipoProducto.id}">
+																<c:out value="${tipoProducto.nombre}"></c:out>
+															</html:option>
+														</c:forEach>
+													</html:select>															
+												</td>
+												<td>
+													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estado" class="botonerab" 
+														onchange="cambiarEstado(${i.count-1});">
+														<c:forEach items="${estadosProductoForestal}" var="estado">
+															<option value="<c:out value='${estado.name}'></c:out>">
+																<c:out value="${estado.descripcion}"></c:out>
+															</option>
+														</c:forEach>
+													</select>																									
+												</td> 
+												<td>
+													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie">
+												</td>
+												<td>
+													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" 
+														name="listaSubImportes[${i.count-1}].cantidadMts" onchange="javascript:actualizarImporte(${i.count-1});"
+														onkeypress="javascript:esNumericoConDecimal(event);"
+														value="${subImporte.cantidadMts}">									
+												</td>
+												<td id="TDValorAforo${i.count-1}">
+													<input id="idValorAforo${i.count-1}" name="listaSubImportes[${i.count-1}].valorAforos" class="botonerab" 
+														type="text"	readonly="readonly">				
+																		
+													<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
+														onkeypress="javascript:esNumerico(event);"> -->
+												</td>
+												<td id="errorAforo${i.count-1}" class="rojoAdvertenciaLeft" style="display: none;">
+													No Definido 
+												</td>
+												<td>
+													<input id="idImporte${i.count-1}" class="botonerab" type="text" name="listaSubImportes[${i.count-1}].importe" 
+														readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
+												</td>
+											</tr>
+
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
@@ -848,8 +852,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 												</td>
 												<td>
 													<select id="idEstado0" name="listaSubImportes[0].estado" class="botonerab" 
-														onchange="cambiarEstado(0);">
-														<option value="">-Seleccione un Estado-</option>									
+														onchange="cambiarEstado(0);">									
 														<c:forEach items="${estadosProductoForestal}" var="estado" varStatus="i">
 															<option value="<c:out value='${estado.name}'></c:out>">
 																<c:out value="${estado.descripcion}"></c:out>
@@ -858,7 +861,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</select>																									
 												</td>
 												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[0].especie">
+													<input class="botonerab" type="text" name="listaSubImportes[0].especie" value="${defaultEspecie}">
 												</td>
 												<td>
 													<input id="idCantidadMts0" class="botonerab" type="text" 
@@ -881,8 +884,9 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 												</td>
 											</tr>	
 	
-	
-	
+											<script>
+												cambiarEstado(0);
+											</script>
 								
 									</c:otherwise>
 								</c:choose>								

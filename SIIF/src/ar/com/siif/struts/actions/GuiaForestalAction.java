@@ -146,7 +146,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", listaFiscalizacionesDTO);
 			request.setAttribute("subImportes",
 					hashProductosFiscalizados.values());
-
+			request.setAttribute("defaultEspecie", "Lenga");
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
