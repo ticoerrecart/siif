@@ -24,7 +24,7 @@ public class BoletaDeposito {
 	private Long id;
 
 	@Column(nullable = false)
-	private int numero;
+	private Long numero;
 
 	private String concepto;
 
@@ -130,11 +130,11 @@ public class BoletaDeposito {
 		this.id = id;
 	}
 
-	public int getNumero() {
+	public Long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
 
@@ -171,5 +171,6 @@ public class BoletaDeposito {
 	public void setAnulado(boolean anulado) {
 		this.anulado = anulado;
 	}
+
 
 }

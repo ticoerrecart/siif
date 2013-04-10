@@ -11,6 +11,9 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate;
+import org.apache.commons.collections.CollectionUtils;
+
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
@@ -672,7 +675,28 @@ public abstract class Validator {
 			return false;
 		}
 		double montoSumaBoletas = 0;
+		List<BoletaDepositoDTO> listaBoletas = new ArrayList<BoletaDepositoDTO>();
 		for (BoletaDepositoDTO boleta : boletas) {
+			if (listaBoletas.size() == 0) {
+				//tengo q crear una nueva porq sino no anda, se borra de la coleccion
+				BoletaDepositoDTO b = new BoletaDepositoDTO();
+				b.setNumero(boleta.getNumero());
+				listaBoletas.add(b);
+			} else {
+				BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils.find(
+						listaBoletas,
+						new BeanPropertyValueEqualsPredicate("numero", boleta.getNumero()));
+				if (boletaEncontrada == null) {
+					//tengo q crear una nueva porq sino no anda, se borra de la coleccion
+					BoletaDepositoDTO b = new BoletaDepositoDTO();
+					b.setNumero(boleta.getNumero());
+					listaBoletas.add(b);
+				} else {
+					addErrorXML(pError, "Los Números de las Boletas de Deposito no se pueden repetir");
+					return false;
+				}
+			}
+
 			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
 			if (boleta.getNumero() <= 0) {
 				addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
