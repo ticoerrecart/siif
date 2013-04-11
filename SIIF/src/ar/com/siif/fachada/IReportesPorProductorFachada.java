@@ -34,5 +34,5 @@ public interface IReportesPorProductorFachada {
 
 	public byte[] generarReporteVolumenPorUbicacion(String path,
 			String periodo, Long idProductor, Long idPMF, Long idTranzon,
-			Long idMarcacion) throws Exception;
+			Long idMarcacion, Long idArea) throws Exception;
 }
