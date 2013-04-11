@@ -32,6 +32,7 @@ function generarReporte(){
 	var periodo = $("#idPeriodo").val();
 	var productor = $("#idProductor").val();
 	var pmf = $("#idPMF").val();
+	var area = $("#idArea").val();
 	var tranzon = $("#idTranzon").val();
 	var marcacion = $("#idMarcacion").val();
 	var metodo = $("#paramForward").val();
@@ -39,11 +40,11 @@ function generarReporte(){
 	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 	if(type == "IE"){
 		//window.open("./reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
-		window.open("./reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
+		window.open("./reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
 		//window.open("./reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
 	}else{
 		//window.open("../../reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
-		window.open("../../reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
+		window.open("../../reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
 		//window.open("../../reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
 	}	
 }
