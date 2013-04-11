@@ -231,4 +231,12 @@ public class GuiaForestal {
 		this.localizacion = localizacion;
 	}
 
+	public double getCantidadMts() {
+		double cantidadMts = 0;
+		for (SubImporte subImporte : this.getSubImportes()) {
+			cantidadMts = cantidadMts + subImporte.getCantidadMts();
+		}
+		return cantidadMts;
+	}
+
 }
