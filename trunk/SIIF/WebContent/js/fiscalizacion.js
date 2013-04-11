@@ -44,13 +44,16 @@ function cambioComboZona() {
 		if (zmf == 1) {
 			$(".plan").show();
 			$(".area").hide();
-
+			$('#idArea').val(-1);
 			actualizarComboPMF();
 		}
 		if (zmf == 2) {
 			$(".area").show();
 			$(".plan").hide();
-
+			$('#idPMF').val(-1);
+			$('#idTranzon').val(-1);
+			$('#idMarcacion').val(-1);
+			$('#idRodal').val(-1);
 			actualizarComboArea();
 		}
 	}
