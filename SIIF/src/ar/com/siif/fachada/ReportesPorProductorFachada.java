@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.com.siif.dao.ReportesDAO;
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.utils.Constantes;
 
 public class ReportesPorProductorFachada implements
@@ -17,7 +19,6 @@ public class ReportesPorProductorFachada implements
 	}
 
 	public ReportesPorProductorFachada(ReportesDAO pReportesDAO) {
-
 		this.reportesDAO = pReportesDAO;
 	}
 
@@ -173,7 +174,7 @@ public class ReportesPorProductorFachada implements
 
 		Timestamp ts = new Timestamp(new Date().getTime());
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("PATH_SUB_REPORTES", path);
 		parameters.put("periodo", periodo);
 		parameters.put("idProductor", idProductor);
@@ -190,16 +191,43 @@ public class ReportesPorProductorFachada implements
 
 	public byte[] generarReporteVolumenPorUbicacion(String path,
 			String periodo, Long idProductor, Long idPMF, Long idTranzon,
-			Long idMarcacion) throws Exception {
+			Long idMarcacion, Long idArea) throws Exception {
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("PATH_SUB_REPORTES", path);
 		parameters.put("periodo", periodo);
-		parameters.put("idProductor", idProductor);
-		parameters.put("idPMF", idPMF);
-		parameters.put("idTranzon", idTranzon);
-		parameters.put("idMarcacion", idMarcacion);
-
+		
+		boolean esPlan = true;
+		
+		Long idLocalizacion = null;
+		if (idMarcacion == -1){
+			if (idTranzon == -1){
+				if (idPMF == -1){
+					idLocalizacion = idArea;
+					esPlan = false;
+				} else {
+					idLocalizacion = idPMF;
+				}
+			} else {
+				idLocalizacion = idTranzon;
+			} 
+		} else {
+			idLocalizacion = idMarcacion;
+		}
+		
+		parameters.put("idLocalizacion", idLocalizacion);
+		parameters.put("porPlan", esPlan);
+		
+		Localizacion localizacion = (Localizacion)reportesDAO.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
+		Entidad entidad = (Entidad)reportesDAO.getHibernateTemplate().get(Entidad.class, idProductor);
+		
+		parameters.put("tipoEntidad", entidad.getTipoEntidad());
+		parameters.put("nombreProductor", entidad.getNombre());
+		parameters.put("porPlan", esPlan);
+		
+		parameters.put("nombreLocalizacion", localizacion.getNombreLocalizacion());
+		
+		
 		return reportesDAO.generarReporte(
 				Constantes.VOLUMEN_POR_PRODUCTOR_POR_UBICACION, parameters);
 		// return
