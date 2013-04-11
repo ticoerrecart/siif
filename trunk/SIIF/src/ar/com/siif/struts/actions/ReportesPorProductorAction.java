@@ -476,11 +476,13 @@ public class ReportesPorProductorAction extends ValidadorAction {
 			String pmf = request.getParameter("pmf");
 			String tranzon = request.getParameter("tranzon");
 			String marcacion = request.getParameter("marcacion");
+			String area = request.getParameter("area");
 
+						
 			byte[] bytes = reportesPorProductorFachada
 					.generarReporteVolumenPorUbicacion(path, periodo, new Long(
 							productor), new Long(pmf), new Long(tranzon),
-							new Long(marcacion));
+							new Long(marcacion),new Long(area));
 
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");
