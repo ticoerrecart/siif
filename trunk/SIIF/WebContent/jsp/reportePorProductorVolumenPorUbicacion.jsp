@@ -37,16 +37,27 @@ function generarReporte(){
 	var marcacion = $("#idMarcacion").val();
 	var metodo = $("#paramForward").val();
 	
-	var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
-	if(type == "IE"){
-		//window.open("./reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
-		window.open("./reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
-		//window.open("./reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
-	}else{
-		//window.open("../../reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
-		window.open("../../reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
-		//window.open("../../reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
+	
+	if(productor != "-1" && (pmf != "-1" || area!= "-1")){
+		$("#error").html("");	
+	
+		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
+		if(type == "IE"){
+			//window.open("./reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
+			window.open("./reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
+			//window.open("./reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
+		}else{
+			//window.open("../../reportesPorProductor.do?metodo=generarReporteVolumenFiscalizadoPorProductos&periodo="+periodo+"&productor="+productor,"",especificaciones);
+			window.open("../../reportesPorProductor.do?metodo="+metodo+"&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&area="+area+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
+			//window.open("../../reportesPorProductor.do?metodo="+metodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);
+		}	
+	} else {
+		var textoError2 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
+		var textoError3 = (pmf == "-1" || area == "-1")?"* Seleccione una Zona de Manejo Forestal<br>":"";
+		$("#error").html( textoError2 + textoError3);		
 	}	
+	
+	
 }
 
 function cargarProductores(){
@@ -108,7 +119,7 @@ function actualizarProductoresCallback(productores){
 				<tr>
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
-						<select id="idProductor" class="botonerab" disabled="disabled" onchange="actualizarComboPMF();">
+						<select id="idProductor" class="botonerab" disabled="disabled" onchange="cambioComboZona();">
 							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>
