@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.com.siif.dao.ReportesDAO;
+import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 
@@ -59,18 +61,40 @@ public class ReportesPorProductoFachada implements IReportesPorProductoFachada {
 	}
 
 	public byte[] generarReporteVolumenPorProductoPorProductorPorUbicacion(
-			String path, String volumen, String productor, String periodo,
-			String pmf, String tranzon, String marcacion) throws Exception {
+			String path, String volumen,String productor, String periodo,
+			String pmf, String tranzon, String marcacion, String area ) throws Exception {
 
-		Map parameters = new HashMap();
+		
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("PATH_SUB_REPORTES", path);
 		parameters.put("volumen", volumen);
-		parameters.put("idProductor", new Long(productor));
 		parameters.put("periodoForestal", periodo);
-		parameters.put("idPMF", new Long(pmf));
-		parameters.put("idTranzon", new Long(tranzon));
-		parameters.put("idMarcacion", new Long(marcacion));
 
+		Long idLocalizacion = null;
+		if ( "-1".equals(marcacion)){
+			if ("-1".equals(tranzon)){
+				if ("-1".equals(pmf)){
+					idLocalizacion = new Long(area);
+				} else {
+					idLocalizacion = new Long(pmf);
+				}
+			} else {
+				idLocalizacion = new Long(tranzon);
+			} 
+		} else {
+			idLocalizacion = new Long(marcacion);
+		}
+		
+		parameters.put("idLoc", idLocalizacion);
+		Localizacion localizacion = (Localizacion)reportesDAO.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
+		parameters.put("localizacion",localizacion.getNombreLocalizacion());
+		
+		Entidad entidad = (Entidad)reportesDAO.getHibernateTemplate().get(Entidad.class, new Long(productor));
+		
+		parameters.put("tipoEntidad", entidad.getTipoEntidad());
+		parameters.put("productorForestal", entidad.getNombre());
+		
 		return reportesDAO.generarReporte(
 				Constantes.VOLUMEN_POR_PRODUCTO_POR_PRODUCTOR_POR_UBICACION,
 				parameters);
