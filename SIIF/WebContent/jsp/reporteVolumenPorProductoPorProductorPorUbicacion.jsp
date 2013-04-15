@@ -33,23 +33,24 @@ function generarReporte(){
 	var periodo = $("#idPeriodo").val();
 	var productor = $("#idProductor").val();
 	var pmf = $("#idPMF").val();
+	var area = $("#idArea").val();
 	var tranzon = $("#idTranzon").val();
 	var marcacion = $("#idMarcacion").val();
 	//var metodo = $("#paramForward").val();
 	
-	if(volumen != "-1" && productor != "-1" && pmf != "-1"){
+	if(volumen != "-1" && productor != "-1" && ( pmf != "-1" || area !="-1")){
 		$("#error").html("");	
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);		
+			window.open("./reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&area="+area+"&volumen="+volumen,"",especificaciones);		
 		}else{
-			window.open("../../reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&volumen="+volumen,"",especificaciones);				
+			window.open("../../reportesPorProducto.do?metodo=generarReporteVolumenPorProductoPorProductorPorUbicacion&periodo="+periodo+"&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion+"&area="+area+"&volumen="+volumen,"",especificaciones);				
 		}
 	}		
 	else{
 		var textoError1 = (volumen == "-1")?"* Seleccione un Volumen<br>":"";
 		var textoError2 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
-		var textoError3 = (pmf == "-1")?"* Seleccione un Plan de Manejo Forestal<br>":"";
+		var textoError3 = (pmf == "-1" && area == "-1")?"* Seleccione una Zona de Manejo Forestal<br>":"";
 		$("#error").html(textoError1 + textoError2 + textoError3);		
 	}		
 }
@@ -123,7 +124,7 @@ function actualizarProductoresCallback(productores){
 				<tr>
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
-						<select id="idProductor" class="botonerab" disabled="disabled" onchange="actualizarComboPMF();">
+						<select id="idProductor" class="botonerab" disabled="disabled" onchange="cambioComboZona();">
 							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>
@@ -145,7 +146,7 @@ function actualizarProductoresCallback(productores){
 				<tr class="area" style="display: none">	
 					<td width="40%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
 					<td align="left"> 
-						<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" >
+						<select id="idArea" class="botonerab" name="idArea" >
 							<option value="-1">- Seleccione -</option>						
 						</select>	
 					</td>
