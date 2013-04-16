@@ -812,18 +812,18 @@ public abstract class Validator {
 				return false;
 			}
 		}
-		List<Integer> lista = new ArrayList<Integer>();
+		List<Long> lista = new ArrayList<Long>();
 		for (RangoDTO rango : rangos) {
 			lista.add(rango.getDesde());
 			lista.add(rango.getHasta() + 1);
 		}
-		Integer i = new Integer(-1);
-		for (Integer integer : lista) {
-			if (i > integer) {
+		Long i = new Long(-1);
+		for (Long nro : lista) {
+			if (i > nro) {
 				addErrorXML(pError, "Los valores de los rangos " + titulo + " estan superpuestos");
 				return false;
 			} else {
-				i = integer;
+				i = nro;
 			}
 		}
 		return true;
@@ -928,6 +928,17 @@ public abstract class Validator {
 		return true;
 	}
 
+	public static boolean validarM3DeLeniaEnValesMenorQueM3Guia(double m3Vales,
+			double m3Guia, StringBuffer pError) {
+		if (m3Vales > m3Guia + 1) {
+			addErrorXML(
+					pError,
+					"La suma de los M3 de los vales de transporte deben ser menores que los M3 declarados en la guía forestal");
+			return false;
+		}
+		return true;
+	}		
+	
 	public static boolean validarFiscalizacionExistenteParaVale(
 			List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError) {
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {

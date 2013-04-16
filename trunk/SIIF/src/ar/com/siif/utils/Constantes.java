@@ -412,6 +412,7 @@ public class Constantes {
 	//FIN MENU
 
 	public static final Long LENIA_ID = 3L;
+	public static final String LENIA = "Leña";
 
 	//diametro
 	/*a. Rollizos: Largo: 2 a m7 y diámetro: 10 a 160cm

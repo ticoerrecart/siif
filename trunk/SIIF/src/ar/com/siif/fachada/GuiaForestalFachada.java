@@ -25,6 +25,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.struts.utils.Validator;
+import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 import ar.com.siif.utils.MyLogger;
 
@@ -200,8 +201,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			StringBuffer pError = new StringBuffer();
 			
 			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
-			boolean ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
-					"Nº de Piezas", pError);
+			boolean ok1 = true;
 			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
 					"Cantidad(m3)", pError);
 
@@ -210,8 +210,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					ValeTransporte.class, idVale);
 			List<Fiscalizacion> fiscalizaciones = vale.getGuiaForestal().getFiscalizaciones();
 
-			boolean ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
-					producto, pError);
+			boolean ok3 = true;
 
 			for (Fiscalizacion fiscalizacion : fiscalizaciones) {
 				if (fiscalizacion.getTipoProducto().getNombre().equals(producto))
@@ -227,8 +226,33 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				}
 			}
 
-			boolean ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
-					totalMts, pError);
+			//Si el tipo de producto del vale es Leña, tengo que verificar el volumen contra lo declarado en la guia.
+			//Si es otro tipo de producto, tengo que verificar contra las fiscalizaciones asociadas a la guia.
+			boolean ok4 = true;
+			if(!producto.equals(Constantes.LENIA)){
+				
+				ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
+						"Nº de Piezas", pError);				
+				
+				ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
+						producto, pError);				
+				
+				ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
+						totalMts, pError);
+			}	
+			else{
+				
+				List<SubImporte> subImportes = vale.getGuiaForestal().getSubImportes();
+				double totalMtsEnGuia = 0;	
+				for (SubImporte subImporte : subImportes) {
+					if (subImporte.getTipoProducto().getNombre().equals(producto))
+						totalMtsEnGuia = totalMtsEnGuia + subImporte.getCantidadMts();					
+				}
+				
+				ok4 = Validator.validarM3DeLeniaEnValesMenorQueM3Guia(totalMtsVales,
+						totalMtsEnGuia, pError);				
+			}
+			
 			if (ok && ok1 && ok2 && ok3 && ok4) {
 				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 						destino, vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
@@ -243,7 +267,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
+	public String reemplazarValeTransporte(long idVale, Long numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento)
 			throws NegocioException {

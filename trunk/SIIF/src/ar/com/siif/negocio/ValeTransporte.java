@@ -24,7 +24,7 @@ public class ValeTransporte {
 	private Long id;
 
 	@Column(nullable = false)
-	private int numero;
+	private Long numero;
 
 	//private Date fecha;
 	
@@ -67,11 +67,11 @@ public class ValeTransporte {
 	@JoinColumn(name = "guiaForestal_fk")
 	private GuiaForestal guiaForestal;
 
-	public int getNumero() {
+	public Long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
 

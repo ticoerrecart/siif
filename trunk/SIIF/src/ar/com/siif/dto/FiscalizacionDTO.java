@@ -38,8 +38,10 @@ public class FiscalizacionDTO {
 	private EntidadDTO oficinaAlta;
 
 	// private long idUsuario;
-	private UsuarioDTO usuario;
+	private UsuarioDTO usuarioAlta;
 
+	private UsuarioDTO usuarioModificacion;
+	
 	private List<MuestraDTO> muestra;
 
 	private GuiaForestalDTO guiaForestal;
@@ -51,7 +53,8 @@ public class FiscalizacionDTO {
 		productorForestal = new EntidadDTO();
 		tipoProducto = new TipoProductoForestalDTO();
 		oficinaAlta = new EntidadDTO();
-		usuario = new UsuarioDTO();
+		usuarioAlta = new UsuarioDTO();
+		usuarioModificacion = new UsuarioDTO();
 	}
 
 	public Long getLocalizacionId() {
@@ -172,12 +175,12 @@ public class FiscalizacionDTO {
 		this.oficinaAlta = oficinaAlta;
 	}
 
-	public UsuarioDTO getUsuario() {
-		return usuario;
+	public UsuarioDTO getUsuarioAlta() {
+		return usuarioAlta;
 	}
 
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
+	public void setUsuarioAlta(UsuarioDTO usuario) {
+		this.usuarioAlta = usuario;
 	}
 
 	public GuiaForestalDTO getGuiaForestal() {
@@ -218,6 +221,14 @@ public class FiscalizacionDTO {
 
 	public void setLocalizacion(LocalizacionDTO localizacion) {
 		this.localizacion = localizacion;
+	}
+
+	public UsuarioDTO getUsuarioModificacion() {
+		return usuarioModificacion;
+	}
+
+	public void setUsuarioModificacion(UsuarioDTO usuarioModificacion) {
+		this.usuarioModificacion = usuarioModificacion;
 	}
 
 }

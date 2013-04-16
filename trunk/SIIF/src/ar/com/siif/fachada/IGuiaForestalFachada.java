@@ -41,7 +41,7 @@ public interface IGuiaForestalFachada {
 			String producto, int nroPiezas, double cantM3, String especie,
 			String fechaDevolucion) throws NegocioException;
 
-	public String reemplazarValeTransporte(long idVale, int numeroVale, String origen,
+	public String reemplazarValeTransporte(long idVale, Long numeroVale, String origen,
 			String destino, String vehiculo, String marca, String dominio, String producto,
 			int nroPiezas, double cantM3, String especie, String fechaVencimiento)
 			throws NegocioException;

@@ -58,9 +58,14 @@ public class Fiscalizacion {
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuario_fk")
-	private Usuario usuario;
+	@JoinColumn(name = "usuarioAlta_fk")
+	private Usuario usuarioAlta;
 
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "usuarioModificacion_fk")
+	private Usuario usuarioModificacion;	
+	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "oficina_fk")
@@ -154,12 +159,12 @@ public class Fiscalizacion {
 		this.localizacion = localizacion;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getUsuarioAlta() {
+		return usuarioAlta;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioAlta(Usuario usuario) {
+		this.usuarioAlta = usuarioAlta;
 	}
 
 	public Entidad getOficinaAlta() {
@@ -168,6 +173,14 @@ public class Fiscalizacion {
 
 	public void setOficinaAlta(Entidad oficinaAlta) {
 		this.oficinaAlta = oficinaAlta;
+	}
+
+	public Usuario getUsuarioModificacion() {
+		return usuarioModificacion;
+	}
+
+	public void setUsuarioModificacion(Usuario usuarioModificacion) {
+		this.usuarioModificacion = usuarioModificacion;
 	}
 
 }

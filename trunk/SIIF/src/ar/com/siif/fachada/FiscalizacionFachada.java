@@ -105,6 +105,8 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
 		fiscalizacion.setLocalizacion(ubicacionFachada
 				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion()));
+		fiscalizacion.setUsuarioModificacion(usuarioFachada.getUsuario(
+								fiscalizacionDTO.getUsuarioModificacion().getId()));
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,
 				muestrasNuevasDTO);
 	}
@@ -148,8 +150,8 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.recuperarTipoProductoForestal(fiscalizacionDTO
 						.getTipoProducto().getId());
 
-		Usuario usuario = usuarioFachada.getUsuario(fiscalizacionDTO
-				.getUsuario().getId());
+		Usuario usuarioAlta = usuarioFachada.getUsuario(fiscalizacionDTO
+				.getUsuarioAlta().getId());
 
 		Long idLocalizacion = fiscalizacionDTO.getIdLocalizacion();
 
@@ -158,7 +160,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(
 				fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
-				oficinaForestal, tipoProducto, usuario);
+				oficinaForestal, tipoProducto, usuarioAlta, null);
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 
