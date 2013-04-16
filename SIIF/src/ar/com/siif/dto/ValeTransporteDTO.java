@@ -5,7 +5,7 @@ public class ValeTransporteDTO {
 
 	private long id;
 	
-	private int numero;
+	private Long numero;
 
 	private String fechaDevolucion;
 
@@ -36,11 +36,11 @@ public class ValeTransporteDTO {
 		guiaForestal = new GuiaForestalDTO();
 	}
 
-	public int getNumero() {
+	public Long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Long numero) {
 		this.numero = numero;
 	}
 

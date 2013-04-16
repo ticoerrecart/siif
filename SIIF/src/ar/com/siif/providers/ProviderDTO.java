@@ -210,7 +210,10 @@ public abstract class ProviderDTO {
 				.getLocalizacion()));
 		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
-		fiscalizacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuario()));
+		fiscalizacionDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioAlta()));
+		if(fiscalizacion.getUsuarioModificacion() != null){
+			fiscalizacionDTO.setUsuarioModificacion(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioModificacion()));
+		}	
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
 		fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());
 

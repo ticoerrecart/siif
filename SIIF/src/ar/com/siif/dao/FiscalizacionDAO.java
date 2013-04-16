@@ -176,7 +176,8 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		fiscalizacion.setOficinaAlta(null);
 		fiscalizacion.setProductorForestal(null);
 		fiscalizacion.setLocalizacion(null);
-		fiscalizacion.setUsuario(null);
+		fiscalizacion.setUsuarioAlta(null);
+		fiscalizacion.setUsuarioModificacion(null);		
 		fiscalizacion.setTipoProducto(null);
 		//fiscalizacion.setMuestra(null);
 

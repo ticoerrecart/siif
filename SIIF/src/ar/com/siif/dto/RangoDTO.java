@@ -6,23 +6,23 @@ public class RangoDTO {
 		super();
 	}
 
-	public int getDesde() {
+	public Long getDesde() {
 		return desde;
 	}
 
-	public void setDesde(int desde) {
+	public void setDesde(Long desde) {
 		this.desde = desde;
 	}
 
-	public int getHasta() {
+	public Long getHasta() {
 		return hasta;
 	}
 
-	public void setHasta(int hasta) {
+	public void setHasta(Long hasta) {
 		this.hasta = hasta;
 	}
 
-	private int desde;
-	private int hasta;
+	private Long desde;
+	private Long hasta;
 
 }

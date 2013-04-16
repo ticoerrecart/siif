@@ -286,15 +286,21 @@ public class FiscalizacionAction extends ValidadorAction {
 
 		String strForward = "exitoModificacionFiscalizacion";
 		try {
+			UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);			
+			
 			WebApplicationContext ctx = getWebApplicationContext();
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
+			
 			/*Fiscalizacion fiscalizacion = fiscalizacionFachada
 					.recuperarFiscalizacion(fiscalizacionForm.getFiscalizacionDTO().getId());
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion);*/
-			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacionForm.getFiscalizacionDTO(),
-					fiscalizacionForm.getMuestrasDTO());
+			
+			FiscalizacionDTO fiscalizacion = fiscalizacionForm.getFiscalizacionDTO();
+			fiscalizacion.setUsuarioModificacion(usuario);
+			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion,fiscalizacionForm.getMuestrasDTO());
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -324,7 +330,7 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
-			fiscalizacionDTO.setUsuario(usuario);
+			fiscalizacionDTO.setUsuarioAlta(usuario);
 
 			//Hay que hacer el alta de la Fiscalizacion, con la FiscalizacionDTO y la lista de MuestraDTO.
 			//Hay que cambiar el usuario que se guarda en el session por usuarioDTO.

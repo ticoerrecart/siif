@@ -57,7 +57,7 @@ public abstract class ProviderDominio {
 			FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO,
 			Localizacion localizacion, Entidad productorForestal,
 			Entidad oficinaForestal, TipoProductoForestal tipoProducto,
-			Usuario usuario) {
+			Usuario usuarioAlta, Usuario usuarioModificacion) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
@@ -72,8 +72,9 @@ public abstract class ProviderDominio {
 		fiscalizacion.setLocalizacion(localizacion);
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
-		fiscalizacion.setUsuario(usuario);
-
+		fiscalizacion.setUsuarioAlta(usuarioAlta);
+		fiscalizacion.setUsuarioModificacion(usuarioModificacion);
+		
 		List<Muestra> muestras = new ArrayList<Muestra>();
 		for (MuestraDTO muestraDTO : muestrasDTO) {
 			muestras.add(ProviderDominio.getMuestra(muestraDTO, fiscalizacion));
@@ -319,7 +320,7 @@ public abstract class ProviderDominio {
 	public static List<ValeTransporte> getValesTransportes(GuiaForestal guia,
 			RangoDTO rangoDTO, Date fechaVencimiento) {
 		List<ValeTransporte> vales = new ArrayList<ValeTransporte>();
-		for (int i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {
+		for (long i = rangoDTO.getDesde(); i <= rangoDTO.getHasta(); i++) {
 			ValeTransporte vale = new ValeTransporte();
 			vale.setFechaVencimiento(fechaVencimiento);
 			vale.setGuiaForestal(guia);
