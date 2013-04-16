@@ -178,7 +178,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
 
-			guiaForestal.setUsuario(usr);
+			guiaForestal.setUsuarioAlta(usr);
 			String fecha = guiaForm.getFechaVencimiento().trim();
 			Date dFecha = null;
 			if (fecha != null && !"".equals(fecha)) {
@@ -502,7 +502,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();
-			guiaForestal.setUsuario(usr);
+			guiaForestal.setUsuarioAlta(usr);
 			String fecha = guiaForestalForm.getFechaVencimiento().trim();
 			Date dFecha = null;
 			if (fecha != null && !"".equals(fecha)) {
@@ -1066,7 +1066,7 @@ public class GuiaForestalAction extends ValidadorAction {
 								.getGuiaForestal().getNroGuia());
 			} else {
 				guiaForestal = guiaForestalFachada
-						.recuperarGuiaForestalPorNroGuia(Integer
+						.recuperarGuiaForestalPorNroGuia(Long
 								.valueOf(nroGuia));
 			}
 

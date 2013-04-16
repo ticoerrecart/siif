@@ -250,7 +250,7 @@ public abstract class ProviderDominio {
 			List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
 			List<Fiscalizacion> listaFiscalizaciones,
 			List<SubImporte> listaSubImportes, Entidad productorForestal,
-			Localizacion localizacion, Localidad localidad, Usuario usuario) {
+			Localizacion localizacion, Localidad localidad, Usuario usuarioAlta) {
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -267,7 +267,7 @@ public abstract class ProviderDominio {
 		guia.setLocalidad(localidad);
 		guia.setNroGuia(guiaDTO.getNroGuia());
 		guia.setObservaciones(guiaDTO.getObservaciones());
-		guia.setUsuario(usuario);
+		guia.setUsuarioAlta(usuarioAlta);
 
 		guia.setPeriodoForestal(guiaDTO.getPeriodoForestal());
 		guia.setProductorForestal(productorForestal);

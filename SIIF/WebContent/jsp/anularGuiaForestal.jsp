@@ -757,7 +757,7 @@ function volverAnulacionGuia(){
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Usuario'/></td>
 		<td align="left">		
-			<input value="${guiaForestal.usuario.nombreUsuario}" class="botonerab" type="text" 
+			<input value="${guiaForestal.usuarioAlta.nombreUsuario}" class="botonerab" type="text" 
 				size="25" readonly="readonly">				
 		</td>
 	</tr>
