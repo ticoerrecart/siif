@@ -31,7 +31,7 @@ public class GuiaForestalDTO {
 
 	private List<BoletaDepositoDTO> boletasDeposito;
 
-	private UsuarioDTO usuario;
+	private UsuarioDTO usuarioAlta;
 
 	private LocalizacionDTO localizacion;
 
@@ -48,7 +48,7 @@ public class GuiaForestalDTO {
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
 		valesTransporte = new ArrayList<ValeTransporteDTO>();
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
-		usuario = new UsuarioDTO();
+		usuarioAlta = new UsuarioDTO();
 		productorForestal = new EntidadDTO();
 		//rodal = new RodalDTO();
 		subImportes = new ArrayList<SubImporteDTO>();
@@ -127,12 +127,12 @@ public class GuiaForestalDTO {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public UsuarioDTO getUsuario() {
-		return usuario;
+	public UsuarioDTO getUsuarioAlta() {
+		return usuarioAlta;
 	}
 
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
+	public void setUsuarioAlta(UsuarioDTO usuario) {
+		this.usuarioAlta = usuario;
 	}
 
 	public Long getId() {

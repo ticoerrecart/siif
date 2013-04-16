@@ -285,8 +285,8 @@ public abstract class ProviderDTO {
 					.valueOf(guiaForestal.getLocalizacion().getId()));
 		}
 
-		if (guiaForestal.getUsuario() != null) {
-			guiaForestalDTO.setUsuario(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuario()));
+		if (guiaForestal.getUsuarioAlta() != null) {
+			guiaForestalDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuarioAlta()));
 		}
 
 		List<BoletaDeposito> listaBoletas = guiaForestal.getBoletasDeposito();

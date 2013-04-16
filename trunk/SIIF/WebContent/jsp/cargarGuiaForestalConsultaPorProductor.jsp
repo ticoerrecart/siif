@@ -754,9 +754,9 @@ function volverAltaGFB(){
 			<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" 
 				width='17' height='21'>						
 		</td>
-		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Usuario'/></td>
+		<td width="30%" class="botoneralNegritaRight">Usuario Alta</td>
 		<td align="left">		
-			<input value="${guiaForestal.usuario.nombreUsuario}" class="botonerab" type="text" 
+			<input value="${guiaForestal.usuarioAlta.nombreUsuario}" class="botonerab" type="text" 
 				size="25" readonly="readonly">				
 		</td>
 	</tr>

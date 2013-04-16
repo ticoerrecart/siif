@@ -68,8 +68,8 @@ public class GuiaForestal {
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuario_fk")
-	private Usuario usuario;
+	@JoinColumn(name = "usuarioAlta_fk")
+	private Usuario usuarioAlta;
 
 	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -159,12 +159,12 @@ public class GuiaForestal {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getUsuarioAlta() {
+		return usuarioAlta;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioAlta(Usuario usuario) {
+		this.usuarioAlta = usuario;
 	}
 
 	public Long getId() {

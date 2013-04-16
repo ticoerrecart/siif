@@ -81,7 +81,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			listaSubImporte.add(ProviderDominio.getSubImporte(null, tipoProducto, subImporteDTO));
 		}
 
-		Usuario usuario = usuarioFachada.getUsuario(guia.getUsuario().getId());
+		Usuario usuarioAlta = usuarioFachada.getUsuario(guia.getUsuarioAlta().getId());
 		Entidad productorForestal = entidadFachada.getEntidad(guia.getProductorForestal().getId());
 		Localizacion localizacion = ubicacionFachada.getLocalizacion(Long.parseLong(guia
 				.getIdLocalizacion()));
@@ -89,7 +89,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 		GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia, listaBoletaDepositoDTO,
 				listaRangosDTO, fechaVencimiento, listaFiscalizaciones, listaSubImporte,
-				productorForestal, localizacion, localidad, usuario);
+				productorForestal, localizacion, localidad, usuarioAlta);
 
 		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 
