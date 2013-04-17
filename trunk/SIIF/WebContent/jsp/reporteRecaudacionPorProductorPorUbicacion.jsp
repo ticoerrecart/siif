@@ -30,22 +30,23 @@ if (!document.all && document.getElementById) type="MO";
 function generarReporte(){
 
 	var productor = $("#idProductor").val();
+	var area = $("#idArea").val();
 	var pmf = $("#idPMF").val();
 	var tranzon = $("#idTranzon").val();
 	var marcacion = $("#idMarcacion").val();
 	
-	if(productor != "-1" && pmf != "-1"){
+	if(productor != "-1" && ( pmf != "-1" || area != "-1")){
 		$("#error").html("");	
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
+			window.open("./reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&area="+area+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);		
 		}else{
-			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
+			window.open("../../reportesRecaudacion.do?metodo=generarReporteRecaudacionPorProductorPorUbicacion&productor="+productor+"&area="+area+"&pmf="+pmf+"&tranzon="+tranzon+"&marcacion="+marcacion,"",especificaciones);				
 		}
 	}		
 	else{
 		var textoError1 = (productor == "-1")?"* Seleccione un Productor Forestal<br>":"";
-		var textoError2 = (pmf == "-1")?"* Seleccione un Plan de Manejo Forestal<br>":"";
+		var textoError2 = (pmf == "-1" &&  area == "-1")?"* Seleccione una Zona de Manejo Forestal<br>":"";
 		$("#error").html(textoError1 + textoError2);		
 	}		
 }

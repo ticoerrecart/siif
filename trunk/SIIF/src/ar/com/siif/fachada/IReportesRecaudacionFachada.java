@@ -10,7 +10,7 @@ public interface IReportesRecaudacionFachada {
 			String path, String productor, String periodo) throws Exception;
 
 	public byte[] generarReporteRecaudacionPorProductorPorUbicacion(
-			String path, String productor, String pmf, String tranzon,
+			String path, String productor, String area, String pmf, String tranzon,
 			String marcacion) throws Exception;
 
 	public byte[] generarReporteRecaudacionTotalProductoresEntreFechas(

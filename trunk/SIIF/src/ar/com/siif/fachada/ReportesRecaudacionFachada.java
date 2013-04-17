@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ar.com.siif.dao.ReportesDAO;
+import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 
@@ -59,16 +60,32 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 	}
 
 	public byte[] generarReporteRecaudacionPorProductorPorUbicacion(
-			String path, String productor, String pmf, String tranzon,
+			String path, String productor, String area, String pmf, String tranzon,
 			String marcacion) throws Exception {
 
-		Map parameters = new HashMap();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("PATH_SUB_REPORTES", path);
 		parameters.put("idProductor", new Long(productor));
-		parameters.put("idPMF", new Long(pmf));
-		parameters.put("idTranzon", new Long(tranzon));
-		parameters.put("idMarcacion", new Long(marcacion));
-
+		
+		Long idLocalizacion = null;
+		if ( "-1".equals(marcacion)){
+			if ("-1".equals(tranzon)){
+				if ("-1".equals(pmf)){
+					idLocalizacion = new Long(area);
+				} else {
+					idLocalizacion = new Long(pmf);
+				}
+			} else {
+				idLocalizacion = new Long(tranzon);
+			} 
+		} else {
+			idLocalizacion = new Long(marcacion);
+		}
+		
+		parameters.put("idLocalizacion", idLocalizacion);
+		Localizacion localizacion = (Localizacion)reportesDAO.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
+		parameters.put("localizacion",localizacion.getNombreLocalizacion());
+		
 		return reportesDAO.generarReporte(
 				Constantes.REPORTE_RECAUDACION_POR_PRODUCTOR_POR_UBICACION,
 				parameters);
