@@ -172,13 +172,14 @@ public class ReportesRecaudacionAction extends ValidadorAction {
 					.getBean("reportesRecaudacionFachada");
 
 			String productor = request.getParameter("productor");
+			String area = request.getParameter("area");
 			String pmf = request.getParameter("pmf");
 			String tranzon = request.getParameter("tranzon");
 			String marcacion = request.getParameter("marcacion");
 
 			byte[] bytes = reportesRecaudacionFachada
 					.generarReporteRecaudacionPorProductorPorUbicacion(path,
-							productor, pmf, tranzon, marcacion);
+							productor, area, pmf, tranzon, marcacion);
 
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");
