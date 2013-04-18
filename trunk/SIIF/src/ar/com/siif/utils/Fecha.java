@@ -1,5 +1,6 @@
 package ar.com.siif.utils;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,11 @@ public class Fecha {
 
 	public static void main(String[] args) {
 		//testing ...
-		//String s = formatAAAAMMDDHHMMSS("19750304175536");
+		//String s = formatAAAAMMDDHHMMSS("19750304175536");	
+		
+		String fecha = getFechaHoyDDMMAAAAhhmmssSlash();
+		Date d = stringAAAAMMDDHHMMSSToDateSlash(fecha);
+		System.out.println(d);
 	}
 
 	/**
@@ -151,6 +156,16 @@ public class Fecha {
 						.substring(10, 12)), Integer.parseInt(pFecha.substring(12, 14))).getTime();
 	}
 
+	/**
+	 * Convierte un String de la forma "aaaa/mm/dd/ hh:MM:ss" a un Date
+	 */
+	public static Date stringAAAAMMDDHHMMSSToDateSlash(String pFecha) {
+		return new GregorianCalendar(Integer.parseInt(pFecha.substring(0, 4)),
+				Integer.parseInt(pFecha.substring(5, 7)) - 1, Integer.parseInt(pFecha.substring(8,
+						10)), Integer.parseInt(pFecha.substring(11, 13)), Integer.parseInt(pFecha
+						.substring(14, 16)), Integer.parseInt(pFecha.substring(17, 19))).getTime();
+	}	
+	
 	/**
 	 * Formatea una fecha String AAAAMMDDHHMMSS para ser visualizada
 	 */
@@ -301,6 +316,19 @@ public class Fecha {
 	/**
 	 * Fecha de hoy con formato DD/MM/AAAA separada por Slash ("/") 
 	 */
+	public static String getFechaHoyDDMMAAAASlash(){
+		
+		Timestamp ts = new Timestamp(new Date().getTime());		
+		return getFechaDDMMAAAASlash(dateToStringDDMMAAAA(ts));
+	}
+	
+	public static String getFechaHoyDDMMAAAAhhmmssSlash(){
+		
+	   DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	   Date date = new Date();
+	   return dateFormat.format(date);
+	}  
+	
 	/*public static String getFechaHoyDDMMAAAASlash() {
 		Calendar calendar = new GregorianCalendar(new Locale("es", "AR"));
 		Date trialTime = new Date();
@@ -383,5 +411,5 @@ public class Fecha {
 		Calendar cal = Calendar.getInstance();
 		return cal.get(Calendar.YEAR);
 	}
-
+	
 }

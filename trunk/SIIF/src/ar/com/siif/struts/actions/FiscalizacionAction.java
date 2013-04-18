@@ -17,6 +17,7 @@ import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.enums.TipoDeEntidad;
+import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IPeriodoFachada;
@@ -34,6 +35,7 @@ import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.struts.actions.forms.FiscalizacionForm;
 import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.Fecha;
 import ar.com.siif.utils.MyLogger;
 
 public class FiscalizacionAction extends ValidadorAction {
@@ -299,7 +301,10 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion);*/
 			
 			FiscalizacionDTO fiscalizacion = fiscalizacionForm.getFiscalizacionDTO();
-			fiscalizacion.setUsuarioModificacion(usuario);
+			fiscalizacion.getOperacionModificacion().setUsuario(usuario);
+			fiscalizacion.getOperacionModificacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			fiscalizacion.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion,fiscalizacionForm.getMuestrasDTO());
 			
 		} catch (Throwable t) {
@@ -330,10 +335,11 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
-			fiscalizacionDTO.setUsuarioAlta(usuario);
+			
+			fiscalizacionDTO.getOperacionAlta().setUsuario(usuario);
+			fiscalizacionDTO.getOperacionAlta().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			fiscalizacionDTO.getOperacionAlta().setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
 
-			//Hay que hacer el alta de la Fiscalizacion, con la FiscalizacionDTO y la lista de MuestraDTO.
-			//Hay que cambiar el usuario que se guarda en el session por usuarioDTO.
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacionDTO,
 					fiscalizacionForm.getMuestrasDTO());
 

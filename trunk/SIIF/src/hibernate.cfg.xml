@@ -17,8 +17,8 @@
 		<property name="hibernate.show_sql">false</property>
 		<property name="hibernate.format_sql">true</property>
 
-		<!-- Validate the database schema on startup -->
-		<property name="hbm2ddl.auto">validate</property>
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Enable Hibernate's automatic session context management -->
 		<mapping class='ar.com.siif.negocio.Rol' />
@@ -50,8 +50,8 @@
 		<mapping class='ar.com.siif.negocio.LocalidadDestino' />
 		<mapping class='ar.com.siif.negocio.CertificadoOrigen' />
 		<mapping class='ar.com.siif.negocio.TipoProductoEnCertificado' />
-		
-		
+		<mapping class='ar.com.siif.negocio.OperacionFiscalizacion' />
+		<mapping class='ar.com.siif.negocio.OperacionGuiaForestal' />
 		
 	</session-factory>
 </hibernate-configuration>

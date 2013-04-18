@@ -34,13 +34,15 @@ public class FiscalizacionDTO {
 
 	private long idLocalizacion;
 
-	// private long idOficinaForestal;
 	private EntidadDTO oficinaAlta;
 
-	// private long idUsuario;
-	private UsuarioDTO usuarioAlta;
-
-	private UsuarioDTO usuarioModificacion;
+	//private UsuarioDTO usuarioAlta;
+	
+	//private UsuarioDTO usuarioModificacion;
+	
+	private OperacionFiscalizacionDTO operacionAlta;
+	
+	private OperacionFiscalizacionDTO operacionModificacion;
 	
 	private List<MuestraDTO> muestra;
 
@@ -53,8 +55,10 @@ public class FiscalizacionDTO {
 		productorForestal = new EntidadDTO();
 		tipoProducto = new TipoProductoForestalDTO();
 		oficinaAlta = new EntidadDTO();
-		usuarioAlta = new UsuarioDTO();
-		usuarioModificacion = new UsuarioDTO();
+		//usuarioAlta = new UsuarioDTO();
+		//usuarioModificacion = new UsuarioDTO();		
+		operacionAlta = new OperacionFiscalizacionDTO();
+		operacionModificacion = new OperacionFiscalizacionDTO();
 	}
 
 	public Long getLocalizacionId() {
@@ -175,13 +179,13 @@ public class FiscalizacionDTO {
 		this.oficinaAlta = oficinaAlta;
 	}
 
-	public UsuarioDTO getUsuarioAlta() {
+	/*public UsuarioDTO getUsuarioAlta() {
 		return usuarioAlta;
 	}
 
 	public void setUsuarioAlta(UsuarioDTO usuario) {
 		this.usuarioAlta = usuario;
-	}
+	}*/
 
 	public GuiaForestalDTO getGuiaForestal() {
 		return guiaForestal;
@@ -223,12 +227,30 @@ public class FiscalizacionDTO {
 		this.localizacion = localizacion;
 	}
 
-	public UsuarioDTO getUsuarioModificacion() {
+	/*public UsuarioDTO getUsuarioModificacion() {
 		return usuarioModificacion;
 	}
 
 	public void setUsuarioModificacion(UsuarioDTO usuarioModificacion) {
 		this.usuarioModificacion = usuarioModificacion;
+	}*/
+
+	public OperacionFiscalizacionDTO getOperacionAlta() {
+		return operacionAlta;
 	}
 
+	public void setOperacionAlta(OperacionFiscalizacionDTO operacionAlta) {
+		this.operacionAlta = operacionAlta;
+	}
+
+	public OperacionFiscalizacionDTO getOperacionModificacion() {
+		return operacionModificacion;
+	}
+
+	public void setOperacionModificacion(
+			OperacionFiscalizacionDTO operacionModificacion) {
+		this.operacionModificacion = operacionModificacion;
+	}
+
+	
 }

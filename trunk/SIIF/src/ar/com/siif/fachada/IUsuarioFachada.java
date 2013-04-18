@@ -3,6 +3,7 @@ package ar.com.siif.fachada;
 import java.util.List;
 
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.negocio.Operacion;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -23,4 +24,6 @@ public interface IUsuarioFachada {
 	public void altaUsuario(UsuarioDTO usuario) throws NegocioException;
 
 	public void modificacionUsuario(UsuarioDTO usuario) throws NegocioException;
+	
+	public void altaOperacion(Operacion operacion) throws NegocioException;
 }

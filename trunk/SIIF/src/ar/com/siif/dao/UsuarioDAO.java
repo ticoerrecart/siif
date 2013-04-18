@@ -7,6 +7,7 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.negocio.Operacion;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
@@ -52,4 +53,11 @@ public class UsuarioDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
+	
+	public void altaOperacion(Operacion operacion) throws NegocioException {
+
+		this.getHibernateTemplate().saveOrUpdate(operacion);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+	}	
 }

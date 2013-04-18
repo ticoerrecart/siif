@@ -31,8 +31,12 @@ public class GuiaForestalDTO {
 
 	private List<BoletaDepositoDTO> boletasDeposito;
 
-	private UsuarioDTO usuarioAlta;
+	//private UsuarioDTO usuarioAlta;
 
+	private OperacionGuiaForestalDTO operacionAlta;
+	
+	private OperacionGuiaForestalDTO operacionModificacion;
+	
 	private LocalizacionDTO localizacion;
 
 	private List<FiscalizacionDTO> fiscalizaciones;
@@ -48,9 +52,10 @@ public class GuiaForestalDTO {
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
 		valesTransporte = new ArrayList<ValeTransporteDTO>();
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
-		usuarioAlta = new UsuarioDTO();
+		//usuarioAlta = new UsuarioDTO();
+		operacionAlta = new OperacionGuiaForestalDTO();
+		operacionModificacion = new OperacionGuiaForestalDTO();
 		productorForestal = new EntidadDTO();
-		//rodal = new RodalDTO();
 		subImportes = new ArrayList<SubImporteDTO>();
 		localidad = new LocalidadDTO();
 	}
@@ -127,13 +132,13 @@ public class GuiaForestalDTO {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public UsuarioDTO getUsuarioAlta() {
+	/*public UsuarioDTO getUsuarioAlta() {
 		return usuarioAlta;
 	}
 
 	public void setUsuarioAlta(UsuarioDTO usuario) {
 		this.usuarioAlta = usuario;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -244,6 +249,23 @@ public class GuiaForestalDTO {
 
 	public void setLocalizacion(LocalizacionDTO localizacion) {
 		this.localizacion = localizacion;
+	}
+
+	public OperacionGuiaForestalDTO getOperacionAlta() {
+		return operacionAlta;
+	}
+
+	public void setOperacionAlta(OperacionGuiaForestalDTO operacionAlta) {
+		this.operacionAlta = operacionAlta;
+	}
+
+	public OperacionGuiaForestalDTO getOperacionModificacion() {
+		return operacionModificacion;
+	}
+
+	public void setOperacionModificacion(
+			OperacionGuiaForestalDTO operacionModificacion) {
+		this.operacionModificacion = operacionModificacion;
 	}
 
 }
