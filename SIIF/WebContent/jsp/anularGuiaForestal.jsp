@@ -569,13 +569,13 @@ function volverAnulacionGuia(){
 				<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ValesTransporte'/></U>
 				<BR>
 			</label>
-			<br>
-			<table class="cuadrado" align="center" width="90%" cellpadding="2">
-				<tr>
-					<td colspan="4" class="azulAjustado"><bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
-				</tr>				
-				<c:choose>					
-					<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
+			<br>				
+			<c:choose>					
+				<c:when test="${fn:length(guiaForestal.valesTransporte)>0}">
+					<table class="cuadrado" align="center" width="90%" cellpadding="2">
+						<tr>
+							<td colspan="4" class="azulAjustado"><bean:message key='SIIF.subTitulo.ValesTransporte'/></td>
+						</tr>					
 						<tr>
 							<td colspan="4"  class="azulAjustado">
 								<input type="button" class="botonerab" onclick="expValesNoDevueltos();" value="Expandir Vales En Uso">
@@ -729,12 +729,18 @@ function volverAnulacionGuia(){
 								<td height="5" colspan="4"></td>
 							</tr>
 						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<bean:message key='SIIF.error.NoExiVales'/>
-					</c:otherwise>													
-				</c:choose>	
-			</table>
+					</table>
+				</c:when>
+				<c:otherwise>
+					<table border="0" class="cuadradoSinBorde" align="center" width="70%" cellpadding="2">
+						<tr>
+							<td class="botonerab">
+								<bean:message key='SIIF.error.NoExiVales'/>
+							</td>
+						</tr>
+					</table>
+				</c:otherwise>													
+			</c:choose>	
 		</div>
 		</td>
 	</tr>
@@ -757,7 +763,7 @@ function volverAnulacionGuia(){
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Usuario'/></td>
 		<td align="left">		
-			<input value="${guiaForestal.usuarioAlta.nombreUsuario}" class="botonerab" type="text" 
+			<input value="${guiaForestal.operacionAlta.usuario.nombreUsuario}" class="botonerab" type="text" 
 				size="25" readonly="readonly">				
 		</td>
 	</tr>
