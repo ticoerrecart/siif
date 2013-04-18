@@ -53,11 +53,5 @@ public class UsuarioDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
-	
-	public void altaOperacion(Operacion operacion) throws NegocioException {
 
-		this.getHibernateTemplate().saveOrUpdate(operacion);
-		this.getHibernateTemplate().flush();
-		this.getHibernateTemplate().clear();
-	}	
 }

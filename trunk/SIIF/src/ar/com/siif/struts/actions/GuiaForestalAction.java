@@ -1115,11 +1115,19 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
+			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
+													Constantes.USER_LABEL_SESSION);
+			
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			guiaForm.normalizarListaFiscalizaciones();
-			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(
-					guiaForm.getGuiaForestal().getId(),
-					guiaForm.getListaFiscalizaciones());
+			
+			GuiaForestalDTO guiaForestalDTO = guiaForm.getGuiaForestal();			
+			guiaForestalDTO.getOperacionModificacion().setUsuario(usr);
+			guiaForestalDTO.getOperacionModificacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			guiaForestalDTO.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());			
+			
+			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(guiaForestalDTO,
+																		guiaForm.getListaFiscalizaciones());
 
 			request.setAttribute("exitoAsociacion",
 					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
@@ -1141,9 +1149,17 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 
+			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);			
+			
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			GuiaForestalDTO guiaForestal = guiaForestalFachada
 					.recuperarGuiaForestal(guiaForm.getGuiaForestal().getId());
+			
+			guiaForestal.getOperacionAnulacion().setUsuario(usr);
+			guiaForestal.getOperacionAnulacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			guiaForestal.getOperacionAnulacion().setTipoOperacion(TipoOperacion.BAJA.getDescripcion());			
+			
 			guiaForestalFachada.anularGuiaForestal(guiaForestal);
 
 			request.getSession().setAttribute("exito",
@@ -1437,6 +1453,8 @@ public class GuiaForestalAction extends ValidadorAction {
 		String strForward = "exitoRecuperarGuiasForestalesParaRestablecerGuia";
 
 		try {
+			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
+					Constantes.USER_LABEL_SESSION);			
 			String paramForward = request.getParameter("forward");
 			WebApplicationContext ctx = getWebApplicationContext();
 			IConsultasPorProductorFachada consultasPorProductorFachada = (IConsultasPorProductorFachada) ctx
@@ -1450,6 +1468,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
+			request.setAttribute("usuario", usr.getId());
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
