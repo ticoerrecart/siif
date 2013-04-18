@@ -14,6 +14,8 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
+import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
 import ar.com.siif.dto.RangoDTO;
@@ -37,6 +39,8 @@ import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Obrajero;
+import ar.com.siif.negocio.OperacionFiscalizacion;
+import ar.com.siif.negocio.OperacionGuiaForestal;
 import ar.com.siif.negocio.PPF;
 import ar.com.siif.negocio.Periodo;
 import ar.com.siif.negocio.ProvinciaDestino;
@@ -72,9 +76,14 @@ public abstract class ProviderDominio {
 		fiscalizacion.setLocalizacion(localizacion);
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
-		fiscalizacion.setUsuarioAlta(usuarioAlta);
-		fiscalizacion.setUsuarioModificacion(usuarioModificacion);
-		
+		fiscalizacion.setOperacionAlta(ProviderDominio.getOperacionFiscalizacion(
+											fiscalizacionDTO.getOperacionAlta(),
+											fiscalizacion,usuarioAlta));
+		if(fiscalizacionDTO.getOperacionModificacion() != null){
+			fiscalizacion.setOperacionModificacion(ProviderDominio.getOperacionFiscalizacion(
+													fiscalizacionDTO.getOperacionModificacion(),
+													fiscalizacion,usuarioModificacion));
+		}
 		List<Muestra> muestras = new ArrayList<Muestra>();
 		for (MuestraDTO muestraDTO : muestrasDTO) {
 			muestras.add(ProviderDominio.getMuestra(muestraDTO, fiscalizacion));
@@ -85,6 +94,36 @@ public abstract class ProviderDominio {
 
 	}
 
+	public static OperacionFiscalizacion getOperacionFiscalizacion(
+													OperacionFiscalizacionDTO operacionDTO,
+													Fiscalizacion fiscalizacion,
+													Usuario usuario)
+	{
+		OperacionFiscalizacion operacion = new OperacionFiscalizacion();
+		//operacion.setFecha(Fecha.stringDDMMAAAAToUtilDate(operacionDTO.getFecha()));
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setFiscalizacion(fiscalizacion);
+		//operacion.setId(operacionDTO.getId());
+		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
+		operacion.setUsuario(usuario);
+		
+		return operacion;
+	}
+	
+	public static OperacionGuiaForestal getOperacionGuiaForestal(
+													OperacionGuiaForestalDTO operacionDTO,
+													GuiaForestal guiaForestal,
+													Usuario usuario){
+		
+		OperacionGuiaForestal operacion = new OperacionGuiaForestal();
+		operacion.setFecha(Fecha.stringAAAAMMDDHHMMSSToDateSlash(operacionDTO.getFecha()));
+		operacion.setGuiaForestal(guiaForestal);
+		operacion.setTipoOperacion(operacionDTO.getTipoOperacion());
+		operacion.setUsuario(usuario);
+		
+		return operacion;		
+	}
+	
 	public static Muestra getMuestra(MuestraDTO muestraDTO,
 			Fiscalizacion fiscalizacion) {
 
@@ -250,7 +289,7 @@ public abstract class ProviderDominio {
 			List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
 			List<Fiscalizacion> listaFiscalizaciones,
 			List<SubImporte> listaSubImportes, Entidad productorForestal,
-			Localizacion localizacion, Localidad localidad, Usuario usuarioAlta) {
+			Localizacion localizacion, Localidad localidad, Usuario usuarioAlta, Usuario usuarioModificacion) {
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -267,8 +306,17 @@ public abstract class ProviderDominio {
 		guia.setLocalidad(localidad);
 		guia.setNroGuia(guiaDTO.getNroGuia());
 		guia.setObservaciones(guiaDTO.getObservaciones());
-		guia.setUsuarioAlta(usuarioAlta);
-
+		
+		guia.setOperacionAlta(ProviderDominio.getOperacionGuiaForestal(
+				guiaDTO.getOperacionAlta(),
+				guia,usuarioAlta));
+		
+		if(guiaDTO.getOperacionModificacion() != null){
+			guia.setOperacionModificacion(ProviderDominio.getOperacionGuiaForestal(
+													guiaDTO.getOperacionModificacion(),
+													guia,usuarioModificacion));
+		}		
+		
 		guia.setPeriodoForestal(guiaDTO.getPeriodoForestal());
 		guia.setProductorForestal(productorForestal);
 		guia.setLocalizacion(localizacion);

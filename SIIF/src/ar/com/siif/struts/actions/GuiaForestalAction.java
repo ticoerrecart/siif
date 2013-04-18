@@ -21,6 +21,7 @@ import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
@@ -177,8 +178,11 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
 			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
-
-			guiaForestal.setUsuarioAlta(usr);
+			
+			guiaForestal.getOperacionAlta().setUsuario(usr);
+			guiaForestal.getOperacionAlta().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			guiaForestal.getOperacionAlta().setTipoOperacion(TipoOperacion.ALTA.getDescripcion());			
+			
 			String fecha = guiaForm.getFechaVencimiento().trim();
 			Date dFecha = null;
 			if (fecha != null && !"".equals(fecha)) {
@@ -502,12 +506,17 @@ public class GuiaForestalAction extends ValidadorAction {
 			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();
-			guiaForestal.setUsuarioAlta(usr);
+			//guiaForestal.setUsuarioAlta(usr);
 			String fecha = guiaForestalForm.getFechaVencimiento().trim();
 			Date dFecha = null;
 			if (fecha != null && !"".equals(fecha)) {
 				dFecha = Fecha.stringDDMMAAAAToUtilDate(fecha);
 			}
+			
+			guiaForestal.getOperacionModificacion().setUsuario(usr);
+			guiaForestal.getOperacionModificacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			guiaForestal.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());			
+			
 			guiaForestalFachada.modificacionGuiaForestalBasica(guiaForestal,
 					guiaForestalForm.getRangos(),
 					guiaForestalForm.getValesTransporte(), dFecha);
@@ -1030,11 +1039,21 @@ public class GuiaForestalAction extends ValidadorAction {
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
+			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
+														Constantes.USER_LABEL_SESSION);			
+			
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
+			GuiaForestalDTO guiaForestalDTO = guiaForm.getGuiaForestal();
+			
 			guiaForm.normalizarListaFiscalizaciones();
+			
+			guiaForestalDTO.getOperacionModificacion().setUsuario(usr);
+			guiaForestalDTO.getOperacionModificacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			guiaForestalDTO.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			
 			guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(
-					guiaForm.getGuiaForestal().getId(),
-					guiaForm.getListaFiscalizaciones());
+																guiaForestalDTO,
+																guiaForm.getListaFiscalizaciones());
 
 			request.setAttribute("exitoAsociacion",
 					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);

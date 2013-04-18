@@ -66,11 +66,19 @@ public class GuiaForestal {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<BoletaDeposito> boletasDeposito = new ArrayList<BoletaDeposito>();
 
-	@ManyToOne()
+	/*@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "usuarioAlta_fk")
-	private Usuario usuarioAlta;
+	private Usuario usuarioAlta;*/
 
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "operacionAlta_fk")
+	private OperacionGuiaForestal operacionAlta;	
+
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "operacionModificacion_fk")
+	private OperacionGuiaForestal operacionModificacion;	
+	
 	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Fiscalizacion> fiscalizaciones;
@@ -159,13 +167,13 @@ public class GuiaForestal {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	public Usuario getUsuarioAlta() {
+	/*public Usuario getUsuarioAlta() {
 		return usuarioAlta;
 	}
 
 	public void setUsuarioAlta(Usuario usuario) {
 		this.usuarioAlta = usuario;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -237,6 +245,22 @@ public class GuiaForestal {
 			cantidadMts = cantidadMts + subImporte.getCantidadMts();
 		}
 		return cantidadMts;
+	}
+
+	public OperacionGuiaForestal getOperacionAlta() {
+		return operacionAlta;
+	}
+
+	public void setOperacionAlta(OperacionGuiaForestal operacionAlta) {
+		this.operacionAlta = operacionAlta;
+	}
+
+	public OperacionGuiaForestal getOperacionModificacion() {
+		return operacionModificacion;
+	}
+
+	public void setOperacionModificacion(OperacionGuiaForestal operacionModificacion) {
+		this.operacionModificacion = operacionModificacion;
 	}
 
 }

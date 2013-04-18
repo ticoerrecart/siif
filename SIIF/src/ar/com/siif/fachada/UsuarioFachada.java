@@ -6,6 +6,7 @@ import java.util.List;
 import ar.com.siif.dao.UsuarioDAO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.negocio.Entidad;
+import ar.com.siif.negocio.Operacion;
 import ar.com.siif.negocio.Rol;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -76,6 +77,10 @@ public class UsuarioFachada implements IUsuarioFachada {
 
 		usuarioDAO.modificacionUsuario(ProviderDominio.getUsuario(usuario,
 				usuarioDTO, entidad, rol));
-
+	}
+	
+	public void altaOperacion(Operacion operacion)throws NegocioException{
+		
+		usuarioDAO.altaOperacion(operacion);
 	}
 }

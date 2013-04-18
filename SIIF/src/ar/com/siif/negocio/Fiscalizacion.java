@@ -56,15 +56,25 @@ public class Fiscalizacion {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Muestra> muestra = new ArrayList<Muestra>();
 
-	@ManyToOne()
+	/*@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "usuarioAlta_fk")
-	private Usuario usuarioAlta;
+	private Usuario usuarioAlta;*/
+
+	/*@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "usuarioModificacion_fk")
+	private Usuario usuarioModificacion;*/	
+	
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "operacionAlta_fk")
+	private OperacionFiscalizacion operacionAlta;	
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuarioModificacion_fk")
-	private Usuario usuarioModificacion;	
+	@JoinColumn(name = "operacionModificacion_fk")
+	private OperacionFiscalizacion operacionModificacion;	
 	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -159,13 +169,13 @@ public class Fiscalizacion {
 		this.localizacion = localizacion;
 	}
 
-	public Usuario getUsuarioAlta() {
+	/*public Usuario getUsuarioAlta() {
 		return usuarioAlta;
 	}
 
 	public void setUsuarioAlta(Usuario usuario) {
 		this.usuarioAlta = usuarioAlta;
-	}
+	}*/
 
 	public Entidad getOficinaAlta() {
 		return oficinaAlta;
@@ -175,12 +185,30 @@ public class Fiscalizacion {
 		this.oficinaAlta = oficinaAlta;
 	}
 
-	public Usuario getUsuarioModificacion() {
+	/*public Usuario getUsuarioModificacion() {
 		return usuarioModificacion;
 	}
 
 	public void setUsuarioModificacion(Usuario usuarioModificacion) {
 		this.usuarioModificacion = usuarioModificacion;
+	}*/
+
+	public OperacionFiscalizacion getOperacionAlta() {
+		return operacionAlta;
 	}
 
+	public void setOperacionAlta(OperacionFiscalizacion operacionAlta) {
+		this.operacionAlta = operacionAlta;
+	}
+
+	public OperacionFiscalizacion getOperacionModificacion() {
+		return operacionModificacion;
+	}
+
+	public void setOperacionModificacion(
+			OperacionFiscalizacion operacionModificacion) {
+		this.operacionModificacion = operacionModificacion;
+	}
+
+	
 }

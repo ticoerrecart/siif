@@ -15,6 +15,8 @@ import ar.com.siif.dto.LocalidadDTO;
 import ar.com.siif.dto.LocalidadDestinoDTO;
 import ar.com.siif.dto.LocalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
+import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.PMFDTO;
 import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.ProvinciaDestinoDTO;
@@ -36,6 +38,8 @@ import ar.com.siif.negocio.Localidad;
 import ar.com.siif.negocio.LocalidadDestino;
 import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.negocio.Muestra;
+import ar.com.siif.negocio.OperacionFiscalizacion;
+import ar.com.siif.negocio.OperacionGuiaForestal;
 import ar.com.siif.negocio.Periodo;
 import ar.com.siif.negocio.ProvinciaDestino;
 import ar.com.siif.negocio.Rol;
@@ -210,9 +214,15 @@ public abstract class ProviderDTO {
 				.getLocalizacion()));
 		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
-		fiscalizacionDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioAlta()));
-		if(fiscalizacion.getUsuarioModificacion() != null){
-			fiscalizacionDTO.setUsuarioModificacion(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioModificacion()));
+		//fiscalizacionDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioAlta()));
+		fiscalizacionDTO.setOperacionAlta(ProviderDTO.getOperacionFiscalizacionDTO(
+													fiscalizacion.getOperacionAlta(),
+													fiscalizacionDTO));
+		if(fiscalizacion.getOperacionModificacion() != null){
+			
+			fiscalizacionDTO.setOperacionModificacion(ProviderDTO.getOperacionFiscalizacionDTO(
+												fiscalizacion.getOperacionModificacion(),
+												fiscalizacionDTO));						
 		}	
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
 		fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());
@@ -226,6 +236,36 @@ public abstract class ProviderDTO {
 		return fiscalizacionDTO;
 	}
 
+	public static OperacionFiscalizacionDTO getOperacionFiscalizacionDTO(
+														OperacionFiscalizacion operacion,
+														FiscalizacionDTO fiscalizacionDTO){
+		
+		OperacionFiscalizacionDTO operacionDTO = new OperacionFiscalizacionDTO();
+		operacionDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha
+													.dateToStringDDMMAAAA(operacion.getFecha())));
+		operacionDTO.setFiscalizacion(fiscalizacionDTO);
+		operacionDTO.setId(operacion.getId());
+		operacionDTO.setTipoOperacion(operacion.getTipoOperacion());
+		operacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(operacion.getUsuario()));
+		
+		return operacionDTO;
+	}
+	
+	public static OperacionGuiaForestalDTO getOperacionGuiaForestalDTO(
+														OperacionGuiaForestal operacion,
+														GuiaForestalDTO guiaForestal){
+		
+		OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
+		operacionDTO.setFecha(Fecha.getFechaDDMMAAAASlash(Fecha
+													.dateToStringDDMMAAAA(operacion.getFecha())));
+		operacionDTO.setGuiaForestal(guiaForestal);
+		operacionDTO.setId(operacion.getId());
+		operacionDTO.setTipoOperacion(operacion.getTipoOperacion());
+		operacionDTO.setUsuario(ProviderDTO.getUsuarioDTO(operacion.getUsuario()));
+		
+		return operacionDTO;		
+	}
+	
 	public static LocalizacionDTO getLocalizacionDTO(Localizacion localizacion) {
 		return localizacion.getLocalizacionDTO();
 	}
@@ -285,10 +325,18 @@ public abstract class ProviderDTO {
 					.valueOf(guiaForestal.getLocalizacion().getId()));
 		}
 
-		if (guiaForestal.getUsuarioAlta() != null) {
-			guiaForestalDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(guiaForestal.getUsuarioAlta()));
+		if (guiaForestal.getOperacionAlta() != null) {
+			guiaForestalDTO.setOperacionAlta(ProviderDTO.getOperacionGuiaForestalDTO(
+															guiaForestal.getOperacionAlta(),
+															guiaForestalDTO));
 		}
-
+		if(guiaForestal.getOperacionModificacion() != null){
+			
+			guiaForestalDTO.setOperacionModificacion(ProviderDTO.getOperacionGuiaForestalDTO(
+															guiaForestal.getOperacionModificacion(),
+															guiaForestalDTO));						
+		}
+		
 		List<BoletaDeposito> listaBoletas = guiaForestal.getBoletasDeposito();
 		for (BoletaDeposito boletaDeposito : listaBoletas) {
 			listaBoletasDTO.add(ProviderDTO.getBoletaDepositoDTO(boletaDeposito, guiaForestalDTO));

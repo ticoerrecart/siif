@@ -176,8 +176,9 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		fiscalizacion.setOficinaAlta(null);
 		fiscalizacion.setProductorForestal(null);
 		fiscalizacion.setLocalizacion(null);
-		fiscalizacion.setUsuarioAlta(null);
-		fiscalizacion.setUsuarioModificacion(null);		
+		//fiscalizacion.setUsuarioAlta(null);
+		//fiscalizacion.setOperacionAlta(null);
+		//fiscalizacion.setUsuarioModificacion(null);		
 		fiscalizacion.setTipoProducto(null);
 		//fiscalizacion.setMuestra(null);
 
@@ -185,6 +186,13 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			muestra.setFiscalizacion(null);
 			this.getHibernateTemplate().delete(muestra);
 		}
+		
+		this.getHibernateTemplate().delete(fiscalizacion.getOperacionAlta());
+		
+		if(fiscalizacion.getOperacionModificacion() != null){
+			this.getHibernateTemplate().delete(fiscalizacion.getOperacionModificacion());	
+		}
+		
 		this.getHibernateTemplate().delete(fiscalizacion);
 	}
 	
