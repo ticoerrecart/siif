@@ -71,10 +71,12 @@ public class GuiaForestal {
 	@JoinColumn(name = "usuarioAlta_fk")
 	private Usuario usuarioAlta;*/
 
+	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionAlta_fk")
 	private OperacionGuiaForestal operacionAlta;	
 
+	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionModificacion_fk")
 	private OperacionGuiaForestal operacionModificacion;	
