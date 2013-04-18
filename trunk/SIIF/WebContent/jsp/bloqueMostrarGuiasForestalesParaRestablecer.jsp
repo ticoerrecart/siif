@@ -25,8 +25,8 @@
 			     guias.push(input.attr("name"));
 			    
 		    });
-	
-			GuiaForestalFachada.restablecerGuias(guias, restablecerGuiasCbk);
+			var idUsuario = $('#idUsuario').val();
+			GuiaForestalFachada.restablecerGuias(guias,idUsuario,restablecerGuiasCbk);
 			//confirmarGuiasCbk();
 		}	
 	}
@@ -41,6 +41,7 @@
 <br>
 <c:choose>
 	<c:when test="${fn:length(guiasForestales)>0}">
+		<input id="idUsuario" type="hidden" value="${usuario}">
 		<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 			<tr>
 				<td class="azulAjustado"></td>			
