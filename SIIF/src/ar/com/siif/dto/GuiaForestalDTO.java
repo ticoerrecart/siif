@@ -37,6 +37,8 @@ public class GuiaForestalDTO {
 	
 	private OperacionGuiaForestalDTO operacionModificacion;
 	
+	private OperacionGuiaForestalDTO operacionAnulacion;
+	
 	private LocalizacionDTO localizacion;
 
 	private List<FiscalizacionDTO> fiscalizaciones;
@@ -55,6 +57,7 @@ public class GuiaForestalDTO {
 		//usuarioAlta = new UsuarioDTO();
 		operacionAlta = new OperacionGuiaForestalDTO();
 		operacionModificacion = new OperacionGuiaForestalDTO();
+		operacionAnulacion = new OperacionGuiaForestalDTO();
 		productorForestal = new EntidadDTO();
 		subImportes = new ArrayList<SubImporteDTO>();
 		localidad = new LocalidadDTO();
@@ -266,6 +269,14 @@ public class GuiaForestalDTO {
 	public void setOperacionModificacion(
 			OperacionGuiaForestalDTO operacionModificacion) {
 		this.operacionModificacion = operacionModificacion;
+	}
+
+	public OperacionGuiaForestalDTO getOperacionAnulacion() {
+		return operacionAnulacion;
+	}
+
+	public void setOperacionAnulacion(OperacionGuiaForestalDTO operacionAnulacion) {
+		this.operacionAnulacion = operacionAnulacion;
 	}
 
 }

@@ -78,9 +78,5 @@ public class UsuarioFachada implements IUsuarioFachada {
 		usuarioDAO.modificacionUsuario(ProviderDominio.getUsuario(usuario,
 				usuarioDTO, entidad, rol));
 	}
-	
-	public void altaOperacion(Operacion operacion)throws NegocioException{
-		
-		usuarioDAO.altaOperacion(operacion);
-	}
+
 }

@@ -214,10 +214,12 @@ public abstract class ProviderDTO {
 				.getLocalizacion()));
 		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
-		//fiscalizacionDTO.setUsuarioAlta(ProviderDTO.getUsuarioDTO(fiscalizacion.getUsuarioAlta()));
-		fiscalizacionDTO.setOperacionAlta(ProviderDTO.getOperacionFiscalizacionDTO(
-													fiscalizacion.getOperacionAlta(),
-													fiscalizacionDTO));
+
+		if(fiscalizacion.getOperacionAlta() != null){
+			fiscalizacionDTO.setOperacionAlta(ProviderDTO.getOperacionFiscalizacionDTO(
+														fiscalizacion.getOperacionAlta(),
+														fiscalizacionDTO));
+		}
 		if(fiscalizacion.getOperacionModificacion() != null){
 			
 			fiscalizacionDTO.setOperacionModificacion(ProviderDTO.getOperacionFiscalizacionDTO(
@@ -334,6 +336,12 @@ public abstract class ProviderDTO {
 			
 			guiaForestalDTO.setOperacionModificacion(ProviderDTO.getOperacionGuiaForestalDTO(
 															guiaForestal.getOperacionModificacion(),
+															guiaForestalDTO));						
+		}
+		if(guiaForestal.getOperacionAnulacion() != null){
+			
+			guiaForestalDTO.setOperacionAnulacion(ProviderDTO.getOperacionGuiaForestalDTO(
+															guiaForestal.getOperacionAnulacion(),
 															guiaForestalDTO));						
 		}
 		

@@ -80,6 +80,11 @@ public class GuiaForestal {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionModificacion_fk")
 	private OperacionGuiaForestal operacionModificacion;	
+
+	@ManyToOne()
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinColumn(name = "operacionAnulacion_fk")
+	private OperacionGuiaForestal operacionAnulacion;	
 	
 	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -263,6 +268,14 @@ public class GuiaForestal {
 
 	public void setOperacionModificacion(OperacionGuiaForestal operacionModificacion) {
 		this.operacionModificacion = operacionModificacion;
+	}
+
+	public OperacionGuiaForestal getOperacionAnulacion() {
+		return operacionAnulacion;
+	}
+
+	public void setOperacionAnulacion(OperacionGuiaForestal operacionAnulacion) {
+		this.operacionAnulacion = operacionAnulacion;
 	}
 
 }

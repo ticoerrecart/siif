@@ -91,7 +91,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 		GuiaForestal guiaForestal = ProviderDominio.getGuiaForestal(guia, listaBoletaDepositoDTO,
 				listaRangosDTO, fechaVencimiento, listaFiscalizaciones, listaSubImporte,
-				productorForestal, localizacion, localidad, usuarioAlta, null);
+				productorForestal, localizacion, localidad, usuarioAlta, null, null);
 
 		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 
@@ -300,48 +300,72 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 											List<FiscalizacionDTO> listaFiscalizacionesAAsociar) 
 											throws NegocioException{
 
-		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
+		GuiaForestal guiaForestal;
 		Fiscalizacion fiscalizacion;
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
 
+			//Tengo que recuperar la guia en cada iteracion pq sino queda desenganchada, pq hago el altaFiscalizacion 
+			//que implicitamente hace el altaGuia
+			guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
+			
 			fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());
 			guiaForestal.getFiscalizaciones().add(fiscalizacion);
 						
 			fiscalizacion.setGuiaForestal(guiaForestal);
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
 		}
+
+		//Tengo que recuperar la guia otra vez pq me quedo desenganchada por el altaFiscalizacion.		
+		guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
 		
 		OperacionGuiaForestal operacion = ProviderDominio.getOperacionGuiaForestal(
 											guiaDTO.getOperacionModificacion(),guiaForestal, 
 											usuarioFachada.getUsuario(
 													guiaDTO.getOperacionModificacion().getUsuario().getId()));
-		
-		//usuarioFachada.altaOperacion(operacion);
-		
+				
 		guiaForestal.setOperacionModificacion(operacion);			
-		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 		
 		//guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 
 	}
 
-	public void desasociarFiscalizacionesConGuiasForestales(long id,
+	public void desasociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,
 											List<FiscalizacionDTO> listaFiscalizacionesAAsociar) {
 		
-		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(id);
+		desasociarFiscalizacionesConGuiasForestales(guiaDTO.getId(),listaFiscalizacionesAAsociar);
+
+		//Tengo que recuperar la guia otra vez pq me quedo desenganchada por el altaFiscalizacion.		
+		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
+		
+		OperacionGuiaForestal operacion = ProviderDominio.getOperacionGuiaForestal(
+											guiaDTO.getOperacionModificacion(),guiaForestal, 
+											usuarioFachada.getUsuario(
+													guiaDTO.getOperacionModificacion().getUsuario().getId()));
+				
+		guiaForestal.setOperacionModificacion(operacion);		
+		
+		// guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+	}
+
+	private void desasociarFiscalizacionesConGuiasForestales(long idGuia, 
+											List<FiscalizacionDTO> listaFiscalizacionesAAsociar){
+		
+		GuiaForestal guiaForestal;
 		Fiscalizacion fiscalizacion;
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
 
+			//Tengo que recuperar la guia en cada iteracion pq sino queda desenganchada, pq hago el altaFiscalizacion 
+			//que implicitamente hace el altaGuia			
+			guiaForestal = guiaForestalDAO.recuperarGuiaForestal(idGuia);
+			
 			fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());
 			guiaForestal.getFiscalizaciones().remove(fiscalizacion);
 			fiscalizacion.setGuiaForestal(null);
 
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
-		}
-
-		// guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+		}		
 	}
-
+	
 	public boolean verificarBoletasDepositoVencidasImpagas(long idProductor) {
 
 		return guiaForestalDAO.verificarBoletasDepositoVencidasImpagas(idProductor);
@@ -385,7 +409,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public void anularGuiaForestal(GuiaForestalDTO guiaForestalDTO) {
 
 		this.desasociarFiscalizacionesConGuiasForestales(guiaForestalDTO.getId(),
-				guiaForestalDTO.getFiscalizaciones());
+														 guiaForestalDTO.getFiscalizaciones());
 		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaForestalDTO.getId());
 		for (BoletaDeposito boleta : guiaForestal.getBoletasDeposito()) {
 			boleta.setAnulado(true);
@@ -394,6 +418,13 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		for (ValeTransporte vale : guiaForestal.getValesTransporte()) {
 			vale.setAnulado(true);
 		}
+		
+		guiaForestal.setOperacionAnulacion(
+				ProviderDominio.getOperacionGuiaForestal(
+								guiaForestalDTO.getOperacionAnulacion(),guiaForestal, 
+								usuarioFachada.getUsuario(
+										guiaForestalDTO.getOperacionAnulacion().getUsuario().getId())));		
+		
 		guiaForestal.setAnulado(true);
 
 	}
@@ -445,7 +476,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public String restablecerGuias(Long[] idsGuias) throws NegocioException {
+	public String restablecerGuias(Long[] idsGuias, Long idUsuario) throws NegocioException {
 		try {
 			if (idsGuias == null || idsGuias.length == 0) {
 				throw new NegocioException("Seleccione alguna Guía Forestal");
@@ -454,9 +485,11 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			String mensaje = (idsGuias.length > 1) ? "Las Guías Forestales fueron restablecidas con exito"
 					: "La Guía Forestal fue restablecida con exito";
 
+			Usuario usuario = usuarioFachada.getUsuario(idUsuario);
+							
 			for (Long idGuia : idsGuias) {
 
-				guiaForestalDAO.restablecerGuias(idGuia);
+				guiaForestalDAO.restablecerGuias(idGuia,usuario);
 			}
 
 			return mensaje;

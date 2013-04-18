@@ -9,10 +9,14 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.OperacionGuiaForestalDTO;
+import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
 import ar.com.siif.negocio.exception.NegocioException;
+import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.Fecha;
 
@@ -235,7 +239,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return lista.size() > 0;
 	}
 	
-	public void restablecerGuias(Long idGuia){
+	public void restablecerGuias(Long idGuia, Usuario usuario){
 		
 		GuiaForestal guia = this.recuperarGuiaForestal(idGuia);
 		guia.setAnulado(false);
@@ -246,6 +250,13 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		for(ValeTransporte vale : guia.getValesTransporte()){
 			vale.setAnulado(false);
 		}
+		
+		OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
+		operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+		operacionDTO.setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
+		
+		guia.setOperacionAlta(ProviderDominio.getOperacionGuiaForestal(operacionDTO,
+																	   guia,usuario));		
 		
 		this.getHibernateTemplate().saveOrUpdate(guia);
 	}

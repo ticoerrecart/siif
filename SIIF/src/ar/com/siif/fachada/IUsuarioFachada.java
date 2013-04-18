@@ -25,5 +25,4 @@ public interface IUsuarioFachada {
 
 	public void modificacionUsuario(UsuarioDTO usuario) throws NegocioException;
 	
-	public void altaOperacion(Operacion operacion) throws NegocioException;
 }

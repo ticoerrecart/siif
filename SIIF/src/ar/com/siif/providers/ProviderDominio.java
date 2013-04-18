@@ -76,9 +76,12 @@ public abstract class ProviderDominio {
 		fiscalizacion.setLocalizacion(localizacion);
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
-		fiscalizacion.setOperacionAlta(ProviderDominio.getOperacionFiscalizacion(
-											fiscalizacionDTO.getOperacionAlta(),
-											fiscalizacion,usuarioAlta));
+		
+		if(fiscalizacionDTO.getOperacionAlta() != null){
+			fiscalizacion.setOperacionAlta(ProviderDominio.getOperacionFiscalizacion(
+												fiscalizacionDTO.getOperacionAlta(),
+												fiscalizacion,usuarioAlta));
+		}	
 		if(fiscalizacionDTO.getOperacionModificacion() != null){
 			fiscalizacion.setOperacionModificacion(ProviderDominio.getOperacionFiscalizacion(
 													fiscalizacionDTO.getOperacionModificacion(),
@@ -285,11 +288,13 @@ public abstract class ProviderDominio {
 	}
 
 	public static GuiaForestal getGuiaForestal(GuiaForestalDTO guiaDTO,
-			List<BoletaDepositoDTO> listaBoletaDepositoDTO,
-			List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
-			List<Fiscalizacion> listaFiscalizaciones,
-			List<SubImporte> listaSubImportes, Entidad productorForestal,
-			Localizacion localizacion, Localidad localidad, Usuario usuarioAlta, Usuario usuarioModificacion) {
+									List<BoletaDepositoDTO> listaBoletaDepositoDTO,
+									List<RangoDTO> listaRangosDTO, Date fechaVencimiento,
+									List<Fiscalizacion> listaFiscalizaciones,
+									List<SubImporte> listaSubImportes, Entidad productorForestal,
+									Localizacion localizacion, Localidad localidad, Usuario usuarioAlta, 
+									Usuario usuarioModificacion,Usuario usuarioAnulacion) 
+	{
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -307,14 +312,22 @@ public abstract class ProviderDominio {
 		guia.setNroGuia(guiaDTO.getNroGuia());
 		guia.setObservaciones(guiaDTO.getObservaciones());
 		
-		guia.setOperacionAlta(ProviderDominio.getOperacionGuiaForestal(
-				guiaDTO.getOperacionAlta(),
-				guia,usuarioAlta));
+		if(guiaDTO.getOperacionAlta().getId() != null){
+			guia.setOperacionAlta(ProviderDominio.getOperacionGuiaForestal(
+					guiaDTO.getOperacionAlta(),
+					guia,usuarioAlta));
+		}
 		
-		if(guiaDTO.getOperacionModificacion() != null){
+		if(guiaDTO.getOperacionModificacion().getId() != null){
 			guia.setOperacionModificacion(ProviderDominio.getOperacionGuiaForestal(
 													guiaDTO.getOperacionModificacion(),
 													guia,usuarioModificacion));
+		}		
+		
+		if(guiaDTO.getOperacionAnulacion().getId() != null){
+			guia.setOperacionAnulacion(ProviderDominio.getOperacionGuiaForestal(
+													guiaDTO.getOperacionAnulacion(),
+													guia,usuarioAnulacion));
 		}		
 		
 		guia.setPeriodoForestal(guiaDTO.getPeriodoForestal());
