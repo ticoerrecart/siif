@@ -348,6 +348,10 @@ public class Constantes {
 	
 	public static final String REPORTE_CERTIFICADO_ORIGEN = "reporteCertificadoOrigen";
 	
+	public static final String REPORTE_DETALLE_GUIAS_ENTRE_FECHAS = "reporteDetalleGuiasEntreFechas";
+	
+	public static final String REPORTE_GUIAS_FORESTALES_POR_PRODUCTOR_ENTRE_FECHAS = "reporteGuiasForestalesPorProductorEntreFechas";
+	
 	//FIN REPORTES	
 
 	//MENU
