@@ -17,7 +17,15 @@ import ar.com.siif.utils.Constantes;
 public class RolDAO extends HibernateDaoSupport {
 
 	public List<Rol> getRoles() {
-		return getHibernateTemplate().loadAll(Rol.class);
+		Criteria criteria = getSession().createCriteria(Rol.class);
+
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.ne("id", 1L));
+
+		criteria.add(conj);
+
+		List<Rol> roles = criteria.list();
+		return roles;
 	}
 
 	public List<ItemMenu> recuperarMenues() {
