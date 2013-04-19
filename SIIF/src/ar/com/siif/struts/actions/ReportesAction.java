@@ -9,7 +9,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
+import ar.com.siif.fachada.IReportesPorProductoFachada;
+import ar.com.siif.fachada.IReportesRecaudacionFachada;
 import ar.com.siif.utils.MyLogger;
 
 public class ReportesAction extends ValidadorAction {
@@ -150,4 +153,97 @@ public class ReportesAction extends ValidadorAction {
 		return null;
 	}
 
+	public ActionForward generarReporteDetalleGuiasEntreFechas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		try {
+			String path = request.getSession().getServletContext()
+					.getRealPath("jasper");
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IReportesFachada reportesFachada = (IReportesFachada) ctx
+												.getBean("reportesFachada");
+
+			String fechaDesde = request.getParameter("fechaDesde");
+			String fechaHasta = request.getParameter("fechaHasta");
+
+			byte[] bytes = reportesFachada.generarReporteDetalleGuiasEntreFechas(
+													path,fechaDesde, fechaHasta);
+
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			// response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
+		}
+
+		return null;
+	}	
+	
+	public ActionForward cargarReporteGuiasForestalesPorProductorEntreFechas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String strForward = "exitoReporteGuiasForestalesPorProductorEntreFechas";
+
+		try {
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
+					.getBean("entidadFachada");
+
+			request.setAttribute("tiposDeEntidad",
+					entidadFachada.getTiposDeEntidadProductores());
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
+	public ActionForward generarReporteGuiasForestalesPorProductorEntreFechas(
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		try {
+			String path = request.getSession().getServletContext()
+					.getRealPath("jasper");
+
+			WebApplicationContext ctx = getWebApplicationContext();
+
+			IReportesFachada reportesFachada = (IReportesFachada) ctx
+												.getBean("reportesFachada");
+
+			String productor = request.getParameter("productor");
+			String fechaDesde = request.getParameter("fechaDesde");
+			String fechaHasta = request.getParameter("fechaHasta");
+
+			byte[] bytes = reportesFachada.
+							generarReporteGuiasForestalesPorProductorEntreFechas(
+											path,productor, fechaDesde, fechaHasta);
+
+			// Lo muestro en la salida del response
+			response.setContentType("application/pdf");
+			// response.setContentLength(baos.size());
+			ServletOutputStream out = response.getOutputStream();
+			out.write(bytes, 0, bytes.length);
+			out.flush();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			return mapping.findForward("errorSinMenu");
+		}
+
+		return null;
+	}	
 }

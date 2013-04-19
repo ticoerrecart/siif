@@ -13,6 +13,12 @@ public interface IReportesFachada {
 	public byte[] generarReporteCertificadoOrigen(long idCertificado,
 			String path) throws Exception;
 
+	public byte[] generarReporteDetalleGuiasEntreFechas(
+			String path, String fechaDesde, String fechaHasta) throws Exception;	
+	
+	public byte[] generarReporteGuiasForestalesPorProductorEntreFechas(String path,
+			String productor, String fechaDesde,String fechaHasta) throws Exception;	
+	
 	/*
 	 * public byte[] generarReporteVolumenFiscalizadoPorProductoForestalFecha(
 	 * String path,String fechaDesde,String fechaHasta)throws NegocioException;

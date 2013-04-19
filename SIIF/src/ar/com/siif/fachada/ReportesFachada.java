@@ -1,5 +1,7 @@
 package ar.com.siif.fachada;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localizacion;
 import ar.com.siif.utils.Constantes;
+import ar.com.siif.utils.Fecha;
 import ar.com.siif.utils.StringUtils;
 
 public class ReportesFachada implements IReportesFachada {
@@ -67,6 +70,39 @@ public class ReportesFachada implements IReportesFachada {
 
 	}
 
+	public byte[] generarReporteDetalleGuiasEntreFechas(
+			String path, String fechaDesde, String fechaHasta) throws Exception {
+
+		Timestamp ts = new Timestamp(new Date().getTime());
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+		parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+		parameters.put("fechaHoy", ts);
+		
+		return reportesDAO.generarReporte(
+				Constantes.REPORTE_DETALLE_GUIAS_ENTRE_FECHAS,
+				parameters);
+	}	
+	
+	public byte[] generarReporteGuiasForestalesPorProductorEntreFechas(String path,
+					String productor, String fechaDesde,String fechaHasta) throws Exception 
+	{
+		Timestamp ts = new Timestamp(new Date().getTime());
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("idProductor", new Long(productor));
+		parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+		parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+		parameters.put("fechaHoy", ts);
+		
+		return reportesDAO.generarReporte(
+				Constantes.REPORTE_GUIAS_FORESTALES_POR_PRODUCTOR_ENTRE_FECHAS,
+				parameters);
+	}	
+	
 	private void setParemetersLocalizacion(Map<String, Object> parameters, Localizacion localizacion) {
 		parameters.put("area", StringUtils.nullToBlank(localizacion.getNombreArea()));
 		parameters.put("nombrePmf", StringUtils.nullToBlank(localizacion.getNombrePMF()));
@@ -75,8 +111,8 @@ public class ReportesFachada implements IReportesFachada {
 		parameters.put("dispTranzon", StringUtils.nullToBlank(localizacion.getDisposicionTranzon()));
 		parameters.put("dispMarcacion", StringUtils.nullToBlank(localizacion.getDisposicionMarcacion()));
 		parameters.put("nombreRodal", StringUtils.nullToBlank(localizacion.getNombreRodal()));
-	}
-
+	}	
+	
 	/*
 	 * public byte[]
 	 * generarReporteVolumenFiscalizadoPorProductoForestalFecha(String path,
