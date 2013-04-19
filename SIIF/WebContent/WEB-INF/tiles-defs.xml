@@ -375,7 +375,17 @@
 	<definition name=".reporteVolumenFiscalizadoProdForestalEntreFechas" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteVolumenFiscalizadoProdForestalEntreFechas.jsp" />
-	</definition>		
+	</definition>
+
+	<definition name=".reporteDetalleGuiasEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteDetalleGuiasEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteGuiasForestalesPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteGuiasForestalesPorProductorEntreFechas.jsp" />
+	</definition>				
 	<!-- FIN REPORTE -->
 
 	<!-- REPORTE POR PRODUCTOR -->
