@@ -7,7 +7,6 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ar.com.siif.negocio.Operacion;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
@@ -37,7 +36,16 @@ public class UsuarioDAO extends HibernateDaoSupport {
 	}
 
 	public List<Usuario> getUsuarios() {
-		return this.getHibernateTemplate().loadAll(Usuario.class);
+		Criteria criteria = getSession().createCriteria(Usuario.class);
+		criteria.createAlias("rol", "r");
+		
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.ne("r.id", 1L));
+		
+		criteria.add(conj);
+
+		List<Usuario> usuarios = criteria.list(); 
+		return usuarios;
 	}
 
 	public Usuario getUsuario(Long id) {
