@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.utils.Constantes;
 
 public class LoginFilter implements Filter {
@@ -23,19 +24,27 @@ public class LoginFilter implements Filter {
 		this.filterConfig = filterConfig;
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String metodo = req.getParameter("metodo");
 
-		//int param = Integer.parseInt((req.getParameter("param")==null)?"0":req.getParameter("param"));
-
 		try {
-			if (session.getAttribute(Constantes.USER_LABEL_SESSION) != null
-					|| (metodo != null && metodo.equals("login"))) {
-
+			UsuarioDTO u = (UsuarioDTO) session
+					.getAttribute(Constantes.USER_LABEL_SESSION);
+			if (u != null || (metodo != null && metodo.equals("login"))) {
+				if ("/log.do".equalsIgnoreCase(req.getServletPath())
+						&& !"SuperAdministrador".equalsIgnoreCase(u.getRol()
+								.getRol())) {
+					RequestDispatcher dispatcher = filterConfig
+							.getServletContext().getRequestDispatcher(
+									"/jsp/login.jsp");
+					req.setAttribute("error",
+							"Usuario no autorizado para realizar ésta operación");
+					dispatcher.forward(request, response);
+				}
 				chain.doFilter(request, response);
 
 			} else {
