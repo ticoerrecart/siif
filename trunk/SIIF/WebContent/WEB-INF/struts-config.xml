@@ -363,7 +363,8 @@
 			<forward name="exitoMostrarReporte" path=".mostrarReporte" />
 			<forward name="exitoCargarReporteVolumenFiscalizadoProductorEntreFechas" path=".reporteVolumenFiscalizadoProductorEntreFechas" />
 			
-			<forward name="exitoReporteGuiasForestalesPorProductorEntreFechas" path=".reporteGuiasForestalesPorProductorEntreFechas" />			
+			<forward name="exitoReporteGuiasForestalesPorProductorEntreFechas" path=".reporteGuiasForestalesPorProductorEntreFechas" />
+			<forward name="exitoMostrarReportes" path=".mostrarReportes" />			
 		</action>			
 		<!-- FIN REPORTES  -->
 

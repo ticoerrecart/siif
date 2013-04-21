@@ -367,6 +367,11 @@
 		<put name="body" value="/jsp/mostrarReporte.jsp" />
 	</definition>
 
+	<definition name=".mostrarReportes" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarReportes.jsp" />
+	</definition>
+	
 	<definition name=".reporteVolumenFiscalizadoProductorEntreFechas" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteVolumenFiscalizadoProductorEntreFechas.jsp" />

@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -109,5 +110,13 @@ public class ReportesDAO extends HibernateDaoSupport {
 		return JasperRunManager.runReportToPdf(jasperReport, parameters,
 				getSession().connection());
 
+	}
+
+	public List<Reporte> obtenerReportes() {
+		Criteria criteria = getSession().createCriteria(Reporte.class);
+		criteria.addOrder(Order.asc("nombreReportePadre"));
+		criteria.addOrder(Order.asc("nombreReporte"));
+
+		return criteria.list();
 	}
 }
