@@ -1,5 +1,7 @@
 package ar.com.siif.struts.actions;
 
+import java.util.List;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
-import ar.com.siif.fachada.IReportesPorProductoFachada;
-import ar.com.siif.fachada.IReportesRecaudacionFachada;
+import ar.com.siif.negocio.Reporte;
 import ar.com.siif.utils.MyLogger;
 
 public class ReportesAction extends ValidadorAction {
@@ -164,13 +165,14 @@ public class ReportesAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IReportesFachada reportesFachada = (IReportesFachada) ctx
-												.getBean("reportesFachada");
+					.getBean("reportesFachada");
 
 			String fechaDesde = request.getParameter("fechaDesde");
 			String fechaHasta = request.getParameter("fechaHasta");
 
-			byte[] bytes = reportesFachada.generarReporteDetalleGuiasEntreFechas(
-													path,fechaDesde, fechaHasta);
+			byte[] bytes = reportesFachada
+					.generarReporteDetalleGuiasEntreFechas(path, fechaDesde,
+							fechaHasta);
 
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");
@@ -186,8 +188,8 @@ public class ReportesAction extends ValidadorAction {
 		}
 
 		return null;
-	}	
-	
+	}
+
 	public ActionForward cargarReporteGuiasForestalesPorProductorEntreFechas(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -208,8 +210,8 @@ public class ReportesAction extends ValidadorAction {
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}	
-	
+	}
+
 	public ActionForward generarReporteGuiasForestalesPorProductorEntreFechas(
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -221,15 +223,15 @@ public class ReportesAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 
 			IReportesFachada reportesFachada = (IReportesFachada) ctx
-												.getBean("reportesFachada");
+					.getBean("reportesFachada");
 
 			String productor = request.getParameter("productor");
 			String fechaDesde = request.getParameter("fechaDesde");
 			String fechaHasta = request.getParameter("fechaHasta");
 
-			byte[] bytes = reportesFachada.
-							generarReporteGuiasForestalesPorProductorEntreFechas(
-											path,productor, fechaDesde, fechaHasta);
+			byte[] bytes = reportesFachada
+					.generarReporteGuiasForestalesPorProductorEntreFechas(path,
+							productor, fechaDesde, fechaHasta);
 
 			// Lo muestro en la salida del response
 			response.setContentType("application/pdf");
@@ -245,5 +247,20 @@ public class ReportesAction extends ValidadorAction {
 		}
 
 		return null;
-	}	
+	}
+
+	public ActionForward obtenerReportes(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String forward = "exitoMostrarReportes";
+		WebApplicationContext ctx = getWebApplicationContext();
+
+		IReportesFachada reportesFachada = (IReportesFachada) ctx
+				.getBean("reportesFachada");
+		List<Reporte> reportes = reportesFachada.obtenerReportes();
+		request.setAttribute("reportes", reportes);
+
+		return mapping.findForward(forward);
+	}
 }
