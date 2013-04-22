@@ -9,13 +9,15 @@
 
 <table border="1" class="cuadrado" align="center" width="90%" cellpadding="2">
 	<tr>
-		<th width="5%">idReporte</th>
+		<th width="2%">nroReporte</th>
+		<th width="3%">idReporte</th>
 	    <th width="25%">nombreReporte</th>
 	    <th width="25%">nombreReportePadre</th>
 	    <th width="45%">Archivo</th>
 	</tr>
 	 <c:forEach items="${reportes}" var="reporte" varStatus="status">
 	  <tr>
+	  	<td width="5%">${status.count}</td>
 	    <td width="5%">${reporte.idReporte}</td>
 	    <td width="25%">${reporte.nombreReporte}</td>
 	    <td width="25%">${reporte.nombreReportePadre}</td>
