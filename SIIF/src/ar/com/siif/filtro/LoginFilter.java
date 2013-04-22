@@ -38,15 +38,16 @@ public class LoginFilter implements Filter {
 				if ("/log.do".equalsIgnoreCase(req.getServletPath())
 						|| ("/reporte.do"
 								.equalsIgnoreCase(req.getServletPath()) && "obtenerReportes"
-								.equalsIgnoreCase(metodo))
-						&& !"SuperAdministrador".equalsIgnoreCase(u.getRol()
-								.getRol())) {
-					RequestDispatcher dispatcher = filterConfig
-							.getServletContext().getRequestDispatcher(
-									"/jsp/login.jsp");
-					req.setAttribute("error",
-							"Usuario no autorizado para realizar ésta operación");
-					dispatcher.forward(request, response);
+								.equalsIgnoreCase(metodo))) {
+					if (!"SuperAdministrador".equalsIgnoreCase(u.getRol()
+							.getRol())) {
+						RequestDispatcher dispatcher = filterConfig
+								.getServletContext().getRequestDispatcher(
+										"/jsp/login.jsp");
+						req.setAttribute("error",
+								"Usuario no autorizado para realizar ésta operación");
+						dispatcher.forward(request, response);
+					}
 				}
 				chain.doFilter(request, response);
 
