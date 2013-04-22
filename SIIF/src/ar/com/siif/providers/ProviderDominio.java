@@ -77,12 +77,16 @@ public abstract class ProviderDominio {
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
 		
-		if(fiscalizacionDTO.getOperacionAlta() != null){
+		if(fiscalizacionDTO.getOperacionAlta() != null &&
+		   fiscalizacionDTO.getOperacionAlta().getUsuario().getId() != null)
+		{
 			fiscalizacion.setOperacionAlta(ProviderDominio.getOperacionFiscalizacion(
 												fiscalizacionDTO.getOperacionAlta(),
 												fiscalizacion,usuarioAlta));
 		}	
-		if(fiscalizacionDTO.getOperacionModificacion() != null){
+		if(fiscalizacionDTO.getOperacionModificacion() != null &&
+		   fiscalizacionDTO.getOperacionModificacion().getUsuario().getId() != null)
+		{
 			fiscalizacion.setOperacionModificacion(ProviderDominio.getOperacionFiscalizacion(
 													fiscalizacionDTO.getOperacionModificacion(),
 													fiscalizacion,usuarioModificacion));
@@ -312,19 +316,25 @@ public abstract class ProviderDominio {
 		guia.setNroGuia(guiaDTO.getNroGuia());
 		guia.setObservaciones(guiaDTO.getObservaciones());
 		
-		if(guiaDTO.getOperacionAlta().getId() != null){
+		if(guiaDTO.getOperacionAlta() != null && 
+		   guiaDTO.getOperacionAlta().getUsuario().getId() != null)
+		{
 			guia.setOperacionAlta(ProviderDominio.getOperacionGuiaForestal(
 					guiaDTO.getOperacionAlta(),
 					guia,usuarioAlta));
 		}
 		
-		if(guiaDTO.getOperacionModificacion().getId() != null){
+		if(guiaDTO.getOperacionModificacion() != null && 
+		   guiaDTO.getOperacionModificacion().getUsuario().getId() != null)
+		{
 			guia.setOperacionModificacion(ProviderDominio.getOperacionGuiaForestal(
 													guiaDTO.getOperacionModificacion(),
 													guia,usuarioModificacion));
 		}		
 		
-		if(guiaDTO.getOperacionAnulacion().getId() != null){
+		if(guiaDTO.getOperacionAnulacion().getId() != null &&
+		   guiaDTO.getOperacionAnulacion().getUsuario().getId() != null)
+		{
 			guia.setOperacionAnulacion(ProviderDominio.getOperacionGuiaForestal(
 													guiaDTO.getOperacionAnulacion(),
 													guia,usuarioAnulacion));
