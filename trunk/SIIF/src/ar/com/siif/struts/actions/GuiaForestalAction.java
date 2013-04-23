@@ -1535,6 +1535,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok10 = true;
 			boolean ok11 = true;
 			boolean ok12 = true;
+			boolean ok13 = true;
 
 			ok = Validator.validarLongMayorQue(0, Long
 					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
@@ -1579,6 +1580,10 @@ public class GuiaForestalAction extends ValidadorAction {
 				ok9 = false;
 			}
 
+			ok13 = Validator.validarVolumenSubImportes(guiaForestalForm.getListaFiscalizaciones(),
+													   guiaForestalForm.getListaSubImportes(),
+													   error);
+			
 			ok10 = Validator.requerido(guiaForestalForm.getGuiaForestal()
 					.getFecha(), "Fecha", error);
 			if (guiaForestalForm.getRangos().size() > 0) {
@@ -1591,7 +1596,7 @@ public class GuiaForestalAction extends ValidadorAction {
 					"Fecha de Vencimiento de Vales de Transporte", error);
 
 			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8
-					&& ok9 && ok10 && ok11 && ok12;
+					&& ok9 && ok10 && ok11 && ok12 && ok13;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
