@@ -1,5 +1,7 @@
 package ar.com.siif.fachada;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -168,4 +170,7 @@ public class ReportesFachada implements IReportesFachada {
 		return reportesDAO.obtenerReportes();
 	}
 
+	public void actualizarReporte(Long idReporte, InputStream is) throws IOException {
+		reportesDAO.actualizarReporte(idReporte, is);
+	}
 }

@@ -4,8 +4,30 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script type="text/javascript">
-
+	function submitir(id){
+		var idForm = "form" + id;
+		$("#" + idForm).submit();
+	}
+	
+	//este metodo se llama en el load de la página
+	function init() {
+		//sobrescribo el load!!!!!
+		$("#upload_target").unbind("load");
+	    $("#upload_target").load(function() {
+	      		var theFrame = $("#upload_target");
+				var detalle = $("#upload_target").contents().find("#detalle").html();
+				if(detalle!=null && detalle!=""){
+					alert(detalle);
+				}
+				//$("#mensajeCallbackErrorExito").html(detalle);
+				//$("#mensajeCallbackErrorExito").dialog({width: 250, height:100, resizable: false ,modal: true});
+	    });
+	
+	}
 </script> 
+
+<iframe id="upload_target" name="upload_target" src="" scrolling="no" style="width:100%;height:0;border:0px solid #fff;">
+</iframe>
 
 <table border="1" class="cuadrado" align="center" width="90%" cellpadding="2">
 	<tr>
@@ -22,13 +44,15 @@
 	    <td width="25%">${reporte.nombreReporte}</td>
 	    <td width="25%">${reporte.nombreReportePadre}</td>
 	    <td width="45%">
-	    	<%--iframe height="0" width="0" frameborder="0" name="frame${reporte.idReporte}>
-	    	</iframe--%>
-	    	
-	    	<form action="" target="frame${reporte.idReporte}" method="post" enctype="multipart/form-data">
-		    	<input type="file" name="filename">
-	    		<input type="submit" name="Grabar" value="Grabar">
-	    	</form>
+	    	<form method="post" id="form${status.count}" enctype="multipart/form-data" action="../../actualizarReporte.do" target="upload_target">
+				<input type="hidden" name="metodo" value="actualizarReporte">
+				<input type="hidden" name="idReporte" value="${reporte.idReporte}">
+
+				<input name="file" type="file" class="botonerab" id="file${status.count}">
+				<input type="button" name="action" class="botonerab" value="Subir reporte" onclick="submitir('${status.count}')">
+
+			</form>
+			
 	    </td>
 	  </tr>
 	  
@@ -38,4 +62,6 @@
 <br/>
 <br/>
 
-
+<script>
+	init();
+</script>
