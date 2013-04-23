@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.struts.DispatchActionSupport;
 
 import ar.com.siif.struts.utils.Validator;
+import ar.com.siif.utils.MyLogger;
 
 public class ValidadorAction extends DispatchActionSupport {
 
@@ -45,6 +46,7 @@ public class ValidadorAction extends DispatchActionSupport {
 		} catch (Exception e) {
 			error = new StringBuffer(Validator.XML_HEADER);
 			Validator.addErrorXML(error, "ValidadorAction :" + e.getCause() + "|" + e.getMessage());
+			MyLogger.logError(e);
 			/*
 			 * new Exception(e.getMessage()); request.setAttribute("titulo",
 			 * "Error Inesperado"); request.setAttribute("mensaje",

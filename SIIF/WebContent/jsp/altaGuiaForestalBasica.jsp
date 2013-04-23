@@ -700,6 +700,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 										onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>
+										<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.nombre" value="${fiscalizacion.tipoProducto.nombre}"/>
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].cantidadMts" value="${fiscalizacion.cantidadMts}"/>
 										<td class="botonerab">
 											<c:out value="${fiscalizacion.fecha}"></c:out>
@@ -747,7 +748,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 				<label onclick="javascript:exp('1')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
 					<U class="azulOpcion">
-						<bean:message key='SIIF.subTitulo.ProductosForestales'/>
+						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
+						Sub Importes
 					</U>
 					<BR>
 				</label>
@@ -756,7 +758,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 				<label onclick="javascript:col('1')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
 					<U class="azulOpcion">
-						<bean:message key='SIIF.subTitulo.ProductosForestales'/>
+						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
+						Sub Importes
 					</U>
 					<BR>
 				</label>
