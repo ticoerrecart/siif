@@ -285,13 +285,21 @@ function despintarFila(idTr){
 			<div id="e1" style="DISPLAY: ">
 				<label onclick="javascript:exp('1')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
-					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ProductosForestales'/></U><BR>
+					<U class="azulOpcion">
+						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
+						Sub Importes
+					</U>
+					<BR>
 				</label>
 			</div>
 			<div id="c1" style="DISPLAY: none">
 				<label onclick="javascript:col('1')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
-					<U class="azulOpcion"><bean:message key='SIIF.subTitulo.ProductosForestales'/></U><BR>
+					<U class="azulOpcion">
+						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
+						Sub Importes
+					</U>
+					<BR>
 				</label>
 	
 				<table border="0" class="cuadradoSinBorde" align="center"

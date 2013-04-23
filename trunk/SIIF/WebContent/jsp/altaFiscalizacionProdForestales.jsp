@@ -41,9 +41,9 @@ function submitir(){
 					if ($('#idTranzon').val() > -1){
 						$('#idLocalizacion').val($('#idTranzon').val());	
 					} else {
-						if ($('#idPMF').val() > -1){
+						//if ($('#idPMF').val() > -1){
 							$('#idLocalizacion').val($('#idPMF').val());
-						}	
+						//}	
 					}
 				}
 			} 
@@ -51,6 +51,9 @@ function submitir(){
 		} else {
 			if ($('#idZMF').val()== 2) {
 				$('#idLocalizacion').val($('#idArea').val());
+			}
+			else{
+				$('#idLocalizacion').val('-1');
 			}
 		}
 		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");

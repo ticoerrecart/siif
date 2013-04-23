@@ -439,6 +439,7 @@ public class FiscalizacionAction extends ValidadorAction {
 		tipoProductoForestalDTO.setCantDiametros(fiscalizacionDTO.getTipoProducto().getCantDiametros());
 		tipoProductoForestalDTO.replicarDiametro2();
 		
+		boolean ok1 = true;		
 		boolean ok2 = true;
 		boolean ok3 = true;
 		boolean ok4 = true;
@@ -455,10 +456,12 @@ public class FiscalizacionAction extends ValidadorAction {
 		boolean ok15 = true;
 		boolean ok16 = true;
 
-		ok2 = Validator.validarComboRequerido("-1",
-				Long.toString(fiscalizacionDTO.getProductorForestal().getId()),
-				"Productor Forestal", error);
-
+		ok1 = Validator.requerido(fiscalizacionDTO.getProductorForestal().getId(),"Productor Forestal", error);
+		if(ok1){
+			ok2 = Validator.validarComboRequerido("-1",
+					Long.toString(fiscalizacionDTO.getProductorForestal().getId()),
+					"Productor Forestal", error);
+		}	
 		ok5 = Validator.requerido(fiscalizacionDTO.getFecha(), "Fecha", error)
 				&& Validator.validarFechaValida(fiscalizacionDTO.getFecha(), "Fecha", error);
 
@@ -488,10 +491,11 @@ public class FiscalizacionAction extends ValidadorAction {
 		ok11 = Validator.validarComboRequerido("-1",
 				Long.toString(fiscalizacionDTO.getOficinaAlta().getId()), "Oficina", error);
 
-		ok15 = Validator.validarComboRequerido("0",Long.toString(fiscalizacionDTO.getIdLocalizacion()), "Localizacion", error);
+		//ok15 = Validator.validarComboRequerido("0",Long.toString(fiscalizacionDTO.getIdLocalizacion()), "Localizacion", error);
+		ok15 = Validator.validarLocalizacionRequerido(String.valueOf(fiscalizacionDTO.getIdLocalizacion()), error);
 		 
 		//VALIDACIONES FISCALIZACION
-		return ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
+		return ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8 && ok9 && ok10 && ok11 && ok12 && ok13
 				&& ok14 && ok15 && ok16;		
 	}	
 }

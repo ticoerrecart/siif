@@ -880,7 +880,9 @@ public abstract class Validator {
 						.getTipoProducto().getId());
 				if (subImporte == null) {
 					addErrorXML(pError,
-							"Debe agregar todas las fiscalizaciones al calculo del importe");
+							//"Debe agregar todas las fiscalizaciones al calculo del importe");
+							"Falta definir el tipo de producto "+fiscalizacionDTO.getTipoProducto().getNombre()+
+							" en los subImportes");
 					return false;
 				}
 			}
@@ -891,7 +893,7 @@ public abstract class Validator {
 
 	public static boolean validarLocalizacionRequerido(String idLocalizacion, StringBuffer pError) {
 
-		if (idLocalizacion == null
+		if (idLocalizacion == null || idLocalizacion.equals("")
 				|| (idLocalizacion != null && Long.parseLong(idLocalizacion) <= 0)) {
 			addErrorXML(pError, "Localización es un dato obligatorio");
 			return false;

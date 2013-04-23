@@ -34,7 +34,10 @@ function cambioComboProductores() {
 }
 
 function cambioComboZona() {
-
+	
+	if($("#idLocalizacion").length > 0){
+		$("#idLocalizacion").val("-1");
+	}	
 	zmf = $('#idZMF').val();
 	idPF = $('#idProductor').val();
 	if (idPF == 0 || zmf == 0) {

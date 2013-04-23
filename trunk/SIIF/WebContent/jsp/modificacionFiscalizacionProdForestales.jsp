@@ -46,9 +46,9 @@ function submitir(){
 					if ($('#idTranzon').val() > -1){
 						$('#idLocalizacion').val($('#idTranzon').val());	
 					} else {
-						if ($('#idPMF').val() > -1){
+						//if ($('#idPMF').val() > -1){
 							$('#idLocalizacion').val($('#idPMF').val());
-						}	
+						//}	
 					}
 				}
 			} 
