@@ -1,5 +1,6 @@
 package ar.com.siif.struts.actions;
 
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -14,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IReportesFachada;
 import ar.com.siif.negocio.Reporte;
+import ar.com.siif.struts.actions.forms.ReporteForm;
 import ar.com.siif.utils.MyLogger;
 
 public class ReportesAction extends ValidadorAction {
@@ -263,4 +265,26 @@ public class ReportesAction extends ValidadorAction {
 
 		return mapping.findForward(forward);
 	}
+
+	public ActionForward actualizarReporte(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String forward = "exitoMostrarReportes";
+		WebApplicationContext ctx = getWebApplicationContext();
+
+		IReportesFachada reportesFachada = (IReportesFachada) ctx
+				.getBean("reportesFachada");
+		ReporteForm reporteForm = (ReporteForm) form;
+
+		InputStream is = reporteForm.getFile().getInputStream();
+
+		reportesFachada.actualizarReporte(reporteForm.getIdReporte(), is);
+		request.setAttribute("detalle", "El reporte con id: " + reporteForm.getIdReporte() + " fue actualizado con éxito");
+		/*List<Reporte> reportes = reportesFachada.obtenerReportes();
+		request.setAttribute("reportes", reportes);*/
+
+		return mapping.findForward(forward);
+	}
+
 }

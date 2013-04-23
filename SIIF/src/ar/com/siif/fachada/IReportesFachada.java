@@ -1,5 +1,7 @@
 package ar.com.siif.fachada;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import ar.com.siif.negocio.Reporte;
@@ -34,4 +36,6 @@ public interface IReportesFachada {
 	 */
 
 	public List<Reporte> obtenerReportes();
+
+	public void actualizarReporte(Long idReporte, InputStream is)throws IOException;
 }

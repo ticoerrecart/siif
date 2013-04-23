@@ -1,8 +1,11 @@
 package ar.com.siif.dao;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +15,9 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import org.apache.struts.upload.FormFile;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -118,5 +123,60 @@ public class ReportesDAO extends HibernateDaoSupport {
 		criteria.addOrder(Order.asc("nombreReporte"));
 
 		return criteria.list();
+	}
+
+	public void actualizarReporte(Long idReporte, InputStream is) throws IOException {
+		Reporte reporte = (Reporte) this.getHibernateTemplate().get(
+				Reporte.class, idReporte);
+		Blob fileBlob = Hibernate.createBlob(is);
+		reporte.setArchivoReporte(fileBlob);
+		this.getHibernateTemplate().saveOrUpdate(reporte);
+	}
+
+	public byte[] toByteArrayImpl(FormFile formfile) throws SQLException,
+			IOException {
+		byte[] buf = new byte[4000];
+		InputStream is = formfile.getInputStream();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			for (;;) {
+				int dataSize = is.read(buf);
+
+				if (dataSize == -1)
+					break;
+				baos.write(buf, 0, dataSize);
+			}
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException ex) {
+				}
+			}
+		}
+		return baos.toByteArray();
+	}
+
+	public byte[] toByteArrayImpl(Blob fromBlob, ByteArrayOutputStream baos)
+			throws SQLException, IOException {
+		byte[] buf = new byte[4000];
+		InputStream is = fromBlob.getBinaryStream();
+		try {
+			for (;;) {
+				int dataSize = is.read(buf);
+
+				if (dataSize == -1)
+					break;
+				baos.write(buf, 0, dataSize);
+			}
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException ex) {
+				}
+			}
+		}
+		return baos.toByteArray();
 	}
 }
