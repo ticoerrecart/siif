@@ -700,6 +700,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 										onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>
+										<html:hidden property="listaFiscalizaciones[${i.count-1}].cantidadMts" value="${fiscalizacion.cantidadMts}"/>
 										<td class="botonerab">
 											<c:out value="${fiscalizacion.fecha}"></c:out>
 										</td>

@@ -713,6 +713,11 @@ public abstract class Validator {
 				return false;
 			}
 
+			if (boleta.getFechaVencimiento() == null || boleta.getFechaVencimiento().equals("")) {
+				addErrorXML(pError, "Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
+				return false;
+			}			
+			
 			if (boleta.getMonto() <= 0.0) {
 				addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
 				return false;
@@ -1031,6 +1036,33 @@ public abstract class Validator {
 			return false;
 		}
 
+		return true;
+	}
+	
+	public static boolean validarVolumenSubImportes(List<FiscalizacionDTO> fiscalizaciones,
+													List<SubImporteDTO> subImportes,StringBuffer pError){
+		
+		double cantidadMts;
+		Long idTipoProducto;		
+		
+		for (SubImporteDTO subImporteDTO : subImportes) {
+			
+			cantidadMts = subImporteDTO.getCantidadMts();
+			idTipoProducto = subImporteDTO.getTipoProducto().getId();
+			
+			for (FiscalizacionDTO fiscalizacion : fiscalizaciones) {
+				
+				if(fiscalizacion.getTipoProducto().getId().longValue() == idTipoProducto.longValue()){
+					cantidadMts = cantidadMts - fiscalizacion.getCantidadMts();
+				}
+			}
+			if(cantidadMts < 0){
+				addErrorXML(pError,
+				"El volumen de los SubImportes debe ser mayor o igual al de las Fiscalizaciones para cada tipo de producto");
+				return false;
+			}
+		}
+		
 		return true;
 	}
 }
