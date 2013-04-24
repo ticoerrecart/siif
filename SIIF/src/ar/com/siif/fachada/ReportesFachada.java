@@ -123,6 +123,23 @@ public class ReportesFachada implements IReportesFachada {
 				parameters);
 	}
 
+	public byte[] generarReporteVolumenPorTipoProductorEntreFechas(String path,
+			String fechaDesde, String fechaHasta) throws Exception {
+
+		//Timestamp ts = new Timestamp(new Date().getTime());
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters
+				.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+		parameters
+				.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+		//parameters.put("fechaHoy", ts);
+
+		return reportesDAO.generarReporte(
+				Constantes.REPORTE_VOLUMEN_POR_TIPO_PRODUCTOR_ENTRE_FECHAS, parameters);
+	}	
+	
 	private void setParemetersLocalizacion(Map<String, Object> parameters,
 			Localizacion localizacion) {
 		parameters.put("area",

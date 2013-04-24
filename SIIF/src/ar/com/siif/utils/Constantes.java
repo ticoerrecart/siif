@@ -352,6 +352,8 @@ public class Constantes {
 	
 	public static final String REPORTE_GUIAS_FORESTALES_POR_PRODUCTOR_ENTRE_FECHAS = "reporteGuiasForestalesPorProductorEntreFechas";
 	
+	public static final String REPORTE_VOLUMEN_POR_TIPO_PRODUCTOR_ENTRE_FECHAS = "reporteVolumenPorTipoProductorEntreFechas";	
+	
 	//FIN REPORTES	
 
 	//MENU
