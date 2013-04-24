@@ -29,14 +29,17 @@ function generarReporte(){
 
 	var fechaDesde = $("#idFechaDesde").val();
 	var fechaHasta = $("#idFechaHasta").val();
+	var metodo = $("#idMetodo").val();
 
+	//generarReporteDetalleGuiasEntreFechas
+	
 	if(fechaDesde != "" && fechaHasta != ""){
 		$("#error").html("");
 		var especificaciones = 'top=0,left=0,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable';
 		if(type == "IE"){
-			window.open("./reporte.do?metodo=generarReporteDetalleGuiasEntreFechas&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+			window.open("./reporte.do?metodo="+metodo+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
 		}else{
-			window.open("../../reporte.do?metodo=generarReporteDetalleGuiasEntreFechas&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
+			window.open("../../reporte.do?metodo="+metodo+"&fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta,"",especificaciones);
 		}
 	}
 	else{
@@ -49,7 +52,7 @@ function generarReporte(){
 </script>
    
 <div id="error" class="rojoAdvertencia"></div>
-
+<html:hidden styleId="idMetodo" value="${metodo}" property=""/>
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
