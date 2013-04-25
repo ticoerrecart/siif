@@ -7,10 +7,14 @@ import ar.com.siif.dao.FiscalizacionDAO;
 import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.SubImporteDTO;
+import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localizacion;
+import ar.com.siif.negocio.OperacionGuiaForestal;
 import ar.com.siif.negocio.TipoProductoForestal;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -31,6 +35,8 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	private IUsuarioFachada usuarioFachada;
 
+	private IGuiaForestalFachada guiaForestalFachada;
+	
 	public FiscalizacionFachada() {
 	}
 
@@ -45,6 +51,55 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		this.entidadFachada = pEntidadFachada;
 		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
 		this.usuarioFachada = pUsuarioFachada;
+	}
+
+	public FiscalizacionDAO getFiscalizacionDAO() {
+		return fiscalizacionDAO;
+	}
+
+	public void setFiscalizacionDAO(FiscalizacionDAO fiscalizacionDAO) {
+		this.fiscalizacionDAO = fiscalizacionDAO;
+	}
+
+	public IUbicacionFachada getUbicacionFachada() {
+		return ubicacionFachada;
+	}
+
+	public void setUbicacionFachada(IUbicacionFachada ubicacionFachada) {
+		this.ubicacionFachada = ubicacionFachada;
+	}
+
+	public IEntidadFachada getEntidadFachada() {
+		return entidadFachada;
+	}
+
+	public void setEntidadFachada(IEntidadFachada entidadFachada) {
+		this.entidadFachada = entidadFachada;
+	}
+
+	public ITipoProductoForestalFachada getTipoProductoForestalFachada() {
+		return tipoProductoForestalFachada;
+	}
+
+	public void setTipoProductoForestalFachada(
+			ITipoProductoForestalFachada tipoProductoForestalFachada) {
+		this.tipoProductoForestalFachada = tipoProductoForestalFachada;
+	}
+
+	public IUsuarioFachada getUsuarioFachada() {
+		return usuarioFachada;
+	}
+
+	public void setUsuarioFachada(IUsuarioFachada usuarioFachada) {
+		this.usuarioFachada = usuarioFachada;
+	}
+
+	public IGuiaForestalFachada getGuiaForestalFachada() {
+		return guiaForestalFachada;
+	}
+
+	public void setGuiaForestalFachada(IGuiaForestalFachada guiaForestalFachada) {
+		this.guiaForestalFachada = guiaForestalFachada;
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizaciones() {
@@ -90,6 +145,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasNuevasDTO) {
 
+		Usuario usuario = usuarioFachada.getUsuario(
+							fiscalizacionDTO.getOperacionModificacion().getUsuario().getId());
+		
 		Fiscalizacion fiscalizacion = fiscalizacionDAO
 				.recuperarFiscalizacion(fiscalizacionDTO.getId());
 
@@ -103,18 +161,41 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.getOficinaAlta().getId());
 		fiscalizacion.setOficinaAlta(oficinaAlta);
 		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
-		fiscalizacion.setLocalizacion(ubicacionFachada
-				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion()));
+		Localizacion localizacionFiscalizacion = ubicacionFachada.
+									getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
+		fiscalizacion.setLocalizacion(localizacionFiscalizacion);
+		
+		//Verifico si la localizacion de la fiscalizacion pertenece o es la misma a la localizacion 
+		//de la guia a la cual esta asociada, si es q lo esta.
+		if(fiscalizacion.getGuiaForestal() != null){
+			
+			GuiaForestal guia = fiscalizacion.getGuiaForestal();
+			
+			if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia.getLocalizacion())
+					|| guia.getLocalizacion().esParteDeLaLocalizacion(localizacionFiscalizacion))) {
+				
+				//Tengo que desasociar la fiscalizacion con la guia
+				fiscalizacion.setGuiaForestal(null);
+				guia.getFiscalizaciones().remove(fiscalizacion);
+				
+				OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
+				operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+				operacionDTO.setFecha(fiscalizacionDTO.getOperacionModificacion().getFecha());
+				
+				OperacionGuiaForestal operacion = ProviderDominio.getOperacionGuiaForestal(
+						operacionDTO,guia,usuario);
+
+				guia.setOperacionModificacion(operacion);
+				
+				//guiaForestalFachada.modificarGuiaForestal(guia);
+			}
+		}
 		
 		fiscalizacion.setOperacionModificacion(
 						ProviderDominio.getOperacionFiscalizacion(
 										fiscalizacionDTO.getOperacionModificacion(), 
-										fiscalizacion, 
-										usuarioFachada.getUsuario(
-											fiscalizacionDTO.getOperacionModificacion().getUsuario().getId()))
-						
-		);
-				
+										fiscalizacion,usuario));
+										
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,
 				muestrasNuevasDTO);
 	}
