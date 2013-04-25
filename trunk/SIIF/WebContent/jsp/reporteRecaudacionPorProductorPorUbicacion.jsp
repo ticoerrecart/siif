@@ -110,7 +110,7 @@ function actualizarProductoresCallback(productores){
 				<tr>
 					<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
 					<td align="left" class="botonerab">
-						<select id="idProductor" class="botonerab" disabled="disabled" onchange="actualizarComboPMF();">
+						<select id="idProductor" class="botonerab" disabled="disabled" onchange="cambioComboZona();">
 							<option value="-1">-Seleccione un Productor-</option>
 						</select>
 					</td>

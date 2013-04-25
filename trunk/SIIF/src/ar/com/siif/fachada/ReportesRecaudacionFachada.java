@@ -85,6 +85,12 @@ public class ReportesRecaudacionFachada implements IReportesRecaudacionFachada {
 		parameters.put("idLocalizacion", idLocalizacion);
 		Localizacion localizacion = (Localizacion)reportesDAO.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
 		parameters.put("localizacion",localizacion.getNombreLocalizacion());
+		parameters.put("nombrePmf",localizacion.getNombrePMF());
+		parameters.put("expedientePmf",localizacion.getExpedientePMF());		
+		parameters.put("numeroTranzon",localizacion.getNumeroTranzon());
+		parameters.put("dispoTranzon",localizacion.getDisposicionTranzon());
+		parameters.put("marcacion",localizacion.getDisposicionMarcacion());
+		parameters.put("area",localizacion.getNombreArea());		
 		
 		return reportesDAO.generarReporte(
 				Constantes.REPORTE_RECAUDACION_POR_PRODUCTOR_POR_UBICACION,
