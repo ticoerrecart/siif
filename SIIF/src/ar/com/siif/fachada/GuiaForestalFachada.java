@@ -63,6 +63,63 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		this.localidadFachada = pLocalidadFachada;
 	}
 
+	public GuiaForestalDAO getGuiaForestalDAO() {
+		return guiaForestalDAO;
+	}
+
+	public void setGuiaForestalDAO(GuiaForestalDAO guiaForestalDAO) {
+		this.guiaForestalDAO = guiaForestalDAO;
+	}
+
+	public IUsuarioFachada getUsuarioFachada() {
+		return usuarioFachada;
+	}
+
+	public void setUsuarioFachada(IUsuarioFachada usuarioFachada) {
+		this.usuarioFachada = usuarioFachada;
+	}
+
+	public IFiscalizacionFachada getFiscalizacionFachada() {
+		return fiscalizacionFachada;
+	}
+
+	public void setFiscalizacionFachada(IFiscalizacionFachada fiscalizacionFachada) {
+		this.fiscalizacionFachada = fiscalizacionFachada;
+	}
+
+	public IEntidadFachada getEntidadFachada() {
+		return entidadFachada;
+	}
+
+	public void setEntidadFachada(IEntidadFachada entidadFachada) {
+		this.entidadFachada = entidadFachada;
+	}
+
+	public ITipoProductoForestalFachada getTipoProductoForestalFachada() {
+		return tipoProductoForestalFachada;
+	}
+
+	public void setTipoProductoForestalFachada(
+			ITipoProductoForestalFachada tipoProductoForestalFachada) {
+		this.tipoProductoForestalFachada = tipoProductoForestalFachada;
+	}
+
+	public IUbicacionFachada getUbicacionFachada() {
+		return ubicacionFachada;
+	}
+
+	public void setUbicacionFachada(IUbicacionFachada ubicacionFachada) {
+		this.ubicacionFachada = ubicacionFachada;
+	}
+
+	public ILocalidadFachada getLocalidadFachada() {
+		return localidadFachada;
+	}
+
+	public void setLocalidadFachada(ILocalidadFachada localidadFachada) {
+		this.localidadFachada = localidadFachada;
+	}
+
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 			List<BoletaDepositoDTO> listaBoletaDepositoDTO, List<RangoDTO> listaRangosDTO,
 			Date fechaVencimiento, List<FiscalizacionDTO> listaFiscalizacionesDTO,
@@ -502,4 +559,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
+	public void modificarGuiaForestal(GuiaForestal guiaForestal){
+		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
+	}	
 }

@@ -9,6 +9,7 @@ import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.exception.NegocioException;
 
 public interface IGuiaForestalFachada {
@@ -63,4 +64,6 @@ public interface IGuiaForestalFachada {
 			List<ValeTransporteDTO> valesTransporteDTO, Date fechaVencimiento);
 
 	public boolean existeGuiaForestal(long idGuia, long nroGuia);
+	
+	public void modificarGuiaForestal(GuiaForestal guiaForestal);
 }

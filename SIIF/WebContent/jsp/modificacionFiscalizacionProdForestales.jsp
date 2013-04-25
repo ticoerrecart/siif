@@ -31,9 +31,19 @@
 
 <script type="text/javascript">
 
-
 function submitir(){
-	if(confirm("Esta seguro que desea modificar la Fiscalización ?")){
+
+	var nroGuia = $('#nroGuia').val();
+	
+	var texto = "";
+	if(nroGuia != null && nroGuia != ""){
+		texto = "La Fiscalización esta asociada a la Guía Forestal nro: " + nroGuia + "\n" +
+				"Esta seguro que desea modificarla?";   
+	}else{
+		texto = "Esta seguro que desea modificar la Fiscalización ?";		
+	}	
+	
+	if(confirm(texto)){
 		calcularVolumen();
 		
 		if ($('#idZMF').val() == 1){
@@ -232,7 +242,7 @@ $(function() {
 				<bean:message key='SIIF.label.NroDeGuia'/>
 			</td>
 			<td align="left">
-				<input type="text" class="botonerab" value="${fiscalizacionDTO.guiaForestal.nroGuia}" readonly="readonly">
+				<input type="text" id="nroGuia" class="botonerab" value="${fiscalizacionDTO.guiaForestal.nroGuia}" readonly="readonly">
 			</td>
 		</tr>
 		<tr>
