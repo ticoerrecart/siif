@@ -216,7 +216,7 @@ public class ReportesPorProductorFachada implements
 		}
 		
 		parameters.put("idLocalizacion", idLocalizacion);
-		parameters.put("porPlan", esPlan);
+		parameters.put("porPlan", esPlan);		
 		
 		Localizacion localizacion = (Localizacion)reportesDAO.getHibernateTemplate().get(Localizacion.class, idLocalizacion);
 		Entidad entidad = (Entidad)reportesDAO.getHibernateTemplate().get(Entidad.class, idProductor);
@@ -227,6 +227,12 @@ public class ReportesPorProductorFachada implements
 		
 		parameters.put("nombreLocalizacion", localizacion.getNombreLocalizacion());
 		
+		parameters.put("nombrePmf",localizacion.getNombrePMF());
+		parameters.put("expedientePmf",localizacion.getExpedientePMF());		
+		parameters.put("numeroTranzon",localizacion.getNumeroTranzon());
+		parameters.put("dispoTranzon",localizacion.getDisposicionTranzon());
+		parameters.put("marcacion",localizacion.getDisposicionMarcacion());
+		parameters.put("area",localizacion.getNombreArea());		
 		
 		return reportesDAO.generarReporte(
 				Constantes.VOLUMEN_POR_PRODUCTOR_POR_UBICACION, parameters);
