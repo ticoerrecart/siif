@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +34,9 @@ import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
 import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localizacion;
+import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.struts.actions.forms.GuiaForestalForm;
 import ar.com.siif.struts.utils.Validator;
@@ -1815,4 +1818,63 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 	}
 
+	public boolean validarFiscalizacionesParaAsociarAGuiaForestalForm(
+			StringBuffer error, ActionForm form) {
+		try {
+			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+			guiaForestalForm.normalizarListaFiscalizaciones();
+			Map<Long,Double> hash = new HashMap<Long,Double>();
+			
+			if (guiaForestalForm.getListaFiscalizaciones().size() > 0) {
+				
+				WebApplicationContext ctx = getWebApplicationContext();
+				IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
+														.getBean("guiaForestalFachada");
+				GuiaForestal guia = guiaForestalFachada.recuperarGuiaForestalDominio(
+														guiaForestalForm.getGuiaForestal().getId());
+
+				List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
+				for (FiscalizacionDTO fiscalizacionDTO : guiaForestalForm.getListaFiscalizaciones()) {
+					Double cant = (hash.get(fiscalizacionDTO.getTipoProducto().getId().longValue())==null)
+												?new Double(0.0)
+												:hash.get(fiscalizacionDTO.getTipoProducto().getId().longValue());
+					cant = cant + fiscalizacionDTO.getCantidadMts();
+					hash.put(fiscalizacionDTO.getTipoProducto().getId().longValue(), cant);
+				}
+				
+				for (Fiscalizacion fiscalizacion : guia.getFiscalizaciones()) {
+					
+					long idTipoProducto = fiscalizacion.getTipoProducto().getId();
+					Double cant = hash.get(idTipoProducto);
+					if(cant != null){
+						cant = cant + fiscalizacion.getCantidadMts();
+						hash.put(idTipoProducto, cant);
+					}	
+				}
+				
+				for (SubImporte subImporte : guia.getSubImportes()) {
+					
+					long idTipoProducto = subImporte.getTipoProducto().getId();
+					Double cant = hash.get(idTipoProducto);
+					
+					if(cant != null && cant > subImporte.getCantidadMts()){
+						Validator.addErrorXML(error,"El Volumen seleccionado de las Fiscalizaciones de "+
+								subImporte.getTipoProducto().getNombre()+" sobrepasa el volumen del SubImporte");
+						return false;						
+					}
+				}
+			}
+			else{
+				Validator.addErrorXML(error,"Debe seleccionar al menos una Fiscalización");
+				return false;				
+			}
+			
+			return true;
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}
+	}	
 }

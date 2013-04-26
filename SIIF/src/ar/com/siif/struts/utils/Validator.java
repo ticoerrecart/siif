@@ -22,6 +22,8 @@ import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
+import ar.com.siif.negocio.GuiaForestal;
+import ar.com.siif.negocio.SubImporte;
 import ar.com.siif.utils.DateUtils;
 import ar.com.siif.utils.MathUtils;
 
@@ -1066,5 +1068,28 @@ public abstract class Validator {
 		}
 		
 		return true;
+	}
+	
+	public static boolean validarCantM3ModiFiscalizacion(FiscalizacionDTO fiscalizacionDTO, GuiaForestal guia){
+		
+		long idTipoProducto = fiscalizacionDTO.getTipoProducto().getId();
+		double cantM3EnSubImporte = 0.0;
+		double cantM3EnFiscalizaciones = fiscalizacionDTO.getCantidadMts();
+		
+		for (SubImporte subImporte : guia.getSubImportes()) {
+			if(subImporte.getTipoProducto().getId() == idTipoProducto){
+				cantM3EnSubImporte = subImporte.getCantidadMts();
+			}
+		}
+		
+		for (Fiscalizacion fiscalizacion : guia.getFiscalizaciones()) {
+			if(fiscalizacion.getTipoProducto().getId() == idTipoProducto
+			   && fiscalizacion.getId().longValue() != fiscalizacionDTO.getId().longValue()){
+				
+				cantM3EnFiscalizaciones = cantM3EnFiscalizaciones + fiscalizacion.getCantidadMts();
+			}
+		}
+		
+		return (cantM3EnFiscalizaciones <= cantM3EnSubImporte);
 	}
 }
