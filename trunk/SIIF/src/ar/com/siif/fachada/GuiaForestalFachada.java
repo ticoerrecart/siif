@@ -562,4 +562,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public void modificarGuiaForestal(GuiaForestal guiaForestal){
 		this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 	}	
+	
+	public GuiaForestal recuperarGuiaForestalDominio(long idGuiaForestal){
+		
+		return guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
+	}
 }

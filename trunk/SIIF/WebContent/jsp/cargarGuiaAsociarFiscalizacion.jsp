@@ -8,6 +8,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <script type="text/javascript" src="<html:rewrite page='/js/funcUtiles.js'/>"></script>
+<script type="text/javascript"
+	src="<html:rewrite page='/js/validacionAjax.js'/>"></script>
 <script type="text/javascript" 
 	src="<html:rewrite page='/js/JQuery/ui/jquery-ui-1.8.10.custom.min.js'/>"></script>		
 
@@ -85,22 +87,25 @@ function volverAltaGFB(){
 	$("#errores").show();
 }
 
-function agrElimFisc(indice,idFiscalizacion){
+function agrElimFisc(indice,idFiscalizacion,idTipoProducto,cantM3){
 
 	var i = indice+1;
 	if($('#idCheck'+i).is(':checked')){
 		$("#idFiscalizacion"+indice).val(idFiscalizacion);
-		//$("#idTipoProducto"+indice).val(idTipoProducto);			
+		$("#idTipoProducto"+indice).val(idTipoProducto);
+		$("#idCantidadMts"+indice).val(cantM3);			
 	}else{
 		$("#idFiscalizacion"+indice).val(0);
-		//$("#idTipoProducto"+indice).val(0);
+		$("#idTipoProducto"+indice).val(0);
+		$("#idCantidadMts"+indice).val(0);
 	}
 }
 
 function submitAsociarGuia(){
 	if(confirm("Esta seguro que desea asociar las fiscalizaciones ?")){
 		//validarForm("guiaForestalForm","../guiaForestal","validarGuiaForestalBasicaForm","GuiaForestalForm");
-		document.forms[0].submit();
+		//document.forms[0].submit();
+		validarForm("guiaForestalForm","../guiaForestal","validarFiscalizacionesParaAsociarAGuiaForestalForm","GuiaForestalForm");
 	}	
 } 
 </script>
@@ -113,6 +118,7 @@ function submitAsociarGuia(){
 <input id="idParamProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
 <input id="idParamIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 
+<div id="errores" class="rojoAdvertencia">${warning}</div>
 <div id="idGuiaForestal">
 <table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
@@ -398,6 +404,8 @@ function submitAsociarGuia(){
 							<%String clase=""; %>
 							<c:forEach items="${fiscalizaciones}" var="fiscalizacion" varStatus="i">
 								<html:hidden styleId="idFiscalizacion${i.count-1}" property="listaFiscalizaciones[${i.count-1}].id" value=""/>
+								<html:hidden styleId="idTipoProducto${i.count-1}" property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value=""/>
+								<html:hidden styleId="idCantidadMts${i.count-1}" property="listaFiscalizaciones[${i.count-1}].cantidadMts" value=""/>
 								<%clase=(clase.equals("")?"par":""); %>
 								
 								<tr id="trAptas<c:out value='${i.count}'></c:out>" class="<%=clase%>"
@@ -409,7 +417,7 @@ function submitAsociarGuia(){
 									
 									<td class="botonerab">
 										<input type="checkbox" id="idCheck<c:out value='${i.count}'></c:out>"
-											onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>);">
+											onclick="javascript:pintarFila(<c:out value='${i.count}'></c:out>);agrElimFisc(<c:out value='${i.count-1}'></c:out>,<c:out value='${fiscalizacion.id}'></c:out>,<c:out value='${fiscalizacion.tipoProducto.id}'></c:out>,<c:out value='${fiscalizacion.cantidadMts}'></c:out>);">
 									</td>									
 									<td class="botonerab">
 										<c:out value="${fiscalizacion.fecha}"></c:out>

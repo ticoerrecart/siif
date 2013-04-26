@@ -20,6 +20,7 @@ import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
+import ar.com.siif.struts.utils.Validator;
 import ar.com.siif.utils.Fecha;
 import ar.com.siif.utils.MyLogger;
 
@@ -167,12 +168,16 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		
 		//Verifico si la localizacion de la fiscalizacion pertenece o es la misma a la localizacion 
 		//de la guia a la cual esta asociada, si es q lo esta.
+		//Ademas verifico si el volumen de la fiscalizacion modificada, mas todas las fiscalizaciones
+		//de la guia para el mismo tipo de producto, supera el volumen declarado en el subImporte.
 		if(fiscalizacion.getGuiaForestal() != null){
 			
 			GuiaForestal guia = fiscalizacion.getGuiaForestal();
 			
 			if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia.getLocalizacion())
-					|| guia.getLocalizacion().esParteDeLaLocalizacion(localizacionFiscalizacion))) {
+					|| guia.getLocalizacion().esParteDeLaLocalizacion(localizacionFiscalizacion)) 
+					|| !Validator.validarCantM3ModiFiscalizacion(fiscalizacionDTO,guia))
+			{
 				
 				//Tengo que desasociar la fiscalizacion con la guia
 				fiscalizacion.setGuiaForestal(null);

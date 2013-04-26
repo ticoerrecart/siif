@@ -26,6 +26,8 @@ public interface IGuiaForestalFachada {
 
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal);
 
+	public GuiaForestal recuperarGuiaForestalDominio(long idGuiaForestal);	
+	
 	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal);
 
 	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal, boolean sinAnulados);
