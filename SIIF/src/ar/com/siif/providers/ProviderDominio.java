@@ -189,7 +189,10 @@ public abstract class ProviderDominio {
 		entidad.setNombre(entidadDTO.getNombre());
 		entidad.setTelefono(entidadDTO.getTelefono());
 		entidad.setLocalidad(localidad);
-
+		entidad.setNroMatricula(entidadDTO.getNroMatricula());
+		entidad.setCuit(entidadDTO.getCuit());
+		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
+		
 		return entidad;
 	}
 
