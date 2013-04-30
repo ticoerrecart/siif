@@ -47,7 +47,7 @@ function seleccionarArea(idTr){
 					<tr>
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Productor'/></td>
 						
-						<td class="azulAjustado" colspan="4" width="70%"><bean:message key='SIIF.label.Area'/></td>												
+						<td class="azulAjustado" colspan="4" width="70%"><bean:message key='SIIF.label.AreaDeCosecha'/></td>												
 						<td class="azulAjustado" width="10%"></td>
 					</tr>
 					<tr>

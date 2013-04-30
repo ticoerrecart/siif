@@ -253,7 +253,7 @@ function cambioComboZona() {
 <table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 
 	<tr>
-		<td class="azulAjustado">Consulta de Certificados de Orígen</td>
+		<td class="azulAjustado">Consulta de Acta de Verificación de C.O</td>
 	</tr>
 	<tr>
 		<td height="20"></td>
