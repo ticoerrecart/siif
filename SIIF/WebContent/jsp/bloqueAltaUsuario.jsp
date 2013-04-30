@@ -54,7 +54,7 @@
 			<td align="left">
 				<c:choose>
 					<c:when test="${metodo=='altaUsuario'}">
-						<html:text property="usuarioDTO.nombreUsuario" value="${usu.nombreUsuario}" />
+						<html:text property="usuarioDTO.nombreUsuario" value="" />
 					</c:when>
 					<c:otherwise><!-- AL MODIFICAR NO PUEDO CAMBIAR EL NOMBRE DE USUARIO -->
 						<html:text property="usuarioDTO.nombreUsuario" value="${usu.nombreUsuario}" readonly="true"/>
@@ -65,7 +65,14 @@
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Contrasenia'/></td>
 			<td  align="left">
-				<html:password property="usuarioDTO.password" value="${usu.password}"/>			
+				<c:choose>
+					<c:when test="${metodo=='altaUsuario'}">
+						<html:password property="usuarioDTO.password" value=""/>
+					</c:when>
+					<c:otherwise><!-- AL MODIFICAR NO PUEDO CAMBIAR EL NOMBRE DE USUARIO -->
+						<html:password property="usuarioDTO.password" value="${usu.password}"/>
+					</c:otherwise>
+				</c:choose>									
 			</td>
 		</tr>
 		<tr>
@@ -73,7 +80,14 @@
 				<bean:message key='SIIF.label.ConfirmarContrasenia'/>
 			</td>
 			<td  align="left">
-				<html:password property="contrasenia" value="${usu.password}"/>			
+				<c:choose>
+					<c:when test="${metodo=='altaUsuario'}">
+						<html:password property="contrasenia" value=""/>
+					</c:when>
+					<c:otherwise><!-- AL MODIFICAR NO PUEDO CAMBIAR EL NOMBRE DE USUARIO -->
+						<html:password property="contrasenia" value="${usu.password}"/>
+					</c:otherwise>
+				</c:choose>										
 			</td>
 		</tr>
 		<tr>
