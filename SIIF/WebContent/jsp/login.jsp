@@ -6,9 +6,25 @@
 <head>
 <link rel="stylesheet" href="<html:rewrite page='/css/main.css'/>" type="text/css">
 <link rel="stylesheet" href="<html:rewrite page='/css/jqueryslidemenu.css'/>" type="text/css">
+
+<script type="text/javascript"
+	src="<html:rewrite page='/js/JQuery/jquery-1.7.2.min.js'/>"></script>
+<script>
+	function darFoco(){
+		if($('#idUsuario').val()==''){
+			$('#idUsuario').focus();
+		}else{
+			if($('#password').val()==''){
+				$('#password').focus();
+			}else{
+				$('#idAceptar').focus();
+			}
+		}
+	}
+</script>
 </head>
 
-<body>
+<body onload="darFoco();">
 <br>
 <br>
 <br>
@@ -51,23 +67,10 @@
 			</td>
 			<td><b><bean:message key='SIIF.label.Contrasenia'/></b></td>
 			<td align="left">
-				<html:password property="password"	styleClass="botonerab" size="15" value=""></html:password>
+				<html:password property="password"	styleId="password" styleClass="botonerab" size="15" value=""></html:password>
 			</td>
 			<td>&nbsp;</td>
 		</tr>
-		<!--  <tr>
-			<td height="32">
-			</td>
-			<td><b>Sub-Sistema</b></td>
-			<td align="left">
-				<select class="botonerab">
-					<option>Direccion General de Bosques</option>
-					<option>Direccion General de Mineria</option>
-					<option>Dirección General de Pesca</option>
-				</select>
-			</td>
-			<td>&nbsp;</td>
-		</tr>-->		
 		<tr>
 			<td height="15" colspan="4">&nbsp;</td>
 		</tr>
@@ -81,9 +84,6 @@
 		</tr>
 	</table> 
 </html:form>
-<script type="text/javascript">
-	//document.getElementById("idUsuario").focus();
-	document.getElementById("idAceptar").focus();
-</script>
+
 </body>
 </html>
