@@ -194,6 +194,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		}
 		
 		this.getHibernateTemplate().delete(fiscalizacion);
+		this.getHibernateTemplate().flush();
 	}
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,

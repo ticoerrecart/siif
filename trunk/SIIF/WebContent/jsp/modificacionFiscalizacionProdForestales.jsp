@@ -110,6 +110,8 @@ $(function() {
 		value="${fiscalizacionDTO.productorForestal.id}"/>
 	<html:hidden property="fiscalizacionDTO.tipoProducto.id"
 		value="${fiscalizacionDTO.tipoProducto.id}"/>		
+	<html:hidden property="fiscalizacionDTO.tipoProducto.cantDiametros"
+		value="${fiscalizacionDTO.tipoProducto.cantDiametros}"/>
 
 	<table border="0" class="cuadrado" align="center" width="70%"
 		cellpadding="2">
@@ -406,14 +408,16 @@ $(function() {
 								onclick="removerMuestras();"></td>
 						</tr>
 						<tr>
-							<td height="10" colspan="3"></td>
+							<td height="10" colspan="3">
+								<input type="hidden" id="cantDiam" value="<c:out value='${fiscalizacionDTO.tipoProducto.cantDiametros}'></c:out>">
+							</td>
 						</tr>
 						<tr id="diametros" style="display:none">
 							<td width="35%" class="botoneralNegritaRight" align="right">
-								1 Diámetro <input type="radio" name="diametros" value="1" onchange="cambiarDiametro();"/>
+								1 Diámetro <input type="radio" id="radio1" name="diametros" value="1" onchange="cambiarDiametro();"/>
 							</td>
 							<td class="botoneralNegritaLeft" align="left">
-								2 Diámetros <input type="radio" name="diametros" value="2" onchange="cambiarDiametro();"/>
+								2 Diámetros <input type="radio" id="radio2" name="diametros" value="2" onchange="cambiarDiametro();"/>
 							</td>
 							<td width="35%" align="left">
 								&nbsp;
@@ -514,5 +518,7 @@ $(function() {
 	actualizarComboRodal();
 	$('#idRodal').val("${idRodal}");
 		
-	
+	var cantDiam = $("#cantDiam").val();	
+	$("#radio"+cantDiam).attr("checked","checked");
+	//cambiarDiametro(cantDiam);	
 </script>
