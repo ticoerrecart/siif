@@ -33,6 +33,8 @@
 		<mapping class='ar.com.siif.negocio.RecursosNaturales' />
 		<mapping class='ar.com.siif.negocio.Obrajero' />
 		<mapping class='ar.com.siif.negocio.PPF' />
+		<mapping class='ar.com.siif.negocio.SinFinesDeLucro' />
+		<mapping class='ar.com.siif.negocio.Estancia' />
 		<mapping class='ar.com.siif.negocio.Aforo' />
 		<mapping class='ar.com.siif.negocio.Muestra' />
 		<mapping class='ar.com.siif.negocio.TipoProducto' />

@@ -169,20 +169,9 @@ public abstract class ProviderDominio {
 		return tipoProducto;
 	}
 
-	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad) {
+	public static Entidad getEntidad(EntidadDTO entidadDTO, Localidad localidad) throws Exception {
 
-		Entidad entidad = null;
-		if (TipoDeEntidad.PPF.getName().equalsIgnoreCase(
-				entidadDTO.getTipoEntidad())) {
-			entidad = new PPF();
-		} else {
-			if (TipoDeEntidad.OBR.getName().equals(entidadDTO.getTipoEntidad())) {
-				entidad = new Obrajero();
-			} else {
-				entidad = new RecursosNaturales();
-			}
-		}
-
+		Entidad entidad = (Entidad) TipoDeEntidad.valueOf(entidadDTO.getTipoEntidad()).getClase().newInstance();
 		entidad.setDireccion(entidadDTO.getDireccion());
 		entidad.setEmail(entidadDTO.getEmail());
 		entidad.setNombre(entidadDTO.getNombre());
@@ -193,6 +182,9 @@ public abstract class ProviderDominio {
 		entidad.setCodigoPostal(entidadDTO.getCodigoPostal());
 		
 		return entidad;
+		
+		
+
 	}
 
 	public static Entidad getEntidad(Entidad entidad, EntidadDTO entidadDTO,

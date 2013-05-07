@@ -29,9 +29,13 @@ public class EntidadFachada implements IEntidadFachada {
 	}
 
 	public void altaEntidad(EntidadDTO entidadDTO)throws NegocioException {
-
-		Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
-		entidadDAO.altaEntidad(ProviderDominio.getEntidad(entidadDTO,localidad));	
+		try{
+			Localidad localidad = localidadFachada.getLocalidadPorId(entidadDTO.getIdLocalidad());
+			entidadDAO.altaEntidad(ProviderDominio.getEntidad(entidadDTO,localidad));	
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}		
 	}
 
 	public List<Entidad> getEntidades(){
@@ -63,6 +67,8 @@ public class EntidadFachada implements IEntidadFachada {
 		tiposDeEntidad.add(TipoDeEntidad.RN);
 		tiposDeEntidad.add(TipoDeEntidad.OBR);
 		tiposDeEntidad.add(TipoDeEntidad.PPF);
+		tiposDeEntidad.add(TipoDeEntidad.SFDL);
+		tiposDeEntidad.add(TipoDeEntidad.EST);
 
 		return tiposDeEntidad;
 	}	
@@ -71,7 +77,8 @@ public class EntidadFachada implements IEntidadFachada {
 		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
 		tiposDeEntidad.add(TipoDeEntidad.OBR);
 		tiposDeEntidad.add(TipoDeEntidad.PPF);
-		
+		tiposDeEntidad.add(TipoDeEntidad.EST);
+		tiposDeEntidad.add(TipoDeEntidad.SFDL);
 		return tiposDeEntidad;
 	}
 	
