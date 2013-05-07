@@ -14,6 +14,7 @@ import ar.com.siif.dto.MuestraDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.Muestra;
+import ar.com.siif.negocio.OperacionFiscalizacion;
 
 public class FiscalizacionDAO extends HibernateDaoSupport {
 
@@ -187,15 +188,25 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			this.getHibernateTemplate().delete(muestra);
 		}
 		
-		this.getHibernateTemplate().delete(fiscalizacion.getOperacionAlta());
-		
-		if(fiscalizacion.getOperacionModificacion() != null){
-			this.getHibernateTemplate().delete(fiscalizacion.getOperacionModificacion());	
+//		fiscalizacion.setOperacionModificacion(null);
+		for (OperacionFiscalizacion operacion : fiscalizacion.getOperacionesModificacion()) {
+			operacion.setFiscalizacion(null);
+			this.getHibernateTemplate().delete(operacion);
 		}
 		
+		
+		//this.getHibernateTemplate().delete(fiscalizacion.getOperacionAlta());
+		
+		/*if(fiscalizacion.getOperacionModificacion() != null){
+			this.getHibernateTemplate().delete(fiscalizacion.getOperacionModificacion());	
+		}
+		*/
+		
 		this.getHibernateTemplate().delete(fiscalizacion);
+		
 		this.getHibernateTemplate().flush();
 	}
+
 	
 	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
 																				    Long idLocalizacion) 
