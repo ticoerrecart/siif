@@ -301,6 +301,9 @@ function headerTabla(funcion) {
 
 function actualizarHeaderTablaPrependCallback(tipoProducto) {
 
+	var diam2Desde = (tipoProducto.diam2Desde == 0)?tipoProducto.diam1Desde:tipoProducto.diam2Desde;
+	var diam2Hasta = (tipoProducto.diam2Hasta == 0)?tipoProducto.diam1Hasta:tipoProducto.diam2Hasta;	
+	
 	var headerTablaStr = '<tr id="headerT">'
 			+ '   <td class="verdeTituloTablaChico" width="3%"></td>'
 			+ '   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('
@@ -309,7 +312,7 @@ function actualizarHeaderTablaPrependCallback(tipoProducto) {
 			+ tipoProducto.diam1Hasta
 			+ 'cm)</td>'
 			+ '   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('
-			+ tipoProducto.diam2Desde + '-' + tipoProducto.diam2Hasta
+			+ diam2Desde + '-' + diam2Hasta
 			+ 'cm)</td>'
 			+ '   <td class="verdeTituloTablaChico" width="33%">Largo ('
 			+ tipoProducto.largoDesde + '-' + tipoProducto.largoHasta
@@ -321,6 +324,9 @@ function actualizarHeaderTablaPrependCallback(tipoProducto) {
 
 function actualizarHeaderTablaAppendCallback(tipoProducto) {
 
+	var diam2Desde = (tipoProducto.diam2Desde == 0)?tipoProducto.diam1Desde:tipoProducto.diam2Desde;
+	var diam2Hasta = (tipoProducto.diam2Hasta == 0)?tipoProducto.diam1Hasta:tipoProducto.diam2Hasta;
+	
 	var headerTablaStr = '<tr id="headerT">'
 			+ '   <td class="verdeTituloTablaChico" width="3%"></td>'
 			+ '   <td class="verdeTituloTablaChico" width="32%">Diametro1 ('
@@ -329,7 +335,7 @@ function actualizarHeaderTablaAppendCallback(tipoProducto) {
 			+ tipoProducto.diam1Hasta
 			+ 'cm)</td>'
 			+ '   <td class="verdeTituloTablaChico diam2" width="32%">Diametro2 ('
-			+ tipoProducto.diam2Desde + '-' + tipoProducto.diam2Hasta
+			+ diam2Desde + '-' + diam2Hasta
 			+ 'cm)</td>'
 			+ '   <td class="verdeTituloTablaChico" width="33%">Largo ('
 			+ tipoProducto.largoDesde + '-' + tipoProducto.largoHasta
@@ -493,6 +499,7 @@ function cambiarDiametro() {
 		}
 	}
 
+	$("#idCantDiametros").val(val);	
 }
 
 function reemplazarComa(valor) {
