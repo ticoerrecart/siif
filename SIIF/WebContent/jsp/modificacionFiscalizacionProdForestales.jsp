@@ -110,7 +110,7 @@ $(function() {
 		value="${fiscalizacionDTO.productorForestal.id}"/>
 	<html:hidden property="fiscalizacionDTO.tipoProducto.id"
 		value="${fiscalizacionDTO.tipoProducto.id}"/>		
-	<html:hidden property="fiscalizacionDTO.tipoProducto.cantDiametros"
+	<html:hidden styleId="idCantDiametros" property="fiscalizacionDTO.tipoProducto.cantDiametros"
 		value="${fiscalizacionDTO.tipoProducto.cantDiametros}"/>
 
 	<table border="0" class="cuadrado" align="center" width="70%"
