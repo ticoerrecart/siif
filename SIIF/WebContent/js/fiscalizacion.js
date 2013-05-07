@@ -407,13 +407,25 @@ function removerNMuestras(cant) {
  */
 function actualizarMuestras() {
 
-	var idTipoProductoForestal = $('#idTipoProductoForestal').val();
-	TipoProductoForestalFachada.getCantidadDiametros(idTipoProductoForestal, {
-		callback : actualizarMuestrasCallback,
-		async : false
-	});
+	var cantDiam = $("#cantidadDiametros").val();		
+	if(cantDiam != ''){
+		actualizarMuestrasCallback(cantDiam);
+	}else{			
+		var idTipoProductoForestal = $('#idTipoProductoForestal').val();
+		TipoProductoForestalFachada.getCantidadDiametros(idTipoProductoForestal, {
+			callback : actualizarMuestrasCallback,
+			async : false
+		});		
+	}	
+}
+
+function cambiarTipoProducto(){
 	
+	//Blanqueo la cantidad de diametros para que se pueda setear
+	//cantidadDiametros con el valor de cantidad de diametros del nuevo tipo de producto
+	$("#cantidadDiametros").val("");
 	
+	actualizarMuestras();
 }
 
 function mostrarSegunCantidadDiametros() {
@@ -499,7 +511,7 @@ function cambiarDiametro() {
 		}
 	}
 
-	$("#idCantDiametros").val(val);	
+	$("#cantidadDiametros").val(val);	
 }
 
 function reemplazarComa(valor) {

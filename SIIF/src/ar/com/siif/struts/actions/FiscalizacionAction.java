@@ -65,7 +65,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.setAttribute("tiposEntidad", tiposEntidad);
-			request.setAttribute("oficinas", oficinas);
+			request.setAttribute("oficinas", oficinas);					
+			
 			//request.getSession().setAttribute("fiscalizacion", null);//Por si quedo alguna Fiscalizacion en el session
 			request.getSession().setAttribute("fiscalizacionDTO", null);//Por si quedo alguna Fiscalizacion en el session
 
@@ -251,6 +252,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			FiscalizacionDTO fiscalizacionDTO = ProviderDTO.getFiscalizacionDTO(fiscalizacion);
 			request.getSession().setAttribute("fiscalizacionDTO", fiscalizacionDTO);
 
+			request.setAttribute("cantDiametrosMuestras", fiscalizacionDTO.recuperarCantDiametrosMuestras());
+			
 			List<EntidadDTO> oficinas = entidadFachada.getOficinasForestalesDTO();
 			request.setAttribute("oficinas", oficinas);
 			
