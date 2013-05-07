@@ -198,6 +198,7 @@ public abstract class ProviderDTO {
 	private static FiscalizacionDTO getFiscalizacionDTODatosGenerales(Fiscalizacion fiscalizacion) {
 
 		List<MuestraDTO> listaMuestrasDTO = new ArrayList<MuestraDTO>();
+		List<OperacionFiscalizacionDTO> listaOperacionDTO = new ArrayList<OperacionFiscalizacionDTO>();
 		FiscalizacionDTO fiscalizacionDTO = new FiscalizacionDTO();
 
 		fiscalizacionDTO.setCantidadMts(fiscalizacion.getCantidadMts());
@@ -220,12 +221,15 @@ public abstract class ProviderDTO {
 														fiscalizacion.getOperacionAlta(),
 														fiscalizacionDTO));
 		}
-		if(fiscalizacion.getOperacionModificacion() != null){
-			
-			fiscalizacionDTO.setOperacionModificacion(ProviderDTO.getOperacionFiscalizacionDTO(
-												fiscalizacion.getOperacionModificacion(),
+		
+		
+		for (OperacionFiscalizacion operacionModif : fiscalizacion.getOperacionesModificacion()){
+			listaOperacionDTO.add(ProviderDTO.getOperacionFiscalizacionDTO(
+												operacionModif,
 												fiscalizacionDTO));						
 		}	
+		fiscalizacionDTO.setOperacionesModificacion(listaOperacionDTO);
+		
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
 		fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());
 

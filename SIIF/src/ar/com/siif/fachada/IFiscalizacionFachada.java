@@ -5,6 +5,7 @@ import java.util.List;
 import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.exception.NegocioException;
@@ -23,7 +24,7 @@ public interface IFiscalizacionFachada {
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion);
 
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasNuevasDTO);
+			List<MuestraDTO> muestrasNuevasDTO, OperacionFiscalizacionDTO operacion);
 
 	public void altaFiscalizacion(Fiscalizacion acta);
 
