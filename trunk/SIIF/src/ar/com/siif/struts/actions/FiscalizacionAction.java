@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ar.com.siif.dto.AreaDeCosechaDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
@@ -301,11 +302,13 @@ public class FiscalizacionAction extends ValidadorAction {
 			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion);*/
 			
 			FiscalizacionDTO fiscalizacion = fiscalizacionForm.getFiscalizacionDTO();
-			fiscalizacion.getOperacionModificacion().setUsuario(usuario);
-			fiscalizacion.getOperacionModificacion().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
-			fiscalizacion.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());
 			
-			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion,fiscalizacionForm.getMuestrasDTO());
+			OperacionFiscalizacionDTO operacion = new OperacionFiscalizacionDTO();
+			operacion.setUsuario(usuario);
+			operacion.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			operacion.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			
+			fiscalizacionFachada.modificacionFiscalizacion(fiscalizacion,fiscalizacionForm.getMuestrasDTO(),operacion);
 			
 		} catch (Throwable t) {
 			MyLogger.logError(t);

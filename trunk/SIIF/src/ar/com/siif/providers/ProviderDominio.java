@@ -84,13 +84,12 @@ public abstract class ProviderDominio {
 												fiscalizacionDTO.getOperacionAlta(),
 												fiscalizacion,usuarioAlta));
 		}	
-		if(fiscalizacionDTO.getOperacionModificacion() != null &&
-		   fiscalizacionDTO.getOperacionModificacion().getUsuario().getId() != null)
-		{
-			fiscalizacion.setOperacionModificacion(ProviderDominio.getOperacionFiscalizacion(
-													fiscalizacionDTO.getOperacionModificacion(),
-													fiscalizacion,usuarioModificacion));
+		List<OperacionFiscalizacion> operacionesModificacion = new ArrayList<OperacionFiscalizacion>();
+		for (OperacionFiscalizacionDTO operacionFiscalizacionDTO : fiscalizacionDTO.getOperacionesModificacion()) {
+			operacionesModificacion.add(ProviderDominio.getOperacionFiscalizacion(operacionFiscalizacionDTO, fiscalizacion, usuarioModificacion)); 
 		}
+		fiscalizacion.setOperacionesModificacion(operacionesModificacion);
+		
 		List<Muestra> muestras = new ArrayList<Muestra>();
 		for (MuestraDTO muestraDTO : muestrasDTO) {
 			muestras.add(ProviderDominio.getMuestra(muestraDTO, fiscalizacion));

@@ -7,6 +7,7 @@ import ar.com.siif.dao.FiscalizacionDAO;
 import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.MuestraDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
 import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.enums.TipoOperacion;
@@ -144,10 +145,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * @throws NegocioException
 	 */
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasNuevasDTO) {
+			List<MuestraDTO> muestrasNuevasDTO, OperacionFiscalizacionDTO operacion) {
 
-		Usuario usuario = usuarioFachada.getUsuario(
-							fiscalizacionDTO.getOperacionModificacion().getUsuario().getId());
+		Usuario usuario = usuarioFachada.getUsuario(operacion.getUsuario().getId());
 		
 		Fiscalizacion fiscalizacion = fiscalizacionDAO
 				.recuperarFiscalizacion(fiscalizacionDTO.getId());
@@ -185,20 +185,20 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				
 				OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
 				operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
-				operacionDTO.setFecha(fiscalizacionDTO.getOperacionModificacion().getFecha());
+				operacionDTO.setFecha(operacion.getFecha());
 				
-				OperacionGuiaForestal operacion = ProviderDominio.getOperacionGuiaForestal(
+				OperacionGuiaForestal operacionGuia = ProviderDominio.getOperacionGuiaForestal(
 						operacionDTO,guia,usuario);
 
-				guia.setOperacionModificacion(operacion);
+				guia.setOperacionModificacion(operacionGuia);
 				
 				//guiaForestalFachada.modificarGuiaForestal(guia);
 			}
 		}
 		
-		fiscalizacion.setOperacionModificacion(
+		fiscalizacion.addOperacionModificacion(
 						ProviderDominio.getOperacionFiscalizacion(
-										fiscalizacionDTO.getOperacionModificacion(), 
+										operacion, 
 										fiscalizacion,usuario));
 										
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,

@@ -1,5 +1,6 @@
 package ar.com.siif.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FiscalizacionDTO {
@@ -42,7 +43,7 @@ public class FiscalizacionDTO {
 	
 	private OperacionFiscalizacionDTO operacionAlta;
 	
-	private OperacionFiscalizacionDTO operacionModificacion;
+	private  List<OperacionFiscalizacionDTO> operacionesModificacion;
 	
 	private List<MuestraDTO> muestra;
 
@@ -58,7 +59,7 @@ public class FiscalizacionDTO {
 		//usuarioAlta = new UsuarioDTO();
 		//usuarioModificacion = new UsuarioDTO();		
 		operacionAlta = new OperacionFiscalizacionDTO();
-		operacionModificacion = new OperacionFiscalizacionDTO();
+		operacionesModificacion = new ArrayList<OperacionFiscalizacionDTO>();
 	}
 
 	public Long getLocalizacionId() {
@@ -243,14 +244,14 @@ public class FiscalizacionDTO {
 		this.operacionAlta = operacionAlta;
 	}
 
-	public OperacionFiscalizacionDTO getOperacionModificacion() {
-		return operacionModificacion;
+	public List<OperacionFiscalizacionDTO> getOperacionesModificacion() {
+		return operacionesModificacion;
 	}
 
-	public void setOperacionModificacion(
-			OperacionFiscalizacionDTO operacionModificacion) {
-		this.operacionModificacion = operacionModificacion;
+	public void setOperacionesModificacion(List<OperacionFiscalizacionDTO> operacionesModificacion) {
+		this.operacionesModificacion = operacionesModificacion;
 	}
 
+	
 	
 }

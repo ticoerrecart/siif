@@ -67,14 +67,13 @@ public class Fiscalizacion {
 	private Usuario usuarioModificacion;*/	
 	
 	@ManyToOne()
-	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "operacionAlta_fk")
 	private OperacionFiscalizacion operacionAlta;	
-
-	@ManyToOne()
+	
+	@OneToMany(mappedBy = "fiscalizacion")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "operacionModificacion_fk")
-	private OperacionFiscalizacion operacionModificacion;	
+	private List<OperacionFiscalizacion> operacionesModificacion;	
 	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -201,13 +200,20 @@ public class Fiscalizacion {
 		this.operacionAlta = operacionAlta;
 	}
 
-	public OperacionFiscalizacion getOperacionModificacion() {
-		return operacionModificacion;
+
+	public List<OperacionFiscalizacion> getOperacionesModificacion() {
+		return operacionesModificacion;
 	}
 
-	public void setOperacionModificacion(
-			OperacionFiscalizacion operacionModificacion) {
-		this.operacionModificacion = operacionModificacion;
+	public void setOperacionesModificacion(List<OperacionFiscalizacion> operacionesModificacion) {
+		this.operacionesModificacion = operacionesModificacion;
+	}
+
+	public void addOperacionModificacion(OperacionFiscalizacion operacionFiscalizacion) {
+		if (this.operacionesModificacion == null) {
+			setOperacionesModificacion(new ArrayList<OperacionFiscalizacion>());
+		}
+		this.operacionesModificacion.add(operacionFiscalizacion);
 	}
 
 	
