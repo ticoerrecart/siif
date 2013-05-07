@@ -1,3 +1,4 @@
+package ar.com.siif.dao;
 
 
 import java.util.ArrayList;
@@ -5,9 +6,6 @@ import java.util.List;
 
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
-import ar.com.siif.dao.FiscalizacionDAO;
-import ar.com.siif.dao.MenuDAO;
-import ar.com.siif.dao.UsuarioDAO;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
 import ar.com.siif.fachada.IUsuarioFachada;
@@ -16,7 +14,6 @@ import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.ItemMenu;
 import ar.com.siif.negocio.Muestra;
 import ar.com.siif.negocio.Usuario;
-import ar.com.siif.negocio.exception.DataBaseException;
 
 public class MenuDAOTest extends AbstractDependencyInjectionSpringContextTests {
 
@@ -86,7 +83,7 @@ public class MenuDAOTest extends AbstractDependencyInjectionSpringContextTests {
 			
 			
 			fiscalizacion.setOficinaAlta(e2);
-			fiscalizacion.setUsuario(u);
+			//fiscalizacion.setUsuario(u);
 			
 			//ff.actFiscalizacion(fiscalizacion);
 			
