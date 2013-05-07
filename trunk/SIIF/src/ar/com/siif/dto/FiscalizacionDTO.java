@@ -252,6 +252,16 @@ public class FiscalizacionDTO {
 		this.operacionesModificacion = operacionesModificacion;
 	}
 
-	
+	public int recuperarCantDiametrosMuestras(){
+		
+		for (MuestraDTO m : muestra) {
+			if(tipoProducto.getCantDiametros()==1 && m.getDiametro2()==m.getDiametro1()){
+				return 1;
+			}else{
+				return 2;
+			}
+		}
+		return 0;
+	}
 	
 }

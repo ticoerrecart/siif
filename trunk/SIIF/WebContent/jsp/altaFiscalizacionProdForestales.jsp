@@ -103,7 +103,7 @@ $(function() {
 
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="altaFiscalizacion" />
-	<input type="hidden" id="cantidadDiametros" value="" />
+	<input type="hidden" id="cantidadDiametros" value="" name="fiscalizacionDTO.tipoProducto.cantDiametros"/>
 	<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 		<tr>
 			<td colspan="4" class="azulAjustado">
@@ -158,7 +158,7 @@ $(function() {
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProducto'/></td>
 			<td>
-				<select class="botonerab" name="fiscalizacionDTO.tipoProducto.id" id="idTipoProductoForestal" onchange="actualizarMuestras();" >
+				<select class="botonerab" name="fiscalizacionDTO.tipoProducto.id" id="idTipoProductoForestal" onchange="cambiarTipoProducto();" >
 					<option value="-1">- Seleccione un Producto -</option>
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
 						<option value="${tipoProducto.id}"><c:out value="${tipoProducto.nombre}"></c:out></option>
