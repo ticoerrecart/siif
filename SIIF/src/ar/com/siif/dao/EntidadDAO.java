@@ -69,37 +69,25 @@ public class EntidadDAO extends HibernateDaoSupport {
 
 		Localidad localidad = (Localidad) getHibernateTemplate().get(Localidad.class, idLocalidad);
 
-		Criteria criteria = getSession().createCriteria(Obrajero.class);
+		Criteria criteria = getSession().createCriteria(Entidad.class);
 		criteria.add(Restrictions.eq("localidad", localidad));
-		List<Entidad> obrajeros = criteria.list();
+		List<Entidad> entidades = criteria.list();
 
-		criteria = getSession().createCriteria(PPF.class);
+		criteria = getSession().createCriteria(RecursosNaturales.class);
 		criteria.add(Restrictions.eq("localidad", localidad));
-		List<Entidad> ppf = criteria.list();
+		List<Entidad> rn = criteria.list();
 
-		obrajeros.addAll(ppf);
-		Collections.sort(obrajeros);
+		entidades.removeAll(rn);
+		Collections.sort(entidades);
 
-		return obrajeros;
+		return entidades;
 	}
 
 	public List<Entidad> getEntidades(TipoDeEntidad tipoDeEntidad){
-
-		List<Entidad> obrajeros = null;
-		Criteria criteria = null;
-		if (tipoDeEntidad == TipoDeEntidad.OBR) {
-			criteria = getSession().createCriteria(Obrajero.class);
-			obrajeros = criteria.list();
-		}
-
-		if (tipoDeEntidad == TipoDeEntidad.PPF) {
-			criteria = getSession().createCriteria(PPF.class);
-			obrajeros = criteria.list();
-		}
-
-		Collections.sort(obrajeros);
-
-		return obrajeros;		
+		Criteria criteria = getSession().createCriteria(tipoDeEntidad.getClase());
+		List<Entidad> entidades = criteria.list();
+		Collections.sort(entidades);
+		return entidades;		
 	}
 	
 	public List<Entidad> getOficinasForestales(){
