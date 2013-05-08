@@ -61,7 +61,7 @@ public abstract class ProviderDominio {
 			FiscalizacionDTO fiscalizacionDTO, List<MuestraDTO> muestrasDTO,
 			Localizacion localizacion, Entidad productorForestal,
 			Entidad oficinaForestal, TipoProductoForestal tipoProducto,
-			Usuario usuarioAlta, Usuario usuarioModificacion) {
+			Usuario usuario) {
 
 		Fiscalizacion fiscalizacion = new Fiscalizacion();
 
@@ -77,18 +77,11 @@ public abstract class ProviderDominio {
 		fiscalizacion.setTamanioMuestra(fiscalizacionDTO.getTamanioMuestra());
 		fiscalizacion.setTipoProducto(tipoProducto);
 		
-		if(fiscalizacionDTO.getOperacionAlta() != null &&
-		   fiscalizacionDTO.getOperacionAlta().getUsuario().getId() != null)
-		{
-			fiscalizacion.setOperacionAlta(ProviderDominio.getOperacionFiscalizacion(
-												fiscalizacionDTO.getOperacionAlta(),
-												fiscalizacion,usuarioAlta));
-		}	
-		List<OperacionFiscalizacion> operacionesModificacion = new ArrayList<OperacionFiscalizacion>();
-		for (OperacionFiscalizacionDTO operacionFiscalizacionDTO : fiscalizacionDTO.getOperacionesModificacion()) {
-			operacionesModificacion.add(ProviderDominio.getOperacionFiscalizacion(operacionFiscalizacionDTO, fiscalizacion, usuarioModificacion)); 
+		List<OperacionFiscalizacion> operaciones= new ArrayList<OperacionFiscalizacion>();
+		for (OperacionFiscalizacionDTO operacionFiscalizacionDTO : fiscalizacionDTO.getOperaciones()) {
+			operaciones.add(ProviderDominio.getOperacionFiscalizacion(operacionFiscalizacionDTO, fiscalizacion, usuario)); 
 		}
-		fiscalizacion.setOperacionesModificacion(operacionesModificacion);
+		fiscalizacion.setOperaciones(operaciones);
 		
 		List<Muestra> muestras = new ArrayList<Muestra>();
 		for (MuestraDTO muestraDTO : muestrasDTO) {

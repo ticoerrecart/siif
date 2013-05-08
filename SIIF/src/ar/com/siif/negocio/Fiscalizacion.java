@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.enums.TipoOperacion;
+
 @Entity
 public class Fiscalizacion {
 
@@ -56,24 +58,9 @@ public class Fiscalizacion {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Muestra> muestra = new ArrayList<Muestra>();
 
-	/*@ManyToOne()
-	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuarioAlta_fk")
-	private Usuario usuarioAlta;*/
-
-	/*@ManyToOne()
-	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuarioModificacion_fk")
-	private Usuario usuarioModificacion;*/	
-	
-	@ManyToOne()
-	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "operacionAlta_fk")
-	private OperacionFiscalizacion operacionAlta;	
-	
 	@OneToMany(mappedBy = "fiscalizacion")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	private List<OperacionFiscalizacion> operacionesModificacion;	
+	private List<OperacionFiscalizacion> operaciones;	
 	
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -193,28 +180,37 @@ public class Fiscalizacion {
 	}*/
 
 	public OperacionFiscalizacion getOperacionAlta() {
-		return operacionAlta;
+		for (OperacionFiscalizacion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
 	}
-
-	public void setOperacionAlta(OperacionFiscalizacion operacionAlta) {
-		this.operacionAlta = operacionAlta;
-	}
-
 
 	public List<OperacionFiscalizacion> getOperacionesModificacion() {
+		List<OperacionFiscalizacion> operacionesModificacion = new ArrayList<OperacionFiscalizacion>();
+		for (OperacionFiscalizacion operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.MOD.getDescripcion())){
+				operacionesModificacion.add(operacion);
+			}
+		}
 		return operacionesModificacion;
 	}
 
-	public void setOperacionesModificacion(List<OperacionFiscalizacion> operacionesModificacion) {
-		this.operacionesModificacion = operacionesModificacion;
-	}
-
-	public void addOperacionModificacion(OperacionFiscalizacion operacionFiscalizacion) {
-		if (this.operacionesModificacion == null) {
-			setOperacionesModificacion(new ArrayList<OperacionFiscalizacion>());
+	public void addOperacion(OperacionFiscalizacion operacionFiscalizacion) {
+		if (this.operaciones == null) {
+			setOperaciones (new ArrayList<OperacionFiscalizacion>());
 		}
-		this.operacionesModificacion.add(operacionFiscalizacion);
+		this.operaciones.add(operacionFiscalizacion);
 	}
 
+	public List<OperacionFiscalizacion> getOperaciones() {
+		return operaciones;
+	}
+
+	public void setOperaciones(List<OperacionFiscalizacion> operaciones) {
+		this.operaciones = operaciones;
+	}
 	
 }

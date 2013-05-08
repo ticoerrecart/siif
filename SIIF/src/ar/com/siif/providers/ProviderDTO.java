@@ -216,19 +216,12 @@ public abstract class ProviderDTO {
 		fiscalizacionDTO.setTipoProducto(ProviderDTO.getTipoProductoForestalDTO(fiscalizacion
 				.getTipoProducto()));
 
-		if(fiscalizacion.getOperacionAlta() != null){
-			fiscalizacionDTO.setOperacionAlta(ProviderDTO.getOperacionFiscalizacionDTO(
-														fiscalizacion.getOperacionAlta(),
-														fiscalizacionDTO));
-		}
-		
-		
-		for (OperacionFiscalizacion operacionModif : fiscalizacion.getOperacionesModificacion()){
+		for (OperacionFiscalizacion operacion : fiscalizacion.getOperaciones()){
 			listaOperacionDTO.add(ProviderDTO.getOperacionFiscalizacionDTO(
-												operacionModif,
+												operacion,
 												fiscalizacionDTO));						
 		}	
-		fiscalizacionDTO.setOperacionesModificacion(listaOperacionDTO);
+		fiscalizacionDTO.setOperaciones(listaOperacionDTO);
 		
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
 		fiscalizacionDTO.setTamanioMuestra(fiscalizacion.getTamanioMuestra());

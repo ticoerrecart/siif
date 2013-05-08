@@ -196,10 +196,11 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 			}
 		}
 		
-		fiscalizacion.addOperacionModificacion(
+		fiscalizacion.addOperacion(
 						ProviderDominio.getOperacionFiscalizacion(
 										operacion, 
-										fiscalizacion,usuario));
+										fiscalizacion,usuario)
+										); 
 										
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,
 				muestrasNuevasDTO);
@@ -236,6 +237,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasDTO) {
 
+		
 		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO
 				.getProductorForestal().getId());
 		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO
@@ -244,17 +246,16 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.recuperarTipoProductoForestal(fiscalizacionDTO
 						.getTipoProducto().getId());
 
-		Usuario usuarioAlta = usuarioFachada.getUsuario(fiscalizacionDTO.
-												getOperacionAlta().getUsuario().getId());
+		OperacionFiscalizacionDTO operacionDTO = fiscalizacionDTO.getOperacionAlta(); 
+		Usuario usuario = usuarioFachada.getUsuario(operacionDTO.getUsuario().getId());
 
 		Long idLocalizacion = fiscalizacionDTO.getIdLocalizacion();
 
-		Localizacion localizacion = ubicacionFachada
-				.getLocalizacion(idLocalizacion);
+		Localizacion localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
 
 		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(
 				fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
-				oficinaForestal, tipoProducto, usuarioAlta, null);
+				oficinaForestal, tipoProducto, usuario );
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 
