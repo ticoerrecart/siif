@@ -210,9 +210,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return null;
 	}
 
-	public String registrarPagoBoletaDeposito(long idBoleta) throws NegocioException {
+	public String registrarPagoBoletaDeposito(long idBoleta, String fechaPago) throws NegocioException {
 		try {
-			return guiaForestalDAO.registrarPagoBoletaDeposito(idBoleta);
+			return guiaForestalDAO.registrarPagoBoletaDeposito(idBoleta,fechaPago);
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -486,9 +486,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 	}
 
-	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<RangoDTO> listaRangosDTO,
-			List<ValeTransporteDTO> valesTransporteDTO, Date fechaVencimiento) {
-
+	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<BoletaDepositoDTO> boletasDepositoDTO,
+										List<RangoDTO> listaRangosDTO,List<ValeTransporteDTO> valesTransporteDTO, 
+										Date fechaVencimiento) 
+	{
 		if (!guiaForestalDAO.existeGuiaForestal(guia.getId(), guia.getNroGuia())) {
 			GuiaForestal guiaForestal = this.guiaForestalDAO.recuperarGuiaForestal(guia.getId());
 			guiaForestal.setNroGuia(guia.getNroGuia());
@@ -496,6 +497,17 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					.getFechaVencimiento()));
 			guiaForestal.setDistanciaAforoMovil(guia.getDistanciaAforoMovil());
 			guiaForestal.setPeriodoForestal(guia.getPeriodoForestal());
+
+			for (BoletaDeposito boleta : guiaForestal.getBoletasDeposito()) {
+				for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
+					
+					if(boleta.getId().longValue() == boletaDTO.getIdBoleta() && boletaDTO.getFechaPago() != null
+						&& boletaDTO.getFechaPago() != ""){
+						boleta.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(boletaDTO.getFechaPago()));
+					}
+				}
+			}
+			
 			for (RangoDTO rangoDTO : listaRangosDTO) {
 				guiaForestal.getValesTransporte().addAll(
 						ProviderDominio.getValesTransportes(guiaForestal, rangoDTO,

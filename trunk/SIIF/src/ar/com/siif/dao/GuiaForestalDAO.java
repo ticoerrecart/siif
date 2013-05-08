@@ -74,12 +74,13 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		return (GuiaForestal) criteria.uniqueResult();			
 	}
 
-	public String registrarPagoBoletaDeposito(long idBoleta){
+	public String registrarPagoBoletaDeposito(long idBoleta, String fechaPago){
 
 		BoletaDeposito boletaDeposito = (BoletaDeposito) getSession().get(BoletaDeposito.class,
 				idBoleta);
 
-		boletaDeposito.setFechaPago(new Date());
+		//boletaDeposito.setFechaPago(new Date());
+		boletaDeposito.setFechaPago(Fecha.stringDDMMAAAAToUtilDate(fechaPago));
 
 		this.getHibernateTemplate().saveOrUpdate(boletaDeposito);
 		this.getHibernateTemplate().flush();
@@ -200,7 +201,10 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.add(Restrictions.eq("nroGuia", nroGuia));
-		criteria.add(Restrictions.eq("anulado", false));
+		
+		//Tengo que comentarlo pq sino se puede crear una guia con un mismo nro de guia que otra
+		//que este anulada
+		//criteria.add(Restrictions.eq("anulado", false)); 
 
 		List<GuiaForestal> guias = criteria.list();
 

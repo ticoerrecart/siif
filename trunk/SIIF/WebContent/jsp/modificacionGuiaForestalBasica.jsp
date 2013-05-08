@@ -721,7 +721,8 @@ function removerValeEnUso(idVale,index){
 									
 										<tr id="idTrBoleta<c:out value='${boletaDeposito.numero}'></c:out>" style="display: none">
 											<td colspan="4">								
-											
+												<input type="hidden" name="boletasDeposito[${index.index}].idBoleta" 
+														value="<c:out value='${boletaDeposito.idBoleta}'></c:out>">
 												<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 													<tr>
 														<td height="5" colspan="5"></td>
@@ -780,8 +781,10 @@ function removerValeEnUso(idVale,index){
 															<bean:message key='SIIF.label.FechaPago'/>
 														</td>
 														<td width="23%" align="left">
-															<input type="text" readonly="readonly" class="botonerab" size="17"
-																   value="<c:out value='${boletaDeposito.fechaPago}'/>">
+															<input " type="text" readonly="readonly" class="botonerab" size="17"
+																   value="<c:out value='${boletaDeposito.fechaPago}'/>"
+																   id="idFechaPago<c:out value='${boletaDeposito.idBoleta}'/>"
+																   name="boletasDeposito[${index.index}].fechaPago" >
 															<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" 
 																 align="top" width='17' height='21'>																						
 														</td>										
@@ -794,7 +797,11 @@ function removerValeEnUso(idVale,index){
 															<c:otherwise>
 																<td width="17%" class="verdeExitoLeft">
 																	<bean:message key='SIIF.label.PAGADA'/>
-																</td>
+																	<script type="text/javascript">
+																		var idBoleta = ${boletaDeposito.idBoleta};
+																		$( "#idFechaPago"+idBoleta ).datepicker({ dateFormat: 'dd/mm/yy'});
+																	</script>
+																</td>																
 															</c:otherwise>
 														</c:choose>																						
 													</tr>

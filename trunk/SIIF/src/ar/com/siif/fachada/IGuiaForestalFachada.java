@@ -32,7 +32,7 @@ public interface IGuiaForestalFachada {
 
 	public GuiaForestalDTO recuperarGuiaForestalPorNroGuia(long nroGuiaForestal, boolean sinAnulados);
 
-	public String registrarPagoBoletaDeposito(long idBoleta) throws NegocioException;
+	public String registrarPagoBoletaDeposito(long idBoleta, String fechaPago) throws NegocioException;
 
 	public String reemplazarBoletaDeDeposito(long idBoleta, Long numero, String concepto,
 			String area, String efectivoCheque, String fechaVencimiento) throws NegocioException;
@@ -62,8 +62,9 @@ public interface IGuiaForestalFachada {
 
 	public void anularGuiaForestal(GuiaForestalDTO guiaForestalDTO);
 
-	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<RangoDTO> listaRangosDTO,
-			List<ValeTransporteDTO> valesTransporteDTO, Date fechaVencimiento);
+	public void modificacionGuiaForestalBasica(GuiaForestalDTO guia, List<BoletaDepositoDTO> boletasDepositoDTO, 
+										List<RangoDTO> listaRangosDTO,List<ValeTransporteDTO> valesTransporteDTO, 
+										Date fechaVencimiento);
 
 	public boolean existeGuiaForestal(long idGuia, long nroGuia);
 	
