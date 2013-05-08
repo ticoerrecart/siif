@@ -521,6 +521,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestal.getOperacionModificacion().setTipoOperacion(TipoOperacion.MOD.getDescripcion());			
 			
 			guiaForestalFachada.modificacionGuiaForestalBasica(guiaForestal,
+					guiaForestalForm.getBoletasDeposito(),
 					guiaForestalForm.getRangos(),
 					guiaForestalForm.getValesTransporte(), dFecha);
 

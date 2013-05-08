@@ -56,17 +56,30 @@ function col(sec) {
 }
 
 var idBoleta;
-function registrarPago(boleta){
+function registrarPagoSeleccionarFecha(boleta,numero){
 
-	if(confirm("¿Está seguro que desea registrar el pago?")){
-
-		/*var id= "#idTr"+idBoleta;
-		$(id).html("");
-		$("#idBoletas").load('../../guiaForestal.do?metodo=registrarPagoBoletaDeposito&idBoleta='+idBoleta);*/
+	/*if(confirm("¿Está seguro que desea registrar el pago?")){
 
 		idBoleta = boleta;
 		GuiaForestalFachada.registrarPagoBoletaDeposito(idBoleta,registrarPagoCallback);		
-	}		
+	}*/
+	$('#idBoletaAPagar').val(boleta);
+	$( "#idFechaPagoDatePicker" ).datepicker({ dateFormat: 'dd/mm/yy'});	
+	$('#dialogo').dialog({title: 'Registrar Pago Boleta de Deposito nro '+numero, height: 200, width: 500, modal: true});			
+}
+
+function registrarPago(){
+
+	var fechaPago = $('#idFechaPagoDatePicker').val();
+	if(fechaPago != ""){
+		idBoleta = $('#idBoletaAPagar').val();		
+		//alert("Se Pago la boleta "+idBoleta+" con la fecha "+fechaPago);	
+		cerrarVentanaPagoBoleta();	
+		GuiaForestalFachada.registrarPagoBoletaDeposito(idBoleta,fechaPago,registrarPagoCallback);		
+	}	
+	else{
+		$('#textoError').show();
+	}
 }
 
 function registrarPagoCallback(valor){
@@ -108,11 +121,60 @@ function despintarFila(idTr){
 		
 }
 
+function cerrarVentanaPagoBoleta(){
+
+	$('#textoError').hide();
+	$('#idFechaPagoDatePicker').val("");
+	$('#dialogo').dialog( "close" );
+}
+
 </script>
 
 <%
 	GuiaForestalDTO guia = (GuiaForestalDTO)request.getAttribute("guiaForestal");
 %>
+
+<div id="dialogo" style="display: none" >
+	<br>
+	<div id="textoError" class="rojoAdvertencia" style="display: none" >Debe especificar una fecha de pago</div>	
+	<br>
+	<input id="idBoletaAPagar" type="hidden" value="">
+	<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+		<tr>
+			<td height="10" colspan="3"></td>
+		</tr>	
+		<tr>
+			<td width="30%" class="botoneralNegritaRight">
+				<bean:message key='SIIF.label.FechaPago'/>
+			</td>
+			<td class="botoneralNegritaRight">
+				<input id="idFechaPagoDatePicker" class="botonerab" type="text" size="23"	readonly="readonly">
+				<img alt="" src="<html:rewrite page='/imagenes/calendar/calendar2.gif'/>" align="top" width='17' height='21'>
+			</td>				
+			<td width="20%" ></td>			
+		</tr>
+		<tr>
+			<td height="10" colspan="3"></td>
+		</tr>		
+	</table>
+	<table border="0" class="cuadradoSinBorde" align="center" width="80%" cellpadding="2">
+		<tr>
+			<td height="10" colspan="3"></td>
+		</tr>	
+		<tr>
+			<td width="48%" class="botonerab" align="right">
+				<input type="button" class="botonerab" value="Aceptar" onclick="javascript:registrarPago();">
+			</td>
+			<td width="4%"></td>			
+			<td width="48%" class="botonerab" align="left">
+				<input type="button" class="botonerab" value="Cancelar" onclick="javascript:cerrarVentanaPagoBoleta();">
+			</td>							
+		</tr>
+		<tr>
+			<td height="10" colspan="3"></td>
+		</tr>		
+	</table>	
+</div>
 
 <input id="paramIdTipoDeEntidad" type="hidden" value="${guiaForestal.productorForestal.tipoEntidad}">
 <input id="paramProductor" type="hidden" value="${guiaForestal.productorForestal.id}">
@@ -436,7 +498,7 @@ function despintarFila(idTr){
 									<c:if test="${boletaDeposito.fechaPago ==null}">
 										<input id="idBotonPago<c:out value='${boletaDeposito.idBoleta}'></c:out>"
 											   type="button" value="Registrar Pago" class="botonerab" 
-											   onclick="registrarPago(<c:out value='${boletaDeposito.idBoleta}'></c:out>);">
+											   onclick="registrarPagoSeleccionarFecha(<c:out value='${boletaDeposito.idBoleta}'></c:out>,<c:out value='${boletaDeposito.numero}'></c:out>);">
 									</c:if>	
 								</td>
 							</tr>
