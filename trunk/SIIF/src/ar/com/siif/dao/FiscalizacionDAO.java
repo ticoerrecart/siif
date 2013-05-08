@@ -177,30 +177,20 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		fiscalizacion.setOficinaAlta(null);
 		fiscalizacion.setProductorForestal(null);
 		fiscalizacion.setLocalizacion(null);
-		//fiscalizacion.setUsuarioAlta(null);
-		//fiscalizacion.setOperacionAlta(null);
-		//fiscalizacion.setUsuarioModificacion(null);		
+		
 		fiscalizacion.setTipoProducto(null);
-		//fiscalizacion.setMuestra(null);
-
 		for (Muestra muestra : fiscalizacion.getMuestra()) {
 			muestra.setFiscalizacion(null);
 			this.getHibernateTemplate().delete(muestra);
 		}
 		
-//		fiscalizacion.setOperacionModificacion(null);
-		for (OperacionFiscalizacion operacion : fiscalizacion.getOperacionesModificacion()) {
+
+		for (OperacionFiscalizacion operacion : fiscalizacion.getOperaciones()) {
 			operacion.setFiscalizacion(null);
 			this.getHibernateTemplate().delete(operacion);
 		}
 		
-		
-		//this.getHibernateTemplate().delete(fiscalizacion.getOperacionAlta());
-		
-		/*if(fiscalizacion.getOperacionModificacion() != null){
-			this.getHibernateTemplate().delete(fiscalizacion.getOperacionModificacion());	
-		}
-		*/
+
 		
 		this.getHibernateTemplate().delete(fiscalizacion);
 		

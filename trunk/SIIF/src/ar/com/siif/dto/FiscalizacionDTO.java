@@ -3,6 +3,8 @@ package ar.com.siif.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siif.enums.TipoOperacion;
+
 public class FiscalizacionDTO {
 
 	private Long id;
@@ -37,13 +39,7 @@ public class FiscalizacionDTO {
 
 	private EntidadDTO oficinaAlta;
 
-	//private UsuarioDTO usuarioAlta;
-	
-	//private UsuarioDTO usuarioModificacion;
-	
-	private OperacionFiscalizacionDTO operacionAlta;
-	
-	private  List<OperacionFiscalizacionDTO> operacionesModificacion;
+	private  List<OperacionFiscalizacionDTO> operaciones;
 	
 	private List<MuestraDTO> muestra;
 
@@ -56,10 +52,7 @@ public class FiscalizacionDTO {
 		productorForestal = new EntidadDTO();
 		tipoProducto = new TipoProductoForestalDTO();
 		oficinaAlta = new EntidadDTO();
-		//usuarioAlta = new UsuarioDTO();
-		//usuarioModificacion = new UsuarioDTO();		
-		operacionAlta = new OperacionFiscalizacionDTO();
-		operacionesModificacion = new ArrayList<OperacionFiscalizacionDTO>();
+		operaciones = new ArrayList<OperacionFiscalizacionDTO>();
 	}
 
 	public Long getLocalizacionId() {
@@ -228,28 +221,25 @@ public class FiscalizacionDTO {
 		this.localizacion = localizacion;
 	}
 
-	/*public UsuarioDTO getUsuarioModificacion() {
-		return usuarioModificacion;
-	}
-
-	public void setUsuarioModificacion(UsuarioDTO usuarioModificacion) {
-		this.usuarioModificacion = usuarioModificacion;
-	}*/
-
 	public OperacionFiscalizacionDTO getOperacionAlta() {
-		return operacionAlta;
+		for (OperacionFiscalizacionDTO operacion : this.getOperaciones()) {
+			if (operacion.getTipoOperacion().equals(TipoOperacion.ALTA.getDescripcion())){
+				return operacion;
+			}
+		}
+		return null;
 	}
 
-	public void setOperacionAlta(OperacionFiscalizacionDTO operacionAlta) {
-		this.operacionAlta = operacionAlta;
+	public void addOperacion(OperacionFiscalizacionDTO operacion) {
+		this.getOperaciones().add(operacion);
 	}
 
-	public List<OperacionFiscalizacionDTO> getOperacionesModificacion() {
-		return operacionesModificacion;
+	public List<OperacionFiscalizacionDTO> getOperaciones() {
+		return operaciones;
 	}
 
-	public void setOperacionesModificacion(List<OperacionFiscalizacionDTO> operacionesModificacion) {
-		this.operacionesModificacion = operacionesModificacion;
+	public void setOperaciones(List<OperacionFiscalizacionDTO> operaciones) {
+		this.operaciones = operaciones;
 	}
 
 	public int recuperarCantDiametrosMuestras(){

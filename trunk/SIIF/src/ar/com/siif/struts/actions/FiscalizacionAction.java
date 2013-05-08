@@ -342,9 +342,11 @@ public class FiscalizacionAction extends ValidadorAction {
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm.getFiscalizacionDTO();
 			
-			fiscalizacionDTO.getOperacionAlta().setUsuario(usuario);
-			fiscalizacionDTO.getOperacionAlta().setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
-			fiscalizacionDTO.getOperacionAlta().setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
+			OperacionFiscalizacionDTO operacionDTO  = new OperacionFiscalizacionDTO(); 
+			operacionDTO.setUsuario(usuario);
+			operacionDTO.setFecha(Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
+			operacionDTO.setTipoOperacion(TipoOperacion.ALTA.getDescripcion());
+			fiscalizacionDTO.addOperacion(operacionDTO);
 
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacionDTO,
 					fiscalizacionForm.getMuestrasDTO());
