@@ -748,7 +748,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 				<label onclick="javascript:exp('1')"> 
 					<img src="../../imagenes/expand.gif" border="0" /> 
 					<U class="azulOpcion">
-						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
 						Sub Importes
 					</U>
 					<BR>
@@ -758,7 +757,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 				<label onclick="javascript:col('1')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
 					<U class="azulOpcion">
-						<!--<bean:message key='SIIF.subTitulo.ProductosForestales'/>-->
 						Sub Importes
 					</U>
 					<BR>
@@ -808,14 +806,14 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</html:select>															
 												</td>
 												<td>
-													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estado" class="botonerab" 
+													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estadoStr" class="botonerab" 
 														onchange="cambiarEstado(${i.count-1});">
 														<c:forEach items="${estadosProductoForestal}" var="estado">
 															<option value="<c:out value='${estado.name}'></c:out>">
 																<c:out value="${estado.descripcion}"></c:out>
 															</option>
 														</c:forEach>
-													</select>																									
+													</select>
 												</td> 
 												<td>
 													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie" value="${defaultEspecie}">
@@ -860,7 +858,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</select>												
 												</td>
 												<td>
-													<select id="idEstado0" name="listaSubImportes[0].estado" class="botonerab" 
+													<select id="idEstado0" name="listaSubImportes[0].estadoStr" class="botonerab" 
 														onchange="cambiarEstado(0);">									
 														<c:forEach items="${estadosProductoForestal}" var="estado" varStatus="i">
 															<option value="<c:out value='${estado.name}'></c:out>">
@@ -879,10 +877,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 												</td>
 												<td id="TDValorAforo0">
 													<input id="idValorAforo0" name="listaSubImportes[0].valorAforos" class="botonerab" 
-														type="text" readonly="readonly">				
-																		
-													<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
-														onkeypress="javascript:esNumerico(event);"> -->										
+														type="text" readonly="readonly">
+
 												</td>
 												<td id="errorAforo0" class="rojoAdvertenciaLeft" style="display: none;">
 													No Definido 

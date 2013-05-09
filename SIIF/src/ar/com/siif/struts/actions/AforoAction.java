@@ -98,7 +98,7 @@ public class AforoAction extends ValidadorAction {
 
 		try {
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);			
-			WebApplicationContext ctx = getWebApplicationContext();			
+			WebApplicationContext ctx = getWebApplicationContext();
 			
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
 			//rolFachada.verificarMenu(Constantes.MODIFICACION_AFORO_MENU,usuario.getRol());

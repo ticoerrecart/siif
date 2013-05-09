@@ -20,7 +20,7 @@
 			<td width="35%" class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.ValorAforo$'/>
 			</td>
-			<td>
+			<td align="left">
 				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30" 
 						value="<c:out value='${aforoParam.valorAforo}'></c:out>" 
 						onkeypress="return evitarAutoSubmit(event)">
@@ -30,7 +30,7 @@
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.TipoProducto'/>
 			</td>
-			<td>
+			<td align="left">
 				<html:select styleClass="botonerab" property="aforoDTO.tipoProducto.id"
 							 value="${aforoParam.tipoProducto.id}">
 								 
@@ -46,8 +46,8 @@
 			<td class="botoneralNegritaRight">
 				<bean:message key='SIIF.label.Estado'/>
 			</td>
-			<td>
-				<html:select styleClass="botonerab" property="aforoDTO.estado" value="${aforoParam.estado}">							 
+			<td align="left">
+				<html:select styleClass="botonerab" property="aforoDTO.estadoStr" value="${aforoParam.estado}">							 
 					<c:forEach items="${estadosProducto}" var="estadoProducto" varStatus="i">
 						<c:choose>
 							<c:when test="${estadoProducto.name == aforoParam.estado}">
@@ -63,24 +63,11 @@
 						</c:choose>					
 					</c:forEach>							 
 				</html:select>			 			
-
-				<!-- <select class="botonerab" name="aforoDTO.estado">
-					<c:choose>
-						<c:when test="${aforoParam.estado == 'Seco'}">
-							<option selected="selected" value="Seco">Seco</option>
-							<option value="Verde">Verde</option>
-						</c:when>
-						<c:otherwise>
-							<option value="Seco">Seco</option>
-							<option selected="selected" value="Verde">Verde</option>
-						</c:otherwise>
-					</c:choose>
-				</select> -->
 			</td>
 		</tr>
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoProductor'/></td>
-			<td>
+			<td align="left">
 				<html:select styleClass="botonerab" property="aforoDTO.tipoProductor" value="${aforoParam.tipoProductor}">
 					<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
 						<c:choose>
@@ -98,26 +85,6 @@
 					</c:forEach>
 				</html:select>
 			
-				<!-- <select class="botonerab" name="aforoDTO.tipoProductor">
-					<c:choose>
-						<c:when test="${aforoParam.tipoProductor == 'PPF'}">
-							<option value="OBR">
-								Obrajero
-							</option>
-							<option selected="selected" value="PPF">
-								Pequeño Productor Forestal
-							</option>
-						</c:when>
-						<c:otherwise>
-							<option selected="selected" value="OBR">
-								Obrajero
-							</option>
-							<option value="PPF">
-								Pequeño Productor Forestal
-							</option>
-						</c:otherwise>
-					</c:choose>
-				</select> -->
 			</td>
 		</tr>
 		<tr>

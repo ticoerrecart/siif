@@ -1,6 +1,8 @@
 package ar.com.siif.negocio;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.enums.TipoDeEntidad;
 
 @Entity
@@ -19,7 +22,8 @@ public class Aforo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private String estado;
+	@Enumerated(EnumType.STRING)
+	private EstadoProducto estado;
 
 	private String tipoProductor;
 
@@ -38,11 +42,11 @@ public class Aforo {
 		this.id = id;
 	}
 
-	public String getEstado() {
+	public EstadoProducto getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(EstadoProducto estado) {
 		this.estado = estado;
 	}
 
@@ -70,12 +74,11 @@ public class Aforo {
 		this.tipoProductor = tipoProductor;
 	}
 
-	public String getTipoProductorDesc(){
-		
-		if(this.getTipoProductor().equals(TipoDeEntidad.OBR.getName())){
+	public String getTipoProductorDesc() {
+
+		if (this.getTipoProductor().equals(TipoDeEntidad.OBR.getName())) {
 			return TipoDeEntidad.OBR.getDescripcion();
-		}
-		else{
+		} else {
 			return TipoDeEntidad.PPF.getDescripcion();
 		}
 	}

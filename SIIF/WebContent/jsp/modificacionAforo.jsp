@@ -20,7 +20,7 @@
 var tr = null;
 var clase = null;
 function mostrarDatos(idAforo,idTr){
-
+	$("#errores").html("");
 	if(tr!=null){
 		$('#tr'+tr).attr("class", clase);	
 	}
@@ -71,28 +71,20 @@ function submitir(){
 			width="90%" cellpadding="2">
 			<tr>
 				<td class="azulAjustado" width="25%"><bean:message key='SIIF.label.TipoProductor'/></td>
-				<td class="azulAjustado" width="28%"><bean:message key='SIIF.label.TipoProducto'/></td>
-				<td class="azulAjustado" width="17%"><bean:message key='SIIF.label.Estado'/></td>
-				<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.ValorAforo$'/></td>
-				<td class="azulAjustado" width="10%"></td>
+				<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.TipoProducto'/></td>
+				<td class="azulAjustado" width="25%"><bean:message key='SIIF.label.Estado'/></td>
+				<td class="azulAjustado" width="12%"><bean:message key='SIIF.label.ValorAforo$'/></td>
+				<td class="azulAjustado" width="8%"></td>
 			</tr>
 			<c:forEach items="${aforos}" var="aforo" varStatus="i">
 				<tr id="tr<c:out value='${i.count}'></c:out>">
 					<td class="botonerab">
-						<!--<c:choose>
-							<c:when test="${aforo.tipoProductor == 'PPF'}">
-								Pequeño Productor Forestal
-							</c:when>
-							<c:otherwise>
-								Obrajero
-							</c:otherwise>
-						</c:choose>-->
 						<c:out value="${aforo.tipoProductorDesc}"></c:out>
 					</td>
 					<td class="botonerab">
 						<c:out value="${aforo.tipoProducto.nombre}"></c:out>
 					</td>
-					<td class="botonerab"><c:out value="${aforo.estado}"></c:out></td>
+					<td class="botonerab"><c:out value="${aforo.estado.descripcion}"></c:out></td>
 					<td class="botonerab"><c:out value="${aforo.valorAforo}"></c:out></td>
 					<td>
 						<a href="javascript:mostrarDatos(<c:out value='${aforo.id}'></c:out>,<c:out value='${i.count}'></c:out>);">

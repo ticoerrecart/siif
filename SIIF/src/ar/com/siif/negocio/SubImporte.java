@@ -1,6 +1,8 @@
 package ar.com.siif.negocio;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,40 +12,43 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.enums.EstadoProducto;
+
 @Entity
 public class SubImporte {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;	
-	
-	private String estado;
-	
+	private Long id;
+
+	@Enumerated(EnumType.STRING)
+	private EstadoProducto estado;
+
 	private String especie;
-	
+
 	private double valorAforos;
-	
+
 	private int cantidadUnidades;
-	
+
 	private double cantidadMts;
-	
+
 	private double importe;
-	
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
-	@JoinColumn(name = "tipoProducto_fk")	
+	@JoinColumn(name = "tipoProducto_fk")
 	private TipoProductoForestal tipoProducto;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "guiaForestal_fk")
-	private GuiaForestal guiaForestal;	
-	
-	public String getEstado() {
+	private GuiaForestal guiaForestal;
+
+	public EstadoProducto getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(EstadoProducto estado) {
 		this.estado = estado;
 	}
 
@@ -110,5 +115,5 @@ public class SubImporte {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }
