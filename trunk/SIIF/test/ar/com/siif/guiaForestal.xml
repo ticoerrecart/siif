@@ -1,0 +1,32 @@
+<ar.com.siif.dto.GuiaForestalDTO>
+  <nroGuia>49</nroGuia>
+  <productorForestal>
+    <id>13</id>
+    <idLocalidad>0</idLocalidad>
+  </productorForestal>
+  <periodoForestal>2013-2014</periodoForestal>
+  <fechaVencimiento>31/05/2013</fechaVencimiento>
+  <distanciaAforoMovil>147</distanciaAforoMovil>
+  <importeTotal>5040.0</importeTotal>
+  <inspFiscalizacion>840.0</inspFiscalizacion>
+  <observaciones></observaciones>
+  <localidad>
+    <id>1</id>
+  </localidad>
+  <fecha>09/05/2013</fecha>
+  <operacionAlta>
+  	<tipoOperacion>ALTA</tipoOperacion>
+    <fecha>2013/05/09 11:41:25</fecha>
+    <usuario>
+      <id>3</id>
+      <nombreUsuario>admin</nombreUsuario>
+      <password>admin</password>
+      <rol>
+        <id>2</id>
+        <rol>Administrador</rol>
+	  </rol>
+	 </usuario>
+    </operacionAlta>
+    <operacionAnulacion/>
+    <idLocalizacion>35</idLocalizacion>
+</ar.com.siif.dto.GuiaForestalDTO>
