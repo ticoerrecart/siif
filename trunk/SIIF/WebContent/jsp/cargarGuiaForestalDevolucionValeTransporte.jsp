@@ -116,11 +116,17 @@ function actEspecie(indice){
 	var esp = prodArray[1];
 	var rel = prodArray[2];
 	var piezas = $("#idNroPiezas"+indice).val();
+
+	var tipoEntidad = $('#paramIdTipoDeEntidad').val();
 	
 	$("#idProducto"+indice).val(prod);
 	$("#idEspecie"+indice).val(esp);
-	
-	if (prodEst.indexOf("Leña")==0){
+
+	//Si el tipo de producto del vale es Leña o si el tipo de productor es Obrajero o Sin Fines de Lucro y
+	//no hay Fiscalizaciones asociadas a la guia para el tipo de producto del vale,
+	//tengo que habilitar el input de los M3.
+	//Sino, tengo que habilitar el input de los Nros de Piezas.	
+	if (prodEst.indexOf("Leña")==0 || ((tipoEntidad == "OBR" || tipoEntidad == "SFDL")&&(rel==0))){
 		$("#idCantM3"+indice).attr("readonly",false);
 		$("#idNroPiezas"+indice).val(0);
 		$("#idNroPiezas"+indice).attr("readonly",true);
@@ -128,9 +134,7 @@ function actEspecie(indice){
 		$("#idCantM3"+indice).attr("readonly",true);
 		$("#idNroPiezas"+indice).attr("readonly",false);
 	}
-	
-	
-	
+
 	if (piezas != null) {
 		$("#idCantM3"+indice).val(roundNumber(rel*piezas,2));	
 	}
