@@ -11,6 +11,7 @@ import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
@@ -285,22 +286,18 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				}
 			}
 
-			//Si el tipo de producto del vale es Leña, tengo que verificar el volumen contra lo declarado en la guia.
-			//Si es otro tipo de producto, tengo que verificar contra las fiscalizaciones asociadas a la guia.
+			GuiaForestal guia = vale.getGuiaForestal();			
+			
+			//Si el tipo de producto del vale es Leña o si el tipo de productor es Obrajero o Sin Fines de Lucro y
+			//no hay Fiscalizaciones asociadas a la guia para el tipo de producto del vale,
+			//tengo que verificar el volumen contra lo declarado en la guia.
+			//Sino, tengo que verificar contra las fiscalizaciones asociadas a la guia.
 			boolean ok4 = true;
-			if(!producto.equals(Constantes.LENIA)){
-				
-				ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
-						"Nº de Piezas", pError);				
-				
-				ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
-						producto, pError);				
-				
-				ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
-						totalMts, pError);
-			}	
-			else{
-				
+			String tipoEntidad = guia.getProductorForestal().getTipoEntidad();
+			if(producto.equals(Constantes.LENIA) ||					
+				((tipoEntidad.equals(TipoDeEntidad.OBR.getDescripcion()) || tipoEntidad.equals(TipoDeEntidad.SFDL.getDescripcion()))
+				&&(totalMts==0)))	
+			{
 				List<SubImporte> subImportes = vale.getGuiaForestal().getSubImportes();
 				double totalMtsEnGuia = 0;	
 				for (SubImporte subImporte : subImportes) {
@@ -310,6 +307,17 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				
 				ok4 = Validator.validarM3DeLeniaEnValesMenorQueM3Guia(totalMtsVales,
 						totalMtsEnGuia, pError);				
+
+			}	
+			else{
+				ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
+						"Nº de Piezas", pError);				
+				
+				ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
+						producto, pError);				
+				
+				ok4 = Validator.validarM3ValesMenorQueM3Fiscalizaciones(totalMtsVales,
+						totalMts, pError);				
 			}
 			
 			if (ok && ok1 && ok2 && ok3 && ok4) {
