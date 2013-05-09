@@ -26,7 +26,8 @@ public class TipoProductoForestalFachada implements
 		this.datosSistemaDAO = datosSistemaDAO;
 	}
 
-	public void altaTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO)
+	public void altaTipoProductoForestal(
+			TipoProductoForestalDTO tipoProductoForestalDTO)
 			throws NegocioException {
 		datosSistemaDAO.altaTipoProductoForestal(ProviderDominio
 				.getTipoProductoForestal(tipoProductoForestalDTO));
@@ -45,20 +46,22 @@ public class TipoProductoForestalFachada implements
 				.recuperarTipoProductoForestal(id));
 	}
 
-	public void modificacionTipoProductoForestal(TipoProductoForestalDTO tipoProductoForestalDTO)
+	public void modificacionTipoProductoForestal(
+			TipoProductoForestalDTO tipoProductoForestalDTO)
 			throws NegocioException {
 		TipoProductoForestal tipoProducto = datosSistemaDAO
 				.recuperarTipoProductoForestal(tipoProductoForestalDTO.getId());
-		
+
 		tipoProducto.setNombre(tipoProductoForestalDTO.getNombre());
-		tipoProducto.setCantDiametros(tipoProductoForestalDTO.getCantDiametros());
+		tipoProducto.setCantDiametros(tipoProductoForestalDTO
+				.getCantDiametros());
 		tipoProducto.setDiam1Desde(tipoProductoForestalDTO.getDiam1Desde());
 		tipoProducto.setDiam1Hasta(tipoProductoForestalDTO.getDiam1Hasta());
 		tipoProducto.setDiam2Desde(tipoProductoForestalDTO.getDiam2Desde());
 		tipoProducto.setDiam2Hasta(tipoProductoForestalDTO.getDiam2Hasta());
 		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
-		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());		
-		
+		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());
+
 		datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
 	}
 
@@ -69,9 +72,11 @@ public class TipoProductoForestalFachada implements
 
 	public List<TipoProductoForestalDTO> recuperarTiposProductoForestalDTO() {
 		List<TipoProductoForestalDTO> tipoProductoForestalDTO = new ArrayList<TipoProductoForestalDTO>();
-		List<TipoProductoForestal> tiposProducto = datosSistemaDAO.recuperarTiposProducto();
+		List<TipoProductoForestal> tiposProducto = datosSistemaDAO
+				.recuperarTiposProducto();
 		for (TipoProductoForestal tipoProducto : tiposProducto) {
-			tipoProductoForestalDTO.add(ProviderDTO.getTipoProductoForestalDTO(tipoProducto));
+			tipoProductoForestalDTO.add(ProviderDTO
+					.getTipoProductoForestalDTO(tipoProducto));
 		}
 		return tipoProductoForestalDTO;
 	}
@@ -79,7 +84,9 @@ public class TipoProductoForestalFachada implements
 	public List<EstadoProducto> getEstadosProductos() {
 		List<EstadoProducto> estadosProductos = new ArrayList<EstadoProducto>();
 		// estadosProductos.add(EstadoProducto.Seco);
-		estadosProductos.add(EstadoProducto.Verde);
+		// estadosProductos.add(EstadoProducto.Verde);
+		estadosProductos.add(EstadoProducto.BMP);
+		estadosProductos.add(EstadoProducto.BS);
 		return estadosProductos;
 	}
 
@@ -124,15 +131,16 @@ public class TipoProductoForestalFachada implements
 		return datosSistemaDAO.recuperarTipoProductoExportacion(id);
 	}
 
-	public int getCantidadDiametros(long idTipoProductoForestal) throws NegocioException{
-		try{
-			TipoProductoForestal tipoProductoForestal = 
-							datosSistemaDAO.recuperarTipoProductoForestal(idTipoProductoForestal);
-			
+	public int getCantidadDiametros(long idTipoProductoForestal)
+			throws NegocioException {
+		try {
+			TipoProductoForestal tipoProductoForestal = datosSistemaDAO
+					.recuperarTipoProductoForestal(idTipoProductoForestal);
+
 			return tipoProductoForestal.getCantDiametros();
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
-		}			
+		}
 	}
 }

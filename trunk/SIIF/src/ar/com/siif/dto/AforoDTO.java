@@ -1,24 +1,26 @@
 package ar.com.siif.dto;
 
+import ar.com.siif.enums.EstadoProducto;
+
 public class AforoDTO {
 
 	private Long id;
 
-	private String estado;
+	private EstadoProducto estado;
 
 	private String tipoProductor;
 
-	private String tipoProductorDesc;	
-	
+	private String tipoProductorDesc;
+
 	private double valorAforo;
-	
+
 	private TipoProductoForestalDTO tipoProducto;
 
-	public AforoDTO(){
-		
+	public AforoDTO() {
+
 		tipoProducto = new TipoProductoForestalDTO();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -27,12 +29,16 @@ public class AforoDTO {
 		this.id = id;
 	}
 
-	public String getEstado() {
+	public EstadoProducto getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(EstadoProducto estado) {
 		this.estado = estado;
+	}
+
+	public void setEstadoStr(String estado) {
+		this.estado = EstadoProducto.valueOf(estado);
 	}
 
 	public String getTipoProductor() {
