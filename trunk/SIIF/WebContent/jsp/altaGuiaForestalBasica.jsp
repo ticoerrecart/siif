@@ -644,16 +644,6 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 			</table>									
 		</c:otherwise>
 	</c:choose>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	<table border="0" class="cuadrado" align="center" width="80%"
 		cellpadding="2">
@@ -780,12 +770,12 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 							<table border="0" class="cuadrado" align="center" width="90%"
 								cellpadding="2" cellspacing="0" id="tablaImportes" >
 								<tr>
-									<td class="azulAjustado"><bean:message key='SIIF.label.Tipo'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.Estado'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.Especie'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.M3'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.ValorAforo'/></td>
-									<td class="azulAjustado"><bean:message key='SIIF.label.Importe'/></td>
+									<td class="azulAjustado" width="19%"><bean:message key='SIIF.label.Tipo'/></td>
+									<td class="azulAjustado" width="35"><bean:message key='SIIF.label.Estado'/></td>
+									<td class="azulAjustado" width="8%"><bean:message key='SIIF.label.Especie'/></td>
+									<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.M3'/></td>
+									<td class="azulAjustado" width="10%">Aforo</td>
+									<td class="azulAjustado" width="18%"><bean:message key='SIIF.label.Importe'/></td>									
 								</tr>
 								<c:choose>
 									<c:when test="${fn:length(subImportes)>0}">
@@ -806,8 +796,8 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</html:select>															
 												</td>
 												<td>
-													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estadoStr" class="botonerab" 
-														onchange="cambiarEstado(${i.count-1});">
+													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estadoStr" 
+															class="botonerab" onchange="cambiarEstado(${i.count-1});">
 														<c:forEach items="${estadosProductoForestal}" var="estado">
 															<option value="<c:out value='${estado.name}'></c:out>">
 																<c:out value="${estado.descripcion}"></c:out>
@@ -816,26 +806,26 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</select>
 												</td> 
 												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie" value="${defaultEspecie}">
+													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie" 
+															value="${defaultEspecie}" size="7">
 												</td>
 												<td>
-													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" 
-														name="listaSubImportes[${i.count-1}].cantidadMts" onchange="javascript:actualizarImporte(${i.count-1});"
+													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" size="9" 
+														name="listaSubImportes[${i.count-1}].cantidadMts" 
+														onchange="javascript:actualizarImporte(${i.count-1});"
 														onkeypress="javascript:esNumericoConDecimal(event);"
 														value="${subImporte.cantidadMts}">									
 												</td>
 												<td id="TDValorAforo${i.count-1}">
-													<input id="idValorAforo${i.count-1}" name="listaSubImportes[${i.count-1}].valorAforos" class="botonerab" 
-														type="text"	readonly="readonly">				
-																		
-													<!-- <input class="botonerab" type="text" name="guiaForestal.cantidadUnidades"
-														onkeypress="javascript:esNumerico(event);"> -->
+													<input id="idValorAforo${i.count-1}" name="listaSubImportes[${i.count-1}].valorAforos" 
+														class="botonerab" type="text" readonly="readonly" size="9">				
 												</td>
 												<td id="errorAforo${i.count-1}" class="rojoAdvertenciaLeft" style="display: none;">
 													No Definido 
 												</td>
 												<td>
-													<input id="idImporte${i.count-1}" class="botonerab" type="text" name="listaSubImportes[${i.count-1}].importe" 
+													<input id="idImporte${i.count-1}" class="botonerab" type="text" 
+														name="listaSubImportes[${i.count-1}].importe" size="20" 
 														readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
 												</td>
 											</tr>
@@ -868,16 +858,17 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 													</select>																									
 												</td>
 												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[0].especie" value="${defaultEspecie}">
+													<input class="botonerab" type="text" name="listaSubImportes[0].especie" 
+															value="${defaultEspecie}" size="7">
 												</td>
 												<td>
-													<input id="idCantidadMts0" class="botonerab" type="text" 
+													<input id="idCantidadMts0" class="botonerab" type="text" size="9"
 														name="listaSubImportes[0].cantidadMts" onchange="javascript:actualizarImporte(0);"
 														onkeypress="javascript:esNumericoConDecimal(event);">		
 												</td>
 												<td id="TDValorAforo0">
 													<input id="idValorAforo0" name="listaSubImportes[0].valorAforos" class="botonerab" 
-														type="text" readonly="readonly">
+														type="text" readonly="readonly" size="9">
 
 												</td>
 												<td id="errorAforo0" class="rojoAdvertenciaLeft" style="display: none;">
@@ -885,7 +876,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 												</td>
 												<td>
 													<input id="idImporte0" class="botonerab" type="text" name="listaSubImportes[0].importe" 
-														readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);">
+														readonly="readonly" onkeypress="javascript:esNumericoConDecimal(event);" size="20">
 												</td>
 											</tr>	
 	
