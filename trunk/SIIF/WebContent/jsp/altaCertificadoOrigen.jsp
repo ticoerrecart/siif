@@ -233,48 +233,16 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td width="21%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.ZonaManejoForestal'/>						
 						</td>
-						<%--td width="32%" align="center">
-							<select id="idPMF" class="botonerab" disabled="disabled" style="width: 16em" onchange="mostrarFiscalizaciones();"
-									name="certificadoOrigenDTO.pmf.id">
-								<option value="-1">- Seleccione -</option>						
-							</select>	
-						</td--%>
 											
-							<td width="32%" align="center">
-								<select id="idZMF" class="botonerab" 
-										onchange="cambioComboZona();" disabled="disabled">
-									<option value="0">--Seleccione una Opcion de Zona--</option>
-									<option value="1">--PMF--</option>
-									<option value="2">--Area de Cosecha--</option>
-								</select>	
-							</td>						
-	
-																						
-					</tr>
-
-					<tr class="area" style="display: none">	
-						<td colspan="2"></td>
-						<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
-						
-						<td align="left"> 
-							<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarFiscalizaciones();">
-								<option value="-1">- Seleccione -</option>						
+						<td width="32%" align="center">
+							<select id="idZMF" class="botonerab" 
+									onchange="cambioComboZona();" disabled="disabled">
+								<option value="0">--Seleccione una Zona--</option>
+								<option value="1">--PMF--</option>
+								<option value="2">--Area de Cosecha--</option>
 							</select>	
-						</td>
+						</td>																							
 					</tr>
-							
-					<tr class="plan" style="display: none">
-						<td colspan="2"></td>
-						<td width="47%" class="botoneralNegritaRight">
-							<bean:message key='SIIF.label.PlanManejoForestal'/>
-						</td>
-						<td align="left">
-							<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarFiscalizaciones();">
-								<option value="-1">- Seleccione -</option>
-							</select>					
-						</td>						
-					</tr>
-
 
 					<tr>
 						<td width="17%" class="botoneralNegritaRight">
@@ -284,12 +252,25 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 							<input class="botonerab" type="text" size="27" id="idReservaForestal" name="certificadoOrigenDTO.reservaForestal">					
 						</td>	
 										
-						<td colspan="2"></td>
-																
+						<td style="display: none;" width="21%" class="botoneralNegritaRight plan">
+							<bean:message key='SIIF.label.PlanManejoForestal'/>
+						</td>
+						<td style="display: none;" class="plan" width="32%" align="center">
+							<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarFiscalizaciones();">
+								<option value="-1">- Seleccione -</option>
+							</select>					
+						</td>						
+
+						<td style="display: none;" width="21%"  class="botoneralNegritaRight area">
+							<bean:message key='SIIF.label.AreaDeCosecha'/>
+						</td>						
+						<td style="display: none;" align="center" class="area" width="32%"> 
+							<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarFiscalizaciones();">
+								<option value="-1">- Seleccione -</option>						
+							</select>	
+						</td>																
 					</tr>					
-
-
-											
+					
 					<tr id="idTrFacturaVolTrans" style="display: none">
 						<td width="17%" class="botoneralNegritaRight">
 							<bean:message key='SIIF.label.NroFactura'/>

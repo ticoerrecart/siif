@@ -57,7 +57,8 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 
 	public String getFullNombre() {
 
-		return "Rerserva: " + this.getReservaForestalArea() + " - Nombre: " + this.getNombreArea();
+		//return "Rerserva: " + this.getReservaForestalArea() + " - Nombre: " + this.getNombreArea();
+		return this.getReservaForestalArea() + " - " + this.getNombreArea();
 	}
 
 	@Override

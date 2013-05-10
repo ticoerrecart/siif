@@ -44,11 +44,6 @@ public class GuiaForestalFachadaTest extends
 					.getBoletasDepositoDTO(ConstantesTest.boletasDeDeposito);
 			List<SubImporteDTO> subImportes = GuiaForestalTestUtil
 					.getSubImportesDTO(ConstantesTest.subImportes);
-			PMFDTO pmf = new PMFDTO();
-			pmf.setId(35L);
-			guia.setLocalizacion(pmf);
-			XStream xs = new XStream();
-			String s = xs.toXML(guia);
 			
 			List<RangoDTO> rangos = new ArrayList<RangoDTO>();
 			List<FiscalizacionDTO> fiscalizaciones = new ArrayList<FiscalizacionDTO>();
