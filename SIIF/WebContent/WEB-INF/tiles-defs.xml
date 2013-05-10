@@ -26,6 +26,12 @@
 		<put name="footer" value="/jsp/tiles/footer.jsp" />
 		<put name="body" value="doc.portal.body" />
 	</definition>
+	
+	<definition name=".baseLogin" path="/jsp/tiles/layoutLogin.jsp">
+		<put name="title" value="Main Layout" />
+		<put name="footer" value="/jsp/tiles/footer.jsp" />
+		<put name="body" value="doc.portal.body" />
+	</definition>	
 	<!-- ========== PAGES ========== -->
 
 	<definition name=".indizarPlano" extends=".base">
@@ -56,6 +62,16 @@
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/bodyPruebaTiles3.jsp" />
 	</definition>
+
+
+	<!-- LOGIN -->
+
+	<definition name=".login" extends=".baseLogin">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/login.jsp" />
+	</definition>
+	
+	<!-- LOGIN -->
 
 
 	<!-- FISCALIZACION -->
