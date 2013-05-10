@@ -62,6 +62,7 @@
 			<forward name=".estadisticaIndizacionPlanos" path=".estadisticaIndizacionPlanos" />
 			<forward name=".pruebaTiles" path=".pruebaTiles" />
 
+			<forward name=".login" path=".login" />
 			<forward name=".fiscalizacionProdForestales" path=".fiscalizacionProdForestales" />
 			<forward name=".altaTipoProductoForestal" path=".altaTipoProductoForestal" />
 			<forward name=".altaEntidad" path=".altaEntidad" />
