@@ -25,64 +25,79 @@
 </head>
 
 <body onload="darFoco();">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 <div id="errores" class="rojoAdvertencia">${error}</div>
+
 <html:form action="login">
 	<html:hidden property="metodo" value="login" />
-	<table class="cuadrado" border="0" width="40%" align="center">
+	
+	<table align="center" border="0" width="100%" height="100%">
 		<tr>
-			<td colspan="4" height="26em" align="center" class="azulAjustado">
-				<CENTER>
-					<b><bean:message key='SIIF.label.Bienvenido'/></b>
-				</CENTER>
-			</td> 
-		</tr>  
-		<tr>
-			<td height="15" colspan="4">&nbsp;</td>
-		</tr>
-		<tr>
-			<td height="32" width="25%">
-				<div align="right">
-					<img src="<html:rewrite page='/imagenes/personitas.jpg'/>" width="33" height="32" alt="Roles">
-				</div>
+			<td height="85%">
+				<table class="cuadrado" border="0" width="40%" align="center">
+					<tr>
+						<td colspan="4" height="26em" align="center" class="azulAjustado">
+							<CENTER>
+								<b><bean:message key='SIIF.label.Bienvenido'/></b>
+							</CENTER>
+						</td> 
+					</tr>  
+					<tr>
+						<td height="15" colspan="4">&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="32" width="25%">
+							<div align="right">
+								<img src="<html:rewrite page='/imagenes/personitas.jpg'/>" width="33" height="32" alt="Roles">
+							</div>
+						</td>
+						<td width="25%"><b><bean:message key='SIIF.label.Usuario'/></b></td>
+						<td align="left">
+							<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value=""/>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="32">
+							<div align="right">
+								<img src="<html:rewrite page='/imagenes/llaves.gif'/>" width="33" height="32" alt="Roles">
+							</div>
+						</td>
+						<td><b><bean:message key='SIIF.label.Contrasenia'/></b></td>
+						<td align="left">
+							<html:password property="password"	styleId="password" styleClass="botonerab" size="15" value=""></html:password>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="15" colspan="4">&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="4" height="29" align="center">
+							<html:submit styleId="idAceptar" styleClass="botonerab" value="Ingresar"></html:submit>
+						</td>
+					</tr>
+					<tr>
+						<td height="14" colspan="4">&nbsp;</td>
+					</tr>
+				</table>
 			</td>
-			<td width="25%"><b><bean:message key='SIIF.label.Usuario'/></b></td>
-			<td align="left">
-				<html:text styleId="idUsuario" property="usuario" styleClass="botonerab" size="15" value=""/>
-			</td>
-			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td height="32">
-				<div align="right">
-					<img src="<html:rewrite page='/imagenes/llaves.gif'/>" width="33" height="32" alt="Roles">
-				</div>
-			</td>
-			<td><b><bean:message key='SIIF.label.Contrasenia'/></b></td>
-			<td align="left">
-				<html:password property="password"	styleId="password" styleClass="botonerab" size="15" value=""></html:password>
-			</td>
-			<td>&nbsp;</td>
+			<td height="10%"></td>	
 		</tr>
 		<tr>
-			<td height="15" colspan="4">&nbsp;</td>
-		</tr>
-		<tr>
-			<td colspan="4" height="29" align="center">
-				<html:submit styleId="idAceptar" styleClass="botonerab" value="Ingresar"></html:submit>
-			</td>
-		</tr>
-		<tr>
-			<td height="14" colspan="4">&nbsp;</td>
-		</tr>
-	</table> 
+			<td>
+				<table border="0" width="100%" align="center">
+					<tr>
+						<td>
+							<DIV class="footer"><img src="./imagenes/footer4.jpg"></DIV>
+						</td>
+					</tr>	 
+				</table>
+			</td>	
+		</tr>	
+	</table>		 
 </html:form>
 
 </body>

@@ -21,7 +21,7 @@
 
 <TABLE cellSpacing=0 cellPadding=0 border=0 height="100%" width="100%" align="center">
 	<TR>
-		<TD height="80%" id="tdBody"><tiles:insert attribute="body" /></TD>
+		<TD height="95%" id="tdBody"><tiles:insert attribute="body" /></TD>
 	</TR>
 	<TR>
 		<TD><tiles:insert attribute="footer" /></TD>
