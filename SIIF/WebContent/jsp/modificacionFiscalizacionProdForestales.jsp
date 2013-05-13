@@ -67,9 +67,44 @@ function submitir(){
 				$('#idLocalizacion').val($('#idArea').val());
 			}
 		}
-		
-		validarForm("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
+
+		validarFormLocal("fiscalizacionForm","../fiscalizacion","validarFiscalizacionForm","FiscalizacionForm");
 	}	
+}
+
+function validarFormLocal(idFormJsp,action,metodo,actionForm){
+	var form = $('#'+idFormJsp).serialize(); 
+	var url = '../' + action + '.do?metodo=validar&validador=' + metodo + '&form=' + actionForm + '&formJsp=' + idFormJsp;
+	preValidar();
+	$.post(url,form,validarFormLocalCallBack);
+}
+
+function validarFormLocalCallBack(xmlDoc){
+   	var nodos = xmlDoc.getElementsByTagName('error');
+    if (nodos.length==0){
+    	nodos = xmlDoc.getElementsByTagName('errorFiscalizacion');
+    	if (nodos.length==0){
+    		var nodos = xmlDoc.getElementsByTagName('formId');
+    	   	var idForm = nodos[0].firstChild.nodeValue;
+	    	$('#'+idForm).submit();
+    	}else{
+    		if(confirm(nodos[0].firstChild.nodeValue)){
+    			var nodos = xmlDoc.getElementsByTagName('formId');
+        	   	var idForm = nodos[0].firstChild.nodeValue;
+    			$('#'+idForm).submit();
+    		}else{
+    			posValidar();
+    		}
+    	}
+
+    } else {
+    	$('#errores').text("");
+	    for(var i=0; i < nodos.length; i++) { 
+		    $('#errores').append( '<div>* ' + nodos[i].firstChild.nodeValue + '</div>');
+	    }
+	 	
+	 	posValidar();
+    }
 }
 
 function volver(){
@@ -102,14 +137,16 @@ $(function() {
 <html:form action="fiscalizacion" styleId="fiscalizacionForm">
 	<html:hidden property="metodo" value="modificacionFiscalizacion" />
 	<!-- <input type="hidden" id="cantidadDiametros" value="1" /> -->
-	
+
 	<html:hidden property="fiscalizacionDTO.id"
 		value="${fiscalizacionDTO.id}" styleId="idFiscalizacion" />
-	
+
 	<html:hidden property="fiscalizacionDTO.productorForestal.id"
 		value="${fiscalizacionDTO.productorForestal.id}"/>
-	<html:hidden property="fiscalizacionDTO.tipoProducto.id"
-		value="${fiscalizacionDTO.tipoProducto.id}"/>		
+
+	<%--html:hidden property="fiscalizacionDTO.tipoProducto.id" styleId="idTipoProductoForestalHidden"
+		value="${fiscalizacionDTO.tipoProducto.id}"/--%>
+
 	<html:hidden styleId="cantidadDiametros" property="fiscalizacionDTO.tipoProducto.cantDiametros"
 		value="${cantDiametrosMuestras}"/>
 
@@ -196,9 +233,9 @@ $(function() {
 			<td class="botoneralNegritaRight"><bean:message
 					key='SIIF.label.TipoProducto' />
 			</td>
-			<td align="left"><html:select property="idTipoProductoForestal"
-					styleClass="botonerab disabled" value="${fiscalizacionDTO.tipoProducto.id}"
-					styleId="idTipoProductoForestal" onchange="actualizarMuestras();">
+			<td align="left"><html:select property="fiscalizacionDTO.tipoProducto.id"
+					styleClass="botonerab" value="${fiscalizacionDTO.tipoProducto.id}"
+					styleId="idTipoProductoForestal" onchange="cambiarTipoProducto();">
 					<c:forEach items="${tiposProducto}" var="tipoProducto">
 						<html:option value="${tipoProducto.id}">
 							<c:out value="${tipoProducto.nombre}"></c:out>

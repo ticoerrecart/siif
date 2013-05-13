@@ -14,34 +14,46 @@ public interface IFiscalizacionFachada {
 
 	public List<Fiscalizacion> recuperarFiscalizaciones();
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(Long idProductor);
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(
+			Long idProductor);
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor,
-			Long idFiscalizacion, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar);
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(
+			Long idProductor, Long idFiscalizacion,
+			List<SubImporteDTO> listaSubImportesDTO,
+			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar);
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(Long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesParaModificacionGFB(
+			Long idProductor);
 
 	public Fiscalizacion recuperarFiscalizacion(long idFiscalizacion);
 
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasNuevasDTO, OperacionFiscalizacionDTO operacion);
+			List<MuestraDTO> muestrasNuevasDTO,
+			OperacionFiscalizacionDTO operacion);
+
+	public String validarFiscalizacionAsociadaAGuia(
+			FiscalizacionDTO fiscalizacionDTO);
 
 	public void altaFiscalizacion(Fiscalizacion acta);
 
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(
+			Long idProductor);
 
-	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion, List<MuestraDTO> muestrasDTO);
+	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion,
+			List<MuestraDTO> muestrasDTO);
 
 	public FiscalizacionDTO recuperarFiscalizacionDTO(long idFiscalizacion);
 
-	public void validarFiscalizacionDTO(String idFiscalizacion, String idProductorForestal,
-			String idTipoProducto, String idRodal) throws NumberFormatException,NegocioException;
+	public void validarFiscalizacionDTO(String idFiscalizacion,
+			String idProductorForestal, String idTipoProducto, String idRodal)
+			throws NumberFormatException, NegocioException;
 
-	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor);
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(
+			Long idProductor);
 
-	public void anularFiscalizaciones(Long[] idsFiscalizaciones) throws NegocioException,
-			NegocioException;
-	
-	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(Long idProductor, String periodo,
-																					 Long idLocalizacion);		
+	public void anularFiscalizaciones(Long[] idsFiscalizaciones)
+			throws NegocioException, NegocioException;
+
+	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaCertificadoOrigen(
+			Long idProductor, String periodo, Long idLocalizacion);
 }
