@@ -27,51 +27,12 @@
 		<put name="body" value="doc.portal.body" />
 	</definition>
 	
-	<definition name=".baseLogin" path="/jsp/tiles/layoutLogin.jsp">
-		<put name="title" value="Main Layout" />
-		<put name="footer" value="/jsp/tiles/footer.jsp" />
-		<put name="body" value="doc.portal.body" />
-	</definition>	
 	<!-- ========== PAGES ========== -->
-
-	<definition name=".indizarPlano" extends=".base">
-		<put name="title" value="Cargando Planos..." />
-		<put name="body" value="/jsp/cargandoPlano.jsp" />
-	</definition>
-
-	<definition name=".planoFiscal" extends=".base">
-		<put name="title" value="Planos" />
-		<put name="body" value="/jsp/planoFiscal.jsp" />
-	</definition>
-
-	<definition name=".visualizarPlano" extends=".base">
-		<put name="title" value="Visualizador" />
-		<put name="body" value="/jsp/visualizadorPlanos.jsp" />
-	</definition>
-	<definition name=".plano" extends=".base">
-		<put name="title" value="Planos" />
-		<put name="body" value="/jsp/plano.jsp" />
-	</definition>
 
 	<definition name=".index" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/index.jsp" />
 	</definition>
-
-	<definition name=".pruebaTiles" extends=".base">
-		<put name="title" value="SIIFs" />
-		<put name="body" value="/jsp/bodyPruebaTiles3.jsp" />
-	</definition>
-
-
-	<!-- LOGIN -->
-
-	<definition name=".login" extends=".baseLogin">
-		<put name="title" value="SIIFs" />
-		<put name="body" value="/jsp/login.jsp" />
-	</definition>
-	
-	<!-- LOGIN -->
 
 
 	<!-- FISCALIZACION -->
