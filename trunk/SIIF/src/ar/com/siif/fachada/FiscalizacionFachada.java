@@ -38,7 +38,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	private IUsuarioFachada usuarioFachada;
 
 	private IGuiaForestalFachada guiaForestalFachada;
-	
+
 	public FiscalizacionFachada() {
 	}
 
@@ -145,10 +145,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * @throws NegocioException
 	 */
 	public void modificacionFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
-			List<MuestraDTO> muestrasNuevasDTO, OperacionFiscalizacionDTO operacion) {
+			List<MuestraDTO> muestrasNuevasDTO,
+			OperacionFiscalizacionDTO operacion) {
 
-		Usuario usuario = usuarioFachada.getUsuario(operacion.getUsuario().getId());
-		
+		Usuario usuario = usuarioFachada.getUsuario(operacion.getUsuario()
+				.getId());
+
 		Fiscalizacion fiscalizacion = fiscalizacionDAO
 				.recuperarFiscalizacion(fiscalizacionDTO.getId());
 
@@ -162,48 +164,94 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.getOficinaAlta().getId());
 		fiscalizacion.setOficinaAlta(oficinaAlta);
 		fiscalizacion.setTamanioMuestra(muestrasNuevasDTO.size());
-		Localizacion localizacionFiscalizacion = ubicacionFachada.
-									getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
+		Localizacion localizacionFiscalizacion = ubicacionFachada
+				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
 		fiscalizacion.setLocalizacion(localizacionFiscalizacion);
-		
-		//Verifico si la localizacion de la fiscalizacion pertenece o es la misma a la localizacion 
-		//de la guia a la cual esta asociada, si es q lo esta.
-		//Ademas verifico si el volumen de la fiscalizacion modificada, mas todas las fiscalizaciones
-		//de la guia para el mismo tipo de producto, supera el volumen declarado en el subImporte.
-		if(fiscalizacion.getGuiaForestal() != null){
-			
-			GuiaForestal guia = fiscalizacion.getGuiaForestal();
-			
-			if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia.getLocalizacion())
-					|| guia.getLocalizacion().esParteDeLaLocalizacion(localizacionFiscalizacion)) 
-					|| !Validator.validarCantM3ModiFiscalizacion(fiscalizacionDTO,guia))
-			{
-				
-				//Tengo que desasociar la fiscalizacion con la guia
-				fiscalizacion.setGuiaForestal(null);
-				guia.getFiscalizaciones().remove(fiscalizacion);
-				
-				OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
-				operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
-				operacionDTO.setFecha(operacion.getFecha());
-				
-				OperacionGuiaForestal operacionGuia = ProviderDominio.getOperacionGuiaForestal(
-						operacionDTO,guia,usuario);
 
-				guia.setOperacionModificacion(operacionGuia);
-				
-				//guiaForestalFachada.modificarGuiaForestal(guia);
-			}
+		// Verifico si la localizacion de la fiscalizacion pertenece o es la
+		// misma a la localizacion
+		// de la guia a la cual esta asociada, si es q lo esta.
+		// Ademas verifico si el volumen de la fiscalizacion modificada, mas
+		// todas las fiscalizaciones
+		// de la guia para el mismo tipo de producto, supera el volumen
+		// declarado en el subImporte.
+
+		/*
+		 * if (fiscalizacion.getGuiaForestal() != null) {
+		 * 
+		 * GuiaForestal guia = fiscalizacion.getGuiaForestal();
+		 * 
+		 * if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia
+		 * .getLocalizacion()) || guia.getLocalizacion()
+		 * .esParteDeLaLocalizacion(localizacionFiscalizacion)) ||
+		 * !Validator.validarCantM3ModiFiscalizacion( fiscalizacionDTO, guia)) {
+		 */
+		String errorFiscalizacion = validarFiscalizacionAsociadaAGuia(fiscalizacionDTO);
+		if (!"".equalsIgnoreCase(errorFiscalizacion)) {
+			GuiaForestal guia = fiscalizacion.getGuiaForestal();
+			// Tengo que desasociar la fiscalizacion con la guia
+			fiscalizacion.setGuiaForestal(null);
+			guia.getFiscalizaciones().remove(fiscalizacion);
+
+			OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
+			operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			operacionDTO.setFecha(operacion.getFecha());
+
+			OperacionGuiaForestal operacionGuia = ProviderDominio
+					.getOperacionGuiaForestal(operacionDTO, guia, usuario);
+
+			guia.setOperacionModificacion(operacionGuia);
+
 		}
-		
-		fiscalizacion.addOperacion(
-						ProviderDominio.getOperacionFiscalizacion(
-										operacion, 
-										fiscalizacion,usuario)
-										); 
-										
+
+		fiscalizacion.addOperacion(ProviderDominio.getOperacionFiscalizacion(
+				operacion, fiscalizacion, usuario));
+
 		fiscalizacionDAO.actualizarFiscalizacion(fiscalizacion,
 				muestrasNuevasDTO);
+	}
+
+	/**
+	 * Verifico si la localizacion de la fiscalizacion pertenece o es la misma a
+	 * la localizacion de la guia a la cual esta asociada, si es q lo esta.
+	 * Ademas verifico si el volumen de la fiscalizacion modificada, mas todas
+	 * las fiscalizaciones de la guia para el mismo tipo de producto, supera el
+	 * volumen declarado en el subImporte.
+	 **/
+	public String validarFiscalizacionAsociadaAGuia(
+			FiscalizacionDTO fiscalizacionDTO) {
+		String error = "";
+		Fiscalizacion fiscalizacion = fiscalizacionDAO
+				.recuperarFiscalizacion(fiscalizacionDTO.getId());
+		if (fiscalizacion.getGuiaForestal() != null) {
+			GuiaForestal guia = fiscalizacion.getGuiaForestal();
+			String errorDesasociar = "  La Fiscalización se va a desasociar de la Guia Nro.:"
+					+ guia.getNroGuia() + ".  Desea Continuar?";
+			Localizacion localizacionFiscalizacion = ubicacionFachada
+					.getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
+
+			if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia
+					.getLocalizacion()) || guia.getLocalizacion()
+					.esParteDeLaLocalizacion(localizacionFiscalizacion))) {
+				error = "No coincide la Localización de la Fiscalización con la de la Guía a la que está asociada.";
+			} else {
+				if (!Validator.validarCantM3ModiFiscalizacion(fiscalizacionDTO,
+						guia)) {
+					error = "El volumen de ésta Fiscalización sumado a las demás Fiscalizaciones asociadas a ésta Guía superan el volumen declarado en el SubImporte de la Guía para éste Tipo de Producto.";
+				} else {
+					if (fiscalizacionDTO.getTipoProducto().getId().longValue() != fiscalizacion
+							.getTipoProducto().getId().longValue()) {
+						error = "El Tipo de Producto de ésta Fiscalización ha cambiado.";
+					}
+				}
+			}
+
+			if (!"".equals(error)) {
+				error = error + errorDesasociar;
+			}
+		}
+
+		return error;
 	}
 
 	public void altaFiscalizacion(Fiscalizacion fiscalizacion) {
@@ -237,7 +285,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
 			List<MuestraDTO> muestrasDTO) {
 
-		
 		Entidad productorForestal = entidadFachada.getEntidad(fiscalizacionDTO
 				.getProductorForestal().getId());
 		Entidad oficinaForestal = entidadFachada.getEntidad(fiscalizacionDTO
@@ -246,16 +293,19 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.recuperarTipoProductoForestal(fiscalizacionDTO
 						.getTipoProducto().getId());
 
-		OperacionFiscalizacionDTO operacionDTO = fiscalizacionDTO.getOperacionAlta(); 
-		Usuario usuario = usuarioFachada.getUsuario(operacionDTO.getUsuario().getId());
+		OperacionFiscalizacionDTO operacionDTO = fiscalizacionDTO
+				.getOperacionAlta();
+		Usuario usuario = usuarioFachada.getUsuario(operacionDTO.getUsuario()
+				.getId());
 
 		Long idLocalizacion = fiscalizacionDTO.getIdLocalizacion();
 
-		Localizacion localizacion = ubicacionFachada.getLocalizacion(idLocalizacion);
+		Localizacion localizacion = ubicacionFachada
+				.getLocalizacion(idLocalizacion);
 
 		Fiscalizacion fiscalizacion = ProviderDominio.getFiscalizacion(
 				fiscalizacionDTO, muestrasDTO, localizacion, productorForestal,
-				oficinaForestal, tipoProducto, usuario );
+				oficinaForestal, tipoProducto, usuario);
 		fiscalizacionDAO.altaFiscalizacion(fiscalizacion);
 	}
 

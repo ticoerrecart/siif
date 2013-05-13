@@ -424,7 +424,7 @@ function cambiarTipoProducto(){
 	//Blanqueo la cantidad de diametros para que se pueda setear
 	//cantidadDiametros con el valor de cantidad de diametros del nuevo tipo de producto
 	$("#cantidadDiametros").val("");
-	
+
 	actualizarMuestras();
 }
 
