@@ -168,24 +168,6 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
 		fiscalizacion.setLocalizacion(localizacionFiscalizacion);
 
-		// Verifico si la localizacion de la fiscalizacion pertenece o es la
-		// misma a la localizacion
-		// de la guia a la cual esta asociada, si es q lo esta.
-		// Ademas verifico si el volumen de la fiscalizacion modificada, mas
-		// todas las fiscalizaciones
-		// de la guia para el mismo tipo de producto, supera el volumen
-		// declarado en el subImporte.
-
-		/*
-		 * if (fiscalizacion.getGuiaForestal() != null) {
-		 * 
-		 * GuiaForestal guia = fiscalizacion.getGuiaForestal();
-		 * 
-		 * if (!(localizacionFiscalizacion.esParteDeLaLocalizacion(guia
-		 * .getLocalizacion()) || guia.getLocalizacion()
-		 * .esParteDeLaLocalizacion(localizacionFiscalizacion)) ||
-		 * !Validator.validarCantM3ModiFiscalizacion( fiscalizacionDTO, guia)) {
-		 */
 		String errorFiscalizacion = validarFiscalizacionAsociadaAGuia(fiscalizacionDTO);
 		if (!"".equalsIgnoreCase(errorFiscalizacion)) {
 			GuiaForestal guia = fiscalizacion.getGuiaForestal();
@@ -214,10 +196,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	/**
 	 * Verifico si la localizacion de la fiscalizacion pertenece o es la misma a
 	 * la localizacion de la guia a la cual esta asociada, si es q lo esta.
+	 * Ademas verifico si cambio el tipo de producto de la fiscalizacion.
 	 * Ademas verifico si el volumen de la fiscalizacion modificada, mas todas
 	 * las fiscalizaciones de la guia para el mismo tipo de producto, supera el
 	 * volumen declarado en el subImporte.
-	 **/
+	 * 
+	 * 	 **/
 	public String validarFiscalizacionAsociadaAGuia(
 			FiscalizacionDTO fiscalizacionDTO) {
 		String error = "";
@@ -235,13 +219,12 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 					.esParteDeLaLocalizacion(localizacionFiscalizacion))) {
 				error = "No coincide la Localización de la Fiscalización con la de la Guía a la que está asociada.";
 			} else {
-				if (!Validator.validarCantM3ModiFiscalizacion(fiscalizacionDTO,
-						guia)) {
-					error = "El volumen de ésta Fiscalización sumado a las demás Fiscalizaciones asociadas a ésta Guía superan el volumen declarado en el SubImporte de la Guía para éste Tipo de Producto.";
-				} else {
-					if (fiscalizacionDTO.getTipoProducto().getId().longValue() != fiscalizacion
-							.getTipoProducto().getId().longValue()) {
-						error = "El Tipo de Producto de ésta Fiscalización ha cambiado.";
+				if (fiscalizacionDTO.getTipoProducto().getId().longValue() != fiscalizacion
+						.getTipoProducto().getId().longValue()) {
+					error = "El Tipo de Producto de ésta Fiscalización ha cambiado.";				
+				} else { 
+					if (!Validator.validarCantM3ModiFiscalizacion(fiscalizacionDTO,guia)) {
+						error = "El volumen de ésta Fiscalización sumado a las demás Fiscalizaciones asociadas a ésta Guía superan el volumen declarado en el SubImporte de la Guía para éste Tipo de Producto.";
 					}
 				}
 			}
