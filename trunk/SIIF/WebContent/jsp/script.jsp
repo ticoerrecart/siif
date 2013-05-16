@@ -16,11 +16,24 @@
 	src="<html:rewrite page='/dwr/interface/UtilFachada.js'/>"></script>
 
 <script>
+	function errh(msg, exc) {
+	  $("#divCargando").hide();
+	  $("#Aceptar").removeAttr("disabled");
+	  alert("Error message is: " + msg + " - Error Details: " + dwr.util.toDescriptiveString(exc, 2));
+	  $("#exitoGrabado").html("");
+	}
+
+	dwr.engine.setErrorHandler(errh);
+	
 	function ejecutarScript(){
+		$("#divCargando").show();
+		$("#Aceptar").attr("disabled",true);
 		UtilFachada.execute($("#script").val(),ejecutarScriptCallback );
 	}
 	
 	function ejecutarScriptCallback(str){
+		$("#divCargando").hide();
+		$("#Aceptar").removeAttr("disabled");
 		$("#exitoGrabado").html(str + " filas Afectadas.");
 	}
 </script>
@@ -49,7 +62,10 @@
 	</tr>
 	<tr>
 		<td>
-			<input type="button" onclick="javascript:ejecutarScript();" name="Aceptar" value="Aceptar"/> 
+			<input id="Aceptar" type="button" onclick="javascript:ejecutarScript();" name="Aceptar" value="Aceptar"/>
+			<td id="divCargando" style="display: none">
+				<img src="<html:rewrite page='/imagenes/cargando.gif'/>">
+			</td> 
 		</td>
 	</tr>	
 	<tr>
