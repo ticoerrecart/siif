@@ -2,5 +2,5 @@ package ar.com.siif.fachada;
 
 public interface IUtilFachada {
 
-	public Integer execute(String sql);
+	public String execute(String sql);
 }
