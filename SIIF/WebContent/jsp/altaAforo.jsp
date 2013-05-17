@@ -57,7 +57,7 @@ function submitir(){
 		<tr>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.Estado'/></td>
 			<td align="left">
-				<select class="botonerab" name="aforoDTO.estado">
+				<select class="botonerab" name="aforoDTO.estadoStr">
 					<c:forEach items="${estadosProducto}" var="estadoProducto" varStatus="i">
 						<option value="<c:out value='${estadoProducto.name}'></c:out>">
 							<c:out value="${estadoProducto.descripcion}"></c:out>
