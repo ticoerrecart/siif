@@ -262,8 +262,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			
 			boolean ok = Validator.requerido(fechaDevolucion, "Fecha Devolución", pError);
 			boolean ok1 = true;
-			boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
-					"Cantidad(m3)", pError);
+			
+			//Quieren poder devolver un vale vacio.
+			/*boolean ok2 = Validator.validarDoubleMayorQue(0, String.valueOf(cantM3),
+					"Cantidad(m3)", pError);*/
 
 			double totalMts = 0;
 			ValeTransporte vale = (ValeTransporte) this.guiaForestalDAO.getHibernateTemplate().get(
@@ -288,15 +290,14 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 			GuiaForestal guia = vale.getGuiaForestal();			
 			
-			//Si el tipo de producto del vale es Leña o si el tipo de productor es Obrajero o Sin Fines de Lucro y
-			//no hay Fiscalizaciones asociadas a la guia para el tipo de producto del vale,
+			//Si el tipo de producto del vale es Leña o si el tipo de productor es Obrajero o Sin Fines de Lucro
 			//tengo que verificar el volumen contra lo declarado en la guia.
 			//Sino, tengo que verificar contra las fiscalizaciones asociadas a la guia.
 			boolean ok4 = true;
 			String tipoEntidad = guia.getProductorForestal().getTipoEntidad();
 			if(producto.equals(Constantes.LENIA) ||					
-				((tipoEntidad.equals(TipoDeEntidad.OBR.getDescripcion()) || tipoEntidad.equals(TipoDeEntidad.SFDL.getDescripcion()))
-				&&(totalMts==0)))	
+				(tipoEntidad.equals(TipoDeEntidad.OBR.getDescripcion()) || tipoEntidad.equals(TipoDeEntidad.SFDL.getDescripcion())))
+				//&&(totalMts==0)))	
 			{
 				List<SubImporte> subImportes = vale.getGuiaForestal().getSubImportes();
 				double totalMtsEnGuia = 0;	
@@ -310,8 +311,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 
 			}	
 			else{
-				ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
-						"Nº de Piezas", pError);				
+				//Quieren poder devolver un vale vacio.
+				/*ok1 = Validator.validarDoubleMayorQue(0, String.valueOf(nroPiezas),
+						"Nº de Piezas", pError);*/				
 				
 				ok3 = Validator.validarFiscalizacionExistenteParaVale(fiscalizaciones,
 						producto, pError);				
@@ -320,7 +322,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 						totalMts, pError);				
 			}
 			
-			if (ok && ok1 && ok2 && ok3 && ok4) {
+			if (ok && ok1 && ok3 && ok4) {
 				return guiaForestalDAO.registrarDevolucionYCompletarDatosValeTransporte(idVale,
 						destino, vehiculo, marca, dominio, producto, nroPiezas, cantM3, especie,
 						fechaDevolucion);
