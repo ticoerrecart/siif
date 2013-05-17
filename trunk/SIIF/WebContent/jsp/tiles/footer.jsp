@@ -1,2 +1,2 @@
-<DIV class="footer"><img src="../../imagenes/footer4.jpg"></DIV>
+<DIV class="footer"><img src="../../imagenes/footerSIIF.jpg"></DIV>
 
