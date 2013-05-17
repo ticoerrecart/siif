@@ -79,7 +79,8 @@
 			<forward name=".reportePorProductoVolumenPorAnioForestal" path=".reportePorProductoVolumenPorAnioForestal" />
 			<forward name=".reporteRecaudacionTotalProductoresEntreFechas" path=".reporteRecaudacionTotalProductoresEntreFechas" />
 			<forward name=".reporteRecaudacionPorAnioForestalTotalProductores" path=".reporteRecaudacionPorAnioForestalTotalProductores" />
-			<forward name=".reporteDetalleGuiasEntreFechas" path=".reporteDetalleGuiasEntreFechas" />																	   
+			<forward name=".reporteDetalleGuiasEntreFechas" path=".reporteDetalleGuiasEntreFechas" />
+			<forward name=".reporteCertificadoOrigenTotalProductoresEntreFechas" path=".reporteCertificadoOrigenTotalProductoresEntreFechas" />																	   
 		</action>
 
 		<action path="/menu" type="ar.com.siif.struts.actions.MenuAction"
@@ -404,6 +405,13 @@
 			<forward name="exitoReporteRecaudacionPorAnioForestalPorProductor" path=".reporteRecaudacionPorAnioForestalPorProductor" />											
 		</action>						
 		<!-- FIN REPORTES  -->
+		
+		<!-- REPORTES CERTIFICADO ORIGEN -->			
+		<action path="/reportesCertificadoOrigen" type="ar.com.siif.struts.actions.ReportesCertificadoOrigenAction"
+			parameter="metodo">
+			<forward name="exitoCargarReporteCertificadosOrigenPorProductorEntreFechas" path=".reporteCertificadosOrigenPorProductorEntreFechas" />											
+		</action>						
+		<!-- FIN REPORTES CERTIFICADO ORIGEN -->		
 		
 		<!-- CERTIFICADO ORIGEN -->
 		<action path="/certificadoOrigen" type="ar.com.siif.struts.actions.CertificadoDeOrigenAction"

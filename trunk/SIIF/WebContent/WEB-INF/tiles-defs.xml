@@ -443,6 +443,18 @@
 	</definition>		
 	<!-- FIN REPORTE RECAUDACION -->
 
+	<!-- REPORTE CERTIFICADO ORIGEN -->
+	<definition name=".reporteCertificadosOrigenPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadosOrigenPorProductorEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteCertificadoOrigenTotalProductoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadoOrigenTotalProductoresEntreFechas.jsp" />
+	</definition>			
+	<!-- FIN REPORTE CERTIFICADO ORIGEN -->
+
 	<!-- CERTIFICADO ORIGEN -->
 	<definition name=".altaCertificadoOrigen" extends=".base">
 		<put name="title" value="SIIFs" />

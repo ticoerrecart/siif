@@ -354,6 +354,10 @@ public class Constantes {
 	
 	public static final String REPORTE_VOLUMEN_POR_TIPO_PRODUCTOR_ENTRE_FECHAS = "reporteVolumenPorTipoProductorEntreFechas";	
 	
+	public static final String REPORTE_CERTIFICADOS_ORIGEN_POR_PRODUCTOR_ENTRE_FECHAS = "reporteCertificadoOrigenPorProductorEntreFechas";
+	
+	public static final String REPORTE_CERTIFICADOS_ORIGEN_TOTAL_PRODUCTORES_ENTRE_FECHAS = "reporteCertificadoOrigenTotalProductoresEntreFechas";
+	
 	//FIN REPORTES	
 
 	//MENU

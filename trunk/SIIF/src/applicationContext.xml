@@ -421,6 +421,28 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>
 
+	<!-- REPORTES CERTIFICADO ORIGEN --> 
+	<bean id="reportesCertificadoOrigenFachadaImpl" class="ar.com.siif.fachada.ReportesCertificadoOrigenFachada">
+		<constructor-arg ref="reportesDAO" />
+	</bean>	
+
+	<bean id="reportesCertificadoOrigenFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="reportesCertificadoOrigenFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.IReportesCertificadoOrigenFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>
+
     <!--CONSULTAS POR FISCALIZACION --> 
 	<bean id="consultasFiscalizacionFachadaImpl" class="ar.com.siif.fachada.ConsultasFiscalizacionFachada">
 		<constructor-arg ref="consultasFiscalizacionDAO" />		
