@@ -2,7 +2,6 @@ package ar.com.siif.fachada;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,26 +20,6 @@ public class UtilFachada implements IUtilFachada {
 		this.utilDAO = utilDAO;
 	}
 
-	private static final HashSet<Class<?>> WRAPPER_TYPES = getWrapperTypes();
-
-	public static boolean isWrapperType(Class<?> clazz) {
-		return WRAPPER_TYPES.contains(clazz);
-	}
-
-	private static HashSet<Class<?>> getWrapperTypes() {
-		HashSet<Class<?>> ret = new HashSet<Class<?>>();
-		ret.add(Boolean.class);
-		ret.add(Character.class);
-		ret.add(Byte.class);
-		ret.add(Short.class);
-		ret.add(Integer.class);
-		ret.add(Long.class);
-		ret.add(Float.class);
-		ret.add(Double.class);
-		ret.add(Void.class);
-		return ret;
-	}
-
 	public String execute(String sql) {
 		String strSelect = "select";
 		int select = sql.toLowerCase().indexOf(strSelect);
@@ -54,15 +33,13 @@ public class UtilFachada implements IUtilFachada {
 				Object object = (Object) iterator.next();
 				try {
 					showFields(object, s);
-					s.append("<br/>");
+					s.append("<br/><br/>");
 				} catch (Exception e) {
 					s.append(" | " + e.toString());
 				}
 			}
 			return s.toString();
 		} else {
-			// SQLQuery sqlQuery = getSession().createSQLQuery(sql);
-			// return String.valueOf(sqlQuery.executeUpdate());
 			return String.valueOf(utilDAO.executeUpdateDelete(sql));
 		}
 	}
@@ -73,17 +50,8 @@ public class UtilFachada implements IUtilFachada {
 		Class<?> clazz = o.getClass();
 
 		for (Field field : clazz.getDeclaredFields()) {
-			// you can also use .toGenericString() instead of .getName(). This
-			// will
-			// give you the type information as well.
-			/*
-			 * if (field.getClass().isPrimitive() ||
-			 * isWrapperType(field.getType())) {
-			 */
 			s.append(field.getName() + ":'"
 					+ PropertyUtils.getProperty(o, field.getName()) + "', ");
-			// }
-
 		}
 	}
 

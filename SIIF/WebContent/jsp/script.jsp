@@ -26,15 +26,24 @@
 	dwr.engine.setErrorHandler(errh);
 	
 	function ejecutarScript(){
-		$("#divCargando").show();
-		$("#Aceptar").attr("disabled",true);
-		UtilFachada.execute($("#script").val(),ejecutarScriptCallback );
+		if($("#script").val().trim()!=""){
+			$("#divCargando").show();
+			$("#Aceptar").attr("disabled",true);
+			UtilFachada.execute($("#script").val(),ejecutarScriptCallback );
+		}else{
+			alert("Escriba el script a ejecutar.");
+			$("#script").focus();
+		}
 	}
 	
 	function ejecutarScriptCallback(str){
 		$("#divCargando").hide();
 		$("#Aceptar").removeAttr("disabled");
-		$("#exitoGrabado").html(str + " filas Afectadas.");
+		if(str.length<5){//es un update/delete
+			$("#exitoGrabado").html(str + " filas Afectadas.");
+		}else{
+			$("#exitoGrabado").html(str);
+		}
 	}
 </script>
 
@@ -72,3 +81,7 @@
 		<td height="10"></td>
 	</tr>	
 </table>
+
+<script>
+	$("#script").focus();
+</script>
