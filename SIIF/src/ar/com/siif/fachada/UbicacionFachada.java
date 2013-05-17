@@ -316,13 +316,24 @@ public class UbicacionFachada implements IUbicacionFachada {
 			throws NegocioException {
 		try {
 			AreaDeCosecha area = this.ubicacionDAO.getArea(idArea);
-			if (ubicacionDAO.getAreasPorNombreParaPF(nombreArea, area.getProductorForestal().getId()).size() > 0) {
-				throw new NegocioException(Constantes.ERROR_EXISTE_AREA + nombreArea);
-			}
 			area.setReservaForestalArea(reservaForestal);
 			area.setNombreArea(nombreArea);
 			area.setDisposicionArea(disposicionArea);
 			area.setExpedienteArea(expedienteArea);
+			List<AreaDeCosecha> areas = ubicacionDAO.getAreas(area.getProductorForestal().getId());
+			for (AreaDeCosecha areaDeCosecha : areas) {
+				if (areaDeCosecha.getId()!= area.getId() &&
+					areaDeCosecha.getReservaForestalArea().equalsIgnoreCase(area.getReservaForestalArea()) &&
+					areaDeCosecha.getDisposicionArea().equalsIgnoreCase(area.getDisposicionArea()) &&
+					areaDeCosecha.getExpedienteArea().equalsIgnoreCase(area.getExpedienteArea()) &&
+					areaDeCosecha.getNombreArea().equalsIgnoreCase(area.getNombreArea())){
+					throw new NegocioException(Constantes.ERROR_EXISTE_AREA + 
+							" Reserva Forestal:" + reservaForestal + 
+							" Nombre :" + nombreArea + 
+							" Disposicion:" + disposicionArea + 
+							" Expediente:" + expedienteArea);
+				}
+			}			
 			this.ubicacionDAO.altaArea(area);
 		} catch (NegocioException ne){
 			throw ne;
