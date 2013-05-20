@@ -15,6 +15,8 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 
 	private EntidadDTO productorForestal;
 
+	private String tipoTerreno;	
+	
 	public String getReservaForestalArea() {
 		return reservaForestalArea;
 	}
@@ -70,6 +72,8 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 		area.setNombreArea(nombreArea);
 		area.setProductorForestal(entidad);
 		area.setReservaForestalArea(reservaForestalArea);
+		area.setTipoTerreno(tipoTerreno);
+		
 		return area;
 	}
 
@@ -81,9 +85,12 @@ public class AreaDeCosechaDTO extends LocalizacionDTO {
 	public boolean getEsAreaDeCosecha() {
 		return true;
 	}
-
-	@Override
-	public String getTipoTerrenoPMF() {
-		return null;
+	
+	public String getTipoTerreno() {
+		return tipoTerreno;
 	}
+
+	public void setTipoTerreno(String tipoTerreno) {
+		this.tipoTerreno = tipoTerreno;
+	}	
 }

@@ -47,15 +47,16 @@ function seleccionarArea(idTr){
 					<tr>
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Productor'/></td>
 						
-						<td class="azulAjustado" colspan="4" width="70%"><bean:message key='SIIF.label.AreaDeCosecha'/></td>												
+						<td class="azulAjustado" colspan="5" width="70%"><bean:message key='SIIF.label.AreaDeCosecha'/></td>												
 						<td class="azulAjustado" width="10%"></td>
 					</tr>
 					<tr>
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Nombre'/></td>
 						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.ReservaForestal'/></td>
-						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Nombre'/></td>												
-						<td class="azulAjustado" width="20%"><bean:message key='SIIF.label.Disposicion'/></td>
+						<td class="azulAjustado" width="15%"><bean:message key='SIIF.label.Nombre'/></td>												
+						<td class="azulAjustado" width="15%"><bean:message key='SIIF.label.Disposicion'/></td>
 						<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.Exepdiente'/></td>
+						<td class="azulAjustado" width="10%"><bean:message key='SIIF.label.TipoTerreno'/></td>
 						<td class="azulAjustado" width="10%"></td>
 					</tr>
 					
@@ -67,8 +68,9 @@ function seleccionarArea(idTr){
 							<td class="botonerab"> ${area.nombreArea}</td>
 							<td class="botonerab"> ${area.disposicionArea}</td>
 							<td class="botonerab"> ${area.expedienteArea}</td>
+							<td class="botonerab"> ${area.tipoTerreno}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosArea(${areaSt.index}, ${area.id},'${area.reservaForestalArea}','${area.nombreArea}','${area.disposicionArea}', '${area.expedienteArea}')">
+								<a href="javascript:mostrarDatosArea(${areaSt.index}, ${area.id},'${area.reservaForestalArea}','${area.nombreArea}','${area.disposicionArea}', '${area.expedienteArea}', '${area.tipoTerreno}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>
@@ -117,6 +119,15 @@ function seleccionarArea(idTr){
 							<td width="33%"align="left"><input id="expedienteArea" type="text" class="botonerab" > </td>
 							<td width="33%"></td>
 						</tr>
+						<tr>
+							<td width="33%" class="botoneralNegritaRight" >
+								<bean:message key='SIIF.label.TipoTerreno'/>
+							</td>
+							<td width="33%"align="left">
+								<input id="tipoTerrenoArea" type="text" class="botonerab" readonly="readonly"> 
+							</td>
+							<td width="33%"></td>
+						</tr>						
 						<tr>
 							<td> <input type="button" class="botonerab" value="Grabar" onclick="modificarArea()"></td>
 							<td> <input type="button" class="botonerab" value="Borrar" onclick="deleteArea()"></td>

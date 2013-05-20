@@ -49,7 +49,7 @@ public class ReportesFachada implements IReportesFachada {
 		parameters.put(
 				"tipoTerreno",
 				StringUtils.nullToBlank(guia.getLocalizacion()
-						.getLocalizacionDTO().getTipoTerrenoPMF()));
+						.getLocalizacionDTO().getTipoTerreno()));
 		return reportesDAO.generarReporte(Constantes.REPORTE_GUIA_FORESTAL,
 				parameters);
 		// return reportesDAO.generarReporteGuiaForestal(idGuiaForestal,path);

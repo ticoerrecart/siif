@@ -71,9 +71,9 @@ function seleccionarPMF(idTr){
 							<td class="botonerab"> ${pmf.productorForestal.nombre}</td>
 							<td class="botonerab"> ${pmf.nombrePMF}</td>
 							<td class="botonerab"> ${pmf.expedientePMF}</td>
-							<td class="botonerab"> ${pmf.tipoTerrenoPMF}</td>
+							<td class="botonerab"> ${pmf.tipoTerreno}</td>
 							<td class="botonerab">
-								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombrePMF}', '${pmf.expedientePMF}', '${pmf.tipoTerrenoPMF}')">
+								<a href="javascript:mostrarDatosPMF(${pmfSt.index}, ${pmf.id}, '${pmf.nombrePMF}', '${pmf.expedientePMF}', '${pmf.tipoTerreno}')">
 									<bean:message key='SIIF.label.Editar'/>
 								</a>
 							</td>

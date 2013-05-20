@@ -14,13 +14,16 @@ public class AreaDeCosecha extends Localizacion {
 		super();
 	}
 
-	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea, String expedienteArea, Entidad entidad) {
+	public AreaDeCosecha(String reservaForestalArea, String nombreArea, String disposicionArea, 
+						 String expedienteArea, Entidad entidad, String tipoTerreno) 
+	{
 		super();
 		this.reservaForestalArea = reservaForestalArea;
 		this.nombreArea = nombreArea;
 		this.disposicionArea = disposicionArea;
 		this.expedienteArea = expedienteArea;
 		this.productorForestal = entidad;
+		this.tipoTerreno = tipoTerreno;
 	}
 
 	private String reservaForestalArea;
@@ -31,6 +34,8 @@ public class AreaDeCosecha extends Localizacion {
 
 	private String expedienteArea;
 
+	private String tipoTerreno;	
+	
 	public String getReservaForestalArea() {
 		return reservaForestalArea;
 	}
@@ -73,7 +78,8 @@ public class AreaDeCosecha extends Localizacion {
 		areaDeCosechaDTO.setNombreArea(this.getNombreArea());
 		areaDeCosechaDTO.setReservaForestalArea(this.getReservaForestalArea());
 		areaDeCosechaDTO.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
-
+		areaDeCosechaDTO.setTipoTerreno(this.getTipoTerreno());
+		
 		return areaDeCosechaDTO;
 	}
 
@@ -113,4 +119,12 @@ public class AreaDeCosecha extends Localizacion {
 	public String getNombreLocalizacion() {
 		return " Area :" + this.getNombreArea();
 	}
+	
+	public String getTipoTerreno() {
+		return tipoTerreno;
+	}
+
+	public void setTipoTerreno(String tipoTerreno) {
+		this.tipoTerreno = tipoTerreno;
+	}	
 }

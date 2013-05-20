@@ -19,7 +19,7 @@
 		$('#' + id).toggle();
 	}
 
-	function mostrarDatosArea(idFila,idArea, reservaForestalArea,nombreArea, disposicionArea, expedienteArea){
+	function mostrarDatosArea(idFila,idArea, reservaForestalArea,nombreArea, disposicionArea, expedienteArea, tipoTerrenoArea){
 		$("#tablaAreas tr").removeClass("seleccionado");
 		$("#A" + idFila).addClass("seleccionado"); 
 		$('#divModificacionArea').fadeIn(600);
@@ -28,6 +28,7 @@
 		$('#nombreArea').val(nombreArea);
 		$('#disposicionArea').val(disposicionArea);
 		$('#expedienteArea').val(expedienteArea);
+		$('#tipoTerrenoArea').val(tipoTerrenoArea);
 	}
 
 	
