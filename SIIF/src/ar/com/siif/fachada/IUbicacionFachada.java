@@ -45,8 +45,8 @@ public interface IUbicacionFachada {
 
 	public void altaPMF(String expediente, String nombre, String tipoTerreno, Long idEntidad) throws NegocioException;
 
-	public void altaArea(String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea, Long idEntidad)
-			throws NegocioException;
+	public void altaArea(String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea, 
+			Long idEntidad, String tipoTerreno)throws NegocioException;
 
 	public void deleteRodal(Long idRodal) throws NegocioException;
 
@@ -90,6 +90,8 @@ public interface IUbicacionFachada {
 
 	public String getTipoTerrenoPMF(Long idPMF) throws NegocioException;
 
+	public String getTipoTerrenoArea(Long idArea) throws NegocioException;	
+	
 	public PMF getPMF(Long idPF);
 
 	public void modificarArea(Long idArea, String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea)

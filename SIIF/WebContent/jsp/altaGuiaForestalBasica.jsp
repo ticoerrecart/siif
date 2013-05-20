@@ -231,7 +231,7 @@ function actualizarImporte(ind){
 
 function calcularTotales(){
 
-	var tipoTerreno = $('#tipoTerrenoPMF').val();
+	var tipoTerreno = $('#tipoTerreno').val();
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 	var sumaImportes = 0;
 	
@@ -362,14 +362,24 @@ function actualizarTipoTerrenoPMF(){
 	idPMF = $('#idPMF').val();
 	if (idPMF > 0) {
 		UbicacionFachada.getTipoTerrenoPMF(idPMF,
-				actualizarTipoTerrenoPMFCallback);
+				actualizarTipoTerrenoCallback);
 	}
-	$('#tipoTerrenoPMF').val("");		
+	$('#tipoTerreno').val("");		
 }
 
-function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
+function actualizarTipoTerrenoArea(){
 
-	$('#tipoTerrenoPMF').val(tipoTerrenoPMF);
+	var idArea = $('#idArea').val();
+	if (idArea > 0) {
+		UbicacionFachada.getTipoTerrenoArea(idArea,
+				actualizarTipoTerrenoCallback);
+	}
+	$('#tipoTerreno').val("");		
+}
+
+function actualizarTipoTerrenoCallback(tipoTerreno) {
+
+	$('#tipoTerreno').val(tipoTerreno);
 
 	//Vuelvo a poner los valores en los subImportes por si cambio a un PMF con terreno Fiscal.
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
@@ -467,14 +477,24 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 				<c:when test="${localizacion.esAreaDeCosecha}">
 					<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 						<tr>
-							<td height="10" colspan="2"></td>
+							<td height="10" colspan="4"></td>
 						</tr>
 						<tr>
 							<td width="12%" align="left" class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
-							<td width="88%" align="left">
+							<td width="30%" align="left">
 								<input value="${localizacion.nombreArea}" class="botonerab" type="text" size="40" readonly="readonly">
 							</td>
+							<td width="30%" class="botoneralNegritaRight">
+								<bean:message key='SIIF.label.TipoTerreno'/>
+							</td>
+							<td align="left">
+								<input value="${localizacion.tipoTerreno}" id="tipoTerreno" name="tipoTerreno"
+										class="botonerab" type="text" size="40" readonly="readonly">
+							</td>							
 						</tr>
+						<tr>
+							<td height="10" colspan="4"></td>
+						</tr>						
 					</table>
 				</c:when>
 
@@ -514,7 +534,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 						<tr>
 							<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoTerreno'/></td>
 							<td width="30%" align="left">
-								<input value="${localizacion.tipoTerrenoPMF}" id="tipoTerrenoPMF" name="tipoTerreno"
+								<input value="${localizacion.tipoTerreno}" id="tipoTerreno" name="tipoTerreno"
 										class="botonerab" type="text" size="40" readonly="readonly">
 							</td>
 							<td colspan="2">
@@ -566,7 +586,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
 								<td width="4%"></td>
 								<td align="left"> 
-									<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" onchange="setValorLocalizacion(this.value);">
+									<select id="idArea" class="botonerab" name="fiscalizacionDTO.idArea" onchange="actualizarTipoTerrenoArea();setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>
 									</select>	
 								</td>
@@ -578,7 +598,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 								</td>
 								<td width="4%"></td>			
 								<td align="left">
-									<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();actualizarTipoTerreno();setValorLocalizacion(this.value);">
+									<select id="idPMF" class="botonerab" name="fiscalizacionDTO.idPlanManejoForestal" 	onchange="actualizarComboTranzon();actualizarTipoTerrenoPMF();setValorLocalizacion(this.value);">
 										<option value="-1">- Seleccione -</option>						
 									</select>					
 								</td>						
@@ -634,7 +654,7 @@ function actualizarTipoTerrenoPMFCallback(tipoTerrenoPMF) {
 					</td>
 					<td width="4%"></td>
 					<td align="left">
-						<input type="text" id="tipoTerrenoPMF" value="" name="tipoTerreno" readonly="readonly"
+						<input type="text" id="tipoTerreno" value="" name="tipoTerreno" readonly="readonly"
 							class="botonerab" type="text" size="15">
 					</td>
 				</tr>

@@ -198,15 +198,17 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}
 	}
 
-	public void altaArea(String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea, Long idEntidad)
-			throws NegocioException {
+	public void altaArea(String reservaForestal, String nombreArea, String disposicionArea, String expedienteArea,
+			Long idEntidad, String tipoTerreno) throws NegocioException 
+	{
 		try {
 			if (ubicacionDAO.getAreasPorNombreParaPF(nombreArea, idEntidad).size() > 0) {
 				throw new NegocioException(Constantes.ERROR_EXISTE_AREA + nombreArea);
 			}
 			Entidad entidad = ubicacionDAO.getEntidad(idEntidad);
 			// entidad.getPmfs().add(new PMF(expediente, nombre, e));
-			ubicacionDAO.altaArea(new AreaDeCosecha(reservaForestal, nombreArea, disposicionArea, expedienteArea, entidad));
+			ubicacionDAO.altaArea(new AreaDeCosecha(reservaForestal, nombreArea, disposicionArea, 
+													expedienteArea, entidad,tipoTerreno));
 
 		} catch (NegocioException ne) {
 			throw ne;
@@ -521,7 +523,7 @@ public class UbicacionFachada implements IUbicacionFachada {
 	public String getTipoTerrenoPMF(Long idPMF) throws NegocioException {
 		try {
 			PMF pmf = ubicacionDAO.getPMF(idPMF);
-			return pmf.getTipoTerrenoPMF();
+			return pmf.getTipoTerreno();
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
@@ -529,6 +531,17 @@ public class UbicacionFachada implements IUbicacionFachada {
 		}
 	}
 
+	public String getTipoTerrenoArea(Long idArea) throws NegocioException {
+		try {
+			AreaDeCosecha area = ubicacionDAO.getArea(idArea);
+			return area.getTipoTerreno();
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}
+	}		
+	
 	public PMF getPMF(Long idPMF) {
 
 		return ubicacionDAO.getPMF(idPMF);

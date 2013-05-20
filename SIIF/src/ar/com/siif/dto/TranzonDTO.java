@@ -71,7 +71,7 @@ public class TranzonDTO extends LocalizacionDTO {
 	}
 
 	@Override
-	public String getTipoTerrenoPMF() {
-		return this.getPmf().getTipoTerrenoPMF();
+	public String getTipoTerreno() {
+		return this.getPmf().getTipoTerreno();
 	}
 }

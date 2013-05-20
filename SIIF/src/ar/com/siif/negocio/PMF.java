@@ -24,7 +24,7 @@ public class PMF extends Localizacion {
 		super();
 		this.expedientePMF = expediente;
 		this.nombrePMF = nombre;
-		this.tipoTerrenoPMF = tipoTerreno;
+		this.tipoTerreno = tipoTerreno;
 		this.productorForestal = entidad;
 
 	}
@@ -33,7 +33,7 @@ public class PMF extends Localizacion {
 
 	private String nombrePMF;
 
-	private String tipoTerrenoPMF;
+	private String tipoTerreno;
 
 	@OneToMany(mappedBy = "pmf")
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
@@ -59,12 +59,12 @@ public class PMF extends Localizacion {
 		this.nombrePMF = nombrePMF;
 	}
 
-	public String getTipoTerrenoPMF() {
-		return tipoTerrenoPMF;
+	public String getTipoTerreno() {
+		return tipoTerreno;
 	}
 
-	public void setTipoTerrenoPMF(String tipoTerrenoPMF) {
-		this.tipoTerrenoPMF = tipoTerrenoPMF;
+	public void setTipoTerreno(String tipoTerrenoPMF) {
+		this.tipoTerreno = tipoTerrenoPMF;
 	}
 
 	public List<Tranzon> getTranzones() {
@@ -80,7 +80,7 @@ public class PMF extends Localizacion {
 		pmfDTO.setId(this.getId());
 		pmfDTO.setExpedientePMF(this.getExpedientePMF());
 		pmfDTO.setNombrePMF(this.getNombrePMF());
-		pmfDTO.setTipoTerrenoPMF(this.getTipoTerrenoPMF());
+		pmfDTO.setTipoTerreno(this.getTipoTerreno());
 		pmfDTO.setProductorForestal(ProviderDTO.getEntidadDTO(this.getProductorForestal()));
 
 		return pmfDTO;

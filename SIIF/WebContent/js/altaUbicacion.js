@@ -310,8 +310,9 @@
 		nombreArea = $('#nombreArea').val();
 		disposicionArea = $('#disposicionArea').val();
 		expedienteArea =  $('#expedienteArea').val();
+		tipoTerrenoArea = $('#tipoTerrenoArea').val();
 		idPF = $('#idProductorForestal').val();
-		UbicacionFachada.altaArea(reservaForestalArea, nombreArea, disposicionArea,expedienteArea, idPF,submitirAreaCallback );
+		UbicacionFachada.altaArea(reservaForestalArea, nombreArea, disposicionArea,expedienteArea, idPF,tipoTerrenoArea,submitirAreaCallback );
 		
 	}
 	function submitirAreaCallback(){

@@ -71,7 +71,7 @@ public class MarcacionDTO extends LocalizacionDTO {
 	}
 
 	@Override
-	public String getTipoTerrenoPMF() {
-		return this.getTranzon().getTipoTerrenoPMF();
+	public String getTipoTerreno() {
+		return this.getTranzon().getTipoTerreno();
 	}
 }

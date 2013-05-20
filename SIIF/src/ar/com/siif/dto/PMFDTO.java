@@ -9,7 +9,7 @@ public class PMFDTO extends LocalizacionDTO {
 
 	private String nombrePMF;
 
-	private String tipoTerrenoPMF;
+	private String tipoTerreno;
 
 	private EntidadDTO productorForestal;
 
@@ -42,17 +42,17 @@ public class PMFDTO extends LocalizacionDTO {
 		this.nombrePMF = nombrePMF;
 	}
 
-	public String getTipoTerrenoPMF() {
-		return tipoTerrenoPMF;
+	public String getTipoTerreno() {
+		return tipoTerreno;
 	}
 
-	public void setTipoTerrenoPMF(String tipoTerrenoPMF) {
-		this.tipoTerrenoPMF = tipoTerrenoPMF;
+	public void setTipoTerreno(String tipoTerrenoPMF) {
+		this.tipoTerreno = tipoTerrenoPMF;
 	}
 
 	@Override
 	public PMF getLocalizacion(Entidad entidad) {
-		PMF pmf = new PMF(this.expedientePMF, this.nombrePMF, this.getTipoTerrenoPMF(), entidad);
+		PMF pmf = new PMF(this.expedientePMF, this.nombrePMF, this.getTipoTerreno(), entidad);
 		return pmf;
 	}
 

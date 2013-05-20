@@ -63,5 +63,5 @@ public abstract class LocalizacionDTO {
 		return false;
 	}
 
-	public abstract String getTipoTerrenoPMF();
+	public abstract String getTipoTerreno();
 }
