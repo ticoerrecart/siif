@@ -92,7 +92,9 @@ public class EntidadAction extends ValidadorAction {
 				if (existe) {
 					Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
 				} else {
-					if (!"RN".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) {
+					if (!"EST".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad()) && 
+						!"SFDL".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) 
+					{
 						existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
 								.getNroMatricula(), entidadForm.getEntidadDTO().getId());
 						if (existe) {

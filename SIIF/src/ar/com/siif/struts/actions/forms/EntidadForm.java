@@ -43,7 +43,9 @@ public class EntidadForm extends ActionForm {
 		}
 
 		if (ok1 && mailsOk) {
-			if (!"RN".equalsIgnoreCase(this.getEntidadDTO().getTipoEntidad())) {
+			if (!"EST".equalsIgnoreCase(this.getEntidadDTO().getTipoEntidad()) && 
+				!"SFDL".equalsIgnoreCase(this.getEntidadDTO().getTipoEntidad())) 
+			{
 				ok1 = ok1
 						&& Validator.validarLongMayorQue(0,this.getEntidadDTO().getNroMatricula().toString(),
 								"Nro Matrícula", error);
