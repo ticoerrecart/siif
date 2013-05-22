@@ -108,16 +108,25 @@ public class EntidadDAO extends HibernateDaoSupport {
 	
 	public List<Entidad> getProductores(){
 	
-		Criteria criteria = getSession().createCriteria(Obrajero.class);
+		/*Criteria criteria = getSession().createCriteria(Obrajero.class);
 		List<Entidad> obrajeros = criteria.list();
 
 		criteria = getSession().createCriteria(PPF.class);
 		List<Entidad> ppf = criteria.list();
 
 		obrajeros.addAll(ppf);
-		Collections.sort(obrajeros);
+		Collections.sort(obrajeros);*/
 
-		return obrajeros;		
+		Criteria criteria = getSession().createCriteria(Entidad.class);
+		List<Entidad> entidades = criteria.list();
+
+		criteria = getSession().createCriteria(RecursosNaturales.class);
+		List<Entidad> rn = criteria.list();
+
+		entidades.removeAll(rn);		
+		Collections.sort(entidades);
+				
+		return entidades;		
 	}
 	
 	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){
