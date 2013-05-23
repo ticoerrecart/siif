@@ -18,7 +18,7 @@ public interface IFiscalizacionFachada {
 			Long idProductor);
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(
-			Long idProductor, Long idFiscalizacion,
+			Long idProductor, String periodoForestalGuia, Long idFiscalizacion,
 			List<SubImporteDTO> listaSubImportesDTO,
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar);
 

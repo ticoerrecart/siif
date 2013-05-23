@@ -47,8 +47,41 @@ function volverModificacionGuia(){
 function submitir(){
 
 	if(confirm("Esta seguro que desea modificar la Guía Forestal?")){
-		validarForm("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
+		validarFormLocal("guiaForestalForm","../guiaForestal","validarModificacionGuiaForestalBasicaForm","GuiaForestalForm");
 	}	
+}
+
+function validarFormLocal(idFormJsp,action,metodo,actionForm){
+	var form = $('#'+idFormJsp).serialize(); 
+	var url = '../' + action + '.do?metodo=validar&validador=' + metodo + '&form=' + actionForm + '&formJsp=' + idFormJsp;
+	preValidar();
+	$.post(url,form,validarFormLocalCallBack);
+}
+
+function validarFormLocalCallBack(xmlDoc){
+	var nodos = xmlDoc.getElementsByTagName('error');
+	if (nodos.length==0){
+		nodos = xmlDoc.getElementsByTagName('errorGuia');
+		if (nodos.length==0){
+			var nodos = xmlDoc.getElementsByTagName('formId');
+	   		var idForm = nodos[0].firstChild.nodeValue;
+    		$('#'+idForm).submit();
+		}else{
+			if(confirm(nodos[0].firstChild.nodeValue)){
+				var nodos = xmlDoc.getElementsByTagName('formId');
+    		   	var idForm = nodos[0].firstChild.nodeValue;
+				$('#'+idForm).submit();
+			}else{
+				posValidar();
+			}
+		}
+	} else {
+		$('#errores').text("");
+    	for(var i=0; i < nodos.length; i++) { 
+	    	$('#errores').append( '<div>* ' + nodos[i].firstChild.nodeValue + '</div>');
+    	}
+ 	 	posValidar();
+	}
 }
 
 function exp(sec) {

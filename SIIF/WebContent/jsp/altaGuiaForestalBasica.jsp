@@ -441,13 +441,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-					<select name="guiaForestal.periodoForestal" class="botonerab" >
-						<c:forEach items="${periodos}" var="per">
-							<option value="${per.periodo}">
-								<c:out value="${per.periodo}"></c:out>
-							</option>
-						</c:forEach>
-					</select>
+					<input id="periodo" value="${periodo}" name="guiaForestal.periodoForestal" class="botonerab" type="text" size="10" readonly="readonly">
 			</td>
 		</tr>
 		<tr>

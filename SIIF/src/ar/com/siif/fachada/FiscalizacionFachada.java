@@ -138,7 +138,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 
 	/**
 	 * Modificación de Fiscalización. Se puede modificar: Fecha, Periodo
-	 * Forestal, Cantidad de Unidades, Oficina y las muestas.
+	 * Forestal, Cantidad de Unidades, Oficina y las muestras.
 	 * 
 	 * @param fiscalizacionDTO
 	 * @param muestrasNuevasDTO
@@ -201,6 +201,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 * fiscalizaciones de la guia para el mismo tipo de producto, supera el
 	 * volumen declarado en el subImporte.
 	 * 
+	 * Agrego que chequee el periodo
 	 * **/
 	public String validarFiscalizacionAsociadaAGuia(
 			FiscalizacionDTO fiscalizacionDTO) {
@@ -227,6 +228,11 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 						if (!Validator.validarCantM3ModiFiscalizacion(
 								fiscalizacionDTO, guia)) {
 							error = "El volumen de ésta Fiscalización sumado a las demás Fiscalizaciones asociadas a ésta Guía superan el volumen declarado en el SubImporte de la Guía para éste Tipo de Producto.";
+						} else {
+							if (!fiscalizacionDTO.getPeriodoForestal().equals(guia.getPeriodoForestal())) {
+								error = "El Período de la Fiscalización no coincide con el de la Guía Forestal. Período de la Fiscalizacion: " + fiscalizacionDTO.getPeriodoForestal() +". Período de la Guia Forestal:" + guia.getPeriodoForestal();
+							}
+							
 						}
 					}
 				}
@@ -303,14 +309,14 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(
-			Long idProductor, Long idLocalizacion,
+			Long idProductor, String periodoForestalGuia, Long idLocalizacion,
 			List<SubImporteDTO> listaSubImportesDTO,
 			List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
 
 	{
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-				.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor,
+				.recuperarFiscalizacionesDTOParaAsociarAGuia(idProductor,periodoForestalGuia,
 						listaSubImportesDTO, tablaVolFiscAsociar);
 
 		if (listaFiscalizaciones.size() > 0) {

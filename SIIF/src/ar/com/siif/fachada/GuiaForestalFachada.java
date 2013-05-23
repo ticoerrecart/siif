@@ -8,10 +8,13 @@ import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.OperacionFiscalizacionDTO;
+import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
+import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
@@ -549,7 +552,16 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					ProviderDominio.getOperacionGuiaForestal(
 									guia.getOperacionModificacion(),guiaForestal, 
 									usuarioFachada.getUsuario(
-											guia.getOperacionModificacion().getUsuario().getId())));			
+											guia.getOperacionModificacion().getUsuario().getId())));	
+			
+			String errorGuia = validarGuiaAsociadaAFiscalizacion(guia);
+			if (!"".equalsIgnoreCase(errorGuia)) {
+				List<Fiscalizacion> fiscalizaciones = guiaForestal.getFiscalizaciones();
+				for (Fiscalizacion fiscalizacion : fiscalizaciones) {
+					fiscalizacion.setGuiaForestal(null);
+					guia.getFiscalizaciones().remove(fiscalizacion);
+				}	
+			}
 			
 			this.guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
 		}
@@ -586,7 +598,36 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	}	
 	
 	public GuiaForestal recuperarGuiaForestalDominio(long idGuiaForestal){
-		
 		return guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
+	}
+	
+	
+	/**
+	 * Verifico si el periodo es distinto
+	 * **/
+	public String validarGuiaAsociadaAFiscalizacion(GuiaForestalDTO guiaDTO) {
+		String error = "";
+		if (guiaDTO.getId() != null) {//es una modificación de Fiscalización
+			GuiaForestal guia = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
+					
+			if (guia.getFiscalizaciones() != null && guia.getFiscalizaciones().size() > 0 ) {
+				String errorDesasociar;
+				if ( guia.getFiscalizaciones().size() > 1){
+					errorDesasociar = "La Guia se va a desasociar de sus Fiscalizaciones: Desea Continuar?";
+				} else {
+					errorDesasociar = "La Guia se va a desasociar de su Fiscalizacion: Desea Continuar?";
+				}
+			
+				Fiscalizacion fisc = guia.getFiscalizaciones().get(0);
+				if (!guiaDTO.getPeriodoForestal().equals(fisc.getPeriodoForestal())) {
+					error = "El Período  de la Guía Forestal no coincide con el de la Fiscalización. Período de la Guía Forestal: " + guiaDTO.getPeriodoForestal() +". Período de la Fiscalización:" + fisc.getPeriodoForestal() + "\n";
+				}
+				if (!"".equals(error)) {
+					error = error + errorDesasociar;
+				}
+			}
+		}
+
+		return error;
 	}
 }

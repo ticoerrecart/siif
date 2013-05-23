@@ -69,4 +69,6 @@ public interface IGuiaForestalFachada {
 	public boolean existeGuiaForestal(long idGuia, long nroGuia);
 	
 	public void modificarGuiaForestal(GuiaForestal guiaForestal);
+
+	public String validarGuiaAsociadaAFiscalizacion(GuiaForestalDTO guiaForestal);
 }

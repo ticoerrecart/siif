@@ -138,7 +138,10 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			request.setAttribute("localidades",
 					localidadFachada.getLocalidadesDTO());
-			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
+			//TODO esto no va mas cuando este lo de tico
+			guiaForm.getGuiaForestal().setPeriodoForestal("2012-2013");
+			//FIN TODO
+			request.setAttribute("periodo", guiaForm.getGuiaForestal().getPeriodoForestal());
 			request.setAttribute("tiposProductosForestales",
 					tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",
@@ -972,7 +975,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			// tipos de productos que esten en los subimportes de la guia.
 			List<FiscalizacionDTO> fiscalizaciones = fiscalizacionFachada
 					.recuperarFiscalizacionesDTOParaAsociarAGuia(new Long(
-							idProductor), new Long(idLocalizacion),
+							idProductor), guiaForestal.getPeriodoForestal() ,new Long(idLocalizacion),
 							guiaForestal.getSubImportes(), tablaVolFiscAsociar);
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
@@ -1756,6 +1759,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok4 = true;
 			boolean ok5 = true;
 			boolean ok6 = true;
+			boolean ok7 = true;
+			boolean okGlobal = true;
 			GuiaForestalDTO guiaForestal = guiaFachada
 					.recuperarGuiaForestal(guiaForestalForm.getGuiaForestal()
 							.getId());
@@ -1810,7 +1815,18 @@ public class GuiaForestalAction extends ValidadorAction {
 			ok5 = Validator.validarRangos(guiaForestalForm.getRangos(),
 					guiaForestal.getValesTransporte(), error);
 
-			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6;
+			okGlobal = ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6;
+			
+			if (okGlobal) {
+				String errorGuia = guiaFachada.validarGuiaAsociadaAFiscalizacion(guiaForestalForm.getGuiaForestal());
+				if (!"".equals(errorGuia)) {
+					error.append("\n" + "<errorGuia>" + errorGuia
+							+ "</errorGuia>");
+					ok7 = false;
+				}
+			}
+			
+			return okGlobal && ok7;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

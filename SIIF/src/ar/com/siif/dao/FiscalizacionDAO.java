@@ -113,7 +113,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		return fiscalizaciones;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
+	public List<Fiscalizacion> recuperarFiscalizacionesDTOParaAsociarAGuia(Long idProductor, String periodoForestalGuia, List<SubImporteDTO> listaSubImportesDTO, List<FilaTablaVolFiscAsociarDTO> tablaVolFiscAsociar)
 	{	
 		List<Long> listaIdsTipoProducto = new ArrayList<Long>();
 		List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
@@ -132,7 +132,8 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 			criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
 					.add(Restrictions.eq("pf.id", idProductor))
 					//.add(Restrictions.eq("localizacion.id", idLocalizacion))
-					.add(Restrictions.in("tipoProducto.id", listaIdsTipoProducto)));
+					.add(Restrictions.in("tipoProducto.id", listaIdsTipoProducto))
+					.add(Restrictions.eq("periodoForestal", periodoForestalGuia)));
 
 			criteria.addOrder(Order.asc("pf.nombre"));
 			criteria.addOrder(Order.asc("fecha"));
