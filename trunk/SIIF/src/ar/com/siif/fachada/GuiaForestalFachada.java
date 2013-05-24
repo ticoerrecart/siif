@@ -607,7 +607,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	 * **/
 	public String validarGuiaAsociadaAFiscalizacion(GuiaForestalDTO guiaDTO) {
 		String error = "";
-		if (guiaDTO.getId() != null) {//es una modificación de Fiscalización
+		if (guiaDTO.getId() != null) {//es una modificación de Guia
 			GuiaForestal guia = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
 					
 			if (guia.getFiscalizaciones() != null && guia.getFiscalizaciones().size() > 0 ) {
