@@ -28,7 +28,7 @@
 
 		Concurrent.Thread.create(function(){
 		    while ($('#divModificacion').html() == "") {}
-		    $('#divCargando').hide();
+		    $('#divCargando').hide();		    
 		});
 	}
 </script>
