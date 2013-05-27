@@ -154,8 +154,8 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						
 						<td width="21%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Exportador'/></td>
 						<td width="32%" align="center">
-							<select id="idExportador" class="botonerab" name="certificadoOrigenDTO.exportador.id" onchange="actualizarDatosExportador();" 
-									disabled="disabled">
+							<select id="idExportador" class="botonerab" style="width: 16em" disabled="disabled"
+									name="certificadoOrigenDTO.exportador.id" onchange="actualizarDatosExportador();">
 								<option value="-1">-Seleccione un Exportador-</option>
 							</select>
 						</td>																
@@ -235,7 +235,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						</td>
 											
 						<td width="32%" align="center">
-							<select id="idZMF" class="botonerab" 
+							<select id="idZMF" class="botonerab" style="width: 16em"
 									onchange="cambioComboZona();" disabled="disabled">
 								<option value="0">--Seleccione una Zona--</option>
 								<option value="1">--PMF--</option>
@@ -255,7 +255,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td style="display: none;" width="21%" class="botoneralNegritaRight plan">
 							<bean:message key='SIIF.label.PlanManejoForestal'/>
 						</td>
-						<td style="display: none;" class="plan" width="32%" align="center">
+						<td style="display: none; width: 16em" class="plan" align="center">
 							<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarFiscalizaciones();">
 								<option value="-1">- Seleccione -</option>
 							</select>					
@@ -264,7 +264,7 @@ function reemplazarCaracter(caracAReemp, caracterNuevo, stringViejo){
 						<td style="display: none;" width="21%"  class="botoneralNegritaRight area">
 							<bean:message key='SIIF.label.AreaDeCosecha'/>
 						</td>						
-						<td style="display: none;" align="center" class="area" width="32%"> 
+						<td style="display: none; width: 16em" align="center" class="area"> 
 							<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarFiscalizaciones();">
 								<option value="-1">- Seleccione -</option>						
 							</select>	
