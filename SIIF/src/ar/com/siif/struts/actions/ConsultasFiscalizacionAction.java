@@ -11,17 +11,13 @@ import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.FiscalizacionDTO;
+import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasFiscalizacionFachada;
-import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IFiscalizacionFachada;
-import ar.com.siif.fachada.ILocalidadFachada;
+import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
-import ar.com.siif.negocio.Fiscalizacion;
-import ar.com.siif.negocio.GuiaForestal;
-import ar.com.siif.negocio.Localidad;
-import ar.com.siif.negocio.Usuario;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.MyLogger;
 
@@ -95,10 +91,16 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			List<PeriodoDTO> periodos = periodoFachada.getPeriodosDTO();
+			request.setAttribute("periodos", periodos);
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idPeriodo", idPeriodo);
 			request.setAttribute("urlDetalle",
 					"../../consultasFiscalizacion.do?metodo=" + paramForward);
 			//request.setAttribute("paramForward", paramForward);
@@ -124,9 +126,10 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 					.getBean("consultasFiscalizacionFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<FiscalizacionDTO> fiscalizacionesConGuia = consultasFiscalizacionFachada
-											.recuperarFiscalizacionesConGuiaForestalDTO(Long.parseLong(idProductor));
+											.recuperarFiscalizacionesConGuiaForestalDTO(Long.parseLong(idProductor),idPeriodo);
 
 			request.setAttribute("fiscalizaciones", fiscalizacionesConGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_CON_GUIA_FORESTAL);
@@ -152,9 +155,10 @@ public class ConsultasFiscalizacionAction extends ValidadorAction {
 					.getBean("consultasFiscalizacionFachada");
 
 			String idProductor = request.getParameter("idProductor");
-
+			String idPeriodo = request.getParameter("idPeriodo");
+			
 			List<FiscalizacionDTO> fiscalizacionesSinGuia = consultasFiscalizacionFachada
-											.recuperarFiscalizacionesSinGuiaForestalDTO(Long.parseLong(idProductor));
+											.recuperarFiscalizacionesSinGuiaForestalDTO(Long.parseLong(idProductor),idPeriodo);
 
 			request.setAttribute("fiscalizaciones", fiscalizacionesSinGuia);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_FISCALIZACIONES_SIN_GUIA_FORESTAL);

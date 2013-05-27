@@ -46,13 +46,13 @@ function despintarFila(idTr){
 function mostrarDetalle(){
 
 	var idProductor = $('#selectProductores').val();
+	var idPeriodo = $('#selectPeriodo').val();
 	var forward = $('#paramForward').val();
 	$('#divCargando').show();	
 	$('#divDetalle').html("");
 	
 	if(idProductor != "" && idProductor != "-1"){
-	//alert($('#paramUrlDetalle').val() + '&idProductor='+idProductor)
-		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward);
+		$('#divDetalle').load( $('#paramUrlDetalle').val() + '&idProductor='+idProductor + '&forward=' + forward + '&idPeriodo=' + idPeriodo);
 		$('#divDetalle').hide();
 		$('#divDetalle').fadeIn(600);
 
@@ -118,7 +118,7 @@ function actualizarProductoresVolverCallback(productores){
 <input id="paramProductor" type="hidden" value="${idProductor}">
 <input id="paramUrlDetalle" type="hidden" value="${urlDetalle}">
 <input id="paramForward" type="hidden" value="${paramForward}">
-<tr>
+<tr id="trTipoDeEntidadProductorForestal">
 	<td>
 		<table border="0" class="cuadrado" align="center" width="70%"
 			cellpadding="2">
@@ -127,7 +127,7 @@ function actualizarProductoresVolverCallback(productores){
 			</tr>
 			<tr>
 				<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoDeProductor'/></td>
-				<td class="botonerab">
+				<td class="botonerab" align="left">
 					<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
 						<option value="-1">-Seleccione un Tipo de Entidad-</option>
 						<c:forEach items="${tiposDeEntidad}" var="tipoDeEntidad" varStatus="i">
@@ -153,13 +153,35 @@ function actualizarProductoresVolverCallback(productores){
 			
 			<tr>
 				<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
-				<td class="botonerab">
+				<td class="botonerab" align="left">
 					<select id="selectProductores" class="botonerab" disabled="disabled" onchange="mostrarDetalle()">
 						<option value="">-Seleccione un Productor-</option>
 					</select>
 				</td>
 			</tr>				
-			 
+			
+			<tr>
+				<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
+				<td class="botonerab" align="left">
+					<select id="selectPeriodo" class="botonerab" onchange="mostrarDetalle()">
+						<c:forEach items="${periodos}" var="periodo" varStatus="i">
+							<c:choose>
+								<c:when test="${periodo.periodo == idPeriodo}">
+									<option value="<c:out value='${periodo.periodo}'></c:out>" selected="selected">
+										<c:out value="${periodo.periodo}"></c:out>
+									</option>																
+								</c:when>
+								<c:otherwise>
+									<option value="<c:out value='${periodo.periodo}'></c:out>">
+										<c:out value="${periodo.periodo}"></c:out>
+									</option>																
+								</c:otherwise>
+							</c:choose>
+							
+						</c:forEach>
+					</select>
+				</td>
+			</tr> 
 			<tr>
 				<td height="10" colspan="3"></td>
 			</tr>

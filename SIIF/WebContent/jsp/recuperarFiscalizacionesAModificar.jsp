@@ -22,7 +22,7 @@
 <br>
 <table border="0" class="cuadrado" align="center" width="80%"
 	cellpadding="2">
-	<tr>
+	<tr id="tituloFiscalizacionesAModificar">
 		<td class="azulAjustado">
 			<c:out value="${titulo}"></c:out>
 		</td>

@@ -28,16 +28,19 @@
 	}
 
 	function mostrarFiscalizacion(idFiscalizacion){
+		$("#tituloFiscalizacionesAModificar").hide();
+		$("#trTipoDeEntidadProductorForestal").hide();	
+		$("#idFisca").hide();
 
-		$("#idGuia").hide();	
 		$("#idDivFiscalizacion").load("../../consultasFiscalizacion.do?metodo=cargarFiscalizacion&idFiscalizacion="+idFiscalizacion+"&strForward=exitoCargarFiscalizacionDesdeAltaGFB");
 		$("#idDivFiscalizacion").show(); 
 		$("#errores").hide();
 	}
 
 	function volverAltaGFB(){
-
-		$("#idGuia").show();
+		$("#tituloFiscalizacionesAModificar").show();
+		$("#trTipoDeEntidadProductorForestal").show();
+		$("#idFisca").show();
 		$("#idDivFiscalizacion").hide();
 		//$("#idDivFiscalizacion").empty();
 		//$("#errores").show();
@@ -45,7 +48,7 @@
 
 </script>
 
-<div id="idGuia">
+<div id="idFisca">
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">
 			<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
@@ -127,5 +130,5 @@
 		</c:otherwise>
 	</c:choose>	
 </div>
-	
-<div id="idDivFiscalizacion" style="display: none;">	
+
+<div id="idDivFiscalizacion" style="display: none;"/>	

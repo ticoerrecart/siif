@@ -28,17 +28,17 @@ function volverConsultaGuia(){
 	var metodo = $('#idParamForward').val();
 	var productor = $('#idParamProductor').val();
 	var entidad = $('#idParamIdTipoDeEntidad').val();
-	parent.location = contextRoot() +  '/consultasPorProductor.do?metodo=cargarConsultaPorProductores&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;
+	var idPeriodo = $('#idPeriodo').val();
+	parent.location = contextRoot() +  '/consultasPorProductor.do?metodo=cargarConsultaPorProductores&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad + '&idPeriodo=' + idPeriodo;
 
-	/*var especificaciones="top=0, left=0, toolbar=no,location=no, status=no,menubar=no,scrollbars=no, resizable=no";
-	window.open("../../mostrarReporte.do?metodo=pruebaJasper",especificaciones);*/		
 }
 
 function volverRestablecerGuia(){
 
 	var productor = $('#idParamProductor').val();
 	var entidad = $('#idParamIdTipoDeEntidad').val();
-	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaRestablecerGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
+	var idPeriodo = $('#idPeriodo').val();
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaRestablecerGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad + '&idPeriodo=' + idPeriodo;	
 }
 
 function imprimirGuia(){	
@@ -196,7 +196,7 @@ function volverAltaGFB(){
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
 			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
-				   size="40" readonly="readonly">
+				   size="40" readonly="readonly" id="idPeriodo">
 		</td>
 	</tr>
 	<tr>

@@ -40,8 +40,9 @@ function volverModificacionGuia(){
 	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();
 	var rodal = $('#idRodal').val();
+	var idPeriodo = $("#idPeriodo").val();
 	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaModificacionGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idRodal=' + rodal;		
+	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaModificacionGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idRodal=' + rodal + '&idPeriodo=' + idPeriodo;		
 }
 
 function submitir(){
@@ -463,7 +464,7 @@ function removerValeEnUso(idVale,index){
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-				<select name="guiaForestal.periodoForestal" class="botonerab" >
+				<select name="guiaForestal.periodoForestal" class="botonerab" id="idPeriodo">
 						<c:forEach items="${periodos}" var="per">
 							<c:choose>
 								<c:when test="${guiaForestal.periodoForestal==per.periodo}">

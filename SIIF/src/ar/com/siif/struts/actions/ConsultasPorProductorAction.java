@@ -13,10 +13,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
+import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.IGuiaForestalFachada;
+import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.utils.Constantes;
 import ar.com.siif.utils.MyLogger;
@@ -65,25 +67,30 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					}
 				}
 			}
-			
+
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
 			request.setAttribute("tiposDeEntidad", entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idPeriodo", idPeriodo);
 			request.setAttribute("urlDetalle",
 					"../../consultasPorProductor.do?metodo=" + paramForward);
 			//request.setAttribute("paramForward", paramForward);
-	
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx.getBean("periodoFachada");
+			List<PeriodoDTO> periodos = periodoFachada.getPeriodosDTO();
+			request.setAttribute("periodos", periodos);
+
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public ActionForward cargarProductores(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -136,9 +143,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					.getBean("consultasPorProductorFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<GuiaForestalDTO> guiasForestalesVigentes = consultasPorProductorFachada
-					.recuperarGuiasForestalesVigentes(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesVigentes(Long.parseLong(idProductor), idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestalesVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_VIGENTES);
@@ -164,9 +172,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					.getBean("consultasPorProductorFachada");
 
 			String idProductor = request.getParameter("idProductor");
-
+			String idPeriodo = request.getParameter("idPeriodo");
+			
 			List<GuiaForestalDTO> guiasForestalesNoVigentes = consultasPorProductorFachada
-					.recuperarGuiasForestalesNoVigentes(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesNoVigentes(Long.parseLong(idProductor),idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestalesNoVigentes);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_NO_VIGENTES);
@@ -191,9 +200,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					.getBean("consultasPorProductorFachada");
 
 			String idProductor = request.getParameter("idProductor");
-
+			String idPeriodo = request.getParameter("idPeriodo");
+			
 			List<GuiaForestalDTO> guiasForestalesAnuladas = consultasPorProductorFachada
-					.recuperarGuiasForestalesAnuladas(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesAnuladas(Long.parseLong(idProductor),idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestalesAnuladas);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_ANULADAS);
@@ -219,9 +229,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					.getBean("consultasPorProductorFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<GuiaForestalDTO> guiasForestalesDeudaAforo = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasAforo(Long.parseLong(idProductor), idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestalesDeudaAforo);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_AFORO);
@@ -247,9 +258,10 @@ public class ConsultasPorProductorAction extends ValidadorAction {
 					.getBean("consultasPorProductorFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<GuiaForestalDTO> guiasForestalesDeudaVale = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor));
+					.recuperarGuiasForestalesConDeudasVales(Long.parseLong(idProductor),idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestalesDeudaVale);
 			request.setAttribute("paramForward", Constantes.METODO_RECUPERAR_GUIAS_CON_DEUDAS_VALE_TRANSPORTE);

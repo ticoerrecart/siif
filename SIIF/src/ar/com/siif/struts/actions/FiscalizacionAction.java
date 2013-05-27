@@ -141,14 +141,19 @@ public class FiscalizacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
 					.getBean("entidadFachada");
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			request.setAttribute("tiposDeEntidad",
 					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idPeriodo", idPeriodo);
+
 			request.setAttribute("urlDetalle",
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAModificar");
 
@@ -161,6 +166,8 @@ public class FiscalizacionAction extends ValidadorAction {
 				request.setAttribute("exitoModificacion",
 						Constantes.EXITO_MODIFICACION_FISCALIZACION);
 			}
+			
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -183,11 +190,11 @@ public class FiscalizacionAction extends ValidadorAction {
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
 
-			// String idLocalidad = request.getParameter("idLocalidad");
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada
-					.recuperarFiscalizacionesPorProductor(new Long(idProductor));
+					.recuperarFiscalizacionesPorProductor(new Long(idProductor),idPeriodo);
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 
@@ -336,8 +343,8 @@ public class FiscalizacionAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IFiscalizacionFachada fiscalizacionFachada = (IFiscalizacionFachada) ctx
 					.getBean("fiscalizacionFachada");
-			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 
+			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
 			FiscalizacionDTO fiscalizacion = fiscalizacionForm
 					.getFiscalizacionDTO();
 
@@ -418,20 +425,26 @@ public class FiscalizacionAction extends ValidadorAction {
 
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
 					.getBean("entidadFachada");
+			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
+					.getBean("periodoFachada");
 
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			request.setAttribute("tiposDeEntidad",
 					entidadFachada.getTiposDeEntidadProductores());
 			request.setAttribute("idTipoDeEntidad", idTipoDeEntidad);
 			request.setAttribute("idProductor", idProductor);
+			request.setAttribute("idPeriodo", idPeriodo);
+
 			request.setAttribute("urlDetalle",
 					"../../fiscalizacion.do?metodo=recuperarFiscalizacionesAAnular");
 
 			request.setAttribute("titulo",
 					Constantes.TITULO_ANULACION_FISCALIZACION);
 
+			request.setAttribute("periodos", periodoFachada.getPeriodosDTO());
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -455,10 +468,11 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 
 			String idProductor = request.getParameter("idProductor");
+			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<Fiscalizacion> fiscalizaciones = fiscalizacionFachada
 					.recuperarFiscalizacionesAAnularPorProductor(new Long(
-							idProductor));
+							idProductor),idPeriodo);
 
 			request.setAttribute("fiscalizaciones", fiscalizaciones);
 

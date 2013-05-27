@@ -18,7 +18,8 @@ function volver(){
 	var metodo = $('#paramForward').val();
 	var productor = $('#paramProductor').val();
 	var entidad = $('#paramIdTipoDeEntidad').val();
-	parent.location = contextRoot() +  '/consultasFiscalizacion.do?metodo=cargarTiposDeEntidadConsultaFiscalizacion&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;		
+	var idPeriodo = $('#idPeriodo').val();
+	parent.location = contextRoot() +  '/consultasFiscalizacion.do?metodo=cargarTiposDeEntidadConsultaFiscalizacion&forward=' + metodo + '&idProductor=' + productor + '&idTipoDeEntidad=' + entidad + '&idPeriodo=' + idPeriodo;		
 }
 
 function imprimir(){	
@@ -87,7 +88,7 @@ function headerTabla(){
 			</td>
 			<td class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-				<input class="botonerab" type="text" size="29" readonly="readonly" 
+				<input class="botonerab" type="text" size="29" readonly="readonly" id="idPeriodo" 
 					   value="<c:out value='${fiscalizacion.periodoForestal}'></c:out>">			
 			</td>
 		</tr>

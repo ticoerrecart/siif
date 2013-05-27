@@ -21,16 +21,16 @@ public class ConsultasFiscalizacionFachada implements IConsultasFiscalizacionFac
 		this.consultasFiscalizacionDAO = pConsultasFiscalizacionDAO;
 	}
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesConGuiaForestal(long idProductor,String idPeriodo){
 
-		return consultasFiscalizacionDAO.recuperarFiscalizacionesConGuiaForestal(idProductor);	
+		return consultasFiscalizacionDAO.recuperarFiscalizacionesConGuiaForestal(idProductor,idPeriodo);	
 	}
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesConGuiaForestalDTO(long idProductor){
+	public List<FiscalizacionDTO> recuperarFiscalizacionesConGuiaForestalDTO(long idProductor,String idPeriodo){
 
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 		List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
-													recuperarFiscalizacionesConGuiaForestal(idProductor);
+													recuperarFiscalizacionesConGuiaForestal(idProductor,idPeriodo);
 		
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
@@ -38,11 +38,11 @@ public class ConsultasFiscalizacionFachada implements IConsultasFiscalizacionFac
 		return listaFiscalizacionesDTO;	
 	}	
 
-	public List<FiscalizacionDTO> recuperarFiscalizacionesSinGuiaForestalDTO(long idProductor){
+	public List<FiscalizacionDTO> recuperarFiscalizacionesSinGuiaForestalDTO(long idProductor,String idPeriodo){
 
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 		List<Fiscalizacion> listaFiscalizaciones = consultasFiscalizacionDAO.
-													recuperarFiscalizacionesSinGuiaForestal(idProductor);
+													recuperarFiscalizacionesSinGuiaForestal(idProductor,idPeriodo);
 		
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 			listaFiscalizacionesDTO.add(ProviderDTO.getFiscalizacionDTO(fiscalizacion));
@@ -50,8 +50,8 @@ public class ConsultasFiscalizacionFachada implements IConsultasFiscalizacionFac
 		return listaFiscalizacionesDTO;
 	}	
 	
-	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesSinGuiaForestal(long idProductor,String idPeriodo){
 
-		return consultasFiscalizacionDAO.recuperarFiscalizacionesSinGuiaForestal(idProductor);
+		return consultasFiscalizacionDAO.recuperarFiscalizacionesSinGuiaForestal(idProductor,idPeriodo);
 	}	
 }

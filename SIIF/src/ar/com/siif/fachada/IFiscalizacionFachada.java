@@ -15,7 +15,7 @@ public interface IFiscalizacionFachada {
 	public List<Fiscalizacion> recuperarFiscalizaciones();
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(
-			Long idProductor);
+			Long idProductor, String idPeriodo);
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAsociarAGuia(
 			Long idProductor, String periodoForestalGuia, Long idFiscalizacion,
@@ -37,7 +37,7 @@ public interface IFiscalizacionFachada {
 	public void altaFiscalizacion(Fiscalizacion acta);
 
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(
-			Long idProductor);
+			Long idProductor, String idPeriodo);
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacion,
 			List<MuestraDTO> muestrasDTO);
@@ -49,7 +49,7 @@ public interface IFiscalizacionFachada {
 			throws NumberFormatException, NegocioException;
 
 	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(
-			Long idProductor);
+			Long idProductor, String idPeriodo);
 
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones)
 			throws NegocioException, NegocioException;

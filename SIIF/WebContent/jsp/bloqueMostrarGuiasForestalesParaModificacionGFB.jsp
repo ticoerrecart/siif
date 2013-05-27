@@ -12,6 +12,7 @@
 %>
 
 <br>
+
 <c:choose>
 	<c:when test="${fn:length(guiasForestales)>0}">
 		<table border="0" class="cuadrado" align="center" width="80%"
@@ -32,10 +33,10 @@
 						<c:out value="${guia.fecha}"></c:out>  
 					</td>
 					<td class="botonerab">
-						<c:out value="${guia.fechaVencimiento}"></c:out>					
-					</td>										
-					<td>			
-						<a href="../../guiaForestal.do?metodo=cargarModificacionGuiaForestalBasica&idGuia=<c:out value='${guia.id}'></c:out>">
+						<c:out value="${guia.fechaVencimiento}"></c:out>
+					</td>
+					<td>
+						<a href="../../guiaForestal.do?metodo=cargarModificacionGuiaForestalBasica&idGuia=<c:out value='${guia.id}'/>">
 							<bean:message key='SIIF.label.Seleccionar'/>
 						</a>
 					</td>

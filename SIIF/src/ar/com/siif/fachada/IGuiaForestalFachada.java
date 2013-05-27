@@ -19,10 +19,10 @@ public interface IGuiaForestalFachada {
 			Date fechaVencimiento, List<FiscalizacionDTO> listaFiscalizacionesDTO,
 			List<SubImporteDTO> listaSubImportesDTO) throws NegocioException;
 
-	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor);
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, String idPeriodo);
 
-	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor,
-			boolean sinAnulados);
+	/*public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor,
+			boolean sinAnulados);*/
 
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal);
 
