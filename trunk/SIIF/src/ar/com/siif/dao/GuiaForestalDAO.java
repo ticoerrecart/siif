@@ -42,7 +42,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().clear();
 	}
 
-	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor, boolean sinAnulados){
+	public List<GuiaForestal> recuperarGuiasForestalesPorProductor(long idProductor, boolean sinAnulados, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 		criteria.createAlias("productorForestal", "productor");
@@ -52,6 +52,9 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 				Restrictions.eq("productor.id", idProductor)));
 		if (sinAnulados){
 			criteria.add(Restrictions.eq("anulado", false));	
+		}
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
 		}
 		
 		List<GuiaForestal> lista = criteria.list();

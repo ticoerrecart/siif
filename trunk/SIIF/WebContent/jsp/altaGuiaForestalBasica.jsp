@@ -38,8 +38,9 @@ if (!document.all && document.getElementById) type="MO";
 function volverAltaGuia(){	
 	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();
+	var idPeriodo = $('#idPeriodo').val();
 	parent.location = contextRoot() +
-	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor;		
+	'/guiaForestal.do?metodo=recuperarTiposDeEntidadParaAltaGFB&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idPeriodo=' + idPeriodo;		
 }
 
 function setValorLocalizacion(valor){
@@ -441,7 +442,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 			</td>
 			<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 			<td align="left">
-					<input id="periodo" value="${periodo}" name="guiaForestal.periodoForestal" class="botonerab" type="text" size="10" readonly="readonly">
+					<input id="idPeriodo" value="${periodo}" name="guiaForestal.periodoForestal" class="botonerab" type="text" size="10" readonly="readonly">
 			</td>
 		</tr>
 		<tr>

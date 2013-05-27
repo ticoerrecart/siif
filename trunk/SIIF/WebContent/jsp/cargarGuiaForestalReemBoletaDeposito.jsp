@@ -32,10 +32,11 @@ if (!document.all && document.getElementById) type="MO";
 
 function volver(){	
 	var entidad = $('#paramIdTipoDeEntidad').val();
-	var productor = $('#paramProductor').val();	
+	var productor = $('#paramProductor').val();
+	var idPeriodo = $('#idPeriodo').val();
 	parent.location = contextRoot() +  
 	'/guiaForestal.do?metodo=recuperarProductoresParaBoletasDeposito&forward=cargarGuiaForestalReemBoletaDeposito'+ 
-	'&forwardBuscarNroGuia=cargarGuiaForestalReemBoletaDepositoPorNroGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;	
+	'&forwardBuscarNroGuia=cargarGuiaForestalReemBoletaDepositoPorNroGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad + '&idPeriodo=' + idPeriodo;	
 }
 
 function exp(sec) {
@@ -250,7 +251,7 @@ function despintarFila(idTr){
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
-			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" size="40" readonly="readonly">
+			<input value="${guiaForestal.periodoForestal}" id="idPeriodo" class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 	</tr>
 	<tr>

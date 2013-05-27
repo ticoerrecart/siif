@@ -110,11 +110,11 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<FiscalizacionDTO> recuperarFiscalizacionesDTOParaAltaGFB(
-			Long idProductor) {
+			Long idProductor, String idPeriodo) {
 
 		List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 		List<Fiscalizacion> listaFiscalizaciones = fiscalizacionDAO
-				.recuperarFiscalizacionesParaAltaGFB(idProductor);
+				.recuperarFiscalizacionesParaAltaGFB(idProductor, idPeriodo);
 
 		for (Fiscalizacion fiscalizacion : listaFiscalizaciones) {
 			listaFiscalizacionesDTO.add(ProviderDTO
@@ -269,9 +269,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	 */
 
 	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(
-			Long idProductor) {
+			Long idProductor, String idPeriodo) {
 		return fiscalizacionDAO
-				.recuperarFiscalizacionesPorProductor(idProductor);
+				.recuperarFiscalizacionesPorProductor(idProductor, idPeriodo);
 	}
 
 	public void altaFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
@@ -402,9 +402,9 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 	}
 
 	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(
-			Long idProductor) {
+			Long idProductor, String idPeriodo) {
 		return fiscalizacionDAO
-				.recuperarFiscalizacionesAAnularPorProductor(idProductor);
+				.recuperarFiscalizacionesAAnularPorProductor(idProductor, idPeriodo);
 	}
 
 	public void anularFiscalizaciones(Long[] idsFiscalizaciones)

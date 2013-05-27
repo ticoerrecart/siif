@@ -32,6 +32,7 @@
 <html:form action="guiaForestal" styleId="guiaForestalForm">
 	<html:hidden property="metodo" value="cargarAltaGuiaForestalBasica" />
 	<html:hidden styleId="idProdForestal" property="guiaForestal.productorForestal.id" value="" />
+	<input type="hidden" id="idPeriodo" name="guiaForestal.periodoForestal" value="${idPeriodo}" >
 	<%--html:hidden styleId="idLocalizacion" property="guiaForestal.localizacion.id" value="" /--%>
 	<c:choose>
 		<c:when test="${fn:length(fiscalizaciones)>0}">

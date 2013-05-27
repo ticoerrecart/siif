@@ -23,8 +23,9 @@ if (!document.all && document.getElementById) type="MO";
 
 function volverRecuperarGuiaDesasociarFiscalizacion(){	
 	var idTipoDeEntidad = $("#idParamIdTipoDeEntidad").val();
-	var idProductor = $("#idParamProductor").val();	
-	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaDesasociarFiscalizacionesAGuia&idTipoDeEntidad='+idTipoDeEntidad + '&idProductor=' + idProductor;		
+	var idProductor = $("#idParamProductor").val();
+	var idPeriodo = $("#idPeriodo").val();
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaDesasociarFiscalizacionesAGuia&idTipoDeEntidad='+idTipoDeEntidad + '&idProductor=' + idProductor + '&idPeriodo=' + idPeriodo;		
 }
 
 function exp(sec) {
@@ -137,7 +138,7 @@ function submitDesasociarGuia(){
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
 			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
-				   size="40" readonly="readonly">
+				   size="40" readonly="readonly" id="idPeriodo">
 		</td>
 	</tr>
 	<tr>

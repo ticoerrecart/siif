@@ -135,9 +135,10 @@ function volverAnulacionGuia(){
 
 	var entidad = $('#idParamIdTipoDeEntidad').val();
 	var productor = $('#idParamProductor').val();
+	var idPeriodo = $('#idPeriodo').val();
 	parent.location = contextRoot() +
 	'/guiaForestal.do?metodo=recuperarProductoresParaAnulacionDeGuia&forward=cargarGuiaForestalParaAnulacionDeGuia&forwardBuscarNroGuia=cargarGuiaForestalParaAnulacionDeGuiaPorNroGuia' + 
-	'&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor ;
+	'&idTipoDeEntidad=' + entidad +  '&idProductor=' + productor + '&idPeriodo='+ idPeriodo;
 	
 }
 
@@ -196,7 +197,7 @@ function volverAnulacionGuia(){
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
 			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
-				   size="40" readonly="readonly">
+				   size="40" readonly="readonly" id="idPeriodo">
 		</td>
 	</tr>
 	<tr>

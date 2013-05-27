@@ -27,9 +27,10 @@ if (!document.all && document.getElementById) type="MO";
 function volver(){	
 	var entidad = $('#paramIdTipoDeEntidad').val();
 	var productor = $('#paramProductor').val();
+	var idPeriodo = $('#idPeriodo').val();
 	parent.location = contextRoot() +  
 	'/guiaForestal.do?metodo=recuperarProductoresParaValeTransporte&forward=cargarGuiaForestalReemplazarValeTransporte'+ 
-	'&forwardBuscarNroGuia=cargarGuiaForestalReemplazarValeTransportePorNroGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad;		
+	'&forwardBuscarNroGuia=cargarGuiaForestalReemplazarValeTransportePorNroGuia&idProductor=' + productor + '&idTipoDeEntidad=' + entidad + '&idPeriodo=' + idPeriodo;		
 }
 
 function exp(sec) {
@@ -278,7 +279,7 @@ function expValesNoDevueltos(){
 		</td>
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
-			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" size="40" readonly="readonly">
+			<input value="${guiaForestal.periodoForestal}" id="idPeriodo" class="botonerab" type="text" size="40" readonly="readonly">
 		</td>
 	</tr>
 	<tr>

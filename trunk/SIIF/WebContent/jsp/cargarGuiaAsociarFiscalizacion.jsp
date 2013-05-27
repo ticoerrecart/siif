@@ -26,7 +26,8 @@ if (!document.all && document.getElementById) type="MO";
 function volverRecuperarGuiaAsociarFiscalizacion(){
 	var idTipoDeEntidad = $("#idParamIdTipoDeEntidad").val();
 	var idProductor = $("#idParamProductor").val();
-	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaAsociarFiscalizacionesAGuia&idTipoDeEntidad=' + idTipoDeEntidad + '&idProductor=' + idProductor;		
+	var idPeriodo = $("#idPeriodo").val();
+	parent.location = contextRoot() +  '/guiaForestal.do?metodo=recuperarProductoresParaAsociarFiscalizacionesAGuia&idTipoDeEntidad=' + idTipoDeEntidad + '&idProductor=' + idProductor + '&idPeriodo=' + idPeriodo;		
 }
 
 function exp(sec) {
@@ -155,7 +156,7 @@ function submitAsociarGuia(){
 		<td width="30%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 		<td align="left">
 			<input value="${guiaForestal.periodoForestal}" class="botonerab" type="text" 
-				   size="40" readonly="readonly">
+				   size="40" readonly="readonly" id="idPeriodo">
 		</td>
 	</tr>
 	<tr>
@@ -272,7 +273,7 @@ function submitAsociarGuia(){
 					<img src="../../imagenes/expand.gif" border="0" /> 
 					<U class="azulOpcion">
 						<!--<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>-->
-						Fiscalizaciones aptas para asociar a la Guía Forestal_
+						Fiscalizaciones aptas para asociar a la Guía Forestal
 					</U>
 					<BR>
 				</label>
@@ -281,8 +282,7 @@ function submitAsociarGuia(){
 				<label onclick="javascript:col('2')"> 
 					<img src="../../imagenes/collapse.gif" border="0" /> 
 					<U class="azulOpcion">
-						<!--<bean:message key='SIIF.subTitulo.Fiscalizaciones'/>-->
-						Fiscalizaciones aptas para asociar a la Guía Forestal_
+						Fiscalizaciones aptas para asociar a la Guía Forestal
 					</U>
 					<BR>
 				</label>

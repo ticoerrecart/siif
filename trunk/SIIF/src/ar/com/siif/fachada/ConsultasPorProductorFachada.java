@@ -27,10 +27,10 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return consultasPorProductorDAO.recuperarGuiasForestales(idProductor);
 	}
 	
-	public List<GuiaForestalDTO> recuperarGuiasForestalesVigentes(long idProductor){
+	public List<GuiaForestalDTO> recuperarGuiasForestalesVigentes(long idProductor, String idPeriodo){
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesVigentes(idProductor);
+		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesVigentes(idProductor,idPeriodo);
 		
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
@@ -39,10 +39,10 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return listaGuiasForestalesDTO;
 	}
 	
-	public List<GuiaForestalDTO> recuperarGuiasForestalesNoVigentes(long idProductor){
+	public List<GuiaForestalDTO> recuperarGuiasForestalesNoVigentes(long idProductor, String idPeriodo){
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesNoVigentes(idProductor);
+		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesNoVigentes(idProductor,idPeriodo);
 		
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
@@ -51,19 +51,19 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return listaGuiasForestalesDTO;
 	}
 	
-	public List<GuiaForestalDTO> recuperarGuiasForestalesAnuladas(long idProductor){
+	public List<GuiaForestalDTO> recuperarGuiasForestalesAnuladas(long idProductor, String idPeriodo){
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesAnuladas(idProductor);
+		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesAnuladas(idProductor, idPeriodo);
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
 		}
 		return listaGuiasForestalesDTO;
 	}
-	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor){
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasAforo(long idProductor, String idPeriodo){
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasAforo(idProductor);
+		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasAforo(idProductor,idPeriodo);
 		
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
@@ -72,10 +72,10 @@ public class ConsultasPorProductorFachada implements IConsultasPorProductorFacha
 		return listaGuiasForestalesDTO;
 	}
 	
-	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasVales(long idProductor){
+	public List<GuiaForestalDTO> recuperarGuiasForestalesConDeudasVales(long idProductor, String idPeriodo){
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
-		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasVales(idProductor);
+		List<GuiaForestal> listaGuiasForestales = consultasPorProductorDAO.recuperarGuiasForestalesConDeudasVales(idProductor, idPeriodo);
 		
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));

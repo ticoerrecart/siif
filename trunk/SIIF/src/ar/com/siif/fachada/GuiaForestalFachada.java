@@ -8,13 +8,10 @@ import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
 import ar.com.siif.dto.GuiaForestalDTO;
-import ar.com.siif.dto.OperacionFiscalizacionDTO;
-import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
-import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
@@ -162,11 +159,11 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 	}
 
-	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor) {
+	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, String idPeriodo) {
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
 		List<GuiaForestal> listaGuiasForestales = guiaForestalDAO
-				.recuperarGuiasForestalesPorProductor(idProductor, true);
+				.recuperarGuiasForestalesPorProductor(idProductor, true, idPeriodo);
 
 		for (GuiaForestal guiaForestal : listaGuiasForestales) {
 			listaGuiasForestalesDTO.add(ProviderDTO.getGuiaForestalDTO(guiaForestal));
@@ -175,7 +172,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return listaGuiasForestalesDTO;
 	}
 
-	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor,
+/*	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor,
 			boolean sinAnulados) {
 
 		List<GuiaForestalDTO> listaGuiasForestalesDTO = new ArrayList<GuiaForestalDTO>();
@@ -187,7 +184,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		}
 		return listaGuiasForestalesDTO;
 	}
-
+*/
 	public GuiaForestalDTO recuperarGuiaForestal(long idGuiaForestal) {
 
 		GuiaForestal guiaForestal = guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
@@ -552,7 +549,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					ProviderDominio.getOperacionGuiaForestal(
 									guia.getOperacionModificacion(),guiaForestal, 
 									usuarioFachada.getUsuario(
-											guia.getOperacionModificacion().getUsuario().getId())));	
+											guia.getOperacionModificacion().getUsuario().getId())));			
 			
 			String errorGuia = validarGuiaAsociadaAFiscalizacion(guia);
 			if (!"".equalsIgnoreCase(errorGuia)) {
@@ -598,10 +595,10 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	}	
 	
 	public GuiaForestal recuperarGuiaForestalDominio(long idGuiaForestal){
+		
 		return guiaForestalDAO.recuperarGuiaForestal(idGuiaForestal);
 	}
-	
-	
+
 	/**
 	 * Verifico si el periodo es distinto
 	 * **/

@@ -27,17 +27,18 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		return fiscalizaciones;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesParaAltaGFB(long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
 		criteria.createAlias("productorForestal", "pf");
-		//criteria.createAlias("rodal", "rod");			
 		criteria.createAlias("tipoProducto", "tp");
 		
 		criteria.add(Restrictions.conjunction().add(Restrictions.isNull("guiaForestal"))
 				.add(Restrictions.eq("pf.id", idProductor)));
 
-
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));	
+		}
 
 		//criteria.addOrder(Order.asc("rod.id"));
 		criteria.addOrder(Order.asc("tp.id"));
@@ -98,14 +99,17 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(fiscalizacion);
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesPorProductor(Long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
-		//criteria.createAlias("productorForestal.l", "localidad");
+
 		criteria.createAlias("productorForestal", "pf");
 		criteria.add(Restrictions.conjunction().add(
 				Restrictions.eq("productorForestal.id", idProductor)));
 
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
 		criteria.addOrder(Order.asc("pf.nombre"));
 		criteria.addOrder(Order.asc("fecha"));
 
@@ -155,7 +159,7 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 		return fiscalizacionesAptasParaAsociar;
 	}
 
-	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor){
+	public List<Fiscalizacion> recuperarFiscalizacionesAAnularPorProductor(Long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(Fiscalizacion.class);
 		criteria.createAlias("productorForestal", "pf");
@@ -164,6 +168,9 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 				.add(Restrictions.eq("productorForestal.id", idProductor))
 				.add(Restrictions.isNull("guiaForestal")));
 		
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
 		criteria.addOrder(Order.asc("fecha"));
 
 		List<Fiscalizacion> fiscalizaciones = criteria.list();

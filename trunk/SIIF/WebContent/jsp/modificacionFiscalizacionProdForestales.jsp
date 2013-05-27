@@ -109,10 +109,11 @@ function validarFormLocalCallBack(xmlDoc){
 
 function volver(){
 	var idTipoDeEntidad = $('#paramIdTipoDeEntidad').val();
-	var productor = $('#paramProductor').val();	
+	var productor = $('#paramProductor').val();
+	var idPeriodo = $('#idPeriodo').val();
 	parent.location = contextRoot() +  
 	'/fiscalizacion.do?metodo=recuperarTiposDeEntidadParaFiscalizacionesAModificar&idTipoDeEntidad=' + idTipoDeEntidad + 
-	'&idProductor=' + productor;
+	'&idProductor=' + productor + '&idPeriodo=' + idPeriodo;
 }
 
 $(function() {
@@ -202,7 +203,7 @@ $(function() {
 			</td>
 			<td align="left">
 					
-				<select name="fiscalizacionDTO.periodoForestal" class="botonerab" style="width: 16em">
+				<select name="fiscalizacionDTO.periodoForestal" id="idPeriodo" class="botonerab" style="width: 16em">
 					<c:forEach items="${periodos}" var="per">
 						<c:choose>
 							<c:when test="${fiscalizacionDTO.periodoForestal == per.periodo}">

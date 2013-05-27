@@ -40,7 +40,7 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesVigentes(long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 
@@ -53,12 +53,16 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
 				.add(Restrictions.ge("fechaVencimiento", fechaActual)));
 		criteria.add(Restrictions.eq("anulado", false));
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
+		
 		List<GuiaForestal> lista = criteria.list();
 
 		return lista;			
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesNoVigentes(long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 
@@ -71,12 +75,16 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))
 				.add(Restrictions.lt("fechaVencimiento", fechaActual)));
 		criteria.add(Restrictions.eq("anulado", false));
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
+
 		List<GuiaForestal> lista = criteria.list();
 
 		return lista;
 	}	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesAnuladas(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesAnuladas(long idProductor, String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class);
 
@@ -85,13 +93,16 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("productor.id", idProductor)).add(Restrictions.eq("anulado", true));
 
 		criteria.addOrder(Order.asc("nroGuia"));
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
 		
 		List<GuiaForestal> lista = criteria.list();
 
 		return lista;			
 	}
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasAforo(long idProductor,String idPeriodo){
 
 		Criteria criteria = getSession().createCriteria(GuiaForestal.class)
 							.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
@@ -104,13 +115,18 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.conjunction().add(Restrictions.eq("productor.id", idProductor))   
 				.add(Restrictions.isNull("listaBoletasDeposito.fechaPago")));
 		criteria.add(Restrictions.eq("anulado", false));
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
+		
+		
 		List<GuiaForestal> lista = criteria.list();
 
 		return lista;			
 	}	
 	
 	
-	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor){
+	public List<GuiaForestal> recuperarGuiasForestalesConDeudasVales(long idProductor, String idPeriodo){
 
 		Date fechaActual = new Date();
 		
@@ -126,6 +142,10 @@ public class ConsultasPorProductorDAO extends HibernateDaoSupport {
 				//.add(Restrictions.ge("fechaVencimiento", fechaActual))				
 				.add(Restrictions.isNull("listaValesTransporte.fechaDevolucion")));
 		criteria.add(Restrictions.eq("anulado", false));
+		if(idPeriodo!=null){
+			criteria.add(Restrictions.eq("periodoForestal", idPeriodo));
+		}
+
 		List<GuiaForestal> lista = criteria.list();
 		
 		return lista;			
