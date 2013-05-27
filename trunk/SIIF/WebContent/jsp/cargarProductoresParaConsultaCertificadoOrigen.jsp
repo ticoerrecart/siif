@@ -267,10 +267,10 @@ function cambioComboZona() {
 						<td height="10"></td>
 					</tr>
 					<tr>
-						<td width="30%" class="botoneralNegritaRight">
+						<td width="35%" class="botoneralNegritaRight">
 							Nro de Certificado de Orígen
 						</td>
-						<td width="10%">
+						<td width="5%">
 							
 						</td>						
 						<td align="left">
@@ -294,28 +294,28 @@ function cambioComboZona() {
 	
 	<tr>
 		<td>
-			<table border="0" class="cuadrado" align="center" width="70%"
-				cellpadding="2">
+			<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 				<tr>
 					<td height="10" colspan="3"></td>
 				</tr>
 				<tr>
-					<td class="botoneralNegritaRight" width="30%"><bean:message key='SIIF.label.TipoDeProductor'/></td>
+					<td class="botoneralNegritaRight" width="35%"><bean:message key='SIIF.label.TipoDeProductor'/></td>
+					<td width="5%"></td>
 					<td class="botonerab" align="left">
 						<select id="selectTiposDeEntidad" class="botonerab" onchange="cargarProductores()">
-							<option value="-1">-Seleccione un Tipo de Entidad-</option>
+							<option value="-1">-Seleccione una Entidad-</option>
 							<c:forEach items="${tiposEntidad}" var="tipoDeEntidad" varStatus="i">
 								<option value="<c:out value='${tipoDeEntidad.name}'></c:out>">
 									<c:out value="${tipoDeEntidad.descripcion}"></c:out>
 								</option>
 							</c:forEach>
 						</select>
-					</td>
-					<td width="15%"></td>					
+					</td>					
 				</tr>
 				
 				<tr>
 					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.ProductorForestal'/></td>
+					<td width="5%"></td>
 					<td class="botonerab" align="left">
 						<select id="idProductor" class="botonerab" disabled="disabled" onchange="cambioComboProductores();">
 							<option value="">-Seleccione un Productor-</option>
@@ -326,10 +326,10 @@ function cambioComboZona() {
 					<td class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.ZonaManejoForestal'/>						
 					</td>
+					<td width="5%"></td>
 					<td align="left">
-						<select id="idZMF" class="botonerab" 
-								onchange="cambioComboZona();" disabled="disabled">
-							<option value="0">--Seleccione una Opcion de Zona--</option>
+						<select id="idZMF" class="botonerab" onchange="cambioComboZona();" disabled="disabled">
+							<option value="0">--Seleccione una Zona--</option>
 							<option value="1">--PMF--</option>
 							<option value="2">--Area de Cosecha--</option>
 						</select>	
@@ -338,7 +338,7 @@ function cambioComboZona() {
 
 				<tr class="area" style="display: none">	
 					<td class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
-					
+					<td width="5%"></td>
 					<td align="left"> 
 						<select id="idArea" class="botonerab" name="certificadoOrigenDTO.areaDeCosecha.id" onchange="mostrarListaCertificadosOrigen();">
 							<option value="-1">- Seleccione -</option>						
@@ -350,6 +350,7 @@ function cambioComboZona() {
 					<td class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.PlanManejoForestal'/>
 					</td>
+					<td width="5%"></td>
 					<td align="left">
 						<select id="idPMF" class="botonerab" name="certificadoOrigenDTO.pmf.id" onchange="mostrarListaCertificadosOrigen();">
 							<option value="-1">- Seleccione -</option>
@@ -361,6 +362,7 @@ function cambioComboZona() {
 					<td class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.PeríodoForestal'/>
 					</td>
+					<td width="5%"></td>
 					<td class="botonerab" align="left">
 						<select id="selectPeriodo" class="botonerab" style="width: 16em" onchange="mostrarListaCertificadosOrigen();">
 							<c:forEach items="${periodos}" var="per">
