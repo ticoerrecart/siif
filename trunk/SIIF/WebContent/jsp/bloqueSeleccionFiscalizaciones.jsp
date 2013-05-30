@@ -175,7 +175,6 @@ function actualizarProductoresVolverCallback(productores){
 			 <tr>
 				<td width="40%" class="botoneralNegritaRight"><bean:message key='SIIF.label.PeríodoForestal'/></td>
 				<td class="botonerab" align="left">
-					--${idPeriodo}--
 					<select id="selectPeriodo" class="botonerab" onchange="mostrarDetalle()">
 						<c:forEach items="${periodos}" var="periodo" varStatus="i">
 							<c:choose>
