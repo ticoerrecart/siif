@@ -32,7 +32,7 @@ public class UtilFachada implements IUtilFachada {
 			for (Iterator iterator = results.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
 				try {
-					showFields(object, s);
+					showFields(object, object.getClass(), s);
 					s.append("<br/><br/>");
 				} catch (Exception e) {
 					s.append(" | " + e.toString());
@@ -44,15 +44,20 @@ public class UtilFachada implements IUtilFachada {
 		}
 	}
 
-	public void showFields(Object o, StringBuffer s)
+	public void showFields(Object o, Class<?> clazz, StringBuffer s)
 			throws IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException {
-		Class<?> clazz = o.getClass();
+		if (!"java.lang.Object".equalsIgnoreCase(clazz.getSuperclass()
+				.getName())) {
+			showFields(o, clazz.getSuperclass(), s);
+		}
 
 		for (Field field : clazz.getDeclaredFields()) {
 			s.append(field.getName() + ":'"
 					+ PropertyUtils.getProperty(o, field.getName()) + "', ");
 		}
+
+
 	}
 
 }
