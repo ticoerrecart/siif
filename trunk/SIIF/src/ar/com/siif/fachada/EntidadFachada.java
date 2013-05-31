@@ -64,7 +64,7 @@ public class EntidadFachada implements IEntidadFachada {
 
 	public List<TipoDeEntidad> getTiposDeEntidad() {
 		List<TipoDeEntidad> tiposDeEntidad = new ArrayList<TipoDeEntidad>();
-		tiposDeEntidad.add(TipoDeEntidad.RN);
+		//tiposDeEntidad.add(TipoDeEntidad.RN);
 		tiposDeEntidad.add(TipoDeEntidad.OBR);
 		tiposDeEntidad.add(TipoDeEntidad.PPF);
 		tiposDeEntidad.add(TipoDeEntidad.SFDL);

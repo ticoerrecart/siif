@@ -83,7 +83,7 @@ public class Constantes {
 	
 	public static final String EXISTE_ENTIDAD_CON_MATRICULA = "Ya existe una Entidad con éste nro de matrícula";
 
-	public static final String ENTIDAD_RN = "RN";
+	public static final String ENTIDAD_SFDL = "SFDL";
 
 	public static final String ERROR_RECUPERAR_OFICINAS_FORESTALES = "Ha ocurrido un error en la recuperación de las oficinas forestales";
 

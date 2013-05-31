@@ -23,7 +23,8 @@
 			<td align="left">
 				<input name="aforoDTO.valorAforo" class="botonerab" type="text" size="30" 
 						value="<c:out value='${aforoParam.valorAforo}'></c:out>" 
-						onkeypress="return evitarAutoSubmit(event)">
+						onkeypress="esNumericoConDecimal(event); return evitarAutoSubmit(event)"
+						onkeyup="javascript: twoDigits(this);">
 			</td>
 		</tr>
 		<tr>

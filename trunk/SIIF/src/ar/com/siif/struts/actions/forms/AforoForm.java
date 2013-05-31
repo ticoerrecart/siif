@@ -56,8 +56,9 @@ public class AforoForm extends ActionForm {
 
 	public boolean validar(StringBuffer error) {
 
-		return Validator.validarDoubleMayorQue(0, String.valueOf(aforoDTO.getValorAforo()),
-				"Valor Aforo", error);
+		/*return Validator.validarDoubleMayorQue(0, String.valueOf(aforoDTO.getValorAforo()),
+				"Valor Aforo", error);*/
+		return true;
 	}
 
 	public AforoDTO getAforoDTO() {

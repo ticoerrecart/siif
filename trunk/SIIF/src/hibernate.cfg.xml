@@ -30,7 +30,6 @@
 		<mapping class='ar.com.siif.negocio.SubImporte' />		
 		<mapping class='ar.com.siif.negocio.GuiaForestal' />
 		<mapping class='ar.com.siif.negocio.Entidad' />
-		<mapping class='ar.com.siif.negocio.RecursosNaturales' />
 		<mapping class='ar.com.siif.negocio.Obrajero' />
 		<mapping class='ar.com.siif.negocio.PPF' />
 		<mapping class='ar.com.siif.negocio.SinFinesDeLucro' />
