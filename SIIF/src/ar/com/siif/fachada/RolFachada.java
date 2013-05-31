@@ -113,7 +113,7 @@ public class RolFachada implements IRolFachada {
 			List<RolDTO> rolesDTO = new ArrayList<RolDTO>();
 			if (Constantes.ID_ROL_ADMINISTRADOR == usuario.getRol().getId()
 					.longValue()) {
-				if (Constantes.ENTIDAD_RN.equalsIgnoreCase(entidad
+				if (Constantes.ENTIDAD_SFDL.equalsIgnoreCase(entidad
 						.getIdTipoEntidad())) {
 					// si la Entidad es RN y es un Administrador, deben estar todos
 					// los roles

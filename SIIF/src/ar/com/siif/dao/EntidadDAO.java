@@ -10,10 +10,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Localidad;
-import ar.com.siif.negocio.Obrajero;
-import ar.com.siif.negocio.PPF;
-import ar.com.siif.negocio.RecursosNaturales;
-import ar.com.siif.negocio.exception.DataBaseException;
+import ar.com.siif.negocio.SinFinesDeLucro;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
 
@@ -73,11 +70,11 @@ public class EntidadDAO extends HibernateDaoSupport {
 		criteria.add(Restrictions.eq("localidad", localidad));
 		List<Entidad> entidades = criteria.list();
 
-		criteria = getSession().createCriteria(RecursosNaturales.class);
+		/*criteria = getSession().createCriteria(RecursosNaturales.class);
 		criteria.add(Restrictions.eq("localidad", localidad));
 		List<Entidad> rn = criteria.list();
-
-		entidades.removeAll(rn);
+		entidades.removeAll(rn);*/
+		
 		Collections.sort(entidades);
 
 		return entidades;
@@ -93,7 +90,7 @@ public class EntidadDAO extends HibernateDaoSupport {
 	public List<Entidad> getOficinasForestales(){
 
 		List<Entidad> oficinasForestales = null;		
-		Criteria criteria = getSession().createCriteria(RecursosNaturales.class);
+		Criteria criteria = getSession().createCriteria(SinFinesDeLucro.class);
 		oficinasForestales = criteria.list();
 		
 		return oficinasForestales;
@@ -120,10 +117,10 @@ public class EntidadDAO extends HibernateDaoSupport {
 		Criteria criteria = getSession().createCriteria(Entidad.class);
 		List<Entidad> entidades = criteria.list();
 
-		criteria = getSession().createCriteria(RecursosNaturales.class);
+		/*criteria = getSession().createCriteria(RecursosNaturales.class);
 		List<Entidad> rn = criteria.list();
-
-		entidades.removeAll(rn);		
+		entidades.removeAll(rn);*/		
+		
 		Collections.sort(entidades);
 				
 		return entidades;		

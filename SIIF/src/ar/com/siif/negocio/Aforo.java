@@ -76,10 +76,12 @@ public class Aforo {
 
 	public String getTipoProductorDesc() {
 
-		if (this.getTipoProductor().equals(TipoDeEntidad.OBR.getName())) {
+		return TipoDeEntidad.valueOf(this.getTipoProductor()).getDescripcion();
+		
+		/*if (this.getTipoProductor().equals(TipoDeEntidad.OBR.getName())) {
 			return TipoDeEntidad.OBR.getDescripcion();
 		} else {
 			return TipoDeEntidad.PPF.getDescripcion();
-		}
+		}*/
 	}
 }

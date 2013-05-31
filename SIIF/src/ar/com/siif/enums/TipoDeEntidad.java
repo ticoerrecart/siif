@@ -2,11 +2,10 @@ package ar.com.siif.enums;
 
 import ar.com.siif.negocio.Estancia;
 import ar.com.siif.negocio.Obrajero;
-import ar.com.siif.negocio.RecursosNaturales;
 import ar.com.siif.negocio.SinFinesDeLucro;
 
 public enum TipoDeEntidad {
-	OBR("Obrajero",Obrajero.class), PPF("Pequeño Productor Forestal", ar.com.siif.negocio.PPF.class ), RN("Recursos Naturales",RecursosNaturales.class), EST("Estancia",Estancia.class), SFDL("Sin Fines de Lucro",SinFinesDeLucro.class);
+	OBR("Obrajero",Obrajero.class), PPF("Pequeño Productor Forestal", ar.com.siif.negocio.PPF.class ), EST("Estancia",Estancia.class), SFDL("Sin Fines de Lucro",SinFinesDeLucro.class);
 
 	private String descripcion;
 	private Class clase;
