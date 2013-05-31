@@ -80,7 +80,8 @@
 			<forward name=".reporteRecaudacionTotalProductoresEntreFechas" path=".reporteRecaudacionTotalProductoresEntreFechas" />
 			<forward name=".reporteRecaudacionPorAnioForestalTotalProductores" path=".reporteRecaudacionPorAnioForestalTotalProductores" />
 			<forward name=".reporteDetalleGuiasEntreFechas" path=".reporteDetalleGuiasEntreFechas" />
-			<forward name=".reporteCertificadoOrigenTotalProductoresEntreFechas" path=".reporteCertificadoOrigenTotalProductoresEntreFechas" />																	   
+			<forward name=".reporteCertificadoOrigenTotalProductoresEntreFechas" path=".reporteCertificadoOrigenTotalProductoresEntreFechas" />
+			<forward name=".reporteCertificadoOrigenTotalExportadoresEntreFechas" path=".reporteCertificadoOrigenTotalExportadoresEntreFechas" />																				  
 		</action>
 
 		<action path="/menu" type="ar.com.siif.struts.actions.MenuAction"

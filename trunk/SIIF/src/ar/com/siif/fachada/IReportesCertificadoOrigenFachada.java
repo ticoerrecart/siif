@@ -6,5 +6,8 @@ public interface IReportesCertificadoOrigenFachada {
 			String productor, String fechaDesde, String fechaHasta)throws Exception;	
 
 	public byte[] generarReporteCertificadosOrigenTotalProductoresEntreFechas(String path,
-			String fechaDesde, String fechaHasta)throws Exception;		
+			String fechaDesde, String fechaHasta)throws Exception;
+	
+	public byte[] generarReporteCertificadosOrigenTotalExportadoresEntreFechas(String path,
+			String fechaDesde, String fechaHasta)throws Exception;	
 }

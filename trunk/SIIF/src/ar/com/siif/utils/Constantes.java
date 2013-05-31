@@ -358,6 +358,8 @@ public class Constantes {
 	
 	public static final String REPORTE_CERTIFICADOS_ORIGEN_TOTAL_PRODUCTORES_ENTRE_FECHAS = "reporteCertificadoOrigenTotalProductoresEntreFechas";
 	
+	public static final String REPORTE_CERTIFICADOS_ORIGEN_TOTAL_EXPORTADORES_ENTRE_FECHAS = "reporteCertificadoOrigenTotalExportadoresEntreFechas";
+	
 	//FIN REPORTES	
 
 	//MENU

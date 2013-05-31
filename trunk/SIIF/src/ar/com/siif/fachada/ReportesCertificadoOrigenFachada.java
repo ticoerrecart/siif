@@ -49,4 +49,17 @@ public class ReportesCertificadoOrigenFachada implements
 				Constantes.REPORTE_CERTIFICADOS_ORIGEN_TOTAL_PRODUCTORES_ENTRE_FECHAS,
 				parameters);		
 	}
+	
+	public byte[] generarReporteCertificadosOrigenTotalExportadoresEntreFechas(String path,
+			String fechaDesde, String fechaHasta)throws Exception{
+
+		Map parameters = new HashMap();
+		parameters.put("PATH_SUB_REPORTES", path);
+		parameters.put("fechaDesde", Fecha.stringDDMMAAAAToUtilDate(fechaDesde));
+		parameters.put("fechaHasta", Fecha.stringDDMMAAAAToUtilDate(fechaHasta));
+
+		return reportesDAO.generarReporte(
+				Constantes.REPORTE_CERTIFICADOS_ORIGEN_TOTAL_EXPORTADORES_ENTRE_FECHAS,
+				parameters);		
+	}	
 }
