@@ -452,7 +452,12 @@
 	<definition name=".reporteCertificadoOrigenTotalProductoresEntreFechas" extends=".base">
 		<put name="title" value="SIIFs" />
 		<put name="body" value="/jsp/reporteCertificadoOrigenTotalProductoresEntreFechas.jsp" />
-	</definition>			
+	</definition>
+	
+	<definition name=".reporteCertificadoOrigenTotalExportadoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadoOrigenTotalExportadoresEntreFechas.jsp" />
+	</definition>
 	<!-- FIN REPORTE CERTIFICADO ORIGEN -->
 
 	<!-- CERTIFICADO ORIGEN -->
