@@ -59,8 +59,8 @@ function cambiarDiametro(diam){
 			<td colspan="3" height="15"></td>
 		</tr>
 		<tr>
-			<td width="35%" class="botoneralNegritaRight">
-				<bean:message key='SIIF.label.TipoDeProducto'/>
+			<td width="45%" class="botoneralNegritaRight">
+				<bean:message key='SIIF.label.TipoProducto'/>
 			</td>
 			<td align="left">
 				<input name="tipoProductoForestalDTO.nombre" class="botonerab" type="text" size="30"
@@ -213,5 +213,12 @@ function cambiarDiametro(diam){
 <script type="text/javascript">
 	var cantDiam = $("#cantDiam").val();	
 	$("#radio"+cantDiam).attr("checked","checked");
-	cambiarDiametro(cantDiam);	
+	cambiarDiametro(cantDiam);
+
+	var esDeExportacion = $("#idEsDeExportacion").val();
+	if(esDeExportacion == 'true'){
+		$("#esDeExpo").attr("checked","checked");
+	}else{
+		$("#noEsDeExpo").attr("checked","checked");
+	}	
 </script>

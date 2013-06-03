@@ -422,7 +422,7 @@ $(function() {
 		</tr>
 
 		<!-- MUESTRAS -->
-		<c:if test="${fiscalizacionDTO.tipoProducto.id!=LENIA}">
+		<c:if test="${fiscalizacionDTO.tipoProducto.cantDiametros > 0}">
 			<tr id="trMuestras">
 				<td colspan="4" align="left">
 					<table border="0" class="cuadrado" align="center" width="80%"

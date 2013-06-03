@@ -16,6 +16,8 @@ public class TipoProductoForestalDTO extends TipoProductoDTO {
 	
 	private double diam2Hasta;
 
+	private boolean esDeExportacion;
+	
 	public int getCantDiametros() {
 		return cantDiametros;
 	}
@@ -72,6 +74,14 @@ public class TipoProductoForestalDTO extends TipoProductoDTO {
 		this.diam2Hasta = diam2Hasta;
 	}
 	
+	public boolean isEsDeExportacion() {
+		return esDeExportacion;
+	}
+
+	public void setEsDeExportacion(boolean esDeExportacion) {
+		this.esDeExportacion = esDeExportacion;
+	}
+
 	//Lo uso en la validacion del alta/modif de la fiscalizacion, por si tengo q validar el diametro 2 
 	//pq en la jsp lo cambie a 2 diametros.
 	public void replicarDiametro2(){

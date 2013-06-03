@@ -106,7 +106,9 @@ public abstract class ProviderDTO {
 				.getLargoDesde());
 		tipoProductoForestalDTO.setLargoHasta(tipoProductoForestal
 				.getLargoHasta());
-
+		tipoProductoForestalDTO.setEsDeExportacion(tipoProductoForestal
+				.isEsDeExportacion());
+		
 		return tipoProductoForestalDTO;
 
 	}

@@ -211,13 +211,14 @@ public class FiscalizacionDAO extends HibernateDaoSupport {
 	{	
 		String q = "from Fiscalizacion where productorForestal.id = :idPf and periodoForestal = :periodo "+
 											  //"and localizacion.id = :idLocalizacion "+
-											  "and tipoProducto.id != :idLenia and guiaForestal != null order by fecha";
+											  //"and tipoProducto.id != :idLenia and guiaForestal != null order by fecha";
+												"and tipoProducto.esDeExportacion = :esDeExpo and guiaForestal != null order by fecha";
 		Query query = getSession().createQuery(q);
 		query.setParameter("idPf", idProductor);
 		query.setParameter("periodo", periodo);
 		//query.setParameter("idLocalizacion", idLocalizacion);
-		query.setParameter("idLenia", 3L);
-
+		//query.setParameter("idLenia", 3L);
+		query.setParameter("esDeExpo", true);
 		List<Fiscalizacion> fiscalizaciones = query.list();
 		
 		return fiscalizaciones;		

@@ -74,7 +74,7 @@ function submitir(metodoValidacion){
 
 <html:hidden property="metodo" value="${metodo}" styleId="idMetodo"/>
 
-<table border="0" class="cuadrado" align="center" width="60%" cellpadding="2">
+<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
 	<tr>
 		<td class="azulAjustado">
 			<c:choose>
