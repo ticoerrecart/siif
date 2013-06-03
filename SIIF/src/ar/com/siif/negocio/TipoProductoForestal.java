@@ -23,6 +23,8 @@ public class TipoProductoForestal extends TipoProducto {
 	
 	private double diam2Hasta;	
 	
+	private boolean esDeExportacion;
+	
 	public String getTipoEntidad() {
 		return TipoDeProducto.FST.getDescripcion();
 	}
@@ -85,7 +87,14 @@ public class TipoProductoForestal extends TipoProducto {
 
 	public void setDiam2Hasta(double diam2Hasta) {
 		this.diam2Hasta = diam2Hasta;
+	}
+
+	public boolean isEsDeExportacion() {
+		return esDeExportacion;
+	}
+
+	public void setEsDeExportacion(boolean esDeExportacion) {
+		this.esDeExportacion = esDeExportacion;
 	}	
-	
 	
 }

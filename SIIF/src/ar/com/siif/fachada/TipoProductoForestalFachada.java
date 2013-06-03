@@ -61,7 +61,8 @@ public class TipoProductoForestalFachada implements
 		tipoProducto.setDiam2Hasta(tipoProductoForestalDTO.getDiam2Hasta());
 		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
 		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());
-
+		tipoProducto.setEsDeExportacion(tipoProductoForestalDTO.isEsDeExportacion());
+		
 		datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
 	}
 

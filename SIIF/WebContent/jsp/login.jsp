@@ -26,14 +26,14 @@
 
 <body onload="darFoco();">
 
-<div id="errores" class="rojoAdvertencia">${error}</div>
-
 <html:form action="login">
 	<html:hidden property="metodo" value="login" />
 	
 	<table align="center" border="0" width="100%" height="100%">
 		<tr>
 			<td height="85%">
+				<div id="errores" class="rojoAdvertencia">${error}</div>
+				<br>
 				<table class="cuadrado" border="0" width="40%" align="center">
 					<tr>
 						<td colspan="4" height="26em" align="center" class="azulAjustado">
