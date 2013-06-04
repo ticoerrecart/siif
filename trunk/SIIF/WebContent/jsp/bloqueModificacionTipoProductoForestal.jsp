@@ -71,9 +71,30 @@ function cambiarDiametro(diam){
 		</tr>
 		<tr>
 			<td colspan="3" height="10"></td>
+		</tr>
+		
+		<tr>
+			<td width="45%" class="botoneralNegritaRight" rowspan="3">
+				El Tipo de Producto es de Exportación
+			</td>
+			<td align="left">
+				<input type="hidden" id="idEsDeExportacion" value="<c:out value='${tipoProducto.esDeExportacion}'></c:out>">
+				<input type="radio" id="esDeExpo" name="tipoProductoForestalDTO.esDeExportacion" value="true" checked="checked"/>Si  
+			</td>
+			<td width="10%"></td>
+		</tr>	
+		<tr>
+			<td align="left">
+				<input type="radio" id="noEsDeExpo" name="tipoProductoForestalDTO.esDeExportacion" value="false" />No
+			</td>
+			<td width="10%"></td>
+		</tr>		
+				
+		<tr>
+			<td colspan="3" height="10"></td>
 		</tr>		
 		<tr>
-			<td width="35%" class="botoneralNegritaRight" rowspan="3">
+			<td width="45%" class="botoneralNegritaRight" rowspan="3">
 				Cantidad de diámetros en muestras
 			</td>
 			<td align="left">
