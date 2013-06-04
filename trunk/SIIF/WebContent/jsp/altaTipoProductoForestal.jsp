@@ -94,7 +94,7 @@ function cambiarDiametro(diam){
 
 				<tr>
 					<td class="botoneralNegritaRight" rowspan="2" width="45%">
-						El Tipo de Producto es de Exportaci?n
+						El Tipo de Producto es de Exportación
 					</td>
 					<td align="left">
 						<input type="radio" name="tipoProductoForestalDTO.esDeExportacion" value="true" checked="checked"/>Si  
