@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.UsuarioDTO;
+import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.fachada.IEntidadFachada;
 import ar.com.siif.fachada.ILocalidadFachada;
 import ar.com.siif.fachada.IRolFachada;
@@ -44,7 +45,8 @@ public class EntidadAction extends ValidadorAction {
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("titulo", Constantes.TITULO_ALTA_ENTIDAD);
 			request.setAttribute("metodo", "altaEntidad");
-
+			request.setAttribute("tiposDocumento", entidadFachada.recuperarTiposDocumento());
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -76,40 +78,6 @@ public class EntidadAction extends ValidadorAction {
 			strForward = "error";
 		}
 		return mapping.findForward(strForward);
-	}
-
-	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
-		
-		try{
-			EntidadForm entidadForm = (EntidadForm) form;
-			boolean ok = entidadForm.validar(error);
-			boolean existe = false;
-			if (ok) {
-				WebApplicationContext ctx = getWebApplicationContext();
-				IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
-				existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
-						entidadForm.getEntidadDTO().getId());
-				if (existe) {
-					Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
-				} else {
-					if (!"EST".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad()) && 
-						!"SFDL".equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) 
-					{
-						existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
-								.getNroMatricula(), entidadForm.getEntidadDTO().getId());
-						if (existe) {
-							Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
-						}
-					}
-				}
-			}
-			return ok && !existe;
-			
-		} catch (Throwable t) {
-			MyLogger.logError(t);
-			Validator.addErrorXML(error, "Error Inesperado");
-			return false;
-		}			
 	}
 
 	@SuppressWarnings("unchecked")
@@ -161,18 +129,27 @@ public class EntidadAction extends ValidadorAction {
 					.getBean("localidadFachada");
 			request.setAttribute("localidades", localidadFachada.getLocalidadesDTO());
 			request.setAttribute("metodo", "modificacionEntidad");
+			request.setAttribute("tiposDocumento", entidadFachada.recuperarTiposDocumento());
+			
+			if (entidad.getCuit() != null && entidad.getCuit().length() == 11) {
 
-			if (entidad.getCuit() != null) {
-				if (entidad.getCuit().length() == 11) {
-					String prefijoCuit = entidad.getCuit().substring(0, 2).trim();
-					String nroCuit = entidad.getCuit().substring(2, 10).trim();
-					String sufijoCuit = entidad.getCuit().substring(10).trim();
-					request.setAttribute("prefijoCuit", prefijoCuit);
-					request.setAttribute("nroCuit", nroCuit);
-					request.setAttribute("sufijoCuit", sufijoCuit);
-				}
+				String prefijoCuit = entidad.getCuit().substring(0, 2).trim();
+				String nroCuit = entidad.getCuit().substring(2, 10).trim();
+				String sufijoCuit = entidad.getCuit().substring(10).trim();
+				request.setAttribute("prefijoCuit", prefijoCuit);
+				request.setAttribute("nroCuit", nroCuit);
+				request.setAttribute("sufijoCuit", sufijoCuit);
 			}
-
+			else{
+				if (entidad.getCuil() != null && entidad.getCuil().length() == 11) {
+					String prefijoCuil = entidad.getCuil().substring(0, 2).trim();
+					String nroCuil = entidad.getCuil().substring(2, 10).trim();
+					String sufijoCuil = entidad.getCuil().substring(10).trim();
+					request.setAttribute("prefijoCuil", prefijoCuil);
+					request.setAttribute("nroCuil", nroCuil);
+					request.setAttribute("sufijoCuil", sufijoCuil);				
+				}	
+			}
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -205,4 +182,42 @@ public class EntidadAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	public boolean validarEntidadForm(StringBuffer error, ActionForm form) {
+		
+		try{
+			EntidadForm entidadForm = (EntidadForm) form;
+			boolean ok = entidadForm.validar(error);
+			boolean existe = false;
+			if (ok) {
+				WebApplicationContext ctx = getWebApplicationContext();
+				IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+				existe = entidadFachada.existeEntidad(entidadForm.getEntidadDTO().getNombre(),
+						entidadForm.getEntidadDTO().getId());
+				if (existe) {
+					Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD);
+				} else {
+					
+					if (!TipoDeEntidad.EST.getName().equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad()) && 
+						!TipoDeEntidad.SFDL.getName().equalsIgnoreCase(entidadForm.getEntidadDTO().getTipoEntidad())) 
+					{
+						existe = entidadFachada.existeEntidadConMatricula(entidadForm.getEntidadDTO()
+								.getNroMatricula(), entidadForm.getEntidadDTO().getId(),
+								entidadForm.getEntidadDTO().getTipoEntidad());
+						if (existe) {
+							Validator.addErrorXML(error, 
+									"Ya existe un "+TipoDeEntidad.valueOf(entidadForm.getEntidadDTO().getTipoEntidad()).getDescripcion()
+									+" con éste nro de matrícula");
+							//Validator.addErrorXML(error, Constantes.EXISTE_ENTIDAD_CON_MATRICULA);
+						}
+					}
+				}
+			}
+			return ok && !existe;
+			
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			Validator.addErrorXML(error, "Error Inesperado");
+			return false;
+		}			
+	}	
 }

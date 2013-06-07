@@ -960,7 +960,7 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean validarCuit(String strCuit, StringBuffer pError) {
+	public static boolean validarCuit(String strCuit, String label ,StringBuffer pError) {
 		String strPrefijo;
 		String strNumero;
 		int valDigCuit;
@@ -971,7 +971,7 @@ public abstract class Validator {
 		if (!strCuit.equals("")) {
 			try {
 				if (strCuit.length() != 11) {
-					addErrorXML(pError, "La Cuit tiene una longitud inválida");
+					addErrorXML(pError, "El "+label+" tiene una longitud inválida");
 					return false;
 				}
 
@@ -979,7 +979,7 @@ public abstract class Validator {
 				strNumero = strCuit.substring(2, 10).trim();
 				// Que no sea 0 el cuerpo
 				if (Integer.parseInt(strNumero) == 0) {
-					addErrorXML(pError, "Nro de Cuit inválido");
+					addErrorXML(pError, "Nro de "+label+" inválido");
 					return false;
 				}
 				// Validacion prefijo
@@ -987,7 +987,7 @@ public abstract class Validator {
 						& !(strPrefijo.equals("24")) & !(strPrefijo.equals("27"))
 						& !(strPrefijo.equals("30")) & !(strPrefijo.equals("33"))
 						& !(strPrefijo.equals("34"))) {
-					addErrorXML(pError, "Prefijo de Cuit inválido");
+					addErrorXML(pError, "Prefijo de "+label+" inválido");
 					return false;
 				}
 				// Validacion digito verificador
@@ -997,11 +997,11 @@ public abstract class Validator {
 					valResult = valResult + (valDigCuit * valDigConstant);
 				}
 				if ((valResult % 11) != 0) {
-					addErrorXML(pError, "Dígito verificador de Cuit inválido");
+					addErrorXML(pError, "Dígito verificador de "+label+" inválido");
 					return false;
 				}
 			} catch (Exception e) {
-				addErrorXML(pError, "Cuit inválido");
+				addErrorXML(pError, label+"  inválido");
 				return false;
 			}
 		} // if generico

@@ -13,6 +13,7 @@ import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.providers.ProviderDTO;
 import ar.com.siif.providers.ProviderDominio;
 import ar.com.siif.utils.MyLogger;
+import ar.com.siif.enums.TipoDocumento;
 
 public class EntidadFachada implements IEntidadFachada {
 
@@ -165,7 +166,18 @@ public class EntidadFachada implements IEntidadFachada {
 		return listaEntidadesDTO;
 	}
 	
-	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){
-		return entidadDAO.existeEntidadConMatricula(nroMatricula, id);
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id, String tipoEntidad){
+		return entidadDAO.existeEntidadConMatricula(nroMatricula, id, tipoEntidad);
 	}
+	
+	public List<TipoDocumento> recuperarTiposDocumento(){
+		
+		List<TipoDocumento> lista = new ArrayList<TipoDocumento>();
+		
+		for(int i=0;i<TipoDocumento.values().length;i++){
+			lista.add(TipoDocumento.values()[i]);
+		}
+		
+		return lista;
+	}	
 }

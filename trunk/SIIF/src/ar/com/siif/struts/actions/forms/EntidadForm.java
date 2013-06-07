@@ -50,12 +50,27 @@ public class EntidadForm extends ActionForm {
 						&& Validator.validarLongMayorQue(0,this.getEntidadDTO().getNroMatricula().toString(),
 								"Nro Matrícula", error);
 				if (ok1) {
-					ok1 = ok1 && Validator.requerido(this.getEntidadDTO().getCuit(), "Cuit", error);
-					if (ok1) {
-						ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(), error);
+					
+					String tipoDoc = this.getEntidadDTO().getTipoDocumento().getDescripcion();
+					if(tipoDoc.equals("CUIT")){
+						ok1 = ok1 && Validator.requerido(this.getEntidadDTO().getCuit(), "Cuit", error);
+						if (ok1) {
+							ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuit(),"Cuit", error);
+						}	
 					}
+					else{
+						if(tipoDoc.equals("CUIL")){
+							ok1 = ok1 && Validator.requerido(this.getEntidadDTO().getCuil(), "Cuil", error);
+							if (ok1) {
+								ok1 = ok1 && Validator.validarCuit(this.getEntidadDTO().getCuil(),"Cuil", error);
+							}
+						}
+						else{
+							ok1 = Validator.validarEnteroMayorQue(0,String.valueOf(this.getEntidadDTO().getDni()),
+																	"Dni", error);
+						}
+					}					
 				}
-
 			}
 		}
 
