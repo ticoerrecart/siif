@@ -126,10 +126,13 @@ public class EntidadDAO extends HibernateDaoSupport {
 		return entidades;		
 	}
 	
-	public boolean existeEntidadConMatricula(Long nroMatricula, Long id){
-		Criteria criteria = getSession().createCriteria(Entidad.class);
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id, String tipoEntidad){
+		
+		//Criteria criteria = getSession().createCriteria(Entidad.class);		
+		Criteria criteria = getSession().createCriteria(TipoDeEntidad.valueOf(tipoEntidad).getClase());
 		Conjunction conj = Restrictions.conjunction();
 		conj.add(Restrictions.eq("nroMatricula", nroMatricula));
+		
 		if (id != null) {
 			conj.add(Restrictions.ne("id", id));
 		}

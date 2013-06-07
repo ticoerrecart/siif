@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.enums.TipoDeEntidad;
+import ar.com.siif.enums.TipoDocumento;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.exception.NegocioException;
 
@@ -39,5 +40,7 @@ public interface IEntidadFachada {
 
 	public List<EntidadDTO> getProductoresDTO();
 
-	public boolean existeEntidadConMatricula(Long nroMatricula, Long id);
+	public boolean existeEntidadConMatricula(Long nroMatricula, Long id, String tipoEntidad);
+	
+	public List<TipoDocumento> recuperarTiposDocumento();	
 }
