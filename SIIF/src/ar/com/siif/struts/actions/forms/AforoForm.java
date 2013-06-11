@@ -16,7 +16,7 @@ public class AforoForm extends ActionForm {
 	private long idTipoProductoForestal;
 
 	private AforoDTO aforoDTO;
-	
+
 	public AforoForm() {
 
 		aforo = new Aforo();
@@ -26,16 +26,18 @@ public class AforoForm extends ActionForm {
 	@Override
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 
-		/*Aforo aforoParam = (Aforo) request.getSession().getAttribute("aforoParam");
+		/*
+		 * Aforo aforoParam = (Aforo)
+		 * request.getSession().getAttribute("aforoParam"); if (aforoParam !=
+		 * null) { aforo = aforoParam; idTipoProductoForestal =
+		 * aforo.getTipoProducto().getId(); }
+		 */
+
+		AforoDTO aforoParam = (AforoDTO) request.getSession().getAttribute(
+				"aforoParam");
 		if (aforoParam != null) {
-			aforo = aforoParam;
-			idTipoProductoForestal = aforo.getTipoProducto().getId();
-		}*/
-		
-		AforoDTO aforoParam = (AforoDTO) request.getSession().getAttribute("aforoParam");
-		if (aforoParam != null) {
-			aforoDTO = aforoParam;			
-		}		
+			aforoDTO = aforoParam;
+		}
 	}
 
 	public Aforo getAforo() {
@@ -56,9 +58,17 @@ public class AforoForm extends ActionForm {
 
 	public boolean validar(StringBuffer error) {
 
-		/*return Validator.validarDoubleMayorQue(0, String.valueOf(aforoDTO.getValorAforo()),
-				"Valor Aforo", error);*/
-		return true;
+		/*
+		 * return Validator.validarDoubleMayorQue(0,
+		 * String.valueOf(aforoDTO.getValorAforo()), "Valor Aforo", error);
+		 */
+		boolean ok = true;
+		if (this.getAforoDTO().getTipoProducto().getId() == null) {
+			Validator.addErrorXML(error,
+					"Seleccione un Tipo de Producto Forestal");
+			ok = false;
+		}
+		return ok;
 	}
 
 	public AforoDTO getAforoDTO() {
@@ -68,5 +78,5 @@ public class AforoForm extends ActionForm {
 	public void setAforoDTO(AforoDTO aforoDTO) {
 		this.aforoDTO = aforoDTO;
 	}
-	
+
 }
