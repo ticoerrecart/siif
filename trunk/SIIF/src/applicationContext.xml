@@ -75,7 +75,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="reportesPorProductoDAO" class="ar.com.siif.dao.ReportesPorProductoDAO" parent="abstractRepository" />
 	<bean id="reportesRecaudacionDAO" class="ar.com.siif.dao.ReportesRecaudacionDAO" parent="abstractRepository" />
 	<bean id="certificadoDeOrigenDAO" class="ar.com.siif.dao.CertificadoDeOrigenDAO" parent="abstractRepository" />
-	<bean id="utilDAO" class="ar.com.siif.dao.UtilDAO" parent="abstractRepository" />
 	
 	
 	<!--  *******************-->
@@ -542,28 +541,6 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 			<ref bean="certificadoDeOrigenFachadaImpl" />
 		</property>
 		<property name="proxyInterfaces" value="ar.com.siif.fachada.ICertificadoDeOrigenFachada" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
-			</props>
-		</property>
-	</bean>	
-
-	<!-- UTIL --> 
-	<bean id="utilFachadaImpl" class="ar.com.siif.fachada.UtilFachada">
-		<constructor-arg ref="utilDAO" />
-	</bean>	
-
-	<bean id="utilFachada"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager">
-			<ref bean="transactionManager" />
-		</property>
-		<property name="proxyTargetClass" value="true" />
-		<property name="target">
-			<ref bean="utilFachadaImpl" />
-		</property>
-		<property name="proxyInterfaces" value="ar.com.siif.fachada.IUtilFachada" />
 		<property name="transactionAttributes">
 			<props>
 				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>

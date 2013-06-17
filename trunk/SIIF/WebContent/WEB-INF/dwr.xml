@@ -110,10 +110,6 @@
 		<create creator="spring" javascript="TipoProductoForestalFachada">
 			<param name="beanName" value="tipoProductoForestalFachada" />
 		</create>
-		
-		<create creator="spring" javascript="UtilFachada">
-			<param name="beanName" value="utilFachada" />
-		</create>	
 	</allow>
 
 </dwr> 
