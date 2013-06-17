@@ -41,8 +41,6 @@
 		</form-bean>		
 		<form-bean name="localidadDestinoForm" type="ar.com.siif.struts.actions.forms.LocalidadDestinoForm">			
 		</form-bean>
-		<form-bean name="reporteForm" type="ar.com.siif.struts.actions.forms.ReporteForm">			
-		</form-bean>
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -368,13 +366,7 @@
 			<forward name="exitoMostrarReporte" path=".mostrarReporte" />
 			<forward name="exitoCargarReporteVolumenFiscalizadoProductorEntreFechas" path=".reporteVolumenFiscalizadoProductorEntreFechas" />
 			
-			<forward name="exitoReporteGuiasForestalesPorProductorEntreFechas" path=".reporteGuiasForestalesPorProductorEntreFechas" />
-			<forward name="exitoMostrarReportes" path=".mostrarReportes" />			
-		</action>
-		
-		<action path="/actualizarReporte" type="ar.com.siif.struts.actions.ReportesAction"
-			parameter="metodo" name="reporteForm">
-			<forward name="exitoMostrarReportes" path="/jsp/exitoUploadReporte.jsp" />			
+			<forward name="exitoReporteGuiasForestalesPorProductorEntreFechas" path=".reporteGuiasForestalesPorProductorEntreFechas" />		
 		</action>
 
 		<!-- FIN REPORTES  -->

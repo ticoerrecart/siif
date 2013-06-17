@@ -35,20 +35,6 @@ public class LoginFilter implements Filter {
 			UsuarioDTO u = (UsuarioDTO) session
 					.getAttribute(Constantes.USER_LABEL_SESSION);
 			if (u != null || (metodo != null && metodo.equals("login"))) {
-				if ("/log.do".equalsIgnoreCase(req.getServletPath())
-						|| ("/reporte.do"
-								.equalsIgnoreCase(req.getServletPath()) && "obtenerReportes"
-								.equalsIgnoreCase(metodo))) {
-					if (!"SuperAdministrador".equalsIgnoreCase(u.getRol()
-							.getRol())) {
-						RequestDispatcher dispatcher = filterConfig
-								.getServletContext().getRequestDispatcher(
-										"/jsp/login.jsp");
-						req.setAttribute("error",
-								"Usuario no autorizado para realizar ésta operación");
-						dispatcher.forward(request, response);
-					}
-				}
 				chain.doFilter(request, response);
 
 			} else {
