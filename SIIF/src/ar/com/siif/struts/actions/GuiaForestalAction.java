@@ -70,7 +70,6 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("tipoProductoForestalFachada");
 
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			// rolFachada.verificarMenu(Constantes.ALTA_GUIA_FORESTAL_MENU,usuario.getRol());
 
 			IUbicacionFachada ubicacionFachada = (IUbicacionFachada) ctx
 					.getBean("ubicacionFachada");
@@ -88,9 +87,7 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getEntidadDTO(guiaForm.getGuiaForestal()
 							.getProductorForestal().getId());
 
-			// RodalDTO rodal = null;
 			LocalizacionDTO localizacion = null;
-			// List<PMFDTO> listaPMFs = new ArrayList<PMFDTO>();
 
 			if (!guiaForm.getListaFiscalizaciones().isEmpty()) {
 				List<Fiscalizacion> fiscalizaciones = new ArrayList<Fiscalizacion>();
