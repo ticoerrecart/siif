@@ -508,8 +508,15 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			guiaForestal.setDistanciaAforoMovil(guia.getDistanciaAforoMovil());
 			guiaForestal.setPeriodoForestal(guia.getPeriodoForestal());
 
-			for (BoletaDeposito boleta : guiaForestal.getBoletasDeposito()) {
+			/*actualizo boletas*/
+			List<BoletaDeposito> boletasABorrar = new ArrayList<BoletaDeposito>();
+			List<BoletaDeposito> boletas = guiaForestal.getBoletasDeposito();
+			for (BoletaDeposito boleta : boletas) {
 				for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
+					if(boleta.getId().longValue() == boletaDTO.getIdBoleta() && boletaDTO.isEliminada()){
+						boletasABorrar.add(boleta);
+						boleta.setGuiaForestal(null);
+					}
 					
 					if(boleta.getId().longValue() == boletaDTO.getIdBoleta() && boletaDTO.getFechaPago() != null
 						&& boletaDTO.getFechaPago() != ""){
@@ -518,31 +525,36 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				}
 			}
 			
+			boletas.removeAll(boletasABorrar);
+			
+			/*agrego boletas nuevas*/
+			for (BoletaDepositoDTO boletaDTO : boletasDepositoDTO) {
+				if (boletaDTO.getIdBoleta() == 0){
+					boletas.add(ProviderDominio.getBoletaDeposito(guiaForestal, boletaDTO));
+				}
+			}
+		
+			
+			List<ValeTransporte> valesBorrados = new ArrayList<ValeTransporte>();
+			for (ValeTransporte valeTransporte : guiaForestal.getValesTransporte()) {
+				for (ValeTransporteDTO valeTransporteDTO : valesTransporteDTO) {
+					if (valeTransporteDTO != null && valeTransporteDTO.getId() > 0) {
+						if (valeTransporteDTO.getId() == valeTransporte.getId()) {
+							valeTransporte.setGuiaForestal(null);
+							valesBorrados.add(valeTransporte);
+							break;
+						}
+					}
+				}
+			}
+			
+			guiaForestal.getValesTransporte().removeAll(valesBorrados);
+			
+			/*agrego vales nuevos*/
 			for (RangoDTO rangoDTO : listaRangosDTO) {
 				guiaForestal.getValesTransporte().addAll(
 						ProviderDominio.getValesTransportes(guiaForestal, rangoDTO,
 								fechaVencimiento));
-			}
-
-			List<ValeTransporte> valesNuevos = new ArrayList<ValeTransporte>();
-
-			for (ValeTransporte valeTransporte : guiaForestal.getValesTransporte()) {
-				boolean encontre = false;
-				for (ValeTransporteDTO valeTransporteDTO : valesTransporteDTO) {
-					if (valeTransporteDTO != null && valeTransporteDTO.getId() > 0) {
-						if (valeTransporteDTO.getId() == valeTransporte.getId()) {
-							encontre = true;
-							valeTransporte.setGuiaForestal(null);
-							break;
-						}
-					}
-				}// for ValeTransporteDTO
-				if (!encontre) {
-					valesNuevos.add(valeTransporte);
-				}
-			}
-			if (valesNuevos.size() > 0) {
-				guiaForestal.setValesTransporte(valesNuevos);
 			}
 			
 			guiaForestal.setOperacionModificacion(

@@ -19,6 +19,8 @@ public class BoletaDepositoDTO {
 	private String fechaVencimiento;
 
 	private GuiaForestalDTO guiaForestal;
+	
+	private boolean eliminada = false;
 
 	public BoletaDepositoDTO() {
 
@@ -95,6 +97,14 @@ public class BoletaDepositoDTO {
 
 	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
+	}
+
+	public boolean isEliminada() {
+		return eliminada;
+	}
+
+	public void setEliminada(boolean eliminada) {
+		this.eliminada = eliminada;
 	}
 
 }

@@ -59,11 +59,11 @@ public class GuiaForestal {
 	private Entidad productorForestal;
 
 	@OneToMany(mappedBy = "guiaForestal")
-	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@Cascade(value = {CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN })
 	private List<ValeTransporte> valesTransporte = new ArrayList<ValeTransporte>();
 
 	@OneToMany(mappedBy = "guiaForestal")
-	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@Cascade(value = {CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN })
 	private List<BoletaDeposito> boletasDeposito = new ArrayList<BoletaDeposito>();
 
 	/*@ManyToOne()

@@ -167,7 +167,7 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 		Localizacion localizacionFiscalizacion = ubicacionFachada
 				.getLocalizacion(fiscalizacionDTO.getIdLocalizacion());
 		fiscalizacion.setLocalizacion(localizacionFiscalizacion);
-
+		fiscalizacion.setTipoProducto(tipoProductoForestalFachada.recuperarTipoProductoForestal(fiscalizacionDTO.getTipoProducto().getId()));
 		String errorFiscalizacion = validarFiscalizacionAsociadaAGuia(fiscalizacionDTO);
 		if (!"".equalsIgnoreCase(errorFiscalizacion)) {
 			GuiaForestal guia = fiscalizacion.getGuiaForestal();
