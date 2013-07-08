@@ -10,7 +10,7 @@
 %>
 
 
-<table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="81%" cellpadding="2">
+<table id="idTable<%=i%>" border="0" class="cuadradoSinBorde" align="center" width="91%" cellpadding="2">
 	<tr id="idTrCuotaEspacio<%=i%>">
 		<td height="5" colspan="4"></td>
 	</tr>
@@ -54,7 +54,7 @@
 					<input name='<%="boletasDeposito["+(i-1)+"].efectivoCheque"%>' class="botonerab" 
 						type="text" size="20" onkeypress="javascript:esAlfaNumerico(event);">
 				</td>
-				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto'/></td>
+				<td width="10%" class="botoneralNegritaRight"><bean:message key='SIIF.label.Monto$'/></td>
 				<td width="40%" align="left">
 					<input name='<%="boletasDeposito["+(i-1)+"].monto"%>' class="botonerab" type="text" 
 						size="20" onkeypress="javascript:esNumericoConDecimal(event);">

@@ -985,7 +985,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 					</tr>
 					<tr>
 						<td colspan="4">
-							<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+							<table border="0" class="cuadrado" align="center" width="90%" cellpadding="2">
 								<tr>
 									<td colspan="4" class="grisSubtitulo"><bean:message key='SIIF.label.CuotaNro'/>1</td>
 								</tr>

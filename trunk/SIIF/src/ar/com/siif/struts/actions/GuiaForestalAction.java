@@ -1829,6 +1829,12 @@ public class GuiaForestalAction extends ValidadorAction {
 			ok2 = Validator.requerido(guiaForestalForm.getGuiaForestal()
 					.getFechaVencimiento(), "Valido Hasta", error);
 
+			double montoTotal = guiaForestalForm.getGuiaForestal()
+					.getImporteTotal();
+			
+			ok3 = Validator.validarBoletasDeposito(
+					guiaForestalForm.getBoletasDeposito(), montoTotal, error);
+			
 			if (guiaForestalForm.getRangos().size() > 0) {
 				ok6 = Validator.requerido(
 						guiaForestalForm.getFechaVencimiento(),

@@ -164,11 +164,32 @@ function removerCuota(){
 	var i = "divPlanDePagos"+indice;
 	document.getElementById(i).innerHTML = "";
 
-	if(indice == 2){
+	if(indice == ${fn:length(guiaForestal.boletasDeposito)+1}){
 		document.getElementById("idBotonRemoverCuota").disabled="disabled";
 	}																			
 }
 
+
+function eliminarCuota( index){
+		ind = index - 1;
+		bd = 'boletasDeposito['+ ind +'].eliminada';
+		$("[name='"+bd+"']").val(true);	
+		apagar($('#tBoleta'+index));
+		$("#tdBoleta" + index).addClass("tachado");
+		$("#idBotonEliminarCuota"+index).hide();
+		$("#idBotonRestituirCuota"+index).show();
+		
+}
+
+function restituirCuota(index){
+		ind = index - 1;
+		bd = 'boletasDeposito['+ ind +'].eliminada';
+		$("[name='"+bd+"']").val(false);	
+		encender($('#tBoleta'+index));
+		$("#tdBoleta" + index).removeClass("tachado");
+		$("#idBotonEliminarCuota"+index).show();
+		$("#idBotonRestituirCuota"+index).hide();
+}
 
 								 
 var fila0Vales ='<tr id="filaVales0">'+
@@ -595,8 +616,10 @@ function removerValeEnUso(idVale,index){
 
 		<%@include file="bloqueSubImportes.jspf" %>
 
+		
+		<input type="hidden" name="guiaForestal.importeTotal" value="${guiaForestal.importeTotal}"/>
 		<!-- PLAN DE PAGO --> 
-	
+
 		<tr>
 			<td colspan="4" align="left">
 			<div id="e2" style="DISPLAY: ">
@@ -643,7 +666,14 @@ function removerValeEnUso(idVale,index){
 											<td colspan="4">								
 												<input type="hidden" name="boletasDeposito[${index.index}].idBoleta" 
 														value="<c:out value='${boletaDeposito.idBoleta}'></c:out>">
-												<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
+												<input type="hidden" name="boletasDeposito[${index.index}].eliminada" value="false"/>
+												<input type="hidden" name="boletasDeposito[${index.index}].numero" value="${boletaDeposito.numero}"/>		
+												<input type="hidden" name="boletasDeposito[${index.index}].concepto" value="${boletaDeposito.concepto}"/>
+												<input type="hidden" name="boletasDeposito[${index.index}].area" value="${boletaDeposito.area}"/>
+												<input type="hidden" name="boletasDeposito[${index.index}].efectivoCheque" value="${boletaDeposito.efectivoCheque}"/>
+												<input type="hidden" name="boletasDeposito[${index.index}].monto" value="${boletaDeposito.monto}"/>
+												<input type="hidden" name="boletasDeposito[${index.index}].fechaVencimiento" value="${boletaDeposito.fechaVencimiento}"/>
+												<table id="tBoleta<c:out value='${index.count}'></c:out>" border="0" align="center" width="100%" cellpadding="2">
 													<tr>
 														<td height="5" colspan="5"></td>
 													</tr>
@@ -728,22 +758,59 @@ function removerValeEnUso(idVale,index){
 													<tr>
 														<td height="5" colspan="5"></td>
 													</tr>
+													<tr>
+														<td height="5" colspan="5">
+														</td>
+													</tr>
 												</table>
+												<c:if test="${boletaDeposito.fechaPago ==null}">
+													<input id="idBotonEliminarCuota<c:out value='${index.count}'></c:out>" type="button"	value="-" onclick="javascript:eliminarCuota(<c:out value='${index.count}'></c:out>);">
+													<input style="display: none" id="idBotonRestituirCuota<c:out value='${index.count}'></c:out>" type="button"	value="+" onclick="javascript:restituirCuota(<c:out value='${index.count}'></c:out>);">
+												</c:if>
 											</td>	
+											
 										</tr>
-										<tr>
-											<td height="5" colspan="4"></td>
-										</tr>										
+																		
 									</c:forEach>	
-								</c:when>
-								<c:otherwise>
-									<bean:message key='SIIF.error.NoExiBoletas'/>
-								</c:otherwise>													
-							</c:choose>									
 						</td>
 					</tr>
+					
 				</table>
+				
+				
+				<table  class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
+					<tr>
+						<td height="5" colspan="4"></td>
+					</tr>
+					<tr>
+						<td colspan="4" class="grisSubtitulo">
+							Agregar Cuotas Nuevas
+						</td>
+					</tr>
+					
+				</table>
+					
+				<div id="dummy" style="display: none"></div>
+				<div id="divPlanDePagos${fn:length(guiaForestal.boletasDeposito)+1}"></div>
+				
+				<table  class="cuadradoSinBorde" align="center" width="90%" cellpadding="2">
+					<tr>
+						<td height="5" colspan="4"></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<input id="idBotonAgregarCuota" type="button" value="+" 
+								onclick="javascript:agregarCuota();">
+							<input id="idBotonRemoverCuota" disabled="disabled" type="button"
+								value="-" onclick="javascript:removerCuota();"></td>
+					</tr>
+					<tr>
+						<td height="5" colspan="4"></td>
+					</tr>
+				</table>
+				
 			</div>
+			<script>indice = ${fn:length(guiaForestal.boletasDeposito)} + 1;	</script>
 			</td>
 		</tr> 
 

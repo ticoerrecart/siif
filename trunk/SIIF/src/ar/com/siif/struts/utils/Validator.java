@@ -698,33 +698,34 @@ public abstract class Validator {
 					return false;
 				}
 			}
-
-			montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
-			if (boleta.getNumero() <= 0) {
-				addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
-				return false;
+			if (!boleta.isEliminada()){
+				montoSumaBoletas = montoSumaBoletas + boleta.getMonto();	
+				
+				if (boleta.getNumero() <= 0) {
+					addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
+					return false;
+				}
+	
+				if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
+					addErrorXML(pError, "Faltan datos en el Concepto de la Boleta de Deposito");
+					return false;
+				}
+	
+				if (boleta.getArea() == null || boleta.getArea().equals("")) {
+					addErrorXML(pError, "Faltan datos en el Area de la Boleta de Deposito");
+					return false;
+				}
+	
+				if (boleta.getFechaVencimiento() == null || boleta.getFechaVencimiento().equals("")) {
+					addErrorXML(pError, "Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
+					return false;
+				}			
+				
+				if (boleta.getMonto() <= 0.0) {
+					addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
+					return false;
+				}
 			}
-
-			if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
-				addErrorXML(pError, "Faltan datos en el Concepto de la Boleta de Deposito");
-				return false;
-			}
-
-			if (boleta.getArea() == null || boleta.getArea().equals("")) {
-				addErrorXML(pError, "Faltan datos en el Area de la Boleta de Deposito");
-				return false;
-			}
-
-			if (boleta.getFechaVencimiento() == null || boleta.getFechaVencimiento().equals("")) {
-				addErrorXML(pError, "Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
-				return false;
-			}			
-			
-			if (boleta.getMonto() <= 0.0) {
-				addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
-				return false;
-			}
-
 		}
 
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
