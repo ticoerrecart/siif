@@ -648,17 +648,15 @@ function removerValeEnUso(idVale,index){
 					</tr>
 					
 					<tr>
+					
 						<td colspan="4">
-							<c:choose>					
-								<c:when test="${fn:length(guiaForestal.boletasDeposito)>0}">	
-				
 									<c:forEach items="${guiaForestal.boletasDeposito}" var="boletaDeposito" varStatus="index">
 									
 										<tr onclick="$('#idTrBoleta<c:out value='${boletaDeposito.numero}'/>').toggle();">								
 											<td colspan="4" class="grisSubtitulo" id="tdBoleta<c:out value='${index.count}'></c:out>" 									
 												onmouseover="javascript:pintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');"
 												onmouseout="javascript:despintarFilaVale('tdBoleta<c:out value='${index.count}'></c:out>');">
-												Boleta de Deposito n° <c:out value="${boletaDeposito.numero}"></c:out>
+												<bean:message key='SIIF.label.CuotaNro'/><c:out value='${index.count}'></c:out>
 											</td>
 										</tr>						
 									
