@@ -76,8 +76,13 @@ public class AforoAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			IAforoFachada aforoFachada = (IAforoFachada) ctx
 					.getBean("aforoFachada");
-
 			AforoForm aforoForm = (AforoForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarAforoForm(new StringBuffer(), aforoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			aforoFachada.altaAforo(aforoForm.getAforoDTO());
 
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_AFORO);
@@ -181,6 +186,11 @@ public class AforoAction extends ValidadorAction {
 
 			AforoForm aforoForm = (AforoForm) form;
 
+			// valido nuevamente por seguridad.  
+			if (!validarAforoForm(new StringBuffer(), aforoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			aforoFachada.modificacionAforo(aforoForm.getAforoDTO());
 
 			request.setAttribute("exitoGrabado",

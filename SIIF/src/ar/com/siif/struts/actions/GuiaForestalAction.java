@@ -177,6 +177,12 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("guiaForestalFachada");
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarAltaGuiaForestalBasicaForm(new StringBuffer(), guiaForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
 
 			guiaForestal.getOperacionAlta().setUsuario(usr);
@@ -512,6 +518,12 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarAltaGuiaForestalBasicaForm(new StringBuffer(), guiaForestalForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();

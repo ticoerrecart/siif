@@ -345,6 +345,12 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getBean("fiscalizacionFachada");
 
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarFiscalizacionForm(new StringBuffer(), fiscalizacionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			FiscalizacionDTO fiscalizacion = fiscalizacionForm
 					.getFiscalizacionDTO();
 
@@ -385,6 +391,12 @@ public class FiscalizacionAction extends ValidadorAction {
 					.getBean("entidadFachada");
 
 			FiscalizacionForm fiscalizacionForm = (FiscalizacionForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarFiscalizacionForm(new StringBuffer(), fiscalizacionForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			FiscalizacionDTO fiscalizacionDTO = fiscalizacionForm
 					.getFiscalizacionDTO();
 

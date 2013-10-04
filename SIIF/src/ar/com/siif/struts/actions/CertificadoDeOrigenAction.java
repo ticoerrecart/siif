@@ -127,6 +127,12 @@ public class CertificadoDeOrigenAction extends ValidadorAction {
 					.getBean("certificadoDeOrigenFachada");
 
 			CertificadoOrigenForm certificadoOrigenForm = (CertificadoOrigenForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarCertificadoOrigenForm(new StringBuffer(), certificadoOrigenForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			certificadoOrigenForm.normalizarListaTiposProducto();
 
 			CertificadoOrigenDTO certificadoOrigen = certificadoOrigenForm

@@ -26,11 +26,15 @@ public class TipoProductoForestalAction extends ValidadorAction {
 		String strForward = "exitoAltaTipoProductoForestal";
 		try {
 			WebApplicationContext ctx = getWebApplicationContext();
-
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
 			TipoProductoForestalForm tipoProductoForestalForm = (TipoProductoForestalForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarTipoProductoForestalForm(new StringBuffer(), tipoProductoForestalForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			tipoProductoForestalFachada.altaTipoProductoForestal(tipoProductoForestalForm.getTipoProductoForestalDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_TIPO_PRODUCTO);
 
 		} catch (NegocioException ne) {
@@ -102,11 +106,14 @@ public class TipoProductoForestalAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
-
 			tipoProductoForm = (TipoProductoForestalForm) form;
 
+			// valido nuevamente por seguridad.  
+			if (!validarTipoProductoForestalForm(new StringBuffer(), tipoProductoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			tipoProductoForestalFachada.modificacionTipoProductoForestal(tipoProductoForm.getTipoProductoForestalDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_TIPO_PRODUCTO);
 
 		} catch (NegocioException ne) {
@@ -129,12 +136,15 @@ public class TipoProductoForestalAction extends ValidadorAction {
 		try {
 
 			WebApplicationContext ctx = getWebApplicationContext();
-
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
-
 			TipoProductoForestalForm tipoProductoForestalForm = (TipoProductoForestalForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarTipoProductoExportacionForm(new StringBuffer(), tipoProductoForestalForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			tipoProductoForestalFachada.altaTipoProductoExportacion(tipoProductoForestalForm.getProductoForestalDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_TIPO_PRODUCTO_EXPORTACION);
 
 		} catch (NegocioException ne) {
@@ -202,10 +212,14 @@ public class TipoProductoForestalAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
-
 			tipoProductoForm = (TipoProductoForestalForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarTipoProductoExportacionForm(new StringBuffer(), tipoProductoForm)) {
+				throw new Exception("Error de Seguridad");
+			}
+			
 			tipoProductoForestalFachada.modificacionTipoProductoExportacion(tipoProductoForm.getProductoForestalDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_TIPO_PRODUCTO);
 
 		} catch (NegocioException ne) {
