@@ -65,16 +65,16 @@ public class LocalidadAction extends ValidadorAction {
 			UsuarioDTO usuario = (UsuarioDTO)request.getSession().getAttribute(Constantes.USER_LABEL_SESSION);	
 			WebApplicationContext ctx = getWebApplicationContext();			
 			
-			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-			//rolFachada.verificarMenu(Constantes.ALTA_LOCALIDAD_MENU,usuario.getRol());	
+			// valido nuevamente por seguridad.  
+			if (!validarLocalidadForm(new StringBuffer(), localidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
+			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");			
 			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			localidadFachada.altaLocalidad(localidadForm.getLocalidadDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_LOCALIDAD);
-		
-		/*} catch (AccesoDenegadoException ade) {
-			request.setAttribute("error", ade.getMessage());
-			strForward = "error";*/		
 
 		} catch (NegocioException ne) {
 			request.setAttribute("error", ne.getMessage());			
@@ -119,6 +119,12 @@ public class LocalidadAction extends ValidadorAction {
 		String strForward = "exitoModificacionLocalidad";
 		try{		
 			LocalidadForm localidadForm = (LocalidadForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarLocalidadForm(new StringBuffer(), localidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			WebApplicationContext ctx = getWebApplicationContext();
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			localidadFachada.modificacionLocalidad(localidadForm.getLocalidadDTO());
@@ -144,6 +150,11 @@ public class LocalidadAction extends ValidadorAction {
 			ProvinciaDestinoForm provinciaForm = (ProvinciaDestinoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();			
 						
+			// valido nuevamente por seguridad.  
+			if (!validarProvinciaForm(new StringBuffer(), provinciaForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			localidadFachada.altaProvincia(provinciaForm.getProvinciaDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_PROVINCIA);
@@ -220,6 +231,11 @@ public class LocalidadAction extends ValidadorAction {
 			WebApplicationContext ctx = getWebApplicationContext();
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			
+			// valido nuevamente por seguridad.  
+			if (!validarProvinciaForm(new StringBuffer(), provinciaForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			localidadFachada.modificacionProvinciaDestino(provinciaForm.getProvinciaDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_PROVINCIA);
 		
@@ -266,6 +282,11 @@ public class LocalidadAction extends ValidadorAction {
 			LocalidadDestinoForm localidadForm = (LocalidadDestinoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();			
 						
+			// valido nuevamente por seguridad.  
+			if (!validarLocalidadDestinoForm(new StringBuffer(), localidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
 			localidadFachada.altaLocalidadDestino(localidadForm.getLocalidadDestinoDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_LOCALIDAD);
@@ -339,6 +360,11 @@ public class LocalidadAction extends ValidadorAction {
 			LocalidadDestinoForm localidadForm = (LocalidadDestinoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
 			ILocalidadFachada localidadFachada = (ILocalidadFachada) ctx.getBean("localidadFachada");
+			
+			// valido nuevamente por seguridad.  
+			if (!validarLocalidadDestinoForm(new StringBuffer(), localidadForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
 			
 			localidadFachada.modificacionLocalidadDestino(localidadForm.getLocalidadDestinoDTO());
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_LOCALIDAD);

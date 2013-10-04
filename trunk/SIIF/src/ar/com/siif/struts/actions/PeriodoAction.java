@@ -50,6 +50,11 @@ public class PeriodoAction extends ValidadorAction {
 			PeriodoForm periodoForm = (PeriodoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
 
+			// valido nuevamente por seguridad.  
+			if (!validarPeriodoForm(new StringBuffer(), periodoForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
 					.getBean("periodoFachada");
 			periodoFachada.altaPeriodo(periodoForm.getPeriodoDTO());
@@ -62,7 +67,7 @@ public class PeriodoAction extends ValidadorAction {
 		} catch (Throwable e) {
 			MyLogger.logError(e);
 			request.setAttribute("error", "Error Inesperado");
-			strForward = "bloqueError";
+			strForward = "error";
 		}
 		return mapping.findForward(strForward);
 	}
@@ -98,6 +103,12 @@ public class PeriodoAction extends ValidadorAction {
 		try {
 			PeriodoForm periodoForm = (PeriodoForm) form;
 			WebApplicationContext ctx = getWebApplicationContext();
+			
+			// valido nuevamente por seguridad.  
+			if (!validarPeriodoForm(new StringBuffer(), periodoForm)) {
+				throw new Exception("Error de Seguridad");
+			}				
+			
 			IPeriodoFachada periodoFachada = (IPeriodoFachada) ctx
 					.getBean("periodoFachada");
 			periodoFachada.modificacionPeriodo(periodoForm.getPeriodoDTO());

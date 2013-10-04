@@ -56,10 +56,14 @@ public class RolAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-
 			RolForm rolForm = (RolForm) form;
+			
+			// valido nuevamente por seguridad.  
+			if (!validarRolForm(new StringBuffer(), rolForm)) {
+				throw new Exception("Error de Seguridad");
+			}				
+			
 			rolFachada.altaRol(rolForm.getRolDTO(), rolForm.getMenuesDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_ALTA_ROL);
 
 		} catch (NegocioException ne) {
@@ -132,11 +136,14 @@ public class RolAction extends ValidadorAction {
 
 			WebApplicationContext ctx = getWebApplicationContext();
 			IRolFachada rolFachada = (IRolFachada) ctx.getBean("rolFachada");
-
 			rolForm = (RolForm) form;
 
+			// valido nuevamente por seguridad.  
+			if (!validarRolForm(new StringBuffer(), rolForm)) {
+				throw new Exception("Error de Seguridad");
+			}			
+			
 			rolFachada.modificacionRol(rolForm.getRolDTO(), rolForm.getMenuesDTO());
-
 			request.setAttribute("exitoGrabado", Constantes.EXITO_MODIFICACION_ROL);
 
 		} catch (NegocioException ne) {
