@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.springframework.web.context.WebApplicationContext;
 
+import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.EntidadDTO;
 import ar.com.siif.dto.FilaTablaVolFiscAsociarDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
@@ -196,6 +197,12 @@ public class GuiaForestalAction extends ValidadorAction {
 			if (fecha != null && !"".equals(fecha)) {
 				dFecha = Fecha.stringDDMMAAAAToUtilDate(fecha);
 			}
+			
+			//Es para el caso en que carguen guias con importe en 0.0, para alguna donacion, etc
+			if(guiaForestal.getImporteTotal() == 0.0){
+				guiaForm.setBoletasDeposito(new ArrayList<BoletaDepositoDTO>());
+			}
+			
 			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 					guiaForm.getBoletasDeposito(), guiaForm.getRangos(),
 					dFecha, guiaForm.getListaFiscalizaciones(),
@@ -520,7 +527,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
 			
 			// valido nuevamente por seguridad.  
-			if (!validarAltaGuiaForestalBasicaForm(new StringBuffer(), guiaForestalForm)) {
+			if (!validarModificacionGuiaForestalBasicaForm(new StringBuffer(), guiaForestalForm)) {
 				throw new Exception("Error de Seguridad");
 			}			
 			
@@ -1627,9 +1634,9 @@ public class GuiaForestalAction extends ValidadorAction {
 					guiaForestalForm.getListaFiscalizaciones(),
 					guiaForestalForm.getTipoTerreno(), error);
 
-			ok4 = Validator.validarDoubleMayorQue(0, String
+			/*ok4 = Validator.validarDoubleMayorQue(0, String
 					.valueOf(guiaForestalForm.getGuiaForestal()
-							.getImporteTotal()), "Importe Total", error);
+							.getImporteTotal()), "Importe Total", error);*/
 
 			double montoTotal = guiaForestalForm.getGuiaForestal()
 					.getImporteTotal();

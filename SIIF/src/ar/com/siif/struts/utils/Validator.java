@@ -672,10 +672,16 @@ public abstract class Validator {
 	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas,
 			double montoTotal, StringBuffer pError) {
 
+		//Es para el caso en que carguen guias con importe en 0.0, para alguna donacion, etc
+		if (montoTotal == 0.0) { 			
+			return true;
+		}		
+		
 		if (boletas.size() == 0) {
 			addErrorXML(pError, "La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
 			return false;
 		}
+				
 		double montoSumaBoletas = 0;
 		List<BoletaDepositoDTO> listaBoletas = new ArrayList<BoletaDepositoDTO>();
 		for (BoletaDepositoDTO boleta : boletas) {
@@ -864,16 +870,17 @@ public abstract class Validator {
 						"Faltan especificar datos en la cantidad de Metros del Producto Forestal");
 				return false;
 			}
-			if (subImporteDTO.getValorAforos() <= 0.0) {
+			//if (subImporteDTO.getValorAforos() <= 0.0) {
+			if (subImporteDTO.getValorAforos() < 0.0) {
 				addErrorXML(pError,
 						"Faltan especificar datos en el Valor del Aforo del Producto Forestal");
 				return false;
 			}
-			if (tipoTerreno != null && !tipoTerreno.equals("Privado")
+			/*if (tipoTerreno != null && !tipoTerreno.equals("Privado")
 					&& subImporteDTO.getImporte() <= 0.0) {
 				addErrorXML(pError, "Faltan especificar datos en el Importe del Producto Forestal");
 				return false;
-			}
+			}*/
 			listaIdTipoProducto.add(subImporteDTO);
 		}
 
