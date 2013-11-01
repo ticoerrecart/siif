@@ -207,7 +207,7 @@ function actualizarImporteCallback(valor){
 	else{
 		$('#TDValorAforo'+idRenglon).hide();
 		$('#idImporte'+idRenglon).val(0.0);
-		$('#idValorAforo'+idRenglon).val(0.0);
+		$('#idValorAforo'+idRenglon).val(-1.0);
 		$('#errorAforo'+idRenglon).show();
 		$('#idPorcentaje').val(0);
 		$('#idTotal').val(0);
@@ -218,7 +218,11 @@ function actualizarImporteCallback(valor){
 function calcularSubImporteRenglon(ind){
 	
 	var cantidadMts = $('#idCantidadMts'+ind).val();
-	var valorAforo = $('#idValorAforo'+ind).val();
+	
+	//Pregunto si es = a -1.0, pq cuando el aforo no esta definido le seteo ese valor.
+	//Lo cambio a 0.0 pq sino las sumatorias pueden dar negativas.
+	var valorAforo = ($('#idValorAforo'+ind).val() == -1.0)?0.0:$('#idValorAforo'+ind).val();
+	
 	var result = Math.round(valorAforo*cantidadMts*100)/100;
 		
 	$('#idImporte'+ind).val(result);	
