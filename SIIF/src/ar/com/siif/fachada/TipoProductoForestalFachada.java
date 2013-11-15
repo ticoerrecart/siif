@@ -84,10 +84,13 @@ public class TipoProductoForestalFachada implements
 
 	public List<EstadoProducto> getEstadosProductos() {
 		List<EstadoProducto> estadosProductos = new ArrayList<EstadoProducto>();
-		// estadosProductos.add(EstadoProducto.Seco);
-		// estadosProductos.add(EstadoProducto.Verde);
-		estadosProductos.add(EstadoProducto.BMP);
+
+		estadosProductos.add(EstadoProducto.BP);
 		estadosProductos.add(EstadoProducto.BS);
+		estadosProductos.add(EstadoProducto.SP);
+		estadosProductos.add(EstadoProducto.TSI);
+		estadosProductos.add(EstadoProducto.VV);
+		
 		return estadosProductos;
 	}
 
