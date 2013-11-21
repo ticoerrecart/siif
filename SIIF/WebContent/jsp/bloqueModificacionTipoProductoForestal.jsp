@@ -72,7 +72,22 @@ function cambiarDiametro(diam){
 		<tr>
 			<td colspan="3" height="10"></td>
 		</tr>
-		
+		<tr>
+			<td width="45%" align="right">
+				<c:choose>
+					<c:when test="${tipoProducto.habilitado}">
+						<input id="checkHab" type="checkbox" name="tipoProductoForestalDTO.habilitado" value="true" 
+							checked="checked"/>
+					</c:when>
+					<c:otherwise>
+						<input id="checkHab" type="checkbox" name="tipoProductoForestalDTO.habilitado"/>
+					</c:otherwise>	
+				</c:choose>	
+			</td>
+			<td class="botoneralNegritaLeft">
+				Habilitado  
+			</td>
+		</tr>		
 		<tr>
 			<td width="45%" class="botoneralNegritaRight" rowspan="3">
 				El Tipo de Producto es de Exportación
