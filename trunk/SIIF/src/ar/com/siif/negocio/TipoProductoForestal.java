@@ -25,6 +25,8 @@ public class TipoProductoForestal extends TipoProducto {
 	
 	private boolean esDeExportacion;
 	
+	private boolean habilitado;
+	
 	public String getTipoEntidad() {
 		return TipoDeProducto.FST.getDescripcion();
 	}
@@ -95,6 +97,13 @@ public class TipoProductoForestal extends TipoProducto {
 
 	public void setEsDeExportacion(boolean esDeExportacion) {
 		this.esDeExportacion = esDeExportacion;
+	}
+
+	public boolean isHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
 	}	
-	
 }

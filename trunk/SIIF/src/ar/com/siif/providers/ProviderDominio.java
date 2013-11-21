@@ -147,6 +147,7 @@ public abstract class ProviderDominio {
 		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
 		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());
 		tipoProducto.setEsDeExportacion(tipoProductoForestalDTO.isEsDeExportacion());
+		tipoProducto.setHabilitado(tipoProductoForestalDTO.isHabilitado());
 		
 		return tipoProducto;
 	}

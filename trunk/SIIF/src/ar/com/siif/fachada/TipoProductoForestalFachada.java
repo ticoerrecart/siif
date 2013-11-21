@@ -62,6 +62,7 @@ public class TipoProductoForestalFachada implements
 		tipoProducto.setLargoDesde(tipoProductoForestalDTO.getLargoDesde());
 		tipoProducto.setLargoHasta(tipoProductoForestalDTO.getLargoHasta());
 		tipoProducto.setEsDeExportacion(tipoProductoForestalDTO.isEsDeExportacion());
+		tipoProducto.setHabilitado(tipoProductoForestalDTO.isHabilitado());
 		
 		datosSistemaDAO.modificacionTipoProductoForestal(tipoProducto);
 	}
@@ -146,5 +147,17 @@ public class TipoProductoForestalFachada implements
 			MyLogger.logError(t);
 			throw new NegocioException("Error Inesperado");
 		}
+	}
+	
+	public List<TipoProductoForestalDTO> recuperarTiposProductoForestalHabInhabDTO(){
+		
+		List<TipoProductoForestalDTO> tipoProductoForestalDTO = new ArrayList<TipoProductoForestalDTO>();
+		List<TipoProductoForestal> tiposProducto = datosSistemaDAO
+				.recuperarTiposProductoForestalHabInhabDTO();
+		for (TipoProductoForestal tipoProducto : tiposProducto) {
+			tipoProductoForestalDTO.add(ProviderDTO
+					.getTipoProductoForestalDTO(tipoProducto));
+		}
+		return tipoProductoForestalDTO;		
 	}
 }
