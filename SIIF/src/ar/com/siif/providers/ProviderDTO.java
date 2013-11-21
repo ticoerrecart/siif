@@ -111,6 +111,7 @@ public abstract class ProviderDTO {
 				.getLargoHasta());
 		tipoProductoForestalDTO.setEsDeExportacion(tipoProductoForestal
 				.isEsDeExportacion());
+		tipoProductoForestalDTO.setHabilitado(tipoProductoForestal.isHabilitado());
 		
 		return tipoProductoForestalDTO;
 

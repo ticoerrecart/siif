@@ -54,11 +54,13 @@ public class AforoDAO extends HibernateDaoSupport {
 		Criteria criteria = getSession().createCriteria(Aforo.class);
 
 		criteria.createAlias("tipoProducto", "tipoP");
-
+		
 		criteria.addOrder(Order.asc("tipoProductor"));
 		criteria.addOrder(Order.asc("tipoP.nombre"));
 		criteria.addOrder(Order.asc("estado"));
-
+		
+		criteria.add(Restrictions.eq("tipoP.habilitado", true));
+		
 		return criteria.list();
 	}
 

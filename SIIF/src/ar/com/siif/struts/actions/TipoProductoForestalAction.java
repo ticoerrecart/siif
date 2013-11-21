@@ -57,7 +57,7 @@ public class TipoProductoForestalAction extends ValidadorAction {
 
 			ITipoProductoForestalFachada tipoProductoForestalFachada = (ITipoProductoForestalFachada) ctx.getBean("tipoProductoForestalFachada");
 
-			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalDTO();
+			List<TipoProductoForestalDTO> tiposProducto = tipoProductoForestalFachada.recuperarTiposProductoForestalHabInhabDTO();
 			request.setAttribute("tiposProducto", tiposProducto);
 			request.setAttribute("metodo", "recuperarTipoProductoForestal");
 

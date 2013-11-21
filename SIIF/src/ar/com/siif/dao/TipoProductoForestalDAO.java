@@ -7,6 +7,7 @@ import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.negocio.TipoProducto;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
@@ -27,8 +28,8 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 	}
 
 	public List<TipoProductoForestal> recuperarTiposProducto() {
-		Criteria criteria = getSession().createCriteria(
-				TipoProductoForestal.class);
+		Criteria criteria = getSession().createCriteria(TipoProductoForestal.class);
+		criteria.add(Restrictions.eq("habilitado", true));
 		List<TipoProductoForestal> tiposProducto = criteria.list();
 		return tiposProducto;
 	}
@@ -115,7 +116,12 @@ public class TipoProductoForestalDAO extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(tipoProducto);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
-
 	}
 
+	public List<TipoProductoForestal> recuperarTiposProductoForestalHabInhabDTO(){
+		
+		Criteria criteria = getSession().createCriteria(TipoProductoForestal.class);
+		List<TipoProductoForestal> tiposProducto = criteria.list();
+		return tiposProducto;		
+	}	
 }

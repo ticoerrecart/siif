@@ -43,5 +43,7 @@ public interface ITipoProductoForestalFachada {
 			TipoProductoDTO tipoProductoDTO) throws NegocioException;
 
 	public TipoProductoExportacion recuperarTipoProductoExportacion(long id);
+	
+	public List<TipoProductoForestalDTO> recuperarTiposProductoForestalHabInhabDTO();
 
 }
