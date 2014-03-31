@@ -219,7 +219,7 @@ public class GuiaForestalDTO {
 		for (SubImporteDTO subImporteDTO : this.getSubImportes()) {
 			ProductoEspecieYRelacionMtsPorPiezaDTO prod = new ProductoEspecieYRelacionMtsPorPiezaDTO();
 			prod.setProducto(subImporteDTO.getTipoProducto().getNombre());
-			prod.setEspecie(subImporteDTO.getEspecie());
+			prod.setEspecie(subImporteDTO.getEspecie().getDescripcion());
 			double mts3 = 0;
 			double piezas = 0;
 			for (FiscalizacionDTO fisc : this.getFiscalizaciones()) {

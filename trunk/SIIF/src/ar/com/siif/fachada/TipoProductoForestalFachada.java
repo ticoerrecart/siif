@@ -6,6 +6,7 @@ import java.util.List;
 import ar.com.siif.dao.TipoProductoForestalDAO;
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
+import ar.com.siif.enums.EspecieProducto;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
@@ -95,6 +96,17 @@ public class TipoProductoForestalFachada implements
 		return estadosProductos;
 	}
 
+	public List<EspecieProducto> getEspecieProductos(){
+		
+		List<EspecieProducto> especieProducto = new ArrayList<EspecieProducto>();
+
+		especieProducto.add(EspecieProducto.LENGA);
+		especieProducto.add(EspecieProducto.Nire);
+		especieProducto.add(EspecieProducto.GUINDO);
+		
+		return especieProducto;		
+	}	
+	
 	public boolean existeTipoProductoExportacion(
 			TipoProductoDTO tipoProdructoDTO) {
 		return datosSistemaDAO.existeTipoProductoExportacion(

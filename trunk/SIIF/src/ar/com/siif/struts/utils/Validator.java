@@ -861,7 +861,7 @@ public abstract class Validator {
 				addErrorXML(pError, "Faltan especificar datos en el Estado del Producto Forestal");
 				return false;
 			}
-			if (subImporteDTO.getEspecie() == null || subImporteDTO.getEspecie().trim().equals("")) {
+			if (subImporteDTO.getEspecie() == null || subImporteDTO.getEspecie().equals("")) {
 				addErrorXML(pError, "Faltan especificar datos en la Especie del Producto Forestal");
 				return false;
 			}
