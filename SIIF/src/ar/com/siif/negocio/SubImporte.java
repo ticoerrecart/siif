@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import ar.com.siif.enums.EspecieProducto;
 import ar.com.siif.enums.EstadoProducto;
 
 @Entity
@@ -24,7 +25,8 @@ public class SubImporte {
 	@Enumerated(EnumType.STRING)
 	private EstadoProducto estado;
 
-	private String especie;
+	@Enumerated(EnumType.STRING)
+	private EspecieProducto especie;
 
 	private double valorAforos;
 
@@ -50,14 +52,6 @@ public class SubImporte {
 
 	public void setEstado(EstadoProducto estado) {
 		this.estado = estado;
-	}
-
-	public String getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(String especie) {
-		this.especie = especie;
 	}
 
 	public double getValorAforos() {
@@ -114,6 +108,14 @@ public class SubImporte {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public EspecieProducto getEspecie() {
+		return especie;
+	}
+
+	public void setEspecie(EspecieProducto especie) {
+		this.especie = especie;
 	}
 
 }

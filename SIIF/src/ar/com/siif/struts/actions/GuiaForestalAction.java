@@ -141,6 +141,8 @@ public class GuiaForestalAction extends ValidadorAction {
 					tipoProdFachada.recuperarTiposProductoForestalDTO());
 			request.setAttribute("estadosProductoForestal",
 					tipoProdFachada.getEstadosProductos());
+			request.setAttribute("especieProductoForestal",
+					tipoProdFachada.getEspecieProductos());						
 			request.setAttribute("productorForestal", productorForestal);
 			// request.setAttribute("rodal", rodal);
 			request.setAttribute("localizacion", localizacion);
@@ -148,7 +150,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", listaFiscalizacionesDTO);
 			request.setAttribute("subImportes",
 					hashProductosFiscalizados.values());
-			request.setAttribute("defaultEspecie", "Lenga");
+			//request.setAttribute("defaultEspecie", "Lenga");
+			
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");

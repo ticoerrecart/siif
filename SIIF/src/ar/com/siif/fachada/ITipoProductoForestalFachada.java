@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.com.siif.dto.TipoProductoDTO;
 import ar.com.siif.dto.TipoProductoForestalDTO;
+import ar.com.siif.enums.EspecieProducto;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.TipoProductoExportacion;
 import ar.com.siif.negocio.TipoProductoForestal;
@@ -28,6 +29,8 @@ public interface ITipoProductoForestalFachada {
 	public List<TipoProductoForestalDTO> recuperarTiposProductoForestalDTO();
 
 	public List<EstadoProducto> getEstadosProductos();
+	
+	public List<EspecieProducto> getEspecieProductos();
 
 	public boolean existeTipoProductoExportacion(
 			TipoProductoDTO tipoProdructoDTO);

@@ -1,5 +1,6 @@
 package ar.com.siif.dto;
 
+import ar.com.siif.enums.EspecieProducto;
 import ar.com.siif.enums.EstadoProducto;
 
 public class SubImporteDTO implements Comparable<SubImporteDTO> {
@@ -8,7 +9,7 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 
 	private EstadoProducto estado;
 
-	private String especie;
+	private EspecieProducto especie;
 
 	private double valorAforos;
 
@@ -48,14 +49,18 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 		this.estado = EstadoProducto.valueOf(estado);
 	}
 
-	public String getEspecie() {
+	public EspecieProducto getEspecie() {
 		return especie;
 	}
 
-	public void setEspecie(String especie) {
+	public void setEspecie(EspecieProducto especie) {
 		this.especie = especie;
 	}
 
+	public void setEspecieStr(String especie) {
+		this.especie = EspecieProducto.valueOf(especie);
+	}	
+	
 	public double getValorAforos() {
 		return valorAforos;
 	}
