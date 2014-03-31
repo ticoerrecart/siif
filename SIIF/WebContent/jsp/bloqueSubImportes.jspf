@@ -54,7 +54,7 @@
 									<input class="botonerab" size="47" type="text" readonly="readonly" value="${subImporte.estado.descripcion}">														
 								</td> 
 								<td>
-									<input class="botonerab" size="7" type="text" readonly="readonly" value="${subImporte.especie}">
+									<input class="botonerab" size="7" type="text" readonly="readonly" value="${subImporte.especie.descripcion}">
 								</td>
 								<td>
 									<input class="botonerab" size="9" type="text" readonly="readonly" value="${subImporte.cantidadMts}">									

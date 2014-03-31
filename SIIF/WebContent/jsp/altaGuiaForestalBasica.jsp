@@ -825,8 +825,14 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 													</select>
 												</td> 
 												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[${i.count-1}].especie" 
-															value="${defaultEspecie}" size="7">
+													<select name="listaSubImportes[${i.count-1}].especieStr" 
+															class="botonerab">
+														<c:forEach items="${especieProductoForestal}" var="especie">
+															<option value="<c:out value='${especie.name}'></c:out>">
+																<c:out value="${especie.descripcion}"></c:out>
+															</option>
+														</c:forEach>
+													</select>															
 												</td>
 												<td>
 													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" size="9" 
@@ -876,9 +882,15 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 														</c:forEach>
 													</select>																									
 												</td>
-												<td>
-													<input class="botonerab" type="text" name="listaSubImportes[0].especie" 
-															value="${defaultEspecie}" size="7">
+												<td>											 
+													<select name="listaSubImportes[0].especieStr" 
+															class="botonerab">
+														<c:forEach items="${especieProductoForestal}" var="especie">
+															<option value="<c:out value='${especie.name}'></c:out>">
+																<c:out value="${especie.descripcion}"></c:out>
+															</option>
+														</c:forEach>
+													</select>
 												</td>
 												<td>
 													<input id="idCantidadMts0" class="botonerab" type="text" size="9"
