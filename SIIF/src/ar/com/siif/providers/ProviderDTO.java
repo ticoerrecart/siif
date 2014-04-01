@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.dto.AforoDTO;
+import ar.com.siif.dto.AforoNuevoDTO;
 import ar.com.siif.dto.AreaDeCosechaDTO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.CertificadoOrigenDTO;
@@ -28,6 +29,7 @@ import ar.com.siif.dto.TipoProductoForestalDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.negocio.Aforo;
+import ar.com.siif.negocio.AforoNuevo;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.CertificadoOrigen;
 import ar.com.siif.negocio.Entidad;
@@ -71,7 +73,7 @@ public abstract class ProviderDTO {
 		entidadDTO.setCuit(entidad.getCuit());
 		entidadDTO.setCuil(entidad.getCuil());
 		entidadDTO.setDni(entidad.getDni());
-		entidadDTO.setTipoDocumento(entidad.getTipoDocumento());		
+		entidadDTO.setTipoDocumento(entidad.getTipoDocumento());
 		entidadDTO.setCodigoPostal(entidad.getCodigoPostal());
 
 		return entidadDTO;
@@ -111,8 +113,9 @@ public abstract class ProviderDTO {
 				.getLargoHasta());
 		tipoProductoForestalDTO.setEsDeExportacion(tipoProductoForestal
 				.isEsDeExportacion());
-		tipoProductoForestalDTO.setHabilitado(tipoProductoForestal.isHabilitado());
-		
+		tipoProductoForestalDTO.setHabilitado(tipoProductoForestal
+				.isHabilitado());
+
 		return tipoProductoForestalDTO;
 
 	}
@@ -234,11 +237,10 @@ public abstract class ProviderDTO {
 		fiscalizacionDTO.setTipoProducto(ProviderDTO
 				.getTipoProductoForestalDTO(fiscalizacion.getTipoProducto()));
 
-		for (OperacionFiscalizacion operacion : fiscalizacion.getOperaciones()){
+		for (OperacionFiscalizacion operacion : fiscalizacion.getOperaciones()) {
 			listaOperacionDTO.add(ProviderDTO.getOperacionFiscalizacionDTO(
-												operacion,
-												fiscalizacionDTO));						
-		}	
+					operacion, fiscalizacionDTO));
+		}
 		fiscalizacionDTO.setOperaciones(listaOperacionDTO);
 
 		fiscalizacionDTO.setPeriodoForestal(fiscalizacion.getPeriodoForestal());
@@ -565,6 +567,15 @@ public abstract class ProviderDTO {
 		certificadoDTO.setTiposProductoEnCertificado(listaTipoProdDTO);
 
 		return certificadoDTO;
+	}
+
+	public static AforoNuevoDTO getAforoNuevoDTO(AforoNuevo aforoNuevo) {
+		AforoNuevoDTO aforoNuevoDTO = new AforoNuevoDTO();
+		aforoNuevoDTO.setId(aforoNuevo.getId());
+		aforoNuevoDTO.setMonto(aforoNuevo.getMonto());
+		aforoNuevoDTO.setPorcentaje(aforoNuevo.getPorcentaje());
+		aforoNuevoDTO.setTipoDeAforo(aforoNuevo.getTipoDeAforo());
+		return aforoNuevoDTO;
 	}
 
 	/*

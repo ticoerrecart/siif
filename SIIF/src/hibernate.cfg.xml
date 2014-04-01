@@ -35,6 +35,7 @@
 		<mapping class='ar.com.siif.negocio.SinFinesDeLucro' />
 		<mapping class='ar.com.siif.negocio.Estancia' />
 		<mapping class='ar.com.siif.negocio.Aforo' />
+		<mapping class='ar.com.siif.negocio.AforoNuevo' />
 		<mapping class='ar.com.siif.negocio.Muestra' />
 		<mapping class='ar.com.siif.negocio.TipoProducto' />
 		<mapping class='ar.com.siif.negocio.TipoProductoForestal' />
