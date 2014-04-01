@@ -41,6 +41,7 @@
 		</form-bean>		
 		<form-bean name="localidadDestinoForm" type="ar.com.siif.struts.actions.forms.LocalidadDestinoForm">			
 		</form-bean>
+		<form-bean name="caminoForm" type="ar.com.siif.struts.actions.forms.CaminoForm"></form-bean>		
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -417,6 +418,16 @@
 			<forward name="exitoCargarCertificadoOrigen" path=".cargarCertificadoOrigen" />											
 		</action>
 		<!-- FIN CERTIFICADO ORIGEN -->		
+		
+			
+		<!-- CAMINO -->
+		<action path="/camino" type="ar.com.siif.struts.actions.CaminosAction"
+			parameter="metodo" name="caminoForm" scope="request">
+			<forward name="exitoInicializarAltaCamino" path=".altaCamino" />
+			<forward name="exitoAltaCamino" path="/camino.do?metodo=inicializarAltaCamino" />
+			<forward name="consultaSaldoCaminos" path=".consultaSaldoCaminos" />
+		</action>
+		<!-- FIN CAMINO -->		
 		
 		<!-- LOGS -->
 		<action path="/log" type="ar.com.siif.struts.actions.LogAction"

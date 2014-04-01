@@ -480,5 +480,7 @@ public class Constantes {
 	
 	public static final String NO_EXISTE_CERTIFICADO = "Certificado de Orígen no encontrado";
 
+	public static final Object EXITO_ALTA_CAMINO = "La compensación por construccion de camino de 2do Orden se ha dado de alta con exito";
+
 	
 }

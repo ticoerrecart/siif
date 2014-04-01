@@ -39,6 +39,8 @@ public interface IEntidadFachada {
 	public void modificacionEntidad(EntidadDTO entidad);
 
 	public List<EntidadDTO> getProductoresDTO();
+	
+	public List<Entidad> getProductores();
 
 	public boolean existeEntidadConMatricula(Long nroMatricula, Long id, String tipoEntidad);
 	

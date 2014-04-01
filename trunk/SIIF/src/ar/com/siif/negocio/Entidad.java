@@ -64,6 +64,18 @@ public class Entidad implements Comparable<Entidad> {
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<Localizacion> localizaciones;
 
+	@OneToMany(mappedBy = "productor")
+	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
+	private List<CaminoConstruido> caminos;
+
+	public double getSaldoXCaminos(){
+		double monto = 0.0;
+		for (CaminoConstruido camino : this.caminos) {
+			monto = monto + camino.getMonto();
+		}
+		return monto;
+	}
+	
 	/**
 	 * Cada subclase debe implementar éste método.
 	 * 
