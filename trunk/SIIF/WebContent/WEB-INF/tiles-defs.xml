@@ -228,7 +228,16 @@
 	</definition>
 
 	<!-- FIN AFORO -->
+	
+	
+	<!-- AFORO NUEVO-->
+	<definition name=".modificacionAforoNuevo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionAforoNuevo.jsp" />
+	</definition>
 
+	<!-- FIN AFORO NUEVO-->
+	
 	<!-- CONSULTAS GUIA FORESTAL -->
 
 	<definition name=".consultaGuiaForestalPorProductor"

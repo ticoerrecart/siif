@@ -16,6 +16,7 @@ import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.enums.TipoDeEntidad;
 
 @Entity
+@Deprecated
 public class Aforo {
 
 	@Id

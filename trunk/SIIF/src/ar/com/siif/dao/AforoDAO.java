@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.enums.EstadoProducto;
 import ar.com.siif.negocio.Aforo;
+import ar.com.siif.negocio.AforoNuevo;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.exception.NegocioException;
 import ar.com.siif.utils.Constantes;
@@ -54,13 +55,19 @@ public class AforoDAO extends HibernateDaoSupport {
 		Criteria criteria = getSession().createCriteria(Aforo.class);
 
 		criteria.createAlias("tipoProducto", "tipoP");
-		
+
 		criteria.addOrder(Order.asc("tipoProductor"));
 		criteria.addOrder(Order.asc("tipoP.nombre"));
 		criteria.addOrder(Order.asc("estado"));
-		
+
 		criteria.add(Restrictions.eq("tipoP.habilitado", true));
-		
+
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<AforoNuevo> recuperarAforosNuevos() {
+		Criteria criteria = getSession().createCriteria(AforoNuevo.class);
 		return criteria.list();
 	}
 
@@ -68,6 +75,11 @@ public class AforoDAO extends HibernateDaoSupport {
 	public Aforo recuperarAforo(Long id) {
 
 		return (Aforo) getSession().get(Aforo.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public AforoNuevo recuperarAforoNuevo(Long id) {
+		return (AforoNuevo) getSession().get(AforoNuevo.class, id);
 	}
 
 	public void modificacionAforo(Aforo aforo) throws NegocioException {

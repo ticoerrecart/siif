@@ -1,5 +1,6 @@
 package ar.com.siif.enums;
 
+@Deprecated
 public enum EstadoProducto {
 
 	/*BMP("Bosque Maduros Primarios"), BS(

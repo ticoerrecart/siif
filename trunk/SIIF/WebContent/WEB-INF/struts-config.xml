@@ -18,6 +18,8 @@
 		</form-bean>
 		<form-bean name="aforoForm" type="ar.com.siif.struts.actions.forms.AforoForm">
 		</form-bean>
+		<form-bean name="aforoNuevoForm" type="ar.com.siif.struts.actions.forms.AforoNuevoForm">
+		</form-bean>
 		<form-bean name="ubicacionForm"
 			type="ar.com.siif.struts.actions.forms.UbicacionForm">
 		</form-bean>
@@ -235,6 +237,22 @@
 			<forward name="exitoRecuperarAforo" path="/jsp/bloqueModificacionAforo.jsp" />
 		</action>
 		<!-- FIN AFORO -->
+		
+		<!-- AFORO NUEVO-->
+		<action path="/aforoNuevo" type="ar.com.siif.struts.actions.AforoNuevoAction"
+			parameter="metodo" name="aforoNuevoForm" scope="request">
+			<forward name="exitoAltaAforo" path="/recuperarAforoNuevo.do?metodo=cargarAltaAforo" />
+			<forward name="exitoModificacionAforo"
+				path="/recuperarAforoNuevo.do?metodo=cargarModificacionAforos" />
+		</action>
+
+		<action path="/recuperarAforoNuevo" type="ar.com.siif.struts.actions.AforoNuevoAction"
+			parameter="metodo">
+			<forward name="exitoCargarAltaAforo" path=".altaAforoNuevo" />
+			<forward name="exitoCargarModificacionAforos" path=".modificacionAforoNuevo" />
+			<forward name="exitoRecuperarAforo" path="/jsp/bloqueModificacionAforoNuevo.jsp" />
+		</action>
+		<!-- FIN AFORO NUEVO-->
 
 		<!-- ENTIDAD -->
 		<action path="/entidad" type="ar.com.siif.struts.actions.EntidadAction"
