@@ -166,6 +166,10 @@ public class EntidadFachada implements IEntidadFachada {
 		return listaEntidadesDTO;
 	}
 	
+	public List<Entidad> getProductores(){
+		return entidadDAO.getProductores();
+	}
+	
 	public boolean existeEntidadConMatricula(Long nroMatricula, Long id, String tipoEntidad){
 		return entidadDAO.existeEntidadConMatricula(nroMatricula, id, tipoEntidad);
 	}

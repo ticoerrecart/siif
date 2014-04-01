@@ -481,6 +481,17 @@
 		<put name="body" value="/jsp/mostrarAltaNroCertificado.jsp" />
 	</definition>			
 	<!-- FIN CERTIFICADO ORIGEN -->
+	
+	<!-- CAMINO -->
+	<definition name=".altaCamino" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaCamino.jsp" />
+	</definition>
+	<definition name=".consultaSaldoCaminos" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/consultaSaldoCaminos.jsp" />
+	</definition>			
+	<!-- FIN CAMINO -->
 
 	<definition name=".error" extends=".base">
 		<put name="title" value="Error en SIIFs" />
