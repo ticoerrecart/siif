@@ -53,6 +53,7 @@
 		<mapping class='ar.com.siif.negocio.TipoProductoEnCertificado' />
 		<mapping class='ar.com.siif.negocio.OperacionFiscalizacion' />
 		<mapping class='ar.com.siif.negocio.OperacionGuiaForestal' />
+		<mapping class='ar.com.siif.negocio.CaminoConstruido' />
 		
 	</session-factory>
 </hibernate-configuration>
