@@ -75,6 +75,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 	<bean id="reportesPorProductoDAO" class="ar.com.siif.dao.ReportesPorProductoDAO" parent="abstractRepository" />
 	<bean id="reportesRecaudacionDAO" class="ar.com.siif.dao.ReportesRecaudacionDAO" parent="abstractRepository" />
 	<bean id="certificadoDeOrigenDAO" class="ar.com.siif.dao.CertificadoDeOrigenDAO" parent="abstractRepository" />
+	<bean id="caminoDAO" class="ar.com.siif.dao.CaminoDAO" parent="abstractRepository" />
 	
 	
 	<!--  *******************-->
@@ -548,6 +549,27 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		</property>
 	</bean>	
 
+	<bean id="caminoFachadaImpl" class="ar.com.siif.fachada.CaminoFachada">
+		<constructor-arg ref="caminoDAO" />
+	</bean>	
+	
+	<bean id="caminoFachada"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="proxyTargetClass" value="true" />
+		<property name="target">
+			<ref bean="caminoFachadaImpl" />
+		</property>
+		<property name="proxyInterfaces" value="ar.com.siif.fachada.ICaminoFachada" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+			</props>
+		</property>
+	</bean>	
+	
 	<!--  *******************-->
 	<!--       Parameters    -->
 	<!--  *******************-->
