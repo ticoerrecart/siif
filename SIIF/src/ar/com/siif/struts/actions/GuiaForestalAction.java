@@ -24,6 +24,7 @@ import ar.com.siif.dto.PeriodoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.UsuarioDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.enums.TipoDeAforo;
 import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.fachada.IConsultasPorProductorFachada;
 import ar.com.siif.fachada.IEntidadFachada;
@@ -101,11 +102,7 @@ public class GuiaForestalAction extends ValidadorAction {
 
 				localizacion = ProviderDTO
 						.getLocalizacionDTO(getLocalizacionMayor(fiscalizaciones));
-			}/*
-			 * else { listaPMFs =
-			 * ubicacionFachada.getPMFsDTO(guiaForm.getGuiaForestal()
-			 * .getProductorForestal().getId()); }
-			 */
+			}
 
 			List<FiscalizacionDTO> listaFiscalizacionesDTO = new ArrayList<FiscalizacionDTO>();
 			HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
@@ -139,10 +136,12 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getPeriodoForestal());
 			request.setAttribute("tiposProductosForestales",
 					tipoProdFachada.recuperarTiposProductoForestalDTO());
-			request.setAttribute("estadosProductoForestal",
-					tipoProdFachada.getEstadosProductos());
+			/*
+			 * request.setAttribute("estadosProductoForestal",
+			 * tipoProdFachada.getEstadosProductos());
+			 */
 			request.setAttribute("especieProductoForestal",
-					tipoProdFachada.getEspecieProductos());						
+					tipoProdFachada.getEspecieProductos());
 			request.setAttribute("productorForestal", productorForestal);
 			// request.setAttribute("rodal", rodal);
 			request.setAttribute("localizacion", localizacion);
@@ -150,8 +149,9 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("fiscalizaciones", listaFiscalizacionesDTO);
 			request.setAttribute("subImportes",
 					hashProductosFiscalizados.values());
-			//request.setAttribute("defaultEspecie", "Lenga");
-			
+			// request.setAttribute("defaultEspecie", "Lenga");
+
+			request.setAttribute("tiposDeAforo", getTiposDeAforo());
 		} catch (Throwable t) {
 			MyLogger.logError(t);
 			request.setAttribute("error", "Error Inesperado");
@@ -159,6 +159,18 @@ public class GuiaForestalAction extends ValidadorAction {
 		}
 
 		return mapping.findForward(strForward);
+	}
+
+	private List<TipoDeAforo> getTiposDeAforo() {
+		List<TipoDeAforo> tiposDeAforo = new ArrayList<TipoDeAforo>();
+		tiposDeAforo.add(TipoDeAforo.BASICO);
+		tiposDeAforo.add(TipoDeAforo.ESTRUCTURA_IRREGULAR);
+		tiposDeAforo.add(TipoDeAforo.MAT_CAIDO_O_TRAT_SILVIC_INCOMPL);
+		tiposDeAforo.add(TipoDeAforo.PM_SILVOPASTORIL);
+		tiposDeAforo.add(TipoDeAforo.USO_COMERCIAL);
+		tiposDeAforo.add(TipoDeAforo.USO_EN_EL_LUGAR);
+		tiposDeAforo.add(TipoDeAforo.CLASIFICACION_DIAMETROS);
+		return tiposDeAforo;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -181,12 +193,12 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getBean("guiaForestalFachada");
 
 			GuiaForestalForm guiaForm = (GuiaForestalForm) form;
-			
-			// valido nuevamente por seguridad.  
+
+			// valido nuevamente por seguridad.
 			if (!validarAltaGuiaForestalBasicaForm(new StringBuffer(), guiaForm)) {
 				throw new Exception("Error de Seguridad");
-			}			
-			
+			}
+
 			GuiaForestalDTO guiaForestal = guiaForm.getGuiaForestal();
 
 			guiaForestal.getOperacionAlta().setUsuario(usr);
@@ -200,12 +212,13 @@ public class GuiaForestalAction extends ValidadorAction {
 			if (fecha != null && !"".equals(fecha)) {
 				dFecha = Fecha.stringDDMMAAAAToUtilDate(fecha);
 			}
-			
-			//Es para el caso en que carguen guias con importe en 0.0, para alguna donacion, etc
-			if(guiaForestal.getImporteTotal() == 0.0){
+
+			// Es para el caso en que carguen guias con importe en 0.0, para
+			// alguna donacion, etc
+			if (guiaForestal.getImporteTotal() == 0.0) {
 				guiaForm.setBoletasDeposito(new ArrayList<BoletaDepositoDTO>());
 			}
-			
+
 			guiaForestalFachada.altaGuiaForestalBasica(guiaForestal,
 					guiaForm.getBoletasDeposito(), guiaForm.getRangos(),
 					dFecha, guiaForm.getListaFiscalizaciones(),
@@ -339,7 +352,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
 			String idPeriodo = request.getParameter("idPeriodo");
-			
+
 			IEntidadFachada entidadFachada = (IEntidadFachada) ctx
 					.getBean("entidadFachada");
 
@@ -528,12 +541,13 @@ public class GuiaForestalAction extends ValidadorAction {
 			IGuiaForestalFachada guiaForestalFachada = (IGuiaForestalFachada) ctx
 					.getBean("guiaForestalFachada");
 			GuiaForestalForm guiaForestalForm = (GuiaForestalForm) form;
-			
-			// valido nuevamente por seguridad.  
-			if (!validarModificacionGuiaForestalBasicaForm(new StringBuffer(), guiaForestalForm)) {
+
+			// valido nuevamente por seguridad.
+			if (!validarModificacionGuiaForestalBasicaForm(new StringBuffer(),
+					guiaForestalForm)) {
 				throw new Exception("Error de Seguridad");
-			}			
-			
+			}
+
 			UsuarioDTO usr = (UsuarioDTO) request.getSession().getAttribute(
 					Constantes.USER_LABEL_SESSION);
 			GuiaForestalDTO guiaForestal = guiaForestalForm.getGuiaForestal();
@@ -633,8 +647,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasAforo(Long
-							.parseLong(idProductor), idPeriodo);
+					.recuperarGuiasForestalesConDeudasAforo(
+							Long.parseLong(idProductor), idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -801,7 +815,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idTipoDeEntidad = request.getParameter("idTipoDeEntidad");
 			String idProductor = request.getParameter("idProductor");
 			String idPeriodo = request.getParameter("idPeriodo");
-			
+
 			request.setAttribute("productores", productores);
 			request.setAttribute("forwardBuscarNroGuia", forwardBuscarNroGuia);
 			request.setAttribute("tiposDeEntidad",
@@ -839,8 +853,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			String idPeriodo = request.getParameter("idPeriodo");
 
 			List<GuiaForestalDTO> guiasForestales = consultasPorProductorFachada
-					.recuperarGuiasForestalesConDeudasVales(Long
-							.parseLong(idProductor),idPeriodo);
+					.recuperarGuiasForestalesConDeudasVales(
+							Long.parseLong(idProductor), idPeriodo);
 
 			request.setAttribute("guiasForestales", guiasForestales);
 			request.setAttribute("paramForward", paramForward);
@@ -1637,9 +1651,11 @@ public class GuiaForestalAction extends ValidadorAction {
 					guiaForestalForm.getListaFiscalizaciones(),
 					guiaForestalForm.getTipoTerreno(), error);
 
-			/*ok4 = Validator.validarDoubleMayorQue(0, String
-					.valueOf(guiaForestalForm.getGuiaForestal()
-							.getImporteTotal()), "Importe Total", error);*/
+			/*
+			 * ok4 = Validator.validarDoubleMayorQue(0, String
+			 * .valueOf(guiaForestalForm.getGuiaForestal() .getImporteTotal()),
+			 * "Importe Total", error);
+			 */
 
 			double montoTotal = guiaForestalForm.getGuiaForestal()
 					.getImporteTotal();
@@ -1853,10 +1869,10 @@ public class GuiaForestalAction extends ValidadorAction {
 
 			double montoTotal = guiaForestalForm.getGuiaForestal()
 					.getImporteTotal();
-			
+
 			ok3 = Validator.validarBoletasDeposito(
 					guiaForestalForm.getBoletasDeposito(), montoTotal, error);
-			
+
 			if (guiaForestalForm.getRangos().size() > 0) {
 				ok6 = Validator.requerido(
 						guiaForestalForm.getFechaVencimiento(),
@@ -1891,16 +1907,18 @@ public class GuiaForestalAction extends ValidadorAction {
 					guiaForestal.getValesTransporte(), error);
 
 			okGlobal = ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6;
-			
+
 			if (okGlobal) {
-				String errorGuia = guiaFachada.validarGuiaAsociadaAFiscalizacion(guiaForestalForm.getGuiaForestal());
+				String errorGuia = guiaFachada
+						.validarGuiaAsociadaAFiscalizacion(guiaForestalForm
+								.getGuiaForestal());
 				if (!"".equals(errorGuia)) {
 					error.append("\n" + "<errorGuia>" + errorGuia
 							+ "</errorGuia>");
 					ok7 = false;
 				}
 			}
-			
+
 			return okGlobal && ok7;
 
 		} catch (Throwable t) {

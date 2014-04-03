@@ -1,13 +1,12 @@
 package ar.com.siif.dto;
 
 import ar.com.siif.enums.EspecieProducto;
-import ar.com.siif.enums.EstadoProducto;
 
-public class SubImporteDTO implements Comparable<SubImporteDTO> {
+public class SubImporteDTO {
 
 	private Long id;
 
-	private EstadoProducto estado;
+	private boolean comercializaDentroProvincia;
 
 	private EspecieProducto especie;
 
@@ -37,16 +36,13 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 		this.id = id;
 	}
 
-	public EstadoProducto getEstado() {
-		return estado;
+	public boolean isComercializaDentroProvincia() {
+		return comercializaDentroProvincia;
 	}
 
-	public void setEstado(EstadoProducto estado) {
-		this.estado = estado;
-	}
-
-	public void setEstadoStr(String estado) {
-		this.estado = EstadoProducto.valueOf(estado);
+	public void setComercializaDentroProvincia(
+			boolean comercializaDentroProvincia) {
+		this.comercializaDentroProvincia = comercializaDentroProvincia;
 	}
 
 	public EspecieProducto getEspecie() {
@@ -59,8 +55,8 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 
 	public void setEspecieStr(String especie) {
 		this.especie = EspecieProducto.valueOf(especie);
-	}	
-	
+	}
+
 	public double getValorAforos() {
 		return valorAforos;
 	}
@@ -107,16 +103,5 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 
 	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
-	}
-
-	public int compareTo(SubImporteDTO o) {
-
-		if (this.getTipoProducto().getId().longValue() == o.getTipoProducto()
-				.getId().longValue()
-				&& this.getEstado().equals(o.getEstado())) {
-
-			return 0;
-		}
-		return 1;
 	}
 }

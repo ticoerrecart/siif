@@ -7,9 +7,7 @@ public enum TipoDeAforo {
 	USO_EN_EL_LUGAR("Productos de Lenga, Ñire, Guindo para uso en el lugar"),
 	USO_COMERCIAL("Leña de uso comercial, de Lenga, Ñire o Guindo"), 
 	ESTRUCTURA_IRREGULAR("Productos forestales de Lenga o Guindo provenientes de bosques Juveniles y bosques secundario de estructura irregular"),
-	CLASIFICACION_DIAMETROS("Productos forestales de Lenga o guindo, con clasificación de diámetros"),
-	CLASIFICACION_DIAMETROS_ROLL_M_20("Productos forestales de Lenga o guindo, con clasificación de diámetros (ROLLIZOS < 20)"),
-	CLASIFICACION_DIAMETROS_FUS_M_25("Productos forestales de Lenga o guindo, con clasificación de diámetros (FUSTES < 25)");
+	CLASIFICACION_DIAMETROS("Productos forestales de Lenga o guindo, con clasificación de diámetros");
 	
 	private String descripcion;
 	

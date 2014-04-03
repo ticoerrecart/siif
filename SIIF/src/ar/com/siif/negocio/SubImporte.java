@@ -13,7 +13,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import ar.com.siif.enums.EspecieProducto;
-import ar.com.siif.enums.EstadoProducto;
 
 @Entity
 public class SubImporte {
@@ -22,8 +21,7 @@ public class SubImporte {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Enumerated(EnumType.STRING)
-	private EstadoProducto estado;
+	private boolean comercializaDentroProvincia;
 
 	@Enumerated(EnumType.STRING)
 	private EspecieProducto especie;
@@ -46,12 +44,13 @@ public class SubImporte {
 	@JoinColumn(name = "guiaForestal_fk")
 	private GuiaForestal guiaForestal;
 
-	public EstadoProducto getEstado() {
-		return estado;
+	public boolean isComercializaDentroProvincia() {
+		return comercializaDentroProvincia;
 	}
 
-	public void setEstado(EstadoProducto estado) {
-		this.estado = estado;
+	public void setComercializaDentroProvincia(
+			boolean comercializaDentroProvincia) {
+		this.comercializaDentroProvincia = comercializaDentroProvincia;
 	}
 
 	public double getValorAforos() {

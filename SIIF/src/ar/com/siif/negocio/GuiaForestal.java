@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import ar.com.siif.enums.TipoDeAforo;
 
 @Entity
 public class GuiaForestal {
@@ -41,6 +45,9 @@ public class GuiaForestal {
 
 	private String observaciones;
 
+	@Enumerated(EnumType.STRING)
+	private TipoDeAforo tipoDeAforo;
+
 	@ManyToOne()
 	@Cascade(value = { CascadeType.ALL, CascadeType.DELETE_ORPHAN })
 	@JoinColumn(name = "localidad_fk")
@@ -59,33 +66,36 @@ public class GuiaForestal {
 	private Entidad productorForestal;
 
 	@OneToMany(mappedBy = "guiaForestal")
-	@Cascade(value = {CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN })
+	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<ValeTransporte> valesTransporte = new ArrayList<ValeTransporte>();
 
 	@OneToMany(mappedBy = "guiaForestal")
-	@Cascade(value = {CascadeType.SAVE_UPDATE,CascadeType.DELETE_ORPHAN })
+	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<BoletaDeposito> boletasDeposito = new ArrayList<BoletaDeposito>();
 
-	/*@ManyToOne()
-	@Cascade(value = CascadeType.SAVE_UPDATE)
-	@JoinColumn(name = "usuarioAlta_fk")
-	private Usuario usuarioAlta;*/
+	/*
+	 * @ManyToOne()
+	 * 
+	 * @Cascade(value = CascadeType.SAVE_UPDATE)
+	 * 
+	 * @JoinColumn(name = "usuarioAlta_fk") private Usuario usuarioAlta;
+	 */
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionAlta_fk")
-	private OperacionGuiaForestal operacionAlta;	
+	private OperacionGuiaForestal operacionAlta;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionModificacion_fk")
-	private OperacionGuiaForestal operacionModificacion;	
+	private OperacionGuiaForestal operacionModificacion;
 
 	@ManyToOne()
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "operacionAnulacion_fk")
-	private OperacionGuiaForestal operacionAnulacion;	
-	
+	private OperacionGuiaForestal operacionAnulacion;
+
 	@OneToMany(mappedBy = "guiaForestal")
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<Fiscalizacion> fiscalizaciones;
@@ -174,13 +184,12 @@ public class GuiaForestal {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	/*public Usuario getUsuarioAlta() {
-		return usuarioAlta;
-	}
-
-	public void setUsuarioAlta(Usuario usuario) {
-		this.usuarioAlta = usuario;
-	}*/
+	/*
+	 * public Usuario getUsuarioAlta() { return usuarioAlta; }
+	 * 
+	 * public void setUsuarioAlta(Usuario usuario) { this.usuarioAlta = usuario;
+	 * }
+	 */
 
 	public Long getId() {
 		return id;
@@ -266,7 +275,8 @@ public class GuiaForestal {
 		return operacionModificacion;
 	}
 
-	public void setOperacionModificacion(OperacionGuiaForestal operacionModificacion) {
+	public void setOperacionModificacion(
+			OperacionGuiaForestal operacionModificacion) {
 		this.operacionModificacion = operacionModificacion;
 	}
 
@@ -276,6 +286,14 @@ public class GuiaForestal {
 
 	public void setOperacionAnulacion(OperacionGuiaForestal operacionAnulacion) {
 		this.operacionAnulacion = operacionAnulacion;
+	}
+
+	public TipoDeAforo getTipoDeAforo() {
+		return tipoDeAforo;
+	}
+
+	public void setTipoDeAforo(TipoDeAforo tipoDeAforo) {
+		this.tipoDeAforo = tipoDeAforo;
 	}
 
 }

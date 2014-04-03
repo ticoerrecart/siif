@@ -17,6 +17,8 @@ public interface IAforoFachada {
 	public Aforo recuperarAforo(Long id);
 
 	public AforoNuevo recuperarAforoNuevo(Long id);
+	
+	public AforoNuevo recuperarAforoNuevoBasico();
 
 	public void modificacionAforo(AforoDTO aforoDTO) throws NegocioException;
 

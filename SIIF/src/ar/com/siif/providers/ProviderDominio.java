@@ -429,7 +429,7 @@ public abstract class ProviderDominio {
 		subImporte.setCantidadMts(subImporteDTO.getCantidadMts());
 		subImporte.setCantidadUnidades(subImporteDTO.getCantidadUnidades());
 		subImporte.setEspecie(subImporteDTO.getEspecie());
-		subImporte.setEstado(subImporteDTO.getEstado());
+		subImporte.setComercializaDentroProvincia(subImporteDTO.isComercializaDentroProvincia());
 		subImporte.setGuiaForestal(guia);
 		subImporte.setImporte(subImporteDTO.getImporte());
 		subImporte.setTipoProducto(tipoProducto);

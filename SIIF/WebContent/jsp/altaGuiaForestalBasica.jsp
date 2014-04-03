@@ -178,22 +178,37 @@ function removerVale(){
 }
 
 var idRenglon;
-function cambiarEstado(ind){
+function cambiarTipoDeAforoSegunEstado(ind){
 
-	var estado = $('#idEstado'+ind).val();
-	var idTipoProducto = $('#selectTiposDeProductos'+ind).val();
-	
-	var idProdForestal = $('#idProductor').val();
-
-	if(estado != ""){
-		idRenglon = ind;
-		//AforoFachada.getValor(estado,idTipoProducto,idProdForestal,actualizarImporteCallback );
+	var tipoDeAforo = $('#tipoDeAforo').val();
+	//alert(tipoDeAforo)
+	var comercializaEnProvincia = $('#comercializaEnProvincia'+ind).is(':checked') ;
+	//alert(comercializaEnProvincia)
+	idRenglon = ind;
 		
-		AforoFachada.getValor(estado,idTipoProducto,idProdForestal, 
-			{callback : actualizarImporteCallback,
-			 async : false}
-		);
+	AforoFachada.getValorAforoNuevo(tipoDeAforo, comercializaEnProvincia, 
+		{callback : actualizarImporteCallback,
+		 async : false}
+	);
+}
+
+
+function cambiarTipoDeAforo(){
+
+	var tipoDeAforo = $('#tipoDeAforo').val();
+	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+	alert(j)
+	for(var i=0; i<=j;i++){
+		alert(i);
+		var comercializaEnProvincia = $('#comercializaEnProvincia'+i).is(':checked') ;
+		alert(comercializaEnProvincia)
+		cambiarTipoDeAforoSegunEstado(i);
 	}
+		
+	/*AforoFachada.getValor(tipoDeAforo, comercializaEnProvincia, 
+		{callback : actualizarImporteCallback,
+		 async : false}
+	);*/
 }
 
 function actualizarImporteCallback(valor){
@@ -345,7 +360,7 @@ function agregarFila() {
 	
 
 	$("input[name='listaSubImportes[" + k + "].especie']").val("${defaultEspecie}");
-	cambiarEstado(k);
+	cambiarTipoDeAforo(k);
 }
 
 function removerFila() {
@@ -489,7 +504,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 							<td align="left">
 								<input value="${localizacion.tipoTerreno}" id="tipoTerreno" name="tipoTerreno"
 										class="botonerab" type="text" size="40" readonly="readonly">
-							</td>							
+							</td>
 						</tr>
 						<tr>
 							<td height="10" colspan="4"></td>
@@ -539,7 +554,8 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 							<td colspan="2">
 							
 							</td>
-						</tr>		
+						</tr>
+
 						<tr>
 							<td height="10" colspan="4"></td>
 						</tr>
@@ -576,10 +592,9 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 										<option value="0">--Seleccione una Opcion de Zona--</option>
 										<option value="1">--PMF--</option>
 										<option value="2">--Area de Cosecha--</option>
-									</select>	
-									<!--input type="hidden" id="idLocalizacion" name="fiscalizacionDTO.idLocalizacion" /-->				
-								</td>						
-							</tr>				
+									</select>
+								</td>
+							</tr>			
 		
 							<tr class="area" style="display: none">
 								<td width="47%"  class="botoneralNegritaRight"><bean:message key='SIIF.label.AreaDeCosecha'/></td>
@@ -648,15 +663,31 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 											
 							
 				<tr>
-					<td width="47%" class="botoneralNegritaRight">
+					<td width="25%" class="botoneralNegritaRight">
 						<bean:message key='SIIF.label.TipoTerreno'/>
 					</td>
-					<td width="4%"></td>
-					<td align="left">
+					<td align="left" width="75%">
 						<input type="text" id="tipoTerreno" value="" name="tipoTerreno" readonly="readonly"
 							class="botonerab" type="text" size="15">
 					</td>
 				</tr>
+				
+				<!-- TIPO DE AFORO -->
+				<tr>
+					<td width="25%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
+					<td  align="left" width="75%">
+						<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});"
+													property="guiaForestal.tipoDeAforo" 
+													styleClass="botonerab">
+							<c:forEach items="${tiposDeAforo}" var="tipoDeAforo">
+								<html:option value="${tipoDeAforo}">
+									<c:out value="${tipoDeAforo.descripcion}"/>
+								</html:option>
+							</c:forEach>
+						</html:select>
+					</td>
+				</tr>
+
 				<tr>
 					<td colspan="3" height="10"></td>
 				</tr>				
@@ -803,7 +834,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 												<td>
 													<input class="ind" type="hidden" value="${i.count-1}">		
 																	
-													<html:select styleId="selectTiposDeProductos${i.count-1}" onchange="cambiarEstado(${i.count-1});"
+													<html:select styleId="selectTiposDeProductos${i.count-1}"
 															property="listaSubImportes[${i.count-1}].tipoProducto.id" 
 															styleClass="botonerab" value="${subImporte.tipoProducto.id}">
 																																											
@@ -815,15 +846,8 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 													</html:select>															
 												</td>
 												<td>
-													<select id="idEstado${i.count-1}" name="listaSubImportes[${i.count-1}].estadoStr" 
-															class="botonerab" onchange="cambiarEstado(${i.count-1});">
-														<c:forEach items="${estadosProductoForestal}" var="estado">
-															<option value="<c:out value='${estado.name}'></c:out>">
-																<c:out value="${estado.descripcion}"></c:out>
-															</option>
-														</c:forEach>
-													</select>
-												</td> 
+													Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
+												</td>
 												<td>
 													<select name="listaSubImportes[${i.count-1}].especieStr" 
 															class="botonerab">
@@ -864,7 +888,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 												<td>
 													<input class="ind" type="hidden" value="0">										
 													<select id="selectTiposDeProductos0" name="listaSubImportes[0].tipoProducto.id" 
-															class="botonerab" onchange="cambiarEstado(0);">
+															class="botonerab">
 														<c:forEach items="${tiposProductosForestales}" var="tipoProducto" varStatus="i">
 															<option value="<c:out value='${tipoProducto.id}'></c:out>">
 																<c:out value="${tipoProducto.nombre}"></c:out>
@@ -873,14 +897,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 													</select>												
 												</td>
 												<td>
-													<select id="idEstado0" name="listaSubImportes[0].estadoStr" class="botonerab" 
-														onchange="cambiarEstado(0);">									
-														<c:forEach items="${estadosProductoForestal}" var="estado" varStatus="i">
-															<option value="<c:out value='${estado.name}'></c:out>">
-																<c:out value="${estado.descripcion}"></c:out>
-															</option>
-														</c:forEach>
-													</select>																									
+													Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>																									
 												</td>
 												<td>											 
 													<select name="listaSubImportes[0].especieStr" 
@@ -912,7 +929,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 											</tr>	
 	
 											<script>
-												cambiarEstado(0);
+												cambiarTipoDeAforoSegunEstado(0);
 											</script>
 								
 									</c:otherwise>
@@ -947,7 +964,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 							<%--RECIEN ACA ESTAN CREADOS LOS CAMPOS DE porcentaje e importeTotal, asi que aca tengo que llamar a cambiarEstado, porq actualiza esos campos --%>
 							<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
 								<script>
-									cambiarEstado(${i.count-1});
+									cambiarTipoDeAforo(${i.count-1});
 								</script>
 							</c:forEach>
 						</td>					
