@@ -104,6 +104,8 @@ public class GuiaForestal {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private List<SubImporte> subImportes;
 
+	private double compensacionCaminos;
+	
 	public GuiaForestal() {
 
 		boletasDeposito = new ArrayList<BoletaDeposito>();
@@ -286,6 +288,14 @@ public class GuiaForestal {
 
 	public void setOperacionAnulacion(OperacionGuiaForestal operacionAnulacion) {
 		this.operacionAnulacion = operacionAnulacion;
+	}
+
+	public double getCompensacionCaminos() {
+		return compensacionCaminos;
+	}
+
+	public void setCompensacionCaminos(double compensacionCaminos) {
+		this.compensacionCaminos = compensacionCaminos;
 	}
 
 	public TipoDeAforo getTipoDeAforo() {

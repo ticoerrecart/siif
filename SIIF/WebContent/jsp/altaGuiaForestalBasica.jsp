@@ -279,7 +279,13 @@ function calcularTotales(){
 		}		
 		var porcentaje = parseFloat(sumaImportes*0.2);
 		$('#idPorcentaje').val(new Number(porcentaje).toFixed(2));		
-		$('#idTotal').val(new Number(parseFloat($('#idPorcentaje').val())).toFixed(2));		
+		
+		var compensacion = parseFloat($('#compXcaminos').val());
+		if (isNaN(compensacion)){
+			compensacion = 0;
+		}
+		var total = porcentaje - compensacion;
+		$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));		
 	}
 	else{	
 		for ( var i = 0; i <= j; i++) {
@@ -294,9 +300,14 @@ function calcularTotales(){
 		}
 		else{
 			var porcentaje = parseFloat(sumaImportes*0.2);
-			
 			$('#idPorcentaje').val(new Number(porcentaje).toFixed(2));
-			$('#idTotal').val(new Number(parseFloat(sumaImportes * 1.2)).toFixed(2));
+
+			var compensacion = parseFloat($('#compXcaminos').val());
+			if (isNaN(compensacion)){
+				compensacion = 0;
+			}
+			var total = (sumaImportes * 1.2) - compensacion;
+			$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));
 		}	
 	}
 }
@@ -395,7 +406,7 @@ function actualizarTipoTerrenoPMF(){
 	idPMF = $('#idPMF').val();
 	if (idPMF > 0) {
 		UbicacionFachada.getTipoTerrenoPMF(idPMF,
-				actualizarTipoTerrenoCallback);
+				actualizarTipoTerrenoCallback);  
 	}
 	$('#tipoTerreno').val("");		
 }
@@ -423,6 +434,15 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 	}
 		
 	calcularTotales();
+}
+
+
+function showCompensacion() {
+	$('#usarCompensacion').hide();
+	$('#compensacion').show();
+	$('#compXcaminos').val($('#saldoXCaminos').val());
+	calcularTotales();
+	
 }
 
 //-----------------------------------------------------//
@@ -957,6 +977,7 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 								<tr>
 									<td colspan="2">&nbsp;</td>
 								</tr>
+								
 								<tr>
 									<td align="right"width="82%">
 										<bean:message key='SIIF.label.DerechoInspFisca'/>
@@ -966,6 +987,28 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 											class="botonerab" type="text">
 									</td>
 								</tr> 
+						<c:if test="${entidad.saldoXCaminos gt 0}">		
+								<tr id="usarCompensacion">
+									<td align="right"width="82%">
+										Desea usar Compensación por Construccion de Caminos de 2do Orden?
+									</td>
+									<td width="18%" align="left">
+										<input class="botonerab" type="checkbox" onclick="showCompensacion();">
+									</td>
+								</tr> 
+	
+	
+								<tr id="compensacion" style="display: none">
+									<td align="right"width="82%">
+										Compensación por Construccion de Caminos de 2do Orden
+									</td>
+									<td width="18%">
+										<input type="hidden" id="saldoXCaminos" value="${entidad.saldoXCaminos}"/>
+										<input id="compXcaminos" name="guiaForestal.compensacionCaminos" class="botonerab" type="text" value="0" onchange="calcularTotales();">
+									</td>
+								</tr> 
+							</c:if>
+							
 								<tr>
 									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
 									<td>

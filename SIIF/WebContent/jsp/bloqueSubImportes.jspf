@@ -81,6 +81,16 @@
 									<input value="${guiaForestal.inspFiscalizacion}" readonly="readonly" class="botonerab" type="text">
 								</td>
 							</tr> 
+							
+							<tr>
+								<td align="right"width="82%">
+									Compensación por Construccion de Caminos de 2do Orden
+								</td>
+								<td width="18%">
+									<input value="${guiaForestal.compensacionCaminos}" class="botonerab" type="text">
+								</td>
+							</tr> 
+							
 							<tr>
 								<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
 								<td>
