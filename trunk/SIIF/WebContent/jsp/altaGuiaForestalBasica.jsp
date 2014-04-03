@@ -197,11 +197,11 @@ function cambiarTipoDeAforo(){
 
 	var tipoDeAforo = $('#tipoDeAforo').val();
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
-	alert(j)
+	//alert(j)
 	for(var i=0; i<=j;i++){
-		alert(i);
+		//alert(i);
 		var comercializaEnProvincia = $('#comercializaEnProvincia'+i).is(':checked') ;
-		alert(comercializaEnProvincia)
+		//alert(comercializaEnProvincia)
 		cambiarTipoDeAforoSegunEstado(i);
 	}
 		
@@ -360,7 +360,7 @@ function agregarFila() {
 	
 
 	$("input[name='listaSubImportes[" + k + "].especie']").val("${defaultEspecie}");
-	cambiarTipoDeAforo(k);
+	cambiarTipoDeAforoSegunEstado(k);
 }
 
 function removerFila() {
