@@ -44,19 +44,10 @@ function cambioComboZona() {
 		$(".area").hide();
 		$(".plan").hide();
 	} else {
-		var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
-		
 		if (zmf == 1) {
 			$(".plan").show();
 			$(".area").hide();
 			$('#idArea').val(-1);
-			
-			//PMF oculta este TD
-			for(var i=0; i<=j;i++){
-				$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvincia']").attr("checked",false);
-				$("#comercializaEnProvinciaTD" + i).hide();
-			}
-
 			actualizarComboPMF();
 		}
 		if (zmf == 2) {
@@ -66,19 +57,11 @@ function cambioComboZona() {
 			$('#idTranzon').val(-1);
 			$('#idMarcacion').val(-1);
 			$('#idRodal').val(-1);
-			
-			//AREA muestra este TD
-			for(var i=0; i<=j;i++){
-				$("#comercializaEnProvinciaTD" + i).show();
-			}
-				
-				
 			actualizarComboArea();
 		}
 	}
 
 }
-
 
 function actualizarComboArea() {
 	idPF = $('#idProductor').val();

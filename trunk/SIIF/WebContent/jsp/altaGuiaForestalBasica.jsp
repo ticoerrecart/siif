@@ -206,8 +206,7 @@ function cambiarTipoDeAforo(){
 
 		if($("#tipoDeAforo").val() == 'ESTRUCTURA_IRREGULAR' ||
 			$("#tipoDeAforo").val() == 'MAT_CAIDO_O_TRAT_SILVIC_INCOMPL' ||
-			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS' ||
-			$("#idZMF").val()==2){
+			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
 			$("#comercializaEnProvinciaTD" + i).show();
 		}else{
 			$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvincia']").attr("checked",false);
