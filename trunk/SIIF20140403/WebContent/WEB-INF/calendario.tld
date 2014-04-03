@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "web-jsptaglibrary_1_2.dtd" >
+<taglib>
+  <tlib-version>tlib-version</tlib-version>
+  <jsp-version>jsp-version</jsp-version>
+  <short-name>cal</short-name>
+  <tag>
+    <name>cal</name>
+    <tag-class>ar.com.siif.tags.Calendario</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+    	<name>propiedad</name>
+    	<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+    	<name>formato</name>
+    	<required>true</required>
+    </attribute>
+    <attribute>
+    	<name>name</name>
+    	<required>true</required> 
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>     
+  </tag>
+</taglib>

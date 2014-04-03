@@ -1,0 +1,115 @@
+<!DOCTYPE dwr PUBLIC
+    "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
+    "http://getahead.org/dwr/dwr30.dtd">
+
+<dwr>
+	<allow>
+		<convert converter="bean" match="ar.com.siif.negocio.PMF">
+			<param name="include" value="id, nombrePMF, nombreExpediente" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.AreaDeCosecha">
+			<param name="include" value="id, nombreArea" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.PMFDTO">
+			<param name="include" value="id, nombrePMF, nombreExpediente" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.AreaDeCosechaDTO">
+			<param name="include" value="id, nombreArea, fullNombre" />
+		</convert>		
+		<convert converter="bean" match="ar.com.siif.negocio.Tranzon">
+			<param name="include" value="id, numeroTranzon, numeroDisposicionTranzon" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.TranzonDTO">
+			<param name="include" value="id, numeroTranzon, numeroDisposicionTranzon" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Marcacion">
+			<param name="include" value="id, disposicionMarcacion" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.MarcacionDTO">
+			<param name="include" value="id, disposicionMarcacion" />
+		</convert>		
+		<convert converter="bean" match="ar.com.siif.negocio.Rodal">
+			<param name="include" value="id, nombreRodal" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.RodalDTO">
+			<param name="include" value="id, nombreRodal" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.negocio.Entidad">
+			<param name="include" value="id, nombre, nroMatricula, cuit" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.EntidadDTO">
+			<param name="include" value="id, nombre, nroMatricula, cuit" />
+		</convert>		
+		<convert converter="bean" match="ar.com.siif.negocio.Rol">
+			<param name="include" value="id, rol" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.RolDTO">
+			<param name="include" value="id, rol, menues" />
+		</convert>		
+		<convert converter="bean" match="ar.com.siif.dto.ItemMenuDTO">
+			<param name="include" value="id, item, url, padre, hijos, orden" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.MuestraDTO">
+			<param name="include" value="id,largo,diametro1,diametro2" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.LocalidadDestinoDTO">
+			<param name="include" value="id,nombre" />
+		</convert>
+		<convert converter="bean" match="ar.com.siif.dto.TipoProductoForestalDTO">
+			<param name="include" value="id,nombre,cantDiametros,largoDesde,largoHasta,diam1Desde,diam1Hasta,diam2Desde,diam2Hasta" />
+		</convert>				
+
+		<convert converter="exception" match="ar.com.siif.negocio.exception.NegocioException">
+			<param name="include" value="message" />
+		</convert>
+		
+		<convert converter="exception" match="java.lang.Exception" >
+		    <param name="include" value="message,lineNumber"/>
+		</convert>
+		
+		<create creator="none" javascript="Validator">
+		    <param name="class" value="ar.com.siif.struts.utils.Validator"/>
+		</create>
+		
+		<create creator="spring" javascript="UbicacionFachada">
+			<param name="beanName" value="ubicacionFachada" />
+		</create>
+		
+		<create creator="spring" javascript="RolFachada">
+			<param name="beanName" value="rolFachada" />
+		</create>
+		
+		<create creator="spring" javascript="EntidadFachada">
+			<param name="beanName" value="entidadFachada" />
+		</create>
+
+		<create creator="new" javascript="UbicacionAction">
+			<param name="class" value="ar.com.siif.struts.actions.UbicacionAction"/>
+		</create>
+
+		<create creator="spring" javascript="AforoFachada">
+			<param name="beanName" value="aforoFachada" />
+		</create>
+		
+		<create creator="spring" javascript="GuiaForestalFachada">
+			<param name="beanName" value="guiaForestalFachada" />
+		</create>
+		
+		<create creator="spring" javascript="FiscalizacionFachada">
+			<param name="beanName" value="fiscalizacionFachada" />
+		</create>
+
+		<create creator="new" javascript="ReportesAction">
+			<param name="class" value="ar.com.siif.struts.actions.ReportesAction"/>
+		</create>
+		
+		<create creator="spring" javascript="LocalidadFachada">
+			<param name="beanName" value="localidadFachada" />
+		</create>
+		
+		<create creator="spring" javascript="TipoProductoForestalFachada">
+			<param name="beanName" value="tipoProductoForestalFachada" />
+		</create>
+	</allow>
+
+</dwr> 

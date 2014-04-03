@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://struts.apache.org/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+	<!-- ======================================================= -->
+	<!-- Master definition -->
+	<!-- ======================================================= -->
+
+	<!-- Doc index page description -->
+	<definition name=".base" path="/jsp/tiles/layout.jsp">
+		<put name="title" value="Main Layout" />
+		<put name="header" value="/jsp/tiles/header.jsp" />
+		<put name="menu" value="/jsp/tiles/menu.jsp" />
+		<put name="footer" value="/jsp/tiles/footer.jsp" />
+		<put name="body" value="doc.portal.body" />
+	</definition>
+
+	<definition name=".baseSinMenu" path="/jsp/tiles/layout.jsp">
+		<put name="title" value="Main Layout" />
+		<put name="header" value="/jsp/tiles/header.jsp" />
+		<put name="menu" value="" />
+		<put name="footer" value="/jsp/tiles/footer.jsp" />
+		<put name="body" value="doc.portal.body" />
+	</definition>
+	
+	<!-- ========== PAGES ========== -->
+
+	<definition name=".index" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/index.jsp" />
+	</definition>
+
+
+	<!-- FISCALIZACION -->
+
+	<definition name=".altaFiscalizacionProdForestales" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaFiscalizacionProdForestales.jsp" />
+	</definition>
+
+	<definition name=".recuperarFiscalizacionesAModificar"
+		extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarFiscalizacionesAModificar.jsp" />
+	</definition>
+
+	<definition name=".exitoRecuperarFiscalizacionesParaAltaGFB"
+		extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarFiscalizacionesParaAltaGFB.jsp" />
+	</definition>
+
+	<definition name=".cargarFiscalizacionAModificar" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionFiscalizacionProdForestales.jsp" />
+	</definition>
+
+	<!-- FIN FISCALIZACION -->
+
+
+	<!-- GUIA FORESTAL -->
+
+		<definition name=".altaGuiaForestalBasica" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/altaGuiaForestalBasica.jsp" />
+		</definition>
+	
+		<definition name=".recuperarGuiasForestales" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiasForestales.jsp" />
+		</definition>
+	
+		<definition name=".cargarPlanPagoAModificar" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/cargarPlanPagoAModificar.jsp" />
+		</definition>
+	
+		<definition name=".recuperarFiscalizacionesParaAltaGFB"
+			extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarFiscalizacionesParaAltaGFB.jsp" />
+		</definition>
+
+		<definition name=".recuperarGuiasForestalesParaModificacionGFB"
+			extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiasForestalesParaModificacionGFB.jsp" />
+		</definition>
+
+		<definition name=".cargarModificacionGFB" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/modificacionGuiaForestalBasica.jsp" />
+		</definition>
+
+		<definition name=".recuperarGuiaAsociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiaAsociarFiscalizacion.jsp" />
+		</definition>
+
+		<definition name=".cargarGuiaAsociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/cargarGuiaAsociarFiscalizacion.jsp" />
+		</definition>
+
+		<definition name=".recuperarGuiaDesasociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/recuperarGuiaDesasociarFiscalizacion.jsp" />
+		</definition>
+
+		<definition name=".cargarGuiaDesasociarFiscalizacion" extends=".base">
+			<put name="title" value="SIIFs" />
+			<put name="body" value="/jsp/cargarGuiaDesasociarFiscalizacion.jsp" />
+		</definition>
+
+		<!-- Boleta de Deposito  -->
+			<definition name=".cargarProductoresParaBoletaDepostio"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaBoletaDepostio.jsp" />
+			</definition>
+		
+			<definition name=".cargarGuiaForestalPagoBoletaDeposito"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarGuiaForestalPagoBoletaDeposito.jsp" />
+			</definition>
+		
+			<definition name=".cargarGuiaForestalReemBoletaDeposito"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarGuiaForestalReemBoletaDeposito.jsp" />
+			</definition>
+		<!--  -->
+		
+		<!-- Vale de Transporte  -->
+			<definition name=".cargarProductoresParaValeTransporte"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaValeTransporte.jsp" />
+			</definition>
+			
+			<definition name=".cargarGuiaForestalDevolucionValeTransporte"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarGuiaForestalDevolucionValeTransporte.jsp" />
+			</definition>
+			
+			<definition name=".cargarGuiaForestalReemplazarValeTransporte"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarGuiaForestalReemplazarValeTransporte.jsp" />
+			</definition>									
+		<!--  -->		
+
+		<!-- Anulacion  -->
+			<definition name=".cargarProductoresParaAnulacioDeGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />
+			</definition>
+			
+			<definition name=".cargarGuiaForestalParaAnulacioDeGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/anularGuiaForestal.jsp" />
+			</definition>		
+		<!--  -->	
+
+		<!-- Confirmacion -->
+			<definition name=".cargarProductoresParaRestablecerGuia"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />
+			</definition>		
+		<!--  -->				
+
+	<!-- FIN GUIA FORESTAL -->
+
+
+	<!-- TIPO PRODUCTO FORESTAL -->
+
+	<definition name=".altaTipoProductoForestal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaTipoProductoForestal.jsp" />
+	</definition>
+
+	<definition name=".modificacionTipoProductoForestal"
+		extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionTipoProductoForestal.jsp" />
+	</definition>
+
+	<!-- FIN TIPO PRODUCTO FORESTAL -->
+
+	<!-- UBICACION -->
+
+	<definition name=".exitoRecuperarUbicacionParaAlta" extends=".base">
+		<put name="title" value="Alta de Plan de Manejo Forestal" />
+		<put name="body" value="/jsp/altaPMF.jsp" />
+	</definition>
+
+	<definition name=".recuperarProductoresParaModificacionPMF" extends=".base">
+		<put name="title" value="Modificacion de Plan de Manejo Forestal" />
+		<put name="body" value="/jsp/recuperarProductoresParaModificacionPMF.jsp" />
+	</definition>
+
+	<definition name=".exitoRecuperarUbicacionParaModificacion" extends=".base">
+		<put name="title" value="Modificacion de Plan de Manejo Forestal" />
+		<put name="body" value="/jsp/modificacionPMF.jsp" />
+	</definition>
+
+	<!-- FIN UBICACION -->
+
+	<!-- AFORO -->
+
+	<definition name=".altaAforo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaAforo.jsp" />
+	</definition>
+
+	<definition name=".modificacionAforo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionAforo.jsp" />
+	</definition>
+
+	<!-- FIN AFORO -->
+	
+	
+	<!-- AFORO NUEVO-->
+	<definition name=".modificacionAforoNuevo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionAforoNuevo.jsp" />
+	</definition>
+
+	<!-- FIN AFORO NUEVO-->
+	
+	<!-- CONSULTAS GUIA FORESTAL -->
+
+	<definition name=".consultaGuiaForestalPorProductor"
+		extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/consultaGuiaForestalPorProductor.jsp" />
+	</definition>
+
+	<definition name=".cargarGuiaForestalConsultaPorProductor"
+		extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarGuiaForestalConsultaPorProductor.jsp" />
+	</definition>
+
+	<!-- FIN CONSULTAS GUIA FORESTAL -->
+
+	<!-- ENTIDAD -->
+	<definition name=".altaEntidad" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaEntidad.jsp" />
+	</definition>
+
+	<definition name=".recuperarEntidades" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarEntidades.jsp" />
+	</definition>
+	<!-- FIN ENTIDAD -->
+
+
+	<!-- LOCALIDAD -->
+	<definition name=".altaLocalidad" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaLocalidad.jsp" />
+	</definition>
+
+	<definition name=".recuperarLocalidades" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarLocalidades.jsp" />
+	</definition>
+	
+	<definition name=".altaProvincia" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaProvincia.jsp" />
+	</definition>	
+
+	<definition name=".recuperarProvinciasDestino" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarProvinciasDestino.jsp" />
+	</definition>	
+
+	<definition name=".altaLocalidadDestino" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaLocalidadDestino.jsp" />
+	</definition>	
+
+	<definition name=".modificacionLocalidadDestino" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionLocalidadDestino.jsp" />
+	</definition>		
+	<!-- FIN LOCALIDAD -->
+
+	<!-- PERIODO -->
+	<definition name=".altaPeriodo" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaPeriodo.jsp" />
+	</definition>
+
+	<definition name=".recuperarPeriodos" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarPeriodos.jsp" />
+	</definition>
+	<!-- FIN PERIODO -->
+
+	<!-- USUARIO -->
+	<definition name=".altaUsuario" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaUsuario.jsp" />
+	</definition>
+
+	<definition name=".recuperarUsuarios" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/recuperarUsuarios.jsp" />
+	</definition>
+	<!-- FIN USUARIO -->
+
+	<!-- ROL -->
+	<definition name=".altaRol" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaRol.jsp" />
+	</definition>
+
+	<definition name=".modificacionRol" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/modificacionRol.jsp" />
+	</definition>
+	<!-- FIN ROL -->
+
+	<!-- CONSULTAS FISCALIZACION -->
+	<definition name=".consultaFiscalizacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/consultaFiscalizacion.jsp" />
+	</definition>
+	
+	<definition name=".cargarFiscalizacionConsulta" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarFiscalizacionConsulta.jsp" />
+	</definition>	
+	<!-- FIN CONSULTAS FISCALIZACION -->
+
+	<!-- REPORTE -->
+	<definition name=".mostrarReporte" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarReporte.jsp" />
+	</definition>
+
+	<definition name=".mostrarReportes" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarReportes.jsp" />
+	</definition>
+	
+	<definition name=".reporteVolumenFiscalizadoProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenFiscalizadoProductorEntreFechas.jsp" />
+	</definition>
+ 
+	<definition name=".reporteVolumenFiscalizadoProdForestalEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenFiscalizadoProdForestalEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteDetalleGuiasEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteDetalleGuiasEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteGuiasForestalesPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteGuiasForestalesPorProductorEntreFechas.jsp" />
+	</definition>				
+	<!-- FIN REPORTE -->
+
+	<!-- REPORTE POR PRODUCTOR -->
+	<definition name=".reportePorProductorVolumenFiscalizadoTotal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductorVolumenFiscalizadoTotal.jsp" />
+	</definition>
+	
+	<!-- <definition name=".reportePorProductorVolumenFiscalizadoPorProductos" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductorVolumenFiscalizadoPorProductos.jsp" />
+	</definition>-->
+		
+	<definition name=".reportePorProductorGeneral" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductorGeneral.jsp" />
+	</definition>		
+	
+	<definition name=".reportePorProductorVolumenPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductorVolumenPorUbicacion.jsp" />
+	</definition>		
+	
+	<!-- FIN REPORTE POR PRODUCTOR -->
+
+	<!-- REPORTE POR PRODUCTOR -->
+	<definition name=".reportePorProductoVolumenPorAnioForestal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reportePorProductoVolumenPorAnioForestal.jsp" />
+	</definition>
+	
+	<definition name=".reporteVolumenPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenPorProductorEntreFechas.jsp" />
+	</definition>	
+
+	<definition name=".reporteVolumenPorProductoPorProductorPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteVolumenPorProductoPorProductorPorUbicacion.jsp" />
+	</definition>	
+	
+	<!-- FIN REPORTE POR PRODUCTOR -->
+
+	<!-- REPORTE RECAUDACION -->
+	<definition name=".reporteRecaudacionPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteRecaudacionPorProductorPorAnioForestal" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorAnioForestal.jsp" />
+	</definition>
+
+	<definition name=".reporteRecaudacionPorProductorPorUbicacion" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorProductorPorUbicacion.jsp" />
+	</definition>			
+
+	<definition name=".reporteRecaudacionTotalProductoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionTotalProductoresEntreFechas.jsp" />
+	</definition>		
+
+	<definition name=".reporteRecaudacionPorAnioForestalPorProductor" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorAnioForestalPorProductor.jsp" />
+	</definition>		
+
+	<definition name=".reporteRecaudacionPorAnioForestalTotalProductores" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteRecaudacionPorAnioForestalTotalProductores.jsp" />
+	</definition>		
+	<!-- FIN REPORTE RECAUDACION -->
+
+	<!-- REPORTE CERTIFICADO ORIGEN -->
+	<definition name=".reporteCertificadosOrigenPorProductorEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadosOrigenPorProductorEntreFechas.jsp" />
+	</definition>
+
+	<definition name=".reporteCertificadoOrigenTotalProductoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadoOrigenTotalProductoresEntreFechas.jsp" />
+	</definition>
+	
+	<definition name=".reporteCertificadoOrigenTotalExportadoresEntreFechas" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/reporteCertificadoOrigenTotalExportadoresEntreFechas.jsp" />
+	</definition>
+	<!-- FIN REPORTE CERTIFICADO ORIGEN -->
+
+	<!-- CERTIFICADO ORIGEN -->
+	<definition name=".altaCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaCertificadoOrigen.jsp" />
+	</definition>
+
+	<definition name=".cargarProductoresParaConsultaCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarProductoresParaConsultaCertificadoOrigen.jsp" />
+	</definition>	
+
+	<definition name=".cargarCertificadoOrigen" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/cargarCertificadoOrigen.jsp" />
+	</definition>	
+
+	<definition name=".mostrarAltaNroCertificado" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/mostrarAltaNroCertificado.jsp" />
+	</definition>			
+	<!-- FIN CERTIFICADO ORIGEN -->
+	
+	<!-- CAMINO -->
+	<definition name=".altaCamino" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/altaCamino.jsp" />
+	</definition>
+	<definition name=".consultaSaldoCaminos" extends=".base">
+		<put name="title" value="SIIFs" />
+		<put name="body" value="/jsp/consultaSaldoCaminos.jsp" />
+	</definition>			
+	<!-- FIN CAMINO -->
+
+	<definition name=".error" extends=".base">
+		<put name="title" value="Error en SIIFs" />
+		<put name="body" value="/jsp/error.jsp" />
+	</definition>
+
+	<definition name=".errorSinMenu" extends=".baseSinMenu">
+		<put name="title" value="Error en SIIFs" />
+		<put name="body" value="/jsp/errorSinMenu.jsp" />
+	</definition>
+</tiles-definitions>
