@@ -97,6 +97,37 @@ public class AforoFachada implements IAforoFachada {
 		return null;
 	}
 
+	public AforoNuevo recuperarAforoNuevoBasico() {
+		return aforoDAO.recuperarAforoNuevoBasico();
+	}
+
+	public String getValorAforoNuevo(String tipoDeAforo, String comercializaEnProvincia)
+			throws NegocioException {
+
+		try {
+			AforoNuevo aforoNuevo = null;
+			boolean comercializaEnProv = Boolean
+					.parseBoolean(comercializaEnProvincia);
+			if (comercializaEnProv) {
+				return "0";
+			} else {
+				aforoNuevo = aforoDAO.getAforoNuevo(tipoDeAforo);
+			}
+
+			if (aforoNuevo != null) {
+				AforoNuevo aforoNuevoBasico = this.recuperarAforoNuevoBasico();
+				return String.valueOf(aforoNuevo
+						.getValorSegunMontoOPorcentaje(aforoNuevoBasico.getMonto()));
+			}
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			throw new NegocioException("Error Inesperado");
+		}
+
+		return null;
+	}
+
 	public List<AforoDTO> recuperarAforosDTO() {
 
 		List<AforoDTO> listaAforosDTO = new ArrayList<AforoDTO>();

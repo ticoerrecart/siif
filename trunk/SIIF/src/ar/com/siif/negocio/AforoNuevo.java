@@ -23,6 +23,14 @@ public class AforoNuevo {
 	@Enumerated(EnumType.STRING)
 	private TipoDeAforo tipoDeAforo;
 
+	public Double getValorSegunMontoOPorcentaje(Double montoBasico) {
+		if (monto != null && monto.doubleValue() > 0.0) {
+			return monto;
+		} else {
+			return montoBasico * porcentaje / 100;
+		}
+	}
+
 	public Double getMonto() {
 		return monto;
 	}

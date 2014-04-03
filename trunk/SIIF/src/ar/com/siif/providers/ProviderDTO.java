@@ -469,7 +469,8 @@ public abstract class ProviderDTO {
 		subImporteDTO.setCantidadMts(subImporte.getCantidadMts());
 		subImporteDTO.setCantidadUnidades(subImporte.getCantidadUnidades());
 		subImporteDTO.setEspecie(subImporte.getEspecie());
-		subImporteDTO.setEstado(subImporte.getEstado());
+		subImporteDTO.setComercializaDentroProvincia(subImporte
+				.isComercializaDentroProvincia());
 		subImporteDTO.setGuiaForestal(guiaDTO);
 		subImporteDTO.setId(subImporte.getId());
 		// subImporteDTO.setImporte(subImporte.getImporte());

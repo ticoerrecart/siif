@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.com.siif.dto.AforoDTO;
 import ar.com.siif.enums.EstadoProducto;
+import ar.com.siif.enums.TipoDeAforo;
 import ar.com.siif.negocio.Aforo;
 import ar.com.siif.negocio.AforoNuevo;
 import ar.com.siif.negocio.Entidad;
@@ -82,6 +83,11 @@ public class AforoDAO extends HibernateDaoSupport {
 		return (AforoNuevo) getSession().get(AforoNuevo.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	public AforoNuevo recuperarAforoNuevoBasico() {
+		return this.getAforoNuevo(TipoDeAforo.BASICO.name());
+	}
+
 	public void modificacionAforo(Aforo aforo) throws NegocioException {
 
 		Criteria criteria = getSession().createCriteria(Aforo.class);
@@ -142,4 +148,21 @@ public class AforoDAO extends HibernateDaoSupport {
 		return null;
 	}
 
+	@SuppressWarnings("finally")
+	public AforoNuevo getAforoNuevo(String tipoDeAforo) {
+
+		Criteria criteria = getSession().createCriteria(AforoNuevo.class);
+		Conjunction conj = Restrictions.conjunction();
+		conj.add(Restrictions.eq("tipoDeAforo",
+				TipoDeAforo.valueOf(tipoDeAforo)));
+
+		criteria.add(conj);
+
+		List<AforoNuevo> aforos = criteria.list();
+
+		if ((aforos.size() > 0)) {
+			return aforos.get(0);
+		}
+		return null;
+	}
 }

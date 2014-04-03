@@ -3,6 +3,8 @@ package ar.com.siif.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.com.siif.enums.TipoDeAforo;
+
 public class GuiaForestalDTO {
 
 	private Long id;
@@ -31,14 +33,14 @@ public class GuiaForestalDTO {
 
 	private List<BoletaDepositoDTO> boletasDeposito;
 
-	//private UsuarioDTO usuarioAlta;
+	// private UsuarioDTO usuarioAlta;
 
 	private OperacionGuiaForestalDTO operacionAlta;
-	
+
 	private OperacionGuiaForestalDTO operacionModificacion;
-	
+
 	private OperacionGuiaForestalDTO operacionAnulacion;
-	
+
 	private LocalizacionDTO localizacion;
 
 	private List<FiscalizacionDTO> fiscalizaciones;
@@ -49,12 +51,14 @@ public class GuiaForestalDTO {
 
 	private String idLocalizacion;
 
+	private TipoDeAforo tipoDeAforo;
+
 	public GuiaForestalDTO() {
 
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
 		valesTransporte = new ArrayList<ValeTransporteDTO>();
 		boletasDeposito = new ArrayList<BoletaDepositoDTO>();
-		//usuarioAlta = new UsuarioDTO();
+		// usuarioAlta = new UsuarioDTO();
 		operacionAlta = new OperacionGuiaForestalDTO();
 		operacionModificacion = new OperacionGuiaForestalDTO();
 		operacionAnulacion = new OperacionGuiaForestalDTO();
@@ -135,13 +139,12 @@ public class GuiaForestalDTO {
 		this.boletasDeposito = boletasDeposito;
 	}
 
-	/*public UsuarioDTO getUsuarioAlta() {
-		return usuarioAlta;
-	}
-
-	public void setUsuarioAlta(UsuarioDTO usuario) {
-		this.usuarioAlta = usuario;
-	}*/
+	/*
+	 * public UsuarioDTO getUsuarioAlta() { return usuarioAlta; }
+	 * 
+	 * public void setUsuarioAlta(UsuarioDTO usuario) { this.usuarioAlta =
+	 * usuario; }
+	 */
 
 	public Long getId() {
 		return id;
@@ -175,13 +178,12 @@ public class GuiaForestalDTO {
 		this.fiscalizaciones = fiscalizaciones;
 	}
 
-	/*	public LocalizacionDTO getLocalizacion() {
-			return localizacion;
-		}
-
-		public void setLocalizacion(LocalizacionDTO localizacion) {
-			this.localizacion = localizacion;
-		}*/
+	/*
+	 * public LocalizacionDTO getLocalizacion() { return localizacion; }
+	 * 
+	 * public void setLocalizacion(LocalizacionDTO localizacion) {
+	 * this.localizacion = localizacion; }
+	 */
 
 	public double getImporteTotal() {
 		return importeTotal;
@@ -208,9 +210,9 @@ public class GuiaForestalDTO {
 	}
 
 	/**
-	 * me fijo en los subimportes para ver los productos que tiene la guia
-	 * Los estados tambien los saco de Ahi
-	 * y la relacion la saco de las fiscalizaciones... si no hay devuelvo 0
+	 * me fijo en los subimportes para ver los productos que tiene la guia Los
+	 * estados tambien los saco de Ahi y la relacion la saco de las
+	 * fiscalizaciones... si no hay devuelvo 0
 	 * 
 	 */
 	public List<ProductoEspecieYRelacionMtsPorPiezaDTO> getProductosEspeciesYRelacionMtsPorPieza() {
@@ -223,7 +225,8 @@ public class GuiaForestalDTO {
 			double mts3 = 0;
 			double piezas = 0;
 			for (FiscalizacionDTO fisc : this.getFiscalizaciones()) {
-				if (fisc.getTipoProducto().getNombre().equalsIgnoreCase(prod.getProducto())) {
+				if (fisc.getTipoProducto().getNombre()
+						.equalsIgnoreCase(prod.getProducto())) {
 					mts3 = mts3 + fisc.getCantidadMts();
 					piezas = piezas + fisc.getCantidadUnidades();
 				}
@@ -275,8 +278,17 @@ public class GuiaForestalDTO {
 		return operacionAnulacion;
 	}
 
-	public void setOperacionAnulacion(OperacionGuiaForestalDTO operacionAnulacion) {
+	public void setOperacionAnulacion(
+			OperacionGuiaForestalDTO operacionAnulacion) {
 		this.operacionAnulacion = operacionAnulacion;
+	}
+
+	public TipoDeAforo getTipoDeAforo() {
+		return tipoDeAforo;
+	}
+
+	public void setTipoDeAforo(TipoDeAforo tipoDeAforo) {
+		this.tipoDeAforo = tipoDeAforo;
 	}
 
 }
