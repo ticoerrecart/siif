@@ -199,14 +199,15 @@ function cambiarTipoDeAforo(){
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 	//alert(j)
 	for(var i=0; i<=j;i++){
-		//alert(i);
+		//alert("i:" + i);
 		var comercializaEnProvincia = $('#comercializaEnProvincia'+i).is(':checked') ;
 		//alert(comercializaEnProvincia)
 		//visibilidad del campo Comercializacion dentro de Provincia.
 
 		if($("#tipoDeAforo").val() == 'ESTRUCTURA_IRREGULAR' ||
 			$("#tipoDeAforo").val() == 'MAT_CAIDO_O_TRAT_SILVIC_INCOMPL' ||
-			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
+			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS' ||
+			$("#idZMF").val()==2){
 			$("#comercializaEnProvinciaTD" + i).show();
 		}else{
 			$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvincia']").attr("checked",false);
@@ -348,7 +349,7 @@ function agregarFila() {
 
 	var k = parseInt(j)+1;
 	
-	$("#tablaImportes tr[id*=fila]:last").clone().find("input,select,td").each(function() {
+	$("#tablaImportes tr[id*=fila]:last").clone().find("input,select,td,span").each(function() {
 		$(this).attr(
 			{'name' : function(_, name){
 							if(name != null)
