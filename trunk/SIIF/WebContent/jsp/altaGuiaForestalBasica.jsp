@@ -216,7 +216,17 @@ function cambiarTipoDeAforo(){
 		cambiarTipoDeAforoSegunEstado(i);
 		
 	}
-		
+	
+	if ($("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
+		$("#trAfip").show();
+	} else {
+		$("#trAfip").hide();
+		$("#afip").attr("checked",false);
+		calcularTotales();
+	}
+	
+	
+	
 	/*AforoFachada.getValor(tipoDeAforo, comercializaEnProvincia, 
 		{callback : actualizarImporteCallback,
 		 async : false}
@@ -284,7 +294,13 @@ function calcularTotales(){
 		if (isNaN(compensacion)){
 			compensacion = 0;
 		}
+		
 		var total = porcentaje - compensacion;
+		
+		if ($('#afip').is(':checked')) {
+		 total = total * .9;	
+		}
+		
 		$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));		
 	}
 	else{	
@@ -307,6 +323,11 @@ function calcularTotales(){
 				compensacion = 0;
 			}
 			var total = (sumaImportes * 1.2) - compensacion;
+			
+			if ($('#afip').is(':checked')) {
+				 total = total * .9;	
+			}
+			
 			$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));
 		}	
 	}
@@ -1008,6 +1029,15 @@ function showCompensacion() {
 									</td>
 								</tr> 
 							</c:if>
+							
+								<tr id="trAfip" style="display: none">
+									<td align="right"width="82%">
+										Cumple F931 AFIP?
+									</td>
+									<td width="18%" align="left">
+										<input id="afip" class="botonerab" type="checkbox" onclick="calcularTotales();">
+									</td>
+								</tr> 
 							
 								<tr>
 									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
