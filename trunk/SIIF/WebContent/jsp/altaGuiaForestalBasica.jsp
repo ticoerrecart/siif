@@ -202,7 +202,19 @@ function cambiarTipoDeAforo(){
 		//alert(i);
 		var comercializaEnProvincia = $('#comercializaEnProvincia'+i).is(':checked') ;
 		//alert(comercializaEnProvincia)
+		//visibilidad del campo Comercializacion dentro de Provincia.
+
+		if($("#tipoDeAforo").val() == 'ESTRUCTURA_IRREGULAR' ||
+			$("#tipoDeAforo").val() == 'MAT_CAIDO_O_TRAT_SILVIC_INCOMPL' ||
+			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
+			$("#comercializaEnProvinciaTD" + i).show();
+		}else{
+			$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvincia']").attr("checked",false);
+			$("#comercializaEnProvinciaTD" + i).hide();
+		}
+
 		cambiarTipoDeAforoSegunEstado(i);
+		
 	}
 		
 	/*AforoFachada.getValor(tipoDeAforo, comercializaEnProvincia, 
@@ -226,7 +238,8 @@ function actualizarImporteCallback(valor){
 		$('#errorAforo'+idRenglon).show();
 		$('#idPorcentaje').val(0);
 		$('#idTotal').val(0);
-	}	
+	}
+	
 	actualizarImporte(idRenglon);
 }
 
@@ -846,7 +859,9 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 													</html:select>															
 												</td>
 												<td>
-													Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
+													<span style="display:none" id="comercializaEnProvinciaTD${i.count-1}">
+														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
+													</span>
 												</td>
 												<td>
 													<select name="listaSubImportes[${i.count-1}].especieStr" 
@@ -897,7 +912,9 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 													</select>												
 												</td>
 												<td>
-													Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>																									
+													<span style="display:none" id="comercializaEnProvinciaTD0">
+														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>
+													</span>																									
 												</td>
 												<td>											 
 													<select name="listaSubImportes[0].especieStr" 
