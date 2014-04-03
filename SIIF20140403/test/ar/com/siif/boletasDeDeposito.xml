@@ -1,0 +1,55 @@
+<java.util.List>
+      <ar.com.siif.dto.BoletaDepositoDTO>
+        <idBoleta>0</idBoleta>
+        <numero>1</numero>
+        <concepto>Aforo</concepto>
+        <area>Direccion General de Bosques</area>
+        <efectivoCheque>e</efectivoCheque>
+        <monto>5400.0</monto>
+        <fechaVencimiento>31/05/2013</fechaVencimiento>
+        <guiaForestal>
+          <nroGuia>0</nroGuia>
+          <productorForestal>
+            <idLocalidad>0</idLocalidad>
+          </productorForestal>
+          <distanciaAforoMovil>0</distanciaAforoMovil>
+          <importeTotal>0.0</importeTotal>
+          <inspFiscalizacion>0.0</inspFiscalizacion>
+          <localidad/>
+          <valesTransporte/>
+          <boletasDeposito/>
+          <operacionAlta>
+            <usuario>
+              <rol/>
+              <entidad>
+                <idLocalidad>0</idLocalidad>
+              </entidad>
+              <habilitado>false</habilitado>
+            </usuario>
+          </operacionAlta>
+          <operacionModificacion>
+            <usuario>
+              <rol/>
+              <entidad>
+                <idLocalidad>0</idLocalidad>
+              </entidad>
+              <habilitado>false</habilitado>
+            </usuario>
+          </operacionModificacion>
+          <operacionAnulacion>
+            <usuario>
+              <rol/>
+              <entidad>
+                <idLocalidad>0</idLocalidad>
+              </entidad>
+              <habilitado>false</habilitado>
+            </usuario>
+          </operacionAnulacion>
+          <fiscalizaciones/>
+          <subImportes/>
+          <anulado>false</anulado>
+        </guiaForestal>
+      </ar.com.siif.dto.BoletaDepositoDTO>
+
+
+</java.util.List>
