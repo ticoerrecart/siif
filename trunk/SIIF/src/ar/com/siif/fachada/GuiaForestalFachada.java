@@ -13,6 +13,7 @@ import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.BoletaDeposito;
+import ar.com.siif.negocio.CaminoConstruido;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -46,6 +47,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	private IUbicacionFachada ubicacionFachada;
 
 	private ILocalidadFachada localidadFachada;
+	
+	private ICaminoFachada caminoFachada;
 
 	public GuiaForestalFachada() {
 	}
@@ -53,7 +56,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public GuiaForestalFachada(GuiaForestalDAO guiaForestalDAO, IUsuarioFachada pUsuarioFachada,
 			IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
 			ITipoProductoForestalFachada pTipoProductoForestalFachada,
-			IUbicacionFachada pUbicacionFachada, ILocalidadFachada pLocalidadFachada) {
+			IUbicacionFachada pUbicacionFachada, ILocalidadFachada pLocalidadFachada,
+			ICaminoFachada pCaminoFachada) {
 
 		this.guiaForestalDAO = guiaForestalDAO;
 		this.usuarioFachada = pUsuarioFachada;
@@ -62,6 +66,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		this.tipoProductoForestalFachada = pTipoProductoForestalFachada;
 		this.ubicacionFachada = pUbicacionFachada;
 		this.localidadFachada = pLocalidadFachada;
+		this.caminoFachada = pCaminoFachada;
 	}
 
 	public GuiaForestalDAO getGuiaForestalDAO() {
@@ -124,7 +129,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	public void altaGuiaForestalBasica(GuiaForestalDTO guia,
 			List<BoletaDepositoDTO> listaBoletaDepositoDTO, List<RangoDTO> listaRangosDTO,
 			Date fechaVencimiento, List<FiscalizacionDTO> listaFiscalizacionesDTO,
-			List<SubImporteDTO> listaSubImportesDTO){
+			List<SubImporteDTO> listaSubImportesDTO) throws NegocioException{
 
 		List<Fiscalizacion> listaFiscalizaciones = new ArrayList<Fiscalizacion>();
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesDTO) {
@@ -157,6 +162,13 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			fiscalizacion.setGuiaForestal(guiaForestal);
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
 		}
+		
+		CaminoConstruido caminoConstruido = new CaminoConstruido(); 
+		caminoConstruido.setGuiaForestal(guiaForestal);
+		caminoConstruido.setMonto(guia.getCompensacionCaminos() * -1);
+		caminoConstruido.setProductor(guiaForestal.getProductorForestal());
+		caminoConstruido.setUsuario(usuarioAlta);
+		this.caminoFachada.altaCamino(caminoConstruido);
 	}
 
 	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, String idPeriodo) {

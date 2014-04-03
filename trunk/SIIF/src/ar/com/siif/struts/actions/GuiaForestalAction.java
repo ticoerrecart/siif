@@ -36,6 +36,7 @@ import ar.com.siif.fachada.IPeriodoFachada;
 import ar.com.siif.fachada.IRolFachada;
 import ar.com.siif.fachada.ITipoProductoForestalFachada;
 import ar.com.siif.fachada.IUbicacionFachada;
+import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Localizacion;
@@ -89,6 +90,10 @@ public class GuiaForestalAction extends ValidadorAction {
 					.getEntidadDTO(guiaForm.getGuiaForestal()
 							.getProductorForestal().getId());
 
+			Entidad entidad = entidadFachada
+					.getEntidad(guiaForm.getGuiaForestal()
+							.getProductorForestal().getId());
+			
 			LocalizacionDTO localizacion = null;
 
 			if (!guiaForm.getListaFiscalizaciones().isEmpty()) {
@@ -143,6 +148,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			request.setAttribute("especieProductoForestal",
 					tipoProdFachada.getEspecieProductos());
 			request.setAttribute("productorForestal", productorForestal);
+			request.setAttribute("entidad", entidad);
 			// request.setAttribute("rodal", rodal);
 			request.setAttribute("localizacion", localizacion);
 			// request.setAttribute("pmfs", listaPMFs);

@@ -2,7 +2,7 @@ package ar.com.siif.dto;
 
 import ar.com.siif.enums.EspecieProducto;
 
-public class SubImporteDTO {
+public class SubImporteDTO implements Comparable<SubImporteDTO> {
 
 	private Long id;
 
@@ -103,5 +103,9 @@ public class SubImporteDTO {
 
 	public void setGuiaForestal(GuiaForestalDTO guiaForestal) {
 		this.guiaForestal = guiaForestal;
+	}
+
+	public int compareTo(SubImporteDTO o) {
+		return this.getTipoProducto().getId().compareTo(o.getTipoProducto().getId());
 	}
 }

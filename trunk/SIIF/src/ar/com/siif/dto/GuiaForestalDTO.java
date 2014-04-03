@@ -50,6 +50,8 @@ public class GuiaForestalDTO {
 	private boolean anulado;
 
 	private String idLocalizacion;
+	
+	private double compensacionCaminos;
 
 	private TipoDeAforo tipoDeAforo;
 
@@ -283,12 +285,23 @@ public class GuiaForestalDTO {
 		this.operacionAnulacion = operacionAnulacion;
 	}
 
+	public double getCompensacionCaminos() {
+		return compensacionCaminos;
+	}
+
+	public void setCompensacionCaminos(double compensacionCaminos) {
+		this.compensacionCaminos = compensacionCaminos;
+	}
+
 	public TipoDeAforo getTipoDeAforo() {
 		return tipoDeAforo;
 	}
 
-	public void setTipoDeAforo(TipoDeAforo tipoDeAforo) {
+	public void setTipoDeAforoEnum(TipoDeAforo tipoDeAforo) {
 		this.tipoDeAforo = tipoDeAforo;
 	}
 
+	public void setTipoDeAforo(String tipoDeAforo) {
+		this.tipoDeAforo = TipoDeAforo.valueOf(tipoDeAforo);
+	}
 }
