@@ -502,6 +502,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<constructor-arg ref="tipoProductoForestalFachada" />
 		<constructor-arg ref="ubicacionFachada" />
 		<constructor-arg ref="localidadFachada" />
+		<constructor-arg ref="caminoFachada" />
 	</bean>	
 
 	<bean id="guiaForestalFachada"
