@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.siif.enums.TipoOperacion;
+import ar.com.siif.negocio.Muestra;
 
 public class FiscalizacionDTO {
 
@@ -254,4 +255,28 @@ public class FiscalizacionDTO {
 		return 0;
 	}
 	
+	
+	public double getCantidadMtsExentos(){
+		//16-Rollizos > 20 cms  //27-Fuste > 25cms
+		int cantMuestrasMenores = 0;
+		if (this.getTipoProducto().getNombre().equalsIgnoreCase("Rollizo")){
+			for (MuestraDTO muestra : this.getMuestra()) {
+				double diam =  (muestra.getDiametro1() + muestra.getDiametro2())/2;
+				if (diam <= 20){
+					cantMuestrasMenores++;	
+				}
+			}	
+		}
+		if (this.getTipoProducto().getNombre().equalsIgnoreCase("Fuste")){
+			for (MuestraDTO muestra : this.getMuestra()) {
+				double diam =  (muestra.getDiametro1() + muestra.getDiametro2())/2;
+				if (diam <= 25){
+					cantMuestrasMenores++;	
+				}
+			}	
+		}
+		
+		return cantMuestrasMenores * this.getCantidadMts() / this.getTamanioMuestra();
+		
+	}	
 }
