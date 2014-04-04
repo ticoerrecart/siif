@@ -393,6 +393,8 @@ public abstract class ProviderDTO {
 		guiaForestalDTO.setSubImportes(listaSubImportesDTO);
 
 		guiaForestalDTO.setAnulado(guiaForestal.isAnulado());
+		
+		guiaForestalDTO.setF931Afip(guiaForestal.isF931Afip());
 
 		return guiaForestalDTO;
 	}

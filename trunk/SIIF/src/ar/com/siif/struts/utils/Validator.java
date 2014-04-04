@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -901,16 +899,20 @@ public abstract class Validator {
 			StringBuffer pError) {
 
 		HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
-		Set<SubImporteDTO> listaIdTipoProducto = new TreeSet<SubImporteDTO>();
+		HashMap<String, SubImporteDTO> listaIdTipoProducto = new HashMap<String, SubImporteDTO>();
 
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
 
 			hashProductosFiscalizados.put(subImporteDTO.getTipoProducto()
 					.getId(), subImporteDTO);
-
-			if (listaIdTipoProducto.contains(subImporteDTO)) {
-				addErrorXML(pError,
-						"Debe especificar un solo subImporte por cada Tipo de Producto");
+			String comercializaEnProvincia = Boolean.toString(subImporteDTO
+					.isComercializaDentroProvincia());
+			String key = subImporteDTO.getTipoProducto().getId() + "-"
+					+ comercializaEnProvincia;
+			if (listaIdTipoProducto.get(key) != null) {
+				addErrorXML(
+						pError,
+						"Debe especificar un solo subImporte por cada Tipo de Producto teniendo en cuenta si Comercializa dentro de la Provincia");
 				return false;
 			}
 			/*
@@ -942,7 +944,7 @@ public abstract class Validator {
 			 * "Faltan especificar datos en el Importe del Producto Forestal");
 			 * return false; }
 			 */
-			listaIdTipoProducto.add(subImporteDTO);
+			listaIdTipoProducto.put(key, subImporteDTO);
 		}
 
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {

@@ -22,3 +22,6 @@ where id= 25;
 update x071vm20_siif.tipoproducto
 set habilitado = 0
 where id= 26;
+
+ALTER TABLE `x071vm20_siif`.`guiaforestal` 
+ADD COLUMN `f931Afip` BIT(1) NULL AFTER `compensacionCaminos`;
