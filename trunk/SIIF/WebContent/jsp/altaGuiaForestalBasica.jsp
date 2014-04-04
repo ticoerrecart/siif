@@ -300,7 +300,15 @@ function calcularTotales(){
 		var total = porcentaje - compensacion;
 		
 		if ($('#afip').is(':checked')) {
-		 total = total * .9;	
+			
+			var desc = total * .1;
+			total = total * .9;
+
+			//Muestro el valor que descuento de la AFIP (10%)
+			$('#idF931Valor').html("-" + desc + " (10%)");	
+		}
+		else{
+			$('#idF931Valor').html("");
 		}
 		
 		$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));		
@@ -327,9 +335,17 @@ function calcularTotales(){
 			var total = (sumaImportes * 1.2) - compensacion;
 			
 			if ($('#afip').is(':checked')) {
-				 total = total * .9;	
+
+				var desc = total * .1;				
+				total = total * .9;	
+
+				//Muestro el valor que descuento de la AFIP (10%)				
+				$('#idF931Valor').html("-" + desc + " (10%)");				 
 			}
-			
+			else{
+				$('#idF931Valor').html("");			
+			}
+				
 			$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));
 		}	
 	}
@@ -1063,9 +1079,10 @@ function showCompensacion() {
 								<tr id="trAfip" style="display: none">
 									<td align="right"width="82%">
 										Cumple F931 AFIP?
+										<input id="afip" name="guiaForestal.f931AfipStr" class="botonerab" type="checkbox" onclick="calcularTotales();">										
 									</td>
 									<td width="18%" align="left">
-										<input id="afip" name="guiaForestal.f931AfipStr" class="botonerab" type="checkbox" onclick="calcularTotales();">
+										<div id="idF931Valor"></div>
 									</td>
 								</tr> 
 							
