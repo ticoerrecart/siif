@@ -562,6 +562,21 @@ function showCompensacion() {
 										class="botonerab" type="text" size="40" readonly="readonly">
 							</td>
 						</tr>
+
+						<!-- TIPO DE AFORO -->
+						<tr>
+							<td width="25%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
+							<td  align="left" width="75%" colspan="3">
+								<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});" property="guiaForestal.tipoDeAforoStr" styleClass="botonerab">
+									<c:forEach items="${tiposDeAforo}" var="tipoDeAforo">
+										<html:option value="${tipoDeAforo}">
+											<c:out value="${tipoDeAforo.descripcion}"/>
+										</html:option>
+									</c:forEach>
+								</html:select>
+							</td>
+						</tr>
+
 						<tr>
 							<td height="10" colspan="4"></td>
 						</tr>						
@@ -612,6 +627,20 @@ function showCompensacion() {
 							</td>
 						</tr>
 
+						<!-- TIPO DE AFORO -->
+						<tr>
+							<td width="25%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
+							<td  align="left" width="75%" colspan="3">
+								<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});" property="guiaForestal.tipoDeAforoStr" styleClass="botonerab">
+									<c:forEach items="${tiposDeAforo}" var="tipoDeAforo">
+										<html:option value="${tipoDeAforo}">
+											<c:out value="${tipoDeAforo.descripcion}"/>
+										</html:option>
+									</c:forEach>
+								</html:select>
+							</td>
+						</tr>
+				
 						<tr>
 							<td height="10" colspan="4"></td>
 						</tr>
@@ -886,6 +915,21 @@ function showCompensacion() {
 										<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
 											<tr id="fila${i.count-1}">
 												<td>
+													<input class="ind" type="hidden" value="${i.count-1}">		
+																	
+													<html:select styleId="selectTiposDeProductos${i.count-1}"
+															property="listaSubImportes[${i.count-1}].tipoProducto.id" 
+															styleClass="botonerab" value="${subImporte.tipoProducto.id}">
+																																											
+														<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
+															<html:option value="${tipoProducto.id}">
+																<c:out value="${tipoProducto.nombre}"></c:out>
+															</html:option>
+														</c:forEach>
+													</html:select>															
+												</td>
+												
+												<td>
 													<span style="display:none" id="comercializaEnProvinciaTD${i.count-1}">
 														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvinciaStr" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
 													</span>
@@ -1040,7 +1084,7 @@ function showCompensacion() {
 							<%--RECIEN ACA ESTAN CREADOS LOS CAMPOS DE porcentaje e importeTotal, asi que aca tengo que llamar a cambiarEstado, porq actualiza esos campos --%>
 							<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
 								<script>
-									cambiarTipoDeAforo(${i.count-1});
+									cambiarTipoDeAforoSegunEstado(${i.count-1});
 								</script>
 							</c:forEach>
 						</td>					
