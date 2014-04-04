@@ -45,6 +45,16 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 		this.comercializaDentroProvincia = comercializaDentroProvincia;
 	}
 
+	public void setComercializaDentroProvinciaStr(
+			String comercializaDentroProvincia) {
+		this.comercializaDentroProvincia = Boolean
+				.valueOf(comercializaDentroProvincia);
+	}
+
+	public String getComercializaDentroProvinciaStr() {
+		return Boolean.toString(this.comercializaDentroProvincia);
+	}
+
 	public EspecieProducto getEspecie() {
 		return especie;
 	}
@@ -106,6 +116,7 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 	}
 
 	public int compareTo(SubImporteDTO o) {
-		return this.getTipoProducto().getId().compareTo(o.getTipoProducto().getId());
+		return this.getTipoProducto().getId()
+				.compareTo(o.getTipoProducto().getId());
 	}
 }

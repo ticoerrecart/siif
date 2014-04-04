@@ -106,6 +106,8 @@ public class GuiaForestal {
 
 	private double compensacionCaminos;
 	
+	private boolean f931Afip;
+	
 	public GuiaForestal() {
 
 		boletasDeposito = new ArrayList<BoletaDeposito>();
@@ -306,4 +308,13 @@ public class GuiaForestal {
 		this.tipoDeAforo = tipoDeAforo;
 	}
 
+	public boolean isF931Afip() {
+		return f931Afip;
+	}
+
+	public void setF931Afip(boolean f931Afip) {
+		this.f931Afip = f931Afip;
+	}
+
+	
 }

@@ -48,6 +48,8 @@ function setValorLocalizacion(valor){
 }
 
 function submitir(){
+	//bug del serialize de jquery con los checkbox.  No viaja el valor de los que están seleccionados.
+	$("#guiaForestalForm").find(':checkbox:checked').attr('value', true);
 	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
 }
 
@@ -209,7 +211,7 @@ function cambiarTipoDeAforo(){
 			$("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
 			$("#comercializaEnProvinciaTD" + i).show();
 		}else{
-			$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvincia']").attr("checked",false);
+			$("#comercializaEnProvinciaTD" + i + " > input[name='listaSubImportes[" + i + "].comercializaDentroProvinciaStr']").attr("checked",false);
 			$("#comercializaEnProvinciaTD" + i).hide();
 		}
 
@@ -374,7 +376,7 @@ function agregarFila() {
 	$('#idRemFila').attr('disabled',false);
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 
-	if(j==3){
+	if(j==8){
 		$('#idAgrFila').attr('disabled',true);	
 	}
 
@@ -730,9 +732,7 @@ function showCompensacion() {
 				<tr>
 					<td width="25%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
 					<td  align="left" width="75%">
-						<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});"
-													property="guiaForestal.tipoDeAforo" 
-													styleClass="botonerab">
+						<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});" property="guiaForestal.tipoDeAforoStr" styleClass="botonerab">
 							<c:forEach items="${tiposDeAforo}" var="tipoDeAforo">
 								<html:option value="${tipoDeAforo}">
 									<c:out value="${tipoDeAforo.descripcion}"/>
@@ -886,22 +886,8 @@ function showCompensacion() {
 										<c:forEach items="${subImportes}" var="subImporte" varStatus="i">	
 											<tr id="fila${i.count-1}">
 												<td>
-													<input class="ind" type="hidden" value="${i.count-1}">		
-																	
-													<html:select styleId="selectTiposDeProductos${i.count-1}"
-															property="listaSubImportes[${i.count-1}].tipoProducto.id" 
-															styleClass="botonerab" value="${subImporte.tipoProducto.id}">
-																																											
-														<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
-															<html:option value="${tipoProducto.id}">
-																<c:out value="${tipoProducto.nombre}"></c:out>
-															</html:option>
-														</c:forEach>
-													</html:select>															
-												</td>
-												<td>
 													<span style="display:none" id="comercializaEnProvinciaTD${i.count-1}">
-														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
+														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvinciaStr" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
 													</span>
 												</td>
 												<td>
@@ -954,7 +940,7 @@ function showCompensacion() {
 												</td>
 												<td>
 													<span style="display:none" id="comercializaEnProvinciaTD0">
-														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvincia" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>
+														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvinciaStr" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>
 													</span>																									
 												</td>
 												<td>											 
@@ -1035,7 +1021,7 @@ function showCompensacion() {
 										Cumple F931 AFIP?
 									</td>
 									<td width="18%" align="left">
-										<input id="afip" class="botonerab" type="checkbox" onclick="calcularTotales();">
+										<input id="afip" name="guiaForestal.f931AfipStr" class="botonerab" type="checkbox" onclick="calcularTotales();">
 									</td>
 								</tr> 
 							

@@ -50,10 +50,12 @@ public class GuiaForestalDTO {
 	private boolean anulado;
 
 	private String idLocalizacion;
-	
+
 	private double compensacionCaminos;
 
 	private TipoDeAforo tipoDeAforo;
+
+	private boolean f931Afip;
 
 	public GuiaForestalDTO() {
 
@@ -297,11 +299,36 @@ public class GuiaForestalDTO {
 		return tipoDeAforo;
 	}
 
-	public void setTipoDeAforoEnum(TipoDeAforo tipoDeAforo) {
+	public void setTipoDeAforo(TipoDeAforo tipoDeAforo) {
 		this.tipoDeAforo = tipoDeAforo;
 	}
 
-	public void setTipoDeAforo(String tipoDeAforo) {
+	public String getTipoDeAforoStr() {
+		if (this.tipoDeAforo != null) {
+			return this.tipoDeAforo.name();
+		}
+
+		return null;
+	}
+
+	public void setTipoDeAforoStr(String tipoDeAforo) {
 		this.tipoDeAforo = TipoDeAforo.valueOf(tipoDeAforo);
 	}
+
+	public boolean isF931Afip() {
+		return f931Afip;
+	}
+
+	public void setF931Afip(boolean f931Afip) {
+		this.f931Afip = f931Afip;
+	}
+
+	public String getF931AfipStr() {
+		return Boolean.toString(f931Afip);
+	}
+
+	public void setF931AfipStr(String f931Afip) {
+		this.f931Afip = Boolean.valueOf(f931Afip);
+	}
+
 }
