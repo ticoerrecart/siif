@@ -67,6 +67,30 @@ public class Fiscalizacion {
 	@JoinColumn(name = "oficina_fk")
 	private Entidad oficinaAlta;
 
+	
+	public double getCantidadMtsExtento(){
+		//16-Rollizos > 20 cms  //27-Fuste > 25cms
+		int cantMuestrasMenores = 0;
+		if (this.getTipoProducto().getNombre().equalsIgnoreCase("Rollizo")){
+			for (Muestra muestra : this.getMuestra()) {
+				double diam =  (muestra.getDiametro1() + muestra.getDiametro2())/2;
+				if (diam <= 20){
+					cantMuestrasMenores++;	
+				}
+			}	
+		}
+		if (this.getTipoProducto().getNombre().equalsIgnoreCase("Fuste")){
+			for (Muestra muestra : this.getMuestra()) {
+				double diam =  (muestra.getDiametro1() + muestra.getDiametro2())/2;
+				if (diam <= 25){
+					cantMuestrasMenores++;	
+				}
+			}	
+		}
+		return (cantMuestrasMenores * this.getCantidadMts() / this.getTamanioMuestra());
+		
+	}
+	
 	public String getPeriodoForestal() {
 		return periodoForestal;
 	}
