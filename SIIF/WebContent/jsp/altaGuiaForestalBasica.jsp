@@ -220,8 +220,39 @@ function cambiarTipoDeAforo(){
 	}
 	
 	if ($("#tipoDeAforo").val() == 'CLASIFICACION_DIAMETROS'){
+		
+		totalRollizoExento = 0; 
+		$('#tablaFiscalizaciones .Rollizo').each(function(){
+			totalRollizoExento = totalRollizoExento + parseFloat($(this).val());  
+		})
+		
+		totalFuesteExento = 0; 
+		$('#tablaFiscalizaciones .Fuste').each(function(){
+			totalFuesteExento = totalFuesteExento + parseFloat($(this).val());  
+		})
+		
+		//recorro todas las fisc y sumarizo por tipo y agrego a lo sumo los dos renglones...
+		if (totalRollizoExento > 0){
+			agregarFila();
+			var ind = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+			$('#idValorAforo'+ind).val(0);
+			$('#idCantidadMts'+ind).val(totalRollizoExento);
+			$('#fila'+ind).addClass('fisc');
+		}	
+		
+		if (totalFuesteExento > 0){
+			agregarFila();
+			var ind = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+			$('#idValorAforo'+ind).val(0);
+			$('#idCantidadMts'+ind).val(totalFusteExento);
+			$('#fila'+ind).addClass('fisc');
+			$('#selectTiposDeProductos'+ind).val(27);
+		}	
+		
+		
 		$("#trAfip").show();
 	} else {
+		$('#tablaImportes .fisc ').remove();
 		$("#trAfip").hide();
 		$("#afip").attr("checked",false);
 		calcularTotales();
@@ -345,7 +376,7 @@ function calcularTotales(){
 			else{
 				$('#idF931Valor').html("");			
 			}
-				
+		
 			$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));
 		}	
 	}
@@ -664,6 +695,8 @@ function showCompensacion() {
 				</c:otherwise>
 			</c:choose>
 			
+			
+			
 		</c:when>
 		<c:otherwise>
 			<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
@@ -823,7 +856,7 @@ function showCompensacion() {
 					<c:choose>
 						<c:when test="${fn:length(fiscalizaciones)>0}">	
 							<br>
-							<table border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
+							<table id="tablaFiscalizaciones" border="0" class="cuadrado" align="center" width="70%" cellpadding="2">
 								<tr>
 									<td class="azulAjustado"><bean:message key='SIIF.label.Fecha'/></td>
 									<td class="azulAjustado"><bean:message key='SIIF.label.ProductorForestal'/></td>
@@ -837,6 +870,7 @@ function showCompensacion() {
 									<tr id="tr<c:out value='${i.count}'></c:out>" class="<%=clase%>"
 										onmouseover="javascript:pintarFila(<c:out value='${i.count}'></c:out>);"
 										onmouseout="javascript:despintarFila(<c:out value='${i.count}'></c:out>);">
+													
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].id" value="${fiscalizacion.id}"/>									
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.id" value="${fiscalizacion.tipoProducto.id}"/>
 										<html:hidden property="listaFiscalizaciones[${i.count-1}].tipoProducto.nombre" value="${fiscalizacion.tipoProducto.nombre}"/>
@@ -852,6 +886,11 @@ function showCompensacion() {
 										</td>	
 										<td class="botonerab">
 											<c:out value="${fiscalizacion.cantidadMts}"></c:out>
+											<input 
+												id="cantidadMtsExentos<c:out value='${i.count}'></c:out>" 
+												class="<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>" 
+												type="hidden" 
+												value="${fiscalizacion.cantidadMtsExentos}">
 										</td>
 										<td class="botonerab">
 											<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
