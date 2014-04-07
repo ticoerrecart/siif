@@ -25,3 +25,27 @@ where id= 26;
 
 ALTER TABLE `x071vm20_siif`.`guiaforestal` 
 ADD COLUMN `f931Afip` BIT(1) NULL AFTER `compensacionCaminos`;
+
+/*Menu de Caminos de 2do Orden*/
+INSERT INTO `x071vm20_siif`.`itemmenu` (`id`, `item`, `orden`, `url`) VALUES ('123', 'Camino 2do Orden', '4', NULL);
+UPDATE `x071vm20_siif`.`itemmenu` SET `orden`='9' WHERE `id`='6';
+UPDATE `x071vm20_siif`.`itemmenu` SET `orden`='7' WHERE `id`='12';
+UPDATE `x071vm20_siif`.`itemmenu` SET `orden`='8' WHERE `id`='16';
+UPDATE `x071vm20_siif`.`itemmenu` SET `orden`='5' WHERE `id`='34';
+UPDATE `x071vm20_siif`.`itemmenu` SET `orden`='6' WHERE `id`='46';
+INSERT INTO `x071vm20_siif`.`itemmenu` (`id`, `item`, `url`, `item_fk`) VALUES ('124', 'Alta Camino 2do Orden', '/camino.do?metodo=inicializarAltaCamino', '123');
+INSERT INTO `x071vm20_siif`.`itemmenu` (`id`, `item`, `url`, `item_fk`) VALUES ('125', 'Consulta Camino 2do Orden', '/camino.do?metodo=consultaSaldo', '123');
+
+insert into `x071vm20_siif`.`rol_item`
+values(1,123);
+insert into `x071vm20_siif`.`rol_item`
+values(1,124);
+insert into `x071vm20_siif`.`rol_item`
+values(1,125);
+insert into `x071vm20_siif`.`rol_item`
+values(2,123);
+insert into `x071vm20_siif`.`rol_item`
+values(2,124);
+insert into `x071vm20_siif`.`rol_item`
+values(2,125);
+

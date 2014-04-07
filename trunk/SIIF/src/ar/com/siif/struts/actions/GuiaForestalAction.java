@@ -1632,7 +1632,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok11 = true;
 			boolean ok12 = true;
 			boolean ok13 = true;
-
+			boolean ok14 = true;
+			
 			ok = Validator.validarLongMayorQue(0, Long
 					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
 					"Nro de Guía", error);
@@ -1691,10 +1692,15 @@ public class GuiaForestalAction extends ValidadorAction {
 			}
 			ok11 = Validator.validarFechaValida(
 					guiaForestalForm.getFechaVencimiento(),
-					"Fecha de Vencimiento de Vales de Transporte", error);
-
+					"Fecha de Vencimiento de Vales de Transporte", error);		
+			
+			if(guiaForestalForm.getGuiaForestal().getCompensacionCaminos() > guiaForestalForm.getSaldoXCaminos()){
+				Validator.addErrorXML(error, "El Credito de Caminos de 2do Orden utilizado debe ser menor o igual al que posee el productor");
+				ok14 = false;					
+			}			
+			
 			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8
-					&& ok9 && ok10 && ok11 && ok12 && ok13;
+					&& ok9 && ok10 && ok11 && ok12 && ok13 && ok14;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);
