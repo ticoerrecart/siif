@@ -17,7 +17,7 @@
 
 
 
-<table border="0" class="cuadrado" align="center" width="50%"
+<table border="0" class="cuadrado" align="center" width="50%" id="idProductores"
 	cellpadding="2">
 	<tr>
 		<td colspan="2" class="azulAjustado">Consulta Saldo por Construcción de Caminos de 2do Orden</td>
@@ -49,4 +49,6 @@
 		</tr>
 	</c:forEach>
 </table>
-
+<script type="text/javascript">
+	$("#idProductores tr:nth-child(even)").addClass("par"); //Para pintar en cebra los tr de la tabla
+</script>

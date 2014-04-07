@@ -236,25 +236,40 @@ function cambiarTipoDeAforo(){
 			agregarFila();
 			var ind = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 			$('#idValorAforo'+ind).val(0);
-			$('#idCantidadMts'+ind).val(totalRollizoExento);
+			$('#idCantidadMts'+ind).val(new Number(totalRollizoExento).toFixed(2));
+			$('#idCantidadMts'+ind).attr("readonly",true);
 			$('#fila'+ind).addClass('fisc');
+			$('#selectTiposDeProductos'+ind).val(16);			
+			$("#comercializaEnProvinciaTD"+ind).hide();
+			$("#exentoPorDiametroTD"+ind).show();					
 		}	
 		
 		if (totalFuesteExento > 0){
 			agregarFila();
 			var ind = $('#tablaImportes tr[id*=fila]:last input.ind').val();
 			$('#idValorAforo'+ind).val(0);
-			$('#idCantidadMts'+ind).val(totalFusteExento);
+			$('#idCantidadMts'+ind).val(new Number(totalFuesteExento).toFixed(2));
+			$('#idCantidadMts'+ind).attr("readonly",true);
 			$('#fila'+ind).addClass('fisc');
 			$('#selectTiposDeProductos'+ind).val(27);
+			$("#comercializaEnProvinciaTD"+ind).hide();
+			$("#exentoPorDiametroTD"+ind).show();			
 		}	
 		
 		
 		$("#trAfip").show();
+		$("#usarCompensacion").show();
+		
 	} else {
 		$('#tablaImportes .fisc ').remove();
 		$("#trAfip").hide();
+		$("#usarCompensacion").hide();
 		$("#afip").attr("checked",false);
+
+		$("#usarCompensacion").hide();
+		$("#compensacion").hide();
+		$("#checkCompensacion").attr("checked",false);
+		
 		calcularTotales();
 	}
 	
@@ -331,8 +346,8 @@ function calcularTotales(){
 		var total = porcentaje - compensacion;
 		
 		if ($('#afip').is(':checked')) {
-			
-			var desc = total * .1;
+
+			var desc = new Number(total * .1).toFixed(2); 
 			total = total * .9;
 
 			//Muestro el valor que descuento de la AFIP (10%)
@@ -354,6 +369,8 @@ function calcularTotales(){
 		if(sumaImportes == 0){
 			$('#idPorcentaje').val(0);
 			$('#idTotal').val(0);
+			$('#idF931Valor').html("");			
+			$("#afip").attr("checked",false);
 		}
 		else{
 			var porcentaje = parseFloat(sumaImportes*0.2);
@@ -367,11 +384,11 @@ function calcularTotales(){
 			
 			if ($('#afip').is(':checked')) {
 
-				var desc = total * .1;				
+				var desc = new Number(total * .1).toFixed(2); 				
 				total = total * .9;	
 
 				//Muestro el valor que descuento de la AFIP (10%)				
-				$('#idF931Valor').html("-" + desc + " (10%)");				 
+				$('#idF931Valor').html("$ -" + desc + " (10%)");				 
 			}
 			else{
 				$('#idF931Valor').html("");			
@@ -422,14 +439,15 @@ function agregarFila() {
 
 	$('#idRemFila').attr('disabled',false);
 	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
-
+	
 	if(j==8){
 		$('#idAgrFila').attr('disabled',true);	
 	}
 
 	var k = parseInt(j)+1;
 	
-	$("#tablaImportes tr[id*=fila]:last").clone().find("input,select,td,span").each(function() {
+	$("#tablaImportes tr[id*=fila]:not(.fisc):last").clone().find("input,select,td,span").each(function() {
+	//$("#tablaImportes tr[id*=fila]:last").clone().find("input,select,td,span").each(function() {
 		$(this).attr(
 			{'name' : function(_, name){
 							if(name != null)
@@ -601,18 +619,18 @@ function showCompensacion() {
 							<td width="30%" align="left">
 								<input value="${localizacion.nombreArea}" class="botonerab" type="text" size="40" readonly="readonly">
 							</td>
-							<td width="30%" class="botoneralNegritaRight">
+							<td width="20%" class="botoneralNegritaRight">
 								<bean:message key='SIIF.label.TipoTerreno'/>
 							</td>
 							<td align="left">
 								<input value="${localizacion.tipoTerreno}" id="tipoTerreno" name="tipoTerreno"
-										class="botonerab" type="text" size="40" readonly="readonly">
+										class="botonerab" type="text" size="10" readonly="readonly">
 							</td>
 						</tr>
 
 						<!-- TIPO DE AFORO -->
 						<tr>
-							<td width="25%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
+							<td width="12%" class="botoneralNegritaRight"><bean:message key='SIIF.label.TipoDeAforo'/></td>
 							<td  align="left" width="75%" colspan="3">
 								<html:select styleId="tipoDeAforo" onchange="cambiarTipoDeAforo(${i.count-1});" property="guiaForestal.tipoDeAforoStr" styleClass="botonerab">
 									<c:forEach items="${tiposDeAforo}" var="tipoDeAforo">
@@ -988,6 +1006,9 @@ function showCompensacion() {
 													<span style="display:none" id="comercializaEnProvinciaTD${i.count-1}">
 														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia${i.count-1}" property="listaSubImportes[${i.count-1}].comercializaDentroProvinciaStr" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(${i.count-1});"/>
 													</span>
+													<span style="display:none" id="exentoPorDiametroTD${i.count-1}">
+														Exento por Diámetro
+													</span>													
 												</td>
 												<td>
 													<select name="listaSubImportes[${i.count-1}].especieStr" 
@@ -1093,23 +1114,22 @@ function showCompensacion() {
 											class="botonerab" type="text">
 									</td>
 								</tr> 
-						<c:if test="${entidad.saldoXCaminos gt 0}">		
-								<tr id="usarCompensacion">
+							<c:if test="${entidad.saldoXCaminos gt 0}">								
+								<tr id="usarCompensacion" style="display: none">
 									<td align="right"width="82%">
 										Desea usar Compensación por Construccion de Caminos de 2do Orden?
 									</td>
 									<td width="18%" align="left">
-										<input class="botonerab" type="checkbox" onclick="showCompensacion();">
+										<input id="checkCompensacion" class="botonerab" type="checkbox" onclick="showCompensacion();">
 									</td>
 								</tr> 
-	
-	
+
 								<tr id="compensacion" style="display: none">
 									<td align="right"width="82%">
 										Compensación por Construccion de Caminos de 2do Orden
 									</td>
 									<td width="18%">
-										<input type="hidden" id="saldoXCaminos" value="${entidad.saldoXCaminos}"/>
+										<input type="hidden" id="saldoXCaminos" value="${entidad.saldoXCaminos}" name="saldoXCaminos"/>
 										<input id="compXcaminos" name="guiaForestal.compensacionCaminos" class="botonerab" type="text" value="0" onchange="calcularTotales();">
 									</td>
 								</tr> 
