@@ -21,6 +21,8 @@ public class SubImporte {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	private String estado;
+	
 	private boolean comercializaDentroProvincia;
 
 	@Enumerated(EnumType.STRING)
@@ -115,6 +117,14 @@ public class SubImporte {
 
 	public void setEspecie(EspecieProducto especie) {
 		this.especie = especie;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }

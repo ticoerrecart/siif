@@ -51,7 +51,7 @@
 									<input class="botonerab" size="22" type="text" readonly="readonly" value="${subImporte.tipoProducto.nombre}">														
 								</td>
 								<td>
-																							
+									<input class="botonerab" size="40" type="text" readonly="readonly" value="${subImporte.estado}">																							
 								</td> 
 								<td>
 									<input class="botonerab" size="7" type="text" readonly="readonly" value="${subImporte.especie.descripcion}">
@@ -87,14 +87,46 @@
 									Compensación por Construccion de Caminos de 2do Orden
 								</td>
 								<td width="18%">
-									<input value="${guiaForestal.compensacionCaminos}" class="botonerab" type="text">
+									<input value="" class="botonerab" type="text" readonly="readonly" id="camino2doOrden">
 								</td>
 							</tr> 
-							
+							<tr>
+						<c:choose>
+							<c:when test="${guiaForestal.f931Afip}">							
+								<td align="right"width="82%">
+									Cumple F931 AFIP?
+									<input type="checkbox" checked="checked" disabled="disabled">										
+								</td>
+								<td width="18%">
+									<input value="" class="botonerab" type="text" id="afip">									
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td align="right"width="82%">
+									Cumple F931 AFIP?
+									<input type="checkbox" disabled="disabled">										
+								</td>
+								<td width="18%">
+									<input value="0.00" class="botonerab" type="text">
+								</td>							
+							</c:otherwise>
+						</c:choose>		
+							</tr>							
 							<tr>
 								<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
 								<td>
-									<input readonly="readonly" value="${guiaForestal.importeTotal}" class="botonerab" type="text">
+									<input id="idImporteTotal" readonly="readonly" value="${guiaForestal.importeTotal}" class="botonerab" type="text">
+									
+									<script type="text/javascript">
+										var importeTotal = $('#idImporteTotal').val();
+										$('#afip').val(new Number(importeTotal*-.1).toFixed(2));
+										if(${guiaForestal.compensacionCaminos}>0){
+											$('#camino2doOrden').val(${guiaForestal.compensacionCaminos*-1});
+										}else{
+											$('#camino2doOrden').val("0.00");
+										}							
+									</script>									
+									
 								</td>
 							</tr>
 							<tr>

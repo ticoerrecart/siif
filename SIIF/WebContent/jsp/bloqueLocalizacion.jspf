@@ -1,3 +1,5 @@
+
+
 <c:choose>
 	<c:when test="${guiaForestal.localizacion.esAreaDeCosecha}">
 		<table border="0" class="cuadrado" align="center" width="80%" cellpadding="2">
@@ -17,6 +19,12 @@
 							size="40" readonly="readonly">
 				</td>												
 			</tr>
+			<tr>
+				<td width="12%" align="left" class="botoneralNegritaRight">Tipo de Aforo</td>							
+				<td colspan="3" align="left">
+					<input value="${guiaForestal.tipoDeAforo.descripcion}" class="botonerab" type="text" size="120" readonly="readonly">				
+				</td>
+			</tr>			
 			<tr>
 				<td height="10" colspan="4"></td>
 			</tr>			
