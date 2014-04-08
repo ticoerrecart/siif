@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Hibernate;
+
 import ar.com.siif.dao.GuiaForestalDAO;
 import ar.com.siif.dto.BoletaDepositoDTO;
 import ar.com.siif.dto.FiscalizacionDTO;
@@ -11,9 +13,11 @@ import ar.com.siif.dto.GuiaForestalDTO;
 import ar.com.siif.dto.RangoDTO;
 import ar.com.siif.dto.SubImporteDTO;
 import ar.com.siif.dto.ValeTransporteDTO;
+import ar.com.siif.enums.TipoDeAforo;
 import ar.com.siif.enums.TipoDeEntidad;
 import ar.com.siif.negocio.BoletaDeposito;
 import ar.com.siif.negocio.CaminoConstruido;
+import ar.com.siif.negocio.CuentaCorrienteFiscalizacion;
 import ar.com.siif.negocio.Entidad;
 import ar.com.siif.negocio.Fiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
@@ -49,6 +53,9 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 	private ILocalidadFachada localidadFachada;
 	
 	private ICaminoFachada caminoFachada;
+	
+	private IAforoFachada aforoFachada;
+	
 
 	public GuiaForestalFachada() {
 	}
@@ -57,7 +64,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			IFiscalizacionFachada pFiscalizacionFachada, IEntidadFachada pEntidadFachada,
 			ITipoProductoForestalFachada pTipoProductoForestalFachada,
 			IUbicacionFachada pUbicacionFachada, ILocalidadFachada pLocalidadFachada,
-			ICaminoFachada pCaminoFachada) {
+			ICaminoFachada pCaminoFachada, IAforoFachada pAforoFachada) {
 
 		this.guiaForestalDAO = guiaForestalDAO;
 		this.usuarioFachada = pUsuarioFachada;
@@ -67,6 +74,7 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		this.ubicacionFachada = pUbicacionFachada;
 		this.localidadFachada = pLocalidadFachada;
 		this.caminoFachada = pCaminoFachada;
+		this.aforoFachada = pAforoFachada;
 	}
 
 	public GuiaForestalDAO getGuiaForestalDAO() {
@@ -375,12 +383,14 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		return guiaForestalDAO.existeGuiaForestal(idGuia, nroGuia);
 	}
 
-	public void asociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,
+	public double asociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,
 											List<FiscalizacionDTO> listaFiscalizacionesAAsociar) 
 											throws NegocioException{
 
+		double total = 0;
 		GuiaForestal guiaForestal;
 		Fiscalizacion fiscalizacion;
+		
 		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
 
 			//Tengo que recuperar la guia en cada iteracion pq sino queda desenganchada, pq hago el altaFiscalizacion 
@@ -392,10 +402,14 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 						
 			fiscalizacion.setGuiaForestal(guiaForestal);
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
+			
 		}
 
 		//Tengo que recuperar la guia otra vez pq me quedo desenganchada por el altaFiscalizacion.		
 		guiaForestal = guiaForestalDAO.recuperarGuiaForestal(guiaDTO.getId());
+		
+		
+	
 		
 		OperacionGuiaForestal operacion = ProviderDominio.getOperacionGuiaForestal(
 											guiaDTO.getOperacionModificacion(),guiaForestal, 
@@ -404,8 +418,39 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 				
 		guiaForestal.setOperacionModificacion(operacion);			
 		
+		/*MODIFICACION FISC CON DESCUENTO*/
+		/*recorro las fiscalizaciones chequeo el getCantidadMtsExtento los multiplico y genero un credito x  la asociacion x cada fisc*/
+		
+		
+		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizacionesAAsociar) {
+			fiscalizacion = fiscalizacionFachada.recuperarFiscalizacion(fiscalizacionDTO.getId());
+			Hibernate.initialize(guiaForestal.getSubImportes());
+			
+			if (guiaForestal.getTipoDeAforo() == TipoDeAforo.CLASIFICACION_DIAMETROS){
+				double cantidadMts = 0;
+				for (SubImporte subImporte : guiaForestal.getSubImportes()) {
+					if (!subImporte.isComercializaDentroProvincia() && subImporte.getTipoProducto().getNombre().equals(fiscalizacion.getTipoProducto().getNombre())){
+						cantidadMts = cantidadMts + subImporte.getCantidadMts();
+					} 
+				}
+				//descuento por la cantidad de mts minima entre la fisc y los subimportes. ej si se fisalizaron 15mts y el subimporte es por 10mts.. hago descuento por 10; 
+				double descMts = Math.min(fiscalizacion.getCantidadMts(), cantidadMts);
+				if (descMts > 0){
+					Double aforo = Double.parseDouble(aforoFachada.getValorAforoNuevo(guiaForestal.getTipoDeAforo().name(), "false"));
+					CuentaCorrienteFiscalizacion cc = new CuentaCorrienteFiscalizacion();
+					cc.setFecha(new Date());
+					cc.setFiscalizacion(fiscalizacion);
+					cc.setGuiaForestal(guiaForestal);
+					cc.setMonto(aforo * descMts);
+					cc.setProductor(guiaForestal.getProductorForestal());
+					cc.setUsuario(usuarioFachada.getUsuario(guiaDTO.getOperacionModificacion().getUsuario().getId()));
+					this.guiaForestalDAO.altaCuentaCorrienteFiscalizacion(cc);
+					total = total + (aforo * descMts);
+				}
+			}
+		}		
 		//guiaForestalDAO.altaGuiaForestalBasica(guiaForestal);
-
+		return total;		
 	}
 
 	public void desasociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,

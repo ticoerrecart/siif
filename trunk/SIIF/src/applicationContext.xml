@@ -503,6 +503,7 @@ http://www.springframework.org/schema/jee http://www.springframework.org/schema/
 		<constructor-arg ref="ubicacionFachada" />
 		<constructor-arg ref="localidadFachada" />
 		<constructor-arg ref="caminoFachada" />
+		<constructor-arg ref="aforoFachada" />
 	</bean>	
 
 	<bean id="guiaForestalFachada"
