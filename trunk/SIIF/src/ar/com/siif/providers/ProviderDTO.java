@@ -394,7 +394,11 @@ public abstract class ProviderDTO {
 
 		guiaForestalDTO.setAnulado(guiaForestal.isAnulado());
 		
+		guiaForestalDTO.setTipoDeAforo(guiaForestal.getTipoDeAforo());		
+		
 		guiaForestalDTO.setF931Afip(guiaForestal.isF931Afip());
+		
+		guiaForestalDTO.setCompensacionCaminos(guiaForestal.getCompensacionCaminos());
 
 		return guiaForestalDTO;
 	}
@@ -470,6 +474,7 @@ public abstract class ProviderDTO {
 
 		subImporteDTO.setCantidadMts(subImporte.getCantidadMts());
 		subImporteDTO.setCantidadUnidades(subImporte.getCantidadUnidades());
+		subImporteDTO.setEstado(subImporte.getEstado());
 		subImporteDTO.setEspecie(subImporte.getEspecie());
 		subImporteDTO.setComercializaDentroProvincia(subImporte
 				.isComercializaDentroProvincia());

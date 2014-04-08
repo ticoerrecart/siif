@@ -48,6 +48,26 @@ function setValorLocalizacion(valor){
 }
 
 function submitir(){
+
+	//Seteo los estados de los SubImportes
+	var j = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+	for(var i=0;i<=j;i++){
+		if ($('#comercializaEnProvinciaTD'+i).is(":visible") && $('#comercializaEnProvincia'+i).is(":checked")){
+			
+			$('#estado'+i).val("Comercializa dentro de Provincia");
+		}
+		else{
+			if ($('#exentoPorDiametroTD'+i).is(":visible")){
+				
+				$('#estado'+i).val("Exento por Diámetro");
+			}
+			else{
+				$('#estado'+i).val("");
+			}			
+		}
+				
+	}
+	
 	//bug del serialize de jquery con los checkbox.  No viaja el valor de los que están seleccionados.
 	$("#guiaForestalForm").find(':checkbox:checked').attr('value', true);
 	validarForm("guiaForestalForm","../guiaForestal","validarAltaGuiaForestalBasicaForm","GuiaForestalForm");
@@ -183,9 +203,9 @@ var idRenglon;
 function cambiarTipoDeAforoSegunEstado(ind){
 
 	var tipoDeAforo = $('#tipoDeAforo').val();
-	//alert(tipoDeAforo)
+
 	var comercializaEnProvincia = $('#comercializaEnProvincia'+ind).is(':checked') ;
-	//alert(comercializaEnProvincia)
+
 	idRenglon = ind;
 		
 	AforoFachada.getValorAforoNuevo(tipoDeAforo, comercializaEnProvincia, 
@@ -1011,7 +1031,9 @@ function showCompensacion() {
 													</span>
 													<span style="display:none" id="exentoPorDiametroTD${i.count-1}">
 														Exento por Diámetro
-													</span>													
+													</span>
+													
+													<input type="hidden" id="estado${i.count-1}" name="listaSubImportes[${i.count-1}].estado">													
 												</td>
 												<td>
 													<select name="listaSubImportes[${i.count-1}].especieStr" 

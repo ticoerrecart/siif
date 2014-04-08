@@ -8,6 +8,8 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 
 	private boolean comercializaDentroProvincia;
 
+	private String estado;
+	
 	private EspecieProducto especie;
 
 	private double valorAforos;
@@ -119,4 +121,12 @@ public class SubImporteDTO implements Comparable<SubImporteDTO> {
 		return this.getTipoProducto().getId()
 				.compareTo(o.getTipoProducto().getId());
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}	
 }

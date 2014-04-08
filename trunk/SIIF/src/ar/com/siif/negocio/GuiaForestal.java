@@ -315,6 +315,4 @@ public class GuiaForestal {
 	public void setF931Afip(boolean f931Afip) {
 		this.f931Afip = f931Afip;
 	}
-
-	
 }

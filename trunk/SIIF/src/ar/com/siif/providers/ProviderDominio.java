@@ -292,6 +292,7 @@ public abstract class ProviderDominio {
 			Localizacion localizacion, Localidad localidad,
 			Usuario usuarioAlta, Usuario usuarioModificacion,
 			Usuario usuarioAnulacion) {
+		
 		GuiaForestal guia = new GuiaForestal();
 
 		if (guiaDTO.getId() != null && guiaDTO.getId() != 0) {
@@ -352,6 +353,8 @@ public abstract class ProviderDominio {
 		guia.setAnulado(guiaDTO.isAnulado());
 		guia.setTipoDeAforo(guiaDTO.getTipoDeAforo());
 		guia.setF931Afip(Boolean.valueOf(guiaDTO.isF931Afip()));
+		guia.setCompensacionCaminos(guiaDTO.getCompensacionCaminos());
+		
 		return guia;
 	}
 
@@ -432,6 +435,7 @@ public abstract class ProviderDominio {
 		subImporte.setCantidadMts(subImporteDTO.getCantidadMts());
 		subImporte.setCantidadUnidades(subImporteDTO.getCantidadUnidades());
 		subImporte.setEspecie(subImporteDTO.getEspecie());
+		subImporte.setEstado(subImporteDTO.getEstado());
 		subImporte.setComercializaDentroProvincia(subImporteDTO
 				.isComercializaDentroProvincia());
 		subImporte.setGuiaForestal(guia);
