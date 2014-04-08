@@ -1116,11 +1116,17 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestalDTO.getOperacionModificacion().setTipoOperacion(
 					TipoOperacion.MOD.getDescripcion());
 
-			guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(
+			double d = guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(
 					guiaForestalDTO, guiaForm.getListaFiscalizaciones());
 
-			request.setAttribute("exitoAsociacion",
-					Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);
+			if (d > 0){
+				request.setAttribute("exitoAsociacion",
+						Constantes.EXITO_MODIFICACION_GUIA_FORESTAL + ". Se le ha generado un credito por " + d + " debido a que las fiscalizaciones asociadas tenian descuento por el tamaño de las muestras.");
+			} else {
+				request.setAttribute("exitoAsociacion",
+						Constantes.EXITO_MODIFICACION_GUIA_FORESTAL);	
+			}
+			
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

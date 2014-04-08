@@ -51,7 +51,7 @@ public interface IGuiaForestalFachada {
 
 	public boolean existeGuiaForestal(long nroGuia);
 
-	public void asociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,
+	public double asociarFiscalizacionesConGuiasForestales(GuiaForestalDTO guiaDTO,
 										List<FiscalizacionDTO> listaFiscalizacionesAAsociar)
 										throws NegocioException;
 

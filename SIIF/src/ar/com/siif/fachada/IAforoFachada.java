@@ -36,4 +36,7 @@ public interface IAforoFachada {
 
 	public String getValor(String estado, Long idTipoProducto,
 			Long idProdForestal) throws NegocioException;
+	
+	public String getValorAforoNuevo(String tipoDeAforo, String comercializaEnProvincia)
+			throws NegocioException;
 }

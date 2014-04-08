@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -12,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ar.com.siif.dto.OperacionGuiaForestalDTO;
 import ar.com.siif.enums.TipoOperacion;
 import ar.com.siif.negocio.BoletaDeposito;
+import ar.com.siif.negocio.CuentaCorrienteFiscalizacion;
 import ar.com.siif.negocio.GuiaForestal;
 import ar.com.siif.negocio.Usuario;
 import ar.com.siif.negocio.ValeTransporte;
@@ -62,7 +64,7 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 	}
 
 	public GuiaForestal recuperarGuiaForestal(long idGuiaForestal){
-
+		
 		return (GuiaForestal) getSession().get(GuiaForestal.class, idGuiaForestal);
 	}
 
@@ -266,5 +268,12 @@ public class GuiaForestalDAO extends HibernateDaoSupport {
 																	   guia,usuario));		
 		
 		this.getHibernateTemplate().saveOrUpdate(guia);
+	}
+
+	public void altaCuentaCorrienteFiscalizacion(CuentaCorrienteFiscalizacion cc) {
+		this.getHibernateTemplate().saveOrUpdate(cc);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+		
 	}
 }
