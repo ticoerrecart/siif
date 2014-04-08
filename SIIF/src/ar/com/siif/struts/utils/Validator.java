@@ -54,8 +54,7 @@ public abstract class Validator {
 		return xml;
 	}
 
-	public static boolean requerido(String entrada, String label,
-			StringBuffer pError) {
+	public static boolean requerido(String entrada, String label, StringBuffer pError) {
 		if (entrada != null && !entrada.equals("")) {
 			return true;
 		}
@@ -64,8 +63,7 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean requerido(Object entrada, String label,
-			StringBuffer pError) {
+	public static boolean requerido(Object entrada, String label, StringBuffer pError) {
 		if (entrada != null) {
 			return true;
 		}
@@ -74,9 +72,8 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean validarRequeridoSi(String entradaCondicion,
-			String valorCondicion, String entrada, String label,
-			StringBuffer pError) {
+	public static boolean validarRequeridoSi(String entradaCondicion, String valorCondicion,
+			String entrada, String label, StringBuffer pError) {
 
 		if (entradaCondicion != null && entradaCondicion.equals(valorCondicion)) {
 			if (entrada != null && !entrada.equals("")) {
@@ -93,8 +90,8 @@ public abstract class Validator {
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
-	public static boolean validarComboRequerido(String valorEntradaDistinto,
-			String entrada, String label, StringBuffer pError) {
+	public static boolean validarComboRequerido(String valorEntradaDistinto, String entrada,
+			String label, StringBuffer pError) {
 
 		if (entrada == null || entrada.equals("")) {
 			return true;
@@ -109,9 +106,8 @@ public abstract class Validator {
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
-	public static boolean validarComboRequeridoSi(String entradaCondicion,
-			String valorCondicion, String valorEntradaDistinto, String entrada,
-			String label, StringBuffer pError) {
+	public static boolean validarComboRequeridoSi(String entradaCondicion, String valorCondicion,
+			String valorEntradaDistinto, String entrada, String label, StringBuffer pError) {
 
 		if (entradaCondicion != null && entradaCondicion.equals(valorCondicion)) {
 			if (entrada != null && !entrada.equals(valorEntradaDistinto)) {
@@ -128,16 +124,16 @@ public abstract class Validator {
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
-	public static boolean validarEnteroMayorQue(int numeroMinimo,
-			String entrada, String label, StringBuffer pError) {
+	public static boolean validarEnteroMayorQue(int numeroMinimo, String entrada, String label,
+			StringBuffer pError) {
 		if (entrada == null || entrada.equals("")) {
 			return true;
 		}
 		try {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt <= numeroMinimo) {
-				addErrorXML(pError, label + " debe ser un número mayor a "
-						+ Integer.toString(numeroMinimo));
+				addErrorXML(pError,
+						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
@@ -150,16 +146,16 @@ public abstract class Validator {
 	/*
 	 * Si la entrada es nula entonces se considera valido
 	 */
-	public static boolean validarEnteroMenorQue(int numeroMaximo,
-			String entrada, String label, StringBuffer pError) {
+	public static boolean validarEnteroMenorQue(int numeroMaximo, String entrada, String label,
+			StringBuffer pError) {
 		if (entrada == null || entrada.equals("")) {
 			return true;
 		}
 		try {
 			int entradaInt = Integer.parseInt(entrada);
 			if (entradaInt >= numeroMaximo) {
-				addErrorXML(pError, label + " debe ser un número menor a "
-						+ Integer.toString(numeroMaximo));
+				addErrorXML(pError,
+						label + " debe ser un número menor a " + Integer.toString(numeroMaximo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
@@ -169,16 +165,16 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarLongMayorQue(int numeroMinimo, String entrada,
-			String label, StringBuffer pError) {
+	public static boolean validarLongMayorQue(int numeroMinimo, String entrada, String label,
+			StringBuffer pError) {
 		if (entrada == null || entrada.equals("")) {
 			return true;
 		}
 		try {
 			long entradaLong = Long.parseLong(entrada);
 			if (entradaLong <= numeroMinimo) {
-				addErrorXML(pError, label + " debe ser un número mayor a "
-						+ Integer.toString(numeroMinimo));
+				addErrorXML(pError,
+						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
@@ -189,42 +185,40 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarDoubleMayorQue(int numeroMinimo,
-			String entrada, String label, StringBuffer pError) {
+	public static boolean validarDoubleMayorQue(int numeroMinimo, String entrada, String label,
+			StringBuffer pError) {
 		if (entrada == null || entrada.equals("")) {
 			return true;
 		}
 		try {
 			double entradaDouble = Double.parseDouble(entrada);
 			if (entradaDouble <= numeroMinimo) {
-				addErrorXML(pError, label + " debe ser un número mayor a "
-						+ Integer.toString(numeroMinimo));
+				addErrorXML(pError,
+						label + " debe ser un número mayor a " + Integer.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError,
-					" debe ser un número entero con decimales válido");
+			addErrorXML(pError, " debe ser un número entero con decimales válido");
 			return false;
 		}
 
 		return true;
 	}
 
-	public static boolean validarDoubleMayorQue(double numeroMinimo,
-			String entrada, String label, StringBuffer pError) {
+	public static boolean validarDoubleMayorQue(double numeroMinimo, String entrada, String label,
+			StringBuffer pError) {
 		if (entrada == null || entrada.equals("")) {
 			return true;
 		}
 		try {
 			double entradaDouble = Double.parseDouble(entrada);
 			if (entradaDouble <= numeroMinimo) {
-				addErrorXML(pError, label + " debe ser un número mayor a "
-						+ Double.toString(numeroMinimo));
+				addErrorXML(pError,
+						label + " debe ser un número mayor a " + Double.toString(numeroMinimo));
 				return false;
 			}
 		} catch (NumberFormatException e) {
-			addErrorXML(pError,
-					" debe ser un número entero con decimales válido");
+			addErrorXML(pError, " debe ser un número entero con decimales válido");
 			return false;
 		}
 
@@ -235,8 +229,7 @@ public abstract class Validator {
 	 * Si la entrada es nula entonces se considera valido chequea que el año se
 	 * mayor que 1900 y menor que 2100
 	 */
-	public static boolean validarFechaValida(String pEntrada, String label,
-			StringBuffer pError) {
+	public static boolean validarFechaValida(String pEntrada, String label, StringBuffer pError) {
 		if (pEntrada == null || pEntrada.equals("")) {
 			return true;
 		}
@@ -253,32 +246,24 @@ public abstract class Validator {
 			int mesInt = Integer.parseInt(mes);
 			int diaInt = Integer.parseInt(dia);
 			if (diaInt > 31 || diaInt < 1) {
-				addErrorXML(
-						pError,
-						label
-								+ " invalida, el dia debe ser menor igual que 31 y mayor que 0");
+				addErrorXML(pError, label
+						+ " invalida, el dia debe ser menor igual que 31 y mayor que 0");
 				return false;
 			} else if (mesInt > 12 || mesInt < 1) {
-				addErrorXML(
-						pError,
-						label
-								+ " invalida, el mes debe ser menor igual que 12 y mayor que 0");
+				addErrorXML(pError, label
+						+ " invalida, el mes debe ser menor igual que 12 y mayor que 0");
 				return false;
 			} else if (anioInt > 2100 || anioInt < 1900) {
-				addErrorXML(
-						pError,
-						label
-								+ " invalida, el año debe ser menor igual que 2100 y mayor que 1900");
+				addErrorXML(pError, label
+						+ " invalida, el año debe ser menor igual que 2100 y mayor que 1900");
 				return false;
 			}
 
 			return DateUtils.validateDate(pEntrada, true, "dd/MM/yyyy");
 
 		} catch (Exception e) {
-			addErrorXML(
-					pError,
-					label
-							+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+			addErrorXML(pError, label
+					+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
 			return false;
 		}
 
@@ -293,21 +278,18 @@ public abstract class Validator {
 	 * @param pError
 	 * @return boolean
 	 */
-	public static boolean validarFechaPasadaValida(String pEntrada,
-			String label, StringBuffer pError) {
+	public static boolean validarFechaPasadaValida(String pEntrada, String label,
+			StringBuffer pError) {
 		boolean salida = true;
 		if (pEntrada == null || pEntrada.equals("")) {
 			return true;
 		}
 		if (!DateUtils.validateDate(pEntrada, true, "dd/MM/yyyy")) {
-			addErrorXML(
-					pError,
-					label
-							+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+			addErrorXML(pError, label
+					+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
 			return false;
 		}
-		if (!DateUtils.validateDatePeriod(
-				DateUtils.dateFromString(pEntrada, "dd/MM/yyyy"),
+		if (!DateUtils.validateDatePeriod(DateUtils.dateFromString(pEntrada, "dd/MM/yyyy"),
 				GregorianCalendar.getInstance().getTime())) {
 			addErrorXML(pError, label + " invalida, debe ser una fecha pasada.");
 			salida = false;
@@ -325,9 +307,8 @@ public abstract class Validator {
 	 * @param pError
 	 * @return boolean
 	 */
-	public static boolean validarFechaMenorA(String pFechaDesde,
-			String pFechaHasta, String labelFechaDesde, String labelFechaHasta,
-			StringBuffer pError) {
+	public static boolean validarFechaMenorA(String pFechaDesde, String pFechaHasta,
+			String labelFechaDesde, String labelFechaHasta, StringBuffer pError) {
 
 		boolean salida = true;
 		if (pFechaDesde == null || pFechaDesde.equals("")) {
@@ -335,10 +316,8 @@ public abstract class Validator {
 			salida = false;
 		} else {
 			if (!DateUtils.validateDate(pFechaDesde, true, "dd/MM/yyyy")) {
-				addErrorXML(
-						pError,
-						labelFechaDesde
-								+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+				addErrorXML(pError, labelFechaDesde
+						+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
 				salida = false;
 			}
 		}
@@ -348,17 +327,14 @@ public abstract class Validator {
 			salida = false;
 		} else {
 			if (!DateUtils.validateDate(pFechaHasta, true, "dd/MM/yyyy")) {
-				addErrorXML(
-						pError,
-						labelFechaHasta
-								+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
+				addErrorXML(pError, labelFechaHasta
+						+ " debe ser una fecha Valida, el formato esperado es dd/mm/yyyy");
 				salida = false;
 			}
 		}
 
 		if (salida
-				&& DateUtils.isBefore(
-						DateUtils.dateFromString(pFechaHasta, "dd/MM/yyyy"),
+				&& DateUtils.isBefore(DateUtils.dateFromString(pFechaHasta, "dd/MM/yyyy"),
 						DateUtils.dateFromString(pFechaDesde, "dd/MM/yyyy"))) {
 			addErrorXML(pError, "Fecha Desde debe ser menor a Fecha Hasta");
 			salida = false;
@@ -371,8 +347,7 @@ public abstract class Validator {
 		return (tipoLote.equals("S") || tipoLote.equals("N"));
 	}
 
-	public static boolean validarEmail(String email, String label,
-			StringBuffer pError) {
+	public static boolean validarEmail(String email, String label, StringBuffer pError) {
 		if (email == null || email.equals("")) {
 			return true;
 		}
@@ -393,8 +368,7 @@ public abstract class Validator {
 			lastToken = st.nextToken();
 		}
 
-		if (matchFound && lastToken.length() >= 2
-				&& email.length() - 1 != lastToken.length()) {
+		if (matchFound && lastToken.length() >= 2 && email.length() - 1 != lastToken.length()) {
 			// validate the country code
 			return true;
 		}
@@ -404,8 +378,7 @@ public abstract class Validator {
 
 	}
 
-	public static boolean validarAlfaNumerico(String valor, String label,
-			StringBuffer pError) {
+	public static boolean validarAlfaNumerico(String valor, String label, StringBuffer pError) {
 		if (valor == null || valor.equals("")) {
 			return true;
 		}
@@ -418,8 +391,7 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean validarNumerico(String valor, String label,
-			StringBuffer pError) {
+	public static boolean validarNumerico(String valor, String label, StringBuffer pError) {
 		if (valor == null || valor.equals("")) {
 			return true;
 		}
@@ -432,8 +404,7 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean validarCaracter(String valor, String label,
-			StringBuffer pError) {
+	public static boolean validarCaracter(String valor, String label, StringBuffer pError) {
 		if (valor == null || valor.equals("")) {
 			return true;
 		}
@@ -446,13 +417,12 @@ public abstract class Validator {
 		return false;
 	}
 
-	public static boolean validarLongitudHasta(String valor, int longitud,
-			String label, StringBuffer pError) {
+	public static boolean validarLongitudHasta(String valor, int longitud, String label,
+			StringBuffer pError) {
 		if ((valor == null) || valor.length() <= longitud) {
 			return true;
 		}
-		addErrorXML(pError, label + " no es válido, se permite hasta "
-				+ longitud + " posiciones");
+		addErrorXML(pError, label + " no es válido, se permite hasta " + longitud + " posiciones");
 		return false;
 	}
 
@@ -460,8 +430,8 @@ public abstract class Validator {
 	 * true si es null , string vacío o letras, si el valor longitudMaxima es 0,
 	 * no toma cuenta el largo del string.
 	 */
-	public static boolean validarLetras(String valor, int longitudMaxima,
-			String label, StringBuffer pError) {
+	public static boolean validarLetras(String valor, int longitudMaxima, String label,
+			StringBuffer pError) {
 		if (valor == null || valor.equals("")) {
 			return true;
 		}
@@ -469,44 +439,40 @@ public abstract class Validator {
 				&& (longitudMaxima == 0 || valor.length() <= longitudMaxima)) {
 			return true;
 		}
-		addErrorXML(pError, label
-				+ " no es válido, solo letras"
-				+ (longitudMaxima != 0 ? " hasta " + longitudMaxima
-						+ " posiciones" : ""));
+		addErrorXML(pError, label + " no es válido, solo letras"
+				+ (longitudMaxima != 0 ? " hasta " + longitudMaxima + " posiciones" : ""));
 		return false;
 	}
 
-	public static boolean validarLetras(String valor, String label,
-			StringBuffer pError) {
+	public static boolean validarLetras(String valor, String label, StringBuffer pError) {
 		return validarLetras(valor, 0, label, pError);
 	}
 
-	private static String mensajeErrorDiametroLargo(String valorIngresado,
-			String valorMin, String valorMax, String msje) {
+	private static String mensajeErrorDiametroLargo(String valorIngresado, String valorMin,
+			String valorMax, String msje) {
 		return "El valor " + valorIngresado + " ingresado en el " + msje
-				+ " no es un valor dentro del rango [" + valorMin + ","
-				+ valorMax + "]";
+				+ " no es un valor dentro del rango [" + valorMin + "," + valorMax + "]";
 	}
 
-	private static boolean validarDiametro(StringBuffer pError,
-			Double diametro, Integer min, Integer max, String label) {
+	private static boolean validarDiametro(StringBuffer pError, Double diametro, Integer min,
+			Integer max, String label) {
 		if (diametro < min || diametro > max) {
 			addErrorXML(
 					pError,
-					mensajeErrorDiametroLargo(diametro.toString(),
-							min.toString(), max.toString(), label));
+					mensajeErrorDiametroLargo(diametro.toString(), min.toString(), max.toString(),
+							label));
 			return false;
 		}
 		return true;
 	}
 
-	private static boolean validarLargo(StringBuffer pError, Double diametro,
-			Double min, Double max, String label) {
+	private static boolean validarLargo(StringBuffer pError, Double diametro, Double min,
+			Double max, String label) {
 		if (diametro < min || diametro > max) {
 			addErrorXML(
 					pError,
-					mensajeErrorDiametroLargo(diametro.toString(),
-							min.toString(), max.toString(), label));
+					mensajeErrorDiametroLargo(diametro.toString(), min.toString(), max.toString(),
+							label));
 			return false;
 		}
 		return true;
@@ -575,44 +541,32 @@ public abstract class Validator {
 
 				if (tipoProducto.getCantDiametros() == 1) {
 					ok = ok
-							&& validarDiametro(pError, muestra.getDiametro1(),
-									new Double(tipoProducto.getDiam1Desde())
-											.intValue(),
-									new Double(tipoProducto.getDiam1Hasta())
-											.intValue(), "Diámetro 1 del "
-											+ tipoProducto.getNombre());
+							&& validarDiametro(pError, muestra.getDiametro1(), new Double(
+									tipoProducto.getDiam1Desde()).intValue(), new Double(
+									tipoProducto.getDiam1Hasta()).intValue(), "Diámetro 1 del "
+									+ tipoProducto.getNombre());
 
 					ok = ok
 							&& validarLargo(pError, muestra.getLargo(),
-									tipoProducto.getLargoDesde(),
-									tipoProducto.getLargoHasta(), "Largo del "
-											+ tipoProducto.getNombre());
+									tipoProducto.getLargoDesde(), tipoProducto.getLargoHasta(),
+									"Largo del " + tipoProducto.getNombre());
 				} else {
 					if (tipoProducto.getCantDiametros() == 2) {
 						ok = ok
-								&& validarDiametro(
-										pError,
-										muestra.getDiametro1(),
-										new Double(tipoProducto.getDiam1Desde())
-												.intValue(), new Double(
-												tipoProducto.getDiam1Hasta())
-												.intValue(), "Diámetro 1 del "
-												+ tipoProducto.getNombre());
+								&& validarDiametro(pError, muestra.getDiametro1(), new Double(
+										tipoProducto.getDiam1Desde()).intValue(), new Double(
+										tipoProducto.getDiam1Hasta()).intValue(), "Diámetro 1 del "
+										+ tipoProducto.getNombre());
 
 						ok = ok
-								&& validarDiametro(
-										pError,
-										muestra.getDiametro2(),
-										new Double(tipoProducto.getDiam2Desde())
-												.intValue(), new Double(
-												tipoProducto.getDiam2Hasta())
-												.intValue(), "Diámetro 2 del "
-												+ tipoProducto.getNombre());
+								&& validarDiametro(pError, muestra.getDiametro2(), new Double(
+										tipoProducto.getDiam2Desde()).intValue(), new Double(
+										tipoProducto.getDiam2Hasta()).intValue(), "Diámetro 2 del "
+										+ tipoProducto.getNombre());
 
 						ok = ok
 								&& validarLargo(pError, muestra.getLargo(),
-										tipoProducto.getLargoDesde(),
-										tipoProducto.getLargoHasta(),
+										tipoProducto.getLargoDesde(), tipoProducto.getLargoHasta(),
 										"Largo del " + tipoProducto.getNombre());
 					}
 				}
@@ -655,8 +609,7 @@ public abstract class Validator {
 			TipoProductoForestalDTO tipoProducto, StringBuffer pError) {
 
 		if (muestras.size() == 0) {
-			addErrorXML(pError,
-					"Cantidad de Muestras debe ser un numero mayor a 0");
+			addErrorXML(pError, "Cantidad de Muestras debe ser un numero mayor a 0");
 			return false;
 		}
 
@@ -664,18 +617,15 @@ public abstract class Validator {
 			if (muestra != null) {
 				// if (idTipoProducto == 2 || idTipoProducto == 5) {
 				if (tipoProducto.getCantDiametros() == 2) {
-					if (muestra.getLargo() == 0.0
-							|| muestra.getDiametro1() == 0.0
+					if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0
 							|| muestra.getDiametro2() == 0.0) {
-						addErrorXML(pError,
-								"Faltan datos de Largo y/o Diametro en las Muestras");
+						addErrorXML(pError, "Faltan datos de Largo y/o Diametro en las Muestras");
 						return false;
 					}
 				} else {
 					// if (idTipoProducto == 1 || idTipoProducto == 4) {
 					if (tipoProducto.getCantDiametros() == 1) {
-						if (muestra.getLargo() == 0.0
-								|| muestra.getDiametro1() == 0.0) {
+						if (muestra.getLargo() == 0.0 || muestra.getDiametro1() == 0.0) {
 							addErrorXML(pError,
 									"Faltan datos de Largo y/o Diametro en las Muestras");
 							return false;
@@ -688,9 +638,8 @@ public abstract class Validator {
 		return validarRangoMuestras(muestras, tipoProducto, pError);
 	}
 
-	public static boolean validarBoletasDeposito(
-			List<BoletaDepositoDTO> boletas, double montoTotal,
-			StringBuffer pError) {
+	public static boolean validarBoletasDeposito(List<BoletaDepositoDTO> boletas,
+			double montoTotal, StringBuffer pError) {
 
 		// Es para el caso en que carguen guias con importe en 0.0, para alguna
 		// donacion, etc
@@ -699,8 +648,7 @@ public abstract class Validator {
 		}
 
 		if (boletas.size() == 0) {
-			addErrorXML(pError,
-					"La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
+			addErrorXML(pError, "La Cantidad de Boletas de Deposito debe ser un numero mayor a 0");
 			return false;
 		}
 
@@ -714,10 +662,9 @@ public abstract class Validator {
 				b.setNumero(boleta.getNumero());
 				listaBoletas.add(b);
 			} else {
-				BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils
-						.find(listaBoletas,
-								new BeanPropertyValueEqualsPredicate("numero",
-										boleta.getNumero()));
+				BoletaDepositoDTO boletaEncontrada = (BoletaDepositoDTO) CollectionUtils.find(
+						listaBoletas,
+						new BeanPropertyValueEqualsPredicate("numero", boleta.getNumero()));
 				if (boletaEncontrada == null) {
 					// tengo q crear una nueva porq sino no anda, se borra de la
 					// coleccion
@@ -734,34 +681,28 @@ public abstract class Validator {
 				montoSumaBoletas = montoSumaBoletas + boleta.getMonto();
 
 				if (boleta.getNumero() <= 0) {
-					addErrorXML(pError,
-							"Faltan datos en el Nro de Boleta de Deposito");
+					addErrorXML(pError, "Faltan datos en el Nro de Boleta de Deposito");
 					return false;
 				}
 
-				if (boleta.getConcepto() == null
-						|| boleta.getConcepto().equals("")) {
-					addErrorXML(pError,
-							"Faltan datos en el Concepto de la Boleta de Deposito");
+				if (boleta.getConcepto() == null || boleta.getConcepto().equals("")) {
+					addErrorXML(pError, "Faltan datos en el Concepto de la Boleta de Deposito");
 					return false;
 				}
 
 				if (boleta.getArea() == null || boleta.getArea().equals("")) {
-					addErrorXML(pError,
-							"Faltan datos en el Area de la Boleta de Deposito");
+					addErrorXML(pError, "Faltan datos en el Area de la Boleta de Deposito");
 					return false;
 				}
 
-				if (boleta.getFechaVencimiento() == null
-						|| boleta.getFechaVencimiento().equals("")) {
+				if (boleta.getFechaVencimiento() == null || boleta.getFechaVencimiento().equals("")) {
 					addErrorXML(pError,
 							"Faltan datos en la Fecha de Vencimiento de la Boleta de Deposito");
 					return false;
 				}
 
 				if (boleta.getMonto() <= 0.0) {
-					addErrorXML(pError,
-							"Faltan datos en el monto de la Boleta de Deposito");
+					addErrorXML(pError, "Faltan datos en el monto de la Boleta de Deposito");
 					return false;
 				}
 			}
@@ -770,40 +711,29 @@ public abstract class Validator {
 		montoSumaBoletas = MathUtils.round(montoSumaBoletas, 2);
 
 		if (montoSumaBoletas != montoTotal) {
-			addErrorXML(
-					pError,
+			addErrorXML(pError,
 					"La suma de los montos de las Boletas de Deposito debe ser igual al Importe Total");
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean validarValesTransporte(List<ValeTransporteDTO> vales,
-			StringBuffer pError) {
+	public static boolean validarValesTransporte(List<ValeTransporteDTO> vales, StringBuffer pError) {
 
 		if (vales.size() == 0) {
-			addErrorXML(pError,
-					"La Cantidad de Vales de Transporte debe ser un numero mayor a 0");
+			addErrorXML(pError, "La Cantidad de Vales de Transporte debe ser un numero mayor a 0");
 			return false;
 		}
 		for (ValeTransporteDTO vale : vales) {
 
-			if (vale.getNumero() <= 0
-					|| vale.getOrigen() == null
-					|| vale.getOrigen().equals("")
-					|| vale.getDestino() == null
-					|| vale.getDestino().equals("")
-					|| vale.getVehiculo() == null
-					|| vale.getVehiculo().equals("")
-					|| vale.getMarca() == null
-					|| vale.getMarca().equals("")
-					|| vale.getDominio() == null
-					|| vale.getDominio().equals("")
-					|| vale.getProducto() == null
-					|| vale.getProducto().equals("")
+			if (vale.getNumero() <= 0 || vale.getOrigen() == null || vale.getOrigen().equals("")
+					|| vale.getDestino() == null || vale.getDestino().equals("")
+					|| vale.getVehiculo() == null || vale.getVehiculo().equals("")
+					|| vale.getMarca() == null || vale.getMarca().equals("")
+					|| vale.getDominio() == null || vale.getDominio().equals("")
+					|| vale.getProducto() == null || vale.getProducto().equals("")
 					|| (vale.getNroPiezas() <= 0 && vale.getCantidadMts() <= 0.0)
-					|| vale.getEspecie() == null
-					|| vale.getEspecie().equals("")) {
+					|| vale.getEspecie() == null || vale.getEspecie().equals("")) {
 				addErrorXML(pError, "Faltan datos en los Vales de Transporte");
 				return false;
 			}
@@ -814,10 +744,8 @@ public abstract class Validator {
 	public static boolean validarTipoProductoAltaGFB(Long idTipoProductoGuia,
 			Long idTipoProductoFiscalizacion, StringBuffer pError) {
 
-		if (idTipoProductoGuia.longValue() != idTipoProductoFiscalizacion
-				.longValue()) {
-			addErrorXML(pError,
-					"El Tipo de Producto debe ser igual al de las Fiscalizaciones");
+		if (idTipoProductoGuia.longValue() != idTipoProductoFiscalizacion.longValue()) {
+			addErrorXML(pError, "El Tipo de Producto debe ser igual al de las Fiscalizaciones");
 			return false;
 		}
 		return true;
@@ -830,8 +758,7 @@ public abstract class Validator {
 		if (ok) {
 			for (RangoDTO rango : rangos) {
 				for (ValeTransporteDTO valeTransporteDTO : valesDeTransporte) {
-					okExisteVale = valeTransporteDTO.getNumero() < rango
-							.getDesde()
+					okExisteVale = valeTransporteDTO.getNumero() < rango.getDesde()
 							|| valeTransporteDTO.getNumero() > rango.getHasta();
 					if (!okExisteVale) {
 						Validator
@@ -855,8 +782,7 @@ public abstract class Validator {
 		return ok && okExisteVale;
 	}
 
-	public static boolean validarRangos(List<RangoDTO> rangos,
-			StringBuffer pError) {
+	public static boolean validarRangos(List<RangoDTO> rangos, StringBuffer pError) {
 		String titulo = "en los Vales de Transporte";
 		/*
 		 * if (rangos.size() == 0) { addErrorXML(pError,
@@ -883,8 +809,7 @@ public abstract class Validator {
 		Long i = new Long(-1);
 		for (Long nro : lista) {
 			if (i > nro) {
-				addErrorXML(pError, "Los valores de los rangos " + titulo
-						+ " estan superpuestos");
+				addErrorXML(pError, "Los valores de los rangos " + titulo + " estan superpuestos");
 				return false;
 			} else {
 				i = nro;
@@ -893,38 +818,13 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarSubImportes(
-			List<SubImporteDTO> listaSubImportes,
-			List<FiscalizacionDTO> listaFiscalizaciones, String tipoTerreno,
-			StringBuffer pError) {
-
-		HashMap<Long, SubImporteDTO> hashProductosFiscalizados = new HashMap<Long, SubImporteDTO>();
-		HashMap<String, SubImporteDTO> listaIdTipoProducto = new HashMap<String, SubImporteDTO>();
+	public static boolean validarSubImportes(List<SubImporteDTO> listaSubImportes,
+			List<FiscalizacionDTO> listaFiscalizaciones, String tipoTerreno, StringBuffer pError) {
 
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
 
-			hashProductosFiscalizados.put(subImporteDTO.getTipoProducto()
-					.getId(), subImporteDTO);
-			String comercializaEnProvincia = Boolean.toString(subImporteDTO
-					.isComercializaDentroProvincia());
-			String key = subImporteDTO.getTipoProducto().getId() + "-"
-					+ comercializaEnProvincia;
-			if (listaIdTipoProducto.get(key) != null) {
-				addErrorXML(
-						pError,
-						"Debe especificar un solo subImporte por cada Tipo de Producto teniendo en cuenta si Comercializa dentro de la Provincia");
-				return false;
-			}
-			/*
-			 * if (subImporteDTO.getEstado() == null ||
-			 * subImporteDTO.getEstado().equals("")) { addErrorXML(pError,
-			 * "Faltan especificar datos en el Estado del Producto Forestal");
-			 * return false; }
-			 */
-			if (subImporteDTO.getEspecie() == null
-					|| subImporteDTO.getEspecie().equals("")) {
-				addErrorXML(pError,
-						"Faltan especificar datos en la Especie del Producto Forestal");
+			if (subImporteDTO.getEspecie() == null || subImporteDTO.getEspecie().equals("")) {
+				addErrorXML(pError, "Faltan especificar datos en la Especie del Producto Forestal");
 				return false;
 			}
 			if (subImporteDTO.getCantidadMts() <= 0.0) {
@@ -932,45 +832,19 @@ public abstract class Validator {
 						"Faltan especificar datos en la cantidad de Metros del Producto Forestal");
 				return false;
 			}
-			// if (subImporteDTO.getValorAforos() <= 0.0) {
 			if (subImporteDTO.getValorAforos() < 0.0) {
 				addErrorXML(pError,
 						"Faltan especificar datos en el Valor del Aforo del Producto Forestal");
 				return false;
-			}
-			/*
-			 * if (tipoTerreno != null && !tipoTerreno.equals("Privado") &&
-			 * subImporteDTO.getImporte() <= 0.0) { addErrorXML(pError,
-			 * "Faltan especificar datos en el Importe del Producto Forestal");
-			 * return false; }
-			 */
-			listaIdTipoProducto.put(key, subImporteDTO);
-		}
-
-		for (FiscalizacionDTO fiscalizacionDTO : listaFiscalizaciones) {
-			if (fiscalizacionDTO.getId() != null) {
-				SubImporteDTO subImporte = hashProductosFiscalizados
-						.get(fiscalizacionDTO.getTipoProducto().getId());
-				if (subImporte == null) {
-					addErrorXML(pError,
-					// "Debe agregar todas las fiscalizaciones al calculo del importe");
-							"Falta definir el tipo de producto "
-									+ fiscalizacionDTO.getTipoProducto()
-											.getNombre()
-									+ " en los subImportes");
-					return false;
-				}
 			}
 		}
 
 		return true;
 	}
 
-	public static boolean validarLocalizacionRequerido(String idLocalizacion,
-			StringBuffer pError) {
+	public static boolean validarLocalizacionRequerido(String idLocalizacion, StringBuffer pError) {
 
-		if (idLocalizacion == null
-				|| idLocalizacion.equals("")
+		if (idLocalizacion == null || idLocalizacion.equals("")
 				|| (idLocalizacion != null && Long.parseLong(idLocalizacion) <= 0)) {
 			addErrorXML(pError, "Localización es un dato obligatorio");
 			return false;
@@ -978,15 +852,12 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarFormatoPeriodo(String periodo,
-			StringBuffer pError) {
+	public static boolean validarFormatoPeriodo(String periodo, StringBuffer pError) {
 		try {
-			Pattern pattern = Pattern
-					.compile("^[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]");
+			Pattern pattern = Pattern.compile("^[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]");
 			Matcher matcher = pattern.matcher(periodo);
 			if (!matcher.matches()) {
-				addErrorXML(pError,
-						"El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
+				addErrorXML(pError, "El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
 				return false;
 			}
 			String[] strArray = periodo.split("-");
@@ -994,20 +865,18 @@ public abstract class Validator {
 			int n2 = Integer.parseInt(strArray[1]);
 
 			if (n + 1 != n2) {
-				addErrorXML(pError,
-						"Los Años del periodo deben ser consecutivos");
+				addErrorXML(pError, "Los Años del periodo deben ser consecutivos");
 				return false;
 			}
 			return true;
 		} catch (Exception e) {
-			addErrorXML(pError,
-					"El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
+			addErrorXML(pError, "El formato del periodo debe ser AAAA-AAAA. Ej 2011-2012");
 			return false;
 		}
 	}
 
-	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(
-			double m3Vales, double m3Fiscalizaciones, StringBuffer pError) {
+	public static boolean validarM3ValesMenorQueM3Fiscalizaciones(double m3Vales,
+			double m3Fiscalizaciones, StringBuffer pError) {
 		if (m3Vales > m3Fiscalizaciones + 1) {
 			addErrorXML(
 					pError,
@@ -1017,8 +886,8 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarM3DeLeniaEnValesMenorQueM3Guia(double m3Vales,
-			double m3Guia, StringBuffer pError) {
+	public static boolean validarM3DeLeniaEnValesMenorQueM3Guia(double m3Vales, double m3Guia,
+			StringBuffer pError) {
 		if (m3Vales > m3Guia + 1) {
 			addErrorXML(
 					pError,
@@ -1029,22 +898,18 @@ public abstract class Validator {
 	}
 
 	public static boolean validarFiscalizacionExistenteParaVale(
-			List<Fiscalizacion> fiscalizaciones, String tipoProducto,
-			StringBuffer pError) {
+			List<Fiscalizacion> fiscalizaciones, String tipoProducto, StringBuffer pError) {
 		for (Fiscalizacion fiscalizacion : fiscalizaciones) {
-			if (fiscalizacion.getTipoProducto().getNombre()
-					.equalsIgnoreCase(tipoProducto)) {
+			if (fiscalizacion.getTipoProducto().getNombre().equalsIgnoreCase(tipoProducto)) {
 				return true;
 			}
 		}
-		addErrorXML(
-				pError,
+		addErrorXML(pError,
 				"Debe existir al menos una Fiscalizacion para el tipo de Proucto del Vale de Transporte");
 		return false;
 	}
 
-	public static boolean validarCuit(String strCuit, String label,
-			StringBuffer pError) {
+	public static boolean validarCuit(String strCuit, String label, StringBuffer pError) {
 		String strPrefijo;
 		String strNumero;
 		int valDigCuit;
@@ -1055,8 +920,7 @@ public abstract class Validator {
 		if (!strCuit.equals("")) {
 			try {
 				if (strCuit.length() != 11) {
-					addErrorXML(pError, "El " + label
-							+ " tiene una longitud inválida");
+					addErrorXML(pError, "El " + label + " tiene una longitud inválida");
 					return false;
 				}
 
@@ -1069,25 +933,20 @@ public abstract class Validator {
 				}
 				// Validacion prefijo
 				if (!(strPrefijo.equals("20")) & !(strPrefijo.equals("23"))
-						& !(strPrefijo.equals("24"))
-						& !(strPrefijo.equals("27"))
-						& !(strPrefijo.equals("30"))
-						& !(strPrefijo.equals("33"))
+						& !(strPrefijo.equals("24")) & !(strPrefijo.equals("27"))
+						& !(strPrefijo.equals("30")) & !(strPrefijo.equals("33"))
 						& !(strPrefijo.equals("34"))) {
 					addErrorXML(pError, "Prefijo de " + label + " inválido");
 					return false;
 				}
 				// Validacion digito verificador
 				for (int valPos = 0; valPos < 11; valPos++) {
-					valDigCuit = Integer.parseInt(strCuit.substring(valPos,
-							valPos + 1));
-					valDigConstant = Integer.parseInt(strConstant.substring(
-							valPos, valPos + 1));
+					valDigCuit = Integer.parseInt(strCuit.substring(valPos, valPos + 1));
+					valDigConstant = Integer.parseInt(strConstant.substring(valPos, valPos + 1));
 					valResult = valResult + (valDigCuit * valDigConstant);
 				}
 				if ((valResult % 11) != 0) {
-					addErrorXML(pError, "Dígito verificador de " + label
-							+ " inválido");
+					addErrorXML(pError, "Dígito verificador de " + label + " inválido");
 					return false;
 				}
 			} catch (Exception e) {
@@ -1099,8 +958,7 @@ public abstract class Validator {
 	}
 
 	public static boolean validarVolumenExportacionCertificadoOrigen(
-			double volumenTotalTipoProducto, double volumenMaximoPermitido,
-			StringBuffer pError) {
+			double volumenTotalTipoProducto, double volumenMaximoPermitido, StringBuffer pError) {
 		if (volumenTotalTipoProducto > volumenMaximoPermitido) {
 			addErrorXML(pError,
 					"El volúmen total debe ser menor al volúmen máximo permitido para exportar");
@@ -1109,11 +967,10 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarDeudaCertificadoOrigen(boolean tieneDeuda,
-			String radioDeuda, StringBuffer pError) {
+	public static boolean validarDeudaCertificadoOrigen(boolean tieneDeuda, String radioDeuda,
+			StringBuffer pError) {
 		if (tieneDeuda && radioDeuda.equals("N")) {
-			addErrorXML(
-					pError,
+			addErrorXML(pError,
 					"El Productor tiene deudas con la Dirección General de Bosques en concepto de aforo");
 			return false;
 		}
@@ -1121,8 +978,7 @@ public abstract class Validator {
 	}
 
 	public static boolean validarVolumenTransferenciaCertificadoOrigen(
-			double volumenMaximoParaExportar, double volumenTransferido,
-			StringBuffer pError) {
+			double volumenMaximoParaExportar, double volumenTransferido, StringBuffer pError) {
 
 		if (volumenTransferido <= volumenMaximoParaExportar / 0.3) {
 			DecimalFormat df = new DecimalFormat("#.##");
@@ -1136,26 +992,35 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarVolumenSubImportes(
-			List<FiscalizacionDTO> fiscalizaciones,
+	public static boolean validarVolumenSubImportes(List<FiscalizacionDTO> fiscalizaciones,
 			List<SubImporteDTO> subImportes, StringBuffer pError) {
 
-		double cantidadMts;
-		Long idTipoProducto;
+		HashMap<Long, Double> hashProductosFiscalizados = new HashMap<Long, Double>();
 
 		for (SubImporteDTO subImporteDTO : subImportes) {
-
-			cantidadMts = subImporteDTO.getCantidadMts();
-			idTipoProducto = subImporteDTO.getTipoProducto().getId();
-
-			for (FiscalizacionDTO fiscalizacion : fiscalizaciones) {
-
-				if (fiscalizacion.getTipoProducto().getId().longValue() == idTipoProducto
-						.longValue()) {
-					cantidadMts = cantidadMts - fiscalizacion.getCantidadMts();
-				}
+			Double d = hashProductosFiscalizados.get(subImporteDTO.getTipoProducto().getId());
+			if (d == null) {
+				hashProductosFiscalizados.put(subImporteDTO.getTipoProducto().getId(),
+						subImporteDTO.getCantidadMts());
+			} else {
+				hashProductosFiscalizados.put(subImporteDTO.getTipoProducto().getId(),
+						subImporteDTO.getCantidadMts() + d);
 			}
-			if (cantidadMts < 0) {
+		}
+
+		for (FiscalizacionDTO fiscalizacion : fiscalizaciones) {
+			Double d = hashProductosFiscalizados.get(fiscalizacion.getTipoProducto().getId());
+
+			if (d == null) {
+				addErrorXML(pError,
+				// "Debe agregar todas las fiscalizaciones al calculo del importe");
+						"Falta definir el tipo de producto "
+								+ fiscalizacion.getTipoProducto().getNombre()
+								+ " en los subImportes");
+				return false;
+			}
+
+			if (fiscalizacion.getCantidadMts() > d) {
 				addErrorXML(
 						pError,
 						"El volumen de los SubImportes debe ser mayor o igual al de las Fiscalizaciones para cada tipo de producto");
@@ -1166,8 +1031,8 @@ public abstract class Validator {
 		return true;
 	}
 
-	public static boolean validarCantM3ModiFiscalizacion(
-			FiscalizacionDTO fiscalizacionDTO, GuiaForestal guia) {
+	public static boolean validarCantM3ModiFiscalizacion(FiscalizacionDTO fiscalizacionDTO,
+			GuiaForestal guia) {
 
 		long idTipoProducto = fiscalizacionDTO.getTipoProducto().getId();
 		double cantM3EnSubImporte = 0.0;
@@ -1181,11 +1046,9 @@ public abstract class Validator {
 
 		for (Fiscalizacion fiscalizacion : guia.getFiscalizaciones()) {
 			if (fiscalizacion.getTipoProducto().getId() == idTipoProducto
-					&& fiscalizacion.getId().longValue() != fiscalizacionDTO
-							.getId().longValue()) {
+					&& fiscalizacion.getId().longValue() != fiscalizacionDTO.getId().longValue()) {
 
-				cantM3EnFiscalizaciones = cantM3EnFiscalizaciones
-						+ fiscalizacion.getCantidadMts();
+				cantM3EnFiscalizaciones = cantM3EnFiscalizaciones + fiscalizacion.getCantidadMts();
 			}
 		}
 

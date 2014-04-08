@@ -444,6 +444,9 @@ function agregarFila() {
 		$('#idAgrFila').attr('disabled',true);	
 	}
 
+	
+	var indSinFisc = $('#tablaImportes tr[id*=fila]:not(.fisc):last input.ind').val();
+	
 	var k = parseInt(j)+1;
 	
 	$("#tablaImportes tr[id*=fila]:not(.fisc):last").clone().find("input,select,td,span").each(function() {
@@ -451,16 +454,16 @@ function agregarFila() {
 		$(this).attr(
 			{'name' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ k ]);
+								return name.replace([ indSinFisc ], [ k ]);
 					  },
 			'value' : '',
 			'onchange' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ k ]);
+								return name.replace([ indSinFisc ], [ k ]);
 						  },
 			'id' : function(_, name){
 							if(name != null)
-								return name.replace([ j ], [ k ]);
+								return name.replace([ indSinFisc ], [ k ]);
 					  	  }
 			}
 		);
