@@ -376,6 +376,8 @@ function calcularTotales(){
 		else{
 			$('#idF931Valor').html("");
 		}
+
+		total = total - $("#idCompensacionFiscalizaciones").val();
 		
 		$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));		
 	}
@@ -413,7 +415,9 @@ function calcularTotales(){
 			else{
 				$('#idF931Valor').html("");			
 			}
-		
+
+			total = total - $("#idCompensacionFiscalizaciones").val();
+			
 			$('#idTotal').val(new Number(parseFloat(total)).toFixed(2));
 		}	
 	}
@@ -547,13 +551,41 @@ function actualizarTipoTerrenoCallback(tipoTerreno) {
 	calcularTotales();
 }
 
-
 function showCompensacion() {
 	$('#usarCompensacion').hide();
 	$('#compensacion').show();
 	$('#compXcaminos').val($('#saldoXCaminos').val());
 	calcularTotales();
 	
+}
+
+/*function cambioMontoCompensacionFiscalizaciones(){
+
+	if($('#checkCompensacionFiscalizaciones').is(':checked')){
+		var montoTotal = new Number($("#idTotal").val()).toFixed(2);
+		var montoCompensacionFiscalizaciones = new Number($("#idCompensacionFiscalizaciones").val()).toFixed(2);
+		var montoTotalTotal = new Number(new Number(montoTotal) - new Number(montoCompensacionFiscalizaciones )).toFixed(2);
+		
+		$("#idTotal").val(montoTotalTotal);
+	}				
+}*/
+
+function cambioCheckCompensacionFiscalizaciones(){
+
+	var saldoCCFiscalizacion = $("#saldoCCFiscalizacionHidden").val(); 
+	
+	if($('#checkCompensacionFiscalizaciones').is(':checked')){
+
+		$("#idCompensacionFiscalizaciones").attr("readonly",false);
+		$("#idCompensacionFiscalizaciones").val(saldoCCFiscalizacion);	
+	}
+	else{
+		
+		$("#idCompensacionFiscalizaciones").attr("readonly",true);
+		$("#idCompensacionFiscalizaciones").val("0.00");
+	}
+	
+	calcularTotales();			
 }
 
 //-----------------------------------------------------//
@@ -1155,7 +1187,8 @@ function showCompensacion() {
 									</td>
 									<td width="18%">
 										<input type="hidden" id="saldoXCaminos" value="${entidad.saldoXCaminos}" name="saldoXCaminos"/>
-										<input id="compXcaminos" name="guiaForestal.compensacionCaminos" class="botonerab" type="text" value="0" onchange="calcularTotales();">
+										<input id="compXcaminos" name="guiaForestal.compensacionCaminos" class="botonerab" type="text" 
+											value="0" onchange="calcularTotales();" onkeypress="javascript:esNumericoConDecimal(event);">
 									</td>
 								</tr> 
 							</c:if>
@@ -1169,6 +1202,22 @@ function showCompensacion() {
 										<div id="idF931Valor"></div>
 									</td>
 								</tr> 
+
+
+								<tr>
+									<td align="right"width="82%">										
+										<input type="hidden" value="${entidad.saldoCCFiscalizacion}" name="saldoFiscalizacion" id="saldoCCFiscalizacionHidden">
+										Compensación por Fiscalizaciones
+										<input type="checkbox" id="checkCompensacionFiscalizaciones" onclick="cambioCheckCompensacionFiscalizaciones()">										 									
+									</td>
+									<td width="18%" id="idCompensacionFiscalizacionesTD">					
+										<input type="text" value="0.00" id="idCompensacionFiscalizaciones" class="botonerab"
+												readonly="readonly" onblur="calcularTotales()" name="guiaForestal.compensacionFiscalizacion" 
+												value="${productor.saldoCCFiscalizacion}" onkeypress="javascript:esNumericoConDecimal(event);">
+									</td>
+								</tr>
+
+
 							
 								<tr>
 									<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>

@@ -354,6 +354,7 @@ public abstract class ProviderDominio {
 		guia.setTipoDeAforo(guiaDTO.getTipoDeAforo());
 		guia.setF931Afip(Boolean.valueOf(guiaDTO.isF931Afip()));
 		guia.setCompensacionCaminos(guiaDTO.getCompensacionCaminos());
+		guia.setCompensacionFiscalizacion(guiaDTO.getCompensacionFiscalizacion());
 		
 		return guia;
 	}

@@ -24,7 +24,16 @@ set habilitado = 0
 where id= 26;
 
 ALTER TABLE `x071vm20_siif`.`guiaforestal` 
+ADD COLUMN `tipoDeAforo` VARCHAR(255) NULL;
+
+ALTER TABLE `x071vm20_siif`.`guiaforestal` 
+ADD COLUMN `compensacionCaminos` DOUBLE;
+
+ALTER TABLE `x071vm20_siif`.`guiaforestal` 
 ADD COLUMN `f931Afip` BIT(1) NULL AFTER `compensacionCaminos`;
+
+ALTER TABLE `x071vm20_siif`.`guiaforestal` 
+ADD COLUMN `compensacionFiscalizacion` DOUBLE;
 
 /*Menu de Caminos de 2do Orden*/
 INSERT INTO `x071vm20_siif`.`itemmenu` (`id`, `item`, `orden`, `url`) VALUES ('123', 'Camino 2do Orden', '4', NULL);
@@ -50,4 +59,10 @@ insert into `x071vm20_siif`.`rol_item`
 values(2,125);
 
 SET SQL_SAFE_UPDATES=0;
+UPDATE `x071vm20_siif`.`guiaforestal` SET `compensacionCaminos`=0;
+
+SET SQL_SAFE_UPDATES=0;
 UPDATE `x071vm20_siif`.`guiaforestal` SET `f931Afip`=0;
+
+SET SQL_SAFE_UPDATES=0;
+UPDATE `x071vm20_siif`.`guiaforestal` SET `compensacionFiscalizacion`=0;

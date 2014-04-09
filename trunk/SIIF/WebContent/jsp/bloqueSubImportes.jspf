@@ -110,21 +110,50 @@
 									<input value="0.00" class="botonerab" type="text">
 								</td>							
 							</c:otherwise>
-						</c:choose>		
-							</tr>							
+						</c:choose>						
+							</tr>						
+							
+							<tr>
+								<td align="right" width="82%">										
+									Compensación por Fiscalizaciones										 									
+								</td>
+								<td width="18%">					
+									<input type="text" value="" id="idCompensacionFiscalizaciones" class="botonerab" readonly="readonly">
+								</td>
+							</tr>
+								
+							<tr>
+								<td align="right"width="82%">										
+																		 									
+								</td>
+								<td width="18%">					
+									<hr>
+								</td>
+							</tr>								
+								
 							<tr>
 								<td class="botoneralNegritaRight"><bean:message key='SIIF.label.IMPORTE_TOTAL'/></td>
 								<td>
 									<input id="idImporteTotal" readonly="readonly" value="${guiaForestal.importeTotal}" class="botonerab" type="text">
 									
 									<script type="text/javascript">
+									
 										var importeTotal = $('#idImporteTotal').val();
 										$('#afip').val(new Number(importeTotal*-.1).toFixed(2));
+										
 										if(${guiaForestal.compensacionCaminos}>0){
 											$('#camino2doOrden').val(${guiaForestal.compensacionCaminos*-1});
 										}else{
 											$('#camino2doOrden').val("0.00");
-										}							
+										}	
+
+										if(${guiaForestal.compensacionFiscalizacion}>0){
+											$('#idCompensacionFiscalizaciones').val(${guiaForestal.compensacionFiscalizacion*-1});
+										}else{
+											$('#idCompensacionFiscalizaciones').val("0.00");
+										}										
+										
+																
 									</script>									
 									
 								</td>

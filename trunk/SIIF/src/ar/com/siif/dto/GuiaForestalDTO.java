@@ -57,6 +57,8 @@ public class GuiaForestalDTO {
 
 	private boolean f931Afip;
 
+	private double compensacionFiscalizacion;
+	
 	public GuiaForestalDTO() {
 
 		fiscalizaciones = new ArrayList<FiscalizacionDTO>();
@@ -329,6 +331,14 @@ public class GuiaForestalDTO {
 
 	public void setF931AfipStr(String f931Afip) {
 		this.f931Afip = Boolean.valueOf(f931Afip);
+	}
+
+	public double getCompensacionFiscalizacion() {
+		return compensacionFiscalizacion;
+	}
+
+	public void setCompensacionFiscalizacion(double compensacionFiscalizacion) {
+		this.compensacionFiscalizacion = compensacionFiscalizacion;
 	}
 
 }

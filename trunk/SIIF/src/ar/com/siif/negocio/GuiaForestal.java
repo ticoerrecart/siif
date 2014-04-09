@@ -108,6 +108,8 @@ public class GuiaForestal {
 	
 	private boolean f931Afip;
 	
+	private double compensacionFiscalizacion;	
+	
 	public GuiaForestal() {
 
 		boletasDeposito = new ArrayList<BoletaDeposito>();
@@ -314,5 +316,13 @@ public class GuiaForestal {
 
 	public void setF931Afip(boolean f931Afip) {
 		this.f931Afip = f931Afip;
+	}
+
+	public double getCompensacionFiscalizacion() {
+		return compensacionFiscalizacion;
+	}
+
+	public void setCompensacionFiscalizacion(double compensacionFiscalizacion) {
+		this.compensacionFiscalizacion = compensacionFiscalizacion;
 	}
 }

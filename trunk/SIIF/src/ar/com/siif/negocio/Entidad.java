@@ -68,6 +68,10 @@ public class Entidad implements Comparable<Entidad> {
 	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
 	private List<CaminoConstruido> caminos;
 
+	@OneToMany(mappedBy = "productor")
+	@Cascade(value = { CascadeType.SAVE_UPDATE, CascadeType.DELETE_ORPHAN })
+	private List<CuentaCorrienteFiscalizacion> movimientosCCFiscalizacion;	
+	
 	public double getSaldoXCaminos(){
 		double monto = 0.0;
 		for (CaminoConstruido camino : this.caminos) {
@@ -75,6 +79,14 @@ public class Entidad implements Comparable<Entidad> {
 		}
 		return monto;
 	}
+					 
+	public double getSaldoCCFiscalizacion(){
+		double monto = 0.0;
+		for (CuentaCorrienteFiscalizacion movimiento : this.movimientosCCFiscalizacion) {
+			monto = monto + movimiento.getMonto();
+		}
+		return monto;
+	}	
 	
 	/**
 	 * Cada subclase debe implementar éste método.
