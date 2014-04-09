@@ -177,6 +177,14 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 		caminoConstruido.setProductor(guiaForestal.getProductorForestal());
 		caminoConstruido.setUsuario(usuarioAlta);
 		this.caminoFachada.altaCamino(caminoConstruido);
+		
+		CuentaCorrienteFiscalizacion cuentaCorrienteFiscalizacion = new CuentaCorrienteFiscalizacion(); 
+		cuentaCorrienteFiscalizacion.setGuiaForestal(guiaForestal);
+		cuentaCorrienteFiscalizacion.setMonto(guia.getCompensacionFiscalizacion() * -1);
+		cuentaCorrienteFiscalizacion.setProductor(guiaForestal.getProductorForestal());
+		cuentaCorrienteFiscalizacion.setUsuario(usuarioAlta);
+		cuentaCorrienteFiscalizacion.setFecha(new Date());
+		this.guiaForestalDAO.altaCuentaCorrienteFiscalizacion(cuentaCorrienteFiscalizacion);		
 	}
 
 	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, String idPeriodo) {
