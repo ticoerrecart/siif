@@ -1615,6 +1615,23 @@ public class GuiaForestalAction extends ValidadorAction {
 		return mapping.findForward(strForward);
 	}
 
+	public ActionForward consultaSaldoCCFiscalizacion(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		String strForward = "consultaSaldoCCFiscalizacion";
+		try {
+
+			WebApplicationContext ctx = getWebApplicationContext();
+			IEntidadFachada entidadFachada = (IEntidadFachada) ctx.getBean("entidadFachada");
+			request.setAttribute("productores", entidadFachada.getProductores());
+
+		} catch (Throwable t) {
+			MyLogger.logError(t);
+			request.setAttribute("error", "Error Inesperado");
+			strForward = "error";
+		}
+		return mapping.findForward(strForward);
+	}	
+	
 	public boolean validarAltaGuiaForestalBasicaForm(StringBuffer error,
 			ActionForm form) {
 
