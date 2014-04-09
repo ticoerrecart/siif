@@ -1639,6 +1639,7 @@ public class GuiaForestalAction extends ValidadorAction {
 			boolean ok12 = true;
 			boolean ok13 = true;
 			boolean ok14 = true;
+			boolean ok15 = true;
 			
 			ok = Validator.validarLongMayorQue(0, Long
 					.toString(guiaForestalForm.getGuiaForestal().getNroGuia()),
@@ -1704,9 +1705,14 @@ public class GuiaForestalAction extends ValidadorAction {
 				Validator.addErrorXML(error, "El Credito de Caminos de 2do Orden utilizado debe ser menor o igual al que posee el productor");
 				ok14 = false;					
 			}			
+
+			if(guiaForestalForm.getGuiaForestal().getCompensacionFiscalizacion() > guiaForestalForm.getSaldoFiscalizacion()){
+				Validator.addErrorXML(error, "El Credito de Compensación por Fiscalizaciones utilizado debe ser menor o igual al que posee el productor");
+				ok15 = false;					
+			}			
 			
 			return ok && ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8
-					&& ok9 && ok10 && ok11 && ok12 && ok13 && ok14;
+					&& ok9 && ok10 && ok11 && ok12 && ok13 && ok14 && ok15;
 
 		} catch (Throwable t) {
 			MyLogger.logError(t);

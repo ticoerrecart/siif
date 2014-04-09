@@ -400,6 +400,8 @@ public abstract class ProviderDTO {
 		
 		guiaForestalDTO.setCompensacionCaminos(guiaForestal.getCompensacionCaminos());
 
+		guiaForestalDTO.setCompensacionFiscalizacion(guiaForestal.getCompensacionFiscalizacion());		
+		
 		return guiaForestalDTO;
 	}
 

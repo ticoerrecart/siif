@@ -37,6 +37,8 @@ public class GuiaForestalForm extends ActionForm {
 
 	private double saldoXCaminos; //Es el saldo que tiene el productor en su cuenta corriente de Caminos de 2do Orden, lo utilizo para validar que no se pase. 
 	
+	private double saldoFiscalizacion; //Es el saldo que tiene el productor en su cuenta corriente de Caminos de 2do Orden, lo utilizo para validar que no se pase.
+	
 	public GuiaForestalForm() {
 
 		guiaForestal = new GuiaForestalDTO();
@@ -168,4 +170,13 @@ public class GuiaForestalForm extends ActionForm {
 	public void setSaldoXCaminos(double saldoXCaminos) {
 		this.saldoXCaminos = saldoXCaminos;
 	}
+
+	public double getSaldoFiscalizacion() {
+		return saldoFiscalizacion;
+	}
+
+	public void setSaldoFiscalizacion(double saldoFiscalizacion) {
+		this.saldoFiscalizacion = saldoFiscalizacion;
+	}
+	
 }
