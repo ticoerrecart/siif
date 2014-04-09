@@ -1067,17 +1067,37 @@ public class GuiaForestalAction extends ValidadorAction {
 					MathUtils.round(volFisc, 2));
 		}
 
+		HashMap<Long, SubImporteDTO> mapSub = new HashMap<Long, SubImporteDTO>();
+		HashMap<Long, Double> mapVolSub = new HashMap<Long, Double>();		
 		for (SubImporteDTO subImporteDTO : listaSubImportes) {
+			double volSub = subImporteDTO.getCantidadMts();
+			Double vol = mapVolSub.get(subImporteDTO.getTipoProducto().getId());
+			if (vol != null) {
+				volSub = volSub + vol.doubleValue();
+			}
+			mapVolSub.put(subImporteDTO.getTipoProducto().getId(),
+					MathUtils.round(volSub, 2));
+			
+			SubImporteDTO si = mapSub.get(subImporteDTO.getTipoProducto().getId());
+			if (si == null){
+				mapSub.put(subImporteDTO.getTipoProducto().getId(),subImporteDTO);
+			}
+			
+			
+		}
+		
+		for (SubImporteDTO subImporteDTO : mapSub.values()) {
 
 			FilaTablaVolFiscAsociarDTO fila = new FilaTablaVolFiscAsociarDTO();
 			fila.setIdTipoProducto(subImporteDTO.getTipoProducto().getId());
 			fila.setNombreProducto(subImporteDTO.getTipoProducto().getNombre());
-			fila.setVolumenTotalEnGuia(subImporteDTO.getCantidadMts());
+			
 
-			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto()
-					.getId());
-			fila.setVolumenEnFiscalizaciones((volEnFisc == null) ? 0.0
-					: volEnFisc);
+
+			Double volEnFisc = mapVol.get(subImporteDTO.getTipoProducto().getId());
+			Double volEnSub = mapVolSub.get(subImporteDTO.getTipoProducto().getId());
+			fila.setVolumenTotalEnGuia((volEnSub == null) ? 0.0 : volEnSub);
+			fila.setVolumenEnFiscalizaciones((volEnFisc == null) ? 0.0 : volEnFisc);
 
 			double volumenFaltante = fila.getVolumenTotalEnGuia()
 					- fila.getVolumenEnFiscalizaciones();
@@ -2008,12 +2028,32 @@ public class GuiaForestalAction extends ValidadorAction {
 					}
 				}
 
-				for (SubImporte subImporte : guia.getSubImportes()) {
+				
+				HashMap<Long, SubImporte> mapSub = new HashMap<Long, SubImporte>();
+				HashMap<Long, Double> mapVolSub = new HashMap<Long, Double>();		
+				for (SubImporte subImporte :  guia.getSubImportes()) {
+					double volSub = subImporte.getCantidadMts();
+					Double vol = mapVolSub.get(subImporte.getTipoProducto().getId());
+					if (vol != null) {
+						volSub = volSub + vol.doubleValue();
+					}
+					mapVolSub.put(subImporte.getTipoProducto().getId(),
+							MathUtils.round(volSub, 2));
+					
+					SubImporte si = mapSub.get(subImporte.getTipoProducto().getId());
+					if (si == null){
+						mapSub.put(subImporte.getTipoProducto().getId(),subImporte);
+					}
+					
+					
+				}
+				
+				for (SubImporte subImporte : mapSub.values()) {
 
 					long idTipoProducto = subImporte.getTipoProducto().getId();
 					Double cant = hash.get(idTipoProducto);
-
-					if (cant != null && cant > subImporte.getCantidadMts()) {
+					Double volSub = mapVolSub.get(idTipoProducto);
+					if (cant != null && cant > volSub) {
 						Validator
 								.addErrorXML(
 										error,
