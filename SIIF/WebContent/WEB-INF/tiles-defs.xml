@@ -176,7 +176,15 @@
 				<put name="title" value="SIIFs" />
 				<put name="body" value="/jsp/cargarProductoresParaGuiaGenerica.jsp" />
 			</definition>		
-		<!--  -->				
+		<!--  -->
+						
+		<!-- Consulta Saldo CC Fiscalizacion -->
+			<definition name=".consultaSaldoCCFiscalizacion"
+				extends=".base">
+				<put name="title" value="SIIFs" />
+				<put name="body" value="/jsp/consultaSaldoCCFiscalizacion.jsp" />
+			</definition>		
+		<!--  -->		
 
 	<!-- FIN GUIA FORESTAL -->
 
