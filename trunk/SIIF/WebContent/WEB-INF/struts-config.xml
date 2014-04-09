@@ -194,6 +194,8 @@
 								path="/jsp/bloqueMostrarGuiasForestalesParaRestablecer.jsp" />		
 				<forward name="exitoCargarGuiaForestalBasicaParaRestablecer" path=".cargarGuiaForestalConsultaPorProductor" />				
 				
+				<!-- Consulta Saldo CC Fiscalizacion -->
+				<forward name="consultaSaldoCCFiscalizacion" path=".consultaSaldoCCFiscalizacion" />				
 												
 		</action>
 		<!-- FIN GUIA FORESTAL -->
