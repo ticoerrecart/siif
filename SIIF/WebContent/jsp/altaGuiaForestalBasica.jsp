@@ -245,11 +245,25 @@ function cambiarTipoDeAforo(){
 		$('#tablaFiscalizaciones .Rollizo').each(function(){
 			totalRollizoExento = totalRollizoExento + parseFloat($(this).val());  
 		})
+
+		totalRollizoNoExento = 0; 
+		$('#tablaFiscalizaciones .RollizoNoExentos').each(function(){
+			totalRollizoNoExento = totalRollizoNoExento + parseFloat($(this).val());  
+		})				
+		
+		$('.RollizoMts').val(new Number(totalRollizoNoExento).toFixed(2));
 		
 		totalFuesteExento = 0; 
 		$('#tablaFiscalizaciones .Fuste').each(function(){
 			totalFuesteExento = totalFuesteExento + parseFloat($(this).val());  
 		})
+
+		totalFuesteNoExento = 0; 
+		$('#tablaFiscalizaciones .FusteNoExentos').each(function(){
+			totalFuesteNoExento = totalFuesteNoExento + parseFloat($(this).val());  
+		})		
+
+		$('.FusteMts').val(new Number(totalFuesteNoExento).toFixed(2));		
 		
 		//recorro todas las fisc y sumarizo por tipo y agrego a lo sumo los dos renglones...
 		if (totalRollizoExento > 0){
@@ -964,6 +978,12 @@ function cambioCheckCompensacionFiscalizaciones(){
 												class="<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>" 
 												type="hidden" 
 												value="${fiscalizacion.cantidadMtsExentos}">
+												
+											<input 
+												id="cantidadMtsNoExentos<c:out value='${i.count}'></c:out>" 
+												class="<c:out value="${fiscalizacion.tipoProducto.nombre}"></c:out>NoExentos" 
+												type="hidden" 
+												value="${fiscalizacion.cantidadMts - fiscalizacion.cantidadMtsExentos}">												
 										</td>
 										<td class="botonerab">
 											<a href="javascript:mostrarFiscalizacion(<c:out value='${fiscalizacion.id}'></c:out>);">
@@ -1078,8 +1098,8 @@ function cambioCheckCompensacionFiscalizaciones(){
 													</select>															
 												</td>
 												<td>
-													<input id="idCantidadMts${i.count-1}" class="botonerab" type="text" size="9" 
-														name="listaSubImportes[${i.count-1}].cantidadMts" 
+													<input id="idCantidadMts${i.count-1}" class="botonerab ${subImporte.tipoProducto.nombre}Mts" 
+														type="text" size="9" name="listaSubImportes[${i.count-1}].cantidadMts" 
 														onchange="javascript:actualizarImporte(${i.count-1});"
 														onkeypress="javascript:esNumericoConDecimal(event);"
 														value="${subImporte.cantidadMts}">									
