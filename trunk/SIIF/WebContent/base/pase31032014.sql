@@ -4,7 +4,7 @@ where item_fk=24;
 delete from `x071vm20_siif`.`ItemMenu`
 where id=24;
 
-CREATE TABLE `AforoNuevo` (
+CREATE TABLE `x071vm20_siif`.`AforoNuevo` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `monto` double DEFAULT NULL,
   `porcentaje` int(11) DEFAULT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE `AforoNuevo` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `CaminoConstruido` (
+CREATE TABLE `x071vm20_siif`.`CaminoConstruido` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `autorizante` varchar(255) DEFAULT NULL,
   `costoDelCamino` double NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `CaminoConstruido` (
   CONSTRAINT `FK5D7D70496F29D8B9` FOREIGN KEY (`guiaForestal_fk`) REFERENCES `GuiaForestal` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `CuentaCorrienteFiscalizacion` (
+CREATE TABLE `x071vm20_siif`.`CuentaCorrienteFiscalizacion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fecha` datetime NOT NULL,
   `monto` double NOT NULL,
@@ -121,3 +121,7 @@ UPDATE `x071vm20_siif`.`GuiaForestal` SET `f931Afip`=0;
 
 SET SQL_SAFE_UPDATES=0;
 UPDATE `x071vm20_siif`.`GuiaForestal` SET `compensacionFiscalizacion`=0;
+
+
+ALTER TABLE `x071vm20_siif`.`SubImporte` 
+ADD COLUMN `comercializaDentroProvincia` BIT(1) NULL;
