@@ -100,9 +100,9 @@ public class TipoProductoForestalFachada implements
 		
 		List<EspecieProducto> especieProducto = new ArrayList<EspecieProducto>();
 
-		especieProducto.add(EspecieProducto.LENGA);
+		especieProducto.add(EspecieProducto.Lenga);
 		especieProducto.add(EspecieProducto.Nire);
-		especieProducto.add(EspecieProducto.GUINDO);
+		especieProducto.add(EspecieProducto.Guindo);
 		
 		return especieProducto;		
 	}	
