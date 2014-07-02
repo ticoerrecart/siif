@@ -125,3 +125,7 @@ UPDATE `x071vm20_siif`.`GuiaForestal` SET `compensacionFiscalizacion`=0;
 
 ALTER TABLE `x071vm20_siif`.`SubImporte` 
 ADD COLUMN `comercializaDentroProvincia` BIT(1) NULL;
+
+update x071vm20_siif.subimporte
+set comercializaDentroProvincia = false
+where id>0;
