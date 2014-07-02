@@ -129,3 +129,7 @@ ADD COLUMN `comercializaDentroProvincia` BIT(1) NULL;
 update x071vm20_siif.subimporte
 set comercializaDentroProvincia = false
 where id>0;
+
+update x071vm20_siif.guiaforestal
+set tipoDeAforo='BASICO'
+where id>1;
