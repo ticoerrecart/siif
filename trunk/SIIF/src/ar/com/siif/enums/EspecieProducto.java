@@ -2,7 +2,7 @@ package ar.com.siif.enums;
 
 public enum EspecieProducto {
 
-	LENGA("Lenga"), Nire("Ñire"), GUINDO("Guindo");
+	Lenga("Lenga"), Nire("Ñire"), Guindo("Guindo");
 
 	private String descripcion;
 
