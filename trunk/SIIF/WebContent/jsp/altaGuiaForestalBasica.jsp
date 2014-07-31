@@ -120,7 +120,7 @@ function agregarCuota(){
 	var nombre = "";
 	nombre = reemplazarCaracter(" ","%20",nom,nombre);
 	
-	$('#dummy').load('/SIIF/jsp/bloquePlanPagosAltaGFB.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
+	$('#dummy').load('/SIIF_TEST/jsp/bloquePlanPagosAltaGFB.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
 			function(){
 				//$("#prueba1").append($("#dummy").html()); NO ANDA ESTA LINEA EN IE
 								
@@ -497,7 +497,7 @@ function agregarFila() {
 			'value' : '',
 			'onchange' : function(_, name){
 							if(name != null)
-								return name.replace([ indSinFisc ], [ k ]);
+								return name.replace([ indSinFisc ], [ k ]);								
 						  },
 			'id' : function(_, name){
 							if(name != null)
