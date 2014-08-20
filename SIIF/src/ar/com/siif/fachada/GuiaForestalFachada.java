@@ -171,20 +171,25 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			fiscalizacionFachada.altaFiscalizacion(fiscalizacion);
 		}
 		
-		CaminoConstruido caminoConstruido = new CaminoConstruido(); 
-		caminoConstruido.setGuiaForestal(guiaForestal);
-		caminoConstruido.setMonto(guia.getCompensacionCaminos() * -1);
-		caminoConstruido.setProductor(guiaForestal.getProductorForestal());
-		caminoConstruido.setUsuario(usuarioAlta);
-		this.caminoFachada.altaCamino(caminoConstruido);
+		if (guia.getCompensacionCaminos() > 0){
+			CaminoConstruido caminoConstruido = new CaminoConstruido(); 
+			caminoConstruido.setGuiaForestal(guiaForestal);
+			caminoConstruido.setMonto(guia.getCompensacionCaminos() * -1);
+			caminoConstruido.setProductor(guiaForestal.getProductorForestal());
+			caminoConstruido.setUsuario(usuarioAlta);
+			this.caminoFachada.altaCamino(caminoConstruido);	
+		}
 		
-		CuentaCorrienteFiscalizacion cuentaCorrienteFiscalizacion = new CuentaCorrienteFiscalizacion(); 
-		cuentaCorrienteFiscalizacion.setGuiaForestal(guiaForestal);
-		cuentaCorrienteFiscalizacion.setMonto(guia.getCompensacionFiscalizacion() * -1);
-		cuentaCorrienteFiscalizacion.setProductor(guiaForestal.getProductorForestal());
-		cuentaCorrienteFiscalizacion.setUsuario(usuarioAlta);
-		cuentaCorrienteFiscalizacion.setFecha(new Date());
-		this.guiaForestalDAO.altaCuentaCorrienteFiscalizacion(cuentaCorrienteFiscalizacion);		
+		if (guia.getCompensacionFiscalizacion() > 0) {
+			CuentaCorrienteFiscalizacion cuentaCorrienteFiscalizacion = new CuentaCorrienteFiscalizacion(); 
+			cuentaCorrienteFiscalizacion.setGuiaForestal(guiaForestal);
+			cuentaCorrienteFiscalizacion.setMonto(guia.getCompensacionFiscalizacion() * -1);
+			cuentaCorrienteFiscalizacion.setProductor(guiaForestal.getProductorForestal());
+			cuentaCorrienteFiscalizacion.setUsuario(usuarioAlta);
+			cuentaCorrienteFiscalizacion.setFecha(new Date());
+			this.guiaForestalDAO.altaCuentaCorrienteFiscalizacion(cuentaCorrienteFiscalizacion);	
+		}
+				
 	}
 
 	public List<GuiaForestalDTO> recuperarGuiasForestalesPorProductor(long idProductor, String idPeriodo) {
