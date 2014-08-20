@@ -253,6 +253,7 @@ function cambiarTipoDeAforo(){
 		
 		$('.RollizoMts').val(new Number(totalRollizoNoExento).toFixed(2));
 		
+		
 		totalFuesteExento = 0; 
 		$('#tablaFiscalizaciones .Fuste').each(function(){
 			totalFuesteExento = totalFuesteExento + parseFloat($(this).val());  
@@ -264,6 +265,14 @@ function cambiarTipoDeAforo(){
 		})		
 
 		$('.FusteMts').val(new Number(totalFuesteNoExento).toFixed(2));		
+		
+		
+		var ultInd = $('#tablaImportes tr[id*=fila]:last input.ind').val();
+		for (i=0;i<=ultInd;i++){
+			calcularSubImporteRenglon(i);	
+		}
+		
+		
 		
 		//recorro todas las fisc y sumarizo por tipo y agrego a lo sumo los dos renglones...
 		if (totalRollizoExento > 0){
@@ -600,6 +609,21 @@ function cambioCheckCompensacionFiscalizaciones(){
 	}
 	
 	calcularTotales();			
+}
+
+
+function actualizarClass(id){
+	if ($("#selectTiposDeProductos" + id).val() != 16) {
+		$("#idCantidadMts" + id).removeClass("RollizoMts")
+	} else {
+		$("#idCantidadMts" + id).addClass("RollizoMts")
+	}
+
+	if ($("#selectTiposDeProductos" + id).val() != 27) {
+		$("#idCantidadMts" + id).removeClass("FusteMts")
+	} else {
+		$("#idCantidadMts" + id).addClass("FusteMts")
+	}
 }
 
 //-----------------------------------------------------//
@@ -1067,7 +1091,8 @@ function cambioCheckCompensacionFiscalizaciones(){
 																	
 													<html:select styleId="selectTiposDeProductos${i.count-1}"
 															property="listaSubImportes[${i.count-1}].tipoProducto.id" 
-															styleClass="botonerab" value="${subImporte.tipoProducto.id}">
+															styleClass="botonerab" value="${subImporte.tipoProducto.id}"
+															onchange="actualizarClass(${i.count-1});">
 																																											
 														<c:forEach items="${tiposProductosForestales}" var="tipoProducto">
 															<html:option value="${tipoProducto.id}">
