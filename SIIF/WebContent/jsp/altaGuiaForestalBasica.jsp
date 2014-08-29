@@ -120,7 +120,7 @@ function agregarCuota(){
 	var nombre = "";
 	nombre = reemplazarCaracter(" ","%20",nom,nombre);
 	
-	$('#dummy').load('/SIIF_TEST/jsp/bloquePlanPagosAltaGFB.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
+	$('#dummy').load('/SIIF/jsp/bloquePlanPagosAltaGFB.jsp?nombreProductor='+ nombre +'&indice=' + indice , 
 			function(){
 				//$("#prueba1").append($("#dummy").html()); NO ANDA ESTA LINEA EN IE
 								
