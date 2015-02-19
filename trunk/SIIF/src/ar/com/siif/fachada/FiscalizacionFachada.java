@@ -176,7 +176,8 @@ public class FiscalizacionFachada implements IFiscalizacionFachada {
 			guia.getFiscalizaciones().remove(fiscalizacion);
 
 			OperacionGuiaForestalDTO operacionDTO = new OperacionGuiaForestalDTO();
-			operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			//operacionDTO.setTipoOperacion(TipoOperacion.MOD.getDescripcion());
+			operacionDTO.setTipoOperacion(TipoOperacion.MODGUIA_POR_MODFISCA.getDescripcion());
 			operacionDTO.setFecha(operacion.getFecha());
 
 			OperacionGuiaForestal operacionGuia = ProviderDominio

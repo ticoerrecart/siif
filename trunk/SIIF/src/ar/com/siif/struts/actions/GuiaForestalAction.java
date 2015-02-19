@@ -1134,7 +1134,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestalDTO.getOperacionModificacion().setFecha(
 					Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
 			guiaForestalDTO.getOperacionModificacion().setTipoOperacion(
-					TipoOperacion.MOD.getDescripcion());
+					//TipoOperacion.MOD.getDescripcion());
+					TipoOperacion.MOD_ASOCIACION_FISCA.getDescripcion());
 
 			double d = guiaForestalFachada.asociarFiscalizacionesConGuiasForestales(
 					guiaForestalDTO, guiaForm.getListaFiscalizaciones());
@@ -1215,7 +1216,8 @@ public class GuiaForestalAction extends ValidadorAction {
 			guiaForestalDTO.getOperacionModificacion().setFecha(
 					Fecha.getFechaHoyDDMMAAAAhhmmssSlash());
 			guiaForestalDTO.getOperacionModificacion().setTipoOperacion(
-					TipoOperacion.MOD.getDescripcion());
+					//TipoOperacion.MOD.getDescripcion());
+					TipoOperacion.MOD_DESASOCIACION_FISCA.getDescripcion());
 
 			guiaForestalFachada.desasociarFiscalizacionesConGuiasForestales(
 					guiaForestalDTO, guiaForm.getListaFiscalizaciones());

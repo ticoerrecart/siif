@@ -186,7 +186,8 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 			cuentaCorrienteFiscalizacion.setMonto(guia.getCompensacionFiscalizacion() * -1);
 			cuentaCorrienteFiscalizacion.setProductor(guiaForestal.getProductorForestal());
 			cuentaCorrienteFiscalizacion.setUsuario(usuarioAlta);
-			cuentaCorrienteFiscalizacion.setFecha(new Date());
+			//cuentaCorrienteFiscalizacion.setFecha(new Date());
+			cuentaCorrienteFiscalizacion.setFecha(Fecha.getFechaHoy());
 			this.guiaForestalDAO.altaCuentaCorrienteFiscalizacion(cuentaCorrienteFiscalizacion);	
 		}
 				
@@ -447,11 +448,13 @@ public class GuiaForestalFachada implements IGuiaForestalFachada {
 					} 
 				}
 				//descuento por la cantidad de mts minima entre la fisc y los subimportes. ej si se fisalizaron 15mts y el subimporte es por 10mts.. hago descuento por 10; 
-				double descMts = Math.min(fiscalizacion.getCantidadMts(), cantidadMts);
+				//double descMts = Math.min(fiscalizacion.getCantidadMts(), cantidadMts);
+				double descMts = Math.min(fiscalizacion.getCantidadMtsExtento(), cantidadMts);				
 				if (descMts > 0){
 					Double aforo = Double.parseDouble(aforoFachada.getValorAforoNuevo(guiaForestal.getTipoDeAforo().name(), "false"));
 					CuentaCorrienteFiscalizacion cc = new CuentaCorrienteFiscalizacion();
-					cc.setFecha(new Date());
+					//cc.setFecha(new Date());
+					cc.setFecha(Fecha.getFechaHoy());
 					cc.setFiscalizacion(fiscalizacion);
 					cc.setGuiaForestal(guiaForestal);
 					cc.setMonto(aforo * descMts);
