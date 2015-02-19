@@ -1163,7 +1163,9 @@ function actualizarClass(id){
 												<td>
 													<span style="display:none" id="comercializaEnProvinciaTD0">
 														Comercializa dentro de Provincia <html:checkbox styleId="comercializaEnProvincia0" property="listaSubImportes[0].comercializaDentroProvinciaStr" value="true" onchange="javascript:cambiarTipoDeAforoSegunEstado(0);"/>
-													</span>																									
+													</span>		
+													
+													<input type="hidden" id="estado0" name="listaSubImportes[0].estado">																							
 												</td>
 												<td>											 
 													<select name="listaSubImportes[0].especieStr" 
