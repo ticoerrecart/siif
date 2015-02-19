@@ -412,4 +412,8 @@ public class Fecha {
 		return cal.get(Calendar.YEAR);
 	}
 	
+	public static Date getFechaHoy(){
+		return new Timestamp(new Date().getTime());
+	}
+	
 }
